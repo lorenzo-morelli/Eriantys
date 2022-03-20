@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ing-sw-2022-morelli-morea-netodellacqua.iml" filepath="$PROJECT_DIR$/ing-sw-2022-morelli-morea-netodellacqua.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/ing-sw-2022-morelli-morea-netodellacqua.iml" filepath="$PROJECT_DIR$/.idea/ing-sw-2022-morelli-morea-netodellacqua.iml" />
     </modules>
   </component>
 </project>
