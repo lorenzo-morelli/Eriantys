@@ -1,8 +1,25 @@
 package it.polimi.ingsw.model;
 
 public class AssistantCard {
-    int values;
-    int moves;
+    private int values;
+    private int moves;
 
+    //A java bean has empty constructor
+    public AssistantCard(){};
 
+    public int getMoves() {
+        return moves;
+    }
+
+    public int getValues() {
+        return values;
+    }
+
+    public void setMoves(int moves) {
+        this.moves = moves;
+    }
+
+    public void setValues(int values) {
+        this.values = values;
+    }
 }
