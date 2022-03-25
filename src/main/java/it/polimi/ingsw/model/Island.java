@@ -9,6 +9,28 @@ public class Island {
     Color towerColor;   // se towerColor = Color.NULLCOLOR allora non ci sono torri su quell'isola
                         // di default un'isola appena costruita non può avere torri né avere madre natura
 
+    public Island(){
+        this.inhabitants = new StudentSet();
+        this.hasMotherNature = false;
+        this.towerColor=Color.nullcolor;
+    }
+
+    public StudentSet getInhabitants() {
+        return inhabitants;
+    }
+
+    public void setInhabitants(StudentSet inhabitants) {
+        this.inhabitants = inhabitants;
+    }
+
+    public Color getTowerColor() {
+        return towerColor;
+    }
+
+    public void setTowerColor(Color towerColor) {
+        this.towerColor = towerColor;
+    }
+
     public int getSerialNumber() {
         return serialNumber;
     }
@@ -37,10 +59,6 @@ public class Island {
     public void setHasMotherNature(boolean mn) {
         this.hasMotherNature = mn;
     }
-    public Island(){
-        this.inhabitants = new StudentSet();
-        this.hasMotherNature = false;
-        this.towerColor=Color.nullcolor;
-    }
+
 
 }

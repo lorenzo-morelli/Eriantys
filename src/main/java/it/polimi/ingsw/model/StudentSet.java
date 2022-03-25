@@ -24,6 +24,46 @@ public class StudentSet {
         this.greenColorSet.setColorName(Color.green);
     }
 
+    public StudentColorSet getBlueColorSet() {
+        return blueColorSet;
+    }
+
+    public void setBlueColorSet(StudentColorSet blueColorSet) {
+        this.blueColorSet = blueColorSet;
+    }
+
+    public StudentColorSet getGreenColorSet() {
+        return greenColorSet;
+    }
+
+    public void setGreenColorSet(StudentColorSet greenColorSet) {
+        this.greenColorSet = greenColorSet;
+    }
+
+    public StudentColorSet getPinkColorSet() {
+        return pinkColorSet;
+    }
+
+    public void setPinkColorSet(StudentColorSet pinkColorSet) {
+        this.pinkColorSet = pinkColorSet;
+    }
+
+    public StudentColorSet getRedColorSet() {
+        return redColorSet;
+    }
+
+    public void setRedColorSet(StudentColorSet redColorSet) {
+        this.redColorSet = redColorSet;
+    }
+
+    public StudentColorSet getYellowColorSet() {
+        return yellowColorSet;
+    }
+
+    public void setYellowColorSet(StudentColorSet yellowColorSet) {
+        this.yellowColorSet = yellowColorSet;
+    }
+
     public static void main(String[] args){
         StudentSet myStudentSet = new StudentSet();
         myStudentSet.redColorSet.setCardinality(7);

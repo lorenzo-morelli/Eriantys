@@ -6,4 +6,12 @@ public class Cloud {
     public Cloud(){
         this.studentAccumulator = new StudentSet();
     }
+
+    public void setStudentAccumulator(StudentSet studentAccumulator) {
+        this.studentAccumulator = studentAccumulator;
+    }
+
+    public StudentSet getStudentAccumulator() {
+        return studentAccumulator;
+    }
 }

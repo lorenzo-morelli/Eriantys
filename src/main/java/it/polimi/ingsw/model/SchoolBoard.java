@@ -16,6 +16,30 @@ public class SchoolBoard {
         this.towerQuantity = 0;
     }
 
+    public StudentSet getEntranceSpace() {
+        return entranceSpace;
+    }
+
+    public void setEntranceSpace(StudentSet entranceSpace) {
+        this.entranceSpace = entranceSpace;
+    }
+
+    public StudentSet getDinnerTable() {
+        return dinnerTable;
+    }
+
+    public void setDinnerTable(StudentSet dinnerTable) {
+        this.dinnerTable = dinnerTable;
+    }
+
+    public ProfessorBoard getProfessorSpace() {
+        return professorSpace;
+    }
+
+    public void setProfessorSpace(ProfessorBoard professorSpace) {
+        this.professorSpace = professorSpace;
+    }
+
     public Color getTowerColor() {
         return TowerColor;
     }

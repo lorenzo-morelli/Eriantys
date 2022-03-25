@@ -4,7 +4,7 @@ public class Deck {
     private ArrayList<AssistantCard> cards;
 
     public Deck(){
-        this.cards= new ArrayList<AssistantCard>();
+        this.cards= new ArrayList<>();
         // adesso c'è da inizializzare il deck appena costruito
         cards.add(new AssistantCard(1,1));
         cards.add(new AssistantCard(2,1));
