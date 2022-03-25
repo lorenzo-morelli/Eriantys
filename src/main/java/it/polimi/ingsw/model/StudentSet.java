@@ -23,6 +23,7 @@ public class StudentSet {
         this.greenColorSet = new StudentColorSet();
         this.greenColorSet.setColorName(Color.green);
     }
+
     public static void main(String[] args){
         StudentSet myStudentSet = new StudentSet();
         myStudentSet.redColorSet.setCardinality(7);
