@@ -5,7 +5,7 @@ public class SchoolBoard {
     private StudentSet dinnerTable;
     private ProfessorBoard professorSpace;
     private Color towerColor;
-    int towerQuantity;
+    private int towerQuantity;
 
     public SchoolBoard(){
         this.entranceSpace = new StudentSet();
