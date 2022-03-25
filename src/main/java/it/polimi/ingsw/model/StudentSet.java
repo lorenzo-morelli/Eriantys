@@ -65,11 +65,7 @@ public class StudentSet {
 
     public static void main(String[] args){
         StudentSet myStudentSet = new StudentSet();
-        myStudentSet.redColorSet.setCardinality(7);
-        System.out.println("Il colore è " + myStudentSet.redColorSet.getColorName().toString());
-        System.out.println("Il numero di studenti di questo colore è " + myStudentSet.redColorSet.getCardinality());
-        // incremento cardinalità degli studenti rossi
-        myStudentSet.redColorSet.setCardinality(myStudentSet.redColorSet.getCardinality() + 1);
-        System.out.println("Il numero di studenti di questo colore è " + myStudentSet.redColorSet.getCardinality());
+        myStudentSet.setCardinality(1,Color.red);
+        System.out.println("Il numero di studenti rossi è " + myStudentSet.getCardinality(Color.red));
     }
 }

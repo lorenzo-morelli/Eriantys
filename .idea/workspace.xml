@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a35c32f2-e540-4fb9-8dff-d946518e7a1f" name="Changes" comment="Getter and setter fixes, part two">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/SchoolBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/SchoolBoard.java" afterDir="false" />
+    <list default="true" id="a35c32f2-e540-4fb9-8dff-d946518e7a1f" name="Changes" comment="Getter and setter fixes, part three">
       <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/StudentSet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/StudentSet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/it/polimi/ingsw/model/StudentSet.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/it/polimi/ingsw/model/StudentSet.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,7 +119,7 @@
       <workItem from="1647793791111" duration="288000" />
       <workItem from="1647954715145" duration="1527000" />
       <workItem from="1648069823763" duration="1844000" />
-      <workItem from="1648071692463" duration="21571000" />
+      <workItem from="1648071692463" duration="21958000" />
     </task>
     <task id="LOCAL-00001" summary="Creation of new branch">
       <created>1647954910751</created>
@@ -208,7 +205,14 @@
       <option name="project" value="LOCAL" />
       <updated>1648215369776</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Getter and setter fixes, part three">
+      <created>1648216872316</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1648216872316</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -244,7 +248,8 @@
     <MESSAGE value="Add Deck and AssistantCard" />
     <MESSAGE value="Getter and setter fixes" />
     <MESSAGE value="Getter and setter fixes, part two" />
-    <option name="LAST_COMMIT_MESSAGE" value="Getter and setter fixes, part two" />
+    <MESSAGE value="Getter and setter fixes, part three" />
+    <option name="LAST_COMMIT_MESSAGE" value="Getter and setter fixes, part three" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Eriantys$FerTest.ic" NAME="FerTest Coverage Results" MODIFIED="1648072489073" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
