@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a35c32f2-e540-4fb9-8dff-d946518e7a1f" name="Changes" comment="bugfix">
+    <list default="true" id="a35c32f2-e540-4fb9-8dff-d946518e7a1f" name="Changes" comment="Cloud fix">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/Cloud.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/Cloud.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/Island.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/Island.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -120,7 +121,7 @@
       <workItem from="1647793791111" duration="288000" />
       <workItem from="1647954715145" duration="1527000" />
       <workItem from="1648069823763" duration="1844000" />
-      <workItem from="1648071692463" duration="24660000" />
+      <workItem from="1648071692463" duration="24886000" />
     </task>
     <task id="LOCAL-00001" summary="Creation of new branch">
       <created>1647954910751</created>
@@ -234,7 +235,14 @@
       <option name="project" value="LOCAL" />
       <updated>1648219182351</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Cloud fix">
+      <created>1648219847922</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1648219847922</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -273,7 +281,8 @@
     <MESSAGE value="Getter and setter fixes, part three" />
     <MESSAGE value="Main method inside StudentSet class for testing purpose" />
     <MESSAGE value="bugfix" />
-    <option name="LAST_COMMIT_MESSAGE" value="bugfix" />
+    <MESSAGE value="Cloud fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cloud fix" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Eriantys$FerTest.ic" NAME="FerTest Coverage Results" MODIFIED="1648072489073" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />

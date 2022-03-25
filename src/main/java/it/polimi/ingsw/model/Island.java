@@ -1,13 +1,13 @@
 package it.polimi.ingsw.model;
 
 public class Island {
-    int serialNumber;  // può andare da 0 ad 11 (aritmentica modulare modulo 12)
-    boolean linkedWithPrev;
-    boolean linkedWithNext;
-    boolean hasMotherNature;
-    StudentSet inhabitants;
-    Color towerColor;   // se towerColor = Color.NULLCOLOR allora non ci sono torri su quell'isola
-                        // di default un'isola appena costruita non può avere torri né avere madre natura
+    private int serialNumber;  // può andare da 0 ad 11 (aritmentica modulare modulo 12)
+    private boolean linkedWithPrev;
+    private boolean linkedWithNext;
+    private boolean hasMotherNature;
+    private StudentSet inhabitants;
+    private Color towerColor;   // se towerColor = Color.NULLCOLOR allora non ci sono torri su quell'isola
+                                // di default un'isola appena costruita non può avere torri né avere madre natura
 
     public Island(){
         this.inhabitants = new StudentSet();

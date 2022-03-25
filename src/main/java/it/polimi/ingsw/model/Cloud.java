@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model;
 
 public class Cloud {
-    StudentSet studentsAccumulator;  // accumulatore per la carica e scarica di studenti
+    private StudentSet studentsAccumulator;  // accumulatore per la carica e scarica di studenti
 
     public Cloud(){
         this.studentsAccumulator = new StudentSet();
