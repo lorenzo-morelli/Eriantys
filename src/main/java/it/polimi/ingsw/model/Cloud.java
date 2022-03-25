@@ -1,19 +1,19 @@
 package it.polimi.ingsw.model;
 
 public class Cloud {
-    StudentSet studentAccumulator;  // accumulatore per la carica e scarica di studenti
+    StudentSet studentsAccumulator;  // accumulatore per la carica e scarica di studenti
 
     public Cloud(){
-        this.studentAccumulator = new StudentSet();
-        //inizializzo a 0 la popolazione (rado al suolo gli abitanti)
-        this.studentAccumulator.setAllPopulationToZero();
+        this.studentsAccumulator = new StudentSet();
+        //inizializzo a 0 la popolazione (uccido tutti gli abitanti)
+        this.studentsAccumulator.setAllPopulationToZero();
     }
 
-    public void setStudentAccumulator(StudentSet studentAccumulator) {
-        this.studentAccumulator = studentAccumulator;
+    public int get(Color color){
+        return this.studentsAccumulator.getCardinality(color);
     }
 
-    public StudentSet getStudentAccumulator() {
-        return studentAccumulator;
+    public void set(int n, Color color){
+        this.studentsAccumulator.setCardinality(n,color);
     }
 }
