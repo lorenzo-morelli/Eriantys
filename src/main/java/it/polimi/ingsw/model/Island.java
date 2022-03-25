@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model;
 
 public class Island {
-    private int serialNumber;  // può andare da 0 ad 11 (aritmentica modulare modulo 12)
+    //private int serialNumber;  // può andare da 0 ad 11 (aritmentica modulare modulo 12)
     private boolean linkedWithPrev;
     private boolean linkedWithNext;
     private boolean hasMotherNature;
@@ -15,6 +15,8 @@ public class Island {
         this.hasMotherNature = false;
         this.towerColor=Color.nullcolor;
         this.inhabitants.setAllPopulationToZero();
+        this.linkedWithPrev = false;
+        this.linkedWithNext = false;
     }
 
     public int getInhabitants(Color color){
@@ -32,14 +34,14 @@ public class Island {
     public void setTowerColor(Color towerColor) {
         this.towerColor = towerColor;
     }
-
+/*
     public int getSerialNumber() {
         return serialNumber;
     }
 
     public void setSerialNumber(int serialNumber) {
         this.serialNumber = serialNumber;
-    }
+    }*/
 
     public boolean isLinkedWithNext() {
         return linkedWithNext;
