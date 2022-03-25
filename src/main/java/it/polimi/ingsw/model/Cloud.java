@@ -5,6 +5,8 @@ public class Cloud {
 
     public Cloud(){
         this.studentAccumulator = new StudentSet();
+        //inizializzo a 0 la popolazione (rado al suolo gli abitanti)
+        this.studentAccumulator.setAllPopulationToZero();
     }
 
     public void setStudentAccumulator(StudentSet studentAccumulator) {

@@ -9,19 +9,10 @@ public class StudentSet {
 
     public StudentSet(){
         this.redColorSet = new StudentColorSet();
-        this.redColorSet.setColorName(Color.red);
-
         this.yellowColorSet = new StudentColorSet();
-        this.yellowColorSet.setColorName(Color.yellow);
-
         this.blueColorSet = new StudentColorSet();
-        this.blueColorSet.setColorName(Color.blue);
-
         this.pinkColorSet = new StudentColorSet();
-        this.pinkColorSet.setColorName(Color.pink);
-
         this.greenColorSet = new StudentColorSet();
-        this.greenColorSet.setColorName(Color.green);
     }
 
     public int getCardinality(Color color){
@@ -62,10 +53,19 @@ public class StudentSet {
         }
     }
 
-
+    public void setAllPopulationToZero(){
+        this.redColorSet.setCardinality(0);
+        this.greenColorSet.setCardinality(0);
+        this.pinkColorSet.setCardinality(0);
+        this.blueColorSet.setCardinality(0);
+        this.yellowColorSet.setCardinality(0);
+    }
+    // for testing purpose only
     public static void main(String[] args){
         StudentSet myStudentSet = new StudentSet();
         myStudentSet.setCardinality(1,Color.red);
+        System.out.println("Il numero di studenti rossi è " + myStudentSet.getCardinality(Color.red));
+        myStudentSet.setAllPopulationToZero();
         System.out.println("Il numero di studenti rossi è " + myStudentSet.getCardinality(Color.red));
     }
 }

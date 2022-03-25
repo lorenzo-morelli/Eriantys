@@ -13,14 +13,15 @@ public class Island {
         this.inhabitants = new StudentSet();
         this.hasMotherNature = false;
         this.towerColor=Color.nullcolor;
+        this.inhabitants.setAllPopulationToZero();
     }
 
-    public StudentSet getInhabitants() {
-        return inhabitants;
+    public int getInhabitants(Color color){
+        return this.inhabitants.getCardinality(color);
     }
 
-    public void setInhabitants(StudentSet inhabitants) {
-        this.inhabitants = inhabitants;
+    public void setInhabitants(int n, Color color){
+        this.inhabitants.setCardinality(n,color);
     }
 
     public Color getTowerColor() {

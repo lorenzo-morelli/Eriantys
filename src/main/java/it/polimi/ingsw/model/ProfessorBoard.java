@@ -11,23 +11,23 @@ public class ProfessorBoard {
     public ProfessorBoard(){}
 
     public boolean HasBlueProfessor() {
-        return hasBlueProfessor;
+        return this.hasBlueProfessor;
     }
 
     public boolean HasGreenProfessor() {
-        return hasGreenProfessor;
+        return this.hasGreenProfessor;
     }
 
     public boolean HasPinkProfessor() {
-        return hasPinkProfessor;
+        return this.hasPinkProfessor;
     }
 
     public boolean HasRedProfessor() {
-        return hasRedProfessor;
+        return this.hasRedProfessor;
     }
 
     public boolean HasYellowProfessor() {
-        return hasYellowProfessor;
+        return this.hasYellowProfessor;
     }
 
     public void setHasBlueProfessor(boolean hasBlueProfessor) {
