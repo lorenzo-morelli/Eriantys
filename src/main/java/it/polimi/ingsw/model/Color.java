@@ -1,9 +1,13 @@
 package it.polimi.ingsw.model;
 
 public enum Color {
-    Red,
-    Green,
-    Yellow,
-    Blue,
-    Pink
+    red,
+    green,
+    yellow,
+    blue,
+    pink,
+    black,
+    grey,
+    white,
+    nullcolor
 }
