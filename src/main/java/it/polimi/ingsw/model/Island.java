@@ -11,6 +11,7 @@ public class Island {
 
     public Island(){
         this.inhabitants = new StudentSet();
+        // inizializzazione
         this.hasMotherNature = false;
         this.towerColor=Color.nullcolor;
         this.inhabitants.setAllPopulationToZero();

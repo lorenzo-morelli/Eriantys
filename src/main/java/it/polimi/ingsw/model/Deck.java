@@ -25,4 +25,6 @@ public class Deck {
     public void setCards(ArrayList<AssistantCard> cards) {
         this.cards = cards;
     }
+
+    //todo: funzioni di utilità: rimozione e ricerca di una carta dal deck
 }
