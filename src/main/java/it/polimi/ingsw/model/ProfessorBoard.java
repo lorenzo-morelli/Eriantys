@@ -1,11 +1,11 @@
 package it.polimi.ingsw.model;
 
 public class ProfessorBoard {
-    boolean hasRedProfessor;
-    boolean hasYellowProfessor;
-    boolean hasBlueProfessor;
-    boolean hasPinkProfessor;
-    boolean hasGreenProfessor;
+    private boolean hasRedProfessor;
+    private boolean hasYellowProfessor;
+    private boolean hasBlueProfessor;
+    private boolean hasPinkProfessor;
+    private boolean hasGreenProfessor;
 
     // A java bean has an empty constructor
     public ProfessorBoard(){}

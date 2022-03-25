@@ -1,10 +1,10 @@
 package it.polimi.ingsw.model;
 
 public class SchoolBoard {
-    StudentSet entranceSpace;
-    StudentSet dinnerTable;
-    ProfessorBoard professorSpace;
-    Color TowerColor;
+    private StudentSet entranceSpace;
+    private StudentSet dinnerTable;
+    private ProfessorBoard professorSpace;
+    private Color TowerColor;
     int towerQuantity;
 
     public SchoolBoard(){
