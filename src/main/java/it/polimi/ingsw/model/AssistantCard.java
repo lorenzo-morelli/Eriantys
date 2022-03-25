@@ -4,8 +4,11 @@ public class AssistantCard {
     private int values;
     private int moves;
 
-    //A java bean has empty constructor
-    public AssistantCard(){};
+
+    public AssistantCard(int values,int moves){
+        this.values = values;
+        this.moves = moves;
+    }
 
     public int getMoves() {
         return moves;
