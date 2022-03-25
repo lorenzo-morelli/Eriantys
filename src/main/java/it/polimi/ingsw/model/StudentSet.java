@@ -24,45 +24,44 @@ public class StudentSet {
         this.greenColorSet.setColorName(Color.green);
     }
 
-    public StudentColorSet getBlueColorSet() {
-        return blueColorSet;
+    public int getCardinality(Color color){
+        if (color == Color.red){
+            return this.redColorSet.getCardinality();
+        }
+        if (color == Color.yellow){
+            return this.yellowColorSet.getCardinality();
+        }
+        if (color == Color.blue){
+            return this.blueColorSet.getCardinality();
+        }
+        if (color == Color.pink){
+            return this.pinkColorSet.getCardinality();
+        }
+        if (color == Color.green){
+            return this.greenColorSet.getCardinality();
+        }
+        //ToDo implementare come una eccezione
+        return -1;
     }
 
-    public void setBlueColorSet(StudentColorSet blueColorSet) {
-        this.blueColorSet = blueColorSet;
+    public void setCardinality(int n,Color color){
+        if (color == Color.red){
+            this.redColorSet.setCardinality(n);
+        }
+        if (color == Color.yellow){
+            this.yellowColorSet.setCardinality(n);
+        }
+        if (color == Color.blue){
+            this.blueColorSet.setCardinality(n);
+        }
+        if (color == Color.pink){
+            this.pinkColorSet.setCardinality(n);
+        }
+        if (color == Color.green){
+            this.greenColorSet.setCardinality(n);
+        }
     }
 
-    public StudentColorSet getGreenColorSet() {
-        return greenColorSet;
-    }
-
-    public void setGreenColorSet(StudentColorSet greenColorSet) {
-        this.greenColorSet = greenColorSet;
-    }
-
-    public StudentColorSet getPinkColorSet() {
-        return pinkColorSet;
-    }
-
-    public void setPinkColorSet(StudentColorSet pinkColorSet) {
-        this.pinkColorSet = pinkColorSet;
-    }
-
-    public StudentColorSet getRedColorSet() {
-        return redColorSet;
-    }
-
-    public void setRedColorSet(StudentColorSet redColorSet) {
-        this.redColorSet = redColorSet;
-    }
-
-    public StudentColorSet getYellowColorSet() {
-        return yellowColorSet;
-    }
-
-    public void setYellowColorSet(StudentColorSet yellowColorSet) {
-        this.yellowColorSet = yellowColorSet;
-    }
 
     public static void main(String[] args){
         StudentSet myStudentSet = new StudentSet();
