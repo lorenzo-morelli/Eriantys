@@ -24,7 +24,7 @@ public class Player {
 
     // Attenzione: non è possibile e non ha senso voler spostare una torre su un isola:
     // la classe player non è il giocatore, è solo una struttura dati !
-    // è il modello che saprà quanti giocatori ci sono, ed avrà istanziate tutte le strutture dati
+    // è il modello che saprà quanti giocatori ci sono, e avrà istanziate tutte le strutture dati
     // per farsi aggiornare dal controllore !
 
     public Color getTowerColor(){
