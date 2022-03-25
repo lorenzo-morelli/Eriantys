@@ -20,16 +20,16 @@ public class SchoolBoard {
         return this.towerColor;
     }
 
-    public void setTowerColor(Color towerColor) {
-        this.towerColor = towerColor;
+    public void setTowerColor(Color color) {
+        this.towerColor = color;
     }
 
     public int getTowerQuantity() {
-        return towerQuantity;
+        return this.towerQuantity;
     }
 
-    public void setTowerQuantity(int towerQuantity) {
-        this.towerQuantity = towerQuantity;
+    public void setTowerQuantity(int n) {
+        this.towerQuantity = n;
     }
 
 

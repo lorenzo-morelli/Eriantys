@@ -61,11 +61,12 @@ public class StudentSet {
         this.yellowColorSet.setCardinality(0);
     }
     // for testing purpose only
+    /*
     public static void main(String[] args){
         StudentSet myStudentSet = new StudentSet();
         myStudentSet.setCardinality(1,Color.red);
         System.out.println("Il numero di studenti rossi è " + myStudentSet.getCardinality(Color.red));
         myStudentSet.setAllPopulationToZero();
         System.out.println("Il numero di studenti rossi è " + myStudentSet.getCardinality(Color.red));
-    }
+    }*/
 }
