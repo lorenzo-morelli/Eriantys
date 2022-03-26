@@ -14,6 +14,12 @@ public class Player {
         this.choosenCard = 0;
     }
 
+    //funzione di debug
+    public void listCards(){
+        for(int i=0; i< this.cards.getCardsList().size(); i++){
+            System.out.println("indice: "+i+ " valore: " + this.cards.getCardsList().get(i).getValues()+" mosse: "+this.cards.getCardsList().get(i).getMoves());
+        }
+    }
     public void setTowerColor(Color color){
         this.mySchoolBoard.setTowerColor(color);
     }
@@ -47,7 +53,11 @@ public class Player {
         return this.userId;
     }
 
-    //todo: selezione e rimozione carte
-
-
+    public static void main(String[] args){
+        Player giovanni = new Player();
+        giovanni.listCards();
+        giovanni.cards.remove(2);
+        System.out.println("");
+        giovanni.listCards();
+    }
 }

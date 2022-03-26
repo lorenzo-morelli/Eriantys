@@ -1,7 +1,10 @@
 package it.polimi.ingsw.model;
+import java.util.List;
 import java.util.ArrayList;
+import java.util.Collections;
+
 public class Deck {
-    private ArrayList<AssistantCard> cards;
+    private List<AssistantCard> cards;
 
     public Deck(){
         this.cards= new ArrayList<>();
@@ -18,30 +21,21 @@ public class Deck {
         this.cards.add(new AssistantCard(10,5));
     }
 
-    // Serve qualche metodo per elencare all'utente le carte disponibili
-    // senza passargli direttamente una reference alla lista
-    // sicuramente questo metodo non soddisfa quanto richiesto, ma per il momento può
-    // andar bene
-    public void listCards(){
-        for(int i=0; i<this.cards.size();i++){
-            System.out.println( "("+ i + ") " + "["+ this.cards.get(i).getValues() + ","+this.cards.get(i).getMoves() +"]");
-        }
+    // Da un lato vogliamo avere completo accesso all'intera lista di carte affinché
+    // l'utente possa sceglierne una e selezionarla
+    // dall'altro non vogliamo un getter con cui poi si possa modificare per riferimento
+    // l'arraylist (si romperebbe l'incapsulazione dei dati)
+
+    public List<AssistantCard> getCardsList() {
+        return Collections.unmodifiableList(this.cards);
     }
 
-    //Una volta scelta, la carta deve poter essere rimossa
-    public void remove(int index){
+    public void remove(int index) {
         this.cards.remove(index);
     }
 
-
-
-    public static void main(String args[]){
-        Deck mioDeck = new Deck();
-        mioDeck.listCards();
-        //putacaso l'utente scegliesse la carta 2
-        mioDeck.remove(2);
-        mioDeck.listCards();
-    }
-
-
 }
+
+
+
+
