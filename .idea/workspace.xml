@@ -55,7 +55,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="c193818a-1e92-4991-9439-cb3e4c836bfd" name="Changes" comment="" />
+      <changelist id="05a87c52-703a-4eb1-b3e3-bce251cf042a" name="Changes" comment="First Commit to Main repo:&#10;still missing: Team, GameState, CenterTable" />
       <created>1647955299176</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -64,6 +64,7 @@
       <workItem from="1648133573641" duration="31000" />
       <workItem from="1648558328466" duration="28000" />
       <workItem from="1648564317550" duration="41000" />
+      <workItem from="1648646390818" duration="201000" />
     </task>
     <task id="LOCAL-00001" summary="created resources directory">
       <created>1647955875299</created>
@@ -72,7 +73,14 @@
       <option name="project" value="LOCAL" />
       <updated>1647955875299</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="First Commit to Main repo:&#10;still missing: Team, GameState, CenterTable">
+      <created>1648646548267</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1648646548267</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -91,7 +99,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="created resources directory" />
-    <option name="LAST_COMMIT_MESSAGE" value="created resources directory" />
+    <MESSAGE value="First Commit to Main repo:&#10;still missing: Team, GameState, CenterTable" />
+    <option name="LAST_COMMIT_MESSAGE" value="First Commit to Main repo:&#10;still missing: Team, GameState, CenterTable" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Eriantys$FerTest.ic" NAME="FerTest Coverage Results" MODIFIED="1648072489073" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
