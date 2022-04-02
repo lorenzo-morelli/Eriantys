@@ -4,7 +4,33 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c193818a-1e92-4991-9439-cb3e4c836bfd" name="Changes" comment="" />
+    <list default="true" id="c193818a-1e92-4991-9439-cb3e4c836bfd" name="Changes" comment="revert">
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/unnamed.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_02_04_2022_15_43_[Changes]/shelved.patch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_02_04_2022_15_43__Changes_.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_30_03_2022_15_15_[Changes]/shelved.patch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_30_03_2022_15_15__Changes_.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase_[Changes]/shelved.patch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase__Changes_.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/META-INF/MANIFEST.MF" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/it/polimi/ingsw/dataobjects/AssistantCard.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/it/polimi/ingsw/dataobjects/Character.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/it/polimi/ingsw/dataobjects/Cloud.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/it/polimi/ingsw/dataobjects/Deck.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/it/polimi/ingsw/dataobjects/GameMode.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/it/polimi/ingsw/dataobjects/Island.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/it/polimi/ingsw/dataobjects/Player.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/it/polimi/ingsw/dataobjects/SchoolBoard.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/it/polimi/ingsw/dataobjects/StudentColor.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/it/polimi/ingsw/dataobjects/StudentSet.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/it/polimi/ingsw/dataobjects/TowerColor.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/it/polimi/ingsw/dataobjects/Wizard.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/it/polimi/ingsw/model/Color.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/it/polimi/ingsw/model/StudentColorSet.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/it/polimi/ingsw/model/StudentSet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -30,6 +56,9 @@
     </option>
   </component>
   <component name="ProjectId" id="26k6aIRhdITyOpcvZP6TxXqIDNm" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -75,8 +104,23 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="4ccd3090-fed6-4061-8a05-f47f649330a3">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="created resources directory" />
-    <option name="LAST_COMMIT_MESSAGE" value="created resources directory" />
+    <MESSAGE value="revert" />
+    <option name="LAST_COMMIT_MESSAGE" value="revert" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Eriantys$FerTest.ic" NAME="FerTest Coverage Results" MODIFIED="1648072489073" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>
