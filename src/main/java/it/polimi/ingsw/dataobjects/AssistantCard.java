@@ -23,6 +23,9 @@ public class AssistantCard {
         return values;
     }
 
+    /* nessun bisogno di cambiare il contenuto delle carte
+    una volta che sono state costruite (vedere classe Deck)
+     */
     public void setMoves(int moves) {
         this.moves = moves;
     }

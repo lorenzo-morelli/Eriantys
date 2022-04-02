@@ -97,4 +97,26 @@ public class Player {
     public static void main(){
 
     }
+
+    public int getChoosenCardValues(){
+        return choosenCard.getValues();
+    }
+    public int getChoosenCardMoves(){
+        return choosenCard.getMoves();
+    }
+
+    //debug only function
+    public void printList(){
+        for(int i=0; i< this.availableCards.getCardsList().size(); i++){
+            System.out.println("Indice: " + i+ " Valore: " +  this.availableCards.getCardsList().get(i).getValues() + " Mosse: "+ this.availableCards.getCardsList().get(i).getMoves());
+        }
+    }
+
+    public static void main(String[] args){
+        Player Giovanni = new Player();
+        Giovanni.setNickname("Giovanni");
+        System.out.println(Giovanni.getNickname());
+        Giovanni.printList();
+
+    }
 }
