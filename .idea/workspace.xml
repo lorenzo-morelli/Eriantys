@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a35c32f2-e540-4fb9-8dff-d946518e7a1f" name="Changes" comment="Deck improvements">
+    <list default="true" id="a35c32f2-e540-4fb9-8dff-d946518e7a1f" name="Changes" comment="Add Player class">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/Deck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/Deck.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/it/polimi/ingsw/model/StudentSet.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/it/polimi/ingsw/model/StudentSet.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,11 +70,11 @@
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.editor" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RunManager" selected="Application.Debug">
     <configuration name="Debug" type="Application" factoryName="Application" temporary="true">
-      <option name="MAIN_CLASS_NAME" value="it.polimi.ingsw.model.Player" />
+      <option name="MAIN_CLASS_NAME" value="it.polimi.ingsw.model.Deck" />
       <module name="PSP28" />
       <extension name="coverage">
         <pattern>
@@ -121,7 +122,7 @@
       <workItem from="1647793791111" duration="288000" />
       <workItem from="1647954715145" duration="1527000" />
       <workItem from="1648069823763" duration="1844000" />
-      <workItem from="1648071692463" duration="39152000" />
+      <workItem from="1648071692463" duration="35573000" />
     </task>
     <task id="LOCAL-00001" summary="Creation of new branch">
       <created>1647954910751</created>
@@ -277,14 +278,7 @@
       <option name="project" value="LOCAL" />
       <updated>1648226990046</updated>
     </task>
-    <task id="LOCAL-00023" summary="Deck improvements">
-      <created>1648238895753</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1648238895753</updated>
-    </task>
-    <option name="localTasksCounter" value="24" />
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -326,8 +320,7 @@
     <MESSAGE value="bugfix" />
     <MESSAGE value="CenterTable" />
     <MESSAGE value="Add Player class" />
-    <MESSAGE value="Deck improvements" />
-    <option name="LAST_COMMIT_MESSAGE" value="Deck improvements" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add Player class" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Eriantys$FerTest.ic" NAME="FerTest Coverage Results" MODIFIED="1648072489073" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
