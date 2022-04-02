@@ -1,4 +1,6 @@
-package it.polimi.ingsw.dataobjects;
+package it.polimi.ingsw.model;
+
+import it.polimi.ingsw.model.enums.PeopleColor;
 
 public class StudentSet {
     private int numOfRedStudents;
@@ -7,39 +9,39 @@ public class StudentSet {
     private int numOfPinkStudents;
     private int numOfGreenStudents;
 
-    public StudentSet(){
+    public StudentSet() {
         // sono interi, non c'è bisogno di costruirli
     }
 
-    public void setStudents(int n,StudentColor color){
-        if(color == StudentColor.blue){
+    public void setStudents(int n, PeopleColor color) {
+        if (color == PeopleColor.BLUE) {
             setNumOfBlueStudents(n);
         }
-        if(color == StudentColor.yellow){
+        if (color == PeopleColor.YELLOW) {
             setNumOfYellowStudents(n);
         }
-        if(color == StudentColor.green){
+        if (color == PeopleColor.GREEN) {
             setNumOfGreenStudents(n);
         }
-        if(color == StudentColor.red){
+        if (color == PeopleColor.RED) {
             setNumOfRedStudents(n);
         }
-        if(color == StudentColor.pink){
+        if (color == PeopleColor.PINK) {
             setNumOfPinkStudents(n);
         }
     }
 
-    public int getStudents(StudentColor color) {
-        if(color == StudentColor.blue){
+    public int getStudents(PeopleColor color) {
+        if (color == PeopleColor.BLUE) {
             return this.getNumOfBlueStudents();
         }
-        if(color == StudentColor.yellow){
+        if (color == PeopleColor.YELLOW) {
             return this.getNumOfYellowStudents();
         }
-        if(color == StudentColor.green){
+        if (color == PeopleColor.GREEN) {
             return this.getNumOfGreenStudents();
         }
-        if(color == StudentColor.red){
+        if (color == PeopleColor.RED) {
             return this.getNumOfRedStudents();
         }
 
@@ -47,7 +49,7 @@ public class StudentSet {
 
     }
 
-    public void setAllStudentsToZero(){
+    public void setAllStudentsToZero() {
         setNumOfBlueStudents(0);
         setNumOfGreenStudents(0);
         setNumOfPinkStudents(0);

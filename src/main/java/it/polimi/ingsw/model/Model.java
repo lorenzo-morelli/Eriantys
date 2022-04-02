@@ -1,15 +1,15 @@
 package it.polimi.ingsw.model;
-import it.polimi.ingsw.dataobjects.*;
 
 abstract class Model {
     private Player player0;
     private Player player1;
-    private table CenterTable;
+    private CenterTable table;
     private GameState gameState;
-    public Model(){
+
+    public Model() {
         player0 = new Player();
         player1 = new Player();
-        table = new CenterTable;
+        table = new CenterTable();
         gameState = new GameState();
 
     }
@@ -26,8 +26,8 @@ abstract class Model {
         return gameState;
     }
 
-    public table getCenterTable() {
-        return CenterTable;
+    public CenterTable getCenterTable() {
+        return table;
     }
 
     public void setPlayer0(Player player0) {
@@ -42,7 +42,7 @@ abstract class Model {
         this.gameState = gameState;
     }
 
-    public void setCenterTable(table centerTable) {
-        CenterTable = centerTable;
+    public void setCenterTable(CenterTable centerTable) {
+        table = centerTable;
     }
 }

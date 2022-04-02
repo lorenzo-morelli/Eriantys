@@ -1,19 +1,21 @@
-package it.polimi.ingsw.dataobjects;
+package it.polimi.ingsw.model;
+
+import it.polimi.ingsw.model.enums.PeopleColor;
+import it.polimi.ingsw.model.enums.TowerColor;
 
 public class SchoolBoard {
     private StudentSet entranceSpace;
     private StudentSet dinnerTable;
-
     private TowerColor towerColor;
     private int numOfTowers;
 
-    public SchoolBoard(){
+    public SchoolBoard() {
         this.entranceSpace = new StudentSet();
         this.dinnerTable = new StudentSet();
         // inizializzazione vuota della school board
         this.entranceSpace.setAllStudentsToZero();
         this.dinnerTable.setAllStudentsToZero();
-        this.towerColor = TowerColor.unknown;
+        this.towerColor = TowerColor.UNKNOWN;
         this.numOfTowers = 0;
     }
 
@@ -21,23 +23,23 @@ public class SchoolBoard {
         this.dinnerTable = dinnerTable;
     }
 
-    public void setDinnerTable(int n, StudentColor color) {
-        this.dinnerTable.setStudents(n,color);
+    public void setDinnerTable(int n, PeopleColor color) {
+        this.dinnerTable.setStudents(n, color);
     }
 
     public void setEntranceSpace(StudentSet entranceSpace) {
         this.entranceSpace = entranceSpace;
     }
 
-    public void setEntranceSpace(int n, StudentColor color) {
-        this.entranceSpace.setStudents(n,color);
+    public void setEntranceSpace(int n, PeopleColor color) {
+        this.entranceSpace.setStudents(n, color);
     }
 
     public StudentSet getEntranceSpace() {
         return entranceSpace;
     }
 
-    public int getEntranceSpace(StudentColor color) {
+    public int getEntranceSpace(PeopleColor color) {
         return this.entranceSpace.getStudents(color);
     }
 
@@ -45,7 +47,7 @@ public class SchoolBoard {
         return dinnerTable;
     }
 
-    public int getDinnerTable(StudentColor color) {
+    public int getDinnerTable(PeopleColor color) {
         return this.dinnerTable.getStudents(color);
     }
 

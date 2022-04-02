@@ -1,4 +1,4 @@
-package it.polimi.ingsw.dataobjects;
+package it.polimi.ingsw.model;
 
 public class AssistantCard {
     private int values;

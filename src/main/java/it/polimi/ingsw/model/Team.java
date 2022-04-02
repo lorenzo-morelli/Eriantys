@@ -1,4 +1,6 @@
-package it.polimi.ingsw.dataobjects;
+package it.polimi.ingsw.model;
+
+import it.polimi.ingsw.model.enums.TowerColor;
 
 public class Team {
     private int player1;

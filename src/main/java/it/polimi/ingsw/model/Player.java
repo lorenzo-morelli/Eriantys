@@ -1,4 +1,7 @@
-package it.polimi.ingsw.dataobjects;
+package it.polimi.ingsw.model;
+import it.polimi.ingsw.model.enums.PeopleColor;
+import it.polimi.ingsw.model.enums.TowerColor;
+
 import java.util.*;
 
 public class Player {
@@ -44,7 +47,7 @@ public class Player {
     public void setDinnerTable(StudentSet students){
         this.schoolBoard.setDinnerTable(students);
     }
-    public void setDinnerTable(int n, StudentColor color) {
+    public void setDinnerTable(int n, PeopleColor color) {
         this.schoolBoard.setDinnerTable(n,color);
     }
 
@@ -52,14 +55,14 @@ public class Player {
         this.schoolBoard.setEntranceSpace(students);
     }
 
-    public void setEntranceSpace(int n, StudentColor color) {
+    public void setEntranceSpace(int n, PeopleColor color) {
         this.schoolBoard.setEntranceSpace(n,color);
     }
 
     public StudentSet getEntranceSpace(){
         return this.schoolBoard.getEntranceSpace();
     }
-    public int getEntranceSpace(StudentColor color) {
+    public int getEntranceSpace(PeopleColor color) {
         return this.schoolBoard.getEntranceSpace(color);
     }
 
@@ -67,7 +70,7 @@ public class Player {
         return this.schoolBoard.getDinnerTable();
     }
 
-    public int getDinnerTable(StudentColor color) {
+    public int getDinnerTable(PeopleColor color) {
         return this.schoolBoard.getDinnerTable(color);
     }
     public TowerColor getTowerColor() {

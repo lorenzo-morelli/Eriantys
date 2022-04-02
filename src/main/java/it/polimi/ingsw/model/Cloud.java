@@ -1,4 +1,4 @@
-package it.polimi.ingsw.dataobjects;
+package it.polimi.ingsw.model;
 
 public class Cloud {
     private StudentSet studentsAccumulator;  // accumulatore per la carica e scarica di studenti

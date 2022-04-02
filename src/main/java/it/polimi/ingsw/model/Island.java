@@ -1,16 +1,18 @@
-package it.polimi.ingsw.dataobjects;
+package it.polimi.ingsw.model;
+
+import it.polimi.ingsw.model.enums.TowerColor;
 
 public class Island {
     private StudentSet inhabitants;
     private int numberOfTowers;
     private TowerColor towerColor;
     private boolean isBlocked;
-    public Island(){
-        //inizializzazione
-        this.inhabitants=new StudentSet();
+
+    public Island() {
+        this.inhabitants = new StudentSet();
         this.inhabitants.setAllStudentsToZero();
         this.numberOfTowers = 0;
-        this.towerColor = TowerColor.unknown;
+        this.towerColor = TowerColor.UNKNOWN;
         this.isBlocked = false;
     }
 
