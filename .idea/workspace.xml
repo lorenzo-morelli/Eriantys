@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a35c32f2-e540-4fb9-8dff-d946518e7a1f" name="Changes" comment="Fixed encapsulation of the Deck, that before was passing a direct reference to the ArrayList, now is returning an immutable collection">
+    <list default="true" id="a35c32f2-e540-4fb9-8dff-d946518e7a1f" name="Changes" comment="Deck improvements">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/Deck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/Deck.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/SchoolBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/SchoolBoard.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -121,7 +121,7 @@
       <workItem from="1647793791111" duration="288000" />
       <workItem from="1647954715145" duration="1527000" />
       <workItem from="1648069823763" duration="1844000" />
-      <workItem from="1648071692463" duration="40190000" />
+      <workItem from="1648071692463" duration="39152000" />
     </task>
     <task id="LOCAL-00001" summary="Creation of new branch">
       <created>1647954910751</created>
@@ -284,14 +284,7 @@
       <option name="project" value="LOCAL" />
       <updated>1648238895753</updated>
     </task>
-    <task id="LOCAL-00024" summary="Fixed encapsulation of the Deck, that before was passing a direct reference to the ArrayList, now is returning an immutable collection">
-      <created>1648282950328</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1648282950328</updated>
-    </task>
-    <option name="localTasksCounter" value="25" />
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -334,8 +327,7 @@
     <MESSAGE value="CenterTable" />
     <MESSAGE value="Add Player class" />
     <MESSAGE value="Deck improvements" />
-    <MESSAGE value="Fixed encapsulation of the Deck, that before was passing a direct reference to the ArrayList, now is returning an immutable collection" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed encapsulation of the Deck, that before was passing a direct reference to the ArrayList, now is returning an immutable collection" />
+    <option name="LAST_COMMIT_MESSAGE" value="Deck improvements" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Eriantys$FerTest.ic" NAME="FerTest Coverage Results" MODIFIED="1648072489073" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />

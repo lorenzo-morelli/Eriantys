@@ -20,31 +20,6 @@ public class Player {
             System.out.println("indice: "+i+ " valore: " + this.cards.getCardsList().get(i).getValues()+" mosse: "+this.cards.getCardsList().get(i).getMoves());
         }
     }
-
-    public void setProfessor(boolean bool, Color color){
-        this.mySchoolBoard.setProfessor(bool,color);
-    }
-    public boolean hasProfessor(Color color){
-        return this.mySchoolBoard.hasProfessor(color);
-    }
-
-    public void setEntranceSpacePopulation(int n, Color color){
-        this.mySchoolBoard.setEntranceSpacePopulation(n,color);
-    }
-    public int getDinnerTablePopulation(Color color){
-        return this.mySchoolBoard.getDinnerTablePopulation(color);
-    }
-    public void setDinnerTablePopulation(int n, Color color){
-        this.mySchoolBoard.setDinnerTablePopulation(n,color);
-    }
-    public int getEntranceSpacePopulation(Color color){
-        return this.mySchoolBoard.getEntranceSpacePopulation(color);
-    }
-    public int getTowerQuantity(){
-        return this.mySchoolBoard.getTowerQuantity();
-    }
-
-
     public void setTowerColor(Color color){
         this.mySchoolBoard.setTowerColor(color);
     }
