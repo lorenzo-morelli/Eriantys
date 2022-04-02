@@ -1,0 +1,743 @@
+Index: src/main/java/it/polimi/ingsw/dataobjects/Player.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package it.polimi.ingsw.dataobjects;\r\nimport java.util.*;\r\n\r\npublic class Player {\r\n    private String nickname;\r\n    private int userId;\r\n    private Deck availableCards;\r\n    private AssistantCard choosenCard;\r\n    private SchoolBoard schoolBoard;\r\n    private int coins;\r\n\r\n    public Player(){\r\n        // crea e assegna valori di default\r\n        this.nickname = \"Steve\";\r\n        this.userId = 0;\r\n        this.availableCards = new Deck();\r\n        this.choosenCard = new AssistantCard();\r\n        this.schoolBoard = new SchoolBoard();\r\n        this.coins = 0;\r\n    }\r\n\r\n    public void setNickname(String nickname) {\r\n        this.nickname = nickname;\r\n    }\r\n\r\n    public String getNickname() {\r\n        return nickname;\r\n    }\r\n\r\n    public void setUserId(int userId) {\r\n        this.userId = userId;\r\n    }\r\n\r\n    public int getUserId() {\r\n        return userId;\r\n    }\r\n    public List<AssistantCard> listAvailableCards(){\r\n        return this.availableCards.getCardsList();\r\n    }\r\n    public void removeCard(AssistantCard choosen){\r\n        this.availableCards.remove(choosen);\r\n    }\r\n\r\n    public void setDinnerTable(StudentSet students){\r\n        this.schoolBoard.setDinnerTable(students);\r\n    }\r\n    public void setDinnerTable(int n, StudentColor color) {\r\n        this.schoolBoard.setDinnerTable(n,color);\r\n    }\r\n\r\n    public void setEntranceSpace(StudentSet students){\r\n        this.schoolBoard.setEntranceSpace(students);\r\n    }\r\n\r\n    public void setEntranceSpace(int n, StudentColor color) {\r\n        this.schoolBoard.setEntranceSpace(n,color);\r\n    }\r\n\r\n    public StudentSet getEntranceSpace(){\r\n        return this.schoolBoard.getEntranceSpace();\r\n    }\r\n    public int getEntranceSpace(StudentColor color) {\r\n        return this.schoolBoard.getEntranceSpace(color);\r\n    }\r\n\r\n    public StudentSet getDinnerTable(){\r\n        return this.schoolBoard.getDinnerTable();\r\n    }\r\n\r\n    public int getDinnerTable(StudentColor color) {\r\n        return this.schoolBoard.getDinnerTable(color);\r\n    }\r\n    public TowerColor getTowerColor() {\r\n        return this.schoolBoard.getTowerColor();\r\n    }\r\n\r\n    public void setTowerColor(TowerColor towerColor) {\r\n        this.schoolBoard.setTowerColor(towerColor);\r\n    }\r\n\r\n    public int getNumOfTowers() {\r\n        return this.schoolBoard.getNumOfTowers();\r\n    }\r\n\r\n    public void setNumOfTowers(int numOfTowers) {\r\n        this.schoolBoard.setNumOfTowers(numOfTowers);\r\n    }\r\n\r\n    public int getCoins() {\r\n        return coins;\r\n    }\r\n\r\n    public void setCoins(int coins) {\r\n        this.coins = coins;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/it/polimi/ingsw/dataobjects/Player.java b/src/main/java/it/polimi/ingsw/dataobjects/Player.java
+--- a/src/main/java/it/polimi/ingsw/dataobjects/Player.java	(revision 8855ae60d4a3162170e552a93b123a8e2c6a5970)
++++ b/src/main/java/it/polimi/ingsw/dataobjects/Player.java	(date 1648904199308)
+@@ -93,4 +93,26 @@
+     public void setCoins(int coins) {
+         this.coins = coins;
+     }
++
++    public int getChoosenCardValues(){
++        return choosenCard.getValues();
++    }
++    public int getChoosenCardMoves(){
++        return choosenCard.getMoves();
++    }
++
++    //debug only function
++    public void printList(){
++        for(int i=0; i< this.availableCards.getCardsList().size(); i++){
++            System.out.println("Indice: " + i+ " Valore: " +  this.availableCards.getCardsList().get(i).getValues() + " Mosse: "+ this.availableCards.getCardsList().get(i).getMoves());
++        }
++    }
++
++    public static void main(String[] args){
++        Player Giovanni = new Player();
++        Giovanni.setNickname("Giovanni");
++        System.out.println(Giovanni.getNickname());
++        Giovanni.printList();
++
++    }
+ }
+Index: src/main/java/it/polimi/ingsw/dataobjects/Team.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/it/polimi/ingsw/dataobjects/Team.java b/src/main/java/it/polimi/ingsw/dataobjects/Team.java
+new file mode 100644
+--- /dev/null	(date 1648904458186)
++++ b/src/main/java/it/polimi/ingsw/dataobjects/Team.java	(date 1648904458186)
+@@ -0,0 +1,46 @@
++package it.polimi.ingsw.dataobjects;
++
++public class Team {
++    private int player1;
++    private int player2;
++    private String teamName;
++    private TowerColor towerColor;
++    private int numOfTowers;
++
++    public void setPlayers(int player1, int player2) {
++        this.player1 = player1;
++        this.player2 = player2;
++    }
++
++    private int getPlayer1() {
++        return player1;
++    }
++
++    private int getPlayer2(){
++        return player2;
++    }
++
++    public void setTeamName(String teamName) {
++        this.teamName = teamName;
++    }
++
++    public String getTeamName() {
++        return teamName;
++    }
++
++    public void setTowerColor(TowerColor towerColor) {
++        this.towerColor = towerColor;
++    }
++
++    public TowerColor getTowerColor() {
++        return towerColor;
++    }
++
++    public void setNumOfTowers(int numOfTowers) {
++        this.numOfTowers = numOfTowers;
++    }
++
++    public int getNumOfTowers() {
++        return numOfTowers;
++    }
++}
+Index: src/main/java/it/polimi/ingsw/dataobjects/AssistantCard.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package it.polimi.ingsw.dataobjects;\r\n\r\npublic class AssistantCard {\r\n    private int values;\r\n    private int moves;\r\n\r\n\r\n    public AssistantCard(int values,int moves){\r\n        this.values = values;\r\n        this.moves = moves;\r\n    }\r\n    public AssistantCard(){\r\n        // creazione di una carta nulla\r\n        this.values = 0;\r\n        this.moves = 0;\r\n    }\r\n\r\n    public int getMoves() {\r\n        return moves;\r\n    }\r\n\r\n    public int getValues() {\r\n        return values;\r\n    }\r\n\r\n    public void setMoves(int moves) {\r\n        this.moves = moves;\r\n    }\r\n\r\n    public void setValues(int values) {\r\n        this.values = values;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/it/polimi/ingsw/dataobjects/AssistantCard.java b/src/main/java/it/polimi/ingsw/dataobjects/AssistantCard.java
+--- a/src/main/java/it/polimi/ingsw/dataobjects/AssistantCard.java	(revision 8855ae60d4a3162170e552a93b123a8e2c6a5970)
++++ b/src/main/java/it/polimi/ingsw/dataobjects/AssistantCard.java	(date 1648903498643)
+@@ -23,6 +23,9 @@
+         return values;
+     }
+ 
++    /* nessun bisogno di cambiare il contenuto delle carte
++    una volta che sono state costruite (vedere classe Deck)
++     */
+     public void setMoves(int moves) {
+         this.moves = moves;
+     }
+Index: src/main/java/it/polimi/ingsw/model/Model.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/it/polimi/ingsw/model/Model.java b/src/main/java/it/polimi/ingsw/model/Model.java
+new file mode 100644
+--- /dev/null	(date 1648906301516)
++++ b/src/main/java/it/polimi/ingsw/model/Model.java	(date 1648906301516)
+@@ -0,0 +1,48 @@
++package it.polimi.ingsw.model;
++import it.polimi.ingsw.dataobjects.*;
++
++abstract class Model {
++    private Player player0;
++    private Player player1;
++    private table CenterTable;
++    private GameState gameState;
++    public Model(){
++        player0 = new Player();
++        player1 = new Player();
++        table = new CenterTable;
++        gameState = new GameState();
++
++    }
++
++    public Player getPlayer0() {
++        return player0;
++    }
++
++    public Player getPlayer1() {
++        return player1;
++    }
++
++    public GameState getGameState() {
++        return gameState;
++    }
++
++    public table getCenterTable() {
++        return CenterTable;
++    }
++
++    public void setPlayer0(Player player0) {
++        this.player0 = player0;
++    }
++
++    public void setPlayer1(Player player1) {
++        this.player1 = player1;
++    }
++
++    public void setGameState(GameState gameState) {
++        this.gameState = gameState;
++    }
++
++    public void setCenterTable(table centerTable) {
++        CenterTable = centerTable;
++    }
++}
+Index: src/main/java/it/polimi/ingsw/model/ModelTwoPlayers.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/it/polimi/ingsw/model/ModelTwoPlayers.java b/src/main/java/it/polimi/ingsw/model/ModelTwoPlayers.java
+new file mode 100644
+--- /dev/null	(date 1648905456770)
++++ b/src/main/java/it/polimi/ingsw/model/ModelTwoPlayers.java	(date 1648905456770)
+@@ -0,0 +1,5 @@
++package it.polimi.ingsw.model;
++
++public class ModelTwoPlayers extends Model {
++
++}
+Index: src/main/java/it/polimi/ingsw/model/ModelThreePlayers.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/it/polimi/ingsw/model/ModelThreePlayers.java b/src/main/java/it/polimi/ingsw/model/ModelThreePlayers.java
+new file mode 100644
+--- /dev/null	(date 1648906223203)
++++ b/src/main/java/it/polimi/ingsw/model/ModelThreePlayers.java	(date 1648906223203)
+@@ -0,0 +1,5 @@
++package it.polimi.ingsw.model;
++
++public class ModelThreePlayers extends Model{
++    //ToDo
++}
+Index: src/main/java/it/polimi/ingsw/model/ModelFourPlayers.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/it/polimi/ingsw/model/ModelFourPlayers.java b/src/main/java/it/polimi/ingsw/model/ModelFourPlayers.java
+new file mode 100644
+--- /dev/null	(date 1648906231159)
++++ b/src/main/java/it/polimi/ingsw/model/ModelFourPlayers.java	(date 1648906231159)
+@@ -0,0 +1,5 @@
++package it.polimi.ingsw.model;
++
++public class ModelFourPlayers extends Model{
++    //ToDo
++}
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"05a87c52-703a-4eb1-b3e3-bce251cf042a\" name=\"Changes\" comment=\"First Commit to Main repo:&#10;still missing: Team, GameState, CenterTable\" />\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$\" value=\"test\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n    <option name=\"UPDATE_TYPE\" value=\"REBASE\" />\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"MavenImportPreferences\">\r\n    <option name=\"generalSettings\">\r\n      <MavenGeneralSettings>\r\n        <option name=\"useMavenConfig\" value=\"true\" />\r\n      </MavenGeneralSettings>\r\n    </option>\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"26k6aIRhdITyOpcvZP6TxXqIDNm\" />\r\n  <component name=\"ProjectLevelVcsManager\">\r\n    <ConfirmationsSetting value=\"2\" id=\"Add\" />\r\n  </component>\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">\r\n    <property name=\"RunOnceActivity.OpenProjectViewOnStart\" value=\"true\" />\r\n    <property name=\"RunOnceActivity.ShowReadmeOnStart\" value=\"true\" />\r\n    <property name=\"SHARE_PROJECT_CONFIGURATION_FILES\" value=\"true\" />\r\n    <property name=\"WebServerToolWindowFactoryState\" value=\"false\" />\r\n  </component>\r\n  <component name=\"RunManager\">\r\n    <configuration name=\"Unnamed\" type=\"Application\" factoryName=\"Application\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"it.polimi.ingsw.App\" />\r\n      <module name=\"PSP28\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"05a87c52-703a-4eb1-b3e3-bce251cf042a\" name=\"Changes\" comment=\"First Commit to Main repo:&#10;still missing: Team, GameState, CenterTable\" />\r\n      <created>1647955299176</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1647955299176</updated>\r\n      <workItem from=\"1647955300329\" duration=\"995000\" />\r\n      <workItem from=\"1648133573641\" duration=\"31000\" />\r\n      <workItem from=\"1648558328466\" duration=\"28000\" />\r\n      <workItem from=\"1648564317550\" duration=\"41000\" />\r\n      <workItem from=\"1648646390818\" duration=\"201000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"created resources directory\">\r\n      <created>1647955875299</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1647955875299</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"First Commit to Main repo:&#10;still missing: Team, GameState, CenterTable\">\r\n      <created>1648646548267</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1648646548267</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"3\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"created resources directory\" />\r\n    <MESSAGE value=\"First Commit to Main repo:&#10;still missing: Team, GameState, CenterTable\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"First Commit to Main repo:&#10;still missing: Team, GameState, CenterTable\" />\r\n  </component>\r\n  <component name=\"com.intellij.coverage.CoverageDataManagerImpl\">\r\n    <SUITE FILE_PATH=\"coverage/Eriantys$FerTest.ic\" NAME=\"FerTest Coverage Results\" MODIFIED=\"1648072489073\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"idea\" COVERAGE_BY_TEST_ENABLED=\"false\" COVERAGE_TRACING_ENABLED=\"false\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 8855ae60d4a3162170e552a93b123a8e2c6a5970)
++++ b/.idea/workspace.xml	(date 1648906909303)
+@@ -4,11 +4,35 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="05a87c52-703a-4eb1-b3e3-bce251cf042a" name="Changes" comment="First Commit to Main repo:&#10;still missing: Team, GameState, CenterTable" />
++    <list default="true" id="05a87c52-703a-4eb1-b3e3-bce251cf042a" name="Changes" comment="First Commit to Main repo:&#10;still missing: CenterTable, Professor, ModelFourPlayers, ModelThreePlayers">
++      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/dataobjects/GameState.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/dataobjects/Team.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/Model.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/ModelFourPlayers.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/ModelThreePlayers.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/model/ModelTwoPlayers.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/messages/Message.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/messages/MessageType.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/observer/Observable.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/observer/Observer.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/observer/ViewObservable.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/observer/ViewObserver.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/dataobjects/AssistantCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/dataobjects/AssistantCard.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/dataobjects/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/dataobjects/Player.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/target/classes/it/polimi/ingsw/App.class" beforeDir="false" />
++    </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+     <option name="LAST_RESOLUTION" value="IGNORE" />
++  </component>
++  <component name="FileTemplateManagerImpl">
++    <option name="RECENT_TEMPLATES">
++      <list>
++        <option value="Class" />
++      </list>
++    </option>
+   </component>
+   <component name="Git.Settings">
+     <option name="RECENT_BRANCH_BY_REPOSITORY">
+@@ -44,8 +68,8 @@
+     <property name="WebServerToolWindowFactoryState" value="false" />
+   </component>
+   <component name="RunManager">
+-    <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
+-      <option name="MAIN_CLASS_NAME" value="it.polimi.ingsw.App" />
++    <configuration name="Player" type="Application" factoryName="Application" nameIsGenerated="true">
++      <option name="MAIN_CLASS_NAME" value="it.polimi.ingsw.dataobjects.Player" />
+       <module name="PSP28" />
+       <method v="2">
+         <option name="Make" enabled="true" />
+@@ -65,6 +89,9 @@
+       <workItem from="1648558328466" duration="28000" />
+       <workItem from="1648564317550" duration="41000" />
+       <workItem from="1648646390818" duration="201000" />
++      <workItem from="1648646698063" duration="890000" />
++      <workItem from="1648900996345" duration="61000" />
++      <workItem from="1648902874924" duration="4030000" />
+     </task>
+     <task id="LOCAL-00001" summary="created resources directory">
+       <created>1647955875299</created>
+@@ -80,7 +107,14 @@
+       <option name="project" value="LOCAL" />
+       <updated>1648646548267</updated>
+     </task>
+-    <option name="localTasksCounter" value="3" />
++    <task id="LOCAL-00003" summary="First Commit to Main repo:&#10;still missing: Team, GameState, CenterTable">
++      <created>1648646756381</created>
++      <option name="number" value="00003" />
++      <option name="presentableId" value="LOCAL-00003" />
++      <option name="project" value="LOCAL" />
++      <updated>1648646756381</updated>
++    </task>
++    <option name="localTasksCounter" value="4" />
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
+@@ -100,7 +134,8 @@
+   <component name="VcsManagerConfiguration">
+     <MESSAGE value="created resources directory" />
+     <MESSAGE value="First Commit to Main repo:&#10;still missing: Team, GameState, CenterTable" />
+-    <option name="LAST_COMMIT_MESSAGE" value="First Commit to Main repo:&#10;still missing: Team, GameState, CenterTable" />
++    <MESSAGE value="First Commit to Main repo:&#10;still missing: CenterTable, Professor, ModelFourPlayers, ModelThreePlayers" />
++    <option name="LAST_COMMIT_MESSAGE" value="First Commit to Main repo:&#10;still missing: CenterTable, Professor, ModelFourPlayers, ModelThreePlayers" />
+   </component>
+   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+     <SUITE FILE_PATH="coverage/Eriantys$FerTest.ic" NAME="FerTest Coverage Results" MODIFIED="1648072489073" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+Index: src/main/java/it/polimi/ingsw/network/messages/MessageType.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/it/polimi/ingsw/network/messages/MessageType.java b/src/main/java/it/polimi/ingsw/network/messages/MessageType.java
+new file mode 100644
+--- /dev/null	(date 1648906019209)
++++ b/src/main/java/it/polimi/ingsw/network/messages/MessageType.java	(date 1648906019209)
+@@ -0,0 +1,35 @@
++package it.polimi.ingsw.network.messages;
++
++    /**
++     * This enum contains all the message type available and used by the server and clients.
++     */
++    public enum MessageType {
++        LOGIN_REQUEST, LOGIN_REPLY,
++        PLAYERNUMBER_REQUEST, PLAYERNUMBER_REPLY,
++        LOBBY,
++        GODLIST,
++        PICK_FIRST_PLAYER,
++        BOARD,
++        INIT_WORKERSPOSITIONS,
++        INIT_COLORS,
++        PICK_MOVING_WORKER,
++        MOVE,
++        MOVE_FX,
++        BUILD,
++        BUILD_FX,
++        WIN,
++        WIN_FX,
++        LOSE,
++
++        //utility:
++        GAME_LOAD,
++        MATCH_INFO,
++        DISCONNECTION,
++        GENERIC_MESSAGE,
++        PING,
++        ERROR,
++        ENABLE_EFFECT,
++        APPLY_EFFECT,
++        PERSISTENCE
++    }
++
+Index: src/main/java/it/polimi/ingsw/network/messages/Message.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/it/polimi/ingsw/network/messages/Message.java b/src/main/java/it/polimi/ingsw/network/messages/Message.java
+new file mode 100644
+--- /dev/null	(date 1648906143580)
++++ b/src/main/java/it/polimi/ingsw/network/messages/Message.java	(date 1648906143580)
+@@ -0,0 +1,34 @@
++package it.polimi.ingsw.network.messages;
++import java.io.Serializable;
++
++/**
++ * Abstract message class which must be extended by each message type.
++ * Both server and clients will communicate using this generic type of message.
++ * This avoids the usage of the "instance of" primitive.
++ */
++public abstract class Message implements Serializable {
++    private static final long serialVersionUID = 6589184250663958343L;
++
++    private final String nickname;
++    private final MessageType messageType;
++
++    Message(String nickname, MessageType messageType) {
++        this.nickname = nickname;
++        this.messageType = messageType;
++    }
++
++    public String getNickname() {
++        return nickname;
++    }
++
++    public MessageType getMessageType() {
++        return messageType;
++    }
++
++    @Override
++    public String toString() {
++        return "Message{" +
++                "nickname=" + nickname +
++                ", messageType=" + messageType + '}';
++    }
++}
+Index: src/main/java/it/polimi/ingsw/observer/Observable.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/it/polimi/ingsw/observer/Observable.java b/src/main/java/it/polimi/ingsw/observer/Observable.java
+new file mode 100644
+--- /dev/null	(date 1648906402006)
++++ b/src/main/java/it/polimi/ingsw/observer/Observable.java	(date 1648906402006)
+@@ -0,0 +1,43 @@
++package it.polimi.ingsw.observer;
++
++import it.polimi.ingsw.network.messages.Message;
++
++import java.util.ArrayList;
++import java.util.List;
++
++/**
++ * Observable class that can be observed by implementing the {@link Observer} interface and registering as listener.
++ */
++public class Observable {
++
++    private final List<Observer> observers = new ArrayList<>();
++
++    /**
++     * Adds an observer.
++     *
++     * @param obs the observer to be added.
++     */
++    public void addObserver(Observer obs) {
++        observers.add(obs);
++    }
++
++    /**
++     * Removes an observer.
++     *
++     * @param obs the observer to be removed.
++     */
++    public void removeObserver(Observer obs) {
++        observers.remove(obs);
++    }
++
++    /**
++     * Notifies all the current observers through the update method and passes to them a {@link Message}.
++     *
++     * @param message the message to be passed to the observers.
++     */
++    protected void notifyObserver(Message message) {
++        for (Observer observer : observers) {
++            observer.update(message);
++        }
++    }
++}
+\ No newline at end of file
+Index: src/main/java/it/polimi/ingsw/observer/Observer.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/it/polimi/ingsw/observer/Observer.java b/src/main/java/it/polimi/ingsw/observer/Observer.java
+new file mode 100644
+--- /dev/null	(date 1648906440689)
++++ b/src/main/java/it/polimi/ingsw/observer/Observer.java	(date 1648906440689)
+@@ -0,0 +1,10 @@
++package it.polimi.ingsw.observer;
++
++import it.polimi.ingsw.network.messages.Message;
++
++/**
++ * Observer interface. It supports a generic method of update.
++ */
++public interface Observer {
++    void update(Message message);
++}
+Index: src/main/java/it/polimi/ingsw/observer/ViewObservable.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/it/polimi/ingsw/observer/ViewObservable.java b/src/main/java/it/polimi/ingsw/observer/ViewObservable.java
+new file mode 100644
+--- /dev/null	(date 1648906536243)
++++ b/src/main/java/it/polimi/ingsw/observer/ViewObservable.java	(date 1648906536243)
+@@ -0,0 +1,60 @@
++package it.polimi.ingsw.observer;
++
++import java.util.ArrayList;
++import java.util.List;
++import java.util.function.Consumer;
++
++/**
++ * Custom observable class that can be observed by implementing the {@link ViewObserver} interface and registering as listener.
++ */
++public abstract class ViewObservable {
++
++    protected final List<ViewObserver> observers = new ArrayList<>();
++
++    /**
++     * Adds an observer.
++     *
++     * @param obs the observer to be added.
++     */
++    public void addObserver(ViewObserver obs) {
++        observers.add(obs);
++    }
++
++    /**
++     * Adds a list of observers.
++     *
++     * @param observerList the list of observers to be added.
++     */
++    public void addAllObservers(List<ViewObserver> observerList) {
++        observers.addAll(observerList);
++    }
++
++    /**
++     * Removes an observer.
++     *
++     * @param obs the observer to be removed.
++     */
++    public void removeObserver(ViewObserver obs) {
++        observers.remove(obs);
++    }
++
++    /**
++     * Removes a list of observers.
++     *
++     * @param observerList the list of observers to be removed.
++     */
++    public void removeAllObservers(List<ViewObserver> observerList) {
++        observers.removeAll(observerList);
++    }
++
++    /**
++     * Notifies all the current observers through the lambda argument.
++     *
++     * @param lambda the lambda to be called on the observers.
++     */
++    protected void notifyObserver(Consumer<ViewObserver> lambda) {
++        for (ViewObserver observer : observers) {
++            lambda.accept(observer);
++        }
++    }
++}
+\ No newline at end of file
+Index: src/main/java/it/polimi/ingsw/observer/ViewObserver.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/it/polimi/ingsw/observer/ViewObserver.java b/src/main/java/it/polimi/ingsw/observer/ViewObserver.java
+new file mode 100644
+--- /dev/null	(date 1648906892641)
++++ b/src/main/java/it/polimi/ingsw/observer/ViewObserver.java	(date 1648906892641)
+@@ -0,0 +1,103 @@
++package it.polimi.ingsw.observer;
++
++import it.polimi.ingsw.model.*
++
++import java.util.List;
++import java.util.Map;
++
++/**
++ * Custom observer interface for views. It supports different types of notification.
++ */
++public interface ViewObserver {
++
++    /**
++     * Create a new connection to the server with the updated info.
++     *
++     * @param serverInfo a map of server address and server port.
++     */
++    void onUpdateServerInfo(Map<String, String> serverInfo);
++
++    /**
++     * Sends a message to the server with the updated nickname.
++     *
++     * @param nickname the nickname to be sent.
++     */
++    void onUpdateNickname(String nickname);
++
++    /**
++     * Sends a message to the server with the player number chosen by the user.
++     *
++     * @param playersNumber the number of players.
++     */
++    void onUpdatePlayersNumber(int playersNumber);
++
++    /**
++     * Sends a message to the server with the workers color chosen by the user.
++     *
++     * @param color the color of the workers.
++     */
++
++    void onUpdateWorkersColor(Color color);
++
++    /**
++     * Sends a message to the server with the gods chosen by the user.
++     *
++     * @param reducedGods the list of gods chosen by the user.
++     */
++    void onUpdateGod(List<ReducedGod> reducedGods);
++
++    /**
++     * Sends a message to the server with the position of the worker to be moved chosen by the user.
++     *
++     * @param position the position of the worker to be moved.
++     */
++    void onUpdatePickMovingWorker(Position position);
++
++    /**
++     * Sends a message to the server with the initial position of the workers chosen by the user.
++     *
++     * @param positions the list of the initial position of the workers.
++     */
++    void onUpdateInitWorkerPosition(List<Position> positions);
++
++    /**
++     * Sends a message to the server with the new position of the moving worker chosen by the user.
++     *
++     * @param destination the new position of the moving worker.
++     */
++    void onUpdateMove(Position destination);
++
++    /**
++     * Sends a message to the server with the position of the block to be built chosen by the user.
++     *
++     * @param position the position of the block to be built.
++     */
++    void onUpdateBuild(Position position);
++
++    /**
++     * Sends a message to the server with the choice of the user about his god effect.
++     *
++     * @param response the choice of the user about his god effect.
++     */
++    void onUpdateEnableEffect(boolean response);
++
++    /**
++     * Sends a message to the server with the choice of the user about his god effect.
++     *
++     * @param dest the choice of the user about his god effect.
++     */
++    void onUpdateApplyEffect(Position dest);
++
++    /**
++     * Sends a message to the server with the nickname of the first player chosen by the user.
++     *
++     * @param nickname the nickname of the first player.
++     */
++
++    void onUpdateFirstPlayer(String nickname);
++
++    /**
++     * Handles a disconnection wanted by the user.
++     * (e.g. a click on the back button into the GUI).
++     */
++    void onDisconnection();
+\ No newline at end of file
+Index: src/main/java/it/polimi/ingsw/dataobjects/GameState.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/it/polimi/ingsw/dataobjects/GameState.java b/src/main/java/it/polimi/ingsw/dataobjects/GameState.java
+new file mode 100644
+--- /dev/null	(date 1648905456721)
++++ b/src/main/java/it/polimi/ingsw/dataobjects/GameState.java	(date 1648905456721)
+@@ -0,0 +1,75 @@
++package it.polimi.ingsw.dataobjects;
++import java.util.*;
++
++public class GameState {
++    private GameMode gameMode;
++    private int numberOfPlayers;
++    private int turnNumber;
++    private int currentOrderNumber;
++    private Vector<Integer> order;
++    private Optional<Vector<Team>> teams;
++
++    public GameState(){
++        order = new Vector<Integer>();
++        teams = new Optional<Vector<Team>>;
++    }
++    public void setGameMode(GameMode gameMode) {
++        this.gameMode = gameMode;
++    }
++
++    public GameMode getGameMode() {
++        return gameMode;
++    }
++
++    public void setNumberOfPlayers(int numberOfPlayers) {
++        this.numberOfPlayers = numberOfPlayers;
++    }
++
++    public int getNumberOfPlayers() {
++        return numberOfPlayers;
++    }
++
++    public void setCurrentOrderNumber(int currentOrderNumber) {
++        this.currentOrderNumber = currentOrderNumber;
++    }
++
++    public int getCurrentOrderNumber() {
++        return currentOrderNumber;
++    }
++
++    public void setOrder(Vector<Integer> order) {
++        this.order = order;
++    }
++
++    public Vector<Integer> getOrder() {
++        return order;
++    }
++
++    public void setTeams(Optional<Vector<Team>> teams) {
++        this.teams = teams;
++    }
++
++    public Optional<Vector<Team>> getTeams() {
++        return teams;
++    }
++
++    public void setTurnNumber(int turnNumber) {
++        this.turnNumber = turnNumber;
++    }
++
++    public int getTurnNumber() {
++        return turnNumber;
++    }
++    public boolean isLastPlayerOfTheTurn(){
++        //todo
++    }
++    public boolean isFirsPlayerOfTheTurn(){
++        //todo
++    }
++    public void update(){
++        // todo, or just an idea??
++        /* aggiorna currentOrderNumber nel caso in cui
++           isLastPlayerOfTheTurn è falso
++         */
++    }
++}
