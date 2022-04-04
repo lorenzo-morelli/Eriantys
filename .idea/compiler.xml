@@ -6,12 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="PSP28" />
         <module name="Eriantys" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="PSP28" target="11" />
+      <module name="Eriantys" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>
