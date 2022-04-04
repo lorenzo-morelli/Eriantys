@@ -13,7 +13,7 @@ public class GameState {
 
     public GameState(){
         order = new Vector<Integer>();
-        teams = new Optional<Vector<Team>>;
+        //teams = new Optional<Vector<Team>>();
     }
     public void setGameMode(GameMode gameMode) {
         this.gameMode = gameMode;
@@ -62,16 +62,16 @@ public class GameState {
     public int getTurnNumber() {
         return turnNumber;
     }
-    public boolean isLastPlayerOfTheTurn(){
-        //todo
-    }
-    public boolean isFirsPlayerOfTheTurn(){
-        //todo
-    }
-    public void update(){
-        // todo, or just an idea??
-        /* aggiorna currentOrderNumber nel caso in cui
-           isLastPlayerOfTheTurn è falso
-         */
-    }
+//    public boolean isLastPlayerOfTheTurn(){
+//        //todo
+//    }
+//    public boolean isFirsPlayerOfTheTurn(){
+//        //todo
+//    }
+//    public void update(){
+//        // todo, or just an idea??
+//        /* aggiorna currentOrderNumber nel caso in cui
+//           isLastPlayerOfTheTurn è falso
+//         */
+//    }
 }
