@@ -1,22 +1,23 @@
 package it.polimi.ingsw.model;
+
 import java.util.*;
 
 public class Deck {
     private List<AssistantCard> cards;
 
-    public Deck(){
-        this.cards= new ArrayList<>();
+    public Deck() {
+        this.cards = new ArrayList<>();
         // adesso c'è da inizializzare il deck appena costruito
-        this.cards.add(new AssistantCard(1,1));
-        this.cards.add(new AssistantCard(2,1));
-        this.cards.add(new AssistantCard(3,2));
-        this.cards.add(new AssistantCard(4,2));
-        this.cards.add(new AssistantCard(5,3));
-        this.cards.add(new AssistantCard(6,3));
-        this.cards.add(new AssistantCard(7,4));
-        this.cards.add(new AssistantCard(8,4));
-        this.cards.add(new AssistantCard(9,5));
-        this.cards.add(new AssistantCard(10,5));
+        this.cards.add(new AssistantCard(1, 1));
+        this.cards.add(new AssistantCard(2, 1));
+        this.cards.add(new AssistantCard(3, 2));
+        this.cards.add(new AssistantCard(4, 2));
+        this.cards.add(new AssistantCard(5, 3));
+        this.cards.add(new AssistantCard(6, 3));
+        this.cards.add(new AssistantCard(7, 4));
+        this.cards.add(new AssistantCard(8, 4));
+        this.cards.add(new AssistantCard(9, 5));
+        this.cards.add(new AssistantCard(10, 5));
     }
 
     // Da un lato vogliamo avere completo accesso all'intera lista di carte affinché
@@ -29,9 +30,9 @@ public class Deck {
     }
 
     public void remove(AssistantCard choosen) {
-        for(int i=0; i < this.cards.size(); i++){
-            if (cards.get(i).getValues() == choosen.getValues()){
-                cards.remove(i);
+        for (AssistantCard assistantCard : this.cards) {
+            if (choosen.equals(assistantCard)) {
+                this.cards.remove(choosen);
             }
         }
     }
