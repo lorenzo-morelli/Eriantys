@@ -14,6 +14,14 @@ abstract class Model {
 
     }
 
+    public CenterTable getTable() {
+        return table;
+    }
+
+    public void setTable(CenterTable table) {
+        this.table = table;
+    }
+
     public Player getPlayer0() {
         return player0;
     }
@@ -43,6 +51,6 @@ abstract class Model {
     }
 
     public void setCenterTable(CenterTable centerTable) {
-        table = centerTable;
+        this.table = centerTable;
     }
 }
