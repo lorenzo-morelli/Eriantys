@@ -8,16 +8,16 @@ public class Deck {
     public Deck() {
         this.cards = new ArrayList<>();
         // adesso c'è da inizializzare il deck appena costruito
-        this.cards.add(new AssistantCard(1, 1));
-        this.cards.add(new AssistantCard(2, 1));
-        this.cards.add(new AssistantCard(3, 2));
-        this.cards.add(new AssistantCard(4, 2));
-        this.cards.add(new AssistantCard(5, 3));
-        this.cards.add(new AssistantCard(6, 3));
-        this.cards.add(new AssistantCard(7, 4));
-        this.cards.add(new AssistantCard(8, 4));
-        this.cards.add(new AssistantCard(9, 5));
-        this.cards.add(new AssistantCard(10, 5));
+//        this.cards.add(new AssistantCard(1, 1));
+//        this.cards.add(new AssistantCard(2, 1));
+//        this.cards.add(new AssistantCard(3, 2));
+//        this.cards.add(new AssistantCard(4, 2));
+//        this.cards.add(new AssistantCard(5, 3));
+//        this.cards.add(new AssistantCard(6, 3));
+//        this.cards.add(new AssistantCard(7, 4));
+//        this.cards.add(new AssistantCard(8, 4));
+//        this.cards.add(new AssistantCard(9, 5));
+//        this.cards.add(new AssistantCard(10, 5));
     }
 
     // Da un lato vogliamo avere completo accesso all'intera lista di carte affinché

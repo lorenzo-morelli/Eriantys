@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c193818a-1e92-4991-9439-cb3e4c836bfd" name="Changes" comment="changed architecture">
+    <list default="true" id="c193818a-1e92-4991-9439-cb3e4c836bfd" name="Changes" comment="added gson dependency">
+      <change afterPath="$PROJECT_DIR$/deliveries/principiant_game.bpmn" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/deliveries/principiant_game.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/model/Deck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/model/Deck.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,6 +23,7 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="PUSH_AUTO_UPDATE" value="true" />
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
         <entry key="$PROJECT_DIR$" value="test" />
@@ -47,10 +50,16 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\morel\Desktop\Programs\Java\ing-sw-2022-morelli-morea-netodellacqua\deliveries" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
@@ -74,7 +83,7 @@
       <workItem from="1648558328466" duration="28000" />
       <workItem from="1648564317550" duration="41000" />
       <workItem from="1649100123501" duration="302000" />
-      <workItem from="1649162521795" duration="1122000" />
+      <workItem from="1649162521795" duration="3717000" />
     </task>
     <task id="LOCAL-00001" summary="created resources directory">
       <created>1647955875299</created>
@@ -132,7 +141,21 @@
       <option name="project" value="LOCAL" />
       <updated>1649162763693</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="added gson dependency">
+      <created>1649164201894</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1649164201894</updated>
+    </task>
+    <task id="LOCAL-00010" summary="added gson dependency">
+      <created>1649164246730</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1649164246730</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -158,6 +181,7 @@
     <MESSAGE value="edited name" />
     <MESSAGE value="fixed errors" />
     <MESSAGE value="changed architecture" />
-    <option name="LAST_COMMIT_MESSAGE" value="changed architecture" />
+    <MESSAGE value="added gson dependency" />
+    <option name="LAST_COMMIT_MESSAGE" value="added gson dependency" />
   </component>
 </project>
