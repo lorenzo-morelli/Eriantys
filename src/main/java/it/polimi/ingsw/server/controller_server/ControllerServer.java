@@ -45,7 +45,7 @@ public class ControllerServer {
     private final StateTableWithNestedHashtables states = new StateTableWithNestedHashtables();
     /** Lo stato corrente del controllore,non puo'essere null */
     private IState currentState;
-    /** il nome dello stato per motivi di log */
+    /** il nome del controllore per motivi di log */
     private final String name;
     /** Coda di eventi */
     private final LinkedList events = new LinkedList();
