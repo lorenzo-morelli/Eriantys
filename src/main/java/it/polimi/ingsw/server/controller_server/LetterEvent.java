@@ -16,7 +16,6 @@ class LetterEvent extends Event implements KeyListener {
     }
 
     public void keyTyped(KeyEvent e) {
-//    	e.consume();
         if (e.getKeyChar() == key) {
             try {
                 fireStateEvent();

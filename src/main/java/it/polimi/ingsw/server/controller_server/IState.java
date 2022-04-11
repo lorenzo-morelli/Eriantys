@@ -2,9 +2,9 @@ package it.polimi.ingsw.server.controller_server;
 
 /**
 
- * Questa Interfaccia astratta serve ad implementare i metodi ("Azioni" di uno stato sul modello)
+ * Questa Interfaccia astratta serve a implementare i metodi ("Azioni" di uno stato sul modello)
  * entryAction viene eseguito quando lo stato viene acceduto,
- * exitAction quando si sta per uscire dallo stato ed andare nel successivo
+ * exitAction quando si sta per uscire dallo stato e andare nel successivo
  *
  * Se si usa quest'interfaccia bisognerebbe fare l'override di toString,
  * (per il logging della partita)
