@@ -15,11 +15,11 @@ import java.io.IOException;
  *
  * @author Fernando
  */
-public class TerminalEvent extends Event implements Observer {
-    public final String toListen;
+public class RecognizeString extends Event implements Observer {
+    public String toListen = null;
     private CommandPrompt commandPrompt;
 
-    public TerminalEvent(String message) throws IOException {
+    public RecognizeString(String message) throws IOException {
         super("Terminal event " + message);
         this.toListen = message;
         System.out.println("[Costruito l'evento di ricenzione da terminale della parola "+message+"]");
@@ -29,9 +29,10 @@ public class TerminalEvent extends Event implements Observer {
 
     @Override
     public void update(Object message) throws IOException, InterruptedException {
-        if (this.toListen.equals ((String)message)){
-            System.out.println("[E' proprio l'evento richiesto !!!]");
-            fireStateEvent();
+        if(toListen != null){
+            if (this.toListen.equals ((String)message)){
+                fireStateEvent();
+            }
         }
     }
 

@@ -45,6 +45,46 @@ public class CommandPrompt implements Subject{
         instance.notifyObservers();
     }
 
+    public static String gotFromTerminal() {
+        return fromTerminal;
+    }
+
+    public static void println(String toPrint) throws IOException {
+        if (instance == null) {
+            instance = new CommandPrompt();
+        }
+        instance.getConsole().println(toPrint);
+        instance.getConsole().flush();
+    }
+
+    public static void setPrompt(String toSet) throws IOException {
+        if (instance == null) {
+            instance = new CommandPrompt();
+        }
+        instance.getConsole().setPrompt(toSet);
+        instance.getConsole().flush();
+    }
+
+    public static void clearScreen() throws IOException {
+        if (instance == null) {
+            instance = new CommandPrompt();
+        }
+        instance.getConsole().clearScreen();
+    }
+
+    public static void ask(String suggestion, String console){
+        try {
+            CommandPrompt.clearScreen();
+            CommandPrompt.println(suggestion);
+            CommandPrompt.setPrompt(console);
+            CommandPrompt.read();
+            CommandPrompt.clearScreen();
+            CommandPrompt.println("    >>> Adesso Attendi <<<    ");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void subscribeObserver(Observer observer) {
         observers.add(observer);
