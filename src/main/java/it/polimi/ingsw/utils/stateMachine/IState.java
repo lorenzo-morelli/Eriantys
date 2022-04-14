@@ -1,6 +1,6 @@
-package it.polimi.ingsw.utils.StateMachine;
+package it.polimi.ingsw.utils.stateMachine;
 
-import it.polimi.ingsw.utils.StateMachine.IEvent;
+import java.io.IOException;
 
 /**
 
@@ -18,10 +18,10 @@ public interface IState {
      * @param cause L'evento che ha causato la transizione in questo stato
      * @return null a meno che tu non voglia forzare la transizione verso un nuovo stato
      */
-    public IEvent entryAction(IEvent cause);
+    public IEvent entryAction(IEvent cause) throws IOException, InterruptedException;
 
     /**
      * Come entryaction, a differenza che questo metodo viene chiamato quando il controllore "sta uscendo" dallo stato
      */
-    public void exitAction(IEvent cause);
+    public void exitAction(IEvent cause) throws IOException;
 }

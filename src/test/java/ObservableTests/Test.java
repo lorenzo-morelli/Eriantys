@@ -1,5 +1,5 @@
 package ObservableTests;
-import it.polimi.ingsw.utils.ObserverPattern.*;
+import it.polimi.ingsw.utils.observerPattern.*;
 
 import java.util.ArrayList;
 

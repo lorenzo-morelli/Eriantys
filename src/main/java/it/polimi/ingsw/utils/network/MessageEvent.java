@@ -1,6 +1,6 @@
 package it.polimi.ingsw.utils.network;
 
-import it.polimi.ingsw.utils.StateMachine.Event;
+import it.polimi.ingsw.utils.stateMachine.Event;
 
 import javax.swing.*;
 /**

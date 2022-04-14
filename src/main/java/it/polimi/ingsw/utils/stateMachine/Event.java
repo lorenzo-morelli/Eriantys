@@ -1,4 +1,6 @@
-package it.polimi.ingsw.utils.StateMachine;
+package it.polimi.ingsw.utils.stateMachine;
+
+import java.io.IOException;
 
 /**
  *  Una classe di default per implementare l'interfaccia IEvent.
@@ -22,7 +24,7 @@ public class Event implements IEvent {
      * possible.  If there is no transaction for the current state + this
      * event, it will throw an IllegalStateException.
      */
-    public void fireStateEvent() {
+    public void fireStateEvent() throws IOException, InterruptedException {
         listener.fireStateEvent(this);
     }
 

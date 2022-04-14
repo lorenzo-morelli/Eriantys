@@ -1,6 +1,4 @@
-package it.polimi.ingsw.utils.ObserverPattern;
-
-import it.polimi.ingsw.utils.ObserverPattern.Observer;
+package it.polimi.ingsw.utils.observerPattern;
 
 public interface Subject {
     /**
@@ -18,7 +16,5 @@ public interface Subject {
      * notifica tutti gli osservatori
      */
     public void notifyObservers();
-
-    public String subjectDetails();
 
 }

@@ -1,6 +1,8 @@
 package ObservableTests;
 
-import it.polimi.ingsw.utils.ObserverPattern.*;
+import it.polimi.ingsw.utils.observerPattern.*;
+
+import java.io.IOException;
 import java.util.List;
 
 public class SoggettoOsservato implements Subject {
@@ -29,7 +31,15 @@ public class SoggettoOsservato implements Subject {
 
     public void notifyObservers() {
         System.out.println();
-        observers.stream().forEach(observer -> observer.update(desc));
+        observers.stream().forEach(observer -> {
+            try {
+                observer.update(desc);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
 
     }
 

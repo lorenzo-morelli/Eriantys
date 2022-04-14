@@ -1,6 +1,6 @@
 package ObservableTests;
 
-import it.polimi.ingsw.utils.ObserverPattern.*;
+import it.polimi.ingsw.utils.observerPattern.*;
 
 public class Osservatore implements Observer {
 
@@ -30,13 +30,13 @@ public class Osservatore implements Observer {
     }
 
     public void subscribe() {
-        System.out.println("Subscribing "+userInfo+" to "+subject.subjectDetails()+" ...");
+        System.out.println("Subscribing "+userInfo+" to "+" ...");
         this.subject.subscribeObserver(this);
         System.out.println("Subscribed successfully");
     }
 
     public void unSubscribe() {
-        System.out.println("Unsubscribing "+userInfo+" to "+subject.subjectDetails()+" ...");
+        System.out.println("Unsubscribing "+userInfo+" to "+" ...");
         this.subject.unsubscribeObserver(this);
         System.out.println("Unsubscribed successfully");
     }

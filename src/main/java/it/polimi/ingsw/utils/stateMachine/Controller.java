@@ -1,5 +1,6 @@
-package it.polimi.ingsw.utils.StateMachine;
+package it.polimi.ingsw.utils.stateMachine;
 
+import java.io.IOException;
 import java.util.Hashtable;
 import java.util.LinkedList;
 
@@ -48,7 +49,7 @@ public class Controller {
     /** il nome del controllore per motivi di log */
     private final String name;
     /** Coda di eventi */
-    private final LinkedList events = new LinkedList();
+    private final LinkedList<IEvent> events = new LinkedList<IEvent>();
     /**
      * Possibilita' di ignorare la transizione (motivi di validazione della transizione)
      */
@@ -146,7 +147,7 @@ public class Controller {
      */
     public void addTransition(IState startingState, IEvent ev, IState nextState) {
         ev.setStateEventListener(this);
-        System.out.println(this + "Adding a transition from " + startingState + " > " + ev + " = " + nextState);
+        System.out.println(this + " Transizione (" + startingState + "," + ev + ") --> " + nextState+" aggiunta");
         states.addTransition(startingState, ev, nextState);
     }
 
@@ -174,7 +175,7 @@ public class Controller {
      * @param ev
      *            L'evento azionato.
      */
-    public void fireStateEvent(IEvent ev) {
+    public void fireStateEvent(IEvent ev) throws IOException, InterruptedException {
         synchronized (events) {
             events.add(ev);
             // If there are more events, they will be executed after the current
@@ -187,7 +188,7 @@ public class Controller {
         while (true) {
 
             synchronized (events) {
-                ev = (IEvent) events.getFirst();
+                ev = events.getFirst();
             }
 
             IState tmp = states.findTransition(currentState, ev);

@@ -1,6 +1,6 @@
-package it.polimi.ingsw.utils.StateMachine;
+package it.polimi.ingsw.utils.stateMachine;
 
-import it.polimi.ingsw.utils.StateMachine.Controller;
+import java.io.IOException;
 
 /**
  * Per fare l'override si puo' usare setStateEventListener (set invece di add
@@ -11,7 +11,7 @@ import it.polimi.ingsw.utils.StateMachine.Controller;
  */
 public interface IEvent {
 
-    public void fireStateEvent();
+    public void fireStateEvent() throws IOException, InterruptedException;
     public void setStateEventListener(Controller engine);
 }
 

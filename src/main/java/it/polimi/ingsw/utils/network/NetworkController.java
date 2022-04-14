@@ -1,8 +1,8 @@
 package it.polimi.ingsw.utils.network;
 
-import it.polimi.ingsw.utils.StateMachine.Controller;
-import it.polimi.ingsw.utils.StateMachine.IEvent;
-import it.polimi.ingsw.utils.StateMachine.State;
+import it.polimi.ingsw.utils.stateMachine.Controller;
+import it.polimi.ingsw.utils.stateMachine.IEvent;
+import it.polimi.ingsw.utils.stateMachine.State;
 
 import javax.swing.*;
 

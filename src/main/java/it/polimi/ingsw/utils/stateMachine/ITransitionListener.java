@@ -1,7 +1,4 @@
-package it.polimi.ingsw.utils.StateMachine;
-
-import it.polimi.ingsw.utils.StateMachine.IEvent;
-import it.polimi.ingsw.utils.StateMachine.IState;
+package it.polimi.ingsw.utils.stateMachine;
 
 /**
  * Notifica il cambiamento di stato (finalita' di logging)

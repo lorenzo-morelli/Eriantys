@@ -1,7 +1,6 @@
-package it.polimi.ingsw.utils.StateMachine;
+package it.polimi.ingsw.utils.stateMachine;
 
-import it.polimi.ingsw.utils.StateMachine.IEvent;
-import it.polimi.ingsw.utils.StateMachine.IState;
+import java.io.IOException;
 
 public class State implements IState {
 
@@ -27,7 +26,7 @@ public class State implements IState {
      * @param cause
      * @return any event but NULL causes the system to go straight to that state.
      */
-    public IEvent entryAction(IEvent cause) {
+    public IEvent entryAction(IEvent cause) throws IOException, InterruptedException {
         return null;
     }
 
@@ -36,7 +35,7 @@ public class State implements IState {
      * Questo non può causare un cambiamento di stato restituendo un evento
      * @param cause the event that caused us to exit this state
      */
-    public void exitAction(IEvent cause) {
+    public void exitAction(IEvent cause) throws IOException {
 
     }
 
