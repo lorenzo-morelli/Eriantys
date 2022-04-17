@@ -55,7 +55,11 @@ public class CommandPrompt implements Subject{
             instance = new CommandPrompt();
         }
         if(!debug) {
+            // clear screen works only on windows
             CommandPrompt.clearScreen();
+            // ascii code for clear screen shoud work on unix
+            System.out.print("\033[H\033[2J");
+            System.out.flush();
         }
         instance.getConsole().println(toPrint);
         instance.getConsole().flush();
