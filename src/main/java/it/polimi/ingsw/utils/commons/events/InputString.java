@@ -6,11 +6,18 @@ import it.polimi.ingsw.utils.stateMachine.Event;
 
 import java.io.IOException;
 
-public class DetectString extends Event implements Observer {
+/**
+ * Evento di inserimento di una parola da parte dell'utente,
+ * l'utente scrive una parola di suo gradimento e preme invio.
+ *
+ * * @author Fernando
+ */
+
+public class InputString extends Event implements Observer {
     private CommandPrompt commandPrompt;
 
-    public DetectString() throws IOException {
-        super("Detected a string from terminal event " );
+    public InputString() throws IOException {
+        super("\"L'utente ha scitto una parola a piacere\"" );
         this.commandPrompt = CommandPrompt.getInstance();
         this.subscribe();
     }

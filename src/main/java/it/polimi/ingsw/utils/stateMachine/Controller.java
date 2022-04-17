@@ -51,7 +51,7 @@ public class Controller {
     /** Coda di eventi */
     private final LinkedList<IEvent> events = new LinkedList<IEvent>();
     /**
-     * Possibilita' di ignorare la transizione (motivi di validazione della transizione)
+     * Lancia eccezione se non ci sono eventi disponibili
      */
     private boolean exceptOnIllegal = true;
 
@@ -177,12 +177,16 @@ public class Controller {
      */
     public void fireStateEvent(IEvent ev) throws IOException, InterruptedException {
         synchronized (events) {
-            events.add(ev);
+            // aggiunge in coda l'evento arrivato
+            // il primo evento che arriva dovrebbe essere il primo eseguito
+            events.addLast(ev);
             // If there are more events, they will be executed after the current
             // one is done, so just return the thread to whoever sent it.
+
             if (events.size() != 1) {
                 return;
             }
+
 
         }
         while (true) {
@@ -194,19 +198,14 @@ public class Controller {
             IState tmp = states.findTransition(currentState, ev);
 
             // No valid state to transition to
-            if (tmp == null) {
-                // Have to wipe out the queue or this thing will lock up.
-                // Plus at this point we are in an illegal state anyway and
-                // cannot continue.
-                synchronized (events) {
-                    events.clear();
-                }
+            if (tmp == null && events.size() == 1) {
+                // Default Route
 
                 if (exceptOnIllegal) {
                     throw new IllegalStateException(this + " can not accept event \"" + ev + "\" when in state \"" + currentState + "\"");
                 }
 
-            } else {
+            } else if (tmp != null ){
 
                 System.out.println(this + " transition from state \"" + currentState + "\" to state \"" + tmp + "\" because of event \"" + ev + "\"");
 

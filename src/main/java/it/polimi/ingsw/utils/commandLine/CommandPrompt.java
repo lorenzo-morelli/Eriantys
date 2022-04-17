@@ -20,6 +20,7 @@ public class CommandPrompt implements Subject{
     private static ConsoleReader console;
     private static List<Observer> observers = null;
     private static CommandPrompt instance = null;
+    private static boolean debug = false;
 
     private CommandPrompt() throws IOException {
         console = new ConsoleReader();
@@ -53,6 +54,9 @@ public class CommandPrompt implements Subject{
         if (instance == null) {
             instance = new CommandPrompt();
         }
+        if(!debug) {
+            CommandPrompt.clearScreen();
+        }
         instance.getConsole().println(toPrint);
         instance.getConsole().flush();
     }
@@ -72,14 +76,18 @@ public class CommandPrompt implements Subject{
         instance.getConsole().clearScreen();
     }
 
+    public static void setDebug() {
+        CommandPrompt.debug = true;
+    }
+
     public static void ask(String suggestion, String console){
         try {
-            CommandPrompt.clearScreen();
+            if(!debug) {
+                CommandPrompt.clearScreen();
+            }
             CommandPrompt.println(suggestion);
             CommandPrompt.setPrompt(console);
             CommandPrompt.read();
-            CommandPrompt.clearScreen();
-            CommandPrompt.println("    >>> Adesso Attendi <<<    ");
         } catch (IOException e) {
             e.printStackTrace();
         }

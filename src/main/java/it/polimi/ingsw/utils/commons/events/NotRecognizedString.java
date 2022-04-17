@@ -7,19 +7,17 @@ import it.polimi.ingsw.utils.stateMachine.Event;
 import java.io.IOException;
 
 /**
- * L'evento TerminalEvent rappresenta un generico evento di inserimento di una parola nel terminale.
- * Noi vogliamo poter costruire un TerminalEvent, ad esempio "L'utente ha inserito ciao sul terminale"
- * Cioè vogliamo poter comparare la stringa ricevuta dal cmd con una stringa memorizzata,
- * quando l'utente inserisce proprio quella stringa scateniamo l'evento
- * Ho utilizzato il pattern observer per poter osservare la CommandPrompt
+ * L'evento di riconoscimento di quando una parola NON viene inserita dall'utente.
+ * Vogliamo poter comparare la stringa ricevuta dal cmd con una stringa memorizzata,
+ * quando l'utente NON inserisce proprio quella stringa scateniamo l'evento
  *
  * @author Fernando
  */
-public class RecognizeString extends Event implements Observer {
+public class NotRecognizedString extends Event implements Observer {
     public String toListen = null;
     private CommandPrompt commandPrompt;
 
-    public RecognizeString(String message) throws IOException {
+    public NotRecognizedString(String message) throws IOException {
         super("Terminal event " + message);
         this.toListen = message;
         System.out.println("[Costruito l'evento di ricenzione da terminale della parola "+message+"]");
@@ -30,7 +28,7 @@ public class RecognizeString extends Event implements Observer {
     @Override
     public void update(Object message) throws IOException, InterruptedException {
         if(toListen != null){
-            if (this.toListen.equals ((String)message)){
+            if (!this.toListen.equals ((String)message)){
                 fireStateEvent();
             }
         }
@@ -46,3 +44,4 @@ public class RecognizeString extends Event implements Observer {
         this.commandPrompt.unsubscribeObserver(this);
     }
 }
+
