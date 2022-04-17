@@ -14,13 +14,13 @@ import javax.swing.text.Utilities;
  *
  * @author Fernando
  */
-public class MessageListener implements DocumentListener {
+public class MyDocumentListener implements DocumentListener {
 
     private static JTextArea ta;
     private String message;
-    private MessageEvent event;
+    private TCPMessageEvent event;
 
-    public MessageListener(String message, JTextArea ta, MessageEvent event) {
+    public MyDocumentListener( String message, JTextArea ta, TCPMessageEvent event) {
         this.ta=ta;
         this.message=message;
         this.event = event;

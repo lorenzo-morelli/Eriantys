@@ -1,20 +1,26 @@
-package it.polimi.ingsw.utils.commandLine;
+package it.polimi.ingsw.server;
 
+import it.polimi.ingsw.client.view.View;
+import it.polimi.ingsw.client.view.cli.CliView;
+import it.polimi.ingsw.utils.commandLine.CommandPrompt;
 import it.polimi.ingsw.utils.commons.events.*;
 import it.polimi.ingsw.utils.stateMachine.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class InputController {
-    String nickname;
+public class GameController {
+    Model model;      // modello dati di questa semplice demo
+    View view;       // vista (per il momento solo command line interface)
+
+
     // IDLE : stato in cui l'interazione con l'utente non è ancora partita
     private final State IDLE = new State("IDLE");
 
     // Stato di attesa della parola "ciao" da terminale
     private final State WAIT_ciao = new State("STATO di attesa di \"ciao\""){
         public IEvent entryAction(IEvent cause) throws IOException{
-            CommandPrompt.ask("Scrivi ciao","SALUTAMI> ");
+            view.askCiao();
             return null;
         }
     };
@@ -22,11 +28,8 @@ public class InputController {
     // Stato di attesa del nickname dell'utente
     private final State ASK_nickname = new State("STATO di attesa di \"nickname\""){
         public IEvent entryAction(IEvent cause) throws IOException{
-            CommandPrompt.ask("Scrivi il tuo nickname","NICKNAME> ");
+            model.setNickname(view.askNickname());
             return null;
-        }
-        public void exitAction(IEvent cause) throws IOException{
-            nickname=CommandPrompt.gotFromTerminal();
         }
     };
 
@@ -34,7 +37,7 @@ public class InputController {
     private final State CHECK_NICKNAME = new State("STATO di attesa di \"si/no\""){
         public IEvent entryAction(IEvent cause) throws IOException{
             neSineNo.enable();
-            CommandPrompt.ask("Il tuo nickname è proprio " + nickname+"?","si/no> ");
+            view.askNicknameConfirmation(model.getNickname());
             return null;
         }
         public void exitAction(IEvent cause) throws IOException{
@@ -45,8 +48,7 @@ public class InputController {
     // Stato finale di interazione con l'utente
     private final State YES = new State("STATO finale"){
         public IEvent entryAction(IEvent cause) throws IOException{
-            CommandPrompt.println("Bene, allora ti chiamerò " + nickname);
-            System.exit(0 );
+            view.showConfirmation(model.getNickname());
             return null;
         }
     };
@@ -60,19 +62,20 @@ public class InputController {
     private final NotRecognizedSetOfStrings neSineNo;
 
 
-    public InputController() throws IOException, InterruptedException {
+    public GameController(View view) throws IOException, InterruptedException {
 
         // decommentare se si vogliono vedere le info di debugging
         //CommandPrompt.setDebug();
 
-
+        this.view = view;
+        this.model = new Model();
         Controller e = new Controller("Controllore di test", IDLE);
-        start=new StartEvent();
-        ciao= new RecognizedString("ciao");
+        start = new StartEvent();
+        ciao = new RecognizedString("ciao");
         notciao = new NotRecognizedString("ciao");
         si = new RecognizedString("si");
         no = new RecognizedString("no");
-        neSineNo= new NotRecognizedSetOfStrings(new ArrayList<>(Arrays.asList("no", "si")));
+        neSineNo = new NotRecognizedSetOfStrings(new ArrayList<>(Arrays.asList("no", "si")));
         nick = new InputString();
 
         e.addTransition(IDLE, start, WAIT_ciao);
@@ -85,5 +88,8 @@ public class InputController {
 
         // L'evento di start è l'unico che deve essere fatto partire manualmente
         start.fireStateEvent();
+    }
+    public static void main(String[] args) throws Exception {
+        new GameController(new CliView());
     }
 }

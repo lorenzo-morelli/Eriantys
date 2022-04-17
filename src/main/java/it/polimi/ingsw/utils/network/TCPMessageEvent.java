@@ -15,17 +15,17 @@ import javax.swing.*;
  * @author Fernando
  */
 
-class MessageEvent extends Event {
+class TCPMessageEvent extends Event {
 
     private final String message;
     private JTextArea textReceived;
-    private MessageListener listener;
+    private MyDocumentListener listener;
 
-    public MessageEvent(String message, JTextArea textReceived) {
+    public TCPMessageEvent(String message, JTextArea textReceived) {
         super("Message Event " + message);
         this.message = message;
         this.textReceived=textReceived;
-        listener = new MessageListener(message,textReceived,this);
+        listener = new MyDocumentListener(message,textReceived,this);
         textReceived.getDocument().addDocumentListener(listener);
     }
 }

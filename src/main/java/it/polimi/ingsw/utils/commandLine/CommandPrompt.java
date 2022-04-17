@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Classe che rappresenta il terminale (o cmd in windows)
  * Ho usato il pattern Singleton per far in modo che ci sia sempre e solo un cmd
- * Il terminale è il soggetto osservato (pattern observer) dall'evento TerminalEvent
+ * Il terminale è il soggetto osservato (pattern observer) dagli Eventi
  *
  * @author Fernando
  */
@@ -100,7 +100,7 @@ public class CommandPrompt implements Subject{
     @Override
     public void subscribeObserver(Observer observer) {
         observers.add(observer);
-        System.out.println("[L'osservatore TerminalEvent sta osservando la Console]");
+        System.out.println("[L'osservatore sta osservando il CommandPrompt]");
     }
 
     @Override

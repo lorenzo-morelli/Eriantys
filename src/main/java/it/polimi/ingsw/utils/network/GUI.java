@@ -11,7 +11,7 @@ import javax.swing.event.*;
  */
 
 
-public class NetworkManager implements ActionListener{
+public class GUI implements ActionListener{
     JFrame frame;
     JPanel panel;
     NetworkHandler connection;
@@ -28,13 +28,7 @@ public class NetworkManager implements ActionListener{
     JLabel textReceivedLabel;
     JButton disconnectButton;
 
-    public JButton getClientButton() {
-        return clientButton;
-    }
 
-    public JButton getServerButton() {
-        return serverButton;
-    }
 
     public void actionPerformed(ActionEvent event){
         if(event.getSource() == clientButton){
@@ -95,39 +89,14 @@ public class NetworkManager implements ActionListener{
 
     }
 
-    public NetworkManager(){
+    public GUI(){
         Font font = new Font("Artis Sans", Font.BOLD, 15);
-        frame = new JFrame("Network Manager");
-        // Set up frame: no border, etc. (undecorated); transparent.
-        frame.setUndecorated(true);
-        frame.setAlwaysOnTop(false);
-        frame.setResizable(false);
-        // on Mac and maybe other platforms, even
-        // undecorated windows can be
-        // resized
-
-    // Determine and set size and position.
-    // Height: maximized; width: maximized up to 400px.
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-        Insets insets = toolkit.getScreenInsets(frame
-                .getGraphicsConfiguration());
-        Dimension screenSize = toolkit.getScreenSize();
-
-
-        Dimension availableSpace = new Dimension(screenSize.width - insets.left
-                - insets.right, screenSize.height - insets.bottom - insets.top);
-
-        frame.setSize(new Dimension(
-                0 > availableSpace.width ? availableSpace.width : 0,
-                availableSpace.height));
-        frame.setLocation(screenSize.width - insets.right
-                - frame.getSize().width, insets.top);
-
+        frame = new JFrame("Command Line");
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         panel = new JPanel();
         panel.setLayout(null);
-        panel.setPreferredSize(new Dimension(300, 300));
+        panel.setPreferredSize(new Dimension(600, 600));
         frame.setContentPane(panel);
         frame.pack();
         serverButton = new JButton("Server");
