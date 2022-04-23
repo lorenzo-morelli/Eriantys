@@ -1,8 +1,8 @@
-package it.polimi.ingsw.server.states;
+package it.polimi.ingsw.client.states;
 
 import it.polimi.ingsw.client.view.View;
-import it.polimi.ingsw.utils.commons.events.NotRecognizedString;
-import it.polimi.ingsw.utils.commons.events.RecognizedString;
+import it.polimi.ingsw.client.events.NotRecognizedString;
+import it.polimi.ingsw.client.events.RecognizedString;
 import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
 

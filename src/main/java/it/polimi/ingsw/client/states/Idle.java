@@ -1,4 +1,4 @@
-package it.polimi.ingsw.server.states;
+package it.polimi.ingsw.client.states;
 
 import it.polimi.ingsw.utils.stateMachine.State;
 

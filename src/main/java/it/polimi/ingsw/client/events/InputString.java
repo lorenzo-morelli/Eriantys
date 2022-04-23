@@ -1,4 +1,4 @@
-package it.polimi.ingsw.utils.commons.events;
+package it.polimi.ingsw.client.events;
 
 import it.polimi.ingsw.utils.commandLine.CommandPrompt;
 import it.polimi.ingsw.utils.observerPattern.Observer;

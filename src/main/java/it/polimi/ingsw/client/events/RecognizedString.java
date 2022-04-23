@@ -1,29 +1,32 @@
-package it.polimi.ingsw.utils.commons.events;
+package it.polimi.ingsw.client.events;
 
 import it.polimi.ingsw.utils.commandLine.CommandPrompt;
 import it.polimi.ingsw.utils.observerPattern.Observer;
 import it.polimi.ingsw.utils.stateMachine.Event;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 /**
- * L'evento scatta quando l'utente NON inserisce una delle parole
- * indicate nell'ArrayList toListen
+ * L'evento di riconoscimento di una parola inserita dall'utente.
+ * Vogliamo poter comparare la stringa ricevuta dal cmd con una stringa memorizzata,
+ * quando l'utente inserisce proprio quella stringa scateniamo l'evento
+ * Ho utilizzato il pattern observer per poter osservare la CommandPrompt
+ *
  * @author Fernando
  */
-public class NotRecognizedSetOfStrings extends Event implements Observer {
-    public ArrayList<String> toListen = null;
+public class RecognizedString extends Event implements Observer {
+    public String toListen = null;
     private CommandPrompt commandPrompt;
     private boolean enabled = false;
 
-    public NotRecognizedSetOfStrings(ArrayList<String> words) throws IOException {
-        super("Nessuna delle opzioni riconosciute ");
-        this.toListen = words;
-        System.out.println("[ Costruito l'evento Stringhe non riconosciute ]");
+    public RecognizedString(String message) throws IOException {
+        super("Terminal event " + message);
+        this.toListen = message;
+        System.out.println("[Costruito l'evento di ricenzione da terminale della parola "+message+"]");
         this.commandPrompt = CommandPrompt.getInstance();
         this.subscribe();
     }
+
 
     public void enable() {
         this.enabled = true;
@@ -33,21 +36,10 @@ public class NotRecognizedSetOfStrings extends Event implements Observer {
         this.enabled = false;
     }
 
-    private boolean isInList(String message) throws IOException {
-        for (String x : toListen){
-            CommandPrompt.println(x+"== (ricevuto) "+message);
-            if (message.equals(x)){
-                CommandPrompt.println("true");
-                return true;
-            }
-        }
-        return false;
-    }
-
     @Override
     public void update(Object message) throws IOException, InterruptedException {
         if(toListen != null && enabled == true){
-            if(!isInList((String)message)){
+            if (this.toListen.equals ((String)message)){
                 fireStateEvent();
             }
         }
