@@ -15,6 +15,7 @@ import java.io.IOException;
 
 public class InputString extends Event implements Observer {
     private CommandPrompt commandPrompt;
+    private boolean enabled = false;
 
     public InputString() throws IOException {
         super("\"L'utente ha scitto una parola a piacere\"" );
@@ -22,9 +23,20 @@ public class InputString extends Event implements Observer {
         this.subscribe();
     }
 
+
+    public void enable() {
+        this.enabled = true;
+    }
+
+    public void disable() {
+        this.enabled = false;
+    }
+
     @Override
     public void update(Object message) throws IOException, InterruptedException {
-        fireStateEvent();
+        if (enabled == true){
+            fireStateEvent();
+        }
     }
 
     @Override

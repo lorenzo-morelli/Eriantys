@@ -16,6 +16,7 @@ import java.io.IOException;
 public class NotRecognizedString extends Event implements Observer {
     public String toListen = null;
     private CommandPrompt commandPrompt;
+    private boolean enabled = false;
 
     public NotRecognizedString(String message) throws IOException {
         super("Terminal event " + message);
@@ -25,9 +26,18 @@ public class NotRecognizedString extends Event implements Observer {
         this.subscribe();
     }
 
+
+    public void enable() {
+        this.enabled = true;
+    }
+
+    public void disable() {
+        this.enabled = false;
+    }
+
     @Override
     public void update(Object message) throws IOException, InterruptedException {
-        if(toListen != null){
+        if(toListen != null && enabled == true){
             if (!this.toListen.equals ((String)message)){
                 fireStateEvent();
             }
