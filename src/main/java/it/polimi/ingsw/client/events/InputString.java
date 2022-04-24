@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.events;
 
-import it.polimi.ingsw.utils.commandLine.CommandPrompt;
+import it.polimi.ingsw.client.Model;
+import it.polimi.ingsw.utils.cli.CommandPrompt;
 import it.polimi.ingsw.utils.observerPattern.Observer;
 import it.polimi.ingsw.utils.stateMachine.Event;
 
@@ -17,10 +18,13 @@ public class InputString extends Event implements Observer {
     private CommandPrompt commandPrompt;
     private boolean enabled = false;
 
-    public InputString() throws IOException {
-        super("\"L'utente ha scitto una parola a piacere\"" );
+    private Model model;
+
+    public InputString(Model model) throws IOException {
+        super("[L'utente ha scitto una parola a piacere]" );
         this.commandPrompt = CommandPrompt.getInstance();
         this.subscribe();
+        this.model = model;
     }
 
 
@@ -35,6 +39,7 @@ public class InputString extends Event implements Observer {
     @Override
     public void update(Object message) throws IOException, InterruptedException {
         if (enabled == true){
+            model.setNickname(CommandPrompt.gotFromTerminal());
             fireStateEvent();
         }
     }

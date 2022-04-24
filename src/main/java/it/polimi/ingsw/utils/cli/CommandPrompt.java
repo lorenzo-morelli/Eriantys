@@ -1,4 +1,4 @@
-package it.polimi.ingsw.utils.commandLine;
+package it.polimi.ingsw.utils.cli;
 
 import it.polimi.ingsw.utils.observerPattern.Observer;
 import it.polimi.ingsw.utils.observerPattern.Subject;
@@ -100,7 +100,6 @@ public class CommandPrompt implements Subject{
     @Override
     public void subscribeObserver(Observer observer) {
         observers.add(observer);
-        System.out.println("[L'osservatore sta osservando il CommandPrompt]");
     }
 
     @Override
@@ -113,7 +112,6 @@ public class CommandPrompt implements Subject{
         CommandPrompt.observers.stream().forEach(observer -> {
             try {
                 observer.update(fromTerminal);
-                System.out.println("[L'osservatore è stato notificato]");
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (InterruptedException e) {

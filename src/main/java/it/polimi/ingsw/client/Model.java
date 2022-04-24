@@ -1,7 +1,7 @@
 package it.polimi.ingsw.client;
 
 public class Model {
-    String nickname;
+    private String nickname;
 
     public String getNickname() {
         return nickname;

@@ -7,12 +7,12 @@ import it.polimi.ingsw.utils.stateMachine.State;
 
 import java.io.IOException;
 
-public class Final extends State {
+public class FinalScreen extends State {
     View view;
     Model model;
 
-    public Final(View view, Model model) {
-        super("Stato finale");
+    public FinalScreen(View view, Model model) {
+        super("[STATO finale]");
         this.view = view;
         this.model = model;
     }

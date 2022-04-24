@@ -1,6 +1,6 @@
 package it.polimi.ingsw.client.events;
 
-import it.polimi.ingsw.utils.commandLine.CommandPrompt;
+import it.polimi.ingsw.utils.cli.CommandPrompt;
 import it.polimi.ingsw.utils.observerPattern.Observer;
 import it.polimi.ingsw.utils.stateMachine.Event;
 
@@ -18,9 +18,9 @@ public class NotRecognizedSetOfStrings extends Event implements Observer {
     private boolean enabled = false;
 
     public NotRecognizedSetOfStrings(ArrayList<String> words) throws IOException {
-        super("Nessuna delle opzioni riconosciute ");
+        super("[Nessuna delle opzioni riconosciute]");
         this.toListen = words;
-        System.out.println("[ Costruito l'evento Stringhe non riconosciute ]");
+        System.out.println("[Costruito l'evento Stringhe non riconosciute]");
         this.commandPrompt = CommandPrompt.getInstance();
         this.subscribe();
     }
@@ -35,9 +35,7 @@ public class NotRecognizedSetOfStrings extends Event implements Observer {
 
     private boolean isInList(String message) throws IOException {
         for (String x : toListen){
-            CommandPrompt.println(x+"== (ricevuto) "+message);
             if (message.equals(x)){
-                CommandPrompt.println("true");
                 return true;
             }
         }

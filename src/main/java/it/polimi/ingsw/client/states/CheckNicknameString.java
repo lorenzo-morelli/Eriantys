@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class CheckNickname extends State {
+public class CheckNicknameString extends State {
 
     private Model model;
     private View view;
@@ -20,8 +20,8 @@ public class CheckNickname extends State {
     private final RecognizedString si, no;
     private final NotRecognizedSetOfStrings neSineNo;
 
-    public CheckNickname(View view, Model model) throws IOException {
-        super("STATO di controllo del nickname");
+    public CheckNicknameString(View view, Model model) throws IOException {
+        super("[STATO di controllo del nickname]");
         this.view = view;
         this.model = model;
         si = new RecognizedString("si");
@@ -29,15 +29,15 @@ public class CheckNickname extends State {
         neSineNo = new NotRecognizedSetOfStrings(new ArrayList<>(Arrays.asList("no", "si")));
     }
 
-    public RecognizedString insertedSi() {
+    public RecognizedString si() {
         return si;
     }
 
-    public RecognizedString insertedNo() {
+    public RecognizedString no() {
         return no;
     }
 
-    public NotRecognizedSetOfStrings insertedNeSineNo() {
+    public NotRecognizedSetOfStrings neSineNo() {
         return neSineNo;
     }
 

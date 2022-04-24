@@ -1,6 +1,6 @@
 package it.polimi.ingsw.client.events;
 
-import it.polimi.ingsw.utils.commandLine.CommandPrompt;
+import it.polimi.ingsw.utils.cli.CommandPrompt;
 import it.polimi.ingsw.utils.observerPattern.Observer;
 import it.polimi.ingsw.utils.stateMachine.Event;
 
@@ -19,7 +19,7 @@ public class NotRecognizedString extends Event implements Observer {
     private boolean enabled = false;
 
     public NotRecognizedString(String message) throws IOException {
-        super("Terminal event " + message);
+        super("[Non è stata riconosciuta la parola " + message + "]");
         this.toListen = message;
         System.out.println("[Costruito l'evento di ricenzione da terminale della parola "+message+"]");
         this.commandPrompt = CommandPrompt.getInstance();

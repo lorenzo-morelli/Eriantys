@@ -4,6 +4,6 @@ import it.polimi.ingsw.utils.stateMachine.State;
 
 public class Idle extends State {
     public Idle() {
-        super("Stato di IDLE");
+        super("[STATO di IDLE]");
     }
 }

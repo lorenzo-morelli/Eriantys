@@ -2,11 +2,11 @@ package it.polimi.ingsw.client.view;
 
 public interface View {
 
-    String askCiao();
+    void askToStart();
 
-    String askNickname();
+    void askNickname();
 
-    String askNicknameConfirmation(String nickname);
+    void askNicknameConfirmation(String nickname);
 
     void showConfirmation(String nickname);
 

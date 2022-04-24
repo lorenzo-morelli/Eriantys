@@ -8,39 +8,39 @@ import it.polimi.ingsw.utils.stateMachine.State;
 
 import java.io.IOException;
 
-public class RiconosciCiao extends State {
+public class WelcomeScreen extends State {
     View view;
-    private RecognizedString ciao;
-    private NotRecognizedString notciao;
+    private RecognizedString start;
+    private NotRecognizedString notStart;
 
 
-    public RiconosciCiao(View view) throws IOException {
-        super("STATO di attesa di \"ciao\"");
+    public WelcomeScreen(View view) throws IOException {
+        super("[STATO di attesa di start]");
         this.view = view;
-        ciao = new RecognizedString("ciao");
-        notciao = new NotRecognizedString("ciao");
+        start = new RecognizedString("start");
+        notStart = new NotRecognizedString("start");
     }
 
 
 
-    public RecognizedString insertedCiao() {
-        return ciao;
+    public RecognizedString start() {
+        return start;
     }
 
-    public NotRecognizedString notInsertedCiao() {
-        return notciao;
+    public NotRecognizedString notStart() {
+        return notStart;
     }
 
     public IEvent entryAction(IEvent cause) throws IOException {
         // mi metto in ascolto di possibili eventi che mi potrebbero far transire
-        ciao.enable();
-        notciao.enable();
+        start.enable();
+        notStart.enable();
 
-        view.askCiao();
+        view.askToStart();
 
         // disabilito gli eventi adesso perché non mi servono più
-        ciao.disable();
-        notciao.disable();
+        start.disable();
+        notStart.disable();
         return null;
     }
 }

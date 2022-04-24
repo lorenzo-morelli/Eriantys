@@ -3,26 +3,27 @@ package it.polimi.ingsw.client.states;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.client.Model;
 import it.polimi.ingsw.client.events.InputString;
+import it.polimi.ingsw.utils.cli.CommandPrompt;
 import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
 
 import java.io.IOException;
 
-public class AskNickname extends State {
+public class AskNicknameScreen extends State {
 
     Model model;
     View view;
 
     InputString insertNickname;
 
-    public AskNickname(View view, Model model) throws IOException {
-        super("STATO di attesa di \"ciao\"");
+    public AskNicknameScreen(View view, Model model) throws IOException {
+        super("[STATO di attesa del nickname]");
         this.view = view;
         this.model = model;
-        insertNickname = new InputString();
+        insertNickname = new InputString(model);
     }
 
-    public InputString insertedNickname() {
+    public InputString nickname() {
         return insertNickname;
     }
 
@@ -30,8 +31,7 @@ public class AskNickname extends State {
         // abilito l'evento di ricezione del nickname
         insertNickname.enable();
 
-        String nickname = view.askNickname();
-        model.setNickname(nickname);
+        view.askNickname();
 
         // disabilito l'evento di ricezione del nickame
         insertNickname.disable();

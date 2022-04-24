@@ -1,27 +1,32 @@
 package it.polimi.ingsw.client.view.cli;
 
+import it.polimi.ingsw.client.Model;
 import it.polimi.ingsw.client.view.View;
-import it.polimi.ingsw.utils.commandLine.CommandPrompt;
+import it.polimi.ingsw.utils.cli.CommandPrompt;
 
 import java.io.IOException;
 
 public class CliView implements View {
+
     @Override
-    public String askCiao() {
-        CommandPrompt.ask("Scrivi ciao","SALUTAMI> ");
-        return CommandPrompt.gotFromTerminal();
+    public void askToStart() {
+        CommandPrompt.ask(
+                "Scrivi start per far partire il gioco e premi invio",
+                "START THE GAME> ");
     }
 
     @Override
-    public String askNickname() {
-        CommandPrompt.ask("Scrivi il tuo nickname","NICKNAME> ");
-        return CommandPrompt.gotFromTerminal();
+    public void askNickname() {
+        CommandPrompt.ask(
+                "Scrivi il tuo nickname",
+                "your nickname> ");
     }
 
     @Override
-    public String askNicknameConfirmation(String nickname) {
-        CommandPrompt.ask("Il tuo nickname è proprio " + nickname +"?","si/no> ");
-        return CommandPrompt.gotFromTerminal();
+    public void askNicknameConfirmation(String nickname) {
+        CommandPrompt.ask(
+                "Il tuo nickname è proprio " + nickname +"?",
+                "si/no> ");
     }
 
     @Override
