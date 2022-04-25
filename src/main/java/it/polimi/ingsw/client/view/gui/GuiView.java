@@ -66,6 +66,11 @@ public class GuiView implements View, ActionListener {
     }
 
     @Override
+    public void askConnectionInfo() {
+
+    }
+
+    @Override
     public void setCallingState(State callingState) {
         this.precedentCallingState = this.callingState;
         this.callingState = callingState;
@@ -78,70 +83,10 @@ public class GuiView implements View, ActionListener {
     }
 
     @Override
-    public void askNickname() {
-        askNicknamePanel = new JPanel();
-        askNicknamePanel.setLayout(null);
-        askNicknamePanel.setBounds(0, 0, 800, 600);
-        Gui.getContainer().add(askNicknamePanel);
+    public void askConnectOrCreate() {
 
-        if (precedentCallingState instanceof WelcomeScreen){
-            askNicknameArea = new JTextArea("Benvenuto nel magico mondo di Eriantys,\nc'è qualche dettaglio che" +
-                    " ti dobbiamo chiedere\n\n" +
-                    "Scrivi il tuo nickname qui sotto \nQuando hai finito premi invio");
-        }
-        else{
-            askNicknameArea = new JTextArea("Correggi il tuo nickname:\n\n" +
-                    "Scrivi il tuo nickname qui sotto \nQuando hai finito premi invio");
-        }
-
-
-        askNicknameArea.setEditable(false);
-        askNicknameArea.setBounds(100, 100, 800, 250);
-        askNicknameArea.setBackground(Color.WHITE);
-        askNicknameArea.setForeground(Color.BLACK);
-        askNicknameArea.setFont(Gui.getNormalFont());
-        askNicknameArea.setLineWrap(true);
-        askNicknamePanel.add(askNicknameArea);
-
-        nicknameLabel = new JLabel("Nickname");
-        nicknameLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        nicknameLabel.setFont(Gui.getButtonFont());
-        nicknameLabel.setSize(600, 25);
-        nicknameLabel.setLocation(100, 425);
-        askNicknamePanel.add(nicknameLabel);
-        nickname = new JTextField();
-        nickname.setSize(300, 25);
-        nickname.setLocation(250, 450);
-        nickname.addActionListener(this);
-        askNicknamePanel.add(nickname);
     }
 
-    @Override
-    public void askNicknameConfirmation(String nickname) {
-        askNicknameConfirmationPanel = new JPanel();
-        askNicknameConfirmationPanel.setLayout(null);
-        askNicknameConfirmationPanel.setBounds(0, 0, 800, 600);
-        Gui.getContainer().add(askNicknameConfirmationPanel);
-        askNicknameConfirmationArea = new JTextArea("Ok, se ho capito bene il tuo nickname è\n" +
-                nickname + ", mi confermi?");
-        askNicknameConfirmationArea.setEditable(false);
-        askNicknameConfirmationArea.setBounds(100, 100, 800, 250);
-        askNicknameConfirmationArea.setBackground(Color.WHITE);
-        askNicknameConfirmationArea.setForeground(Color.BLACK);
-        askNicknameConfirmationArea.setFont(Gui.getNormalFont());
-        askNicknameConfirmationArea.setLineWrap(true);
-        askNicknameConfirmationPanel.add(askNicknameConfirmationArea);
-        siButton = new JButton("Si");
-        siButton.setSize(300, 25);
-        siButton.setLocation(100, 400);
-        siButton.addActionListener(this);
-        askNicknameConfirmationPanel.add(siButton);
-        noButton = new JButton("No");
-        noButton.setSize(300, 25);
-        noButton.setLocation(400, 400);
-        noButton.addActionListener(this);
-        askNicknameConfirmationPanel.add(noButton);
-    }
 
     @Override
     public void showConfirmation(String nickname) {
@@ -169,23 +114,6 @@ public class GuiView implements View, ActionListener {
                 ((WelcomeScreen) callingState).start().fireStateEvent();
                 titleNamePanel.setVisible(false);
                 startButtonPanel.setVisible(false);
-            }
-
-            if (event.getSource() == nickname) {
-                if (!nickname.getText().equals("")) {
-                    System.out.println(nickname.getText());
-                    ((AskNicknameScreen) callingState).setNickname(nickname.getText());
-                    ((AskNicknameScreen) callingState).nickname().fireStateEvent();
-                    askNicknamePanel.setVisible(false);
-                }
-            }
-            if (event.getSource() == noButton) {
-                ((CheckNicknameScreen) callingState).no().fireStateEvent();
-                askNicknameConfirmationPanel.setVisible(false);
-            }
-            if (event.getSource() == siButton) {
-                ((CheckNicknameScreen) callingState).si().fireStateEvent();
-                askNicknameConfirmationPanel.setVisible(false);
             }
 
         } catch (IOException e) {

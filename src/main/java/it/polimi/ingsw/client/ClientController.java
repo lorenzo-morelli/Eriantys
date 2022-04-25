@@ -16,11 +16,12 @@ public class ClientController {
     // ogni stato avrà un getter che sarà utilizzato dalla GuiView
     private final Idle idle;    // modo elegante di far partire il controllore
     private final WelcomeScreen waitStart;
-    private final AskNicknameScreen askNicknameScreen;
-    /*private final CheckNicknameScreen checkNicknameScreen;
-    private final FinalScreen finalScreen;*/
+    private final AskConnectionInfoScreen askConnectionInfo;
+    private final CreateOrConnectScreen CreateOrConnect;
+    private final CreateGameScreen CreateGame;
+    private final ConnectGameScreen ConnectGame;
 
-    // unico evento che deve avere il controllore per partire
+
     private final Event start;
 
     public ClientController(View view) throws IOException, InterruptedException {
@@ -31,19 +32,19 @@ public class ClientController {
         idle = new Idle();
         start = new Event("[Controller Started]");
         Controller fsm = new Controller("Controllore del Client", idle);
-
         waitStart = new WelcomeScreen(view);
-        askNicknameScreen = new AskNicknameScreen(view,model);
-        checkNicknameScreen = new CheckNicknameScreen(view,model);
-        finalScreen = new FinalScreen(view, model);
+        askConnectionInfo = new AskConnectionInfoScreen(view,model);
+        CreateOrConnect = new CreateOrConnectScreen(view,model);
+        CreateGame= new CreateGameScreen(view,model);
+        ConnectGame= new ConnectGameScreen(view,model);
 
         fsm.addTransition(idle, start, waitStart);
-        fsm.addTransition(waitStart, waitStart.start(), askNicknameScreen);
+        fsm.addTransition(waitStart, waitStart.start(), askConnectionInfo);
         fsm.addTransition(waitStart, waitStart.notStart(), waitStart);
-        fsm.addTransition(askNicknameScreen, askNicknameScreen.nickname(), checkNicknameScreen);
-        fsm.addTransition(checkNicknameScreen, checkNicknameScreen.si(), finalScreen);
-        fsm.addTransition(checkNicknameScreen, checkNicknameScreen.no(), askNicknameScreen);
-        fsm.addTransition(checkNicknameScreen, checkNicknameScreen.neSineNo(), checkNicknameScreen);
+        fsm.addTransition(askConnectionInfo, askConnectionInfo.userInfo(), CreateOrConnect);
+        fsm.addTransition(CreateOrConnect, CreateOrConnect.haSceltoConnetti(), ConnectGame);
+        fsm.addTransition(CreateOrConnect, CreateOrConnect.haSceltoCrea(), CreateGame);
+        fsm.addTransition(CreateOrConnect, CreateOrConnect.sceltaNonValida(), CreateOrConnect);
 
         // L'evento di start è l'unico che deve essere fatto partire manualmente
         start.fireStateEvent();

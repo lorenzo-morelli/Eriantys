@@ -14,6 +14,20 @@ public class CliView implements View{
     private State precedentCallingState;
 
     @Override
+    public void askConnectionInfo() {
+        if (callingState instanceof AskConnectionInfoScreen) {
+
+            ((AskConnectionInfoScreen) callingState).userInfo().enable();
+
+            CommandPrompt.ask(
+                    "Inserisci nickname, indirizzo ip e porta separati da uno spazio e clicca invio",
+                    "nickname ip porta> ");
+
+            ((AskConnectionInfoScreen) callingState).userInfo().disable();
+        }
+    }
+
+    @Override
     public void setCallingState(State callingState) {
         this.precedentCallingState = this.callingState;
         this.callingState = callingState;
@@ -33,35 +47,20 @@ public class CliView implements View{
     }
 
     @Override
-    public void askNickname() {
-        ((AskNicknameScreen) callingState).nickname().enable();
-        if(precedentCallingState instanceof WelcomeScreen){
+    public void askConnectOrCreate() {
+        if (callingState instanceof CreateOrConnectScreen) {
+            ((CreateOrConnectScreen)callingState).haSceltoCrea().enable();
+            ((CreateOrConnectScreen)callingState).haSceltoConnetti().enable();
+            ((CreateOrConnectScreen)callingState).sceltaNonValida().enable();
+
             CommandPrompt.ask(
-                        "Scrivi il tuo nickname",
-                        "your nickname> ");
+                    "Scegli se creare una nuova partita o connetterti ad una partita esistente",
+                    "create or connect> ");
+
+            ((CreateOrConnectScreen)callingState).haSceltoCrea().enable();
+            ((CreateOrConnectScreen)callingState).haSceltoConnetti().enable();
+            ((CreateOrConnectScreen)callingState).sceltaNonValida().enable();
         }
-        else{
-            CommandPrompt.ask(
-                        "Ok, allora correggi il tuo nickname",
-                        "your nickname> ");
-        }
-        ((AskNicknameScreen) callingState).nickname().disable();
-
-
-    }
-
-
-    @Override
-    public void askNicknameConfirmation(String nickname) {
-        ((CheckNicknameScreen) callingState).si().enable();
-        ((CheckNicknameScreen) callingState).no().enable();
-        ((CheckNicknameScreen) callingState).neSineNo().enable();
-        CommandPrompt.ask(
-                "Il tuo nickname è proprio " + nickname +"?",
-                "si/no> ");
-        ((CheckNicknameScreen) callingState).si().disable();
-        ((CheckNicknameScreen) callingState).no().disable();
-        ((CheckNicknameScreen) callingState).neSineNo().disable();
     }
 
     @Override

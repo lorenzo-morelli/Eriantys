@@ -6,7 +6,7 @@ import it.polimi.ingsw.client.events.*;
 import it.polimi.ingsw.utils.stateMachine.*;
 import java.io.IOException;
 
-public class AskNicknameScreen extends State{
+public class AskConnectionInfoScreen extends State{
     Model model;
     View view;
     InputString insertUserInfo;
@@ -15,7 +15,7 @@ public class AskNicknameScreen extends State{
         super("[STATO di attesa del nickname]");
         this.view = view;
         this.model = model;
-        insertNickname = new InputString(model);
+        insertUserInfo = new ParametersFromTerminal(model, 3); // nickname / numeroIp / numerodiporta
     }
 
     public InputString userInfo() {
@@ -24,11 +24,17 @@ public class AskNicknameScreen extends State{
 
     public IEvent entryAction(IEvent cause) throws IOException {
         view.setCallingState(this);
-        view.askNickname();
+        view.askConnectionInfo();
         return null;
     }
 
-    public void setNickname(String nickname) {
-        model.setNickname(nickname);
+    @Override
+    public void exitAction(IEvent cause) throws IOException {
+        super.exitAction(cause);
+        model.setNickname(model.getFromTerminal().get(0));
+        model.setIp(model.getFromTerminal().get(1));
+        model.setPort(model.getFromTerminal().get(2));
+        //connettiti al server (indirizzo Ip, numero di porta NOTI) tramite connection info dati
     }
+
 }
