@@ -23,11 +23,13 @@ public class CliView implements View{
     public void askToStart() {
         if (callingState instanceof WelcomeScreen) {
             ((WelcomeScreen)callingState).start().enable();
+            ((WelcomeScreen)callingState).notStart().enable();
             CommandPrompt.ask(
                     "Scrivi start per far partire il gioco e premi invio",
                     "START THE GAME> ");
         }
         ((WelcomeScreen)callingState).start().disable();
+        ((WelcomeScreen)callingState).notStart().enable();
     }
 
     @Override

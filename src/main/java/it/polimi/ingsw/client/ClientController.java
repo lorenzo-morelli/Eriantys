@@ -2,6 +2,7 @@ package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.client.states.*;
 import it.polimi.ingsw.client.view.*;
+import it.polimi.ingsw.utils.cli.CommandPrompt;
 import it.polimi.ingsw.utils.stateMachine.*;
 import java.io.IOException;
 
@@ -16,14 +17,14 @@ public class ClientController {
     private final Idle idle;    // modo elegante di far partire il controllore
     private final WelcomeScreen waitStart;
     private final AskNicknameScreen askNicknameScreen;
-    private final CheckNicknameScreen checkNicknameScreen;
-    private final FinalScreen finalScreen;
+    /*private final CheckNicknameScreen checkNicknameScreen;
+    private final FinalScreen finalScreen;*/
 
     // unico evento che deve avere il controllore per partire
     private final Event start;
 
     public ClientController(View view) throws IOException, InterruptedException {
-        // CommandPrompt.setDebug();
+        CommandPrompt.setDebug();
         this.model = new Model();
         this.view = view;
 
@@ -46,22 +47,6 @@ public class ClientController {
 
         // L'evento di start è l'unico che deve essere fatto partire manualmente
         start.fireStateEvent();
-    }
-    // I getters seguenti saranno utilizzati dalla GuiView
-    public WelcomeScreen getWaitStart() {
-        return waitStart;
-    }
-
-    public AskNicknameScreen getAskNicknameScreen() {
-        return askNicknameScreen;
-    }
-
-    public CheckNicknameScreen getCheckNicknameString() {
-        return checkNicknameScreen;
-    }
-
-    public FinalScreen getFinalScreen() {
-        return finalScreen;
     }
 
 }

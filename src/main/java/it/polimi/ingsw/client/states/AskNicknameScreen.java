@@ -9,17 +9,17 @@ import java.io.IOException;
 public class AskNicknameScreen extends State{
     Model model;
     View view;
-    InputString insertNickname;
+    InputString insertUserInfo;
 
-    public AskNicknameScreen(View view, Model model) throws IOException {
+    public AskConnectionInfoScreen(View view, Model model) throws IOException {
         super("[STATO di attesa del nickname]");
         this.view = view;
         this.model = model;
         insertNickname = new InputString(model);
     }
 
-    public InputString nickname() {
-        return insertNickname;
+    public InputString userInfo() {
+        return insertUserInfo;
     }
 
     public IEvent entryAction(IEvent cause) throws IOException {

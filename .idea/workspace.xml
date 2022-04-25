@@ -9,11 +9,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c193818a-1e92-4991-9439-cb3e4c836bfd" name="Changes" comment="GuiView and CliView demo fully working code">
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/utils/gui/ImagePanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/GuiResources/background.jpg" afterDir="false" />
+    <list default="true" id="c193818a-1e92-4991-9439-cb3e4c836bfd" name="Changes" comment="background to welcome screen test">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/view/gui/GuiView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/view/gui/GuiView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/deliveries/principiant_game.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ClientController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ClientLauncher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ClientLauncher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/AskNicknameScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/AskNicknameScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/view/cli/CliView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/view/cli/CliView.java" afterDir="false" />
+    </list>
+    <list id="4543697f-2cef-4409-863c-6d4c8711deb7" name="Changes by ignaI" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/AskNicknameScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/AskNicknameScreen.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,6 +48,16 @@
       <filtered-out-file-type name="TAG" />
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
+  </component>
+  <component name="LineStatusTrackerManager">
+    <file path="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/AskNicknameScreen.java">
+      <ranges>
+        <range start1="11" end1="12" start2="11" end2="12" changelist="c193818a-1e92-4991-9439-cb3e4c836bfd" />
+        <range start1="13" end1="14" start2="13" end2="14" changelist="c193818a-1e92-4991-9439-cb3e4c836bfd" />
+        <range start1="17" end1="18" start2="17" end2="19" changelist="4543697f-2cef-4409-863c-6d4c8711deb7" />
+        <range start1="20" end1="22" start2="21" end2="23" changelist="c193818a-1e92-4991-9439-cb3e4c836bfd" />
+      </ranges>
+    </file>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -229,7 +244,8 @@
       <workItem from="1650797492125" duration="119000" />
       <workItem from="1650797839056" duration="116000" />
       <workItem from="1650798074426" duration="79000" />
-      <workItem from="1650798166130" duration="35852000" />
+      <workItem from="1650798166130" duration="38295000" />
+      <workItem from="1650901774959" duration="399000" />
     </task>
     <task id="LOCAL-00001" summary="created resources directory">
       <created>1647955875299</created>
@@ -385,7 +401,14 @@
       <option name="project" value="LOCAL" />
       <updated>1650882108538</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="background to welcome screen test">
+      <created>1650888129258</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1650888129258</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -425,7 +448,8 @@
     <MESSAGE value="Moved classes in correct packages" />
     <MESSAGE value="View should have all void methods" />
     <MESSAGE value="GuiView and CliView demo fully working code" />
-    <option name="LAST_COMMIT_MESSAGE" value="GuiView and CliView demo fully working code" />
+    <MESSAGE value="background to welcome screen test" />
+    <option name="LAST_COMMIT_MESSAGE" value="background to welcome screen test" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/ing_sw_2022_morelli_morea_netodellacqua$Main.ic" NAME="Main Coverage Results" MODIFIED="1649790444598" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
