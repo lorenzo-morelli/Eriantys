@@ -9,19 +9,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c193818a-1e92-4991-9439-cb3e4c836bfd" name="Changes" comment="View should have all void methods">
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/utils/gui/Gui.java" afterDir="false" />
+    <list default="true" id="c193818a-1e92-4991-9439-cb3e4c836bfd" name="Changes" comment="GuiView and CliView demo fully working code">
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/utils/gui/ImagePanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/GuiResources/background.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ClientController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ClientLauncher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ClientLauncher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/AskNicknameScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/AskNicknameScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/CheckNicknameString.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/CheckNicknameScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/FinalScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/FinalScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/WelcomeScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/WelcomeScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/view/View.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/view/View.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/view/cli/CliView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/view/cli/CliView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/view/gui/GuiView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/view/gui/GuiView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/utils/gui/Window.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,16 +76,18 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources/GuiResources" />
+      <recent name="$PROJECT_DIR$/src/main/resources" />
       <recent name="C:\Users\Fernando\Il mio Drive\Desktop\ing-sw-2022-morelli-morea-netodellacqua\src\main\java" />
       <recent name="C:\Users\Fernando\Il mio Drive\Desktop\ing-sw-2022-morelli-morea-netodellacqua\src\main" />
       <recent name="C:\Users\morel\Desktop\Programs\Java\ing-sw-2022-morelli-morea-netodellacqua\deliveries" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="it.polimi.ingsw.utils.gui" />
       <recent name="it.polimi.ingsw.client.view" />
       <recent name="it.polimi.ingsw.server" />
       <recent name="it.polimi.ingsw.server.model" />
       <recent name="it.polimi.ingsw.client" />
-      <recent name="it.polimi.ingsw.utils" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -148,12 +142,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Window" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="it.polimi.ingsw.utils.gui.Window" />
+    <configuration name="it.polimi.ingsw.common.view.Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="it.polimi.ingsw.common.view.Main" />
       <module name="Eriantys" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="it.polimi.ingsw.utils.gui.*" />
+          <option name="PATTERN" value="it.polimi.ingsw.common.view.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -161,12 +155,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="it.polimi.ingsw.common.view.Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="it.polimi.ingsw.common.view.Main" />
+    <configuration name="it.polimi.ingsw.utils.gui.Window" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="it.polimi.ingsw.utils.gui.Window" />
       <module name="Eriantys" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="it.polimi.ingsw.common.view.*" />
+          <option name="PATTERN" value="it.polimi.ingsw.utils.gui.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -189,17 +183,17 @@
     </configuration>
     <list>
       <item itemvalue="Application.DemoEsempio" />
+      <item itemvalue="Application.it.polimi.ingsw.utils.gui.Window" />
       <item itemvalue="Application.Main" />
       <item itemvalue="Application.ClientController" />
       <item itemvalue="Application.ClientLauncher" />
-      <item itemvalue="Application.Window" />
       <item itemvalue="Application.it.polimi.ingsw.common.view.Main" />
       <item itemvalue="Application.it.polimi.ingsw.utils.network.NetworkController" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.ClientLauncher" />
-        <item itemvalue="Application.Window" />
+        <item itemvalue="Application.it.polimi.ingsw.utils.gui.Window" />
         <item itemvalue="Application.ClientController" />
         <item itemvalue="Application.it.polimi.ingsw.utils.network.NetworkController" />
         <item itemvalue="Application.it.polimi.ingsw.common.view.Main" />
@@ -235,7 +229,7 @@
       <workItem from="1650797492125" duration="119000" />
       <workItem from="1650797839056" duration="116000" />
       <workItem from="1650798074426" duration="79000" />
-      <workItem from="1650798166130" duration="31193000" />
+      <workItem from="1650798166130" duration="35852000" />
     </task>
     <task id="LOCAL-00001" summary="created resources directory">
       <created>1647955875299</created>
@@ -384,7 +378,14 @@
       <option name="project" value="LOCAL" />
       <updated>1650805083805</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="GuiView and CliView demo fully working code">
+      <created>1650882108538</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1650882108538</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -423,7 +424,8 @@
     <MESSAGE value="Created States Classes" />
     <MESSAGE value="Moved classes in correct packages" />
     <MESSAGE value="View should have all void methods" />
-    <option name="LAST_COMMIT_MESSAGE" value="View should have all void methods" />
+    <MESSAGE value="GuiView and CliView demo fully working code" />
+    <option name="LAST_COMMIT_MESSAGE" value="GuiView and CliView demo fully working code" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/ing_sw_2022_morelli_morea_netodellacqua$Main.ic" NAME="Main Coverage Results" MODIFIED="1649790444598" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />

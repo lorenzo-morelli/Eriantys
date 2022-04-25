@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.view.gui;
 import it.polimi.ingsw.client.states.*;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.utils.gui.Gui;
+import it.polimi.ingsw.utils.gui.ImagePanel;
 import it.polimi.ingsw.utils.stateMachine.State;
 import javax.swing.*;
 import java.awt.*;
@@ -18,13 +19,16 @@ public class GuiView implements View, ActionListener {
     // Elementi grafici
     JFrame window;
     JPanel titleNamePanel, startButtonPanel, askNicknamePanel, askNicknameConfirmationPanel, confirmationPanel;
-    JLabel titleNameLabel, nicknameLabel;
+    JLabel titleNameLabel, nicknameLabel, backgroundLabel;
     JButton startButton, siButton, noButton;
     JTextArea askNicknameArea, askNicknameConfirmationArea, confirmationArea;
     JTextField nickname;
 
+    Image background = (new ImageIcon(getClass().getResource("/GuiResources/background.jpg"))).getImage();
+
+
     public GuiView(){
-        window = new JFrame();
+        window = new JFrame("Eriantys");
         window.setSize(800, 600);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.getContentPane().setBackground(Color.WHITE);
@@ -32,15 +36,17 @@ public class GuiView implements View, ActionListener {
         window.setVisible(true);
         Gui.setContainer(window.getContentPane());
 
-        titleNamePanel = new JPanel();
-        titleNamePanel.setBounds(100, 100, 600, 150);
-        titleNamePanel.setBackground(Color.WHITE);
+
+        titleNamePanel = new ImagePanel(background);
+        window.repaint();
+        titleNamePanel.setBounds(0, 0, 800, 600);
         titleNameLabel = new JLabel("Eriantys");
-        titleNameLabel.setForeground(Color.BLACK);
+        titleNameLabel.setForeground(Color.BLUE);
         titleNameLabel.setFont(Gui.getTitleFont());
 
+
         startButtonPanel = new JPanel();
-        startButtonPanel.setBounds(300, 400, 200, 100);
+        startButtonPanel.setBounds(350, 500, 100, 50);
         startButtonPanel.setBackground(Color.WHITE);
 
         startButton = new JButton("START");
