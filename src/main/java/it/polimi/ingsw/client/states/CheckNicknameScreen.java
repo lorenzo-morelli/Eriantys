@@ -2,16 +2,12 @@ package it.polimi.ingsw.client.states;
 
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.client.Model;
-import it.polimi.ingsw.client.events.NotRecognizedSetOfStrings;
-import it.polimi.ingsw.client.events.RecognizedString;
-import it.polimi.ingsw.utils.stateMachine.IEvent;
-import it.polimi.ingsw.utils.stateMachine.State;
-
+import it.polimi.ingsw.client.events.*;
+import it.polimi.ingsw.utils.stateMachine.*;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 
-public class CheckNicknameString extends State {
+public class CheckNicknameScreen extends State{
 
     private Model model;
     private View view;
@@ -20,7 +16,7 @@ public class CheckNicknameString extends State {
     private final RecognizedString si, no;
     private final NotRecognizedSetOfStrings neSineNo;
 
-    public CheckNicknameString(View view, Model model) throws IOException {
+    public CheckNicknameScreen(View view, Model model) throws IOException {
         super("[STATO di controllo del nickname]");
         this.view = view;
         this.model = model;
@@ -37,22 +33,16 @@ public class CheckNicknameString extends State {
         return no;
     }
 
+
     public NotRecognizedSetOfStrings neSineNo() {
         return neSineNo;
     }
 
     public IEvent entryAction(IEvent cause) throws IOException{
-        // abilito gli eventi
-        si.enable();
-        no.enable();
-        neSineNo.enable();
 
+        view.setCallingState(this);
         view.askNicknameConfirmation(model.getNickname());
 
-        // disabilito l'evento di ricezione del nickame
-        si.disable();
-        no.disable();
-        neSineNo.disable();
         return null;
     }
 }

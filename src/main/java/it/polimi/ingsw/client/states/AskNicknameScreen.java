@@ -2,18 +2,13 @@ package it.polimi.ingsw.client.states;
 
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.client.Model;
-import it.polimi.ingsw.client.events.InputString;
-import it.polimi.ingsw.utils.cli.CommandPrompt;
-import it.polimi.ingsw.utils.stateMachine.IEvent;
-import it.polimi.ingsw.utils.stateMachine.State;
-
+import it.polimi.ingsw.client.events.*;
+import it.polimi.ingsw.utils.stateMachine.*;
 import java.io.IOException;
 
-public class AskNicknameScreen extends State {
-
+public class AskNicknameScreen extends State{
     Model model;
     View view;
-
     InputString insertNickname;
 
     public AskNicknameScreen(View view, Model model) throws IOException {
@@ -27,14 +22,13 @@ public class AskNicknameScreen extends State {
         return insertNickname;
     }
 
-    public IEvent entryAction(IEvent cause) throws IOException{
-        // abilito l'evento di ricezione del nickname
-        insertNickname.enable();
-
+    public IEvent entryAction(IEvent cause) throws IOException {
+        view.setCallingState(this);
         view.askNickname();
-
-        // disabilito l'evento di ricezione del nickame
-        insertNickname.disable();
         return null;
+    }
+
+    public void setNickname(String nickname) {
+        model.setNickname(nickname);
     }
 }
