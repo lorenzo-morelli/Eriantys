@@ -10,13 +10,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * Evento di inserimento di una parola da parte dell'utente,
- * l'utente scrive una parola di suo gradimento e preme invio.
+ * Evento che si attiva quando l'utente inserisce un numero di parametri scorretti
+ * da terminale
  *
  * * @author Fernando
  */
 
-public class ParametersFromTerminal extends Event implements Observer {
+public class IncorrectParameters extends Event implements Observer {
     private CommandPrompt commandPrompt;
     private boolean enabled = false;
 
@@ -26,8 +26,8 @@ public class ParametersFromTerminal extends Event implements Observer {
 
     private int numberOfStrings;
 
-    public ParametersFromTerminal(Model model, int numberOfStrings) throws IOException {
-        super("[Inserimento di "+numberOfStrings+" parametri da terminale]" );
+    public IncorrectParameters(Model model, int numberOfStrings) throws IOException {
+        super("[Numero di parametri non corretto (doveva essere "+numberOfStrings+ ")]" );
         this.commandPrompt = CommandPrompt.getInstance();
         this.subscribe();
         this.model = model;
@@ -47,8 +47,7 @@ public class ParametersFromTerminal extends Event implements Observer {
     public void update(Object message) throws IOException, InterruptedException {
         if (enabled == true){
             parsedStrings = new ArrayList<String>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
-            if (parsedStrings.size() == numberOfStrings){
-                model.setFromTerminal(parsedStrings);
+            if (parsedStrings.size() != numberOfStrings){
                 fireStateEvent();;
             }
 

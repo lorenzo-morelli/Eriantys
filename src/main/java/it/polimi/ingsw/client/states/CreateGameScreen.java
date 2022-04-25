@@ -24,7 +24,7 @@ public class CreateGameScreen extends State{
 
     public IEvent entryAction(IEvent cause) throws IOException {
         view.setCallingState(this);
-        view.askConnectionInfo();
+        view.showTryToConnect();
         return null;
     }
 

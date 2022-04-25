@@ -8,14 +8,18 @@ public interface View {
      * (schermata video/cli) che ha aggiornato la vista
      * @param callingState Stato del controllore che ha aggiornato la vista
      */
+    void setCallingState(State callingState);
+
+
 
     void askConnectionInfo();
-    void setCallingState(State callingState);
 
     void askToStart();
 
     void askConnectOrCreate();
 
-    void showConfirmation(String nickname);
+    void showTryToConnect();
+
+    void showCreatingGame();
 
 }

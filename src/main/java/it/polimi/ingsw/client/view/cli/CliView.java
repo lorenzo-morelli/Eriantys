@@ -13,25 +13,33 @@ public class CliView implements View{
     private State callingState;
     private State precedentCallingState;
 
+    // Uno stato che vuole chiamare un metodo della vista si registra prima chiamando questo metodo
+    // ad esempio sono nello stato WelcomeScreen e faccio "view.setCallingState(this)"
+    // Non è altro che il pattern Observer riadattato per il pattern State
+    @Override
+    public void setCallingState(State callingState) {
+        this.precedentCallingState = this.callingState;
+        this.callingState = callingState;
+    }
+
     @Override
     public void askConnectionInfo() {
         if (callingState instanceof AskConnectionInfoScreen) {
 
+
+            // Gli eventi (di uscita dallo stato corrente callingState) devono essere abilitati per poter avvenire
             ((AskConnectionInfoScreen) callingState).userInfo().enable();
 
             CommandPrompt.ask(
                     "Inserisci nickname, indirizzo ip e porta separati da uno spazio e clicca invio",
                     "nickname ip porta> ");
 
+            // Disabilitare gli eventi una volta che uno di loro è avvenuto elimina la possibilità del verificarsi di
+            // eventi concorrenti.
             ((AskConnectionInfoScreen) callingState).userInfo().disable();
         }
     }
 
-    @Override
-    public void setCallingState(State callingState) {
-        this.precedentCallingState = this.callingState;
-        this.callingState = callingState;
-    }
 
     @Override
     public void askToStart() {
@@ -43,7 +51,7 @@ public class CliView implements View{
                     "START THE GAME> ");
         }
         ((WelcomeScreen)callingState).start().disable();
-        ((WelcomeScreen)callingState).notStart().enable();
+        ((WelcomeScreen)callingState).notStart().disable();
     }
 
     @Override
@@ -64,10 +72,22 @@ public class CliView implements View{
     }
 
     @Override
-    public void showConfirmation(String nickname) {
-        try {
-            CommandPrompt.println("Bene, allora ti chiamerò " + nickname);
-        }catch (IOException e){};
-        System.exit(0 );
+    public void showTryToConnect() {
+        try{
+            CommandPrompt.println("Tentativo di connessione in corso");
+            System.exit(0); // per il momento chiude l'applicazione
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        };
+    }
+
+    @Override
+    public void showCreatingGame() {
+        try{
+            CommandPrompt.println("Connessione ad una partita esistente");
+            System.exit(0); // per il momento chiude l'applicazione
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        };
     }
 }

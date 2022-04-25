@@ -20,8 +20,6 @@ public class ClientController {
     private final CreateOrConnectScreen CreateOrConnect;
     private final CreateGameScreen CreateGame;
     private final ConnectGameScreen ConnectGame;
-
-
     private final Event start;
 
     public ClientController(View view) throws IOException, InterruptedException {
@@ -35,8 +33,8 @@ public class ClientController {
         waitStart = new WelcomeScreen(view);
         askConnectionInfo = new AskConnectionInfoScreen(view,model);
         CreateOrConnect = new CreateOrConnectScreen(view,model);
-        CreateGame= new CreateGameScreen(view,model);
-        ConnectGame= new ConnectGameScreen(view,model);
+        CreateGame= new CreateGameScreen(view, model);
+        ConnectGame= new ConnectGameScreen(view, model);
 
         fsm.addTransition(idle, start, waitStart);
         fsm.addTransition(waitStart, waitStart.start(), askConnectionInfo);

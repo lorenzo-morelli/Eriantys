@@ -16,7 +16,16 @@ public class GuiView implements View, ActionListener {
     private State callingState;
     private State precedentCallingState;
 
-    // Elementi grafici
+    // Uno stato che vuole chiamare un metodo della vista si registra prima chiamando questo metodo
+    // ad esempio sono nello stato WelcomeScreen e faccio "view.setCallingState(this)"
+    // Non è altro che il pattern Observer riadattato per il pattern State
+    @Override
+    public void setCallingState(State callingState) {
+        this.precedentCallingState = this.callingState;
+        this.callingState = callingState;
+    }
+
+    // Elementi grafici (finestre, bottoni, fuochi d'artificio...) (libreria SWING)
     JFrame window;
     JPanel titleNamePanel, startButtonPanel, askNicknamePanel, askNicknameConfirmationPanel, confirmationPanel;
     JLabel titleNameLabel, nicknameLabel, backgroundLabel;
@@ -66,45 +75,29 @@ public class GuiView implements View, ActionListener {
     }
 
     @Override
-    public void askConnectionInfo() {
-
-    }
-
-    @Override
-    public void setCallingState(State callingState) {
-        this.precedentCallingState = this.callingState;
-        this.callingState = callingState;
-    }
-
-    @Override
     public void askToStart() {
         window.setVisible(true);
         window.setResizable(false);
     }
 
     @Override
-    public void askConnectOrCreate() {
-
+    public void askConnectionInfo() {
+        //todo
     }
 
+    @Override
+    public void askConnectOrCreate() {
+        //todo
+    }
 
     @Override
-    public void showConfirmation(String nickname) {
+    public void showTryToConnect() {
+        //todo
+    }
 
-        confirmationPanel = new JPanel();
-        confirmationPanel.setLayout(null);
-        confirmationPanel.setBounds(0,0,800,600);
-        Gui.getContainer().add(confirmationPanel);
-
-        confirmationArea = new JTextArea("Bene, allora ti chiamerò " +
-                nickname+".");
-        confirmationArea.setEditable(false);
-        confirmationArea.setBounds(100,100,800,250);
-        confirmationArea.setBackground(Color.WHITE);
-        confirmationArea.setForeground(Color.BLACK);
-        confirmationArea.setFont(Gui.getNormalFont());
-        confirmationArea.setLineWrap(true);
-        confirmationPanel.add(confirmationArea);
+    @Override
+    public void showCreatingGame() {
+        // todo
     }
 
     @Override
