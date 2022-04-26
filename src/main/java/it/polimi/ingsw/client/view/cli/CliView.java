@@ -29,6 +29,7 @@ public class CliView implements View{
 
             // Gli eventi (di uscita dallo stato corrente callingState) devono essere abilitati per poter avvenire
             ((AskConnectionInfoScreen) callingState).userInfo().enable();
+            ((AskConnectionInfoScreen) callingState).numberOfParametersIncorrect().enable();
 
             CommandPrompt.ask(
                     "Inserisci nickname, indirizzo ip e porta separati da uno spazio e clicca invio",
@@ -37,6 +38,7 @@ public class CliView implements View{
             // Disabilitare gli eventi una volta che uno di loro è avvenuto elimina la possibilità del verificarsi di
             // eventi concorrenti.
             ((AskConnectionInfoScreen) callingState).userInfo().disable();
+            ((AskConnectionInfoScreen) callingState).numberOfParametersIncorrect().disable();
         }
     }
 
@@ -46,10 +48,12 @@ public class CliView implements View{
         if (callingState instanceof WelcomeScreen) {
             ((WelcomeScreen)callingState).start().enable();
             ((WelcomeScreen)callingState).notStart().enable();
+
             CommandPrompt.ask(
                     "Scrivi start per far partire il gioco e premi invio",
                     "START THE GAME> ");
         }
+
         ((WelcomeScreen)callingState).start().disable();
         ((WelcomeScreen)callingState).notStart().disable();
     }

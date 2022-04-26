@@ -15,11 +15,20 @@ public class AskConnectionInfoScreen extends State{
         super("[STATO di attesa del nickname]");
         this.view = view;
         this.model = model;
-        insertUserInfo = new ParametersFromTerminal(model, 3); // nickname / numeroIp / numerodiporta
+
+        // L'utente deve inserire 3 parametri: nickname, ip e porta
+        insertUserInfo = new ParametersFromTerminal(model, 3);
+
+        // Devo essere capace di intercettare se l'utente inserisce un numero diverso da 3 parametri
+        numberOfParametersIncorrect = new IncorrectParameters(model, 3);
     }
 
     public InputString userInfo() {
         return insertUserInfo;
+    }
+
+    public IncorrectParameters numberOfParametersIncorrect() {
+        return numberOfParametersIncorrect;
     }
 
     public IEvent entryAction(IEvent cause) throws IOException {
@@ -31,10 +40,12 @@ public class AskConnectionInfoScreen extends State{
     @Override
     public void exitAction(IEvent cause) throws IOException {
         super.exitAction(cause);
-        model.setNickname(model.getFromTerminal().get(0));
-        model.setIp(model.getFromTerminal().get(1));
-        model.setPort(model.getFromTerminal().get(2));
-        //connettiti al server (indirizzo Ip, numero di porta NOTI) tramite connection info dati
+        if (cause instanceof ParametersFromTerminal) {
+            model.setNickname(model.getFromTerminal().get(0));
+            model.setIp(model.getFromTerminal().get(1));
+            model.setPort(model.getFromTerminal().get(2));
+        }
+        //todo: connettiti al server (indirizzo Ip, numero di porta NOTI) tramite connection info dati
     }
 
 }

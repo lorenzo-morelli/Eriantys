@@ -30,16 +30,20 @@ public class ClientController {
         idle = new Idle();
         start = new Event("[Controller Started]");
         Controller fsm = new Controller("Controllore del Client", idle);
+
+        // Costruzioni degli stati necessari
         waitStart = new WelcomeScreen(view);
         askConnectionInfo = new AskConnectionInfoScreen(view,model);
         CreateOrConnect = new CreateOrConnectScreen(view,model);
         CreateGame= new CreateGameScreen(view, model);
         ConnectGame= new ConnectGameScreen(view, model);
 
+        // Dichiarazione delle transiioni tra gli stati
         fsm.addTransition(idle, start, waitStart);
         fsm.addTransition(waitStart, waitStart.start(), askConnectionInfo);
         fsm.addTransition(waitStart, waitStart.notStart(), waitStart);
         fsm.addTransition(askConnectionInfo, askConnectionInfo.userInfo(), CreateOrConnect);
+        fsm.addTransition(askConnectionInfo, askConnectionInfo.numberOfParametersIncorrect(), askConnectionInfo);
         fsm.addTransition(CreateOrConnect, CreateOrConnect.haSceltoConnetti(), ConnectGame);
         fsm.addTransition(CreateOrConnect, CreateOrConnect.haSceltoCrea(), CreateGame);
         fsm.addTransition(CreateOrConnect, CreateOrConnect.sceltaNonValida(), CreateOrConnect);
