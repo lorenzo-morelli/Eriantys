@@ -82,7 +82,6 @@ public class CliView implements View{
     public void showTryToConnect() {
         try{
             CommandPrompt.println("Tentativo di connessione in corso");
-            System.exit(0); // per il momento chiude l'applicazione
         } catch (IOException e) {
             throw new RuntimeException(e);
         };
