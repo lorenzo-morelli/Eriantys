@@ -17,7 +17,7 @@ public class AskConnectionInfoScreen extends State{
         this.model = model;
 
         // L'utente deve inserire 3 parametri: nickname, ip e porta
-        insertUserInfo = new ParametersFromTerminal(model, 3);
+        insertedUserInfo = new ParametersFromTerminal(model, 3);
 
         // Devo essere capace di intercettare se l'utente inserisce un numero diverso da 3 parametri
         numberOfParametersIncorrect = new IncorrectParameters(model, 3);

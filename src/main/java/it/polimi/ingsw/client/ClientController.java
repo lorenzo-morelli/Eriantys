@@ -37,13 +37,23 @@ public class ClientController {
         CreateOrConnect = new CreateOrConnectScreen(view,model);
         CreateGame= new CreateGameScreen(view, model);
         ConnectGame= new ConnectGameScreen(view, model);
+        //wait= new WaitForturn();
+        chooseCard= new ChooseAssistentCard();
+        MoveStudent= new MoveStudentPhase();
+        MoveMother= new MoveMotherPhase();
 
-        // Dichiarazione delle transiioni tra gli stati
+        // Dichiarazione delle transizioni tra gli stati
         fsm.addTransition(idle, start, waitStart);
+
+        // Schermata di benvenuto
         fsm.addTransition(waitStart, waitStart.start(), askConnectionInfo);
         fsm.addTransition(waitStart, waitStart.notStart(), waitStart);
-        fsm.addTransition(askConnectionInfo, askConnectionInfo.userInfo(), CreateOrConnect);
+
+        // Schermata di richiesta di nickname, ip e porta
+        fsm.addTransition(askConnectionInfo, askConnectionInfo.insertedUserInfo(), CreateOrConnect);
         fsm.addTransition(askConnectionInfo, askConnectionInfo.numberOfParametersIncorrect(), askConnectionInfo);
+
+        // Scelta tra creazione di una nuova partita o connessione ad una esistente
         fsm.addTransition(CreateOrConnect, CreateOrConnect.haSceltoConnetti(), ConnectGame);
         fsm.addTransition(CreateOrConnect, CreateOrConnect.haSceltoCrea(), CreateGame);
         fsm.addTransition(CreateOrConnect, CreateOrConnect.sceltaNonValida(), CreateOrConnect);

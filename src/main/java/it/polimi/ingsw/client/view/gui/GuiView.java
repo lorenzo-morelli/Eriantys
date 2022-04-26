@@ -27,11 +27,11 @@ public class GuiView implements View, ActionListener {
 
     // Elementi grafici (finestre, bottoni, fuochi d'artificio...) (libreria SWING)
     JFrame window;
-    JPanel titleNamePanel, startButtonPanel, askNicknamePanel, askNicknameConfirmationPanel, confirmationPanel;
-    JLabel titleNameLabel, nicknameLabel, backgroundLabel;
-    JButton startButton, siButton, noButton;
-    JTextArea askNicknameArea, askNicknameConfirmationArea, confirmationArea;
-    JTextField nickname;
+    JPanel titleNamePanel, startButtonPanel, userInfoPanel;
+    JLabel titleNameLabel, nicknameLabel, ipLabel, portLabel;
+    JButton startButton, sendButton;
+
+    JTextField nickname,ip, port;
 
     Image background = (new ImageIcon(getClass().getResource("/GuiResources/background.jpg"))).getImage();
 
@@ -82,7 +82,55 @@ public class GuiView implements View, ActionListener {
 
     @Override
     public void askConnectionInfo() {
-        //todo
+        userInfoPanel = new JPanel();
+        userInfoPanel.setLayout(null);
+        userInfoPanel.setBounds(0,0,800,600);
+        Gui.getContainer().add(userInfoPanel);
+
+        nicknameLabel = new JLabel("Nickname");
+        nicknameLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        nicknameLabel.setFont(Gui.getButtonFont());
+        nicknameLabel.setSize(600, 25);
+        nicknameLabel.setLocation(100, 25);
+        userInfoPanel.add(nicknameLabel);
+        nickname = new JTextField();
+        nickname.setSize(300, 25);
+        nickname.setLocation(250, 50);
+        nickname.addActionListener(this);
+        userInfoPanel.add(nickname);
+
+        ipLabel = new JLabel("Ip");
+        ipLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        ipLabel.setFont(Gui.getButtonFont());
+        ipLabel.setSize(600, 25);
+        ipLabel.setLocation(100, 125);
+        userInfoPanel.add(ipLabel);
+        ip = new JTextField();
+        ip.setSize(300, 25);
+        ip.setLocation(250, 150);
+        ip.addActionListener(this);
+        userInfoPanel.add(ip);
+
+        portLabel = new JLabel("Port");
+        portLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        portLabel.setFont(Gui.getButtonFont());
+        portLabel.setSize(600, 25);
+        portLabel.setLocation(100, 225);
+        userInfoPanel.add(portLabel);
+        port = new JTextField();
+        port.setSize(300, 25);
+        port.setLocation(250, 250);
+        port.addActionListener(this);
+        userInfoPanel.add(port);
+
+        sendButton = new JButton("Confirm");
+        sendButton.setSize(300, 25);
+        sendButton.setLocation(250, 400);
+        sendButton.addActionListener(this);
+        userInfoPanel.add(sendButton);
+
+
+
     }
 
     @Override

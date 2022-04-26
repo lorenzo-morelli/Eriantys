@@ -28,16 +28,19 @@ public class CliView implements View{
 
 
             // Gli eventi (di uscita dallo stato corrente callingState) devono essere abilitati per poter avvenire
-            ((AskConnectionInfoScreen) callingState).userInfo().enable();
+            ((AskConnectionInfoScreen) callingState).insertedUserInfo().enable();
             ((AskConnectionInfoScreen) callingState).numberOfParametersIncorrect().enable();
 
-            CommandPrompt.ask(
-                    "Inserisci nickname, indirizzo ip e porta separati da uno spazio e clicca invio",
-                    "nickname ip porta> ");
+            if (precedentCallingState instanceof WelcomeScreen){
+                CommandPrompt.ask(
+                        "Inserisci nickname, indirizzo ip e porta separati da uno spazio e clicca invio",
+                        "nickname ip porta> ");
+            }
+
 
             // Disabilitare gli eventi una volta che uno di loro è avvenuto elimina la possibilità del verificarsi di
             // eventi concorrenti.
-            ((AskConnectionInfoScreen) callingState).userInfo().disable();
+            ((AskConnectionInfoScreen) callingState).insertedUserInfo().disable();
             ((AskConnectionInfoScreen) callingState).numberOfParametersIncorrect().disable();
         }
     }

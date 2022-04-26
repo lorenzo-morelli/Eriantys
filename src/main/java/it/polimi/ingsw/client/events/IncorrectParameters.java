@@ -34,15 +34,6 @@ public class IncorrectParameters extends Event implements Observer {
         this.numberOfStrings = numberOfStrings;
     }
 
-
-    public void enable() {
-        this.enabled = true;
-    }
-
-    public void disable() {
-        this.enabled = false;
-    }
-
     @Override
     public void update(Object message) throws IOException, InterruptedException {
         if (enabled == true){

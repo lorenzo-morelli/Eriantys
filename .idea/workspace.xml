@@ -9,16 +9,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c193818a-1e92-4991-9439-cb3e4c836bfd" name="Changes" comment="Working code - 25 aprile 2022">
+    <list default="true" id="c193818a-1e92-4991-9439-cb3e4c836bfd" name="Changes" comment="fixed the case of insertion of incorrect number of parameters">
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/CheckFormatOfNicknameIpPort.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/MoveMotherPhase.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ClientController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/events/IncorrectParameters.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/events/IncorrectParameters.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/AskConnectionInfoScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/AskConnectionInfoScreen.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/view/cli/CliView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/view/cli/CliView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/view/gui/GuiView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/view/gui/GuiView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/utils/stateMachine/Event.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/utils/stateMachine/Event.java" afterDir="false" />
     </list>
     <list id="4543697f-2cef-4409-863c-6d4c8711deb7" name="Changes by ignaI" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/ChooseAssistentCard.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/ChooseCloud.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/ConnectGameScreen.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/EndGame.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/MoveStudentPhase.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/WaitForturn.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ClientController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/AskConnectionInfoScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/AskConnectionInfoScreen.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/CheckNicknameScreen.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/CreateGameScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/CreateGameScreen.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/FinalScreen.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -55,10 +67,20 @@
       <ranges>
         <range start1="11" end1="12" start2="11" end2="13" changelist="4543697f-2cef-4409-863c-6d4c8711deb7" />
         <range start1="14" end1="15" start2="15" end2="16" changelist="4543697f-2cef-4409-863c-6d4c8711deb7" />
-        <range start1="17" end1="18" start2="18" end2="24" changelist="c193818a-1e92-4991-9439-cb3e4c836bfd" />
-        <range start1="20" end1="21" start2="26" end2="27" changelist="4543697f-2cef-4409-863c-6d4c8711deb7" />
-        <range start1="23" end1="23" start2="29" end2="33" changelist="c193818a-1e92-4991-9439-cb3e4c836bfd" />
-        <range start1="33" end1="37" start2="43" end2="49" changelist="c193818a-1e92-4991-9439-cb3e4c836bfd" />
+        <range start1="19" end1="20" start2="20" end2="21" changelist="c193818a-1e92-4991-9439-cb3e4c836bfd" />
+        <range start1="25" end1="27" start2="26" end2="28" changelist="4543697f-2cef-4409-863c-6d4c8711deb7" />
+      </ranges>
+    </file>
+    <file path="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ClientController.java">
+      <ranges>
+        <range start1="23" end1="23" start2="23" end2="27" changelist="4543697f-2cef-4409-863c-6d4c8711deb7" />
+        <range start1="25" end1="25" start2="29" end2="30" changelist="4543697f-2cef-4409-863c-6d4c8711deb7" />
+        <range start1="39" end1="39" start2="44" end2="48" changelist="c193818a-1e92-4991-9439-cb3e4c836bfd" />
+        <range start1="40" end1="41" start2="49" end2="50" changelist="c193818a-1e92-4991-9439-cb3e4c836bfd" />
+        <range start1="42" end1="42" start2="51" end2="53" changelist="c193818a-1e92-4991-9439-cb3e4c836bfd" />
+        <range start1="44" end1="45" start2="55" end2="58" changelist="c193818a-1e92-4991-9439-cb3e4c836bfd" />
+        <range start1="46" end1="46" start2="59" end2="61" changelist="c193818a-1e92-4991-9439-cb3e4c836bfd" />
+        <range start1="49" end1="49" start2="64" end2="83" changelist="4543697f-2cef-4409-863c-6d4c8711deb7" />
       </ranges>
     </file>
   </component>
@@ -251,7 +273,7 @@
       <workItem from="1650901774959" duration="5892000" />
       <workItem from="1650908481581" duration="1930000" />
       <workItem from="1650911531563" duration="1151000" />
-      <workItem from="1650953540225" duration="939000" />
+      <workItem from="1650953540225" duration="14218000" />
     </task>
     <task id="LOCAL-00001" summary="created resources directory">
       <created>1647955875299</created>
@@ -435,7 +457,14 @@
       <option name="project" value="LOCAL" />
       <updated>1650911577268</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="fixed the case of insertion of incorrect number of parameters">
+      <created>1650954543973</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1650954543973</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -453,7 +482,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="created resources directory" />
     <MESSAGE value="added CenterTable and Professor, and edited project structure" />
     <MESSAGE value="fixed Model.java setCenterTable" />
     <MESSAGE value="created classes" />
@@ -478,7 +506,23 @@
     <MESSAGE value="background to welcome screen test" />
     <MESSAGE value="backup" />
     <MESSAGE value="Working code - 25 aprile 2022" />
-    <option name="LAST_COMMIT_MESSAGE" value="Working code - 25 aprile 2022" />
+    <MESSAGE value="fixed the case of insertion of incorrect number of parameters" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed the case of insertion of incorrect number of parameters" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/WaitForturn.java</url>
+          <line>42</line>
+          <properties class="it.polimi.ingsw.client.states.WaitForturn" method="goto_STUDENTPHASE">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/ing_sw_2022_morelli_morea_netodellacqua$Main.ic" NAME="Main Coverage Results" MODIFIED="1649790444598" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />

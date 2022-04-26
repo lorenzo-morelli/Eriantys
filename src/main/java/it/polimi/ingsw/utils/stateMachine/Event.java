@@ -11,6 +11,8 @@ public class Event implements IEvent {
     private String name;
     private Controller listener;
 
+    private boolean enabled = false;
+
     /**
      * Constructor to force naming of each event.
      * @param eventName The name used for logging
@@ -25,7 +27,7 @@ public class Event implements IEvent {
      * event, it will throw an IllegalStateException.
      */
     public void fireStateEvent() throws IOException, InterruptedException {
-        listener.fireStateEvent(this);
+            listener.fireStateEvent(this);
     }
 
     /**
@@ -47,5 +49,13 @@ public class Event implements IEvent {
      */
     public String toString() {
         return name;
+    }
+
+    public void enable(){
+        enabled = true;
+    }
+
+    public void disable(){
+        enabled = false;
     }
 }
