@@ -21,8 +21,15 @@ public class ClientController {
     private final CreateGameScreen CreateGame;
     private final ConnectGameScreen ConnectGame;
     private final Event start;
+    private final WaitForturn wait;
+    private final ChooseAssistentCard chooseCard;
+    private final MoveStudentPhase MoveStudent;
+    private final MoveMotherPhase MoveMother;
+    private final ChooseCloudPhase ChooseCloud;
+    private final EndGame end;
 
     public ClientController(View view) throws IOException, InterruptedException {
+
         CommandPrompt.setDebug();
         this.model = new Model();
         this.view = view;
@@ -37,10 +44,12 @@ public class ClientController {
         CreateOrConnect = new CreateOrConnectScreen(view,model);
         CreateGame= new CreateGameScreen(view, model);
         ConnectGame= new ConnectGameScreen(view, model);
-        //wait= new WaitForturn();
+        wait= new WaitForturn(view, model);
         chooseCard= new ChooseAssistentCard();
         MoveStudent= new MoveStudentPhase();
         MoveMother= new MoveMotherPhase();
+        ChooseCloud= new ChooseCloudPhase();
+        end= new EndGame();
 
         // Dichiarazione delle transizioni tra gli stati
         fsm.addTransition(idle, start, waitStart);
@@ -57,6 +66,26 @@ public class ClientController {
         fsm.addTransition(CreateOrConnect, CreateOrConnect.haSceltoConnetti(), ConnectGame);
         fsm.addTransition(CreateOrConnect, CreateOrConnect.haSceltoCrea(), CreateGame);
         fsm.addTransition(CreateOrConnect, CreateOrConnect.sceltaNonValida(), CreateOrConnect);
+
+        fsm.addTransition(ConnectGame, ConnectGame.go_to_wait(), wait);
+        fsm.addTransition(CreateGame, CreateGame.go_to_wait(), wait);
+
+        //todo
+
+
+        fsm.addTransition(wait, wait.go_to_assistantcardphase(), chooseCard);
+       // fsm.addTransition(chooseCard, chooseCard.go_to_wait(), wait);
+
+        fsm.addTransition(wait, wait.go_to_studentphase() , MoveStudent);
+       // fsm.addTransition(MoveStudent , MoveStudent.go_to_wait(), wait);
+
+      //  fsm.addTransition(MoveStudent , MoveStudent.go_to_movemotherphase(), MoveMother);
+      //  fsm.addTransition(MoveMother , MoveMother.go_to_wait(), wait);
+
+        fsm.addTransition(wait, wait.go_to_endgame() , end );
+        fsm.addTransition(wait, wait.go_to_cloudphase() , ChooseCloud);
+       // fsm.addTransition(ChooseCloud, ChooseCloudPhase.go_to_wait(), wait);
+
 
         // L'evento di start è l'unico che deve essere fatto partire manualmente
         start.fireStateEvent();

@@ -6,18 +6,19 @@ import it.polimi.ingsw.client.events.*;
 import it.polimi.ingsw.utils.stateMachine.*;
 import java.io.IOException;
 
-public class CreateGameScreen extends State{
+public class ConnectGameScreen extends State{
     Model model;
     View view;
     ParametersFromTerminal insertUserInfo;
+
     Event idle;
 
-    public CreateGameScreen(View view, Model model) throws IOException {
-        super("[STATO di attesa info di setup per la nuova partita]");
+    public ConnectGameScreen(View view, Model model) throws IOException {
+        super("[STATO di attesa connessione a partita]");
         this.view = view;
         this.model = model;
-        insertUserInfo = new ParametersFromTerminal(model, 2); // numero di giocatori / modalita di gioco
-        idle= new Event("Evento Ritorno");
+        insertUserInfo = new ParametersFromTerminal(model, 1); // codice partita
+        idle = new Event("Evento ritorno");
     }
 
     public IEvent entryAction(IEvent cause) throws IOException {
@@ -31,11 +32,10 @@ public class CreateGameScreen extends State{
     @Override
     public void exitAction(IEvent cause) throws IOException {
         super.exitAction(cause);
-        //invia al server numero di giocatori e game mode scelto
-        //lato server nel frattempo crea partita e invia codice
-        //ricevi codice partita
-        //lato server si mette in attesa della connessione di tutti i giocatori
-        //aspetta che server inizi partita
+        // todo: connettiti alla partita con codice partita
+        // server si mette in attesa della connessione di tutti i giocatori
+        // aspetta che server inizi partita
+        go_to_wait();
     }
 
 }

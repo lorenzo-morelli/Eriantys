@@ -9,10 +9,11 @@ import java.io.IOException;
 public class AskConnectionInfoScreen extends State{
     Model model;
     View view;
-    InputString insertUserInfo;
+    ParametersFromTerminal insertedUserInfo;
+    IncorrectParameters numberOfParametersIncorrect;
 
     public AskConnectionInfoScreen(View view, Model model) throws IOException {
-        super("[STATO di attesa del nickname]");
+        super("[STATO di attesa info di connessione]");
         this.view = view;
         this.model = model;
 
@@ -23,8 +24,8 @@ public class AskConnectionInfoScreen extends State{
         numberOfParametersIncorrect = new IncorrectParameters(model, 3);
     }
 
-    public InputString userInfo() {
-        return insertUserInfo;
+    public ParametersFromTerminal insertedUserInfo() {
+        return insertedUserInfo;
     }
 
     public IncorrectParameters numberOfParametersIncorrect() {
