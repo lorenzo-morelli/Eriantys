@@ -1,5 +1,7 @@
 package it.polimi.ingsw.utils.network;
 
+import it.polimi.ingsw.utils.network.MessageEvent;
+
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -18,9 +20,9 @@ public class MyDocumentListener implements DocumentListener {
 
     private static JTextArea ta;
     private String message;
-    private TCPMessageEvent event;
+    private MessageEvent event;
 
-    public MyDocumentListener( String message, JTextArea ta, TCPMessageEvent event) {
+    public MyDocumentListener( String message, JTextArea ta, MessageEvent event) {
         this.ta=ta;
         this.message=message;
         this.event = event;
@@ -28,17 +30,17 @@ public class MyDocumentListener implements DocumentListener {
 
     @Override
     public void insertUpdate(DocumentEvent e) {
-        checkLastWord();
+      checkLastWord();
     }
 
     @Override
     public void removeUpdate(DocumentEvent e) {
-        //checkLastWord();
+      //checkLastWord();
     }
 
     @Override
     public void changedUpdate(DocumentEvent e) {
-        //checkLastWord();
+       //checkLastWord();
     }
 
     /**

@@ -2,7 +2,9 @@ package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.client.states.*;
 import it.polimi.ingsw.client.view.*;
+import it.polimi.ingsw.server.states.Idle;
 import it.polimi.ingsw.utils.cli.CommandPrompt;
+import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.stateMachine.*;
 import java.io.IOException;
 
@@ -10,13 +12,15 @@ public class ClientController {
     private Model model;      // modello dati di questa semplice demo
     private View view;       // vista (per il momento solo command line interface)
 
+    private Network network;
+
     // Dichiarazione degli stati necessari
     // La maggior parte delle volte uno stato rappresenta una schermata (che sia essa di gui o di cli)
     // ma più in generale potrebbe significare delle azioni da compiere a fronte di eventi
-    // ogni stato avrà un getter che sarà utilizzato dalla GuiView
     private final Idle idle;    // modo elegante di far partire il controllore
     private final WelcomeScreen waitStart;
     private final AskConnectionInfoScreen askConnectionInfo;
+    private final ConnectionToServer connectionToServer;
     private final CreateOrConnectScreen CreateOrConnect;
     private final CreateGameScreen CreateGame;
     private final ConnectGameScreen ConnectGame;
@@ -33,6 +37,7 @@ public class ClientController {
         CommandPrompt.setDebug();
         this.model = new Model();
         this.view = view;
+        this.network = new Network();
 
         idle = new Idle();
         start = new Event("[Controller Started]");
@@ -41,15 +46,16 @@ public class ClientController {
         // Costruzioni degli stati necessari
         waitStart = new WelcomeScreen(view);
         askConnectionInfo = new AskConnectionInfoScreen(view,model);
+        connectionToServer = new ConnectionToServer(view, network, model);
         CreateOrConnect = new CreateOrConnectScreen(view,model);
-        CreateGame= new CreateGameScreen(view, model);
-        ConnectGame= new ConnectGameScreen(view, model);
-        wait= new WaitForturn(view, model);
-        chooseCard= new ChooseAssistentCard();
-        MoveStudent= new MoveStudentPhase();
-        MoveMother= new MoveMotherPhase();
-        ChooseCloud= new ChooseCloudPhase();
-        end= new EndGame();
+        CreateGame = new CreateGameScreen(view, model);
+        ConnectGame = new ConnectGameScreen(view, model);
+        wait = new WaitForturn(view, model);
+        chooseCard = new ChooseAssistentCard();
+        MoveStudent = new MoveStudentPhase();
+        MoveMother = new MoveMotherPhase();
+        ChooseCloud = new ChooseCloudPhase();
+        end = new EndGame();
 
         // Dichiarazione delle transizioni tra gli stati
         fsm.addTransition(idle, start, waitStart);

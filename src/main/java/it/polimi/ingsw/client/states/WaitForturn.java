@@ -48,7 +48,6 @@ public class WaitForturn extends State {
 
     public IEvent entryAction(IEvent cause) throws IOException {
         view.setCallingState(this);
-        view.showTryToConnect();
         return null;
     }
 }

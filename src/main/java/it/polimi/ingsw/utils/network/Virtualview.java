@@ -1,9 +1,13 @@
 package it.polimi.ingsw.utils.network;
 
-import java.awt.*;
-import java.awt.event.*;
+import it.polimi.ingsw.utils.network.NetworkHandler;
+
 import javax.swing.*;
-import javax.swing.event.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 /**
  * Questa classe implementa un'interfaccia grafica molto minimale a riga di comando
@@ -11,7 +15,7 @@ import javax.swing.event.*;
  */
 
 
-public class GUI implements ActionListener{
+public class Virtualview implements ActionListener{
     JFrame frame;
     JPanel panel;
     NetworkHandler connection;
@@ -89,9 +93,9 @@ public class GUI implements ActionListener{
 
     }
 
-    public GUI(){
+    public Virtualview(){
         Font font = new Font("Artis Sans", Font.BOLD, 15);
-        frame = new JFrame("Command Line");
+        frame = new JFrame("Command Line VirtualView Utility");
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         panel = new JPanel();
@@ -149,18 +153,6 @@ public class GUI implements ActionListener{
         textReceived.setFont(font);
         textReceived.setForeground(Color.WHITE);
         textReceived.setBackground(Color.BLACK);
-
-
-        textReceived.getDocument().addDocumentListener(new DocumentListener() {
-
-            public void changedUpdate(DocumentEvent e) {
-            }
-            public void removeUpdate(DocumentEvent e) {
-            }
-            public void insertUpdate(DocumentEvent e) {
-
-            }
-        });
         scroll = new JScrollPane(textReceived);
         scroll.setSize(600,350);
         scroll.setLocation(0, 225);
@@ -176,9 +168,9 @@ public class GUI implements ActionListener{
         // Needed for Windows. But not in macOS
         // When one closes the window, disconnect any open sockets
         // Seems to do it automatically in macOS but not in windows
-        frame.addWindowListener(new java.awt.event.WindowAdapter() {
+        frame.addWindowListener(new WindowAdapter() {
             @Override
-            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+            public void windowClosing(WindowEvent windowEvent) {
                 if(connection != null){
                     connection.disconnect();
                 }

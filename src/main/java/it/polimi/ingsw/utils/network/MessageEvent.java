@@ -1,5 +1,4 @@
 package it.polimi.ingsw.utils.network;
-
 import it.polimi.ingsw.utils.stateMachine.Event;
 
 import javax.swing.*;
@@ -15,17 +14,18 @@ import javax.swing.*;
  * @author Fernando
  */
 
-class TCPMessageEvent extends Event {
+class MessageEvent extends Event {
 
-    private final String message;
-    private JTextArea textReceived;
-    private MyDocumentListener listener;
+        private final String message;
+        private JTextArea textReceived;
+        private MyDocumentListener listener;
 
-    public TCPMessageEvent(String message, JTextArea textReceived) {
-        super("Message Event " + message);
-        this.message = message;
-        this.textReceived=textReceived;
-        listener = new MyDocumentListener(message,textReceived,this);
-        textReceived.getDocument().addDocumentListener(listener);
-    }
+    public MessageEvent(String message, JTextArea textReceived) {
+            super("Message Event " + message);
+            this.message = message;
+            this.textReceived = textReceived;
+            listener = new MyDocumentListener(message,textReceived,this);
+            textReceived.getDocument().addDocumentListener(listener);
+        }
 }
+

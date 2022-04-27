@@ -22,7 +22,7 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * Classe java che astrae i dettagli di basso livello delle socket TCP fornendo al programmatore semplici
  * metodi per connettersi a una socket, inviare e ricevere messaggi, e varie utilita'
- */
+*/
 
 public class NetworkHandler {
     // Properta' della connessione
@@ -132,7 +132,7 @@ public class NetworkHandler {
             listener.actionPerformed(new ActionEvent(this,ActionEvent.ACTION_PERFORMED,"Network Message"));
         }
     }
-
+   
     /**
      * Server Mode TcpSocket Costruttore
      *
@@ -209,7 +209,7 @@ public class NetworkHandler {
                         closeConnection();
                         return false;
                     }else{
-                        outBuffer.println(getMyAddress()+ " " + text);
+                        outBuffer.println(text);
                         // restarting Heartbeat after last message that was sent.
                         // No need to send heartbeat if there are lots of network messages being sent
                         timer.restart();
@@ -439,4 +439,3 @@ public class NetworkHandler {
         }
     }
 }
-

@@ -80,18 +80,17 @@ public class CliView implements View{
 
     @Override
     public void showTryToConnect() {
-        try{
+        try {
             CommandPrompt.println("Tentativo di connessione in corso");
         } catch (IOException e) {
             throw new RuntimeException(e);
         };
     }
 
-    @Override
+        @Override
     public void showCreatingGame() {
         try{
             CommandPrompt.println("Connessione ad una partita esistente");
-            System.exit(0); // per il momento chiude l'applicazione
         } catch (IOException e) {
             throw new RuntimeException(e);
         };

@@ -9,24 +9,48 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c193818a-1e92-4991-9439-cb3e4c836bfd" name="Changes" comment="fixed the case of insertion of incorrect number of parameters">
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/ChooseCloudPhase.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/ServerController.java" afterDir="false" />
+    <list default="true" id="c193818a-1e92-4991-9439-cb3e4c836bfd" name="Changes" comment="Backup">
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/events/ConnectedToServer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/events/NotConnectedToServer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/ConnectionToServer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/states/SpecifyPort.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/states/Wait.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/utils/network/Network.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/utils/network/ServerDumb.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/utils/network/TestMessageEvents.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/TcpEventMessages/SampleTcpClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/TcpEventMessages/SampleTcpServer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/TcpEventMessages/TcpClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/TcpEventMessages/TcpClientEventHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/TcpEventMessages/TcpServer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/TcpEventMessages/TcpServerEventHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/view/cli/CliView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/view/cli/CliView.java" afterDir="false" />
-    </list>
-    <list id="4543697f-2cef-4409-863c-6d4c8711deb7" name="Changes by ignaI" comment="Changes by ignaI">
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/ChooseAssistentCard.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/ConnectGameScreen.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/EndGame.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/MoveStudentPhase.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/WaitForturn.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ClientController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/AskConnectionInfoScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/AskConnectionInfoScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/CheckNicknameScreen.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/events/InputString.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/ConnectGameScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/ConnectGameScreen.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/CreateGameScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/CreateGameScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/FinalScreen.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/Idle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/states/Idle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/WaitForturn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/WaitForturn.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/view/cli/CliView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/view/cli/CliView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/ServerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/ServerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/controller/events/LetterEvent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/utils/network/GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/utils/network/Virtualview.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/utils/network/MyDocumentListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/utils/network/MyDocumentListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/utils/network/NetworkHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/utils/network/NetworkHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/utils/network/TCPMessageEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/utils/network/MessageEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/MultiClientServer/client/Client.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/MultiClientServer/server/ClientHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/MultiClientServer/server/Server.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/MultiClientServer/server/messages/AnswerMsg.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/MultiClientServer/server/messages/CommandMsg.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/MultiClientServer/server/messages/GuessAnswerMsg.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/MultiClientServer/server/messages/GuessMsg.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/MultiClientServer/server/messages/NetworkMessage.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/MultiClientServer/server/messages/NewGameMsg.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/MultiClientServer/server/model/InvalidGuessException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/MultiClientServer/server/model/Mastermind.java" beforeDir="false" />
     </list>
+    <list id="4543697f-2cef-4409-863c-6d4c8711deb7" name="Changes by ignaI" comment="Changes by ignaI" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -41,6 +65,12 @@
   </component>
   <component name="Git.Settings">
     <option name="PUSH_AUTO_UPDATE" value="true" />
+    <option name="PUSH_TAGS">
+      <GitPushTagMode>
+        <option name="argument" value="--tags" />
+        <option name="title" value="All" />
+      </GitPushTagMode>
+    </option>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
         <entry key="$PROJECT_DIR$" value="main" />
@@ -88,18 +118,18 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/test/java/Network" />
+      <recent name="$PROJECT_DIR$/src/test/java/SuperSocket" />
+      <recent name="$PROJECT_DIR$/src/test/java" />
+      <recent name="$PROJECT_DIR$/src/test/java/TcpEventMessages" />
       <recent name="$PROJECT_DIR$/src/test/java/MultiClientServer/client" />
-      <recent name="$PROJECT_DIR$/src/test/java/MultiClientServer" />
-      <recent name="$PROJECT_DIR$/src/main/resources/GuiResources" />
-      <recent name="$PROJECT_DIR$/src/main/resources" />
-      <recent name="C:\Users\Fernando\Il mio Drive\Desktop\ing-sw-2022-morelli-morea-netodellacqua\src\main\java" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="it.polimi.ingsw.server" />
+      <recent name="Network" />
       <recent name="it.polimi.ingsw.utils.gui" />
       <recent name="it.polimi.ingsw.client.view" />
-      <recent name="it.polimi.ingsw.server" />
       <recent name="it.polimi.ingsw.server.model" />
-      <recent name="it.polimi.ingsw.client" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -107,39 +137,13 @@
       <command value="mvn clean" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.Server">
-    <configuration name="Client" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="MultiClientServer.client.Client" />
-      <module name="Eriantys" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="MultiClientServer.client.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="Application.ServerController">
     <configuration name="ClientController" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="it.polimi.ingsw.client.ClientController" />
+      <option name="MAIN_CLASS_NAME" value="SuperSocket.ClientController" />
       <module name="Eriantys" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="it.polimi.ingsw.server.states.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ClientLauncher" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="it.polimi.ingsw.client.ClientLauncher" />
-      <module name="Eriantys" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="it.polimi.ingsw.client.*" />
+          <option name="PATTERN" value="SuperSocket.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -154,12 +158,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Server" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="MultiClientServer.server.Server" />
+    <configuration name="ServerController" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="it.polimi.ingsw.server.ServerController" />
       <module name="Eriantys" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="MultiClientServer.server.*" />
+          <option name="PATTERN" value="it.polimi.ingsw.server.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -167,12 +171,38 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="it.polimi.ingsw.utils.gui.Window" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="it.polimi.ingsw.utils.gui.Window" />
+    <configuration name="ServerDumb" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="SuperSocket.ServerDumb" />
       <module name="Eriantys" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="it.polimi.ingsw.utils.gui.*" />
+          <option name="PATTERN" value="SuperSocket.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestMessageEvents" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="it.polimi.ingsw.utils.network.TestMessageEvents" />
+      <module name="Eriantys" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="it.polimi.ingsw.utils.network.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="it.polimi.ingsw.utils.network.ServerDumb" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="it.polimi.ingsw.utils.network.ServerDumb" />
+      <module name="Eriantys" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="it.polimi.ingsw.utils.network.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -182,19 +212,19 @@
     </configuration>
     <list>
       <item itemvalue="Application.DemoEsempio" />
-      <item itemvalue="Application.Client" />
-      <item itemvalue="Application.Server" />
-      <item itemvalue="Application.it.polimi.ingsw.utils.gui.Window" />
       <item itemvalue="Application.ClientController" />
-      <item itemvalue="Application.ClientLauncher" />
+      <item itemvalue="Application.ServerController" />
+      <item itemvalue="Application.Network.TestMessageEvents" />
+      <item itemvalue="Application.it.polimi.ingsw.utils.network.ServerDumb" />
+      <item itemvalue="Application.ServerDumb" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.ClientLauncher" />
-        <item itemvalue="Application.Server" />
-        <item itemvalue="Application.Client" />
-        <item itemvalue="Application.it.polimi.ingsw.utils.gui.Window" />
+        <item itemvalue="Application.ServerController" />
+        <item itemvalue="Application.Network.TestMessageEvents" />
+        <item itemvalue="Application.it.polimi.ingsw.utils.network.ServerDumb" />
         <item itemvalue="Application.ClientController" />
+        <item itemvalue="Application.ServerDumb" />
       </list>
     </recent_temporary>
   </component>
@@ -231,7 +261,10 @@
       <workItem from="1650901774959" duration="5892000" />
       <workItem from="1650908481581" duration="1930000" />
       <workItem from="1650911531563" duration="1151000" />
-      <workItem from="1650953540225" duration="17647000" />
+      <workItem from="1650953540225" duration="18058000" />
+      <workItem from="1651010659756" duration="6190000" />
+      <workItem from="1651048878425" duration="6549000" />
+      <workItem from="1651059269030" duration="11518000" />
     </task>
     <task id="LOCAL-00001" summary="created resources directory">
       <created>1647955875299</created>
@@ -429,7 +462,21 @@
       <option name="project" value="LOCAL" />
       <updated>1650978780413</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="Backup">
+      <created>1650982083605</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1650982083605</updated>
+    </task>
+    <task id="LOCAL-00030" summary="Changes by ignaI">
+      <created>1650982380524</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1650982380524</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -447,8 +494,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added CenterTable and Professor, and edited project structure" />
-    <MESSAGE value="fixed Model.java setCenterTable" />
     <MESSAGE value="created classes" />
     <MESSAGE value="edited .gitignore" />
     <MESSAGE value="edited name" />
@@ -472,7 +517,9 @@
     <MESSAGE value="backup" />
     <MESSAGE value="Working code - 25 aprile 2022" />
     <MESSAGE value="fixed the case of insertion of incorrect number of parameters" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed the case of insertion of incorrect number of parameters" />
+    <MESSAGE value="Backup" />
+    <MESSAGE value="Changes by ignaI" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changes by ignaI" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
