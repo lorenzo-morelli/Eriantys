@@ -10,15 +10,13 @@ import java.io.IOException;
 public class CreateGameScreen extends State{
     Model model;
     View view;
-    Network network;
     ParametersFromTerminal insertUserInfo;
     Event idle;
 
-    public CreateGameScreen(View view, Model model, Network network) throws IOException {
+    public CreateGameScreen(View view, Model model) throws IOException {
         super("[STATO di attesa info di setup per la nuova partita]");
         this.view = view;
         this.model = model;
-        this.network = network;
         insertUserInfo = new ParametersFromTerminal(model, 2); // numero di giocatori / modalita di gioco
         idle= new Event("Evento Ritorno");
     }
@@ -36,7 +34,7 @@ public class CreateGameScreen extends State{
     @Override
     public void exitAction(IEvent cause) throws IOException {
         super.exitAction(cause);
-        network.send("CREATE");
+        Network.send(Network.getMyIp() + " CREATE");
         //invia al server numero di giocatori e game mode scelto
         //lato server nel frattempo crea partita e invia codice
         //ricevi codice partita

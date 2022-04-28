@@ -9,12 +9,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c193818a-1e92-4991-9439-cb3e4c836bfd" name="Changes" comment="ServerController, working demo">
+    <list default="true" id="c193818a-1e92-4991-9439-cb3e4c836bfd" name="Changes" comment="Improved code readability">
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/states/WaitIpAndCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/utils/network/events/ParametersFromNetwork.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ClientController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/ConnectionToServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/ConnectionToServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/CreateGameScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/CreateGameScreen.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/ServerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/ServerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/states/SpecifyPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/states/SpecifyPortScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/states/Wait.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/states/WaitSpecificMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/utils/network/MessageEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/utils/network/SpecificMessageEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/states/WaitSpecificMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/states/WaitSpecificMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/utils/network/Network.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/utils/network/Network.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/utils/network/SpecificMessageEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/utils/network/events/SpecificMessageEvent.java" afterDir="false" />
     </list>
     <list id="4543697f-2cef-4409-863c-6d4c8711deb7" name="Changes by ignaI" comment="Changes by ignaI" />
     <option name="SHOW_DIALOG" value="false" />
@@ -103,26 +108,13 @@
       <command value="mvn clean" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.ClientLauncher">
+  <component name="RunManager" selected="Application.it.polimi.ingsw.client.ClientLauncher">
     <configuration name="ClientController" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="SuperSocket.ClientController" />
       <module name="Eriantys" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="SuperSocket.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ClientLauncher" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="it.polimi.ingsw.client.ClientLauncher" />
-      <module name="Eriantys" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="it.polimi.ingsw.client.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -150,12 +142,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestMessageEvents" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="it.polimi.ingsw.utils.network.TestMessageEvents" />
+    <configuration name="ServerDumb" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="it.polimi.ingsw.utils.network.ServerDumb" />
       <module name="Eriantys" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="it.polimi.ingsw.utils.network.*" />
+          <option name="PATTERN" value="it.polimi.ingsw.utils.network.events.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -163,12 +155,25 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="it.polimi.ingsw.utils.network.ServerDumb" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="it.polimi.ingsw.utils.network.ServerDumb" />
+    <configuration name="it.polimi.ingsw.client.ClientLauncher" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="it.polimi.ingsw.client.ClientLauncher" />
       <module name="Eriantys" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="it.polimi.ingsw.utils.network.*" />
+          <option name="PATTERN" value="it.polimi.ingsw.client.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="it.polimi.ingsw.utils.network.TestMessageEvents" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="it.polimi.ingsw.utils.network.TestMessageEvents" />
+      <module name="Eriantys" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="it.polimi.ingsw.utils.network.events.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -179,14 +184,14 @@
     <list>
       <item itemvalue="Application.DemoEsempio" />
       <item itemvalue="Application.ClientController" />
-      <item itemvalue="Application.ClientLauncher" />
+      <item itemvalue="Application.it.polimi.ingsw.client.ClientLauncher" />
       <item itemvalue="Application.ServerController" />
-      <item itemvalue="Application.it.polimi.ingsw.utils.network.TestMessageEvents" />
       <item itemvalue="Application.it.polimi.ingsw.utils.network.ServerDumb" />
+      <item itemvalue="Application.it.polimi.ingsw.utils.network.TestMessageEvents" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.ClientLauncher" />
+        <item itemvalue="Application.it.polimi.ingsw.client.ClientLauncher" />
         <item itemvalue="Application.ServerController" />
         <item itemvalue="Application.it.polimi.ingsw.utils.network.TestMessageEvents" />
         <item itemvalue="Application.it.polimi.ingsw.utils.network.ServerDumb" />
@@ -230,7 +235,7 @@
       <workItem from="1650953540225" duration="18058000" />
       <workItem from="1651010659756" duration="6190000" />
       <workItem from="1651048878425" duration="6549000" />
-      <workItem from="1651059269030" duration="26437000" />
+      <workItem from="1651059269030" duration="30872000" />
     </task>
     <task id="LOCAL-00001" summary="created resources directory">
       <created>1647955875299</created>
@@ -456,7 +461,14 @@
       <option name="project" value="LOCAL" />
       <updated>1651133839122</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="Improved code readability">
+      <created>1651134311499</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1651134311499</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -474,7 +486,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="edited name" />
     <MESSAGE value="fixed errors" />
     <MESSAGE value="changed architecture" />
     <MESSAGE value="added gson dependency" />
@@ -499,7 +510,8 @@
     <MESSAGE value="Changes by ignaI" />
     <MESSAGE value="ServerController, a first sketch" />
     <MESSAGE value="ServerController, working demo" />
-    <option name="LAST_COMMIT_MESSAGE" value="ServerController, working demo" />
+    <MESSAGE value="Improved code readability" />
+    <option name="LAST_COMMIT_MESSAGE" value="Improved code readability" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

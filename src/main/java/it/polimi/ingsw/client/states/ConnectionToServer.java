@@ -10,24 +10,22 @@ import java.io.IOException;
 public class ConnectionToServer extends State {
     private View view;
     private Model model;
-    private Network network;
 
     ConnectedToServer connected = new ConnectedToServer();
     NotConnectedToServer notConnected = new NotConnectedToServer();
 
 
-    public ConnectionToServer(View view, Network network, Model model) {
+    public ConnectionToServer(View view, Model model) {
         super("[Tentativo di connessione al server]");
         this.view = view;
-        this.network = network;
         this.model = model;
     }
 
     @Override
     public IEvent entryAction(IEvent cause) throws IOException, InterruptedException {
         view.setCallingState(this);
-        network.setupClient(model.getIp(), model.getPort());
-        if (network.isConnected()){
+        Network.setupClient(model.getIp(), model.getPort());
+        if (Network.isConnected()){
             connected.fireStateEvent();
         }
         else{

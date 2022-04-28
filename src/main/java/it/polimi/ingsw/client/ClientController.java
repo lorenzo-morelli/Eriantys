@@ -12,8 +12,6 @@ public class ClientController {
     private Model model;      // modello dati di questa semplice demo
     private View view;       // vista (per il momento solo command line interface)
 
-    private Network network;
-
     // Dichiarazione degli stati necessari
     // La maggior parte delle volte uno stato rappresenta una schermata (che sia essa di gui o di cli)
     // ma più in generale potrebbe significare delle azioni da compiere a fronte di eventi
@@ -37,7 +35,6 @@ public class ClientController {
         CommandPrompt.setDebug();
         this.model = new Model();
         this.view = view;
-        this.network = new Network();
 
         idle = new Idle();
         start = new Event("[Controller Started]");
@@ -46,9 +43,9 @@ public class ClientController {
         // Costruzioni degli stati necessari
         waitStart = new WelcomeScreen(view);
         askConnectionInfo = new AskConnectionInfoScreen(view,model);
-        connectionToServer = new ConnectionToServer(view, network, model);
+        connectionToServer = new ConnectionToServer(view, model);
         CreateOrConnect = new CreateOrConnectScreen(view,model);
-        CreateGame = new CreateGameScreen(view, model, network);
+        CreateGame = new CreateGameScreen(view, model);
         ConnectGame = new ConnectGameScreen(view, model);
         wait = new WaitForturn(view, model);
         chooseCard = new ChooseAssistentCard();

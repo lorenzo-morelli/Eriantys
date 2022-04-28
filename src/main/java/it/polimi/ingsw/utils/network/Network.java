@@ -7,6 +7,7 @@ import javax.swing.*;
 public class Network implements ActionListener{
     private static NetworkHandler connection;
     private static boolean gotConnect;
+    private static Network instance = null;
 
     // elementi grafici "virtuali" che astraggono i dettagli implementativi
     private static JButton serverButton,clientButton, sendButton;
@@ -45,7 +46,7 @@ public class Network implements ActionListener{
 
     }
 
-    public Network(){
+    private Network(){
         serverButton = new JButton();
         serverButton.addActionListener(this);
         clientButton = new JButton();
@@ -56,36 +57,49 @@ public class Network implements ActionListener{
         port = new JTextField();
         textToSend = new JTextField();
         textToSend.addActionListener(this);
-        textReceived = new JTextArea();
+        //textReceived = new JTextArea();
         disconnectButton = new JButton();
         disconnectButton.addActionListener(this);
     }
 
     public static JTextArea checkNewMessages() {
-        return textReceived;
+        if (instance.textReceived == null){
+            instance.textReceived = new JTextArea();
+        }
+        return instance.textReceived;
     }
 
     public static void setupServer(String port){
-        Network.port.setText(port);
-        Network.serverButton.doClick();
+        if (instance == null){
+            instance = new Network();
+        }
+        instance.port.setText(port);
+        instance.serverButton.doClick();
     };
 
     public static void setupClient(String ip,String port){
-        Network.IPAddress.setText(ip);
-        Network.port.setText(port);
-        Network.clientButton.doClick();
+        if (instance == null){
+            instance = new Network();
+        }
+        instance.IPAddress.setText(ip);
+        instance.port.setText(port);
+        instance.clientButton.doClick();
     };
 
     public static void disconnect(){
-        Network.disconnectButton.doClick();
+        instance.disconnectButton.doClick();
     }
 
     public static boolean isConnected() {
-        return gotConnect;
+        return instance.gotConnect;
     }
 
     public static void send(String message){
-        Network.textToSend.setText(message);
-        Network.sendButton.doClick();
+        instance.textToSend.setText(message);
+        instance.sendButton.doClick();
+    }
+
+    public static String getMyIp(){
+        return instance.connection.getMyAddress();
     }
 }
