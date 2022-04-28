@@ -85,8 +85,8 @@ public class ClientController {
         fsm.addTransition(wait, wait.go_to_studentphase() , MoveStudent);
        // fsm.addTransition(MoveStudent , MoveStudent.go_to_wait(), wait);
 
-      //  fsm.addTransition(MoveStudent , MoveStudent.go_to_movemotherphase(), MoveMother);
-      //  fsm.addTransition(MoveMother , MoveMother.go_to_wait(), wait);
+       // fsm.addTransition(MoveStudent , MoveStudent.go_to_movemotherphase(), MoveMother);
+       // fsm.addTransition(MoveMother , MoveMother.go_to_wait(), wait);
 
         fsm.addTransition(wait, wait.go_to_endgame() , end );
         fsm.addTransition(wait, wait.go_to_cloudphase() , ChooseCloud);
