@@ -1,31 +1,67 @@
 package it.polimi.ingsw.utils.network;
+
 import it.polimi.ingsw.utils.stateMachine.Event;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
 /**
- * Un evento di tipo messaggio non e' altro che un messaggio (Stringa) arrivato attraverso socket TCP
- * il cui contenuto corrisponde esattamente a quello di un messaggio da noi definito (di cui il significato e'
- * a priori chiaro). Per implementare cio' occorre:
- * a) Il posto dove vengono ricevuti i messaggi: JTextArea textReceived
- * b) Qualcuno che monitori se ci sono messaggi in arrivo: MyDocumentListener listener
- * c) Qualcuno che controlli che il contenuto del messaggio arrivato e' esattamente quello che ci aspettavamo
- * per far triggherare l'evento: sempre il listener MyDocumentListener
+ * I messaggi inviati tramite TCPsocket vengono ricevuti sulla CLI, in particolare su una
+ * TextArea textReceived. La seguente classe si mette in ascolto di questa zona di testo dell'
+ * interfaccia grafica dove vengono ricevuti i nuovi in messaggio, e se vengono effettuate modifiche,
+ * in particolare in caso di arrivo di nuovi messaggi, controlla che il nuovo messaggio ricevuto sia
+ * uguale a quello dell'evento e "lancia" l'evento con event.fireStateEvent();
  *
  * @author Fernando
  */
+public class MessageEvent extends Event implements DocumentListener {
 
-class MessageEvent extends Event {
+    private static JTextArea ta;
+    private String toListen;
 
-        private final String message;
-        private JTextArea textReceived;
-        private MyDocumentListener listener;
+    private boolean messageReceived = false;
 
-    public MessageEvent(String message, JTextArea textReceived) {
-            super("Message Event " + message);
-            this.message = message;
-            this.textReceived = textReceived;
-            listener = new MyDocumentListener(message,textReceived,this);
-            textReceived.getDocument().addDocumentListener(listener);
+    public MessageEvent(String toListen) {
+        super("[Messaggio == "+ toListen);
+        this.ta = Network.checkNewMessages();
+        this.toListen = toListen;
+        ta.getDocument().addDocumentListener(this);
+    }
+
+    public boolean messageReceived() {
+        return messageReceived;
+    }
+
+    @Override
+    public void insertUpdate(DocumentEvent e) {
+      checkLastWord();
+    }
+
+    @Override
+    public void removeUpdate(DocumentEvent e) {
+      //checkLastWord();
+    }
+
+    @Override
+    public void changedUpdate(DocumentEvent e) {
+       //checkLastWord();
+    }
+
+    /**
+     * Metodo che controlla se l'ultima stringa inviata dal client e' uguale a quella che ci aspettavamo
+     * di trovare per lanciare il nostro evento
+     */
+    private void checkLastWord() {
+        try {
+            String text = ta.getText();
+            if (this.toListen.equals( text)){
+                System.out.println("Ricevuto: "+ text);
+                this.messageReceived = true;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+    }
 }
-

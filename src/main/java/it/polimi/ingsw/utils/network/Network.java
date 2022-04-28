@@ -1,23 +1,18 @@
 package it.polimi.ingsw.utils.network;
 
-import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.event.*;
 
 
 public class Network implements ActionListener{
-    NetworkHandler connection;
-    boolean gotConnect;
+    private static NetworkHandler connection;
+    private static boolean gotConnect;
 
     // elementi grafici "virtuali" che astraggono i dettagli implementativi
-    JButton serverButton;
-    JButton clientButton;
-    JTextField IPAddress;
-    JTextField port;
-    JTextField textToSend;
-    JTextArea textReceived;
-    JButton disconnectButton;
+    private static JButton serverButton,clientButton, sendButton;
+    private static JTextField IPAddress,port,textToSend;
+    private static JTextArea textReceived;
+    private static JButton disconnectButton;
 
 
 
@@ -26,26 +21,22 @@ public class Network implements ActionListener{
             connection = new NetworkHandler(IPAddress.getText(), Integer.parseInt(port.getText()), this);
             gotConnect = connection.connect();
             if(gotConnect){
-                textReceived.append("My Address: "+connection.getMyAddress()+"\n");
-                textReceived.append("My Hostname: "+connection.getMyHostname()+"\n");
-                textReceived.append("ClientRole" + "\n");
+                System.out.println("[Connected to server]");
             }
 
         }else if(event.getSource() == serverButton){
             connection = new NetworkHandler(Integer.parseInt(port.getText()), this);
             gotConnect = connection.connect();
             if(gotConnect){
-                textReceived.append("Indirizzo IP di questo pc: "+connection.getMyAddress()+"\n");
-                textReceived.append("Nome Computer: "+connection.getMyHostname()+"\n");
-                textReceived.append("ServerRole" + "\n");
+                System.out.println("[Listening for Clients]");
             }
 
-        }else if(event.getSource() == textToSend){
+        }else if(event.getSource() == sendButton){
             if(connection != null){
                 connection.sendText(textToSend.getText());
             }
         }else if(event.getSource() == connection){
-            textReceived.append(connection.readText() + "\n");
+            textReceived.setText(connection.readText());
             textReceived.setCaretPosition(textReceived.getDocument().getLength());
 
         }else if(event.getSource() == disconnectButton){
@@ -59,6 +50,8 @@ public class Network implements ActionListener{
         serverButton.addActionListener(this);
         clientButton = new JButton();
         clientButton.addActionListener(this);
+        sendButton = new JButton();
+        sendButton.addActionListener(this);
         IPAddress = new JTextField();
         port = new JTextField();
         textToSend = new JTextField();
@@ -68,26 +61,31 @@ public class Network implements ActionListener{
         disconnectButton.addActionListener(this);
     }
 
-    public JTextArea getTextArea() {
+    public static JTextArea checkNewMessages() {
         return textReceived;
     }
 
-    public void setupServer(String port){
-        this.port.setText(port);
-        this.serverButton.doClick();
+    public static void setupServer(String port){
+        Network.port.setText(port);
+        Network.serverButton.doClick();
     };
 
-    public void setupClient(String ip,String port){
-        this.IPAddress.setText(ip);
-        this.port.setText(port);
-        this.clientButton.doClick();
+    public static void setupClient(String ip,String port){
+        Network.IPAddress.setText(ip);
+        Network.port.setText(port);
+        Network.clientButton.doClick();
     };
 
-    public void disconnect(){
-        this.disconnectButton.doClick();
+    public static void disconnect(){
+        Network.disconnectButton.doClick();
     }
 
-    public boolean isConnected() {
+    public static boolean isConnected() {
         return gotConnect;
+    }
+
+    public static void send(String message){
+        Network.textToSend.setText(message);
+        Network.sendButton.doClick();
     }
 }

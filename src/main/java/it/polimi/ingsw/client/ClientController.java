@@ -48,7 +48,7 @@ public class ClientController {
         askConnectionInfo = new AskConnectionInfoScreen(view,model);
         connectionToServer = new ConnectionToServer(view, network, model);
         CreateOrConnect = new CreateOrConnectScreen(view,model);
-        CreateGame = new CreateGameScreen(view, model);
+        CreateGame = new CreateGameScreen(view, model, network);
         ConnectGame = new ConnectGameScreen(view, model);
         wait = new WaitForturn(view, model);
         chooseCard = new ChooseAssistentCard();
@@ -65,8 +65,11 @@ public class ClientController {
         fsm.addTransition(waitStart, waitStart.notStart(), waitStart);
 
         // Schermata di richiesta di nickname, ip e porta
-        fsm.addTransition(askConnectionInfo, askConnectionInfo.insertedUserInfo(), CreateOrConnect);
+        fsm.addTransition(askConnectionInfo, askConnectionInfo.insertedUserInfo(), connectionToServer);
         fsm.addTransition(askConnectionInfo, askConnectionInfo.numberOfParametersIncorrect(), askConnectionInfo);
+
+        fsm.addTransition(connectionToServer, connectionToServer.connected(), CreateOrConnect);
+        fsm.addTransition(connectionToServer, connectionToServer.notConnected(), askConnectionInfo);
 
         // Scelta tra creazione di una nuova partita o connessione ad una esistente
         fsm.addTransition(CreateOrConnect, CreateOrConnect.haSceltoConnetti(), ConnectGame);
