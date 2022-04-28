@@ -38,7 +38,7 @@ public class RecognizedString extends Event implements Observer {
 
     @Override
     public void update(Object message) throws IOException, InterruptedException {
-        if(toListen != null && enabled == true){
+        if(toListen != null && enabled){
             if (this.toListen.equals ((String)message)){
                 fireStateEvent();
             }

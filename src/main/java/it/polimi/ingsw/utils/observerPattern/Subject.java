@@ -6,6 +6,7 @@ public interface Subject {
      * che saranno poi notificati in caso di cambiamento di stato
      */
     public void subscribeObserver(Observer observer);
+
     /**
      * permette ad un osservatore di disiscriversi all'elenco degli osservatori
      * che saranno poi notificati in caso di cambiamento di stato
