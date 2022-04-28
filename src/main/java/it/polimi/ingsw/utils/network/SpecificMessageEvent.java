@@ -15,14 +15,14 @@ import javax.swing.event.DocumentListener;
  *
  * @author Fernando
  */
-public class MessageEvent extends Event implements DocumentListener {
+public class SpecificMessageEvent extends Event implements DocumentListener {
 
     private static JTextArea ta;
     private String toListen;
 
     private boolean messageReceived = false;
 
-    public MessageEvent(String toListen) {
+    public SpecificMessageEvent(String toListen) {
         super("[Messaggio == "+ toListen);
         this.ta = Network.checkNewMessages();
         this.toListen = toListen;

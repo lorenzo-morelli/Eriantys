@@ -8,14 +8,11 @@ import it.polimi.ingsw.utils.stateMachine.State;
 
 import java.io.IOException;
 
-public class SpecifyPort extends State {
-    Network network;
-
+public class SpecifyPortScreen extends State {
     Event portSpecified;
 
-    public SpecifyPort(Network network) throws IOException {
+    public SpecifyPortScreen() throws IOException {
         super("[Specifica porta dove mettersi in ascolto dei clients]");
-        this.network = network;
         portSpecified = new Event("Porta specificata");
 
     }
@@ -36,7 +33,7 @@ public class SpecifyPort extends State {
 
     @Override
     public void exitAction(IEvent cause) throws IOException {
-        network.setupServer(CommandPrompt.gotFromTerminal());
+        Network.setupServer(CommandPrompt.gotFromTerminal());
         super.exitAction(cause);
     }
 }

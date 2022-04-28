@@ -1,18 +1,17 @@
 package it.polimi.ingsw.server.states;
 
-import it.polimi.ingsw.utils.network.MessageEvent;
-import it.polimi.ingsw.utils.network.Network;
+import it.polimi.ingsw.utils.network.SpecificMessageEvent;
 import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
 
 import java.io.IOException;
 
-public class Wait extends State {
+public class WaitSpecificMessage extends State {
 
-    private MessageEvent newmessage;
-    public Wait() {
-        super("[Il server è in attesa di eventi]]");
-        newmessage = new MessageEvent("CREATE");
+    private SpecificMessageEvent newmessage;
+    public WaitSpecificMessage() {
+        super("[Il server è in attesa di un messaggio specifico]]");
+        newmessage = new SpecificMessageEvent("CREATE");
     }
 
     @Override
