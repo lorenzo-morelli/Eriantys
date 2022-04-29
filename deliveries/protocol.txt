@@ -1,23 +1,16 @@
-Host:
-	myIp CREATE gameMode numOfPlayers
+Host (the clients that create the game):
+	myIp nickname CREATE gameMode numOfPlayers
 
 Server:
-	client_ip CREATION_SUCCESSFUL gameId
+	client_ip CREATION_SUCCESSFUL    || client_ip GAME_ALREADY_CREATED  ||  client_ip NICKNAME_ALREADY_EXIST
 
 // Now the Client1 waits for his priority (turn)
 
 Player2:
-	myIp CONNECT
+	myIp nickname CONNECT
 
-// Server create a new separate thread to communicate with Client2
-
-Server response:
-	client_ip LIST_GAMES gamesList
-
-// Now the Client2 will choose a game from game list
-
-Player2:
-	myIp CONNECT gameId
+Server:
+    client_ip GAME_NOT_EXIST || client_ip NICKNAME_ALREADY_EXIST || client_ip CONNECTED
 
 // Now Client2 waits for his priority (turn)
 // waiting that the others players connects in the number specified by the first Host client

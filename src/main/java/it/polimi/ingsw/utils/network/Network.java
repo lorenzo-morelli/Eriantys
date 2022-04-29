@@ -7,6 +7,7 @@ import javax.swing.*;
 public class Network implements ActionListener{
     private static NetworkHandler connection;
     private static boolean gotConnect;
+    private static boolean serverListening = false;
     private static Network instance = null;
 
     // elementi grafici "virtuali" che astraggono i dettagli implementativi
@@ -72,9 +73,13 @@ public class Network implements ActionListener{
     public static void setupServer(String port){
         if (instance == null){
             instance = new Network();
+            // una volta avviato il server in ascolto su una porta
+            // non posso rifare il setup (instance non è null)
+            instance.port.setText(port);
+            instance.serverButton.doClick();
+            serverListening = true;
         }
-        instance.port.setText(port);
-        instance.serverButton.doClick();
+
     };
 
     public static void setupClient(String ip,String port){
@@ -102,4 +107,9 @@ public class Network implements ActionListener{
     public static String getMyIp(){
         return instance.connection.getMyAddress();
     }
+
+    public static boolean isServerListening() {
+        return serverListening;
+    }
 }
+

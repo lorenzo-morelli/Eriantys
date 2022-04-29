@@ -19,15 +19,15 @@ public class ClientController {
     private final WelcomeScreen waitStart;
     private final AskConnectionInfoScreen askConnectionInfo;
     private final ConnectionToServer connectionToServer;
-    private final CreateOrConnectScreen CreateOrConnect;
-    private final CreateGameScreen CreateGame;
-    private final ConnectGameScreen ConnectGame;
+    private final CreateOrConnectScreen createOrConnect;
+    private final CreateGameScreen createGame;
+    private final ConnectGameScreen connectGame;
     private final Event start;
     private final WaitForturn wait;
     private final ChooseAssistentCard chooseCard;
-    private final MoveStudentPhase MoveStudent;
-    private final MoveMotherPhase MoveMother;
-    private final ChooseCloudPhase ChooseCloud;
+    private final MoveStudentPhase moveStudent;
+    private final MoveMotherPhase moveMother;
+    private final ChooseCloudPhase chooseCloud;
     private final EndGame end;
 
     public ClientController(View view) throws IOException, InterruptedException {
@@ -44,14 +44,14 @@ public class ClientController {
         waitStart = new WelcomeScreen(view);
         askConnectionInfo = new AskConnectionInfoScreen(view,model);
         connectionToServer = new ConnectionToServer(view, model);
-        CreateOrConnect = new CreateOrConnectScreen(view,model);
-        CreateGame = new CreateGameScreen(view, model);
-        ConnectGame = new ConnectGameScreen(view, model);
+        createOrConnect = new CreateOrConnectScreen(view,model);
+        createGame = new CreateGameScreen(view, model);
+        connectGame = new ConnectGameScreen(view, model);
         wait = new WaitForturn(view, model);
         chooseCard = new ChooseAssistentCard();
-        MoveStudent = new MoveStudentPhase();
-        MoveMother = new MoveMotherPhase();
-        ChooseCloud = new ChooseCloudPhase();
+        moveStudent = new MoveStudentPhase();
+        moveMother = new MoveMotherPhase();
+        chooseCloud = new ChooseCloudPhase();
         end = new EndGame();
 
         // Dichiarazione delle transizioni tra gli stati
@@ -65,16 +65,18 @@ public class ClientController {
         fsm.addTransition(askConnectionInfo, askConnectionInfo.insertedUserInfo(), connectionToServer);
         fsm.addTransition(askConnectionInfo, askConnectionInfo.numberOfParametersIncorrect(), askConnectionInfo);
 
-        fsm.addTransition(connectionToServer, connectionToServer.connected(), CreateOrConnect);
+        // Trying to connect to server via TCP socket
+        fsm.addTransition(connectionToServer, connectionToServer.connected(), createOrConnect);
         fsm.addTransition(connectionToServer, connectionToServer.notConnected(), askConnectionInfo);
 
-        // Scelta tra creazione di una nuova partita o connessione ad una esistente
-        fsm.addTransition(CreateOrConnect, CreateOrConnect.haSceltoConnetti(), ConnectGame);
-        fsm.addTransition(CreateOrConnect, CreateOrConnect.haSceltoCrea(), CreateGame);
-        fsm.addTransition(CreateOrConnect, CreateOrConnect.sceltaNonValida(), CreateOrConnect);
+        // Choose if create a new game or connect to an existing one
+        fsm.addTransition(createOrConnect, createOrConnect.haSceltoConnetti(), connectGame);
+        fsm.addTransition(createOrConnect, createOrConnect.haSceltoCrea(), createGame);
+        fsm.addTransition(createOrConnect, createOrConnect.sceltaNonValida(), createOrConnect);
 
-        fsm.addTransition(ConnectGame, ConnectGame.go_to_wait(), wait);
-        fsm.addTransition(CreateGame, CreateGame.go_to_wait(), wait);
+        fsm.addTransition(connectGame, connectGame.creationSuccessful(), wait);
+        /*
+        fsm.addTransition(createGame, createGame.go_to_wait(), wait);
 
         //todo
 
@@ -91,7 +93,7 @@ public class ClientController {
         fsm.addTransition(wait, wait.go_to_endgame() , end );
         fsm.addTransition(wait, wait.go_to_cloudphase() , ChooseCloud);
        // fsm.addTransition(ChooseCloud, ChooseCloudPhase.go_to_wait(), wait);
-
+    */
 
         // L'evento di start è l'unico che deve essere fatto partire manualmente
         start.fireStateEvent();

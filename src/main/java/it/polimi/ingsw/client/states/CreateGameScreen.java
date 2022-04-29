@@ -19,23 +19,17 @@ public class CreateGameScreen extends State{
         this.view = view;
         this.model = model;
         insertUserInfo = new ParametersFromTerminal(model, 2); // numero di giocatori / modalita di gioco
-        idle= new Event("Evento Ritorno");
     }
 
     public IEvent entryAction(IEvent cause) throws IOException {
         view.setCallingState(this);
-        try {
-            idle.fireStateEvent();
-        } catch(InterruptedException e){}
         return null;
     }
-
-    public Event go_to_wait(){ return idle; }
 
     @Override
     public void exitAction(IEvent cause) throws IOException {
         super.exitAction(cause);
-        Network.send(Network.getMyIp() + " CREATE");
+        Network.send(Network.getMyIp() + " "+model.getNickname()+" CREATE PRINCIPIANT 2");
         //invia al server numero di giocatori e game mode scelto
         //lato server nel frattempo crea partita e invia codice
         //ricevi codice partita

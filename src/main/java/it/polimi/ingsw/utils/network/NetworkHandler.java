@@ -287,8 +287,7 @@ public class NetworkHandler {
                     } catch (IOException e) {
                     }
                 }
-                System.out.println("reading while loop done");
-                // CADAWAS
+                System.out.println("[Il server sta chiudendo]");
                 closeConnection();
             }
         }

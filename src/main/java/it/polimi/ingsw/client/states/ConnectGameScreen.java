@@ -3,13 +3,15 @@ package it.polimi.ingsw.client.states;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.client.Model;
 import it.polimi.ingsw.client.events.*;
+import it.polimi.ingsw.utils.network.Network;
+import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
 import it.polimi.ingsw.utils.stateMachine.*;
 import java.io.IOException;
 
 public class ConnectGameScreen extends State{
     Model model;
     View view;
-    ParametersFromTerminal insertUserInfo;
+    ParametersFromNetwork creationSuccessful;
 
     Event idle;
 
@@ -17,20 +19,27 @@ public class ConnectGameScreen extends State{
         super("[STATO di attesa connessione a partita]");
         this.view = view;
         this.model = model;
-        insertUserInfo = new ParametersFromTerminal(model, 1); // codice partita
-        idle = new Event("Evento ritorno");
+        creationSuccessful = new ParametersFromNetwork(2);  // client_ip CREATION_SUCCESSFULL
     }
 
     public IEvent entryAction(IEvent cause) throws IOException {
         view.setCallingState(this);
-        view.showTryToConnect();
-        try {
-            idle.fireStateEvent();
-        } catch(InterruptedException e){}
+        if(creationSuccessful.parametersReceived()){
+            // Ho ricevuto un messaggio inviato a me (conteneva il mio Ip)
+            if (creationSuccessful.getParameter(0).equals(Network.getMyIp())){
+                if (creationSuccessful.getParameter(1).equals("CREATION_SUCCESSFUL")){
+                    // todo: vista.printaCreazioneAvvenutaConSuccesso()
+                    System.out.println("[Creazione avvenuta con successo]");
+                }
+                else if(creationSuccessful.getParameter(1).equals("NICKNAME_ALREADY_EXIST")){
+                    System.out.println("[Nickname già esistente]");
+                }
+            }
+        }
         return null;
     }
 
-    public Event go_to_wait(){ return idle; }
+    public ParametersFromNetwork creationSuccessful(){ return creationSuccessful; }
 
     @Override
     public void exitAction(IEvent cause) throws IOException {
@@ -38,7 +47,6 @@ public class ConnectGameScreen extends State{
         // todo: connettiti alla partita con codice partita
         // server si mette in attesa della connessione di tutti i giocatori
         // aspetta che server inizi partita
-        go_to_wait();
     }
 
 }
