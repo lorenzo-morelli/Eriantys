@@ -9,7 +9,13 @@ public class Model {
 
     private int GameCodeNumber;
 
+    public int getGameCodeNumber() {
+        return GameCodeNumber;
+    }
 
+    public void setGameCodeNumber(int gameCodeNumber) {
+        GameCodeNumber = gameCodeNumber;
+    }
 
     private ArrayList<String> fromTerminal;
 
