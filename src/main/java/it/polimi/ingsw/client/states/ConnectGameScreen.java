@@ -13,13 +13,11 @@ public class ConnectGameScreen extends State{
     View view;
     ParametersFromNetwork creationSuccessful;
 
-    Event idle;
-
     public ConnectGameScreen(View view, Model model) throws IOException {
         super("[STATO di attesa connessione a partita]");
         this.view = view;
         this.model = model;
-        creationSuccessful = new ParametersFromNetwork(2);  // client_ip CREATION_SUCCESSFULL
+        creationSuccessful = new ParametersFromNetwork(2);  // myIp CREATION_SUCCESSFULL
     }
 
     public IEvent entryAction(IEvent cause) throws IOException {
@@ -29,6 +27,7 @@ public class ConnectGameScreen extends State{
             if (creationSuccessful.getParameter(0).equals(Network.getMyIp())){
                 if (creationSuccessful.getParameter(1).equals("CREATION_SUCCESSFUL")){
                     // todo: vista.printaCreazioneAvvenutaConSuccesso()
+                    // per il momento gestito con un messaggio di log
                     System.out.println("[Creazione avvenuta con successo]");
                 }
                 else if(creationSuccessful.getParameter(1).equals("NICKNAME_ALREADY_EXIST")){

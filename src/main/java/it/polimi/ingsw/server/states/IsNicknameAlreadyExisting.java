@@ -32,8 +32,8 @@ public class IsNicknameAlreadyExisting extends State {
             }
         }
         if(!nicknameAlreadyExists){
-
-            Network.send(connectionInfo.getNewNickname() + " CREATION_SUCCESSFUL");
+            System.out.println("[Accolta richiesta di nuova creazione, invio conferma]");
+            Network.send(connectionInfo.getNewIp() + " CREATION_SUCCESSFUL");
             while(true){
 
             }

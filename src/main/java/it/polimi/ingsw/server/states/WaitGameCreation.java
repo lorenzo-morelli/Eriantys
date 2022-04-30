@@ -14,8 +14,8 @@ public class WaitGameCreation extends State {
     private ParametersFromNetwork create, connect;
     public WaitGameCreation(ConnectionInfo connectionInfo) {
         super("[Il server è in attesa della creazione della partita]");
-        create = new ParametersFromNetwork(5);
-        connect = new ParametersFromNetwork(3);
+        create = new ParametersFromNetwork(5); // ricevo "client_ip Nickname CREATE gamemode numOfPlayers"
+        connect = new ParametersFromNetwork(3); // ricevo "client_ip Nickname CONNECT"
         this.connectionInfo = connectionInfo;
     }
 
@@ -29,13 +29,16 @@ public class WaitGameCreation extends State {
 
     @Override
     public IEvent entryAction(IEvent cause) throws IOException, InterruptedException {
+        System.out.println("[Non ho ancora ricevuto niente]");
         while(!create.parametersReceived() && !connect.parametersReceived()){
             // non ho ricevuto ne un messaggio di creazione ne uno di creazione
         }
+        System.out.println("[Ho ricevuto qualcosa]");
         if (create.parametersReceived()){
             connectionInfo.setNewIp(create.getParameter(0));
             connectionInfo.setNewNickname(create.getParameter(1));
             System.out.println("[Paramentro ricevuto]");
+            create.fireStateEvent();
         }
         else if (connect.parametersReceived()){
             connectionInfo.setNewIp(connect.getParameter(0));

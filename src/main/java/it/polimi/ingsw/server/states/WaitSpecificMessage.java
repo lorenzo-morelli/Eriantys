@@ -10,7 +10,7 @@ public class WaitSpecificMessage extends State {
 
     private SpecificMessageEvent newMessage;
     public WaitSpecificMessage() {
-        super("[Il server è in attesa di un messaggio specifico]]");
+        super("[Il server è in attesa di un messaggio specifico]");
         newMessage = new SpecificMessageEvent("CREATE");
     }
 

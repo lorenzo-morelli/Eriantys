@@ -44,7 +44,6 @@ public class ParametersFromNetwork extends Event implements DocumentListener {
             if (parsedStrings.size() == numberOfStrings){
                 System.out.println("[Ricevuto: "+ ta.getText() +"]" );
                 this.parametersReceived = true;
-                this.fireStateEvent();
             }
 
         } catch (Exception e) {
