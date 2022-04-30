@@ -235,5 +235,51 @@ public class CliView implements View{
             ((Read_from_terminal) callingState).insertedParameters().disable();
         }
     }
+
+    @Override
+    public void askWheremove() {
+        if (callingState instanceof Read_from_terminal) {
+            // Gli eventi (di uscita dallo stato corrente callingState) devono essere abilitati per poter avvenire
+            ((Read_from_terminal) callingState).numberOfParametersIncorrect().enable();
+            ((Read_from_terminal) callingState).insertedParameters().enable();
+
+            CommandPrompt.ask(
+                    "Inserisci indice isola dove muovere madre natura",
+                    " island ");
+
+            // Disabilitare gli eventi una volta che uno di loro è avvenuto elimina la possibilità del verificarsi di
+            // eventi concorrenti.
+            ((Read_from_terminal) callingState).numberOfParametersIncorrect().disable();
+            ((Read_from_terminal) callingState).insertedParameters().disable();
+        }
+    }
+
+    @Override
+    public void askwitchCloud(){
+        if (callingState instanceof Read_from_terminal) {
+            // Gli eventi (di uscita dallo stato corrente callingState) devono essere abilitati per poter avvenire
+            ((Read_from_terminal) callingState).numberOfParametersIncorrect().enable();
+            ((Read_from_terminal) callingState).insertedParameters().enable();
+
+            CommandPrompt.ask(
+                    "Inserisci numero di nuvola che si vuole scegliere",
+                    " cloud ");
+
+            // Disabilitare gli eventi una volta che uno di loro è avvenuto elimina la possibilità del verificarsi di
+            // eventi concorrenti.
+            ((Read_from_terminal) callingState).numberOfParametersIncorrect().disable();
+            ((Read_from_terminal) callingState).insertedParameters().disable();
+        }
+    }
+
+    @Override
+    public void showendscreen(String winner){
+        try{
+                CommandPrompt.println("GAME ENDED !! THE WINNER IS: "+ winner);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        };
+    }
+
 }
 

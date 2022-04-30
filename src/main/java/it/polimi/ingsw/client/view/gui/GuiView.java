@@ -1,3 +1,8 @@
+/*
+
+
+ todo: GUI DA SISTEMARE
+
 package it.polimi.ingsw.client.view.gui;
 
 import it.polimi.ingsw.client.states.*;
@@ -194,3 +199,4 @@ public class GuiView implements View, ActionListener {
         }
     }
 }
+*/

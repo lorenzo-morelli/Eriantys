@@ -13,6 +13,7 @@ public class Send_to_Server extends State{
     View view;
     String type;
     MessageReceived ack;
+    MessageReceived not_valid;
     NetworkIssue message_issue;
 
     public Send_to_Server(View view, Model model,String type){
@@ -22,46 +23,16 @@ public class Send_to_Server extends State{
         this.type = type;
         message_issue= new NetworkIssue("SOMETHING_STRANGE_HAPPENNED...");
         ack= new MessageReceived("MESSAGE_SENT_CORRECTLY");
+        not_valid=new MessageReceived("MESSAGE_NOT_VALID");
     }
 
     public IEvent entryAction(IEvent cause) throws IOException {
         view.setCallingState(this);
-        switch (this.type) {
-            case ("CREATIONPARAMETERS"):
-                Network.send("CREATIONPARAMETERS "+ Network.getMyIp() + " " + model.getNickname() +" "+ model.getGamemode());
-                // CONTESTO: lato server crea partita e invia codice
-                // todo: aspetta -> ricevuto ack CODICEPARTITA vai avanti
-                Recevied_ack();
-                // try catch: se riceve qualsiasi altra cosa che non sia CODICEPARTITA:
-                send_failed();
-                break;
-            case ("CARDCHOOSED"):
-                Network.send("CARDCHOOSED " + model.getCardChoosed());
-                // CONTESTO: lato server inserisce carta tra le carte scelte per il client
-                // todo: aspetta -> ricevuto ack CARTASCELTA vai avanti
-                Recevied_ack();
-                // try catch: se riceve qualsiasi altra cosa che non sia CARTASCELTA:
-                send_failed();
-                break;
-            case ("STUDENT_TOSCHOOL"):
-                Network.send("STUDENT_TOSCHOOL " + model.getStudent_in_entrance_Choosed());
-                // CONTESTO: lato server inserisce studente nella school board del client ed esegue funzioni correlate
-                // todo: aspetta -> ricevuto ack STUDENT_PLACED vai avanti
-                Recevied_ack();
-                // try catch: se riceve qualsiasi altra cosa che non sia STUDENT_PLACED:
-                send_failed();
-            case("STUDENT_TOISLAND"):
-                Network.send("STUDENT_TOISLAND " + model.getStudent_in_entrance_Choosed() + " " + model.getIsland_Choosed());
-                // todo: aspetta -> ricevuto ack STUDENT_PLACED vai avanti
-                Recevied_ack();
-                // try catch: se riceve qualsiasi altra cosa che non sia STUDENT_PLACED:
-                send_failed();
-                break;
-        }
         return null;
     }
 
     public MessageReceived Recevied_ack(){ return ack; }
+    public MessageReceived Message_not_valid(){ return not_valid; }
     public NetworkIssue send_failed(){ return message_issue; }
 
     @Override

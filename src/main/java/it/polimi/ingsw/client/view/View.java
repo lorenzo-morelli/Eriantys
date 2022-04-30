@@ -10,31 +10,22 @@ public interface View {
      */
     void setCallingState(State callingState);
 
-
-
     void askConnectionInfo();
-
     void askToStart();
-
     void askConnectOrCreate();
-
     void showTryToConnect();
-
     void showConnectingGame();
-
     void showWaitingForOtherPlayer();
-
     void showGameStarted();
-
     void ComunicationError();
-
     void ask_carta_assistente();
-
     void askGameCode();
-
     void askGameInfo();
     void itsyourturn(String command);
     void ask_witch_student();
     void askIslandOrSchool();
     void ask_witch_island();
+    void askWheremove();
+    void askwitchCloud();
+    void showendscreen(String winner);
 }

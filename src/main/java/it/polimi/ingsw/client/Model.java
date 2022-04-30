@@ -12,7 +12,25 @@ public class Model {
     private int CardChoosed;
     private int Student_in_entrance_Choosed;
     private int Island_Choosed;
+    private int Mother_movement_Choosed;
+    private int CloudChoosed;
     private ArrayList<String> fromTerminal;
+
+    public int getCloudChoosed() {
+        return CloudChoosed;
+    }
+
+    public void setCloudChoosed(int cloudChoosed) {
+        CloudChoosed = cloudChoosed;
+    }
+
+    public int getMother_movement_Choosed() {
+        return Mother_movement_Choosed;
+    }
+
+    public void setMother_movement_Choosed(int mother_movement_Choosed) {
+        Mother_movement_Choosed = mother_movement_Choosed;
+    }
 
     public int getIsland_Choosed() {
         return Island_Choosed;

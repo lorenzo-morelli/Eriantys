@@ -58,10 +58,15 @@ public class WaitForTurn extends State {
         command="ASSISTENTCARDPAHSE"; //messo giusto per togliere l'errore
         switch (command){
             case "STUDENTPHASE": go_to_studentphase();
+            break;
             case "ASSISTANTCARDPHASE": go_to_assistantcardphase();
+            break;
             case "CLOUDPHASE": go_to_cloudphase();
-            case "ENDGAME": go_to_endgame();
+            break;
             case "MOVEMOTHERPHASE": go_to_movemotherphase();
+            break;
+            case "ENDGAME": go_to_endgame();
+            break;
         }
         view.itsyourturn(command);
     }
