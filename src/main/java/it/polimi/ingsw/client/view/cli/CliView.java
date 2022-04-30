@@ -24,10 +24,10 @@ public class CliView implements View{
 
     @Override
     public void askConnectionInfo() {
-        if (callingState instanceof READ) {
+        if (callingState instanceof Read_from_terminal) {
             // Gli eventi (di uscita dallo stato corrente callingState) devono essere abilitati per poter avvenire
-            ((READ) callingState).numberOfParametersIncorrect().enable();
-            ((READ) callingState).insertedParameters().enable();
+            ((Read_from_terminal) callingState).numberOfParametersIncorrect().enable();
+            ((Read_from_terminal) callingState).insertedParameters().enable();
 
             if (precedentCallingState instanceof WelcomeScreen){
                 CommandPrompt.ask(
@@ -37,17 +37,17 @@ public class CliView implements View{
 
             // Disabilitare gli eventi una volta che uno di loro è avvenuto elimina la possibilità del verificarsi di
             // eventi concorrenti.
-            ((READ) callingState).numberOfParametersIncorrect().disable();
-            ((READ) callingState).insertedParameters().disable();
+            ((Read_from_terminal) callingState).numberOfParametersIncorrect().disable();
+            ((Read_from_terminal) callingState).insertedParameters().disable();
         }
     }
 
     @Override
     public void askGameCode() {
-        if (callingState instanceof READ) {
+        if (callingState instanceof Read_from_terminal) {
             // Gli eventi (di uscita dallo stato corrente callingState) devono essere abilitati per poter avvenire
-            ((READ) callingState).numberOfParametersIncorrect().enable();
-            ((READ) callingState).insertedParameters().enable();
+            ((Read_from_terminal) callingState).numberOfParametersIncorrect().enable();
+            ((Read_from_terminal) callingState).insertedParameters().enable();
 
 
             CommandPrompt.ask(
@@ -56,16 +56,16 @@ public class CliView implements View{
 
             // Disabilitare gli eventi una volta che uno di loro è avvenuto elimina la possibilità del verificarsi di
             // eventi concorrenti.
-            ((READ) callingState).numberOfParametersIncorrect().disable();
-            ((READ) callingState).insertedParameters().disable();
+            ((Read_from_terminal) callingState).numberOfParametersIncorrect().disable();
+            ((Read_from_terminal) callingState).insertedParameters().disable();
         }
     }
     @Override
     public void askGameInfo() {
-        if (callingState instanceof READ) {
+        if (callingState instanceof Read_from_terminal) {
             // Gli eventi (di uscita dallo stato corrente callingState) devono essere abilitati per poter avvenire
-            ((READ) callingState).numberOfParametersIncorrect().enable();
-            ((READ) callingState).insertedParameters().enable();
+            ((Read_from_terminal) callingState).numberOfParametersIncorrect().enable();
+            ((Read_from_terminal) callingState).insertedParameters().enable();
 
                 CommandPrompt.ask(
                         "Inserisci informazioni del gioco che vuoi creare",
@@ -73,8 +73,8 @@ public class CliView implements View{
 
             // Disabilitare gli eventi una volta che uno di loro è avvenuto elimina la possibilità del verificarsi di
             // eventi concorrenti.
-            ((READ) callingState).numberOfParametersIncorrect().disable();
-            ((READ) callingState).insertedParameters().disable();
+            ((Read_from_terminal) callingState).numberOfParametersIncorrect().disable();
+            ((Read_from_terminal) callingState).insertedParameters().disable();
         }
     }
 
@@ -95,21 +95,37 @@ public class CliView implements View{
 
     @Override
     public void askConnectOrCreate() {
-        if (callingState instanceof CreateOrConnectDecision) {
-            ((CreateOrConnectDecision)callingState).haSceltoCrea().enable();
-            ((CreateOrConnectDecision)callingState).haSceltoConnetti().enable();
-            ((CreateOrConnectDecision)callingState).sceltaNonValida().enable();
+        if (callingState instanceof Decision) {
+            ((Decision)callingState).haScelto1().enable();
+            ((Decision)callingState).haScelto2().enable();
+            ((Decision)callingState).sceltaNonValida().enable();
 
             CommandPrompt.ask(
                     "Scegli se creare una nuova partita o connetterti ad una partita esistente",
                     "create or connect> ");
 
-            ((CreateOrConnectDecision)callingState).haSceltoCrea().disable();
-            ((CreateOrConnectDecision)callingState).haSceltoConnetti().disable();
-            ((CreateOrConnectDecision)callingState).sceltaNonValida().disable();
+            ((Decision)callingState).haScelto1().disable();
+            ((Decision)callingState).haScelto2().disable();
+            ((Decision)callingState).sceltaNonValida().disable();
         }
     }
 
+    @Override
+    public void askIslandOrSchool() {
+        if (callingState instanceof Decision) {
+            ((Decision)callingState).haScelto1().enable();
+            ((Decision)callingState).haScelto2().enable();
+            ((Decision)callingState).sceltaNonValida().enable();
+
+            CommandPrompt.ask(
+                    "Scegli se inserire studente in nella school board oppure su un isola",
+                    "school or island> ");
+
+            ((Decision)callingState).haScelto1().disable();
+            ((Decision)callingState).haScelto2().disable();
+            ((Decision)callingState).sceltaNonValida().disable();
+        }
+    }
     @Override
     public void showTryToConnect() {
         try {
@@ -154,26 +170,69 @@ public class CliView implements View{
         };
     }
 
+    @Override
+    public void itsyourturn(String command){
+        try{
+            if(command!="ENDGAME")
+            CommandPrompt.println(" IT'S YOUR TURN - PHASE: "+command);
+            else
+                CommandPrompt.println(" THE GAME ENDED ");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        };
+    }
+
        @Override
     public void ask_carta_assistente() {
-        if (callingState instanceof ShowAssistantsCards) {
+           if (callingState instanceof Read_from_terminal) {
+               // Gli eventi (di uscita dallo stato corrente callingState) devono essere abilitati per poter avvenire
+               ((Read_from_terminal) callingState).numberOfParametersIncorrect().enable();
+               ((Read_from_terminal) callingState).insertedParameters().enable();
 
+               CommandPrompt.ask(
+                       "Inserisci numero di carta assistente che vuoi usare",
+                       "numerocarta> ");
 
+               // Disabilitare gli eventi una volta che uno di loro è avvenuto elimina la possibilità del verificarsi di
+               // eventi concorrenti.
+               ((Read_from_terminal) callingState).numberOfParametersIncorrect().disable();
+               ((Read_from_terminal) callingState).insertedParameters().disable();
+           }
+       }
+
+    @Override
+    public void ask_witch_student() {
+        if (callingState instanceof Read_from_terminal) {
             // Gli eventi (di uscita dallo stato corrente callingState) devono essere abilitati per poter avvenire
-            ((ShowAssistantsCards) callingState).insertedCard().enable();
-            ((ShowAssistantsCards) callingState).numberOfParametersIncorrect().enable();
+            ((Read_from_terminal) callingState).numberOfParametersIncorrect().enable();
+            ((Read_from_terminal) callingState).insertedParameters().enable();
 
-            if (precedentCallingState instanceof WaitForTurn) {
-                CommandPrompt.ask(
-                        "Inserisci numero di carta scelta",
-                        "numero della carta");
-            }
-
+            CommandPrompt.ask(
+                    "Inserisci lo studente da spostare (indice)",
+                    " student  ");
 
             // Disabilitare gli eventi una volta che uno di loro è avvenuto elimina la possibilità del verificarsi di
             // eventi concorrenti.
-            ((ShowAssistantsCards) callingState).insertedCard().disable();
-            ((ShowAssistantsCards) callingState).numberOfParametersIncorrect().disable();
+            ((Read_from_terminal) callingState).numberOfParametersIncorrect().disable();
+            ((Read_from_terminal) callingState).insertedParameters().disable();
+        }
+    }
+
+    @Override
+    public void ask_witch_island() {
+        if (callingState instanceof Read_from_terminal) {
+            // Gli eventi (di uscita dallo stato corrente callingState) devono essere abilitati per poter avvenire
+            ((Read_from_terminal) callingState).numberOfParametersIncorrect().enable();
+            ((Read_from_terminal) callingState).insertedParameters().enable();
+
+            CommandPrompt.ask(
+                    "Inserisci indice isola dove spostare lo studente",
+                    " island ");
+
+            // Disabilitare gli eventi una volta che uno di loro è avvenuto elimina la possibilità del verificarsi di
+            // eventi concorrenti.
+            ((Read_from_terminal) callingState).numberOfParametersIncorrect().disable();
+            ((Read_from_terminal) callingState).insertedParameters().disable();
         }
     }
 }

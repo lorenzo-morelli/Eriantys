@@ -6,7 +6,7 @@ import it.polimi.ingsw.client.events.*;
 import it.polimi.ingsw.utils.stateMachine.*;
 import java.io.IOException;
 
-public class READ extends State {
+public class Read_from_terminal extends State {
     Model model;
     View view;
     String type;
@@ -14,8 +14,8 @@ public class READ extends State {
     ParametersFromTerminal insertedParameters;
     IncorrectParameters numberOfParametersIncorrect;
 
-    public READ(View view, Model model, int numofparameters, String type) throws IOException {
-        super("[STATO di lettura di " + numofparameters + " parametri da terminale]");
+    public Read_from_terminal(View view, Model model, int numofparameters, String type) throws IOException {
+        super("[STATO di lettura di " + numofparameters + " parametri da terminale interpretati come :"+ type+ "]");
         this.view = view;
         this.model = model;
         this.parameter = numofparameters;
@@ -40,7 +40,7 @@ public class READ extends State {
         view.setCallingState(this);
 
         switch (this.type) {
-            case ("INFO"):
+            case ("USERINFO"):
                 view.askConnectionInfo();
                 break;
             case ("GAMECODE"):
@@ -49,6 +49,14 @@ public class READ extends State {
             case ("GAMEINFO"):
                 view.askGameInfo();
                 break;
+            case("WICHCARD"):
+                view.ask_carta_assistente();
+                break;
+            case("WICHSTUDENT"):
+                view.ask_witch_student();
+                break;
+            case ("WICHISLAND"):
+                view.ask_witch_island();
         }
         return null;
     }
@@ -58,7 +66,7 @@ public class READ extends State {
         super.exitAction(cause);
         if (cause instanceof ParametersFromTerminal) {
             switch (this.type) {
-                case ("INFO"): //NICKNAME / IP / PORTA
+                case ("USERINFO"): //NICKNAME / IP / PORTA
                     model.setNickname(model.getFromTerminal().get(0));
                     model.setIp(model.getFromTerminal().get(1));
                     model.setPort(model.getFromTerminal().get(2));
@@ -69,6 +77,14 @@ public class READ extends State {
                 case ("GAMEINFO"):  //NUMOFPLAYER / GAMEMODE
                     model.setNumofplayer(Integer.parseInt(model.getFromTerminal().get(0)));
                     model.setGamemode(model.getFromTerminal().get(1));
+                    break;
+                case("WICHCARD"): //CARD POSITION
+                    model.setCardChoosed(Integer.parseInt(model.getFromTerminal().get(0)));
+                case("WICHSTUDENT"): //STUDENT POSITION IN ENTRANCE
+                    model.setStudent_in_entrance_Choosed(Integer.parseInt(model.getFromTerminal().get(0)));
+                    break;
+                case("WICHISLAND"): //ISLAND INDEX
+                    model.setIsland_Choosed(Integer.parseInt(model.getFromTerminal().get(0)));
                     break;
             }
         }

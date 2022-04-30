@@ -6,6 +6,7 @@ import it.polimi.ingsw.server.states.Idle;
 import it.polimi.ingsw.utils.cli.CommandPrompt;
 import it.polimi.ingsw.utils.stateMachine.*;
 import java.io.IOException;
+import it.polimi.ingsw.client.background_activites.*;
 
 public class ClientController {
     private Model model;      // modello dati di questa semplice demo
@@ -16,20 +17,22 @@ public class ClientController {
     // ma più in generale potrebbe significare delle azioni da compiere a fronte di eventi
     private final Idle idle;    // modo elegante di far partire il controllore
     private final WelcomeScreen waitStart;
-    private final READ askUserinfo;
-    private final READ askGAMECODE;
-    private final READ askGameInfo;
-    private final READ askCardChoosed;
+    private final Read_from_terminal askUserinfo;
+    private final Read_from_terminal askGAMECODE;
+    private final Read_from_terminal askGameInfo;
+    private final Read_from_terminal askCardChoosed;
+    private final Read_from_terminal askwitchStudent;
+    private final Read_from_terminal askwitchIsland;
+    private final Decision islandOrSchool;
     private final ConnectToServer connectionToServer;
-    private final CreateOrConnectDecision createOrConnect;
-    private final CreateGame createGame;
+    private final Send_to_Server sendGameInfo;
+    private final Send_to_Server sendCardChoosed;
+    private final Send_to_Server sendStudent_toSchool;
+    private final Send_to_Server sendStudent_toIsland;
+    private final Decision createOrConnect;
     private final ConnectGame connectGame;
     private final Event start;
     private final WaitForTurn wait;
-    private final ShowAssistantsCards showsCard;
-    private final MoveStudentPhase moveStudent;
-    private final MoveMotherPhase moveMother;
-    private final ChooseCloudPhase chooseCloud;
     private final EndGame end;
 
     public ClientController(View view) throws IOException, InterruptedException {
@@ -44,19 +47,21 @@ public class ClientController {
 
         // Costruzioni degli stati necessari
         waitStart = new WelcomeScreen(view);
-        askUserinfo= new READ(view,model,3,"INFO");
-        askGAMECODE= new READ(view,model,1,"GAMECODE");
-        askGameInfo= new READ(view,model,2,"GAMEINFO");
-        askCardChoosed =new READ(view,model,1,"CARD");
+        askUserinfo= new Read_from_terminal(view,model,3,"USERINFO");
+        askGAMECODE= new Read_from_terminal(view,model,1,"GAMECODE");
+        askGameInfo= new Read_from_terminal(view,model,2,"GAMEINFO");
+        askCardChoosed =new Read_from_terminal(view,model,1,"WICHCARD");
+        askwitchStudent=new Read_from_terminal(view,model,1,"WICHSTUDENT");
+        askwitchIsland=new Read_from_terminal(view,model,1,"WICHISLAND");
         connectionToServer = new ConnectToServer(view,model);
-        createOrConnect = new CreateOrConnectDecision(view,model);
-        createGame = new CreateGame(view, model);
+        createOrConnect = new Decision(view,model,"CREATEORCONNECT");
+        islandOrSchool=new Decision(view,model,"ISLANDORSCHOOL");
+        sendGameInfo = new Send_to_Server(view, model,"CREATIONPARAMETERS");
+        sendCardChoosed = new Send_to_Server(view, model, "CARDCHOOSED");
+        sendStudent_toSchool= new Send_to_Server(view,model,"STUDENT_TOSCHOOL");
+        sendStudent_toIsland= new Send_to_Server(view,model,"STUDENT_TOISLAND");
         connectGame = new ConnectGame(view, model);
         wait = new WaitForTurn(view, model);
-        showsCard = new ShowAssistantsCards(view,model);
-        moveStudent = new MoveStudentPhase();
-        moveMother = new MoveMotherPhase();
-        chooseCloud = new ChooseCloudPhase();
         end = new EndGame();
 
         // Dichiarazione delle transizioni tra gli stati
@@ -74,37 +79,48 @@ public class ClientController {
         fsm.addTransition(connectionToServer, connectionToServer.Connected_to_server(), createOrConnect);
 
         // Choose if create a new game or connect to an existing one
-        fsm.addTransition(createOrConnect, createOrConnect.haSceltoConnetti(), askGAMECODE);
+        fsm.addTransition(createOrConnect, createOrConnect.haScelto1(), askGAMECODE);
         fsm.addTransition(askGAMECODE, askGAMECODE.insertedParameters(), connectGame);
         fsm.addTransition(askGAMECODE, askGAMECODE.numberOfParametersIncorrect(), askGAMECODE);
         fsm.addTransition(connectGame, connectGame.Game_Started(), wait);
         fsm.addTransition(connectGame, connectGame.Connection_failed(), connectGame);
 
-        fsm.addTransition(createOrConnect, createOrConnect.haSceltoCrea(), askGameInfo);
-        fsm.addTransition(askGameInfo, askGameInfo.insertedParameters(), createGame);
+        fsm.addTransition(createOrConnect, createOrConnect.haScelto2(), askGameInfo);
+        fsm.addTransition(askGameInfo, askGameInfo.insertedParameters(), sendGameInfo);
         fsm.addTransition(askGameInfo, askGameInfo.numberOfParametersIncorrect(), askGameInfo);
-        fsm.addTransition(createGame, createGame.Recevied_game_code(), connectGame);
-        fsm.addTransition(createGame, createGame.Creation_failed(), createGame);
+        fsm.addTransition(sendGameInfo, sendGameInfo.Recevied_ack(), connectGame);
+        fsm.addTransition(sendGameInfo, sendGameInfo.send_failed(), sendGameInfo);
 
         fsm.addTransition(createOrConnect, createOrConnect.sceltaNonValida(), createOrConnect);
 
-        //todo
+        //GAME
+        Thread background_thread= new Thread(new receive_view_from_server(this.view));
+        background_thread.start();
 
 
-        fsm.addTransition(wait, wait.go_to_assistantcardphase(), showsCard);
-        fsm.addTransition(showsCard, showsCard.view_done(), askCardChoosed);
-        fsm.addTransition(askCardChoosed, askCardChoosed.insertedParameters(), askCardChoosed);
+        fsm.addTransition(wait, wait.go_to_assistantcardphase(), askCardChoosed);
+        fsm.addTransition(askCardChoosed, askCardChoosed.insertedParameters(), sendCardChoosed);
         fsm.addTransition(askCardChoosed, askCardChoosed.numberOfParametersIncorrect(), askCardChoosed);
+        fsm.addTransition(sendCardChoosed, sendCardChoosed.Recevied_ack(), wait);
+        fsm.addTransition(sendCardChoosed, sendCardChoosed.send_failed(), sendCardChoosed);
 
-        fsm.addTransition(wait, wait.go_to_studentphase() , moveStudent);
-       // fsm.addTransition(MoveStudent , MoveStudent.go_to_wait(), wait);
+        fsm.addTransition(wait, wait.go_to_studentphase() , askwitchStudent);
+        fsm.addTransition(askwitchStudent , askwitchStudent.insertedParameters(), islandOrSchool);
+        fsm.addTransition(askwitchStudent, askwitchStudent.numberOfParametersIncorrect(), askwitchStudent);
+        fsm.addTransition(islandOrSchool, islandOrSchool.haScelto1(), askwitchIsland);
+        fsm.addTransition(islandOrSchool, islandOrSchool.haScelto2(), sendStudent_toSchool);
+        fsm.addTransition(islandOrSchool, islandOrSchool.sceltaNonValida(), islandOrSchool);
+        fsm.addTransition(askwitchIsland , askwitchIsland.insertedParameters(), sendStudent_toIsland);
+        fsm.addTransition(askwitchIsland, askwitchIsland.numberOfParametersIncorrect(), askwitchIsland);
 
-       // fsm.addTransition(MoveStudent , MoveStudent.go_to_movemotherphase(), moveMother);
-       // fsm.addTransition(MoveMother , MoveMother.go_to_wait(), wait);
+        fsm.addTransition(sendStudent_toSchool, sendStudent_toSchool.Recevied_ack(), wait);
+        fsm.addTransition(sendStudent_toSchool, sendStudent_toSchool.send_failed(), sendStudent_toSchool);
+        fsm.addTransition(sendStudent_toIsland, sendStudent_toIsland.Recevied_ack(), wait);
+        fsm.addTransition(sendStudent_toIsland, sendStudent_toIsland.send_failed(), sendStudent_toIsland);
 
-        fsm.addTransition(wait, wait.go_to_endgame() , end );
-        fsm.addTransition(wait, wait.go_to_cloudphase() , chooseCloud);
-       // fsm.addTransition(ChooseCloud, ChooseCloudPhase.go_to_wait(), wait);
+        //fsm.addTransition(wait, wait.go_to_endgame() , end );
+        //fsm.addTransition(wait, wait.go_to_cloudphase() , chooseCloud);
+        // fsm.addTransition(ChooseCloud, ChooseCloudPhase.go_to_wait(), wait);
 
         // L'evento di start è l'unico che deve essere fatto partire manualmente
         start.fireStateEvent();

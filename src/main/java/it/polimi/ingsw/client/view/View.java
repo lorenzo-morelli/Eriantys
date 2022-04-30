@@ -33,4 +33,8 @@ public interface View {
     void askGameCode();
 
     void askGameInfo();
+    void itsyourturn(String command);
+    void ask_witch_student();
+    void askIslandOrSchool();
+    void ask_witch_island();
 }

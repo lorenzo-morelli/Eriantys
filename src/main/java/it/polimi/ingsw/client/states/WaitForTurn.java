@@ -14,6 +14,7 @@ public class WaitForTurn extends State {
     MessageReceived ENDPHASE;
     MessageReceived STUDENTPHASE;
     MessageReceived CLOUDPHASE;
+    MessageReceived MOVEMOTHERPHASE;
 
     public WaitForTurn(View view, Model model) throws IOException {
         super("[STATO di attesa (WaitForTurn.java)]");
@@ -42,6 +43,8 @@ public class WaitForTurn extends State {
         return CLOUDPHASE;
     }
 
+    public MessageReceived go_to_movemotherphase(){ return MOVEMOTHERPHASE;}
+
     public IEvent entryAction(IEvent cause) throws IOException {
         view.setCallingState(this);
         return null;
@@ -50,12 +53,16 @@ public class WaitForTurn extends State {
     @Override
     public void exitAction(IEvent cause) throws IOException {
         super.exitAction(cause);
+        String command;
         // todo: mettiti in attesa di un ACK "command" da server
-        switch ("ASSISTENTCARDPAHSE" /*command*/){   //messo giusto per togliere l'errore
+        command="ASSISTENTCARDPAHSE"; //messo giusto per togliere l'errore
+        switch (command){
             case "STUDENTPHASE": go_to_studentphase();
             case "ASSISTANTCARDPHASE": go_to_assistantcardphase();
             case "CLOUDPHASE": go_to_cloudphase();
             case "ENDGAME": go_to_endgame();
+            case "MOVEMOTHERPHASE": go_to_movemotherphase();
         }
+        view.itsyourturn(command);
     }
 }
