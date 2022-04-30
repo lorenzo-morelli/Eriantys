@@ -23,17 +23,11 @@ public class ShowAssistantsCards extends State {
         return cardView;
     }
 
-    public Message_Sended choice_sended() { return Choice_Sended; }
-
 
     public IEvent entryAction(IEvent cause) throws IOException {
         view.setCallingState(this);
         //todo: ricevi da server le carte assistenti disponibili e stampale a video
-        view.ask_carta_assistente();   // NOTA: la scelta sarà un numero tra le carte assistenti disponibili
-        if (cause instanceof ParametersFromTerminal) {
-            //NOTA: ora model.getFromTerminal().get(0) conterrà l'intero scelto'
-            //invia
-        }
+        view_done();
         return null;
     }
 

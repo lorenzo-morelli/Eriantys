@@ -14,10 +14,8 @@ public class CreateGame extends State{
     MessageReceived Game_code;
     NetworkIssue CreationProblem;
 
-    Message_Sended GameInfo;
-
-    public CreateGame(View view, Model model) throws IOException {
-        super("[STATO di attesa info di setup per la nuova partita]");
+    public CreateGame(View view, Model model){
+        super("[STATO di attesa info di setup per la nuova partita (CreateGame.java)]");
         this.view = view;
         this.model = model;
         CreationProblem= new NetworkIssue("SOMETHING_STRANGE_HAPPENNED...");
@@ -31,12 +29,10 @@ public class CreateGame extends State{
 
     public MessageReceived Recevied_game_code(){ return Game_code; }
     public NetworkIssue Creation_failed(){ return CreationProblem; }
-    public Message_Sended Send_info(){return GameInfo; }
 
     @Override
     public void exitAction(IEvent cause) throws IOException {
         super.exitAction(cause);
-        Send_info();
         // todo: crea gioco <- invia al server numero di giocatori e game mode scelto
         Network.send(Network.getMyIp() + " "+model.getNickname()+" CREATE PRINCIPIANT 2"); //buona idea!
         // CONTESTO: lato server nel frattempo crea partita e invia codice
@@ -44,9 +40,5 @@ public class CreateGame extends State{
         Recevied_game_code();
         // try catch: se riceve qualsiasi altra cosa che non sia CODICEPARTITA:
         Creation_failed();
-        // CONTESTO: server si mette in attesa della connessione di tutti i giocatori
-        // todo: aspetta che server inizi partita -> ricevuto ack GAMESTARTED vai avanti
-        Game_Started();
     }
-
 }

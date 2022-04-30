@@ -28,7 +28,7 @@ public class ConnectGame extends State{
     @Override
     public IEvent entryAction(IEvent cause) throws IOException {
         view.setCallingState(this);
-        // todo:  connettiti alla partita dato il codice partita //che si trovera a model.getFromTerminal().get(0)
+        // todo :  connettiti alla partita dato il codice partita //che si trovera in model.getGameCodeNumber()
         view.showConnectingGame();
         // CONTESTO: server ti inserisce nella partita
         // todo:  aspetta che server ti inserisca nella partita -> ricevuto ack JOINEDTOGAME vai avanti

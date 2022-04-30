@@ -13,10 +13,6 @@ public class CliView implements View{
     private State callingState;
     private State precedentCallingState;
 
-    public State getPrecedentCallingState() {
-        return precedentCallingState;
-    }
-
     // Uno stato che vuole chiamare un metodo della vista si registra prima chiamando questo metodo
     // ad esempio sono nello stato WelcomeScreen e faccio "view.setCallingState(this)"
     // Non è altro che il pattern Observer riadattato per il pattern State
@@ -31,7 +27,7 @@ public class CliView implements View{
         if (callingState instanceof READ) {
             // Gli eventi (di uscita dallo stato corrente callingState) devono essere abilitati per poter avvenire
             ((READ) callingState).numberOfParametersIncorrect().enable();
-            ((READ) callingState).insertedUserInfo().enable();
+            ((READ) callingState).insertedParameters().enable();
 
             if (precedentCallingState instanceof WelcomeScreen){
                 CommandPrompt.ask(
@@ -42,10 +38,45 @@ public class CliView implements View{
             // Disabilitare gli eventi una volta che uno di loro è avvenuto elimina la possibilità del verificarsi di
             // eventi concorrenti.
             ((READ) callingState).numberOfParametersIncorrect().disable();
-            ((READ) callingState).insertedUserInfo().disable();
+            ((READ) callingState).insertedParameters().disable();
         }
     }
 
+    @Override
+    public void askGameCode() {
+        if (callingState instanceof READ) {
+            // Gli eventi (di uscita dallo stato corrente callingState) devono essere abilitati per poter avvenire
+            ((READ) callingState).numberOfParametersIncorrect().enable();
+            ((READ) callingState).insertedParameters().enable();
+
+
+            CommandPrompt.ask(
+                        "Inserisci il game code della partita a cui ti vuoi unire",
+                        "gamecode");
+
+            // Disabilitare gli eventi una volta che uno di loro è avvenuto elimina la possibilità del verificarsi di
+            // eventi concorrenti.
+            ((READ) callingState).numberOfParametersIncorrect().disable();
+            ((READ) callingState).insertedParameters().disable();
+        }
+    }
+    @Override
+    public void askGameInfo() {
+        if (callingState instanceof READ) {
+            // Gli eventi (di uscita dallo stato corrente callingState) devono essere abilitati per poter avvenire
+            ((READ) callingState).numberOfParametersIncorrect().enable();
+            ((READ) callingState).insertedParameters().enable();
+
+                CommandPrompt.ask(
+                        "Inserisci informazioni del gioco che vuoi creare",
+                        "numerogiocatori gamemode> ");
+
+            // Disabilitare gli eventi una volta che uno di loro è avvenuto elimina la possibilità del verificarsi di
+            // eventi concorrenti.
+            ((READ) callingState).numberOfParametersIncorrect().disable();
+            ((READ) callingState).insertedParameters().disable();
+        }
+    }
 
     @Override
     public void askToStart() {

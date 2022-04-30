@@ -6,37 +6,36 @@ public class Model {
     private String nickname;
     private String Ip;
     private String Port;
-
     private int GameCodeNumber;
+    private int numofplayer;
+    private String Gamemode;
+    private ArrayList<String> fromTerminal;
 
     public int getGameCodeNumber() {
         return GameCodeNumber;
     }
 
-    public void setGameCodeNumber(int gameCodeNumber) {
-        GameCodeNumber = gameCodeNumber;
+    public void setGamemode(String gamemode) {
+        Gamemode = gamemode;
     }
 
-    private ArrayList<String> fromTerminal;
+    public void setNumofplayer(int numofplayer) {
+        this.numofplayer = numofplayer;
+    }
+
+    public void setGameCodeNumber(int gameCodeNumber) {
+        this.GameCodeNumber = gameCodeNumber;}
 
     public void setIp(String ip) {
-        Ip = ip;
+        this.Ip = ip;
     }
 
     public void setPort(String port) {
-        Port = port;
+        this.Port = port;
     }
 
     public String getNickname() {
-        return nickname;
-    }
-
-    public String getIp() {
-        return Ip;
-    }
-
-    public String getPort() {
-        return Port;
+        return this.nickname;
     }
 
     public void setNickname(String nickname) {
@@ -44,7 +43,7 @@ public class Model {
     }
 
     public ArrayList<String> getFromTerminal() {
-        return fromTerminal;
+        return this.fromTerminal;
     }
 
     public void setFromTerminal(ArrayList<String> fromTerminal) {

@@ -29,6 +29,11 @@ public class ConnectToServer extends State{
     public IEvent entryAction(IEvent cause) throws IOException, InterruptedException {
 
         view.setCallingState(this);
+        // avvia timeout
+        // connettiti al server (indirizzo Ip, numero di porta NOTI) tramite connection info dati
+        // attendi che server accetti la connessione:
+        //se timeout scade chiama:
+
         view.showTryToConnect();
         Network.setupClient(model.getIp(),model.getPort());
         if (Network.isConnected()){

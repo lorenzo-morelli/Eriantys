@@ -19,6 +19,7 @@ public class ClientController {
     private final READ askUserinfo;
     private final READ askGAMECODE;
     private final READ askGameInfo;
+    private final READ askCardChoosed;
     private final ConnectToServer connectionToServer;
     private final CreateOrConnectDecision createOrConnect;
     private final CreateGame createGame;
@@ -66,7 +67,7 @@ public class ClientController {
         fsm.addTransition(waitStart, waitStart.notStart(), waitStart);
 
         // Schermata di richiesta di nickname, ip e porta + Trying to connect to server via TCP socket
-        fsm.addTransition(askUserinfo, askUserinfo.insertedUserInfo(), connectionToServer);
+        fsm.addTransition(askUserinfo, askUserinfo.insertedParameters(), connectionToServer);
         fsm.addTransition(askUserinfo, askUserinfo.numberOfParametersIncorrect(), askUserinfo);
 
         fsm.addTransition(connectionToServer, connectionToServer.Connection_to_server_failed(), connectionToServer);
@@ -74,24 +75,26 @@ public class ClientController {
 
         // Choose if create a new game or connect to an existing one
         fsm.addTransition(createOrConnect, createOrConnect.haSceltoConnetti(), askGAMECODE);
-        fsm.addTransition(askGAMECODE, askGAMECODE.insertedUserInfo(), connectGame);
+        fsm.addTransition(askGAMECODE, askGAMECODE.insertedParameters(), connectGame);
         fsm.addTransition(askGAMECODE, askGAMECODE.numberOfParametersIncorrect(), askGAMECODE);
+        fsm.addTransition(connectGame, connectGame.Game_Started(), wait);
+        fsm.addTransition(connectGame, connectGame.Connection_failed(), connectGame);
 
         fsm.addTransition(createOrConnect, createOrConnect.haSceltoCrea(), askGameInfo);
-        fsm.addTransition(askGameInfo, askGameInfo.insertedUserInfo(), createGame);
-        fsm.addTransition(askGameInfo, askGameInfo.numberOfParametersIncorrect(), askGAMECODE);
+        fsm.addTransition(askGameInfo, askGameInfo.insertedParameters(), createGame);
+        fsm.addTransition(askGameInfo, askGameInfo.numberOfParametersIncorrect(), askGameInfo);
+        fsm.addTransition(createGame, createGame.Recevied_game_code(), connectGame);
+        fsm.addTransition(createGame, createGame.Creation_failed(), createGame);
 
         fsm.addTransition(createOrConnect, createOrConnect.sceltaNonValida(), createOrConnect);
 
-        fsm.addTransition(connectGame, connectGame.Game_Started(), wait);
-        fsm.addTransition(connectGame, connectGame.Connection_failed(), connectGame);
-        fsm.addTransition(createGame, createGame.Game_Started(), wait);
-        fsm.addTransition(createGame, createGame.Creation_failed(), createGame);
         //todo
 
 
-        fsm.addTransition(wait, wait.go_to_assistantcardphase(), chooseCard);
-       // fsm.addTransition(chooseCard, chooseCard.go_to_wait(), wait);
+        fsm.addTransition(wait, wait.go_to_assistantcardphase(), showsCard);
+        fsm.addTransition(showsCard, showsCard.view_done(), askCardChoosed);
+        fsm.addTransition(askCardChoosed, askCardChoosed.insertedParameters(), askCardChoosed);
+        fsm.addTransition(askCardChoosed, askCardChoosed.numberOfParametersIncorrect(), askCardChoosed);
 
         fsm.addTransition(wait, wait.go_to_studentphase() , moveStudent);
        // fsm.addTransition(MoveStudent , MoveStudent.go_to_wait(), wait);
