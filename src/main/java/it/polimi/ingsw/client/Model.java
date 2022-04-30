@@ -7,6 +7,10 @@ public class Model {
     private String Ip;
     private String Port;
 
+    private int GameCodeNumber;
+
+
+
     private ArrayList<String> fromTerminal;
 
     public void setIp(String ip) {

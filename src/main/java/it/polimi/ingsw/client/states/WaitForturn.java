@@ -9,40 +9,36 @@ import java.io.IOException;
 public class WaitForturn extends State {
     Model model;
     View view;
-    ParametersFromTerminal insertUserInfo;
-    // todo:
-    //  NOTA: per testare lo facciamo da tastiera , in pratica usiamo exitAction
 
-    RecognizedString ASSISTENTPHASE;
-    RecognizedString ENDPHASE;
-    RecognizedString STUDENTPHASE;
-    RecognizedString CLOUDPHASE;
+    Message_Received ASSISTENTPHASE;
+    Message_Received ENDPHASE;
+    Message_Received STUDENTPHASE;
+    Message_Received CLOUDPHASE;
 
     public WaitForturn(View view, Model model) throws IOException {
         super("[STATO di attesa]");
         this.view = view;
         this.model = model;
-        //testing
-        ENDPHASE = new RecognizedString("ENDPHASE");
-        ASSISTENTPHASE = new RecognizedString("ASSISTENTPHASE");
-        STUDENTPHASE = new RecognizedString("STUDENTPHASE");
-        CLOUDPHASE = new RecognizedString("CLOUDPHASE");
+        ENDPHASE = new Message_Received("GO_TO_ENDPHASE");
+        ASSISTENTPHASE = new Message_Received("GO_TO_ASSISTENTPHASE");
+        STUDENTPHASE = new Message_Received("GO_TO_STUDENTPHASE");
+        CLOUDPHASE = new Message_Received("GO_TOCLOUDPHASE");
     }
 
     // testing
-    public RecognizedString go_to_assistantcardphase() {
+    public Message_Received go_to_assistantcardphase() {
         return ASSISTENTPHASE;
     }
 
-    public RecognizedString go_to_endgame() {
+    public Message_Received go_to_endgame() {
         return ENDPHASE;
     }
 
-    public RecognizedString go_to_studentphase() {
+    public Message_Received go_to_studentphase() {
         return STUDENTPHASE;
     }
 
-    public RecognizedString go_to_cloudphase() {
+    public Message_Received go_to_cloudphase() {
         return CLOUDPHASE;
     }
 
@@ -50,20 +46,16 @@ public class WaitForturn extends State {
         view.setCallingState(this);
         return null;
     }
-}
-/*
+
     @Override
     public void exitAction(IEvent cause) throws IOException {
         super.exitAction(cause);
-        // todo: mettiti in attesa di un comando "command" da server
-        switch (command){
+        // todo: mettiti in attesa di un ACK "command" da server
+        switch ("ASSISTENTCARDPAHSE" /*command*/){   //messo giusto per togliere l'errore
             case "STUDENTPHASE": go_to_studentphase();
             case "ASSISTANTCARDPHASE": go_to_assistantcardphase();
-            case "CLOUDPHASE": go_to_cloudpahse();
+            case "CLOUDPHASE": go_to_cloudphase();
             case "ENDGAME": go_to_endgame();
         }
     }
-
 }
-
- */

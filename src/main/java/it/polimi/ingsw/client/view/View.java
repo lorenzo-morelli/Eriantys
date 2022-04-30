@@ -20,6 +20,15 @@ public interface View {
 
     void showTryToConnect();
 
-    void showCreatingGame();
+    void showConnectingGame();
 
+    void showWaitingForOtherPlayer();
+
+    void showGameStarted();
+
+    void ComunicationError();
+
+    void ask_carta_assistente();
+
+    State getPrecedentCallingState();
 }

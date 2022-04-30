@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class CreateOrConnectScreen extends State {
+public class CreateOrConnectDecision extends State {
 
     View view;
     Model model;
@@ -19,7 +19,7 @@ public class CreateOrConnectScreen extends State {
     NotRecognizedSetOfStrings nessunaDellePrecedenti;
 
 
-    public CreateOrConnectScreen(View view, Model model) throws IOException {
+    public CreateOrConnectDecision(View view, Model model) throws IOException {
         super("[Decisione se creare una nuova partita o collegarsi ad una esistente]");
         this.view = view;
         this.model = model;

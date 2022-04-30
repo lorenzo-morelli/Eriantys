@@ -49,7 +49,7 @@ public class ParametersFromTerminal extends Event implements Observer {
             parsedStrings = new ArrayList<String>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
             if (parsedStrings.size() == numberOfStrings){
                 model.setFromTerminal(parsedStrings);
-                fireStateEvent();;
+                fireStateEvent();
             }
 
         }

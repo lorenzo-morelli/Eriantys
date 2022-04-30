@@ -13,6 +13,10 @@ public class CliView implements View{
     private State callingState;
     private State precedentCallingState;
 
+    public State getPrecedentCallingState() {
+        return precedentCallingState;
+    }
+
     // Uno stato che vuole chiamare un metodo della vista si registra prima chiamando questo metodo
     // ad esempio sono nello stato WelcomeScreen e faccio "view.setCallingState(this)"
     // Non è altro che il pattern Observer riadattato per il pattern State
@@ -24,12 +28,10 @@ public class CliView implements View{
 
     @Override
     public void askConnectionInfo() {
-        if (callingState instanceof AskConnectionInfoScreen) {
-
-
+        if (callingState instanceof READ) {
             // Gli eventi (di uscita dallo stato corrente callingState) devono essere abilitati per poter avvenire
-            ((AskConnectionInfoScreen) callingState).insertedUserInfo().enable();
-            ((AskConnectionInfoScreen) callingState).numberOfParametersIncorrect().enable();
+            ((READ) callingState).numberOfParametersIncorrect().enable();
+            ((READ) callingState).insertedUserInfo().enable();
 
             if (precedentCallingState instanceof WelcomeScreen){
                 CommandPrompt.ask(
@@ -37,11 +39,10 @@ public class CliView implements View{
                         "nickname ip porta> ");
             }
 
-
             // Disabilitare gli eventi una volta che uno di loro è avvenuto elimina la possibilità del verificarsi di
             // eventi concorrenti.
-            ((AskConnectionInfoScreen) callingState).insertedUserInfo().disable();
-            ((AskConnectionInfoScreen) callingState).numberOfParametersIncorrect().disable();
+            ((READ) callingState).numberOfParametersIncorrect().disable();
+            ((READ) callingState).insertedUserInfo().disable();
         }
     }
 
@@ -63,36 +64,86 @@ public class CliView implements View{
 
     @Override
     public void askConnectOrCreate() {
-        if (callingState instanceof CreateOrConnectScreen) {
-            ((CreateOrConnectScreen)callingState).haSceltoCrea().enable();
-            ((CreateOrConnectScreen)callingState).haSceltoConnetti().enable();
-            ((CreateOrConnectScreen)callingState).sceltaNonValida().enable();
+        if (callingState instanceof CreateOrConnectDecision) {
+            ((CreateOrConnectDecision)callingState).haSceltoCrea().enable();
+            ((CreateOrConnectDecision)callingState).haSceltoConnetti().enable();
+            ((CreateOrConnectDecision)callingState).sceltaNonValida().enable();
 
             CommandPrompt.ask(
                     "Scegli se creare una nuova partita o connetterti ad una partita esistente",
                     "create or connect> ");
 
-            ((CreateOrConnectScreen)callingState).haSceltoCrea().enable();
-            ((CreateOrConnectScreen)callingState).haSceltoConnetti().enable();
-            ((CreateOrConnectScreen)callingState).sceltaNonValida().enable();
+            ((CreateOrConnectDecision)callingState).haSceltoCrea().enable();
+            ((CreateOrConnectDecision)callingState).haSceltoConnetti().enable();
+            ((CreateOrConnectDecision)callingState).sceltaNonValida().enable();
         }
     }
 
     @Override
     public void showTryToConnect() {
         try {
-            CommandPrompt.println("Tentativo di connessione in corso");
+            CommandPrompt.println("Tentativo di connessione al server in corso");
         } catch (IOException e) {
             throw new RuntimeException(e);
         };
     }
 
         @Override
-    public void showCreatingGame() {
+    public void showConnectingGame() {
         try{
-            CommandPrompt.println("Connessione ad una partita esistente");
+            CommandPrompt.println("Connessione ad una partita esistente....");
         } catch (IOException e) {
             throw new RuntimeException(e);
         };
     }
+
+    @Override
+    public void showWaitingForOtherPlayer(){
+        try{
+            CommandPrompt.println("Waiting for other player to join the game...");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        };
+    }
+    @Override
+    public void showGameStarted(){
+        try{
+            CommandPrompt.println("Game Started!!");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        };
+    }
+
+    @Override
+    public void ComunicationError(){
+        try{
+            CommandPrompt.println("COMUNICATION ERROR: something strage happened...");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        };
+    }
+
+       @Override
+    public void ask_carta_assistente() {
+        if (callingState instanceof ChooseAssistentCardPhase) {
+
+
+            // Gli eventi (di uscita dallo stato corrente callingState) devono essere abilitati per poter avvenire
+            ((ChooseAssistentCardPhase) callingState).insertedCard().enable();
+            ((ChooseAssistentCardPhase) callingState).numberOfParametersIncorrect().enable();
+
+            if (precedentCallingState instanceof WaitForturn) {
+                CommandPrompt.ask(
+                        "Inserisci numero di carta scelta",
+                        "numero della carta");
+            }
+
+
+            // Disabilitare gli eventi una volta che uno di loro è avvenuto elimina la possibilità del verificarsi di
+            // eventi concorrenti.
+            ((ChooseAssistentCardPhase) callingState).insertedCard().disable();
+            ((ChooseAssistentCardPhase) callingState).numberOfParametersIncorrect().disable();
+        }
+    }
 }
+
