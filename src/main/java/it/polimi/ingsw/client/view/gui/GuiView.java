@@ -144,8 +144,38 @@ public class GuiView implements View, ActionListener {
     }
 
     @Override
-    public void showCreatingGame() {
-        // todo
+    public void showConnectingGame() {
+
+    }
+
+    @Override
+    public void showWaitingForOtherPlayer() {
+
+    }
+
+    @Override
+    public void showGameStarted() {
+
+    }
+
+    @Override
+    public void ComunicationError() {
+
+    }
+
+    @Override
+    public void ask_carta_assistente() {
+
+    }
+
+    @Override
+    public void askGameCode() {
+
+    }
+
+    @Override
+    public void askGameInfo() {
+
     }
 
     @Override

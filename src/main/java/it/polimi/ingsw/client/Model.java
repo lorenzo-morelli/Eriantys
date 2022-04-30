@@ -50,4 +50,14 @@ public class Model {
     public void setFromTerminal(ArrayList<String> fromTerminal) {
         this.fromTerminal = fromTerminal;
     }
+
+    public String getIp() {
+        return Ip;
+    }
+
+    public String getPort() {
+        return Port;
+    }
+
+
 }

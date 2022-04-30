@@ -12,7 +12,7 @@ public class WelcomeScreen extends State{
     private NotRecognizedString notStart;
 
     public WelcomeScreen(View view) throws IOException {
-        super("[STATO di attesa di start]");
+        super("[STATO di attesa di start (WelcomeScreen.java)]");
         this.view = view;
         start = new RecognizedString("start");
         notStart = new NotRecognizedString("start");

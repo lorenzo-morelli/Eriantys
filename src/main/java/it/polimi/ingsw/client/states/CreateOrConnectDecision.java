@@ -20,7 +20,7 @@ public class CreateOrConnectDecision extends State {
 
 
     public CreateOrConnectDecision(View view, Model model) throws IOException {
-        super("[Decisione se creare una nuova partita o collegarsi ad una esistente]");
+        super("[Decisione se creare una nuova partita o collegarsi ad una esistente (CreateOrConnectDecision.java)]");
         this.view = view;
         this.model = model;
         creaNuovoGioco = new RecognizedString("create");

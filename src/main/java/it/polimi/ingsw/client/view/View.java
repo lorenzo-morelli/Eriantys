@@ -30,5 +30,7 @@ public interface View {
 
     void ask_carta_assistente();
 
-    State getPrecedentCallingState();
+    void askGameCode();
+
+    void askGameInfo();
 }

@@ -73,9 +73,9 @@ public class CliView implements View{
                     "Scegli se creare una nuova partita o connetterti ad una partita esistente",
                     "create or connect> ");
 
-            ((CreateOrConnectDecision)callingState).haSceltoCrea().enable();
-            ((CreateOrConnectDecision)callingState).haSceltoConnetti().enable();
-            ((CreateOrConnectDecision)callingState).sceltaNonValida().enable();
+            ((CreateOrConnectDecision)callingState).haSceltoCrea().disable();
+            ((CreateOrConnectDecision)callingState).haSceltoConnetti().disable();
+            ((CreateOrConnectDecision)callingState).sceltaNonValida().disable();
         }
     }
 
@@ -125,14 +125,14 @@ public class CliView implements View{
 
        @Override
     public void ask_carta_assistente() {
-        if (callingState instanceof ChooseAssistentCardPhase) {
+        if (callingState instanceof ShowAssistantsCards) {
 
 
             // Gli eventi (di uscita dallo stato corrente callingState) devono essere abilitati per poter avvenire
-            ((ChooseAssistentCardPhase) callingState).insertedCard().enable();
-            ((ChooseAssistentCardPhase) callingState).numberOfParametersIncorrect().enable();
+            ((ShowAssistantsCards) callingState).insertedCard().enable();
+            ((ShowAssistantsCards) callingState).numberOfParametersIncorrect().enable();
 
-            if (precedentCallingState instanceof WaitForturn) {
+            if (precedentCallingState instanceof WaitForTurn) {
                 CommandPrompt.ask(
                         "Inserisci numero di carta scelta",
                         "numero della carta");
@@ -141,8 +141,8 @@ public class CliView implements View{
 
             // Disabilitare gli eventi una volta che uno di loro è avvenuto elimina la possibilità del verificarsi di
             // eventi concorrenti.
-            ((ChooseAssistentCardPhase) callingState).insertedCard().disable();
-            ((ChooseAssistentCardPhase) callingState).numberOfParametersIncorrect().disable();
+            ((ShowAssistantsCards) callingState).insertedCard().disable();
+            ((ShowAssistantsCards) callingState).numberOfParametersIncorrect().disable();
         }
     }
 }

@@ -13,7 +13,6 @@ public class NetworkIssue extends Event{
         super("[Ricevuto ERRORE: " + message + "]");
     }
 
-
     public void enable() {
         this.enabled = true;
     }

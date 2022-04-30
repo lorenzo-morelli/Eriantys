@@ -4,6 +4,6 @@ import it.polimi.ingsw.utils.stateMachine.State;
 
 public class EndGame extends State {
     public EndGame() {
-        super("Stato finale");
+        super("[Stato finale (EndGame.java)]");
     }
 }

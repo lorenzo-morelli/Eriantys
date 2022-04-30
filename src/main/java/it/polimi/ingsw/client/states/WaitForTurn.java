@@ -2,43 +2,43 @@ package it.polimi.ingsw.client.states;
 
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.client.Model;
-import it.polimi.ingsw.client.events.*;
+import it.polimi.ingsw.utils.network.events.MessageReceived;
 import it.polimi.ingsw.utils.stateMachine.*;
 import java.io.IOException;
 
-public class WaitForturn extends State {
+public class WaitForTurn extends State {
     Model model;
     View view;
 
-    Message_Received ASSISTENTPHASE;
-    Message_Received ENDPHASE;
-    Message_Received STUDENTPHASE;
-    Message_Received CLOUDPHASE;
+    MessageReceived ASSISTENTPHASE;
+    MessageReceived ENDPHASE;
+    MessageReceived STUDENTPHASE;
+    MessageReceived CLOUDPHASE;
 
-    public WaitForturn(View view, Model model) throws IOException {
-        super("[STATO di attesa]");
+    public WaitForTurn(View view, Model model) throws IOException {
+        super("[STATO di attesa (WaitForTurn.java)]");
         this.view = view;
         this.model = model;
-        ENDPHASE = new Message_Received("GO_TO_ENDPHASE");
-        ASSISTENTPHASE = new Message_Received("GO_TO_ASSISTENTPHASE");
-        STUDENTPHASE = new Message_Received("GO_TO_STUDENTPHASE");
-        CLOUDPHASE = new Message_Received("GO_TOCLOUDPHASE");
+        ENDPHASE = new MessageReceived("GO_TO_ENDPHASE");
+        ASSISTENTPHASE = new MessageReceived("GO_TO_ASSISTENTPHASE");
+        STUDENTPHASE = new MessageReceived("GO_TO_STUDENTPHASE");
+        CLOUDPHASE = new MessageReceived("GO_TOCLOUDPHASE");
     }
 
     // testing
-    public Message_Received go_to_assistantcardphase() {
+    public MessageReceived go_to_assistantcardphase() {
         return ASSISTENTPHASE;
     }
 
-    public Message_Received go_to_endgame() {
+    public MessageReceived go_to_endgame() {
         return ENDPHASE;
     }
 
-    public Message_Received go_to_studentphase() {
+    public MessageReceived go_to_studentphase() {
         return STUDENTPHASE;
     }
 
-    public Message_Received go_to_cloudphase() {
+    public MessageReceived go_to_cloudphase() {
         return CLOUDPHASE;
     }
 

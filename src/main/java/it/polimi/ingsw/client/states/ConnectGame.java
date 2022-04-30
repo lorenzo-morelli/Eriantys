@@ -3,24 +3,25 @@ package it.polimi.ingsw.client.states;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.client.Model;
 import it.polimi.ingsw.client.events.*;
+import it.polimi.ingsw.utils.network.events.MessageReceived;
 import it.polimi.ingsw.utils.stateMachine.*;
 import java.io.IOException;
 
 public class ConnectGame extends State{
     Model model;
     View view;
-    Message_Received Game_started;
+    MessageReceived Game_started;
     NetworkIssue ConnectionFailed;
 
     public ConnectGame(View view, Model model) throws IOException {
-        super("[STATO di attesa connessione a partita]");
+        super("[STATO di attesa connessione a partita (ConnectGame.java)]");
         this.view = view;
         this.model = model;
         ConnectionFailed= new NetworkIssue("CONNECTION_TO_GAME_FAILED");
-        Game_started= new Message_Received("GAME_STARTED");
+        Game_started= new MessageReceived("GAME_STARTED");
     }
 
-   public Message_Received Game_Started(){ return Game_started; }
+   public MessageReceived Game_Started(){ return Game_started; }
     public NetworkIssue Connection_failed(){ return ConnectionFailed; }
 
 

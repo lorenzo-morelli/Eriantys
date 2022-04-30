@@ -24,8 +24,8 @@ public class ClientController {
     private final CreateGame createGame;
     private final ConnectGame connectGame;
     private final Event start;
-    private final WaitForturn wait;
-    private final ChooseAssistentCardPhase chooseCard;
+    private final WaitForTurn wait;
+    private final ShowAssistantsCards showsCard;
     private final MoveStudentPhase moveStudent;
     private final MoveMotherPhase moveMother;
     private final ChooseCloudPhase chooseCloud;
@@ -43,15 +43,16 @@ public class ClientController {
 
         // Costruzioni degli stati necessari
         waitStart = new WelcomeScreen(view);
-        askUserinfo= new READ(view,model,3);
-        askGAMECODE= new READ(view,model,1);
-        askGameInfo= new READ(view,model,2);
+        askUserinfo= new READ(view,model,3,"INFO");
+        askGAMECODE= new READ(view,model,1,"GAMECODE");
+        askGameInfo= new READ(view,model,2,"GAMEINFO");
+        askCardChoosed =new READ(view,model,1,"CARD");
         connectionToServer = new ConnectToServer(view,model);
         createOrConnect = new CreateOrConnectDecision(view,model);
         createGame = new CreateGame(view, model);
         connectGame = new ConnectGame(view, model);
-        wait = new WaitForturn(view, model);
-        chooseCard = new ChooseAssistentCardPhase(view,model);
+        wait = new WaitForTurn(view, model);
+        showsCard = new ShowAssistantsCards(view,model);
         moveStudent = new MoveStudentPhase();
         moveMother = new MoveMotherPhase();
         chooseCloud = new ChooseCloudPhase();

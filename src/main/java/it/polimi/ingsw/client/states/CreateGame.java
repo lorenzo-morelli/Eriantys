@@ -4,15 +4,14 @@ import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.client.Model;
 import it.polimi.ingsw.client.events.*;
 import it.polimi.ingsw.utils.network.Network;
+import it.polimi.ingsw.utils.network.events.MessageReceived;
 import it.polimi.ingsw.utils.stateMachine.*;
 import java.io.IOException;
 
 public class CreateGame extends State{
     Model model;
     View view;
-    ParametersFromTerminal insertUserInfo;
-    Message_Received Game_started;
-    Message_Received Game_code;
+    MessageReceived Game_code;
     NetworkIssue CreationProblem;
 
     Message_Sended GameInfo;
@@ -21,11 +20,8 @@ public class CreateGame extends State{
         super("[STATO di attesa info di setup per la nuova partita]");
         this.view = view;
         this.model = model;
-        insertUserInfo = new ParametersFromTerminal(model, 2); // numero di giocatori / modalita di gioco
-        Game_started = new Message_Received("CONNECTED_TO_GAME");  // client_ip CONNECTION_SUCCESSFULL
         CreationProblem= new NetworkIssue("SOMETHING_STRANGE_HAPPENNED...");
-        GameInfo= new Message_Sended("SEND_SETUP_INFO");
-        Game_code= new Message_Received("RECEVIED_GAME_CODE");
+        Game_code= new MessageReceived("RECEVIED_GAME_CODE");
     }
 
     public IEvent entryAction(IEvent cause) throws IOException {
@@ -33,8 +29,7 @@ public class CreateGame extends State{
         return null;
     }
 
-    public Message_Received Game_Started(){ return Game_started; }
-    public Message_Received Recevied_game_code(){ return Game_code; }
+    public MessageReceived Recevied_game_code(){ return Game_code; }
     public NetworkIssue Creation_failed(){ return CreationProblem; }
     public Message_Sended Send_info(){return GameInfo; }
 
