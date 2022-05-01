@@ -45,11 +45,6 @@ public class ConnectToServer extends State{
         return super.entryAction(cause);
     }
 
-        // avvia timeout
-        //todo: connettiti al server (indirizzo Ip, numero di porta NOTI) tramite connection info dati
-        //todo: attendi che server accetti la connessione:
-        //se timeout scade chiama:
-
     public ConnectedToServer Connected_to_server() {
         return connected;
     }

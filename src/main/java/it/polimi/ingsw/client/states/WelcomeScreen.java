@@ -8,8 +8,8 @@ import java.io.IOException;
 
 public class WelcomeScreen extends State{
     View view;
-    private RecognizedString start;
-    private NotRecognizedString notStart;
+    private final RecognizedString start;
+    private final NotRecognizedString notStart;
 
     public WelcomeScreen(View view) throws IOException {
         super("[STATO di attesa di start (WelcomeScreen.java)]");

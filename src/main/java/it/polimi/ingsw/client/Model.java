@@ -20,6 +20,10 @@ public class Model {
         return CloudChoosed;
     }
 
+    public int getNumofplayer() {
+        return numofplayer;
+    }
+
     public void setCloudChoosed(int cloudChoosed) {
         CloudChoosed = cloudChoosed;
     }

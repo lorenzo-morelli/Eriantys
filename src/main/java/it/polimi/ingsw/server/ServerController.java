@@ -9,30 +9,23 @@ import it.polimi.ingsw.utils.stateMachine.Event;
 import java.io.IOException;
 
 public class ServerController{
-    private final ConnectionInfo connectionInfo;
-
-    private final Idle idle;    // modo elegante di far partire il controllore
-    private final SpecifyPortScreen specifyPortScreen;
-
-    //private final WaitSpecificMessage waitSpecificMessage;
-    private final WaitGameCreation waitGameCreation;
-    private final IsNicknameAlreadyExisting isNicknameAlreadyExisting;
-    private final Event start;
 
     public ServerController() throws IOException, InterruptedException {
         CommandPrompt.setDebug();
-        connectionInfo = new ConnectionInfo();
+        ConnectionInfo connectionInfo = new ConnectionInfo();
 
-        idle = new Idle();
-        start = new Event("[Controller Started]");
+        // modo elegante di far partire il controllore
+        Idle idle = new Idle();
+        Event start = new Event("[Controller Started]");
 
-        Controller fsm = new Controller("Controllore del Server",idle);
+        Controller fsm = new Controller("Controllore del Server", idle);
 
         //Costruzione degli stati necessari
-        specifyPortScreen = new SpecifyPortScreen();
+        SpecifyPortScreen specifyPortScreen = new SpecifyPortScreen();
         //waitSpecificMessage = new WaitSpecificMessage();
-        waitGameCreation = new WaitGameCreation(connectionInfo);
-        isNicknameAlreadyExisting = new IsNicknameAlreadyExisting(connectionInfo);
+        //private final WaitSpecificMessage waitSpecificMessage;
+        WaitGameCreation waitGameCreation = new WaitGameCreation(connectionInfo);
+        IsNicknameAlreadyExisting isNicknameAlreadyExisting = new IsNicknameAlreadyExisting(connectionInfo);
 
         // Dichiarazione delle transizioni tra gli stati
         fsm.addTransition(idle, start, specifyPortScreen);
@@ -43,9 +36,9 @@ public class ServerController{
         start.fireStateEvent();
     }
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         try {
             new ServerController();
-        } catch (InterruptedException | IOException e){}
+        } catch (InterruptedException | IOException ignored){}
     }
 }

@@ -14,8 +14,8 @@ public class WaitGameCreation extends State {
     private ParametersFromNetwork create, connect;
     public WaitGameCreation(ConnectionInfo connectionInfo) {
         super("[Il server è in attesa della creazione della partita]");
-        create = new ParametersFromNetwork(5); // ricevo "client_ip Nickname CREATE gamemode numOfPlayers"
-        connect = new ParametersFromNetwork(3); // ricevo "client_ip Nickname CONNECT"
+        create = new ParametersFromNetwork(4); // ricevo "client_ip CREATE gamemode numOfPlayers"
+        connect = new ParametersFromNetwork(3); // ricevo "client_ip CONNECT Nickname"
         this.connectionInfo = connectionInfo;
     }
 

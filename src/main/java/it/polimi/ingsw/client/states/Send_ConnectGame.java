@@ -7,20 +7,21 @@ import it.polimi.ingsw.utils.stateMachine.IEvent;
 
 import java.io.IOException;
 
-public class Send_CreationParameters extends Send_to_Server {
-    public Send_CreationParameters(View view, Model model, String type) {
+public class Send_ConnectGame extends Send_to_Server {
+    public Send_ConnectGame(View view, Model model, String type) {
         super(view, model, type);
     }
 
     @Override
     public IEvent entryAction(IEvent cause) throws IOException {
         view.setCallingState(this);
-        Network.send(Network.getMyIp()+" "+ "CREATE "+ model.getGamemode() +" "+  model.getNumofplayer());
+        view.showConnectingGame();
+        Network.send(Network.getMyIp()+" "+ "CONNECT "+ model.getNickname());
         // avvia timeout
-        // CONTESTO: lato server crea partita e invia codice
-        // todo: aspetta -> se ricevuto ack CODICEPARTITA fai
+        // CONTESTO: lato server inserisce o meno il player nella partita e invia ack
+        // todo: aspetta -> se ricevuto ack CONNESSO fai
         Recevied_ack();
-        // -> se ricevuto ack INVALIDMESSAGE fai
+        // -> se ricevuto ack NONCONNESSO fai
         Message_not_valid();
         // try catch: se scade timeout
         send_failed();
