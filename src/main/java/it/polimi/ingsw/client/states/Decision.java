@@ -45,7 +45,7 @@ public class Decision extends State {
 
         public IEvent entryAction(IEvent cause) throws IOException{
             view.setCallingState(this);
-
+            view.askDecision(scelta1,scelta2);
             return null;
         }
     }

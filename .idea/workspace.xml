@@ -9,14 +9,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c193818a-1e92-4991-9439-cb3e4c836bfd" name="Changes" comment="client upgrades">
+    <list default="true" id="c193818a-1e92-4991-9439-cb3e4c836bfd" name="Changes" comment="Fixed decision between 2 possible option in terminal">
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/CreateOrConnect.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/IslandsOrSchool.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ClientController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ClientLauncher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ClientLauncher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/CreateOrConnectDecision.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/Decision.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/Decision.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/IslandOrSchoolDecision.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/view/View.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/view/View.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/view/cli/CliView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/view/cli/CliView.java" afterDir="false" />
     </list>
     <list id="5898b61b-8180-4e82-9e43-365b4c835277" name="Changes by fernandomorea" comment="" />
@@ -111,7 +109,7 @@
       <command value="mvn clean" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.it.polimi.ingsw.client.ClientLauncher">
+  <component name="RunManager" selected="Application.ServerController">
     <configuration name="ClientController" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="SuperSocket.ClientController" />
       <module name="Eriantys" />
@@ -194,8 +192,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.it.polimi.ingsw.client.ClientLauncher" />
         <item itemvalue="Application.ServerController" />
+        <item itemvalue="Application.it.polimi.ingsw.client.ClientLauncher" />
         <item itemvalue="Application.it.polimi.ingsw.utils.network.TestMessageEvents" />
         <item itemvalue="Application.ClientController" />
       </list>
@@ -507,7 +505,14 @@
       <option name="project" value="LOCAL" />
       <updated>1651342808574</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="Fixed decision between 2 possible option in terminal">
+      <created>1651413128047</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1651413128047</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -525,7 +530,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="edited bpmn" />
     <MESSAGE value="Description of transitions with a matrix" />
     <MESSAGE value="network messages states stuff" />
     <MESSAGE value="Things" />
@@ -550,7 +554,8 @@
     <MESSAGE value="Changes by ignaI" />
     <MESSAGE value="Changes by morel" />
     <MESSAGE value="client upgrades" />
-    <option name="LAST_COMMIT_MESSAGE" value="client upgrades" />
+    <MESSAGE value="Fixed decision between 2 possible option in terminal" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed decision between 2 possible option in terminal" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/ing_sw_2022_morelli_morea_netodellacqua$Main.ic" NAME="Main Coverage Results" MODIFIED="1649790444598" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />

@@ -52,7 +52,7 @@ public class CliView implements View{
 
             CommandPrompt.ask(
                         "Inserisci il game code della partita a cui ti vuoi unire",
-                        "gamecode");
+                        "gamecode>");
 
             // Disabilitare gli eventi una volta che uno di loro è avvenuto elimina la possibilità del verificarsi di
             // eventi concorrenti.
