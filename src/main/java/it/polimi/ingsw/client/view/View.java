@@ -12,7 +12,7 @@ public interface View {
 
     void askConnectionInfo();
     void askToStart();
-    void askConnectOrCreate();
+    void askDecision(String option1, String option2);
     void showTryToConnect();
     void showConnectingGame();
     void showWaitingForOtherPlayer();

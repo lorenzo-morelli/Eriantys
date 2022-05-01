@@ -81,32 +81,31 @@ public class CliView implements View{
     @Override
     public void askToStart() {
         if (callingState instanceof WelcomeScreen) {
-            ((WelcomeScreen)callingState).start().enable();
-            ((WelcomeScreen)callingState).notStart().enable();
+            ((WelcomeScreen) callingState).start().enable();
+            ((WelcomeScreen) callingState).notStart().enable();
 
             CommandPrompt.ask(
                     "Scrivi start per far partire il gioco e premi invio",
                     "START THE GAME> ");
-        }
 
-        ((WelcomeScreen)callingState).start().disable();
-        ((WelcomeScreen)callingState).notStart().disable();
+
+            ((WelcomeScreen) callingState).start().disable();
+            ((WelcomeScreen) callingState).notStart().disable();
+        }
     }
 
     @Override
-    public void askConnectOrCreate() {
+    public void askDecision(String option1, String option2) {
         if (callingState instanceof Decision) {
-            ((Decision)callingState).haScelto1().enable();
-            ((Decision)callingState).haScelto2().enable();
-            ((Decision)callingState).sceltaNonValida().enable();
+            ((Decision) callingState).haScelto1().enable();
+            ((Decision) callingState).haScelto2().enable();
 
             CommandPrompt.ask(
-                    "Scegli se creare una nuova partita o connetterti ad una partita esistente",
-                    "create or connect> ");
+                    "Scegli tra " + option1 + " e " + option2,
+                    option1 + " or " + option2+"> ");
 
-            ((Decision)callingState).haScelto1().disable();
-            ((Decision)callingState).haScelto2().disable();
-            ((Decision)callingState).sceltaNonValida().disable();
+            ((Decision) callingState).haScelto1().disable();
+            ((Decision) callingState).haScelto2().disable();
         }
     }
 

@@ -38,8 +38,8 @@ public class ClientController {
         Read_wheremove_mother askwheremovemother = new Read_wheremove_mother(view, model, 1, "WHEREMOVEMOTHER");
         Read_witchcloud askwitchcloud = new Read_witchcloud(view, model, 1, "WITCHCLOUD");
 
-        CreateOrConnectDecision connectOrCreate = new CreateOrConnectDecision(view, model, "CREATEORCONNECT");
-        IslandOrSchoolDecision islandOrSchool = new IslandOrSchoolDecision(view, model, "ISLANDORSCHOOL");
+        Decision connectOrCreate = new Decision(view, model, "CREATE","CONNECT");
+        Decision islandOrSchool = new Decision(view, model, "ISLAND","SCHOOL");
 
         Send_CreationParameters sendGameInfo = new Send_CreationParameters(view, model, "CREATIONPARAMETERS");
         Send_CardChoosed sendCardChoosed = new Send_CardChoosed(view, model, "CARDCHOOSED");
