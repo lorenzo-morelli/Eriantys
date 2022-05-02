@@ -23,62 +23,6 @@ public class CliView implements View{
     }
 
     @Override
-    public void askConnectionInfo() {
-        if (callingState instanceof Read_from_terminal) {
-            // Gli eventi (di uscita dallo stato corrente callingState) devono essere abilitati per poter avvenire
-            ((Read_from_terminal) callingState).numberOfParametersIncorrect().enable();
-            ((Read_from_terminal) callingState).insertedParameters().enable();
-
-            if (precedentCallingState instanceof WelcomeScreen){
-                CommandPrompt.ask(
-                        "Inserisci nickname, indirizzo ip e porta separati da uno spazio e clicca invio",
-                        "nickname ip porta> ");
-            }
-
-            // Disabilitare gli eventi una volta che uno di loro è avvenuto elimina la possibilità del verificarsi di
-            // eventi concorrenti.
-            ((Read_from_terminal) callingState).numberOfParametersIncorrect().disable();
-            ((Read_from_terminal) callingState).insertedParameters().disable();
-        }
-    }
-
-    @Override
-    public void askGameCode() {
-        if (callingState instanceof Read_from_terminal) {
-            // Gli eventi (di uscita dallo stato corrente callingState) devono essere abilitati per poter avvenire
-            ((Read_from_terminal) callingState).numberOfParametersIncorrect().enable();
-            ((Read_from_terminal) callingState).insertedParameters().enable();
-
-
-            CommandPrompt.ask(
-                        "Inserisci il game code della partita a cui ti vuoi unire",
-                        "gamecode>");
-
-            // Disabilitare gli eventi una volta che uno di loro è avvenuto elimina la possibilità del verificarsi di
-            // eventi concorrenti.
-            ((Read_from_terminal) callingState).numberOfParametersIncorrect().disable();
-            ((Read_from_terminal) callingState).insertedParameters().disable();
-        }
-    }
-    @Override
-    public void askGameInfo() {
-        if (callingState instanceof Read_from_terminal) {
-            // Gli eventi (di uscita dallo stato corrente callingState) devono essere abilitati per poter avvenire
-            ((Read_from_terminal) callingState).numberOfParametersIncorrect().enable();
-            ((Read_from_terminal) callingState).insertedParameters().enable();
-
-                CommandPrompt.ask(
-                        "Inserisci informazioni del gioco che vuoi creare",
-                        "numerogiocatori gamemode> ");
-
-            // Disabilitare gli eventi una volta che uno di loro è avvenuto elimina la possibilità del verificarsi di
-            // eventi concorrenti.
-            ((Read_from_terminal) callingState).numberOfParametersIncorrect().disable();
-            ((Read_from_terminal) callingState).insertedParameters().disable();
-        }
-    }
-
-    @Override
     public void askToStart() {
         if (callingState instanceof WelcomeScreen) {
             ((WelcomeScreen) callingState).start().enable();
@@ -109,22 +53,6 @@ public class CliView implements View{
         }
     }
 
-    @Override
-    public void askIslandOrSchool() {
-        if (callingState instanceof Decision) {
-            ((Decision)callingState).haScelto1().enable();
-            ((Decision)callingState).haScelto2().enable();
-            ((Decision)callingState).sceltaNonValida().enable();
-
-            CommandPrompt.ask(
-                    "Scegli se inserire studente in nella school board oppure su un isola",
-                    "school or island> ");
-
-            ((Decision)callingState).haScelto1().disable();
-            ((Decision)callingState).haScelto2().disable();
-            ((Decision)callingState).sceltaNonValida().disable();
-        }
-    }
     @Override
     public void showTryToConnect() {
         try {
@@ -161,15 +89,6 @@ public class CliView implements View{
     }
 
     @Override
-    public void ComunicationError(){
-        try{
-            CommandPrompt.println("COMUNICATION ERROR: something strage happened...");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        };
-    }
-
-    @Override
     public void itsyourturn(String command){
         try{
             if(command!="ENDGAME")
@@ -181,96 +100,6 @@ public class CliView implements View{
         };
     }
 
-       @Override
-    public void ask_carta_assistente() {
-           if (callingState instanceof Read_from_terminal) {
-               // Gli eventi (di uscita dallo stato corrente callingState) devono essere abilitati per poter avvenire
-               ((Read_from_terminal) callingState).numberOfParametersIncorrect().enable();
-               ((Read_from_terminal) callingState).insertedParameters().enable();
-
-               CommandPrompt.ask(
-                       "Inserisci numero di carta assistente che vuoi usare",
-                       "numerocarta> ");
-
-               // Disabilitare gli eventi una volta che uno di loro è avvenuto elimina la possibilità del verificarsi di
-               // eventi concorrenti.
-               ((Read_from_terminal) callingState).numberOfParametersIncorrect().disable();
-               ((Read_from_terminal) callingState).insertedParameters().disable();
-           }
-       }
-
-    @Override
-    public void ask_witch_student() {
-        if (callingState instanceof Read_from_terminal) {
-            // Gli eventi (di uscita dallo stato corrente callingState) devono essere abilitati per poter avvenire
-            ((Read_from_terminal) callingState).numberOfParametersIncorrect().enable();
-            ((Read_from_terminal) callingState).insertedParameters().enable();
-
-            CommandPrompt.ask(
-                    "Inserisci lo studente da spostare (indice)",
-                    " student  ");
-
-            // Disabilitare gli eventi una volta che uno di loro è avvenuto elimina la possibilità del verificarsi di
-            // eventi concorrenti.
-            ((Read_from_terminal) callingState).numberOfParametersIncorrect().disable();
-            ((Read_from_terminal) callingState).insertedParameters().disable();
-        }
-    }
-
-    @Override
-    public void ask_witch_island() {
-        if (callingState instanceof Read_from_terminal) {
-            // Gli eventi (di uscita dallo stato corrente callingState) devono essere abilitati per poter avvenire
-            ((Read_from_terminal) callingState).numberOfParametersIncorrect().enable();
-            ((Read_from_terminal) callingState).insertedParameters().enable();
-
-            CommandPrompt.ask(
-                    "Inserisci indice isola dove spostare lo studente",
-                    " island ");
-
-            // Disabilitare gli eventi una volta che uno di loro è avvenuto elimina la possibilità del verificarsi di
-            // eventi concorrenti.
-            ((Read_from_terminal) callingState).numberOfParametersIncorrect().disable();
-            ((Read_from_terminal) callingState).insertedParameters().disable();
-        }
-    }
-
-    @Override
-    public void askWheremove() {
-        if (callingState instanceof Read_from_terminal) {
-            // Gli eventi (di uscita dallo stato corrente callingState) devono essere abilitati per poter avvenire
-            ((Read_from_terminal) callingState).numberOfParametersIncorrect().enable();
-            ((Read_from_terminal) callingState).insertedParameters().enable();
-
-            CommandPrompt.ask(
-                    "Inserisci indice isola dove muovere madre natura",
-                    " island ");
-
-            // Disabilitare gli eventi una volta che uno di loro è avvenuto elimina la possibilità del verificarsi di
-            // eventi concorrenti.
-            ((Read_from_terminal) callingState).numberOfParametersIncorrect().disable();
-            ((Read_from_terminal) callingState).insertedParameters().disable();
-        }
-    }
-
-    @Override
-    public void askwitchCloud(){
-        if (callingState instanceof Read_from_terminal) {
-            // Gli eventi (di uscita dallo stato corrente callingState) devono essere abilitati per poter avvenire
-            ((Read_from_terminal) callingState).numberOfParametersIncorrect().enable();
-            ((Read_from_terminal) callingState).insertedParameters().enable();
-
-            CommandPrompt.ask(
-                    "Inserisci numero di nuvola che si vuole scegliere",
-                    " cloud ");
-
-            // Disabilitare gli eventi una volta che uno di loro è avvenuto elimina la possibilità del verificarsi di
-            // eventi concorrenti.
-            ((Read_from_terminal) callingState).numberOfParametersIncorrect().disable();
-            ((Read_from_terminal) callingState).insertedParameters().disable();
-        }
-    }
-
     @Override
     public void showendscreen(String winner){
         try{
@@ -278,6 +107,42 @@ public class CliView implements View{
         } catch (IOException e) {
             throw new RuntimeException(e);
         };
+    }
+
+    @Override
+    public void askParameters() {
+        ((Read_from_terminal) callingState).numberOfParametersIncorrect().enable();
+        ((Read_from_terminal) callingState).insertedParameters().enable();
+
+        switch (((Read_from_terminal) callingState).getType()){
+            case "USERINFO":
+                CommandPrompt.ask("Inserire Nickname Ip e porta separati da uno spazio e premere invio",
+                                      "nickname ip porta>");
+            case "GAMECODE":
+                CommandPrompt.ask("Inserire il codice di gioco e premere invio",
+                                    "GAMECODE>");
+            case "GAMEINFO" :
+                CommandPrompt.ask("Inserire numero di giocatori e modalità di gioco ",
+                        "numOfPlayers gameMode>");
+            case "WICHCARD"   :
+                CommandPrompt.ask("Inserire la carta scelta",
+                        "carta>");
+            case "WICHSTUDENT":
+                CommandPrompt.ask("Inserire lo studente scelto",
+                        "studente>");
+            case "WICHISLAND" :
+                CommandPrompt.ask("Inserire l'isola scelta'",
+                        "isola>");
+            case "WHEREMOVEMOTHER":
+                CommandPrompt.ask("Inserire di quanti passi si desidera muovere madre natura'",
+                        "passi>");
+            case "WICHCLOUD":
+                CommandPrompt.ask("Inserire da quale nuvola prelevare gli studenti",
+                        "nuvola>");
+        }
+
+        ((Read_from_terminal) callingState).numberOfParametersIncorrect().disable();
+        ((Read_from_terminal) callingState).insertedParameters().disable();
     }
 
 }

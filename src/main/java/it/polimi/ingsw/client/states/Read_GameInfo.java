@@ -8,16 +8,10 @@ import it.polimi.ingsw.utils.stateMachine.IEvent;
 import java.io.IOException;
 
 public class Read_GameInfo extends Read_from_terminal {
-    public Read_GameInfo(View view, Model model, int numofparameters, String type) throws IOException {
-        super(view, model, numofparameters, type);
+    public Read_GameInfo(View view, Model model) throws IOException {
+        super(view, model, 2, "GAMEINFO");
     }
 
-    @Override
-    public IEvent entryAction(IEvent cause) throws IOException {
-        view.setCallingState(this);
-        view.askGameInfo();
-        return null;
-    }
     @Override
     public void exitAction(IEvent cause) throws IOException {
         super.exitAction(cause);

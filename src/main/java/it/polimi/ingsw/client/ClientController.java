@@ -29,14 +29,14 @@ public class ClientController {
 
         ConnectToServer connectionToServer = new ConnectToServer(view,model);
 
-        Read_UserInfo askUserinfo = new Read_UserInfo(view, model, 3, "USERINFO");
-        Read_GameCode askGameCode = new Read_GameCode(view, model, 1, "GAMECODE");
-        Read_GameInfo askGameInfo = new Read_GameInfo(view, model, 2, "GAMEINFO");
-        Read_witch_card askCardChoosed = new Read_witch_card(view, model, 1, "WICHCARD");
-        Read_witch_student askwitchStudent = new Read_witch_student(view, model, 1, "WICHSTUDENT");
-        Read_witch_island askwitchIsland = new Read_witch_island(view, model, 1, "WICHISLAND");
-        Read_wheremove_mother askwheremovemother = new Read_wheremove_mother(view, model, 1, "WHEREMOVEMOTHER");
-        Read_witchcloud askwitchcloud = new Read_witchcloud(view, model, 1, "WITCHCLOUD");
+        Read_UserInfo askUserinfo = new Read_UserInfo(view, model);
+        Read_GameCode askGameCode = new Read_GameCode(view, model);
+        Read_GameInfo askGameInfo = new Read_GameInfo(view, model);
+        Read_witch_card askCardChoosed = new Read_witch_card(view, model);
+        Read_witch_student askwitchStudent = new Read_witch_student(view, model);
+        Read_witch_island askwitchIsland = new Read_witch_island(view, model);
+        Read_wheremove_mother askwheremovemother = new Read_wheremove_mother(view, model);
+        Read_witchcloud askwitchcloud = new Read_witchcloud(view, model);
 
         CreateOrConnect connectOrCreate = new CreateOrConnect(view, model);
         Decision islandOrSchool = new IslandsOrSchool(view, model);

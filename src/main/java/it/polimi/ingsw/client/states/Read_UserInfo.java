@@ -9,16 +9,10 @@ import java.io.IOException;
 
 public class Read_UserInfo extends Read_from_terminal{
 
-    public Read_UserInfo(View view, Model model, int numofparameters, String type) throws IOException {
-        super(view, model, numofparameters, type);
+    public Read_UserInfo(View view, Model model) throws IOException {
+        super(view, model, 3, "USERINFO");
     }
 
-    @Override
-    public IEvent entryAction(IEvent cause) throws IOException {
-        view.setCallingState(this);
-        view.askConnectionInfo();
-        return null;
-    }
     @Override
     public void exitAction(IEvent cause) throws IOException {
         super.exitAction(cause);

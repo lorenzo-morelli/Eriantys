@@ -33,8 +33,14 @@ public class Read_from_terminal extends State {
         return numberOfParametersIncorrect;
     }
 
+
+    public String getType() {
+        return type;
+    }
+
     public IEvent entryAction(IEvent cause) throws IOException {
         view.setCallingState(this);
+        view.askParameters();
         return null;
     }
 
