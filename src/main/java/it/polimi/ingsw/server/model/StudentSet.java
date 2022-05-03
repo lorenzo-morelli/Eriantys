@@ -8,9 +8,14 @@ public class StudentSet {
     private int numOfBlueStudents;
     private int numOfPinkStudents;
     private int numOfGreenStudents;
+    public StudentSet(){}
 
-    public StudentSet() {
-        // sono interi, non c'è bisogno di costruirli
+    public StudentSet(int numOfRedStudents,int numOfYellowStudents,int numOfBlueStudents,int numOfPinkStudents,int numOfGreenStudents) {
+                this.numOfRedStudents=numOfRedStudents;
+                this.numOfGreenStudents=numOfGreenStudents;
+                this.numOfBlueStudents=numOfBlueStudents;
+                this.numOfPinkStudents=numOfPinkStudents;
+                this.numOfYellowStudents=numOfYellowStudents;
     }
 
     public void setStudents(int n, PeopleColor color) {

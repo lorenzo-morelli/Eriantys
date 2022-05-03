@@ -1,56 +1,88 @@
 package it.polimi.ingsw.server.model;
 
-abstract class Model {
-    private Player player0;
-    private Player player1;
+import it.polimi.ingsw.server.model.enums.GameMode;
+
+import java.util.ArrayList;
+import java.util.Optional;
+import java.util.Vector;
+
+public class Model {
+
+    private GameMode gameMode;
+    private int numberOfPlayers;
+    private int turnNumber;
     private CenterTable table;
-    private GameState gameState;
 
-    public Model() {
-        player0 = new Player();
-        player1 = new Player();
-        table = new CenterTable();
-        gameState = new GameState();
+    private Optional<Vector<Team>> teams; //TODO
+    private ArrayList<Player> Player;
+    public Model(int numofplayer, String gamemode) {
 
+        this.Player=new ArrayList<>();
+        this.numberOfPlayers= numofplayer;
+        switch(gamemode) {
+            case "PRINCIPIANT":
+                gameMode = GameMode.PRINCIPIANT;
+                break;
+            case "EXPERT":
+                gameMode = GameMode.EXPERT;
+                break;
+        }
+        this.turnNumber=0;
+        this.table = new CenterTable(numofplayer);
     }
 
-    public CenterTable getTable() {
-        return table;
+    public static Model createModel(int numofplayer, String Gamemode) {
+                return new Model(numofplayer,Gamemode);
+    }
+    public void setGameMode(GameMode gameMode) {
+        this.gameMode = gameMode;
     }
 
-    public void setTable(CenterTable table) {
-        this.table = table;
+    public GameMode getGameMode() {
+        return gameMode;
     }
 
-    public Player getPlayer0() {
-        return player0;
+    public void setNumberOfPlayers(int numberOfPlayers) {
+        this.numberOfPlayers = numberOfPlayers;
     }
 
-    public Player getPlayer1() {
-        return player1;
+    public int getNumberOfPlayers() {
+        return numberOfPlayers;
     }
 
-    public GameState getGameState() {
-        return gameState;
+    public void setTeams(Optional<Vector<Team>> teams) {
+        this.teams = teams;
     }
 
-    public CenterTable getCenterTable() {
-        return table;
+    public Optional<Vector<Team>> getTeams() {
+        return teams;
     }
 
-    public void setPlayer0(Player player0) {
-        this.player0 = player0;
+    public void setTurnNumber(int turnNumber) {
+        this.turnNumber = turnNumber;
     }
 
-    public void setPlayer1(Player player1) {
-        this.player1 = player1;
+    public int getTurnNumber() {
+        return turnNumber;
     }
 
-    public void setGameState(GameState gameState) {
-        this.gameState = gameState;
+    public ArrayList<it.polimi.ingsw.server.model.Player> getPlayer() {
+        return Player;
     }
 
-    public void setCenterTable(CenterTable centerTable) {
-        this.table = centerTable;
+    public void setPlayer(ArrayList<it.polimi.ingsw.server.model.Player> player) {
+        Player = player;
     }
+//    public boolean isLastPlayerOfTheTurn(){
+//        //todo
+//    }
+//    public boolean isFirsPlayerOfTheTurn(){
+//        //todo
+//    }
+//    public void update(){
+//        // todo, or just an idea??
+//        /* aggiorna currentOrderNumber nel caso in cui
+//           isLastPlayerOfTheTurn è falso
+//         */
+//    }
 }

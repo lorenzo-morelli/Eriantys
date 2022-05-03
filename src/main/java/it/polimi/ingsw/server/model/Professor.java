@@ -6,5 +6,10 @@ import java.util.Optional;
 
 public class Professor {
     private PeopleColor color;
-    private Optional<Player> heldBy;
+    private Player heldBy;
+
+    public Professor(PeopleColor color){
+        this.color = color;
+        heldBy=null;
+    }
 }
