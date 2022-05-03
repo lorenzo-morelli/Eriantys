@@ -37,9 +37,11 @@ public class AmIFirst extends State {
         Network.send(json.toJson(clientModel));
 
         System.out.println("[Non so ancora se sono il primo o no]");
+        response.enable();
         while( !response.parametersReceived()){
             // Non ho ancora ricevuto una risposta dal server
         }
+        response.disable();
         System.out.println("[Ho ricevuto qualcosa]");
         clientModel = json.fromJson(response.getParameter(0), ClientModel.class);
         if (clientModel.getAmIfirst().equals(null)){

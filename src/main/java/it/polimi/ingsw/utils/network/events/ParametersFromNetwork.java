@@ -1,6 +1,7 @@
 package it.polimi.ingsw.utils.network.events;
 
 import it.polimi.ingsw.utils.network.Network;
+import it.polimi.ingsw.utils.stateMachine.Controller;
 import it.polimi.ingsw.utils.stateMachine.Event;
 
 import javax.swing.*;
@@ -14,6 +15,8 @@ public class ParametersFromNetwork extends Event implements DocumentListener {
     private int numberOfStrings;
     private ArrayList<String> parsedStrings;
     private boolean parametersReceived = false;
+
+    private boolean enabled = false;
 
     public ParametersFromNetwork(int numberOfStrings) {
 
@@ -42,8 +45,9 @@ public class ParametersFromNetwork extends Event implements DocumentListener {
         try {
             parsedStrings = new ArrayList(Arrays.asList(ta.getText().split(" ")));
             if (parsedStrings.size() == numberOfStrings){
-                System.out.println("[Ricevuto: "+ ta.getText() +"]" );
-                this.parametersReceived = true;
+                if (enabled == true) {
+                    this.parametersReceived = true;
+                }
             }
 
         } catch (Exception e) {
@@ -58,4 +62,14 @@ public class ParametersFromNetwork extends Event implements DocumentListener {
     public synchronized boolean parametersReceived() {
         return parametersReceived;
     }
+
+    public void enable(){
+        enabled = true;
+    }
+
+    public void disable(){
+        enabled = false;
+        parametersReceived = false;
+    }
+
 }
