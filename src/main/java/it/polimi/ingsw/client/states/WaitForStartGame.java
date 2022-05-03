@@ -17,7 +17,9 @@ public class WaitForStartGame extends WaitForServer {
         view.setCallingState(this);
         // todo: mettiti in attesa di un ACK "GAMESTART" da server
         view.showGameStarted();
-        start_game();
+        try {
+            GO.fireStateEvent();
+        }catch (InterruptedException e) {}
         return null;
     }
 }

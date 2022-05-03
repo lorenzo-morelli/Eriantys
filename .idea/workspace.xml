@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="ArtifactsWorkspaceSettings">
-    <artifacts-to-build>
-      <artifact name="Eriantys:jar" />
-    </artifacts-to-build>
-  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c193818a-1e92-4991-9439-cb3e4c836bfd" name="Changes" comment="Fixed generic state of option between two options">
-      <change beforePath="$PROJECT_DIR$/src/main/java/META-INF/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/META-INF/MANIFEST.MF" afterDir="false" />
+    <list default="true" id="c193818a-1e92-4991-9439-cb3e4c836bfd" name="Changes" comment="edited gitignore position">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ClientController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/Send_CardChoosed.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/Send_CardChoosed.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/Send_ConnectGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/Send_ConnectGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/Send_CreationParameters.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/Send_CreationParameters.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/Send_MotherMovement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/Send_MotherMovement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/Send_StudentToIsland.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/Send_StudentToIsland.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/Send_StudentToSchool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/Send_StudentToSchool.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/Send_to_CloudChoosed.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/Send_to_CloudChoosed.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/WaitForStartGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/WaitForStartGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/WaitForTurn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/states/WaitForTurn.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/view/cli/CliView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/view/cli/CliView.java" afterDir="false" />
     </list>
-    <list id="5898b61b-8180-4e82-9e43-365b4c835277" name="Changes by fernandomorea" comment="" />
-    <list id="4543697f-2cef-4409-863c-6d4c8711deb7" name="Changes by ignaI" comment="Changes by ignaI" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -28,27 +32,12 @@
   </component>
   <component name="Git.Settings">
     <option name="PUSH_AUTO_UPDATE" value="true" />
-    <option name="PUSH_TAGS">
-      <GitPushTagMode>
-        <option name="argument" value="--tags" />
-        <option name="title" value="All" />
-      </GitPushTagMode>
-    </option>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="network" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="UPDATE_TYPE" value="REBASE" />
-  </component>
-  <component name="GitSEFilterConfiguration">
-    <file-type-list>
-      <filtered-out-file-type name="LOCAL_BRANCH" />
-      <filtered-out-file-type name="REMOTE_BRANCH" />
-      <filtered-out-file-type name="TAG" />
-      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
-    </file-type-list>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -60,9 +49,6 @@
       </MavenGeneralSettings>
     </option>
   </component>
-  <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
-  </component>
   <component name="ProjectId" id="26k6aIRhdITyOpcvZP6TxXqIDNm" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -71,57 +57,39 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "TODO_SCOPE": "All Places",
-    "WebServerToolWindowFactoryState": "false",
-    "project.structure.last.edited": "Artifacts",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;last_opened_file_path&quot;: &quot;/Users/fernandomorea/IdeaProjects/ing-sw-2022-morelli-morea-netodellacqua/src/main/java/it/polimi/ingsw/network&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
-    <key name="CreateClassDialog.RecentsKey">
-      <recent name="it.polimi.ingsw.client.states" />
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network" />
+      <recent name="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/network/message" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/test/java" />
-      <recent name="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/utils/network" />
-      <recent name="$PROJECT_DIR$/src/test/java/Network" />
-      <recent name="$PROJECT_DIR$/src/test/java/SuperSocket" />
-      <recent name="$PROJECT_DIR$/src/test/java/TcpEventMessages" />
+      <recent name="C:\Users\morel\Desktop\Programs\Java\ing-sw-2022-morelli-morea-netodellacqua" />
+      <recent name="C:\Users\morel\Desktop\Programs\Java\ing-sw-2022-morelli-morea-netodellacqua\deliveries" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="it.polimi.ingsw.server" />
-      <recent name="Network" />
-      <recent name="it.polimi.ingsw.utils.gui" />
-      <recent name="it.polimi.ingsw.client.view" />
       <recent name="it.polimi.ingsw.server.model" />
+      <recent name="it.polimi.ingsw.utils" />
+      <recent name="it.polimi.ingsw.client" />
     </key>
   </component>
-  <component name="RunAnythingCache">
-    <option name="myCommands">
-      <command value="mvn clean" />
-    </option>
-  </component>
-  <component name="RunManager" selected="Application.it.polimi.ingsw.client.ClientLauncher">
-    <configuration name="ClientController" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="SuperSocket.ClientController" />
+  <component name="RunManager" selected="Application.ClientLauncher">
+    <configuration name="ClientLauncher" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="it.polimi.ingsw.client.ClientLauncher" />
       <module name="Eriantys" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="SuperSocket.*" />
+          <option name="PATTERN" value="it.polimi.ingsw.client.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="DemoEsempio" type="Application" factoryName="Application" singleton="false" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="it.polimi.ingsw.server.controller_server.DemoEsempio" />
-      <module name="Eriantys" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -139,59 +107,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ServerDumb" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="it.polimi.ingsw.utils.network.ServerDumb" />
+    <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="it.polimi.ingsw.App" />
       <module name="Eriantys" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="it.polimi.ingsw.utils.network.events.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="it.polimi.ingsw.client.ClientLauncher" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="it.polimi.ingsw.client.ClientLauncher" />
-      <module name="Eriantys" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="it.polimi.ingsw.client.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="it.polimi.ingsw.utils.network.TestMessageEvents" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="it.polimi.ingsw.utils.network.TestMessageEvents" />
-      <module name="Eriantys" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="it.polimi.ingsw.utils.network.events.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.DemoEsempio" />
-      <item itemvalue="Application.ServerDumb" />
-      <item itemvalue="Application.ClientController" />
-      <item itemvalue="Application.it.polimi.ingsw.client.ClientLauncher" />
+      <item itemvalue="Application.Unnamed" />
+      <item itemvalue="Application.ClientLauncher" />
       <item itemvalue="Application.ServerController" />
-      <item itemvalue="Application.it.polimi.ingsw.utils.network.TestMessageEvents" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.it.polimi.ingsw.client.ClientLauncher" />
+        <item itemvalue="Application.ClientLauncher" />
         <item itemvalue="Application.ServerController" />
-        <item itemvalue="Application.it.polimi.ingsw.utils.network.TestMessageEvents" />
-        <item itemvalue="Application.ClientController" />
       </list>
     </recent_temporary>
   </component>
@@ -209,34 +140,9 @@
       <workItem from="1648564317550" duration="41000" />
       <workItem from="1649100123501" duration="302000" />
       <workItem from="1649162521795" duration="3796000" />
-      <workItem from="1649184459227" duration="651000" />
-      <workItem from="1649509988232" duration="54584000" />
-      <workItem from="1649745815215" duration="13287000" />
-      <workItem from="1649761816987" duration="7934000" />
-      <workItem from="1649771659689" duration="40811000" />
-      <workItem from="1649879838426" duration="41879000" />
-      <workItem from="1650002128785" duration="6767000" />
-      <workItem from="1650088594330" duration="20034000" />
-      <workItem from="1650227988227" duration="1426000" />
-      <workItem from="1650710761188" duration="1997000" />
-      <workItem from="1650714628920" duration="9458000" />
-      <workItem from="1650797332211" duration="32000" />
-      <workItem from="1650797492125" duration="119000" />
-      <workItem from="1650797839056" duration="116000" />
-      <workItem from="1650798074426" duration="79000" />
-      <workItem from="1650798166130" duration="38295000" />
-      <workItem from="1650901774959" duration="5892000" />
-      <workItem from="1650908481581" duration="1930000" />
-      <workItem from="1650911531563" duration="1151000" />
-      <workItem from="1650953540225" duration="18058000" />
-      <workItem from="1651010659756" duration="6190000" />
-      <workItem from="1651048878425" duration="6549000" />
-      <workItem from="1651059269030" duration="36495000" />
-      <workItem from="1651215512260" duration="455000" />
-      <workItem from="1651215971898" duration="8686000" />
-      <workItem from="1651419284675" duration="479000" />
-      <workItem from="1651497260699" duration="1000" />
-      <workItem from="1651513928817" duration="2161000" />
+      <workItem from="1649184459227" duration="999000" />
+      <workItem from="1649257868700" duration="2400000" />
+      <workItem from="1649663743603" duration="2105000" />
     </task>
     <task id="LOCAL-00001" summary="created resources directory">
       <created>1647955875299</created>
@@ -322,203 +228,28 @@
       <option name="project" value="LOCAL" />
       <updated>1649184493844</updated>
     </task>
-    <task id="LOCAL-00013" summary="Description of transitions with a matrix">
-      <created>1649511590518</created>
+    <task id="LOCAL-00013" summary="edited bpmn">
+      <created>1649185858636</created>
       <option name="number" value="00013" />
       <option name="presentableId" value="LOCAL-00013" />
       <option name="project" value="LOCAL" />
-      <updated>1649511590518</updated>
+      <updated>1649185858636</updated>
     </task>
-    <task id="LOCAL-00014" summary="network messages states stuff">
-      <created>1649663946920</created>
+    <task id="LOCAL-00014" summary="added two controllers">
+      <created>1649185992159</created>
       <option name="number" value="00014" />
       <option name="presentableId" value="LOCAL-00014" />
       <option name="project" value="LOCAL" />
-      <updated>1649663946920</updated>
+      <updated>1649185992159</updated>
     </task>
-    <task id="LOCAL-00015" summary="Things">
-      <created>1649860152541</created>
+    <task id="LOCAL-00015" summary="edited gitignore position">
+      <created>1649186028582</created>
       <option name="number" value="00015" />
       <option name="presentableId" value="LOCAL-00015" />
       <option name="project" value="LOCAL" />
-      <updated>1649860152541</updated>
+      <updated>1649186028582</updated>
     </task>
-    <task id="LOCAL-00016" summary="Observer pattern &amp;&amp; Jline library used to handle user input">
-      <created>1649939847918</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1649939847918</updated>
-    </task>
-    <task id="LOCAL-00017" summary="Simplified">
-      <created>1649968111583</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1649968111583</updated>
-    </task>
-    <task id="LOCAL-00018" summary="Fixed clear terminal in unix based systems (Mac Os/Linux)">
-      <created>1650179954495</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1650179954495</updated>
-    </task>
-    <task id="LOCAL-00019" summary="Created States Classes">
-      <created>1650718704508</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1650718704508</updated>
-    </task>
-    <task id="LOCAL-00020" summary="Moved classes in correct packages">
-      <created>1650723851727</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1650723851727</updated>
-    </task>
-    <task id="LOCAL-00021" summary="View should have all void methods">
-      <created>1650805083805</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1650805083805</updated>
-    </task>
-    <task id="LOCAL-00022" summary="GuiView and CliView demo fully working code">
-      <created>1650882108538</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1650882108538</updated>
-    </task>
-    <task id="LOCAL-00023" summary="background to welcome screen test">
-      <created>1650888129258</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1650888129258</updated>
-    </task>
-    <task id="LOCAL-00024" summary="backup">
-      <created>1650902189365</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1650902189365</updated>
-    </task>
-    <task id="LOCAL-00025" summary="backup">
-      <created>1650908363983</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1650908363983</updated>
-    </task>
-    <task id="LOCAL-00026" summary="Working code - 25 aprile 2022">
-      <created>1650911577268</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1650911577268</updated>
-    </task>
-    <task id="LOCAL-00027" summary="fixed the case of insertion of incorrect number of parameters">
-      <created>1650954543973</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1650954543973</updated>
-    </task>
-    <task id="LOCAL-00028" summary="fixed the case of insertion of incorrect number of parameters">
-      <created>1650978780413</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1650978780413</updated>
-    </task>
-    <task id="LOCAL-00029" summary="Backup">
-      <created>1650982083605</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1650982083605</updated>
-    </task>
-    <task id="LOCAL-00030" summary="Changes by ignaI">
-      <created>1650982380524</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
-      <option name="project" value="LOCAL" />
-      <updated>1650982380524</updated>
-    </task>
-    <task id="LOCAL-00031" summary="ServerController, a first sketch">
-      <created>1651071861195</created>
-      <option name="number" value="00031" />
-      <option name="presentableId" value="LOCAL-00031" />
-      <option name="project" value="LOCAL" />
-      <updated>1651071861195</updated>
-    </task>
-    <task id="LOCAL-00032" summary="ServerController, working demo">
-      <created>1651133839122</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1651133839122</updated>
-    </task>
-    <task id="LOCAL-00033" summary="Improved code readability">
-      <created>1651134311499</created>
-      <option name="number" value="00033" />
-      <option name="presentableId" value="LOCAL-00033" />
-      <option name="project" value="LOCAL" />
-      <updated>1651134311499</updated>
-    </task>
-    <task id="LOCAL-00034" summary="Added stuff">
-      <created>1651174001762</created>
-      <option name="number" value="00034" />
-      <option name="presentableId" value="LOCAL-00034" />
-      <option name="project" value="LOCAL" />
-      <updated>1651174001762</updated>
-    </task>
-    <task id="LOCAL-00035" summary="Updates at 28 april 2022 (videocall)">
-      <created>1651179542849</created>
-      <option name="number" value="00035" />
-      <option name="presentableId" value="LOCAL-00035" />
-      <option name="project" value="LOCAL" />
-      <updated>1651179542849</updated>
-    </task>
-    <task id="LOCAL-00036" summary="Changes by ignaI">
-      <created>1651179553395</created>
-      <option name="number" value="00036" />
-      <option name="presentableId" value="LOCAL-00036" />
-      <option name="project" value="LOCAL" />
-      <updated>1651179553395</updated>
-    </task>
-    <task id="LOCAL-00037" summary="Changes by morel">
-      <created>1651179562022</created>
-      <option name="number" value="00037" />
-      <option name="presentableId" value="LOCAL-00037" />
-      <option name="project" value="LOCAL" />
-      <updated>1651179562022</updated>
-    </task>
-    <task id="LOCAL-00038" summary="client upgrades">
-      <created>1651342808574</created>
-      <option name="number" value="00038" />
-      <option name="presentableId" value="LOCAL-00038" />
-      <option name="project" value="LOCAL" />
-      <updated>1651342808574</updated>
-    </task>
-    <task id="LOCAL-00039" summary="Fixed decision between 2 possible option in terminal">
-      <created>1651413128047</created>
-      <option name="number" value="00039" />
-      <option name="presentableId" value="LOCAL-00039" />
-      <option name="project" value="LOCAL" />
-      <updated>1651413128047</updated>
-    </task>
-    <task id="LOCAL-00040" summary="Fixed generic state of option between two options">
-      <created>1651413746322</created>
-      <option name="number" value="00040" />
-      <option name="presentableId" value="LOCAL-00040" />
-      <option name="project" value="LOCAL" />
-      <updated>1651413746322</updated>
-    </task>
-    <option name="localTasksCounter" value="41" />
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -536,32 +267,20 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="network messages states stuff" />
-    <MESSAGE value="Things" />
-    <MESSAGE value="Observer pattern &amp;&amp; Jline library used to handle user input" />
-    <MESSAGE value="Simplified" />
-    <MESSAGE value="Fixed clear terminal in unix based systems (Mac Os/Linux)" />
-    <MESSAGE value="Case study of MVC pattern&#10;todo: Events independents from the view" />
-    <MESSAGE value="Created States Classes" />
-    <MESSAGE value="Moved classes in correct packages" />
-    <MESSAGE value="View should have all void methods" />
-    <MESSAGE value="GuiView and CliView demo fully working code" />
-    <MESSAGE value="background to welcome screen test" />
-    <MESSAGE value="backup" />
-    <MESSAGE value="Working code - 25 aprile 2022" />
-    <MESSAGE value="fixed the case of insertion of incorrect number of parameters" />
-    <MESSAGE value="Backup" />
-    <MESSAGE value="ServerController, a first sketch" />
-    <MESSAGE value="ServerController, working demo" />
-    <MESSAGE value="Improved code readability" />
-    <MESSAGE value="Added stuff" />
-    <MESSAGE value="Updates at 28 april 2022 (videocall)" />
-    <MESSAGE value="Changes by ignaI" />
-    <MESSAGE value="Changes by morel" />
-    <MESSAGE value="client upgrades" />
-    <MESSAGE value="Fixed decision between 2 possible option in terminal" />
-    <MESSAGE value="Fixed generic state of option between two options" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed generic state of option between two options" />
+    <MESSAGE value="created resources directory" />
+    <MESSAGE value="added CenterTable and Professor, and edited project structure" />
+    <MESSAGE value="fixed Model.java setCenterTable" />
+    <MESSAGE value="created classes" />
+    <MESSAGE value="edited .gitignore" />
+    <MESSAGE value="edited name" />
+    <MESSAGE value="fixed errors" />
+    <MESSAGE value="changed architecture" />
+    <MESSAGE value="added gson dependency" />
+    <MESSAGE value="added bpmn" />
+    <MESSAGE value="edited bpmn" />
+    <MESSAGE value="added two controllers" />
+    <MESSAGE value="edited gitignore position" />
+    <option name="LAST_COMMIT_MESSAGE" value="edited gitignore position" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/ing_sw_2022_morelli_morea_netodellacqua$Main.ic" NAME="Main Coverage Results" MODIFIED="1649790444598" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />

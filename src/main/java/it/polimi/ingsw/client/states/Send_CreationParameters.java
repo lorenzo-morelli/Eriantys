@@ -19,11 +19,14 @@ public class Send_CreationParameters extends Send_to_Server {
         // avvia timeout
         // CONTESTO: lato server crea partita e invia codice
         // todo: aspetta -> se ricevuto ack CODICEPARTITA fai
-        Recevied_ack();
-        // -> se ricevuto ack INVALIDMESSAGE fai
-        Message_not_valid();
-        // try catch: se scade timeout
-        send_failed();
+        try{
+            ack.fireStateEvent();
+            // -> se ricevuto ack INVALIDMESSAGE fai
+            not_valid.fireStateEvent();
+            // try catch: se scade timeout
+            //message_issue.fireStateEvent(); TODO
+        }
+        catch(InterruptedException e){ }
         return null;
     }
 }

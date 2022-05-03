@@ -118,27 +118,35 @@ public class CliView implements View{
             case "USERINFO":
                 CommandPrompt.ask("Inserire Nickname Ip e porta separati da uno spazio e premere invio",
                                       "nickname ip porta>");
+                break;
             case "GAMECODE":
                 CommandPrompt.ask("Inserire il codice di gioco e premere invio",
                                     "GAMECODE>");
+                break;
             case "GAMEINFO" :
                 CommandPrompt.ask("Inserire numero di giocatori e modalità di gioco ",
                         "numOfPlayers gameMode>");
+                break;
             case "WICHCARD"   :
                 CommandPrompt.ask("Inserire la carta scelta",
                         "carta>");
+                break;
             case "WICHSTUDENT":
                 CommandPrompt.ask("Inserire lo studente scelto",
                         "studente>");
+                break;
             case "WICHISLAND" :
                 CommandPrompt.ask("Inserire l'isola scelta'",
                         "isola>");
+                break;
             case "WHEREMOVEMOTHER":
                 CommandPrompt.ask("Inserire di quanti passi si desidera muovere madre natura'",
                         "passi>");
+                break;
             case "WICHCLOUD":
                 CommandPrompt.ask("Inserire da quale nuvola prelevare gli studenti",
                         "nuvola>");
+                break;
         }
 
         ((Read_from_terminal) callingState).numberOfParametersIncorrect().disable();

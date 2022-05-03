@@ -13,18 +13,21 @@ public class Send_ConnectGame extends Send_to_Server {
     }
 
     @Override
-    public IEvent entryAction(IEvent cause) throws IOException {
+    public IEvent entryAction(IEvent cause) throws IOException{
         view.setCallingState(this);
         view.showConnectingGame();
         Network.send(Network.getMyIp()+" "+ "CONNECT "+ model.getNickname());
         // avvia timeout
         // CONTESTO: lato server inserisce o meno il player nella partita e invia ack
         // todo: aspetta -> se ricevuto ack CONNESSO fai
-        Recevied_ack();
+        try{
+            ack.fireStateEvent();
         // -> se ricevuto ack NONCONNESSO fai
-        Message_not_valid();
+            not_valid.fireStateEvent();
         // try catch: se scade timeout
-        send_failed();
+            //message_issue.fireStateEvent(); TODO
+        }
+        catch(InterruptedException e){ }
         return null;
     }
 }

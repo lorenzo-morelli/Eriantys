@@ -69,14 +69,14 @@ public class ClientController {
         fsm.addTransition(connectionToServer, connectionToServer.Connected_to_server(), connectOrCreate);
 
         // Choose if create a new game or connect to an existing one
-        fsm.addTransition(connectOrCreate, connectOrCreate.haScelto1(), askGameCode);    //CONNECT
+        fsm.addTransition(connectOrCreate, connectOrCreate.haScelto2(), askGameCode);    //CONNECT
         fsm.addTransition(askGameCode, askGameCode.insertedParameters(), send_connectGame);
         fsm.addTransition(askGameCode, askGameCode.numberOfParametersIncorrect(), askGameCode);
         fsm.addTransition(send_connectGame, send_connectGame.Recevied_ack(), waitstartgame);
         fsm.addTransition(send_connectGame, send_connectGame.send_failed(), send_connectGame);
         fsm.addTransition(send_connectGame, send_connectGame.Message_not_valid(), send_connectGame);
 
-        fsm.addTransition(connectOrCreate, connectOrCreate.haScelto2(), askGameInfo);    //CREATE THEN CONNECT
+        fsm.addTransition(connectOrCreate, connectOrCreate.haScelto1(), askGameInfo);    //CREATE THEN CONNECT
         fsm.addTransition(askGameInfo, askGameInfo.insertedParameters(), sendGameInfo);
         fsm.addTransition(askGameInfo, askGameInfo.numberOfParametersIncorrect(), askGameInfo);
         fsm.addTransition(sendGameInfo, sendGameInfo.Recevied_ack(), send_connectGame);

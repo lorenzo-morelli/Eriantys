@@ -19,11 +19,14 @@ public class Send_to_CloudChoosed extends Send_to_Server {
         // avvia timeout
         // CONTESTO: lato server arriva la scelta della nuvola e invia ack,  poi esegue funzioni correlate
         // todo: aspetta -> se ricevuto ack NUVOLASCELTA fai
-        Recevied_ack();
-        // -> se ricevuto ack INVALIDMESSAGE fai
-        Message_not_valid();
-        // try catch: se scade timeout
-        send_failed();
+        try{
+            ack.fireStateEvent();
+            // -> se ricevuto ack INVALIDMESSAGE fai
+            not_valid.fireStateEvent();
+            // try catch: se scade timeout
+            //message_issue.fireStateEvent(); TODO
+        }
+        catch(InterruptedException e){ }
         return null;
     }
 }
