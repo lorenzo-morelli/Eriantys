@@ -13,7 +13,7 @@ public class ClientController {
 
         CommandPrompt.setDebug();
         // modello dati di questa semplice demo
-        Model model = new Model();
+        ClientModel clientModel = new ClientModel();
         // vista (per il momento solo command line interface)
 
         // Dichiarazione degli stati necessari
@@ -25,35 +25,42 @@ public class ClientController {
         Controller fsm = new Controller("Controllore del Client", idle);
 
         // Costruzioni degli stati necessari
+
+        // La welcomeScreen richiede all'utente una interazione scrivendo (o cliccando il bottone) start
         WelcomeScreen waitStart = new WelcomeScreen(view);
 
-        ConnectToServer connectionToServer = new ConnectToServer(view,model);
+        // Stato di connessione al server
+        ConnectToServer connectionToServer = new ConnectToServer(view, clientModel);
 
-        Read_UserInfo askUserinfo = new Read_UserInfo(view, model);
-        Read_GameCode askGameCode = new Read_GameCode(view, model);
-        Read_GameInfo askGameInfo = new Read_GameInfo(view, model);
-        Read_witch_card askCardChoosed = new Read_witch_card(view, model);
-        Read_witch_student askwitchStudent = new Read_witch_student(view, model);
-        Read_witch_island askwitchIsland = new Read_witch_island(view, model);
-        Read_wheremove_mother askwheremovemother = new Read_wheremove_mother(view, model);
-        Read_witchcloud askwitchcloud = new Read_witchcloud(view, model);
+        // Chiede al server se è il primo client ad essersi collegato
+        AmIFirst amIFirst = new AmIFirst(clientModel,fsm);
 
-        CreateOrConnect connectOrCreate = new CreateOrConnect(view, model);
-        Decision islandOrSchool = new IslandsOrSchool(view, model);
+        // Reading stuffs from terminal
+        ReadUserInfo askUserinfo = new ReadUserInfo(view, clientModel, fsm);
+        ReadGameCode askGameCode = new ReadGameCode(view, clientModel, fsm);
+        ReadGameInfo askGameInfo = new ReadGameInfo(view, clientModel, fsm);
+        ReadWichCard askCardChoosed = new ReadWichCard(view, clientModel, fsm);
+        ReadWichStudent askwitchStudent = new ReadWichStudent(view, clientModel, fsm);
+        ReadWichIsland askwitchIsland = new ReadWichIsland(view, clientModel, fsm);
+        ReadWhereToMoveMotherNature askwheremovemother = new ReadWhereToMoveMotherNature(view, clientModel, fsm);
+        ReadWichCloud askwitchcloud = new ReadWichCloud(view, clientModel, fsm);
 
-        Send_CreationParameters sendGameInfo = new Send_CreationParameters(view, model, "CREATIONPARAMETERS");
-        Send_CardChoosed sendCardChoosed = new Send_CardChoosed(view, model, "CARDCHOOSED");
-        Send_StudentToSchool sendStudent_toSchool = new Send_StudentToSchool(view, model, "STUDENT_TOSCHOOL");
-        Send_StudentToIsland sendStudent_toIsland = new Send_StudentToIsland(view, model, "STUDENT_TOISLAND");
-        Send_MotherMovement sendMotherMovement = new Send_MotherMovement(view, model, "MOTHER_TOISLAND");
-        Send_to_CloudChoosed sendcloudChoosed = new Send_to_CloudChoosed(view, model, "CLOUDCHOOSED");
-        Send_ConnectGame send_connectGame=new Send_ConnectGame(view,model,"CONNECTTOGAME");
+        CreateOrConnect connectOrCreate = new CreateOrConnect(view, clientModel);
+        Decision islandOrSchool = new IslandsOrSchool(view, clientModel);
 
-        WaitForStartGame waitstartgame = new WaitForStartGame(view, model, "GAMESTART");
-        WaitForTurn waitAssistantCardphase = new WaitForTurn(view,model,"ASSISTANTCARDPHASE");
-        WaitForTurn waitStudent_and_Mother_Phase = new WaitForTurn(view,model,"STUDENTPHASE_OR_MOVEMOTHERPHASE");
-        WaitForTurn waitCloudPhase = new WaitForTurn(view,model,"CLOUDPHASE");
-        EndGame end = new EndGame(view, model);
+        Send_CreationParameters sendGameInfo = new Send_CreationParameters(view, clientModel, "CREATIONPARAMETERS");
+        Send_CardChoosed sendCardChoosed = new Send_CardChoosed(view, clientModel, "CARDCHOOSED");
+        Send_StudentToSchool sendStudent_toSchool = new Send_StudentToSchool(view, clientModel, "STUDENT_TOSCHOOL");
+        Send_StudentToIsland sendStudent_toIsland = new Send_StudentToIsland(view, clientModel, "STUDENT_TOISLAND");
+        Send_MotherMovement sendMotherMovement = new Send_MotherMovement(view, clientModel, "MOTHER_TOISLAND");
+        Send_to_CloudChoosed sendcloudChoosed = new Send_to_CloudChoosed(view, clientModel, "CLOUDCHOOSED");
+        Send_ConnectGame send_connectGame=new Send_ConnectGame(view, clientModel,"CONNECTTOGAME");
+
+        WaitForStartGame waitstartgame = new WaitForStartGame(view, clientModel, "GAMESTART");
+        WaitForTurn waitAssistantCardphase = new WaitForTurn(view, clientModel,"ASSISTANTCARDPHASE");
+        WaitForTurn waitStudent_and_Mother_Phase = new WaitForTurn(view, clientModel,"STUDENTPHASE_OR_MOVEMOTHERPHASE");
+        WaitForTurn waitCloudPhase = new WaitForTurn(view, clientModel,"CLOUDPHASE");
+        EndGame end = new EndGame(view, clientModel);
 
         // Dichiarazione delle transizioni tra gli stati
         fsm.addTransition(idle, start, waitStart);
@@ -65,9 +72,16 @@ public class ClientController {
         // Schermata di richiesta di nickname, ip e porta + Trying to connect to server via TCP socket
         fsm.addTransition(askUserinfo, askUserinfo.insertedParameters(), connectionToServer);
         fsm.addTransition(askUserinfo, askUserinfo.numberOfParametersIncorrect(), askUserinfo);
-        fsm.addTransition(connectionToServer, connectionToServer.Connection_to_server_failed(), connectionToServer);
-        fsm.addTransition(connectionToServer, connectionToServer.Connected_to_server(), connectOrCreate);
 
+        // Tentativo di connessione al server sull' IP/Porta specificata dall'utente
+        fsm.addTransition(connectionToServer, connectionToServer.connectionToServerFailed(), askUserinfo);
+        fsm.addTransition(connectionToServer, connectionToServer.connectedToServer(), amIFirst);
+
+        // Se sono il primo client allora devo chiedere la scelta del gamemode e del numero dei partecipanti
+        // ed inviare il tutto al server
+
+        fsm.addTransition(amIFirst, amIFirst.yes(), askGameInfo);
+        /*
         // Choose if create a new game or connect to an existing one
         fsm.addTransition(connectOrCreate, connectOrCreate.haScelto2(), askGameCode);    //CONNECT
         fsm.addTransition(askGameCode, askGameCode.insertedParameters(), send_connectGame);
@@ -141,7 +155,7 @@ public class ClientController {
         fsm.addTransition(waitCloudPhase, waitCloudPhase.go_to_endgame(), end);
         fsm.addTransition(waitAssistantCardphase, waitAssistantCardphase.go_to_endgame(), end);
         fsm.addTransition(waitStudent_and_Mother_Phase, waitStudent_and_Mother_Phase.go_to_endgame() , end);
-
+        */
         // L'evento di start è l'unico che deve essere fatto partire manualmente
         start.fireStateEvent();
     }

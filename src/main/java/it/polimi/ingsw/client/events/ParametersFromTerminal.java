@@ -1,6 +1,6 @@
 package it.polimi.ingsw.client.events;
 
-import it.polimi.ingsw.client.Model;
+import it.polimi.ingsw.client.ClientModel;
 import it.polimi.ingsw.utils.cli.CommandPrompt;
 import it.polimi.ingsw.utils.observerPattern.Observer;
 import it.polimi.ingsw.utils.stateMachine.Event;
@@ -18,41 +18,30 @@ import java.util.Arrays;
 
 public class ParametersFromTerminal extends Event implements Observer {
     private CommandPrompt commandPrompt;
-    private boolean enabled = false;
-
-    private Model model;
-
+    private ClientModel clientModel;
     private ArrayList<String> parsedStrings;
-
     private int numberOfStrings;
+    private boolean parametersReceived = false;
 
-    public ParametersFromTerminal(Model model, int numberOfStrings) throws IOException {
+    public ParametersFromTerminal(ClientModel clientModel, int numberOfStrings) throws IOException {
         super("[Inserimento di "+numberOfStrings+" parametri da terminale]" );
         this.commandPrompt = CommandPrompt.getInstance();
         this.subscribe();
-        this.model = model;
+        this.clientModel = clientModel;
         this.numberOfStrings = numberOfStrings;
-    }
-
-
-    public void enable() {
-        this.enabled = true;
-    }
-
-    public void disable() {
-        this.enabled = false;
     }
 
     @Override
     public void update(Object message) throws IOException, InterruptedException {
-        if (enabled == true){
             parsedStrings = new ArrayList<String>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
             if (parsedStrings.size() == numberOfStrings){
-                model.setFromTerminal(parsedStrings);
-                fireStateEvent();
+                clientModel.setFromTerminal(parsedStrings);
+                this.parametersReceived = true;
             }
+    }
 
-        }
+    public boolean parametersReceived() {
+        return parametersReceived;
     }
 
     @Override

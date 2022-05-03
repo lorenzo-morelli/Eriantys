@@ -1,6 +1,5 @@
 package it.polimi.ingsw.client.view;
 
-import it.polimi.ingsw.client.states.Read_from_terminal;
 import it.polimi.ingsw.utils.stateMachine.State;
 
 public interface View {
@@ -12,7 +11,6 @@ public interface View {
     void setCallingState(State callingState);
     void askToStart();
     void askDecision(String option1, String option2);
-    void showTryToConnect();
     void showConnectingGame();
     void showWaitingForOtherPlayer();
     void showGameStarted();

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.client.states;
 
-import it.polimi.ingsw.client.Model;
+import it.polimi.ingsw.client.ClientModel;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.utils.network.events.MessageReceived;
 import it.polimi.ingsw.utils.stateMachine.IEvent;
@@ -14,8 +14,8 @@ public class WaitForTurn extends WaitForServer {
     private MessageReceived GO_4;
     private MessageReceived GO_5;
 
-    public WaitForTurn(View view, Model model, String type) throws IOException {
-        super(view, model, type);
+    public WaitForTurn(View view, ClientModel clientModel, String type) throws IOException {
+        super(view, clientModel, type);
         GO_1 = new MessageReceived(type);
         GO_2 = new MessageReceived(type);
         GO_3 = new MessageReceived(type);

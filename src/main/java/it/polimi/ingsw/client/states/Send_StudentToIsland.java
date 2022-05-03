@@ -1,6 +1,6 @@
 package it.polimi.ingsw.client.states;
 
-import it.polimi.ingsw.client.Model;
+import it.polimi.ingsw.client.ClientModel;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.stateMachine.IEvent;
@@ -8,14 +8,14 @@ import it.polimi.ingsw.utils.stateMachine.IEvent;
 import java.io.IOException;
 
 public class Send_StudentToIsland extends Send_to_Server {
-    public Send_StudentToIsland(View view, Model model, String type) {
-        super(view, model, type);
+    public Send_StudentToIsland(View view, ClientModel clientModel, String type) {
+        super(view, clientModel, type);
     }
 
     @Override
     public IEvent entryAction(IEvent cause) throws IOException {
         view.setCallingState(this);
-        Network.send("STUDENT_TOISLAND " + model.getStudent_in_entrance_Choosed() + " " + model.getIsland_Choosed());
+        Network.send("STUDENT_TOISLAND " + clientModel.getStudent_in_entrance_Choosed() + " " + clientModel.getIsland_Choosed());
         // avvia timeout
         // CONTESTO: lato server inserisce studente nell'isola scelta ,invia ack ,poi esegue funzioni correlate
         // todo: aspetta -> se ricevuto ack STUDENT_PLACED fai

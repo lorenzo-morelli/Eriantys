@@ -2,10 +2,14 @@ package it.polimi.ingsw.client;
 
 import java.util.ArrayList;
 
-public class Model {
+public class ClientModel {
     private String nickname;
+
+    // server Ip and port
     private String Ip;
     private String Port;
+    //
+    private String myIp;
     private int GameCodeNumber;
     private int numofplayer;
     private String Gamemode;
@@ -14,7 +18,13 @@ public class Model {
     private int Island_Choosed;
     private int Mother_movement_Choosed;
     private int CloudChoosed;
+
+    private Boolean amIfirst = null;
     private ArrayList<String> fromTerminal;
+
+    public ClientModel(){
+        fromTerminal = new ArrayList<>();
+    }
 
     public int getCloudChoosed() {
         return CloudChoosed;
@@ -111,5 +121,19 @@ public class Model {
         return Port;
     }
 
+    public Boolean getAmIfirst() {
+        return amIfirst;
+    }
 
+    public void setAmIfirst(Boolean amIfirst) {
+        this.amIfirst = amIfirst;
+    }
+
+    public String getMyIp() {
+        return myIp;
+    }
+
+    public void setMyIp(String myIp) {
+        this.myIp = myIp;
+    }
 }
