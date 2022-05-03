@@ -1,6 +1,6 @@
 package it.polimi.ingsw.client.events;
 
-import it.polimi.ingsw.client.Model;
+import it.polimi.ingsw.client.ClientModel;
 import it.polimi.ingsw.utils.cli.CommandPrompt;
 import it.polimi.ingsw.utils.observerPattern.Observer;
 import it.polimi.ingsw.utils.stateMachine.Event;
@@ -16,21 +16,21 @@ import java.util.Arrays;
  * * @author Fernando
  */
 
-public class IncorrectParameters extends Event implements Observer {
+public class IncorrectNumberOfParameters extends Event implements Observer {
     private CommandPrompt commandPrompt;
     private boolean enabled = false;
 
-    private Model model;
+    private ClientModel clientModel;
 
     private ArrayList<String> parsedStrings;
 
     private int numberOfStrings;
 
-    public IncorrectParameters(Model model, int numberOfStrings) throws IOException {
+    public IncorrectNumberOfParameters(ClientModel clientModel, int numberOfStrings) throws IOException {
         super("[Numero di parametri non corretto (doveva essere "+numberOfStrings+ ")]" );
         this.commandPrompt = CommandPrompt.getInstance();
         this.subscribe();
-        this.model = model;
+        this.clientModel = clientModel;
         this.numberOfStrings = numberOfStrings;
     }
 

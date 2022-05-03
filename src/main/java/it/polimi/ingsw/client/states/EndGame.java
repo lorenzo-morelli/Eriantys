@@ -1,6 +1,6 @@
 package it.polimi.ingsw.client.states;
 
-import it.polimi.ingsw.client.Model;
+import it.polimi.ingsw.client.ClientModel;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
@@ -9,11 +9,11 @@ import java.io.IOException;
 
 public class EndGame extends State {
     View view;
-    Model model;
-    public EndGame(View view, Model model) {
+    ClientModel clientModel;
+    public EndGame(View view, ClientModel clientModel) {
         super("[Stato finale (EndGame.java)]");
         this.view = view;
-        this.model = model;
+        this.clientModel = clientModel;
     }
     public IEvent entryAction(IEvent cause) throws IOException {
         view.setCallingState(this);

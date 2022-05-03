@@ -1,6 +1,6 @@
 package it.polimi.ingsw.client.states;
 
-import it.polimi.ingsw.client.Model;
+import it.polimi.ingsw.client.ClientModel;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.utils.network.events.MessageReceived;
 import it.polimi.ingsw.utils.stateMachine.IEvent;
@@ -8,8 +8,8 @@ import it.polimi.ingsw.utils.stateMachine.IEvent;
 import java.io.IOException;
 
 public class WaitForStartGame extends WaitForServer {
-    public WaitForStartGame(View view, Model model, String type) throws IOException {
-        super(view, model, type);
+    public WaitForStartGame(View view, ClientModel clientModel, String type) throws IOException {
+        super(view, clientModel, type);
     }
     public MessageReceived start_game(){return GO; }
     @Override

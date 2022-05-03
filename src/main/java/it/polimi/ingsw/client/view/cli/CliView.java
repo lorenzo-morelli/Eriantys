@@ -53,15 +53,6 @@ public class CliView implements View{
         }
     }
 
-    @Override
-    public void showTryToConnect() {
-        try {
-            CommandPrompt.println("Tentativo di connessione al server in corso");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        };
-    }
-
         @Override
     public void showConnectingGame() {
         try{
@@ -111,10 +102,10 @@ public class CliView implements View{
 
     @Override
     public void askParameters() {
-        ((Read_from_terminal) callingState).numberOfParametersIncorrect().enable();
-        ((Read_from_terminal) callingState).insertedParameters().enable();
+        ((ReadFromTerminal) callingState).numberOfParametersIncorrect().enable();
+        ((ReadFromTerminal) callingState).insertedParameters().enable();
 
-        switch (((Read_from_terminal) callingState).getType()){
+        switch (((ReadFromTerminal) callingState).getType()){
             case "USERINFO":
                 CommandPrompt.ask("Inserire Nickname Ip e porta separati da uno spazio e premere invio",
                                       "nickname ip porta>");
@@ -149,8 +140,8 @@ public class CliView implements View{
                 break;
         }
 
-        ((Read_from_terminal) callingState).numberOfParametersIncorrect().disable();
-        ((Read_from_terminal) callingState).insertedParameters().disable();
+        ((ReadFromTerminal) callingState).numberOfParametersIncorrect().disable();
+        ((ReadFromTerminal) callingState).insertedParameters().disable();
     }
 
 }

@@ -31,7 +31,7 @@
       <outgoing>Flow_055kmac</outgoing>
       <messageEventDefinition id="MessageEventDefinition_1tlstlj" />
     </intermediateCatchEvent>
-    <task id="Activity_1kgq8p4" name="Load chosen model">
+    <task id="Activity_1kgq8p4" name="Load chosen clientModel">
       <incoming>Flow_055kmac</incoming>
       <outgoing>Flow_0zcswjd</outgoing>
     </task>

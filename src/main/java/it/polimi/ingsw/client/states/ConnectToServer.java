@@ -1,23 +1,22 @@
 package it.polimi.ingsw.client.states;
 
+import it.polimi.ingsw.client.ClientModel;
 import it.polimi.ingsw.client.view.View;
-import it.polimi.ingsw.client.Model;
 import it.polimi.ingsw.client.events.*;
 import it.polimi.ingsw.utils.network.Network;
-import it.polimi.ingsw.utils.network.events.MessageReceived;
 import it.polimi.ingsw.utils.stateMachine.*;
 import java.io.IOException;
 
 public class ConnectToServer extends State{
-    Model model;
+    ClientModel clientModel;
     View view;
     ConnectedToServer connected ;
     NotConnectedToServer notConnected;
 
-    public ConnectToServer(View view, Model model){
+    public ConnectToServer(View view, ClientModel clientModel){
         super("[STATO Tentativo di connessione al server (ConnectToServer.java)]");
         this.view = view;
-        this.model = model;
+        this.clientModel = clientModel;
 
         connected = new ConnectedToServer();
         notConnected = new NotConnectedToServer();
@@ -29,13 +28,9 @@ public class ConnectToServer extends State{
     public IEvent entryAction(IEvent cause) throws IOException, InterruptedException {
 
         view.setCallingState(this);
-        // avvia timeout
-        // connettiti al server (indirizzo Ip, numero di porta NOTI) tramite connection info dati
-        // attendi che server accetti la connessione:
-        //se timeout scade chiama:
+        Network.setupClient(clientModel.getIp(), clientModel.getPort());
+        clientModel.setMyIp(Network.getMyIp());
 
-        view.showTryToConnect();
-        Network.setupClient(model.getIp(),model.getPort());
         if (Network.isConnected()){
             connected.fireStateEvent();
         }
@@ -45,11 +40,11 @@ public class ConnectToServer extends State{
         return super.entryAction(cause);
     }
 
-    public ConnectedToServer Connected_to_server() {
+    public ConnectedToServer connectedToServer() {
         return connected;
     }
 
-    public NotConnectedToServer Connection_to_server_failed() {
+    public NotConnectedToServer connectionToServerFailed() {
         return notConnected;
     }
 

@@ -1,25 +1,24 @@
 package it.polimi.ingsw.client.states;
 
+import it.polimi.ingsw.client.ClientModel;
 import it.polimi.ingsw.client.view.View;
-import it.polimi.ingsw.client.Model;
 import it.polimi.ingsw.client.events.*;
-import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.network.events.MessageReceived;
 import it.polimi.ingsw.utils.stateMachine.*;
 import java.io.IOException;
 
 public class Send_to_Server extends State{
-    Model model;
+    ClientModel clientModel;
     View view;
     String type;
     MessageReceived ack;
     MessageReceived not_valid;
     NetworkIssue message_issue;
 
-    public Send_to_Server(View view, Model model,String type){
+    public Send_to_Server(View view, ClientModel clientModel, String type){
         super("[STATO di invio messaggi al server interpretati come :]"+ type);
         this.view = view;
-        this.model = model;
+        this.clientModel = clientModel;
         this.type = type;
         message_issue= new NetworkIssue("SOMETHING_STRANGE_HAPPENNED...");
         ack= new MessageReceived("MESSAGE_SENT_CORRECTLY");

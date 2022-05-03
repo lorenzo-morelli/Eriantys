@@ -22,15 +22,13 @@ public class ServerController{
 
         //Costruzione degli stati necessari
         SpecifyPortScreen specifyPortScreen = new SpecifyPortScreen();
-        //waitSpecificMessage = new WaitSpecificMessage();
-        //private final WaitSpecificMessage waitSpecificMessage;
-        WaitGameCreation waitGameCreation = new WaitGameCreation(connectionInfo);
+        WaitFirstPlayer waitFirstPlayer = new WaitFirstPlayer(connectionInfo,fsm);
         IsNicknameAlreadyExisting isNicknameAlreadyExisting = new IsNicknameAlreadyExisting(connectionInfo);
 
         // Dichiarazione delle transizioni tra gli stati
         fsm.addTransition(idle, start, specifyPortScreen);
-        fsm.addTransition(specifyPortScreen, specifyPortScreen.portSpecified(), waitGameCreation);
-        fsm.addTransition(waitGameCreation, waitGameCreation.getCreate(), isNicknameAlreadyExisting);
+        fsm.addTransition(specifyPortScreen, specifyPortScreen.portSpecified(), waitFirstPlayer);
+        fsm.addTransition(waitFirstPlayer, waitFirstPlayer.getCreate(), isNicknameAlreadyExisting);
 
         // L'evento di start è l'unico che deve essere fatto partire manualmente
         start.fireStateEvent();
