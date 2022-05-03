@@ -6,16 +6,16 @@ import java.util.*;
 
 public class Player {
     private String nickname;
-    private int userId;
     private Deck availableCards;
     private AssistantCard choosenCard;
     private SchoolBoard schoolBoard;
     private int coins;
+    private String Ip;
 
-    public Player(){
+    public Player(String nickname,String Ip){
         // crea e assegna valori di default
-        this.nickname = "Steve";
-        this.userId = 0;
+        this.nickname = nickname;
+        this.Ip = Ip;
         this.availableCards = new Deck();
         this.choosenCard = new AssistantCard();
         this.schoolBoard = new SchoolBoard();
@@ -30,13 +30,6 @@ public class Player {
         return nickname;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
     public List<AssistantCard> listAvailableCards(){
         return this.availableCards.getCardsList();
     }
@@ -115,11 +108,11 @@ public class Player {
         }
     }
 
-    public static void main(String[] args){
-        Player Giovanni = new Player();
-        Giovanni.setNickname("Giovanni");
-        System.out.println(Giovanni.getNickname());
-        Giovanni.printList();
+    public String getIp() {
+        return Ip;
+    }
 
+    public void setIp(String ip) {
+        Ip = ip;
     }
 }
