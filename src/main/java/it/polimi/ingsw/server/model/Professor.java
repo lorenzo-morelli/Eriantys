@@ -12,4 +12,20 @@ public class Professor {
         this.color = color;
         heldBy=null;
     }
+
+    public Player getHeldBy() {
+        return heldBy;
+    }
+
+    public void setHeldBy(Player heldBy) {
+        this.heldBy = heldBy;
+    }
+
+    public PeopleColor getColor() {
+        return color;
+    }
+
+    public void setColor(PeopleColor color) {
+        this.color = color;
+    }
 }

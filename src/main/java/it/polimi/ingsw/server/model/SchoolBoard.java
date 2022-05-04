@@ -3,67 +3,52 @@ package it.polimi.ingsw.server.model;
 import it.polimi.ingsw.server.model.enums.PeopleColor;
 import it.polimi.ingsw.server.model.enums.TowerColor;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 public class SchoolBoard {
     private StudentSet entranceSpace;
     private StudentSet dinnerTable;
     private TowerColor towerColor;
     private int numOfTowers;
 
-    public SchoolBoard() {
-        this.entranceSpace = new StudentSet();
+    public SchoolBoard(int numOfPlayer, StudentSet bag, ArrayList<PeopleColor> avaiablePeopleColorinBag,ArrayList<TowerColor> avaiableTower) {
+        this.entranceSpace = new StudentSet();   //2 o 3 giocatori
+        if (numOfPlayer == 3) {
+            this.entranceSpace.setStudentsRandomly(9, bag, avaiablePeopleColorinBag);
+            this.numOfTowers = 6;
+        } else {
+            this.entranceSpace.setStudentsRandomly(7, bag, avaiablePeopleColorinBag);
+            this.numOfTowers = 8;
+        }
         this.dinnerTable = new StudentSet();
-        // inizializzazione vuota della school board
-        this.entranceSpace.setAllStudentsToZero();
-        this.dinnerTable.setAllStudentsToZero();
-        this.towerColor = TowerColor.UNKNOWN;
-        this.numOfTowers = 0;
+        int rnd = new Random().nextInt(avaiableTower.size());
+        this.towerColor = TowerColor.values()[rnd];
+        avaiableTower.remove(TowerColor.values()[rnd]);
     }
-
-    public void setDinnerTable(StudentSet dinnerTable) {
-        this.dinnerTable = dinnerTable;
+    public SchoolBoard(Team team,int numOfPlayer, StudentSet bag, ArrayList<PeopleColor> avaiablePeopleColorinBag,ArrayList<TowerColor> avaiableTower) {
+        this.entranceSpace = new StudentSet();    //4 giocatori
+        this.entranceSpace.setStudentsRandomly(7, bag, avaiablePeopleColorinBag);
+        this.numOfTowers = 8;
+        this.dinnerTable = new StudentSet();
+        if (!team.isFull()) {
+            int rnd = new Random().nextInt(avaiableTower.size());
+            this.towerColor = TowerColor.values()[rnd];
+            avaiableTower.remove(TowerColor.values()[rnd]);
+        } else {
+            this.towerColor = team.getPlayer1().getTowerColor();
+        }
     }
-
-    public void setDinnerTable(int n, PeopleColor color) {
-        this.dinnerTable.setStudents(n, color);
-    }
-
-    public void setEntranceSpace(StudentSet entranceSpace) {
-        this.entranceSpace = entranceSpace;
-    }
-
-    public void setEntranceSpace(int n, PeopleColor color) {
-        this.entranceSpace.setStudents(n, color);
-    }
-
-    public StudentSet getEntranceSpace() {
-        return entranceSpace;
-    }
-
-    public int getEntranceSpace(PeopleColor color) {
-        return this.entranceSpace.getStudents(color);
-    }
-
-    public StudentSet getDinnerTable() {
-        return dinnerTable;
-    }
-
-    public int getDinnerTable(PeopleColor color) {
-        return this.dinnerTable.getStudents(color);
-    }
-
     public TowerColor getTowerColor() {
         return towerColor;
     }
+    public void placeTower(){ this.numOfTowers = numOfTowers-1; }
 
-    public void setTowerColor(TowerColor towerColor) {
-        this.towerColor = towerColor;
-    }
-
-    public int getNumOfTowers() {
-        return numOfTowers;
-    }
-
-    public void setNumOfTowers(int numOfTowers) {
-        this.numOfTowers = numOfTowers;
+    public void load_entrance(Cloud cloud){
+       entranceSpace.addstudents(cloud.getStudentsAccumulator().numStudentsbycolor(PeopleColor.RED),PeopleColor.RED);
+       entranceSpace.addstudents(cloud.getStudentsAccumulator().numStudentsbycolor(PeopleColor.PINK),PeopleColor.PINK);
+       entranceSpace.addstudents(cloud.getStudentsAccumulator().numStudentsbycolor(PeopleColor.GREEN),PeopleColor.GREEN);
+       entranceSpace.addstudents(cloud.getStudentsAccumulator().numStudentsbycolor(PeopleColor.BLUE),PeopleColor.BLUE);
+       entranceSpace.addstudents(cloud.getStudentsAccumulator().numStudentsbycolor(PeopleColor.YELLOW),PeopleColor.YELLOW);
     }
 }

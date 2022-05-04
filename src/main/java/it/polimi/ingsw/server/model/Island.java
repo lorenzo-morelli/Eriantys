@@ -1,6 +1,9 @@
 package it.polimi.ingsw.server.model;
 
+import it.polimi.ingsw.server.model.enums.PeopleColor;
 import it.polimi.ingsw.server.model.enums.TowerColor;
+
+import java.util.ArrayList;
 
 public class Island {
     private StudentSet inhabitants;
@@ -8,11 +11,11 @@ public class Island {
     private TowerColor towerColor;
     private boolean isBlocked;
 
-    public Island() {
+    public Island(int student, StudentSet bag, ArrayList<PeopleColor> avaiablecolor) {
         this.inhabitants = new StudentSet();
-        this.inhabitants.setAllStudentsToZero();
+        this.inhabitants.setStudentsRandomly(student,bag,avaiablecolor);
         this.numberOfTowers = 0;
-        this.towerColor = TowerColor.UNKNOWN;
+        this.towerColor = null;
         this.isBlocked = false;
     }
 

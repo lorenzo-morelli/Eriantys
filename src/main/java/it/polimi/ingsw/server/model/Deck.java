@@ -29,11 +29,13 @@ public class Deck {
         return Collections.unmodifiableList(this.cards);
     }
 
-    public void remove(AssistantCard choosen) {
+    public boolean remove(AssistantCard choosen) {
         for (AssistantCard assistantCard : this.cards) {
             if (choosen.equals(assistantCard)) {
                 this.cards.remove(choosen);
             }
         }
+        if (cards.size()==0) return true;
+        else return false;
     }
 }

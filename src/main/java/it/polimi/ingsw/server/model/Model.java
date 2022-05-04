@@ -3,8 +3,9 @@ package it.polimi.ingsw.server.model;
 import it.polimi.ingsw.server.model.enums.GameMode;
 
 import java.util.ArrayList;
-import java.util.Optional;
-import java.util.Vector;
+
+import static java.util.Collections.shuffle;
+import static java.util.Collections.sort;
 
 public class Model {
 
@@ -13,11 +14,14 @@ public class Model {
     private int turnNumber;
     private CenterTable table;
 
-    private Optional<Vector<Team>> teams; //TODO
-    private ArrayList<Player> Player;
+    private int currentplayer;
+    private ArrayList<Team> teams;
+    private ArrayList<Player> players;
+
     public Model(int numofplayer, String gamemode) {
 
-        this.Player=new ArrayList<>();
+        this.currentplayer=0;
+        this.players =new ArrayList<>();
         this.numberOfPlayers= numofplayer;
         switch(gamemode) {
             case "PRINCIPIANT":
@@ -28,61 +32,53 @@ public class Model {
                 break;
         }
         this.turnNumber=0;
-        this.table = new CenterTable(numofplayer);
+        this.table = new CenterTable(numofplayer,this.gameMode);
+        if(numofplayer==4) {
+            teams = new ArrayList<>();
+            teams.add(new Team(1));
+            teams.add(new Team(2));
+        }else{
+            teams=null;
+        }
     }
 
     public static Model createModel(int numofplayer, String Gamemode) {
                 return new Model(numofplayer,Gamemode);
-    }
-    public void setGameMode(GameMode gameMode) {
-        this.gameMode = gameMode;
     }
 
     public GameMode getGameMode() {
         return gameMode;
     }
 
-    public void setNumberOfPlayers(int numberOfPlayers) {
-        this.numberOfPlayers = numberOfPlayers;
-    }
-
     public int getNumberOfPlayers() {
         return numberOfPlayers;
     }
 
-    public void setTeams(Optional<Vector<Team>> teams) {
-        this.teams = teams;
-    }
-
-    public Optional<Vector<Team>> getTeams() {
+    public ArrayList<Team> getTeams() {
         return teams;
     }
 
-    public void setTurnNumber(int turnNumber) {
-        this.turnNumber = turnNumber;
+    public CenterTable getTable() {
+        return table;
+    }
+    public void randomschedulePlayers(){
+        shuffle(players);
     }
 
-    public int getTurnNumber() {
-        return turnNumber;
+    public void schedulePlayers(){
+        sort(players);
     }
 
-    public ArrayList<it.polimi.ingsw.server.model.Player> getPlayer() {
-        return Player;
+    public Player getcurrentPlayer(){
+        return players.get(currentplayer);
     }
 
-    public void setPlayer(ArrayList<it.polimi.ingsw.server.model.Player> player) {
-        Player = player;
+    public void nextPlayer(){
+        if(currentplayer==(players.size()-1)){
+            currentplayer=0;
+        }
+        else{
+            currentplayer++;
+        }
     }
-//    public boolean isLastPlayerOfTheTurn(){
-//        //todo
-//    }
-//    public boolean isFirsPlayerOfTheTurn(){
-//        //todo
-//    }
-//    public void update(){
-//        // todo, or just an idea??
-//        /* aggiorna currentOrderNumber nel caso in cui
-//           isLastPlayerOfTheTurn è falso
-//         */
-//    }
 }

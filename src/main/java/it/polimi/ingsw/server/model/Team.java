@@ -1,48 +1,38 @@
 package it.polimi.ingsw.server.model;
 
-import it.polimi.ingsw.server.model.enums.TowerColor;
-
 public class Team {
-    private int player1;
-    private int player2;
-    private String teamName;
-    private TowerColor towerColor;
-    private int numOfTowers;
+    private Player player1;
+    private Player player2;
+    private int teamNumber;
 
-    public void setPlayers(int player1, int player2) {
-        this.player1 = player1;
-        this.player2 = player2;
+    public Team(int teamNumber){
+        player1=null;
+        player2=null;
+        this.teamNumber=teamNumber;
     }
-
-    private int getPlayer1() {
+    public Player getPlayer1() {
         return player1;
     }
-
-    private int getPlayer2(){
+    public Player getPlayer2() {
         return player2;
     }
 
-    public void setTeamName(String teamName) {
-        this.teamName = teamName;
+    public int setPlayer(Player player){
+        if(player1==null){
+            player1=player;
+            return 1;
+        }
+        else {
+            player2=player;
+            return 2;
+        }
     }
 
-    public String getTeamName() {
-        return teamName;
+    public int getTeamNumber() {
+        return teamNumber;
     }
-
-    public void setTowerColor(TowerColor towerColor) {
-        this.towerColor = towerColor;
-    }
-
-    public TowerColor getTowerColor() {
-        return towerColor;
-    }
-
-    public void setNumOfTowers(int numOfTowers) {
-        this.numOfTowers = numOfTowers;
-    }
-
-    public int getNumOfTowers() {
-        return numOfTowers;
+    public boolean isFull(){
+        if(player1==null || player2==null) return false;
+        else return true;
     }
 }
