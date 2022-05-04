@@ -47,8 +47,15 @@ public class WaitOtherClients extends State {
 
                 System.out.println("Ricevuto " + clientModel.getNickname() +" " +clientModel.getMyIp());
 
-                // Ma se il nickname è già esistente??
+                // Ma se il nickname è già esistente? Gestiscimi questa casistica
                 isNicknameAlreadyExistent();
+
+                // Adesso ho la garanzia di avere un nickname unico
+                System.out.println("[Nickname unico]");
+                // Compila il campo "non sei primo" e invia la risposta al client
+                clientModel.setAmIfirst(false);
+                Network.send(json.toJson(clientModel));
+                System.out.println("[Client notificato per aver inserito nickname valido]");
 
                 // Appendi alla lista di ClientModel il modello appena ricevuto così da salvarlo per usi futuri
                 connectionModel.getClientsInfo().add(clientModel);
@@ -80,10 +87,5 @@ public class WaitOtherClients extends State {
                     isNicknameAlreadyExistent();
             }
         }
-        System.out.println("[Nickname unico]");
-        // Compila il campo "non sei primo" e invia la risposta al client
-        clientModel.setAmIfirst(false);
-        Network.send(json.toJson(clientModel));
-        System.out.println("[Client notificato per aver inserito nickname valido]");
     }
 }
