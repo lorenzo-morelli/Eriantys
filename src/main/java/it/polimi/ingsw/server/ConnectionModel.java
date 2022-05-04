@@ -18,7 +18,4 @@ public class ConnectionModel {
         return clientsInfo;
     }
 
-    public void setClientsInfo(ArrayList<ClientModel> clientsInfo) {
-        this.clientsInfo = clientsInfo;
-    }
 }

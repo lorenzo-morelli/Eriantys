@@ -3,7 +3,6 @@ package it.polimi.ingsw.server.states;
 import com.google.gson.Gson;
 import it.polimi.ingsw.client.ClientModel;
 import it.polimi.ingsw.server.ConnectionModel;
-import it.polimi.ingsw.server.model.ConnectionInfo;
 import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
 import it.polimi.ingsw.utils.stateMachine.Controller;
@@ -13,19 +12,17 @@ import it.polimi.ingsw.utils.stateMachine.State;
 import java.io.IOException;
 
 public class WaitFirstPlayer extends State {
-    private ConnectionInfo connectionInfo;
     private ClientModel clientModel = null;
     private Gson json;
     private Controller controller;
     private ConnectionModel connectionModel;
 
     private ParametersFromNetwork firstMessage;
-    public WaitFirstPlayer(ConnectionInfo connectionInfo, Controller controller, ConnectionModel connectionModel) {
+    public WaitFirstPlayer(Controller controller, ConnectionModel connectionModel) {
         super("[Il server è in attesa del primo giocatore]");
         json = new Gson();
         firstMessage = new ParametersFromNetwork(1);
         firstMessage.setStateEventListener(controller);
-        this.connectionInfo = connectionInfo;
         this.controller = controller;
         this.connectionModel = connectionModel;
     }

@@ -19,6 +19,7 @@ public class ClientController {
         // Dichiarazione degli stati necessari
         // La maggior parte delle volte uno stato rappresenta una schermata (che sia essa di gui o di cli)
         // ma più in generale potrebbe significare delle azioni da compiere a fronte di eventi
+
         // modo elegante di far partire il controllore
         Idle idle = new Idle();
         Event start = new Event("[Controller Started]");

@@ -1,6 +1,5 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.server.model.ConnectionInfo;
 import it.polimi.ingsw.server.states.*;
 import it.polimi.ingsw.utils.cli.CommandPrompt;
 import it.polimi.ingsw.utils.stateMachine.Controller;
@@ -12,7 +11,6 @@ public class ServerController{
 
     public ServerController() throws IOException, InterruptedException {
         CommandPrompt.setDebug();
-        ConnectionInfo connectionInfo = new ConnectionInfo();
         ConnectionModel connectionModel = new ConnectionModel();
 
         // modo elegante di far partire il controllore
@@ -23,8 +21,8 @@ public class ServerController{
 
         //Costruzione degli stati necessari
         SpecifyPortScreen specifyPortScreen = new SpecifyPortScreen();
-        WaitFirstPlayer waitFirstPlayer = new WaitFirstPlayer(connectionInfo, fsm, connectionModel);
-        WaitFirstPlayerGameInfo waitFirstPlayerGameInfo = new WaitFirstPlayerGameInfo(connectionInfo,fsm,connectionModel);
+        WaitFirstPlayer waitFirstPlayer = new WaitFirstPlayer( fsm, connectionModel);
+        WaitFirstPlayerGameInfo waitFirstPlayerGameInfo = new WaitFirstPlayerGameInfo(fsm,connectionModel);
         //IsNicknameAlreadyExisting isNicknameAlreadyExisting = new IsNicknameAlreadyExisting(connectionInfo);
 
         // Dichiarazione delle transizioni tra gli stati
@@ -40,6 +38,6 @@ public class ServerController{
     public static void main(String[] args) {
         try {
             new ServerController();
-        } catch (InterruptedException | IOException ignored){}
+        } catch (InterruptedException | IOException e){e.printStackTrace();}
     }
 }

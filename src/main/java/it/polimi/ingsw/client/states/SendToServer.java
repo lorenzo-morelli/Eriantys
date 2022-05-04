@@ -42,16 +42,24 @@ public class SendToServer extends State{
     }
 
     public void checkAck() throws IOException, InterruptedException {
+
         ack.enable();
         while (!ack.parametersReceived()){
             // non ho ancora ricevuto l'ack
         }
+        ack.disable();
+
         // Se ho ricevuto l'ack controllo che effettivamente è un ack inviato a me
-        if(!json.fromJson(ack.getParameter(0),ClientModel.class).getMyIp().equals(Network.getMyIp())){
+        // if messaggioArrivato.getNickname == mio nickname then ho ricevuto ack
+        // else attendi l'ack
+        // (con il metodo .equals perché sono Stringhe)
+        if(!json.fromJson(ack.getParameter(0),ClientModel.class).getNickname().equals(clientModel.getNickname())){
             ack = new ParametersFromNetwork(1);
             checkAck();
         }
-        ack.fireStateEvent();
-        ack.disable();
+        else {
+            ack.fireStateEvent();
+        }
+
     }
 }
