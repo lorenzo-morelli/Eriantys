@@ -10,6 +10,10 @@ import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
 import it.polimi.ingsw.utils.stateMachine.*;
 import java.io.IOException;
 
+/**
+ * Generico stato di invio dati al server
+ * Attende la ricezione di un generico ack dal server
+ */
 public class SendToServer extends State{
     private Gson json;
     private ClientModel clientModel;
@@ -18,21 +22,15 @@ public class SendToServer extends State{
         super("[Invio dati al server ed attesa di un ack]");
         this.clientModel = clientModel;
         ack = new ParametersFromNetwork(1);
+        ack.setStateEventListener(controller);
         json = new Gson();
     }
 
     @Override
     public IEvent entryAction(IEvent cause) throws IOException, InterruptedException {
         Network.send(json.toJson(clientModel));
+        checkAck();
         return super.entryAction(cause);
-    }
-
-    @Override
-    public void exitAction(IEvent cause) throws IOException{
-        try {
-            // Attendi la ricezione dell'ack
-            checkAck();
-        }catch (InterruptedException e){e.printStackTrace();}
     }
 
     public ParametersFromNetwork getAck() {
@@ -45,19 +43,8 @@ public class SendToServer extends State{
         while (!ack.parametersReceived()){
             // non ho ancora ricevuto l'ack
         }
-        ack.disable();
-
-        // Se ho ricevuto l'ack controllo che effettivamente è un ack inviato a me
-        // if messaggioArrivato.getNickname == mio nickname then ho ricevuto ack
-        // else attendi l'ack
-        // (con il metodo .equals perché sono Stringhe)
-        if(!json.fromJson(ack.getParameter(0),ClientModel.class).getNickname().equals(clientModel.getNickname())){
-            ack = new ParametersFromNetwork(1);
-            checkAck();
-        }
-        else {
-            ack.fireStateEvent();
-        }
+        System.out.println("[Conferma del nickname ricevuta]");
+        ack.fireStateEvent();
 
     }
 }

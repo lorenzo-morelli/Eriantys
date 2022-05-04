@@ -2,31 +2,74 @@ package it.polimi.ingsw.client;
 
 import java.util.ArrayList;
 
+/**
+ * Dati del client minimali che possono facilmente essere trasferiti via network
+ */
+
 public class ClientModel {
+    // Am I the first client connected to server?
+    // amIfirst: true = Identificato come primo,
+    // false = identificato come non primo,
+    // null = non ancora identificato
+    private Boolean amIfirst = null;
+
+    // Gestione dei possibili messaggi, si veda CliView
+    // Un messaggio o è una richiesta (del server ad un client di avere degli input)
+    // o è una risposta di un client al server
+
+    // isResponse --> è una risposta di un client al server
+    // !isResponse --> è una richiesta del server al client
+    // isresponse == null, non è ne una richiesta ne una risposta, probabilmente un messaggio di quelli iniziali
+    private Boolean isResponse = false;
+
+    private Boolean gameStarded = false;
+    private String responseDescription;
+    private String typeOfRequest;
+    private String requestDescription;
+
+
+
+    // where to put data that comes from terminal
+    private ArrayList<String> fromTerminal;
+
+
+    // My nickname
     private String nickname;
 
-    // server Ip and port
+
+    // server IP and port
     private String Ip;
     private String Port;
-    //
+
+
+
+    // my IP address
     private String myIp;
-    private int GameCodeNumber;
+
+    // Number of players
     private int numofplayer;
-    private String Gamemode;
+
+
+    // Game mode (PRINCIPIANT or EXPERT)
+    private String gamemode;
+
+
+
     private int CardChoosed;
     private int Student_in_entrance_Choosed;
     private int Island_Choosed;
     private int Mother_movement_Choosed;
     private int CloudChoosed;
 
-    // amIfirst: true = Identificato come primo, false = identificato come non primo, null = non ancora identificato
-    private Boolean amIfirst = null;
 
-    private ArrayList<String> fromTerminal;
+
 
     public ClientModel(){
         fromTerminal = new ArrayList<>();
     }
+
+
+    // Getters and Setters
 
     public int getCloudChoosed() {
         return CloudChoosed;
@@ -69,28 +112,20 @@ public class ClientModel {
     }
 
     public String getGamemode() {
-        return Gamemode;
+        return gamemode;
     }
 
     public void setCardChoosed(int cardChoosed) {
         CardChoosed = cardChoosed;
     }
 
-    public int getGameCodeNumber() {
-        return GameCodeNumber;
-    }
-
     public void setGamemode(String gamemode) {
-        Gamemode = gamemode;
+        this.gamemode = gamemode;
     }
 
     public void setNumofplayer(int numofplayer) {
         this.numofplayer = numofplayer;
     }
-
-    public void setGameCodeNumber(int gameCodeNumber) {
-        this.GameCodeNumber = gameCodeNumber;}
-
     public void setIp(String ip) {
         this.Ip = ip;
     }
@@ -137,5 +172,45 @@ public class ClientModel {
 
     public void setMyIp(String myIp) {
         this.myIp = myIp;
+    }
+
+    public String getTypeOfRequest() {
+        return typeOfRequest;
+    }
+
+    public void setTypeOfRequest(String typeOfRequest) {
+        this.typeOfRequest = typeOfRequest;
+    }
+
+    public Boolean isResponse() {
+        return isResponse;
+    }
+
+    public void setResponse(Boolean response) {
+        isResponse = response;
+    }
+
+    public void setRequestDescription(String requestDescription) {
+        this.requestDescription = requestDescription;
+    }
+
+    public String getRequestDescription() {
+        return requestDescription;
+    }
+
+    public String getResponseDescription() {
+        return responseDescription;
+    }
+
+    public void setResponseDescription(String responseDescription) {
+        this.responseDescription = responseDescription;
+    }
+
+    public void setGameStarded(Boolean gameStarded) {
+        this.gameStarded = gameStarded;
+    }
+
+    public Boolean isGameStarded() {
+        return gameStarded;
     }
 }

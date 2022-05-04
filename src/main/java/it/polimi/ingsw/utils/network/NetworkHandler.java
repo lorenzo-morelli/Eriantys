@@ -266,7 +266,7 @@ public class NetworkHandler {
                         clientConnections.addElement(singleconnection);
                         Thread t1 = new Thread(singleconnection);
                         t1.start();
-                        System.out.println("Server accepted a client connection:  Current Size: "+clientConnections.size());
+                        System.out.println("Server accepted a client connection:  Current Size: " + clientConnections.size());
                     } catch (IOException e) {
                         blnListenForClients = false;
                     }

@@ -1,8 +1,11 @@
 package it.polimi.ingsw.client.view.cli;
 
+import com.google.gson.Gson;
+import it.polimi.ingsw.client.ClientModel;
 import it.polimi.ingsw.client.states.*;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.utils.cli.CommandPrompt;
+import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.stateMachine.State;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -19,6 +22,8 @@ public class CliView implements View{
 
     // parsedString ci serve per parsare l'input e verificare la correttezza dei dati inseriti
     private ArrayList<String> parsedStrings;
+
+    private ClientModel clientModel;
 
     // Le regular expressions servono per individuare pattern e verificare la correttezza dell'input dell'utente
     private static final String IP_REGEX =
@@ -85,6 +90,9 @@ public class CliView implements View{
         return matcher.matches();
     }
 
+    public void setClientModel(ClientModel clientModel) {
+        this.clientModel = clientModel;
+    }
 
     // Uno stato che vuole chiamare un metodo della vista si registra prima chiamando questo metodo
     // ad esempio sono nello stato WelcomeScreen e faccio "view.setCallingState(this)"
@@ -173,6 +181,14 @@ public class CliView implements View{
         };
     }
 
+    /**
+     * Metodo di richiesta all'utente di inserimento di un certo numero di parole separate da uno spazio,
+     * lo stato chiamante sarà uno stato di Read (lettura da terminale), lo stato si occupa solo del dichiarare
+     * il numero di parole da leggere e di recuperare poi le informazioni mettendole nel ClientModel, oggetto che
+     * verrà poi spedito al server.
+     * E' possibile implementare anche controlli client side di correttezza dei parametri inseriti, ad esempio se un
+     * indirizzo IP è valido o meno.
+     */
     @Override
     public void askParameters() {
         ((ReadFromTerminal) callingState).numberOfParametersIncorrect().enable();
@@ -240,6 +256,49 @@ public class CliView implements View{
 
         ((ReadFromTerminal) callingState).numberOfParametersIncorrect().disable();
         ((ReadFromTerminal) callingState).insertedParameters().disable();
+    }
+
+    // Il server mi invia una richiesta di interazione tramite terminale
+    public void requestToMe(){
+        switch(clientModel.getTypeOfRequest()){
+            case "HELLO" :
+                CommandPrompt.ask("Inserire hello",
+                        "hello>");
+                // l'utente ha inserito hello? Prima parso e inserisco tutto in una variabile locale
+                parsedStrings = new ArrayList<String>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
+
+                //Se si invia tutto al server
+                if (parsedStrings.size() == 1 && parsedStrings.get(0).equals("hello")) {
+                    clientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                    clientModel.setFromTerminal(parsedStrings);
+                    Gson json = new Gson();
+                    Network.send(json.toJson(clientModel));
+                }
+                else{
+                    requestToMe();
+                }
+                break;
+        }
+    }
+
+    // Qualcun altro sta interagendo con il terminale
+    public void requestToOthers() throws IOException {
+        switch(clientModel.getTypeOfRequest()) {
+            case "HELLO" :
+            CommandPrompt.println("L'utente " +clientModel.getNickname()+ " sta scrivendo Hello");
+            break;
+            // Esempio "pippo: sta salutando"
+        }
+    }
+
+    // Qualcun altro ha risposto al server
+    public void response() throws IOException {
+        switch(clientModel.getTypeOfRequest()) {
+            case "HELLO" :
+                CommandPrompt.println("L'utente " +clientModel.getNickname()+ " ha scritto Hello");
+            break;
+            // Esempio "pippo: ha salutato"
+        }
     }
 
 }
