@@ -82,18 +82,4 @@ public class Model {
             currentplayer++;
         }
     }
-    public void checkProfessor(PeopleColor color){
-        int max=0;
-        Player moreInfluenced=null;
-        for (int i=0;i<players.size();i++){
-            if(i==0) max=players.get(i).getSchoolBoard().getDinnerTable().numStudentsbycolor(color);
-            else if (players.get(i).getSchoolBoard().getDinnerTable().numStudentsbycolor(color) > max) {
-                max=players.get(i).getSchoolBoard().getDinnerTable().numStudentsbycolor(color);
-                moreInfluenced=players.get(i);
-            } else if (players.get(i).getSchoolBoard().getDinnerTable().numStudentsbycolor(color) == max) {
-                moreInfluenced=null;
-            }
-        }
-        if(moreInfluenced!=null) table.changeProfessor(moreInfluenced,color);
-    }
 }

@@ -43,14 +43,12 @@ public class SchoolBoard {
         return towerColor;
     }
     public void placeTower(){ this.numOfTowers = numOfTowers-1; }
+    public void removeTower(){ this.numOfTowers = numOfTowers+1;}
     public void load_dinner(PeopleColor color){
         entranceSpace.removestudent(color);
         dinnerTable.addstudents(1,color);
     }
-    public void load_island(PeopleColor color,Island island){
-        entranceSpace.removestudent(color);
-        island.getInhabitants().addstudents(1,color);
-    }
+
     public void load_entrance(Cloud cloud){
        entranceSpace.addstudents(cloud.getStudentsAccumulator().numStudentsbycolor(PeopleColor.RED),PeopleColor.RED);
        entranceSpace.addstudents(cloud.getStudentsAccumulator().numStudentsbycolor(PeopleColor.PINK),PeopleColor.PINK);
@@ -62,4 +60,10 @@ public class SchoolBoard {
     public StudentSet getDinnerTable() {
         return dinnerTable;
     }
+
+    public StudentSet getEntranceSpace() {
+        return entranceSpace;
+    }
+
+
 }

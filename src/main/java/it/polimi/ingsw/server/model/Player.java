@@ -39,6 +39,11 @@ public class Player implements Comparable<Player>{
     public void setChoosedCard(AssistantCard choosedCard) {
         this.choosedCard = choosedCard;
     }
+
+    public AssistantCard getChoosedCard() {
+        return choosedCard;
+    }
+
     @Override
     public int compareTo(Player player) {
         int compareValues=player.choosedCard.getValues();

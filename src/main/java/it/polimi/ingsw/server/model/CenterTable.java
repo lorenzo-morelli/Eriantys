@@ -111,4 +111,53 @@ public class CenterTable {
             cloud.charge(bag, avaiablePeopleColorinBag);
         }
     }
+
+    public ArrayList<Island> getIslands() {
+        return islands;
+    }
+
+    public void movemother(int moves){
+        motherNaturePosition= (motherNaturePosition + moves)% islands.size();
+    }
+
+    public int getMotherNaturePosition() {
+        return motherNaturePosition;
+    }
+    public void load_island(Player player,PeopleColor color,int index_island){
+        player.getSchoolBoard().getEntranceSpace().removestudent(color);
+        islands.get(index_island).getInhabitants().addstudents(1,color);
+    }
+    public void checkProfessor(PeopleColor color, ArrayList<Player> players){
+        int max=0;
+        Player moreInfluenced=null;
+        for (Player player : players) {
+            if (player.getSchoolBoard().getDinnerTable().numStudentsbycolor(color) > max) {
+                max = player.getSchoolBoard().getDinnerTable().numStudentsbycolor(color);
+                moreInfluenced = player;
+            } else if (player.getSchoolBoard().getDinnerTable().numStudentsbycolor(color) == max) {
+                moreInfluenced = null;
+            }
+        }
+        if(moreInfluenced!=null) changeProfessor(moreInfluenced,color);
+    }
+    public void ConquestIsland(int index_island, ArrayList<Player> players, Player influence_player){
+        for (Player player : players) {
+            if (player.getSchoolBoard().getTowerColor().equals(islands.get(index_island).getTowerColor())) {
+                player.getSchoolBoard().removeTower();
+            }
+        }
+        islands.get(index_island).controlIsland(influence_player);
+    }
+    public void MergeIsland(int index_1, int index_2){
+        islands.get(index_1).placeTower();
+        islands.get(index_1).getInhabitants().addstudents( islands.get(index_2).getInhabitants().numStudentsbycolor(PeopleColor.RED),PeopleColor.RED);
+        islands.get(index_1).getInhabitants().addstudents( islands.get(index_2).getInhabitants().numStudentsbycolor(PeopleColor.BLUE),PeopleColor.BLUE);
+        islands.get(index_1).getInhabitants().addstudents( islands.get(index_2).getInhabitants().numStudentsbycolor(PeopleColor.GREEN),PeopleColor.GREEN);
+        islands.get(index_1).getInhabitants().addstudents( islands.get(index_2).getInhabitants().numStudentsbycolor(PeopleColor.YELLOW),PeopleColor.YELLOW);
+        islands.get(index_1).getInhabitants().addstudents( islands.get(index_2).getInhabitants().numStudentsbycolor(PeopleColor.PINK),PeopleColor.PINK);
+        islands.get(index_1).setBlocked(islands.get(index_1).isBlocked());
+        islands.remove(index_2);
+        if(index_2 < index_1) motherNaturePosition--;
+        if(index_2==0 && index_1== islands.size()) motherNaturePosition=islands.size()-1;
+    }
 }

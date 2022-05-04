@@ -1,7 +1,6 @@
 package it.polimi.ingsw.server.model;
 
 import it.polimi.ingsw.server.model.enums.PeopleColor;
-import it.polimi.ingsw.server.model.enums.TowerColor;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -64,49 +63,6 @@ public class StudentSet {
             case GREEN: return numOfGreenStudents;
         }
         return 0;
-    }
-
-    public Player player_influence(TowerColor tower, ArrayList<Player> Players, ArrayList<Professor> Professors) { //ritorna nullo se nessuno ha influenza
-        int max = 0, partial_sum = 0;   //2 or 3 player
-        Player max_influence = null;
-        for (Player player : Players) {
-            if (player.getTowerColor().equals(tower)) partial_sum++;
-            for (Professor professor : Professors) {
-                if (player.equals(professor.getHeldBy())) {
-                    partial_sum = partial_sum + numStudentsbycolor(professor.getColor());
-                }
-                if (partial_sum > max) {
-                    max = partial_sum;
-                    max_influence = player;
-                } else if (partial_sum == max) {
-                    max_influence = null;
-                }
-                partial_sum = 0;
-            }
-        }
-        return max_influence; //ritorna player con piu influenza
-     }
-
-    public Team team_influence(TowerColor tower, ArrayList<Team> Teams, ArrayList<Professor> Professors){ //ritorna nullo se nessuno ha influenza
-        int max=0, partial_sum=0;   //4 player
-        Team max_influence = null;
-
-        for (Team team : Teams) {
-            if (team.getPlayer1().getTowerColor().equals(tower)) partial_sum++;
-            for (Professor professor : Professors) {
-                if (team.getPlayer1().equals(professor.getHeldBy()) || team.getPlayer2().equals(professor.getHeldBy())) {
-                    partial_sum = partial_sum + numStudentsbycolor(professor.getColor());
-                }
-                if (partial_sum > max) {
-                    max = partial_sum;
-                    max_influence = team;
-                } else if (partial_sum == max) {
-                    max_influence = null;
-                }
-                partial_sum = 0;
-            }
-        }
-        return max_influence; //ritorna team con piu influenza
     }
     public int size(){
         return numStudentsbycolor(PeopleColor.BLUE)+numStudentsbycolor(PeopleColor.RED)+numStudentsbycolor(PeopleColor.YELLOW)+numStudentsbycolor(PeopleColor.PINK)+numStudentsbycolor(PeopleColor.GREEN);
