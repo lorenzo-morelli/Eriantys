@@ -45,10 +45,10 @@ public class WaitOtherClients extends State {
                 // Converti il messaggio stringa json in un oggetto clientModel
                 clientModel = json.fromJson(message.getParameter(0), ClientModel.class);
 
-                System.out.println("Ricevuto " + clientModel.getNickname() +" " +clientModel.getMyIp());
-
-                // Ma se il nickname è già esistente? Gestiscimi questa casistica
+                // Ma se il nickname è già esistente? Gestiscimi questa casistic
                 isNicknameAlreadyExistent();
+
+                System.out.println("Ricevuto " + clientModel.getNickname() +" " +clientModel.getMyIp());
 
                 // Adesso ho la garanzia di avere un nickname unico
                 System.out.println("[Nickname unico]");
