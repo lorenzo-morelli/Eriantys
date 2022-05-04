@@ -2,10 +2,8 @@ package it.polimi.ingsw.server.model;
 
 import it.polimi.ingsw.server.model.enums.PeopleColor;
 
-import java.util.Optional;
-
 public class Professor {
-    private PeopleColor color;
+    private final PeopleColor color;
     private Player heldBy;
 
     public Professor(PeopleColor color){
@@ -23,9 +21,5 @@ public class Professor {
 
     public PeopleColor getColor() {
         return color;
-    }
-
-    public void setColor(PeopleColor color) {
-        this.color = color;
     }
 }

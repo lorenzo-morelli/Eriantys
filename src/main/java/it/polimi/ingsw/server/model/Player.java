@@ -1,18 +1,14 @@
 package it.polimi.ingsw.server.model;
 import it.polimi.ingsw.server.model.enums.GameMode;
-import it.polimi.ingsw.server.model.enums.PeopleColor;
 import it.polimi.ingsw.server.model.enums.TowerColor;
 
-import java.util.*;
-
-public class Player implements Comparable{
-    private String nickname;
+public class Player implements Comparable<Player>{
+    private final String nickname;
     private final Deck availableCards;
     private AssistantCard choosedCard;
     private final SchoolBoard schoolBoard;
     private int coins;
-    private String Ip;
-    private int numPlayerinTeam;
+    private final String Ip;
 
     public Player(String nickname,String Ip,Model model){
         // crea e assegna valori di default
@@ -33,8 +29,7 @@ public class Player implements Comparable{
         Team team;
         if (model.getTeams().get(0).getTeamNumber() == teamnumber) team = model.getTeams().get(0);
         else team = model.getTeams().get(1);
-        numPlayerinTeam= team.setPlayer(this);
-        this.schoolBoard = new SchoolBoard(team, model.getNumberOfPlayers(), model.getTable().getBag(), model.getTable().getAvaiablePeopleColorinBag(), model.getTable().getDisponibleTowerColor());
+        this.schoolBoard = new SchoolBoard(team, model.getTable().getBag(), model.getTable().getAvaiablePeopleColorinBag(), model.getTable().getDisponibleTowerColor());
         if(model.getGameMode().equals(GameMode.EXPERT) ) this.coins = 0;
     }
     public TowerColor getTowerColor() {
@@ -45,12 +40,15 @@ public class Player implements Comparable{
         this.choosedCard = choosedCard;
     }
     @Override
-    public int compareTo(Object player) {
-        int compareValues=((Player)player).choosedCard.getValues();
+    public int compareTo(Player player) {
+        int compareValues=player.choosedCard.getValues();
         return this.choosedCard.getValues()-compareValues;
     }
-
     public Deck getAvailableCards() {
         return availableCards;
+    }
+
+    public SchoolBoard getSchoolBoard() {
+        return schoolBoard;
     }
 }

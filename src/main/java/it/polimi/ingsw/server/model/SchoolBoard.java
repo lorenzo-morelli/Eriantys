@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class SchoolBoard {
-    private StudentSet entranceSpace;
-    private StudentSet dinnerTable;
-    private TowerColor towerColor;
+    private final StudentSet entranceSpace;
+    private final StudentSet dinnerTable;
+    private final TowerColor towerColor;
     private int numOfTowers;
 
     public SchoolBoard(int numOfPlayer, StudentSet bag, ArrayList<PeopleColor> avaiablePeopleColorinBag,ArrayList<TowerColor> avaiableTower) {
@@ -26,7 +26,7 @@ public class SchoolBoard {
         this.towerColor = TowerColor.values()[rnd];
         avaiableTower.remove(TowerColor.values()[rnd]);
     }
-    public SchoolBoard(Team team,int numOfPlayer, StudentSet bag, ArrayList<PeopleColor> avaiablePeopleColorinBag,ArrayList<TowerColor> avaiableTower) {
+    public SchoolBoard(Team team, StudentSet bag, ArrayList<PeopleColor> avaiablePeopleColorinBag,ArrayList<TowerColor> avaiableTower) {
         this.entranceSpace = new StudentSet();    //4 giocatori
         this.entranceSpace.setStudentsRandomly(7, bag, avaiablePeopleColorinBag);
         this.numOfTowers = 8;
@@ -43,12 +43,23 @@ public class SchoolBoard {
         return towerColor;
     }
     public void placeTower(){ this.numOfTowers = numOfTowers-1; }
-
+    public void load_dinner(PeopleColor color){
+        entranceSpace.removestudent(color);
+        dinnerTable.addstudents(1,color);
+    }
+    public void load_island(PeopleColor color,Island island){
+        entranceSpace.removestudent(color);
+        island.getInhabitants().addstudents(1,color);
+    }
     public void load_entrance(Cloud cloud){
        entranceSpace.addstudents(cloud.getStudentsAccumulator().numStudentsbycolor(PeopleColor.RED),PeopleColor.RED);
        entranceSpace.addstudents(cloud.getStudentsAccumulator().numStudentsbycolor(PeopleColor.PINK),PeopleColor.PINK);
        entranceSpace.addstudents(cloud.getStudentsAccumulator().numStudentsbycolor(PeopleColor.GREEN),PeopleColor.GREEN);
        entranceSpace.addstudents(cloud.getStudentsAccumulator().numStudentsbycolor(PeopleColor.BLUE),PeopleColor.BLUE);
        entranceSpace.addstudents(cloud.getStudentsAccumulator().numStudentsbycolor(PeopleColor.YELLOW),PeopleColor.YELLOW);
+    }
+
+    public StudentSet getDinnerTable() {
+        return dinnerTable;
     }
 }

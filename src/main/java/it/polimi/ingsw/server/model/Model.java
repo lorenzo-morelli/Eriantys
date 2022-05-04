@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.model;
 
 import it.polimi.ingsw.server.model.enums.GameMode;
+import it.polimi.ingsw.server.model.enums.PeopleColor;
 
 import java.util.ArrayList;
 
@@ -10,13 +11,13 @@ import static java.util.Collections.sort;
 public class Model {
 
     private GameMode gameMode;
-    private int numberOfPlayers;
-    private int turnNumber;
-    private CenterTable table;
+    private final int numberOfPlayers;
+    private final int turnNumber;
+    private final CenterTable table;
 
     private int currentplayer;
-    private ArrayList<Team> teams;
-    private ArrayList<Player> players;
+    private final ArrayList<Team> teams;
+    private final ArrayList<Player> players;
 
     public Model(int numofplayer, String gamemode) {
 
@@ -80,5 +81,19 @@ public class Model {
         else{
             currentplayer++;
         }
+    }
+    public void checkProfessor(PeopleColor color){
+        int max=0;
+        Player moreInfluenced=null;
+        for (int i=0;i<players.size();i++){
+            if(i==0) max=players.get(i).getSchoolBoard().getDinnerTable().numStudentsbycolor(color);
+            else if (players.get(i).getSchoolBoard().getDinnerTable().numStudentsbycolor(color) > max) {
+                max=players.get(i).getSchoolBoard().getDinnerTable().numStudentsbycolor(color);
+                moreInfluenced=players.get(i);
+            } else if (players.get(i).getSchoolBoard().getDinnerTable().numStudentsbycolor(color) == max) {
+                moreInfluenced=null;
+            }
+        }
+        if(moreInfluenced!=null) table.changeProfessor(moreInfluenced,color);
     }
 }
