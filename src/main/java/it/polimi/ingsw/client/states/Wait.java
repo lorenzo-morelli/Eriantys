@@ -48,11 +48,8 @@ public class Wait extends State {
 
            if(receivedClientModel.isGameStarded().equals(true)) {
                Gson json = new Gson();
-               System.out.println(message.getParameter(0));
 
-               System.out.println(receivedClientModel.getNickname());
-                view.setClientModel(receivedClientModel);
-
+               view.setClientModel(receivedClientModel);
 
 
                 // Il messaggio è o una richiesta o una risposta
