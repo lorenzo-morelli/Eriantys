@@ -19,7 +19,9 @@ public class ClientModel {
     private int Mother_movement_Choosed;
     private int CloudChoosed;
 
+    // amIfirst: true = Identificato come primo, false = identificato come non primo, null = non ancora identificato
     private Boolean amIfirst = null;
+
     private ArrayList<String> fromTerminal;
 
     public ClientModel(){

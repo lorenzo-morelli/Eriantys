@@ -32,14 +32,8 @@ public class Network implements ActionListener{
             if(gotConnect){
                 System.out.println("[Listening for Clients]");
             }
-
-        }else if(event.getSource() == sendButton){
-            if(connection != null){
-                connection.sendText(textToSend.getText());
-            }
         }else if(event.getSource() == connection){
             textReceived.setText(connection.readText());
-            textReceived.setCaretPosition(textReceived.getDocument().getLength());
 
         }else if(event.getSource() == disconnectButton){
             connection.disconnect();
@@ -56,8 +50,6 @@ public class Network implements ActionListener{
         sendButton.addActionListener(this);
         IPAddress = new JTextField();
         port = new JTextField();
-        textToSend = new JTextField();
-        textToSend.addActionListener(this);
         //textReceived = new JTextArea();
         disconnectButton = new JButton();
         disconnectButton.addActionListener(this);
@@ -100,8 +92,7 @@ public class Network implements ActionListener{
     }
 
     public static void send(String message){
-        instance.textToSend.setText(message);
-        instance.sendButton.doClick();
+        connection.sendText(message);
     }
 
     public static String getMyIp(){

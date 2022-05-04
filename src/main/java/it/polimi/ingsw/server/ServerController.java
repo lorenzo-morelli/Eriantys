@@ -1,6 +1,5 @@
 package it.polimi.ingsw.server;
 
-import it.polimi.ingsw.server.model.ConnectionInfo;
 import it.polimi.ingsw.server.states.*;
 import it.polimi.ingsw.utils.cli.CommandPrompt;
 import it.polimi.ingsw.utils.stateMachine.Controller;
@@ -12,7 +11,7 @@ public class ServerController{
 
     public ServerController() throws IOException, InterruptedException {
         CommandPrompt.setDebug();
-        ConnectionInfo connectionInfo = new ConnectionInfo();
+        ConnectionModel connectionModel = new ConnectionModel();
 
         // modo elegante di far partire il controllore
         Idle idle = new Idle();
@@ -22,13 +21,16 @@ public class ServerController{
 
         //Costruzione degli stati necessari
         SpecifyPortScreen specifyPortScreen = new SpecifyPortScreen();
-        WaitFirstPlayer waitFirstPlayer = new WaitFirstPlayer(connectionInfo,fsm);
-        IsNicknameAlreadyExisting isNicknameAlreadyExisting = new IsNicknameAlreadyExisting(connectionInfo);
+        WaitFirstPlayer waitFirstPlayer = new WaitFirstPlayer( fsm, connectionModel);
+        WaitFirstPlayerGameInfo waitFirstPlayerGameInfo = new WaitFirstPlayerGameInfo(fsm,connectionModel);
+        WaitOtherClients waitOtherClients = new WaitOtherClients(connectionModel,fsm);
+        //IsNicknameAlreadyExisting isNicknameAlreadyExisting = new IsNicknameAlreadyExisting(connectionInfo);
 
         // Dichiarazione delle transizioni tra gli stati
         fsm.addTransition(idle, start, specifyPortScreen);
         fsm.addTransition(specifyPortScreen, specifyPortScreen.portSpecified(), waitFirstPlayer);
-        fsm.addTransition(waitFirstPlayer, waitFirstPlayer.getCreate(), isNicknameAlreadyExisting);
+        fsm.addTransition(waitFirstPlayer,waitFirstPlayer.getFirstMessage(),waitFirstPlayerGameInfo);
+        fsm.addTransition(waitFirstPlayerGameInfo,waitFirstPlayerGameInfo.getMessage(),waitOtherClients);
 
         // L'evento di start è l'unico che deve essere fatto partire manualmente
         start.fireStateEvent();
@@ -37,6 +39,6 @@ public class ServerController{
     public static void main(String[] args) {
         try {
             new ServerController();
-        } catch (InterruptedException | IOException ignored){}
+        } catch (InterruptedException | IOException e){e.printStackTrace();}
     }
 }

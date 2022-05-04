@@ -7,14 +7,13 @@ import it.polimi.ingsw.utils.stateMachine.IEvent;
 
 import java.io.IOException;
 
-public class ReadGameCode extends ReadFromTerminal {
-    public ReadGameCode(View view, ClientModel clientModel, Controller controller) throws IOException {
-        super(view, clientModel, controller, 1, "GAMECODE");
+public class ReadNickname extends ReadFromTerminal{
+    public ReadNickname(View view, ClientModel clientModel, Controller controller) throws IOException {
+        super(view, clientModel, controller, 1, "NICKNAMEEXISTENT");
     }
     @Override
     public void exitAction(IEvent cause) throws IOException {
-            //GAMECODE
-            clientModel.setGameCodeNumber(Integer.parseInt(clientModel.getFromTerminal().get(0)));
+        //NICKNAME
+        clientModel.setNickname(clientModel.getFromTerminal().get(0));
     }
-
 }
