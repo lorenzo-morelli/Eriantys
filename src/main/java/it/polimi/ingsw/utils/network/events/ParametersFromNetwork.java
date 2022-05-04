@@ -28,7 +28,9 @@ public class ParametersFromNetwork extends Event implements DocumentListener {
 
     @Override
     public void insertUpdate(DocumentEvent e) {
-        checkLastMessage();
+        if (enabled == true) {
+            checkLastMessage();
+        }
     }
 
     @Override
@@ -45,9 +47,8 @@ public class ParametersFromNetwork extends Event implements DocumentListener {
         try {
             parsedStrings = new ArrayList(Arrays.asList(ta.getText().split(" ")));
             if (parsedStrings.size() == numberOfStrings){
-                if (enabled == true) {
-                    this.parametersReceived = true;
-                }
+                this.parametersReceived = true;
+                enabled = false;
             }
 
         } catch (Exception e) {

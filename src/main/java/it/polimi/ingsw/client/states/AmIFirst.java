@@ -45,7 +45,7 @@ public class AmIFirst extends State {
 
         System.out.println("[Ho ricevuto la risposta]");
         clientModel = json.fromJson(response.getParameter(0), ClientModel.class);
-        if (clientModel.getAmIfirst().equals(null)){
+        if (clientModel.getAmIfirst() == null){
             nicknameAlreadyPresent.fireStateEvent();
         }
         else if (clientModel.getAmIfirst().equals(true)){

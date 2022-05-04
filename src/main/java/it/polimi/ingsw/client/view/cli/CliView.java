@@ -211,6 +211,11 @@ public class CliView implements View{
                 }
                 break;
 
+            case "NICKNAMEEXISTENT" :
+                CommandPrompt.ask("Il nickname scelto è già esistente, si prega di reinserirne uno nuovo",
+                        "nickname>");
+                break;
+
             case "WICHCARD" :
                 CommandPrompt.ask("Inserire la carta scelta",
                         "carta>");

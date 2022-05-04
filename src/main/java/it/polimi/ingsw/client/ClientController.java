@@ -43,13 +43,15 @@ public class ClientController {
         // Wait state, per il momento uno stato stupido while(true){ }
         Wait wait = new Wait();
 
-        // Stato per inviare informazioni al server
+        // Stati per inviare informazioni al server
         SendToServer sendToServer = new SendToServer(clientModel,fsm);
+        SendNicknameToServer sendNicknameToServer = new SendNicknameToServer(clientModel,fsm);
 
         // Stati di lettura da terminale
         ReadWichCard askCardChoosed = new ReadWichCard(view, clientModel, fsm);
         ReadWichStudent askwitchStudent = new ReadWichStudent(view, clientModel, fsm);
         ReadWichIsland askwitchIsland = new ReadWichIsland(view, clientModel, fsm);
+        ReadNickname askNewNickname = new ReadNickname(view,clientModel,fsm);
         ReadWhereToMoveMotherNature askwheremovemother = new ReadWhereToMoveMotherNature(view, clientModel, fsm);
         ReadWichCloud askwitchcloud = new ReadWichCloud(view, clientModel, fsm);
 
@@ -86,6 +88,12 @@ public class ClientController {
 
         // Altrimenti se non sono il primo client vado direttamente nello stato di attesa comandi
         fsm.addTransition(amIFirst, amIFirst.no(), wait);
+
+        // Altrimenti il server mi intima di scegliere un nuovo nickname
+        fsm.addTransition(amIFirst,amIFirst.nicknameAlreadyPresent(), askNewNickname);
+        fsm.addTransition(askNewNickname,askNewNickname.insertedParameters(),sendNicknameToServer);
+        fsm.addTransition(sendNicknameToServer, sendNicknameToServer.nickAlreadyExistent(), askNewNickname);
+        fsm.addTransition(sendNicknameToServer,sendNicknameToServer.getAck(),wait);
 
         // L'evento di start è l'unico che deve essere fatto partire manualmente
         start.fireStateEvent();

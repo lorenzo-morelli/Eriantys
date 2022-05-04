@@ -23,8 +23,6 @@ public class SendToServer extends State{
 
     @Override
     public IEvent entryAction(IEvent cause) throws IOException, InterruptedException {
-        clientModel.setNumofplayer(Integer.parseInt(clientModel.getFromTerminal().get(0)));
-        clientModel.setGamemode(clientModel.getFromTerminal().get(1));
         Network.send(json.toJson(clientModel));
         return super.entryAction(cause);
     }

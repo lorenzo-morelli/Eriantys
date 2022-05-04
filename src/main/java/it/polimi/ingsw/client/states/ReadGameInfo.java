@@ -15,4 +15,10 @@ public class ReadGameInfo extends ReadFromTerminal {
         super(view, clientModel, controller, 2, "GAMEINFO");
     }
 
+    @Override
+    public void exitAction(IEvent cause) throws IOException {
+        clientModel.setNumofplayer(Integer.parseInt(clientModel.getFromTerminal().get(0)));
+        clientModel.setGamemode(clientModel.getFromTerminal().get(1));
+        super.exitAction(cause);
+    }
 }
