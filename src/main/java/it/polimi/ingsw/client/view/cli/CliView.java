@@ -17,6 +17,10 @@ public class CliView implements View{
     private State callingState;
     private State precedentCallingState;
 
+    // parsedString ci serve per parsare l'input e verificare la correttezza dei dati inseriti
+    private ArrayList<String> parsedStrings;
+
+    // Le regular expressions servono per individuare pattern e verificare la correttezza dell'input dell'utente
     private static final String IP_REGEX =
             "^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\." +
                     "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\." +
@@ -28,7 +32,6 @@ public class CliView implements View{
 
     private static final String CIFRA_REGEX ="[0-9]";
     private static final String NUMERO_REGEX ="[0-9]+";
-
     private static final Pattern IP_PATTERN = Pattern.compile(IP_REGEX);
     private static final Pattern PORT_PATTERN = Pattern.compile(PORT_REGEX);
     private static final Pattern CIFRA_PATTERN = Pattern.compile(CIFRA_REGEX);
@@ -46,6 +49,7 @@ public class CliView implements View{
         return matcher.matches();
     }
 
+    // Metodo che controlla se una porta è valida con le regular expressions
     public static boolean isValidPort(String port)
     {
         if (port == null) {
@@ -56,6 +60,8 @@ public class CliView implements View{
 
         return matcher.matches();
     }
+
+    // Metodo che controlla se una cifra è valida con le regular expressions
     public static boolean isValidCifra(String cifra)
     {
         if (cifra == null) {
@@ -66,6 +72,8 @@ public class CliView implements View{
 
         return matcher.matches();
     }
+
+    // Metodo che controlla se un numero è valido con le regular expressions
     public static boolean isValidNumber(String number)
     {
         if (number == null) {
@@ -176,7 +184,7 @@ public class CliView implements View{
                 CommandPrompt.ask("Inserire Nickname Ip e porta separati da uno spazio e premere invio",
                                       "nickname ip porta>");
                 // Controllo di correttezza dei dati inseriti lato client
-                ArrayList<String> parsedStrings =
+                parsedStrings =
                         new ArrayList<String>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
                 if (parsedStrings.size()!=3 || !isValidIp(parsedStrings.get(1)) || !isValidPort(parsedStrings.get(2))){
                     askParameters();
@@ -202,11 +210,12 @@ public class CliView implements View{
                     askParameters();
                 }
                 break;
-            case "WICHCARD"   :
+
+            case "WICHCARD" :
                 CommandPrompt.ask("Inserire la carta scelta",
                         "carta>");
                 break;
-            case "WICHSTUDENT":
+            case "WICHSTUDENT" :
                 CommandPrompt.ask("Inserire lo studente scelto",
                         "studente>");
                 break;
@@ -214,11 +223,11 @@ public class CliView implements View{
                 CommandPrompt.ask("Inserire l'isola scelta'",
                         "isola>");
                 break;
-            case "WHEREMOVEMOTHER":
+            case "WHEREMOVEMOTHER" :
                 CommandPrompt.ask("Inserire di quanti passi si desidera muovere madre natura'",
                         "passi>");
                 break;
-            case "WICHCLOUD":
+            case "WICHCLOUD" :
                 CommandPrompt.ask("Inserire da quale nuvola prelevare gli studenti",
                         "nuvola>");
                 break;
