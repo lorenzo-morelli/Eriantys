@@ -26,13 +26,12 @@ public class AskHelloToPlayerOne extends State {
 
         ClientModel datiPrimoClient;
         datiPrimoClient = connectionModel.getClientsInfo().get(0);
-        System.out.println(datiPrimoClient.getNickname());
 
         // Compilo i campi per effettuare una richiesta
         datiPrimoClient.setResponse(false); // è una richiesta non una risposta
         datiPrimoClient.setGameStarded(true); // faccio partire il gioco
         datiPrimoClient.setTypeOfRequest("HELLO");  // lato client avrà una nella CliView un metodo per gestire questa richiesta
-        datiPrimoClient.setRequestDescription("USER_INSERTED_HELLO");
+        datiPrimoClient.setRequestDescription("the_user_inserted_hello");
 
 
 

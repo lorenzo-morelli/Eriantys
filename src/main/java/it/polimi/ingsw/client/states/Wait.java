@@ -5,33 +5,39 @@ import it.polimi.ingsw.client.ClientModel;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
 import it.polimi.ingsw.utils.stateMachine.Controller;
+import it.polimi.ingsw.utils.stateMachine.Event;
 import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
 
 import java.io.IOException;
 
 public class Wait extends State {
-    private ParametersFromNetwork message;
     private Gson json;
     private ClientModel myClientModel;
     private ClientModel receivedClientModel;
+    private Controller controller;
     private View view;
+
+    private Event messaggioGestito;
     public Wait(ClientModel clientModel, View view, Controller controller) {
         super("[Stato di attesa di comandi (aggiornamento vista o comandi di inserimento da terminale)]");
         json = new Gson();
         myClientModel = clientModel;
         this.view = view;
-        message = new ParametersFromNetwork(1);
-        message.setStateEventListener(controller);
+        this.controller = controller;
+        messaggioGestito = new Event(" messaggio gestito");
+        messaggioGestito.setStateEventListener(controller);
     }
 
-    public ParametersFromNetwork messaggioGestito() {
-        return message;
+    public Event messaggioGestito() {
+        return messaggioGestito;
     }
 
     @Override
     public IEvent entryAction(IEvent cause) throws IOException, InterruptedException {
 
+
+          ParametersFromNetwork message = new ParametersFromNetwork(1);
 
            message.enable();
            while(!message.parametersReceived()){
@@ -61,16 +67,16 @@ public class Wait extends State {
                        view.requestToMe();
                    } else {
                        // altrimenti devo limitarmi a segnalare che l'altro giocatore sta facendo qualcosa
-                       view.requestToOthers(receivedClientModel.getNickname(), receivedClientModel.getRequestDescription());
+                       view.requestToOthers();
                    }
                }
                // altrimenti il messaggio è una risposta di un client ad un server
                else if (receivedClientModel.isResponse().equals(true)) {
-                   view.response(receivedClientModel.getNickname(), receivedClientModel.getRequestDescription());
+                   view.response();
                }
 
            }
-        message.fireStateEvent();
+        messaggioGestito.fireStateEvent();
         return super.entryAction(cause);
     }
 }

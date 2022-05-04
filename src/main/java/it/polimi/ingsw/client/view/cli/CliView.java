@@ -262,7 +262,7 @@ public class CliView implements View{
     public void requestToMe(){
         switch(clientModel.getTypeOfRequest()){
             case "HELLO" :
-                CommandPrompt.ask("Inserire HELLO",
+                CommandPrompt.ask("Inserire hello",
                         "hello>");
                 // l'utente ha inserito hello? Prima parso e inserisco tutto in una variabile locale
                 parsedStrings = new ArrayList<String>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
@@ -282,15 +282,23 @@ public class CliView implements View{
     }
 
     // Qualcun altro sta interagendo con il terminale
-    public void requestToOthers(String nickname, String what) throws IOException {
-        CommandPrompt.println( nickname + ":" + what);
-        // Esempio "pippo: sta salutando"
+    public void requestToOthers() throws IOException {
+        switch(clientModel.getTypeOfRequest()) {
+            case "HELLO" :
+            CommandPrompt.println("L'utente " +clientModel.getNickname()+ " sta scrivendo Hello");
+            break;
+            // Esempio "pippo: sta salutando"
+        }
     }
 
     // Qualcun altro ha risposto al server
-    public void response(String nickname, String what) throws IOException {
-        CommandPrompt.println(nickname + ": " + what);
-        // Esempio "pippo: ha salutato"¯
+    public void response() throws IOException {
+        switch(clientModel.getTypeOfRequest()) {
+            case "HELLO" :
+                CommandPrompt.println("L'utente " +clientModel.getNickname()+ " ha scritto Hello");
+            break;
+            // Esempio "pippo: ha salutato"
+        }
     }
 
 }

@@ -25,7 +25,7 @@ public interface View {
 
     void requestToMe();
 
-    void requestToOthers(String nickname, String what) throws IOException;
+    void requestToOthers() throws IOException;
 
-    void response(String nickname, String what) throws IOException;
+    void response() throws IOException;
 }
