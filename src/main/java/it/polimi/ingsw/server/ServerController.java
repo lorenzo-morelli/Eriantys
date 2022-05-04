@@ -24,6 +24,7 @@ public class ServerController{
         WaitFirstPlayer waitFirstPlayer = new WaitFirstPlayer( fsm, connectionModel);
         WaitFirstPlayerGameInfo waitFirstPlayerGameInfo = new WaitFirstPlayerGameInfo(fsm,connectionModel);
         WaitOtherClients waitOtherClients = new WaitOtherClients(connectionModel,fsm);
+        AskHelloToPlayerOne askHelloToPlayerOne = new AskHelloToPlayerOne(connectionModel);
         //IsNicknameAlreadyExisting isNicknameAlreadyExisting = new IsNicknameAlreadyExisting(connectionInfo);
 
         // Dichiarazione delle transizioni tra gli stati
@@ -31,7 +32,7 @@ public class ServerController{
         fsm.addTransition(specifyPortScreen, specifyPortScreen.portSpecified(), waitFirstPlayer);
         fsm.addTransition(waitFirstPlayer,waitFirstPlayer.getFirstMessage(),waitFirstPlayerGameInfo);
         fsm.addTransition(waitFirstPlayerGameInfo,waitFirstPlayerGameInfo.getMessage(),waitOtherClients);
-
+        fsm.addTransition(waitOtherClients, waitOtherClients.allClientsConnected(), askHelloToPlayerOne);
         // L'evento di start è l'unico che deve essere fatto partire manualmente
         start.fireStateEvent();
     }

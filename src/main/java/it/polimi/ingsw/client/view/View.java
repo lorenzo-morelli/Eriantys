@@ -1,6 +1,10 @@
 package it.polimi.ingsw.client.view;
 
+import it.polimi.ingsw.client.ClientModel;
+import it.polimi.ingsw.utils.cli.CommandPrompt;
 import it.polimi.ingsw.utils.stateMachine.State;
+
+import java.io.IOException;
 
 public interface View {
     /**
@@ -9,6 +13,7 @@ public interface View {
      * @param callingState Stato del controllore che ha aggiornato la vista
      */
     void setCallingState(State callingState);
+    void setClientModel(ClientModel clientModel);
     void askToStart();
     void askDecision(String option1, String option2);
     void showConnectingGame();
@@ -17,4 +22,10 @@ public interface View {
     void itsyourturn(String command);
     void showendscreen(String winner);
     void askParameters();
+
+    void requestToMe();
+
+    void requestToOthers(String nickname, String what) throws IOException;
+
+    void response(String nickname, String what) throws IOException;
 }

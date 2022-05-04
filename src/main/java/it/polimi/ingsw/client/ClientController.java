@@ -41,7 +41,7 @@ public class ClientController {
         ReadGameInfo askGameInfo = new ReadGameInfo(view, clientModel, fsm);
 
         // Wait state, per il momento uno stato stupido while(true){ }
-        Wait wait = new Wait();
+        Wait wait = new Wait(clientModel,view, fsm);
 
         // Stati per inviare informazioni al server
         SendToServer sendToServer = new SendToServer(clientModel,fsm);
@@ -94,6 +94,7 @@ public class ClientController {
         fsm.addTransition(askNewNickname,askNewNickname.insertedParameters(),sendNicknameToServer);
         fsm.addTransition(sendNicknameToServer, sendNicknameToServer.nickAlreadyExistent(), askNewNickname);
         fsm.addTransition(sendNicknameToServer,sendNicknameToServer.getAck(),wait);
+        fsm.addTransition(wait,wait.messaggioGestito(),wait);
 
         // L'evento di start è l'unico che deve essere fatto partire manualmente
         start.fireStateEvent();

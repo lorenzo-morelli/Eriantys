@@ -6,6 +6,7 @@ import it.polimi.ingsw.server.ConnectionModel;
 import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
 import it.polimi.ingsw.utils.stateMachine.Controller;
+import it.polimi.ingsw.utils.stateMachine.Event;
 import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
 
@@ -19,6 +20,8 @@ public class WaitOtherClients extends State {
     private Controller controller;
     private ParametersFromNetwork message;
 
+    private Event allClientsConnected;
+
     public WaitOtherClients(ConnectionModel connectionModel, Controller controller) {
         super("[Aspettando gli altri giocatori]");
         this.connectionModel = connectionModel;
@@ -26,7 +29,12 @@ public class WaitOtherClients extends State {
         json = new Gson();
         message = new ParametersFromNetwork(1);
         message.setStateEventListener(controller);
+        allClientsConnected = new Event("Tutti i clients sono collegati e pronti a giocare");
+        allClientsConnected.setStateEventListener(controller);
+    }
 
+    public Event allClientsConnected() {
+        return allClientsConnected;
     }
 
     @Override
@@ -65,6 +73,7 @@ public class WaitOtherClients extends State {
                 message.disable();
                 numOfPlayersToWait --;
         }
+        allClientsConnected.fireStateEvent();
         return super.entryAction(cause);
     }
 
