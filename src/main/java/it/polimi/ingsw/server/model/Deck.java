@@ -3,7 +3,7 @@ package it.polimi.ingsw.server.model;
 import java.util.*;
 
 public class Deck {
-    private List<AssistantCard> cards;
+    private final List<AssistantCard> cards;
 
     public Deck() {
         this.cards = new ArrayList<>();
@@ -35,7 +35,6 @@ public class Deck {
                 this.cards.remove(choosen);
             }
         }
-        if (cards.size()==0) return true;
-        else return false;
+        return cards.size() == 0;
     }
 }

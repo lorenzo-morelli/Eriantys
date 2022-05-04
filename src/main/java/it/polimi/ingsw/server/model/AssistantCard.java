@@ -1,8 +1,8 @@
 package it.polimi.ingsw.server.model;
 
 public class AssistantCard {
-    private int values;
-    private int moves;
+    private final int values;
+    private final int moves;
 
 
     public AssistantCard(int values,int moves){

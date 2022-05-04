@@ -3,7 +3,7 @@ package it.polimi.ingsw.server.model;
 public class Team {
     private Player player1;
     private Player player2;
-    private int teamNumber;
+    private final int teamNumber;
 
     public Team(int teamNumber){
         player1=null;
@@ -32,7 +32,6 @@ public class Team {
         return teamNumber;
     }
     public boolean isFull(){
-        if(player1==null || player2==null) return false;
-        else return true;
+        return player1 != null && player2 != null;
     }
 }

@@ -28,17 +28,9 @@ public class StudentSet {
                 this.numOfYellowStudents=numOfYellowStudents;
     }
 
-    public void setAllStudentsToZero() {
-        setNumOfBlueStudents(0);
-        setNumOfGreenStudents(0);
-        setNumOfPinkStudents(0);
-        setNumOfRedStudents(0);
-        setNumOfYellowStudents(0);
-    }
-
     public PeopleColor estractRandomStudent(ArrayList<PeopleColor> avaiableColor){
         int rnd = new Random().nextInt(avaiableColor.size());
-        if(numofbycolor(PeopleColor.values()[rnd])==0) avaiableColor.remove(PeopleColor.values()[rnd]);
+        if(numStudentsbycolor(PeopleColor.values()[rnd])==0) avaiableColor.remove(PeopleColor.values()[rnd]);
         removestudent(PeopleColor.values()[rnd]);
         return PeopleColor.values()[rnd];
     }
@@ -47,98 +39,72 @@ public class StudentSet {
         this.numOfBlueStudents = numOfBlueStudents;
     }
 
-    private int getNumOfBlueStudents() {
-        return numOfBlueStudents;
-    }
-
     private void setNumOfGreenStudents(int numOfGreenStudents) {
         this.numOfGreenStudents = numOfGreenStudents;
-    }
-
-    private int getNumOfGreenStudents() {
-        return numOfGreenStudents;
     }
 
     private void setNumOfPinkStudents(int numOfPinkStudents) {
         this.numOfPinkStudents = numOfPinkStudents;
     }
 
-    private int getNumOfPinkStudents() {
-        return numOfPinkStudents;
-    }
-
     private void setNumOfRedStudents(int numOfRedStudents) {
         this.numOfRedStudents = numOfRedStudents;
-    }
-
-    private int getNumOfRedStudents() {
-        return numOfRedStudents;
     }
 
     private void setNumOfYellowStudents(int numOfYellowStudents) {
         this.numOfYellowStudents = numOfYellowStudents;
     }
 
-    private int getNumOfYellowStudents() {
-        return numOfYellowStudents;
-    }
-    public int numofbycolor(PeopleColor color){
-        switch (color){
-            case BLUE: return getNumOfBlueStudents();
-            case RED: return getNumOfRedStudents();
-            case YELLOW: return getNumOfYellowStudents();
-            case PINK: return getNumOfPinkStudents();
-            case GREEN: return getNumOfGreenStudents();
-        }
-        return 0;
-    }
     public int numStudentsbycolor(PeopleColor color){
         switch (color){
-            case BLUE: return getNumOfBlueStudents();
-            case RED: return getNumOfRedStudents();
-            case YELLOW: return getNumOfYellowStudents();
-            case PINK: return getNumOfPinkStudents();
-            case GREEN: return getNumOfGreenStudents();
+            case BLUE: return numOfBlueStudents;
+            case RED: return numOfRedStudents;
+            case YELLOW: return numOfYellowStudents;
+            case PINK: return numOfPinkStudents;
+            case GREEN: return numOfGreenStudents;
         }
         return 0;
     }
 
-    public Player player_influence(TowerColor tower, ArrayList<Player> Players, ArrayList<Professor> Professors){ //ritorna nullo se nessuno ha influenza
-        int max=0, partial_sum=0;   //2 or 3 player
+    public Player player_influence(TowerColor tower, ArrayList<Player> Players, ArrayList<Professor> Professors) { //ritorna nullo se nessuno ha influenza
+        int max = 0, partial_sum = 0;   //2 or 3 player
         Player max_influence = null;
-            for(int j=0;j<Players.size();j++) {
-                   if(Players.get(j).getTowerColor().equals(tower)) partial_sum++;
-                   for (int i = 0; i < Professors.size(); i++) {
-                        if(Players.get(j).equals(Professors.get(i).getHeldBy())) partial_sum = partial_sum + numStudentsbycolor(Professors.get(i).getColor());
-                   }
-                   if(partial_sum>max) {
-                       max=partial_sum;
-                       max_influence=Players.get(j);
-                   }
-                   if(partial_sum==max){
-                       max_influence=null;
-                   }
-                    partial_sum=0;
-               }
+        for (Player player : Players) {
+            if (player.getTowerColor().equals(tower)) partial_sum++;
+            for (Professor professor : Professors) {
+                if (player.equals(professor.getHeldBy())) {
+                    partial_sum = partial_sum + numStudentsbycolor(professor.getColor());
+                }
+                if (partial_sum > max) {
+                    max = partial_sum;
+                    max_influence = player;
+                } else if (partial_sum == max) {
+                    max_influence = null;
+                }
+                partial_sum = 0;
+            }
+        }
         return max_influence; //ritorna player con piu influenza
-         }
+     }
 
     public Team team_influence(TowerColor tower, ArrayList<Team> Teams, ArrayList<Professor> Professors){ //ritorna nullo se nessuno ha influenza
-        int max=0, partial_sum=0;   //2 or 3 player
+        int max=0, partial_sum=0;   //4 player
         Team max_influence = null;
-        for(int j=0;j<Teams.size();j++) {
-            if(Teams.get(j).getPlayer1().getTowerColor().equals(tower)) partial_sum++;
-            for (int i = 0; i < Professors.size(); i++) {
-                if(Teams.get(j).getPlayer1().equals(Professors.get(i).getHeldBy()) || Teams.get(j).getPlayer2().equals(Professors.get(i).getHeldBy())) partial_sum = partial_sum + numStudentsbycolor(Professors.get(i).getColor());
+
+        for (Team team : Teams) {
+            if (team.getPlayer1().getTowerColor().equals(tower)) partial_sum++;
+            for (Professor professor : Professors) {
+                if (team.getPlayer1().equals(professor.getHeldBy()) || team.getPlayer2().equals(professor.getHeldBy())) {
+                    partial_sum = partial_sum + numStudentsbycolor(professor.getColor());
+                }
+                if (partial_sum > max) {
+                    max = partial_sum;
+                    max_influence = team;
+                } else if (partial_sum == max) {
+                    max_influence = null;
+                }
+                partial_sum = 0;
             }
-            if(partial_sum>max) {
-                max=partial_sum;
-                max_influence=Teams.get(j);
-            }
-            if(partial_sum==max){
-                max_influence=null;
-            }
-            partial_sum=0;
         }
         return max_influence; //ritorna team con piu influenza
     }

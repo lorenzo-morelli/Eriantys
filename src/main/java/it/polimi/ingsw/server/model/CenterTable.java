@@ -89,6 +89,9 @@ public class CenterTable {
         }
     }
 
+    public ArrayList<Professor> getProfessors() {
+        return professors;
+    }
     public StudentSet getBag() {
         return bag;
     }
@@ -97,5 +100,15 @@ public class CenterTable {
     }
     public ArrayList<TowerColor> getDisponibleTowerColor() {
         return avaiableTowerColor;
+    }
+    public void changeProfessor(Player player,PeopleColor color){
+        for (Professor professor : professors) {
+            if (professor.getColor().equals(color)) professor.setHeldBy(player);
+        }
+    }
+    public void chargeClouds(){
+        for (Cloud cloud : clouds) {
+            cloud.charge(bag, avaiablePeopleColorinBag);
+        }
     }
 }
