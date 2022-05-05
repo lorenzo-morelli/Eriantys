@@ -45,7 +45,7 @@ public class SchoolBoard {
     public void placeTower(){ this.numOfTowers = numOfTowers-1; }
     public void removeTower(){ this.numOfTowers = numOfTowers+1;}
     public void load_dinner(PeopleColor color){
-        entranceSpace.removestudent(color);
+        entranceSpace.removestudent(1,color);
         dinnerTable.addstudents(1,color);
     }
 

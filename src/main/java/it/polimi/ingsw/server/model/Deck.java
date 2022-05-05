@@ -37,4 +37,7 @@ public class Deck {
         }
         return cards.size() == 0;
     }
+    public boolean inDeck(AssistantCard card){
+        return cards.contains(card);
+    }
 }

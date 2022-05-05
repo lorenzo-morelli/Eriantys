@@ -16,7 +16,7 @@ public class Player implements Comparable<Player>{
         this.Ip = Ip;
         this.availableCards = new Deck();
         this.choosedCard = null;
-        this.schoolBoard = new SchoolBoard(model.getNumberOfPlayers(), model.getTable().getBag(), model.getTable().getAvaiablePeopleColorinBag(), model.getTable().getDisponibleTowerColor());
+        this.schoolBoard = new SchoolBoard(model.getNumberOfPlayers(), model.getTable().getBag(), model.getTable().getAvaiablePeopleColorinBag(), model.getTable().getAvaiableTowerColor());
         if(model.getGameMode().equals(GameMode.EXPERT) ) this.coins = 0;
     }
     //requies teamnumber== "1 or 2" e un controllo che fa riscegliere il team se team è gia pieno :team.isFull())
@@ -29,7 +29,7 @@ public class Player implements Comparable<Player>{
         Team team;
         if (model.getTeams().get(0).getTeamNumber() == teamnumber) team = model.getTeams().get(0);
         else team = model.getTeams().get(1);
-        this.schoolBoard = new SchoolBoard(team, model.getTable().getBag(), model.getTable().getAvaiablePeopleColorinBag(), model.getTable().getDisponibleTowerColor());
+        this.schoolBoard = new SchoolBoard(team, model.getTable().getBag(), model.getTable().getAvaiablePeopleColorinBag(), model.getTable().getAvaiableTowerColor());
         if(model.getGameMode().equals(GameMode.EXPERT) ) this.coins = 0;
     }
     public TowerColor getTowerColor() {
@@ -46,8 +46,9 @@ public class Player implements Comparable<Player>{
 
     @Override
     public int compareTo(Player player) {
-        int compareValues=player.choosedCard.getValues();
-        return this.choosedCard.getValues()-compareValues;
+        float compareValues=player.choosedCard.getValues();
+        if((this.choosedCard.getValues()-compareValues)>0) return 1;
+        else return -1;
     }
     public Deck getAvailableCards() {
         return availableCards;

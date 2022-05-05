@@ -1,7 +1,7 @@
 package it.polimi.ingsw.server.model;
 
 public class AssistantCard {
-    private final int values;
+    private float values;
     private final int moves;
 
 
@@ -13,11 +13,14 @@ public class AssistantCard {
         return moves;
     }
 
-    public int getValues() {
+    public float getValues() {
         return values;
     }
 
     /* nessun bisogno di cambiare il contenuto delle carte
     una volta che sono state costruite (vedere classe Deck)
      */
+    public void lowPriority(){
+        values+=0.5;
+    }
 }

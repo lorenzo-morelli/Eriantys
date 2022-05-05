@@ -31,18 +31,6 @@ public class Island {
         return inhabitants;
     }
 
-    public void setInhabitants(StudentSet inhabitants) {
-        this.inhabitants = inhabitants;
-    }
-
-    public int getNumberOfTowers() {
-        return numberOfTowers;
-    }
-
-    public void setNumberOfTowers(int numberOfTowers) {
-        this.numberOfTowers = numberOfTowers;
-    }
-
     public boolean isBlocked() {
         return isBlocked;
     }
@@ -59,14 +47,14 @@ public class Island {
                 if (player.equals(professor.getHeldBy())) {
                     partial_sum = partial_sum + inhabitants.numStudentsbycolor(professor.getColor());
                 }
-                if (partial_sum > max) {
-                    max = partial_sum;
-                    max_influence = player;
-                } else if (partial_sum == max) {
-                    max_influence = null;
-                }
-                partial_sum = 0;
             }
+            if (partial_sum > max) {
+                max = partial_sum;
+                max_influence = player;
+            } else if (partial_sum == max) {
+                max_influence = null;
+            }
+            partial_sum = 0;
         }
         return max_influence; //ritorna player con piu influenza
     }
@@ -81,19 +69,19 @@ public class Island {
                 if (team.getPlayer1().equals(professor.getHeldBy()) || team.getPlayer2().equals(professor.getHeldBy())) {
                     partial_sum = partial_sum + inhabitants.numStudentsbycolor(professor.getColor());
                 }
-                if (partial_sum > max) {
-                    max = partial_sum;
-                    max_influence = team;
-                } else if (partial_sum == max) {
-                    max_influence = null;
-                }
-                partial_sum = 0;
             }
+            if (partial_sum > max) {
+                max = partial_sum;
+                max_influence = team;
+            } else if (partial_sum == max) {
+                max_influence = null;
+            }
+            partial_sum = 0;
         }
         return max_influence; //ritorna team con piu influenza
     }
-    public void placeTower(){ this.numberOfTowers = numberOfTowers+1; }
-    public void controlIsland(Player influence_player){
+    public void placeTower(){ this.numberOfTowers ++; }
+    public void controllIsland(Player influence_player){
         setTowerColor(influence_player.getSchoolBoard().getTowerColor());
         influence_player.getSchoolBoard().placeTower();
     }

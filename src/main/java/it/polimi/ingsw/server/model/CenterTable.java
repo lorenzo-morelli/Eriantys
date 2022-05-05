@@ -4,6 +4,7 @@ import it.polimi.ingsw.server.model.enums.*;
 import it.polimi.ingsw.server.model.enums.Character;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 public class CenterTable {
@@ -20,19 +21,15 @@ public class CenterTable {
 
         islands=new ArrayList<>();
         StudentSet islandbag=new StudentSet(2,2,2,2,2);
-        ArrayList<PeopleColor> avaiableColorislandBag = new ArrayList<>();
-        avaiableColorislandBag.add(PeopleColor.RED);
-        avaiableColorislandBag.add(PeopleColor.BLUE);
-        avaiableColorislandBag.add(PeopleColor.YELLOW);
-        avaiableColorislandBag.add(PeopleColor.GREEN);
-        avaiableColorislandBag.add(PeopleColor.PINK);
+        ArrayList<PeopleColor> avaiableColorIslandBag = new ArrayList<>();
+        Collections.addAll(avaiableColorIslandBag, PeopleColor.values());
 
         for(int i=0;i<12;i++){
             if(i==0 || i==6) {
-                islands.add(new Island(0,islandbag,avaiableColorislandBag));
+                islands.add(new Island(0,islandbag,avaiableColorIslandBag));
             }
             else {
-                islands.add(new Island(1,islandbag,avaiableColorislandBag));
+                islands.add(new Island(1,islandbag,avaiableColorIslandBag));
             }
         }
 
@@ -40,33 +37,25 @@ public class CenterTable {
 
         bag=new StudentSet(24,24,24,24,24);
         avaiablePeopleColorinBag = new ArrayList<>();
-        avaiablePeopleColorinBag.add(PeopleColor.RED);
-        avaiablePeopleColorinBag.add(PeopleColor.BLUE);
-        avaiablePeopleColorinBag.add(PeopleColor.YELLOW);
-        avaiablePeopleColorinBag.add(PeopleColor.GREEN);
-        avaiablePeopleColorinBag.add(PeopleColor.PINK);
+        Collections.addAll(avaiablePeopleColorinBag, PeopleColor.values());
 
         avaiableTowerColor= new ArrayList<>();
         if (numplayer == 3) {
-            avaiableTowerColor.add(TowerColor.WHITE);
-            avaiableTowerColor.add(TowerColor.BLACK);
-            avaiableTowerColor.add(TowerColor.GREY);
+            Collections.addAll(avaiableTowerColor, TowerColor.values());
         } else {
             avaiableTowerColor.add(TowerColor.WHITE);
             avaiableTowerColor.add(TowerColor.BLACK);
         }
 
         professors=new ArrayList<>();
-        professors.add(new Professor(PeopleColor.RED));
-        professors.add(new Professor(PeopleColor.YELLOW));
-        professors.add(new Professor(PeopleColor.BLUE));
-        professors.add(new Professor(PeopleColor.GREEN));
-        professors.add(new Professor(PeopleColor.PINK));
+        for(PeopleColor Color: PeopleColor.values()) {
+            professors.add(new Professor(Color));
+        }
 
         clouds =new ArrayList<>();
         for(int i=0;i<numplayer;i++){
             clouds.add(new Cloud(numplayer));
-            clouds.get(i).charge(bag,avaiableColorislandBag);
+            clouds.get(i).charge(bag,avaiablePeopleColorinBag);
         }
 
         if(gamemode.equals(GameMode.EXPERT)){
@@ -98,7 +87,7 @@ public class CenterTable {
     public ArrayList<PeopleColor> getAvaiablePeopleColorinBag() {
         return avaiablePeopleColorinBag;
     }
-    public ArrayList<TowerColor> getDisponibleTowerColor() {
+    public ArrayList<TowerColor> getAvaiableTowerColor() {
         return avaiableTowerColor;
     }
     public void changeProfessor(Player player,PeopleColor color){
@@ -124,7 +113,7 @@ public class CenterTable {
         return motherNaturePosition;
     }
     public void load_island(Player player,PeopleColor color,int index_island){
-        player.getSchoolBoard().getEntranceSpace().removestudent(color);
+        player.getSchoolBoard().getEntranceSpace().removestudent(1,color);
         islands.get(index_island).getInhabitants().addstudents(1,color);
     }
     public void checkProfessor(PeopleColor color, ArrayList<Player> players){
@@ -146,15 +135,13 @@ public class CenterTable {
                 player.getSchoolBoard().removeTower();
             }
         }
-        islands.get(index_island).controlIsland(influence_player);
+        islands.get(index_island).controllIsland(influence_player);
     }
     public void MergeIsland(int index_1, int index_2){
         islands.get(index_1).placeTower();
-        islands.get(index_1).getInhabitants().addstudents( islands.get(index_2).getInhabitants().numStudentsbycolor(PeopleColor.RED),PeopleColor.RED);
-        islands.get(index_1).getInhabitants().addstudents( islands.get(index_2).getInhabitants().numStudentsbycolor(PeopleColor.BLUE),PeopleColor.BLUE);
-        islands.get(index_1).getInhabitants().addstudents( islands.get(index_2).getInhabitants().numStudentsbycolor(PeopleColor.GREEN),PeopleColor.GREEN);
-        islands.get(index_1).getInhabitants().addstudents( islands.get(index_2).getInhabitants().numStudentsbycolor(PeopleColor.YELLOW),PeopleColor.YELLOW);
-        islands.get(index_1).getInhabitants().addstudents( islands.get(index_2).getInhabitants().numStudentsbycolor(PeopleColor.PINK),PeopleColor.PINK);
+        for(PeopleColor Color: PeopleColor.values()){
+            islands.get(index_1).getInhabitants().addstudents(islands.get(index_2).getInhabitants().numStudentsbycolor(Color), Color);
+        }
         islands.get(index_1).setBlocked(islands.get(index_1).isBlocked());
         islands.remove(index_2);
         if(index_2 < index_1) motherNaturePosition--;

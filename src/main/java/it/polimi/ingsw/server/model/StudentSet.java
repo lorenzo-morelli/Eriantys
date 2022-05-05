@@ -29,29 +29,9 @@ public class StudentSet {
 
     public PeopleColor estractRandomStudent(ArrayList<PeopleColor> avaiableColor){
         int rnd = new Random().nextInt(avaiableColor.size());
-        if(numStudentsbycolor(PeopleColor.values()[rnd])==0) avaiableColor.remove(PeopleColor.values()[rnd]);
-        removestudent(PeopleColor.values()[rnd]);
+        if(numStudentsbycolor(PeopleColor.values()[rnd])==1) avaiableColor.remove(PeopleColor.values()[rnd]);
+        removestudent(1,PeopleColor.values()[rnd]);
         return PeopleColor.values()[rnd];
-    }
-
-    private void setNumOfBlueStudents(int numOfBlueStudents) {
-        this.numOfBlueStudents = numOfBlueStudents;
-    }
-
-    private void setNumOfGreenStudents(int numOfGreenStudents) {
-        this.numOfGreenStudents = numOfGreenStudents;
-    }
-
-    private void setNumOfPinkStudents(int numOfPinkStudents) {
-        this.numOfPinkStudents = numOfPinkStudents;
-    }
-
-    private void setNumOfRedStudents(int numOfRedStudents) {
-        this.numOfRedStudents = numOfRedStudents;
-    }
-
-    private void setNumOfYellowStudents(int numOfYellowStudents) {
-        this.numOfYellowStudents = numOfYellowStudents;
     }
 
     public int numStudentsbycolor(PeopleColor color){
@@ -67,20 +47,21 @@ public class StudentSet {
     public int size(){
         return numStudentsbycolor(PeopleColor.BLUE)+numStudentsbycolor(PeopleColor.RED)+numStudentsbycolor(PeopleColor.YELLOW)+numStudentsbycolor(PeopleColor.PINK)+numStudentsbycolor(PeopleColor.GREEN);
     }
-    public void removestudent(PeopleColor color){
-        setStudents(numStudentsbycolor(color)-1,color);
+    public void removestudent(int n, PeopleColor color){
+        addstudents(-n,color);
     }
     public void addstudents(int n, PeopleColor color){
-        setStudents(numStudentsbycolor(color)+n,color);
-    }
-
-    public void setStudents(int n, PeopleColor color) {
         switch (color){
-            case BLUE: setNumOfBlueStudents(n);
-            case RED: setNumOfRedStudents(n);
-            case YELLOW: setNumOfYellowStudents(n);
-            case PINK: setNumOfPinkStudents(n);
-            case GREEN: setNumOfGreenStudents(n);
+            case BLUE: numOfBlueStudents+=n;
+            break;
+            case RED: numOfRedStudents+=n;
+            break;
+            case YELLOW: numOfYellowStudents+=n;
+            break;
+            case PINK: numOfPinkStudents+=n;
+            break;
+            case GREEN: numOfGreenStudents+=n;
+            break;
         }
     }
 
