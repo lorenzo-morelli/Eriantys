@@ -14,25 +14,31 @@ import java.io.IOException;
 public class SendNicknameToServer extends State {
     private Gson json;
     private ClientModel clientModel;
+    private Controller controller;
     private ParametersFromNetwork ack;
     private Event nickAlreadyExistent;
+    private Event nickUnique;
 
     public SendNicknameToServer(ClientModel clientModel, Controller controller) {
         super("[Invio dati al server ed attesa di un ack]");
         this.clientModel = clientModel;
+        this.controller = controller;
         ack = new ParametersFromNetwork(1);
         json = new Gson();
         nickAlreadyExistent = new Event("Nickname already existent");
+        nickUnique = new Event("Nick unique");
         nickAlreadyExistent.setStateEventListener(controller);
+        nickUnique.setStateEventListener(controller);
     }
 
     public Event nickAlreadyExistent() {
         return nickAlreadyExistent;
     }
 
-    public ParametersFromNetwork getAck() {
-        return ack;
+    public Event nickUnique() {
+        return nickUnique;
     }
+
 
     @Override
     public IEvent entryAction(IEvent cause) throws IOException, InterruptedException {
@@ -54,6 +60,8 @@ public class SendNicknameToServer extends State {
 
     public void checkAck() throws IOException, InterruptedException {
 
+        ack = new ParametersFromNetwork(1);
+        ack.setStateEventListener(controller);
         ack.enable();
         System.out.println("[Conferma del nickname non ancora ricevuta]");
         while (!ack.parametersReceived()){
@@ -62,6 +70,7 @@ public class SendNicknameToServer extends State {
 
         System.out.println("[Conferma del nickname ricevuta]");
         ClientModel fromNetwork = json.fromJson(ack.getParameter(0),ClientModel.class);
+        System.out.println(ack.getParameter(0));
 
         if(fromNetwork.getAmIfirst() == null){
             // ancora una volta l'utente ha inserito un nickname già esistente
@@ -69,7 +78,7 @@ public class SendNicknameToServer extends State {
         }
         else {
             // l'utente ha finalmente inserito un nickname valido
-            ack.fireStateEvent();
+            nickUnique.fireStateEvent();
         }
 
     }

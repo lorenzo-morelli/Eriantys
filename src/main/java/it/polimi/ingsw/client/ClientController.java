@@ -13,7 +13,7 @@ public class ClientController {
 
         CommandPrompt.setDebug();
 
-        // modello dati di questa semplice demo
+        // Dati del client
         ClientModel clientModel = new ClientModel();
 
         // Dichiarazione degli stati necessari: uno stato rappresenta una schermata (che sia essa di gui o di cli)
@@ -32,7 +32,7 @@ public class ClientController {
         ReadUserInfo askUserinfo = new ReadUserInfo(view, clientModel, fsm);
         ReadGameInfo askGameInfo = new ReadGameInfo(view, clientModel, fsm);
         ReadNickname askNewNickname = new ReadNickname(view,clientModel,fsm);
-        // Wait state, stato in cui ricevo solo comandi di aggiornamento della vista
+        // Wait state, stato in amIFirstcui ricevo solo comandi di aggiornamento della vista
         Wait wait = new Wait(clientModel,view, fsm);
         // Stati per inviare informazioni al server
         SendToServer sendToServer = new SendToServer(clientModel,fsm);
@@ -59,7 +59,7 @@ public class ClientController {
         fsm.addTransition(amIFirst,amIFirst.nicknameAlreadyPresent(), askNewNickname);
         fsm.addTransition(askNewNickname,askNewNickname.insertedParameters(),sendNicknameToServer);
         fsm.addTransition(sendNicknameToServer, sendNicknameToServer.nickAlreadyExistent(), askNewNickname);
-        fsm.addTransition(sendNicknameToServer,sendNicknameToServer.getAck(),wait);
+        fsm.addTransition(sendNicknameToServer,sendNicknameToServer.nickUnique(),wait);
         fsm.addTransition(wait,wait.messaggioGestito(),wait);
         // L'evento di start è l'unico che deve essere fatto partire manualmente
         start.fireStateEvent();

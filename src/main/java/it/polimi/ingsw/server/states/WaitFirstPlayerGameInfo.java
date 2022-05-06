@@ -33,10 +33,19 @@ public class WaitFirstPlayerGameInfo extends State {
 
     @Override
     public IEvent entryAction(IEvent cause) throws IOException, InterruptedException {
+        boolean messageReceived = false;
         System.out.println("[Non ho ancora ricevuto niente]");
-        message.enable();
-        while(!message.parametersReceived() ){
-            // non ho ricevuto ancora il messaggio
+
+        while(!messageReceived) {
+            message.enable();
+            while (!message.parametersReceived()) {
+                // non ho ricevuto ancora il messaggio
+            }
+            // controllo se il messaggio è arrivato proprio dal primo client
+            if(json.fromJson(message.getParameter(0), ClientModel.class).getClientIdentity() == connectionModel.getClientsInfo().get(0).getClientIdentity()){
+                messageReceived = true;
+            }
+
         }
         System.out.println("[Il primo player ha inviato il gameMode e il numOfPlayers]");
         if (message.parametersReceived()){

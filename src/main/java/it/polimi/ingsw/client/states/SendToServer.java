@@ -43,7 +43,7 @@ public class SendToServer extends State{
         while (!ack.parametersReceived()){
             // non ho ancora ricevuto l'ack
         }
-        System.out.println("[Conferma del nickname ricevuta]");
+        System.out.println("[Conferma ricevuta]");
         ack.fireStateEvent();
 
     }

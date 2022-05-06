@@ -59,7 +59,7 @@ public class Wait extends State {
                    // il messaggio è una richiesta del server alla view di un client
 
                    // se il messaggio è rivolto a me devo essere io a compiere l'azione
-                   if (receivedClientModel.getNickname().equals(myClientModel.getNickname())) {
+                   if (receivedClientModel.getClientIdentity() == myClientModel.getClientIdentity()) {
                        // il messaggio è rivolto a me
                        view.requestToMe();
                    } else {

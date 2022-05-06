@@ -1,12 +1,22 @@
 package it.polimi.ingsw.client;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Dati del client minimali che possono facilmente essere trasferiti via network
  */
 
 public class ClientModel {
+    transient Random rand = new Random();
+
+    // Numero univoco che rappresenta l'identità del client
+    // Questo perché in fase di setup i client potrebbero proporre al server dei nickname identici
+    // e potrebbero avere lo stesso indirizzo IP in fase di testing sullo stesso computer
+    // si rende necessario un metodo di riconoscimento del client
+    private int clientIdentity;
+
+
     // Am I the first client connected to server?
     // amIfirst: true = Identificato come primo,
     // false = identificato come non primo,
@@ -66,6 +76,7 @@ public class ClientModel {
 
     public ClientModel(){
         fromTerminal = new ArrayList<>();
+        clientIdentity = rand.nextInt(2147483647);
     }
 
 
@@ -212,5 +223,9 @@ public class ClientModel {
 
     public Boolean isGameStarded() {
         return gameStarded;
+    }
+
+    public int getClientIdentity() {
+        return clientIdentity;
     }
 }

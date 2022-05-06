@@ -33,26 +33,37 @@ public class AmIFirst extends State {
 
     @Override
     public IEvent entryAction(IEvent cause) throws IOException, InterruptedException {
-        // invio al server il mio modello
-        System.out.println("[Chiedo al server se sono il primo client]");
-        Network.send(json.toJson(clientModel));
+        boolean responseReceived = false;
 
-        response.enable();
-        while( !response.parametersReceived()){
-            // Non ho ancora ricevuto una risposta dal server
+        while(!responseReceived) {
+            // invio al server il mio modello
+            System.out.println("[Chiedo al server se sono il primo client]");
+            Network.send(json.toJson(clientModel));
+
+            response.enable();
+            while (!response.parametersReceived()) {
+                // Non ho ancora ricevuto una risposta dal server
+            }
+
+            // se il messaggio è rivolto a me allora ho ricevuto l'ack, altrimenti reinvio e riattendo
+            if(json.fromJson(response.getParameter(0), ClientModel.class).getClientIdentity() == clientModel.getClientIdentity()){
+                responseReceived = true;
+            }
         }
-        response.disable();
 
-        System.out.println("[Ho ricevuto la risposta]");
+        System.out.println("[Ho ricevuto la risposta: ");
         clientModel = json.fromJson(response.getParameter(0), ClientModel.class);
         if (clientModel.getAmIfirst() == null){
             nicknameAlreadyPresent.fireStateEvent();
+            System.out.println("   il nickname era già presente !!!]");
         }
         else if (clientModel.getAmIfirst().equals(true)){
             yes.fireStateEvent();
+            System.out.println("   sono primo !!!]");
         }
         else if (clientModel.getAmIfirst().equals(false)){
             no.fireStateEvent();
+            System.out.println("   non sono primo !!!]");
         }
         return super.entryAction(cause);
     }
