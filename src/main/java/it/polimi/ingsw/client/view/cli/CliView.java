@@ -134,53 +134,6 @@ public class CliView implements View{
         }
     }
 
-        @Override
-    public void showConnectingGame() {
-        try{
-            CommandPrompt.println("Connessione ad una partita esistente....");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        };
-    }
-
-    @Override
-    public void showWaitingForOtherPlayer(){
-        try{
-            CommandPrompt.println("Waiting for other player to join the game...");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        };
-    }
-    @Override
-    public void showGameStarted(){
-        try{
-            CommandPrompt.println("Game Started!!");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        };
-    }
-
-    @Override
-    public void itsyourturn(String command){
-        try{
-            if(command!="ENDGAME")
-            CommandPrompt.println(" IT'S YOUR TURN - PHASE: "+command);
-            else
-                CommandPrompt.println(" THE GAME ENDED ");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        };
-    }
-
-    @Override
-    public void showendscreen(String winner){
-        try{
-                CommandPrompt.println("GAME ENDED !! THE WINNER IS: "+ winner);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        };
-    }
-
     /**
      * Metodo di richiesta all'utente di inserimento di un certo numero di parole separate da uno spazio,
      * lo stato chiamante sarà uno stato di Read (lettura da terminale), lo stato si occupa solo del dichiarare
@@ -231,34 +184,13 @@ public class CliView implements View{
                 CommandPrompt.ask("Il nickname scelto è già esistente, si prega di reinserirne uno nuovo",
                         "nickname>");
                 break;
-
-            case "WICHCARD" :
-                CommandPrompt.ask("Inserire la carta scelta",
-                        "carta>");
-                break;
-            case "WICHSTUDENT" :
-                CommandPrompt.ask("Inserire lo studente scelto",
-                        "studente>");
-                break;
-            case "WICHISLAND" :
-                CommandPrompt.ask("Inserire l'isola scelta'",
-                        "isola>");
-                break;
-            case "WHEREMOVEMOTHER" :
-                CommandPrompt.ask("Inserire di quanti passi si desidera muovere madre natura'",
-                        "passi>");
-                break;
-            case "WICHCLOUD" :
-                CommandPrompt.ask("Inserire da quale nuvola prelevare gli studenti",
-                        "nuvola>");
-                break;
         }
 
         ((ReadFromTerminal) callingState).numberOfParametersIncorrect().disable();
         ((ReadFromTerminal) callingState).insertedParameters().disable();
     }
 
-    // Il server mi invia una richiesta di interazione tramite terminale
+    // Il server mi invia una richiesta di interazione: devo digitare roba da terminale
     public void requestToMe(){
         switch(clientModel.getTypeOfRequest()){
             case "HELLO" :
@@ -281,23 +213,23 @@ public class CliView implements View{
         }
     }
 
-    // Qualcun altro sta interagendo con il terminale
+    // Qualcun altro sta interagendo con il terminale: devo gestire il tempo di attesa
+    // Esempio "pippo: sta salutando"
     public void requestToOthers() throws IOException {
         switch(clientModel.getTypeOfRequest()) {
             case "HELLO" :
             CommandPrompt.println("L'utente " +clientModel.getNickname()+ " sta scrivendo Hello");
             break;
-            // Esempio "pippo: sta salutando"
         }
     }
 
-    // Qualcun altro ha risposto al server
+    // Qualcun altro ha risposto al server: devo mostrare a schermo un'interpretazione della risposta
+    // Esempio "pippo: ha salutato"
     public void response() throws IOException {
         switch(clientModel.getTypeOfRequest()) {
             case "HELLO" :
                 CommandPrompt.println("L'utente " +clientModel.getNickname()+ " ha scritto Hello");
             break;
-            // Esempio "pippo: ha salutato"
         }
     }
 

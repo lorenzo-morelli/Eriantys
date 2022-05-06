@@ -86,12 +86,19 @@ public class WaitOtherClients extends State {
                     System.out.println("[Client notificato per aver inserito nickname già presente]");
 
                     // attendo un nickname unico
-                    ParametersFromNetwork nickname = new ParametersFromNetwork(1);
-                    nickname.enable();
-                    while(!nickname.parametersReceived() ){
-                       // non ho ricevuto ancora un messaggio
-                    }
+                    ParametersFromNetwork nickname = new ParametersFromNetwork(1);;
 
+                    boolean messageReceived = false;
+                    while(!messageReceived) {
+                        nickname = new ParametersFromNetwork(1);
+                        nickname.enable();
+                        while (!nickname.parametersReceived()) {
+                            // non ho ricevuto ancora un messaggio
+                        }
+                        if (json.fromJson(nickname.getParameter(0), ClientModel.class).getClientIdentity() == clientModel.getClientIdentity()){
+                            messageReceived = true;
+                        }
+                    }
                     clientModel = json.fromJson(nickname.getParameter(0), ClientModel.class);
                     isNicknameAlreadyExistent();
             }
