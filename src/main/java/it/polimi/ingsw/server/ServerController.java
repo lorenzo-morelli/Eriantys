@@ -25,7 +25,6 @@ public class ServerController{
         WaitFirstPlayerGameInfo waitFirstPlayerGameInfo = new WaitFirstPlayerGameInfo(fsm,connectionModel);
         WaitOtherClients waitOtherClients = new WaitOtherClients(connectionModel,fsm);
         AskHelloToPlayerOne askHelloToPlayerOne = new AskHelloToPlayerOne(connectionModel);
-        //IsNicknameAlreadyExisting isNicknameAlreadyExisting = new IsNicknameAlreadyExisting(connectionInfo);
 
         // Dichiarazione delle transizioni tra gli stati
         fsm.addTransition(idle, start, specifyPortScreen);
