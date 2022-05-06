@@ -27,7 +27,7 @@ public class WaitFirstPlayer extends State {
         this.connectionModel = connectionModel;
     }
 
-    public ParametersFromNetwork getFirstMessage() {
+    public ParametersFromNetwork gotFirstMessage() {
         return firstMessage;
     }
 

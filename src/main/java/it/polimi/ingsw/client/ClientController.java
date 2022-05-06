@@ -10,10 +10,7 @@ import java.io.IOException;
 public class ClientController {
 
     public ClientController(View view) throws IOException, InterruptedException {
-
-        CommandPrompt.setDebug();
-
-        // Dati del client
+        // Dati del client (inviabili tramite network)
         ClientModel clientModel = new ClientModel();
 
         // Dichiarazione degli stati necessari: uno stato rappresenta una schermata (che sia essa di gui o di cli)
@@ -32,7 +29,7 @@ public class ClientController {
         ReadUserInfo askUserinfo = new ReadUserInfo(view, clientModel, fsm);
         ReadGameInfo askGameInfo = new ReadGameInfo(view, clientModel, fsm);
         ReadNickname askNewNickname = new ReadNickname(view,clientModel,fsm);
-        // Wait state, stato in amIFirstcui ricevo solo comandi di aggiornamento della vista
+        // Wait state, stato in cui ricevo solo comandi di aggiornamento della vista
         Wait wait = new Wait(clientModel,view, fsm);
         // Stati per inviare informazioni al server
         SendToServer sendToServer = new SendToServer(clientModel,fsm);

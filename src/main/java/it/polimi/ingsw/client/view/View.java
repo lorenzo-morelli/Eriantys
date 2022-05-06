@@ -16,16 +16,21 @@ public interface View {
     void setClientModel(ClientModel clientModel);
     void askToStart();
     void askDecision(String option1, String option2);
-    void showConnectingGame();
-    void showWaitingForOtherPlayer();
-    void showGameStarted();
-    void itsyourturn(String command);
-    void showendscreen(String winner);
     void askParameters();
 
+    /**
+     * Come reagisco io client se il server mi fa una richiesta di interagire tramite terminale
+     */
     void requestToMe();
 
+    /**
+     * Come reagisco io client se un altro client riceve una richiesta di interazione da terminale
+     */
     void requestToOthers() throws IOException;
 
+    /**
+     * Come reagisco io client in caso di risposta di un altro client al server
+     * @throws IOException
+     */
     void response() throws IOException;
 }

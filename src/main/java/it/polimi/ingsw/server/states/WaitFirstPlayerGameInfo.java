@@ -27,7 +27,7 @@ public class WaitFirstPlayerGameInfo extends State {
         this.connectionModel= connectionModel;
     }
 
-    public ParametersFromNetwork getMessage() {
+    public ParametersFromNetwork gotNumOfPlayersAndGamemode() {
         return message;
     }
 

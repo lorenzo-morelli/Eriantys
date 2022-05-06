@@ -4,7 +4,7 @@ import it.polimi.ingsw.client.ClientModel;
 import java.util.ArrayList;
 
 /**
- * This class is needed to store the data from Clients
+ * This class is needed to store the data sent from Clients over network
  */
 
 public class ConnectionModel {
