@@ -23,18 +23,18 @@ public class SchoolBoard {
         }
         this.dinnerTable = new StudentSet();
         int rnd = new Random().nextInt(avaiableTower.size());
-        this.towerColor = TowerColor.values()[rnd];
-        avaiableTower.remove(TowerColor.values()[rnd]);
+        this.towerColor = avaiableTower.get(rnd);
+        avaiableTower.remove(rnd);
     }
     public SchoolBoard(Team team, StudentSet bag, ArrayList<PeopleColor> avaiablePeopleColorinBag,ArrayList<TowerColor> avaiableTower) {
         this.entranceSpace = new StudentSet();    //4 giocatori
         this.entranceSpace.setStudentsRandomly(7, bag, avaiablePeopleColorinBag);
         this.numOfTowers = 8;
         this.dinnerTable = new StudentSet();
-        if (!team.isFull()) {
+        if (team.getPlayer2()==null) {
             int rnd = new Random().nextInt(avaiableTower.size());
-            this.towerColor = TowerColor.values()[rnd];
-            avaiableTower.remove(TowerColor.values()[rnd]);
+            this.towerColor = avaiableTower.get(rnd);
+            avaiableTower.remove(rnd);
         } else {
             this.towerColor = team.getPlayer1().getTowerColor();
         }
@@ -65,5 +65,7 @@ public class SchoolBoard {
         return entranceSpace;
     }
 
-
+    public int getNumOfTowers() {
+        return numOfTowers;
+    }
 }

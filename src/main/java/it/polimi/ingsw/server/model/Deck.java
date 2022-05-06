@@ -30,14 +30,18 @@ public class Deck {
     }
 
     public boolean remove(AssistantCard choosen) {
-        for (AssistantCard assistantCard : this.cards) {
-            if (choosen.equals(assistantCard)) {
-                this.cards.remove(choosen);
-            }
+        if (inDeck(choosen)) {
+            cards.removeIf(assistantCard -> assistantCard.getValues() == choosen.getValues() && assistantCard.getMoves() == choosen.getMoves());
+            return cards.size() == 0;
+        }else {
+            throw new IllegalArgumentException();
         }
-        return cards.size() == 0;
     }
     public boolean inDeck(AssistantCard card){
-        return cards.contains(card);
+        for (AssistantCard assistantCard : cards) {
+            if (assistantCard.getValues() == card.getValues() && assistantCard.getMoves() == card.getMoves())
+                return true;
+        }
+        return false;
     }
 }

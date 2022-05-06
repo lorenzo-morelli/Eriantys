@@ -6,5 +6,4 @@ public enum PeopleColor {
     YELLOW,
     BLUE,
     PINK,
-    UNKNOWN,
 }

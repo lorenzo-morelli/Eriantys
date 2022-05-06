@@ -20,7 +20,7 @@ public class Cloud {
     public StudentSet getStudentsAccumulator() {
         return studentsAccumulator;
     }
-    public boolean charge(StudentSet bag, ArrayList<PeopleColor> avaiablecolor){
+    public boolean charge(StudentSet bag, ArrayList<PeopleColor> avaiablecolor) {
         if(bag.size()>=cloudsize) {
             this.studentsAccumulator.setStudentsRandomly(cloudsize, bag, avaiablecolor);
             return true;
@@ -28,5 +28,9 @@ public class Cloud {
         else{
             return false;
         }
+    }
+
+    public int getCloudsize() {
+        return cloudsize;
     }
 }

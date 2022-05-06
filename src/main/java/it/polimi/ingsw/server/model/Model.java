@@ -1,7 +1,6 @@
 package it.polimi.ingsw.server.model;
 
 import it.polimi.ingsw.server.model.enums.GameMode;
-import it.polimi.ingsw.server.model.enums.PeopleColor;
 
 import java.util.ArrayList;
 
@@ -12,14 +11,13 @@ public class Model {
 
     private GameMode gameMode;
     private final int numberOfPlayers;
-    private final int turnNumber;
+    private int turnNumber;
     private final CenterTable table;
-
     private int currentplayer;
     private final ArrayList<Team> teams;
     private final ArrayList<Player> players;
 
-    public Model(int numofplayer, String gamemode) {
+    public Model(int numofplayer, String gamemode) throws Exception {
 
         this.currentplayer=0;
         this.players =new ArrayList<>();
@@ -43,8 +41,13 @@ public class Model {
         }
     }
 
-    public static Model createModel(int numofplayer, String Gamemode) {
-                return new Model(numofplayer,Gamemode);
+    public static Model createModel(int numofplayer, String Gamemode) throws Exception {
+        if(numofplayer<5 && numofplayer>1 && (Gamemode=="PRINCIPIANT" || Gamemode=="EXPERT")) {
+            return new Model(numofplayer, Gamemode);
+        }
+        else{
+            throw new IllegalArgumentException();
+        }
     }
 
     public GameMode getGameMode() {
@@ -81,5 +84,16 @@ public class Model {
         else{
             currentplayer++;
         }
+    }
+
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
+    public int getTurnNumber() {
+        return turnNumber;
+    }
+    public void nextTurn(){
+        turnNumber++;
     }
 }

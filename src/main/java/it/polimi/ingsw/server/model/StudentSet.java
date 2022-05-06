@@ -27,11 +27,17 @@ public class StudentSet {
                 this.numOfYellowStudents=numOfYellowStudents;
     }
 
-    public PeopleColor estractRandomStudent(ArrayList<PeopleColor> avaiableColor){
-        int rnd = new Random().nextInt(avaiableColor.size());
-        if(numStudentsbycolor(PeopleColor.values()[rnd])==1) avaiableColor.remove(PeopleColor.values()[rnd]);
-        removestudent(1,PeopleColor.values()[rnd]);
-        return PeopleColor.values()[rnd];
+    public PeopleColor estractRandomStudent(ArrayList<PeopleColor> avaiableColor) {
+        if(avaiableColor.size()>0) {
+            int rnd = new Random().nextInt(avaiableColor.size());
+            removestudent(1, avaiableColor.get(rnd));
+            PeopleColor color= avaiableColor.get(rnd);
+            if (numStudentsbycolor(avaiableColor.get(rnd)) == 0) {
+                avaiableColor.remove(rnd);
+            }
+            return color;
+        }
+        throw new IllegalArgumentException();
     }
 
     public int numStudentsbycolor(PeopleColor color){
@@ -42,12 +48,16 @@ public class StudentSet {
             case PINK: return numOfPinkStudents;
             case GREEN: return numOfGreenStudents;
         }
-        return 0;
+        throw new IllegalArgumentException();
     }
     public int size(){
         return numStudentsbycolor(PeopleColor.BLUE)+numStudentsbycolor(PeopleColor.RED)+numStudentsbycolor(PeopleColor.YELLOW)+numStudentsbycolor(PeopleColor.PINK)+numStudentsbycolor(PeopleColor.GREEN);
     }
     public void removestudent(int n, PeopleColor color){
+        if(numStudentsbycolor(color)<n){
+            addstudents(-numStudentsbycolor(color),color);
+            return;
+        }
         addstudents(-n,color);
     }
     public void addstudents(int n, PeopleColor color){
@@ -65,7 +75,7 @@ public class StudentSet {
         }
     }
 
-    public void setStudentsRandomly(int n,StudentSet bag,ArrayList<PeopleColor> avaiableColor){//rivedere
+    public void setStudentsRandomly(int n,StudentSet bag,ArrayList<PeopleColor> avaiableColor) {//rivedere
         for(int i=0;i<n;i++){
             addstudents(1,bag.estractRandomStudent(avaiableColor));
         }

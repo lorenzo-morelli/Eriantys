@@ -17,7 +17,7 @@ public class CenterTable {
     private final ArrayList<TowerColor> avaiableTowerColor;
     private final ArrayList<Character> characterCards;
 
-    public CenterTable(int numplayer, GameMode gamemode){
+    public CenterTable(int numplayer, GameMode gamemode) throws Exception {
 
         islands=new ArrayList<>();
         StudentSet islandbag=new StudentSet(2,2,2,2,2);
@@ -58,7 +58,7 @@ public class CenterTable {
             clouds.get(i).charge(bag,avaiablePeopleColorinBag);
         }
 
-        if(gamemode.equals(GameMode.EXPERT)){
+        if(gamemode.equals(GameMode.EXPERT)){  //da controllare
             characterCards=new ArrayList<>();
             ArrayList<Integer> picks=new ArrayList<>();
             var ref = new Object() {
@@ -95,7 +95,7 @@ public class CenterTable {
             if (professor.getColor().equals(color)) professor.setHeldBy(player);
         }
     }
-    public void chargeClouds(){
+    public void chargeClouds() throws Exception {
         for (Cloud cloud : clouds) {
             cloud.charge(bag, avaiablePeopleColorinBag);
         }
@@ -146,5 +146,13 @@ public class CenterTable {
         islands.remove(index_2);
         if(index_2 < index_1) motherNaturePosition--;
         if(index_2==0 && index_1== islands.size()) motherNaturePosition=islands.size()-1;
+    }
+
+    public ArrayList<Cloud> getClouds() {
+        return clouds;
+    }
+
+    public ArrayList<Character> getCharacterCards() {
+        return characterCards;
     }
 }

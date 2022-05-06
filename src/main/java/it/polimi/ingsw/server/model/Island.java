@@ -11,7 +11,7 @@ public class Island {
     private TowerColor towerColor;
     private boolean isBlocked;
 
-    public Island(int initialstudent, StudentSet bag, ArrayList<PeopleColor> avaiablecolor) {
+    public Island(int initialstudent, StudentSet bag, ArrayList<PeopleColor> avaiablecolor) throws Exception {
         this.inhabitants = new StudentSet();
         this.inhabitants.setStudentsRandomly(initialstudent,bag,avaiablecolor);
         this.numberOfTowers = 0;
@@ -84,5 +84,9 @@ public class Island {
     public void controllIsland(Player influence_player){
         setTowerColor(influence_player.getSchoolBoard().getTowerColor());
         influence_player.getSchoolBoard().placeTower();
+    }
+
+    public int getNumberOfTowers() {
+        return numberOfTowers;
     }
 }
