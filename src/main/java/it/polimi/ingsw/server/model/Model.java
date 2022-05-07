@@ -16,9 +16,11 @@ public class Model {
     private int currentplayer;
     private final ArrayList<Team> teams;
     private final ArrayList<Player> players;
+    boolean islastturn;
 
     public Model(int numofplayer, String gamemode) throws Exception {
 
+        this.islastturn=false;
         this.currentplayer=0;
         this.players =new ArrayList<>();
         this.numberOfPlayers= numofplayer;
@@ -95,5 +97,75 @@ public class Model {
     }
     public void nextTurn(){
         turnNumber++;
+    }
+
+    public void setlastturn() {
+        this.islastturn = true;
+    }
+
+    public String player_winner(){
+        int min=8;
+        Player winner=null;
+        for (Player player : players) {
+            if (player.getSchoolBoard().getNumOfTowers() < min) {
+                min = player.getSchoolBoard().getNumOfTowers();
+                winner = player;
+            } else if (player.getSchoolBoard().getNumOfTowers() == min) {
+                winner = null;
+            }
+        }
+        if(winner==null){
+            int max=0;
+            for (Player player : players) {
+                int numProf = 0;
+                for (int i = 0; i < getTable().getProfessors().size(); i++) {
+                    if (getTable().getProfessors().get(i).getHeldBy().equals(player)) {
+                        numProf++;
+                    }
+                }
+                if (numProf > max) {
+                    max = numProf;
+                    winner = player;
+                } else if (numProf == max) {
+                    winner = null;
+                }
+            }
+        }
+
+        if(winner==null) return "NON C'E' NESSUN VINCITORE";
+        else return winner.getNickname();
+    }
+
+    public String team_winner(){
+        int min=8;
+        Team winner=null;
+        for (Team team : teams) {
+            if (team.getPlayer1().getSchoolBoard().getNumOfTowers() < min) {
+                min = team.getPlayer1().getSchoolBoard().getNumOfTowers();
+                winner = team;
+            } else if (team.getPlayer1().getSchoolBoard().getNumOfTowers() == min) {
+                winner = null;
+            }
+        }
+        if(winner==null){
+            int max=0;
+            for (Team team : teams) {
+                int numProf = 0;
+                for (int i = 0; i < getTable().getProfessors().size(); i++) {
+                    if (getTable().getProfessors().get(i).getHeldBy().equals(team.getPlayer1()) || getTable().getProfessors().get(i).getHeldBy().equals(team.getPlayer2())) {
+                        numProf++;
+                    }
+                }
+                if (numProf > max) {
+                    max = numProf;
+                    winner = team;
+                } else if (numProf == max) {
+                    winner = null;
+                }
+            }
+        }
+
+        if(winner==null) return "NON C'E' NESSUN VINCITORE";
+        else return winner.getPlayer1().getNickname()+ " " +winner.getPlayer2().getNickname();
     }
 }

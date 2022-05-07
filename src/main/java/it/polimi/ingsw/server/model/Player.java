@@ -51,10 +51,6 @@ public class Player implements Comparable<Player>{
             throw new IllegalArgumentException();
         }
     }
-    public TowerColor getTowerColor() {
-        return this.schoolBoard.getTowerColor();
-    }
-
     public void setChoosedCard(AssistantCard choosedCard) {
         this.choosedCard = choosedCard;
     }
