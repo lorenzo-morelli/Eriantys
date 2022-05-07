@@ -38,7 +38,7 @@ public class Island {
     public void setBlocked(boolean blocked) {
         isBlocked = blocked;
     }
-    public Player player_influence(ArrayList<Player> Players, ArrayList<Professor> Professors) { //ritorna nullo se nessuno ha influenza
+    /*public Player player_influence(ArrayList<Player> Players, ArrayList<Professor> Professors) { //ritorna nullo se nessuno ha influenza
         int max = 0, partial_sum = 0;   //2 or 3 player
         Player max_influence = null;
         for (Player player : Players) {
@@ -79,16 +79,16 @@ public class Island {
             partial_sum = 0;
         }
         return max_influence; //ritorna team con piu influenza
-    }
+    }*/
     public void placeTower(){ this.numberOfTowers ++; }
 
     public void controllIsland(Player influence_player){
-        setTowerColor(influence_player.getSchoolBoard().getTowerColor());
+        //setTowerColor(influence_player.getSchoolBoard().getTowerColor());
         influence_player.getSchoolBoard().placeTower();
     }
 
     public void controllIsland(Team influence_team){
-        setTowerColor(influence_team.getPlayer1().getSchoolBoard().getTowerColor());
+        //setTowerColor(influence_team.getPlayer1().getSchoolBoard().getTowerColor());
         influence_team.getPlayer1().getSchoolBoard().placeTower();
         influence_team.getPlayer2().getSchoolBoard().placeTower();
     }

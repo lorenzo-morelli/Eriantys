@@ -1,5 +1,6 @@
 package it.polimi.ingsw.client;
 
+import com.google.gson.annotations.SerializedName;
 import it.polimi.ingsw.server.model.AssistantCard;
 import it.polimi.ingsw.server.model.Deck;
 
@@ -37,9 +38,7 @@ public class ClientModel {
     private Boolean isResponse = false;
 
     private Boolean gameStarded = false;
-    private String responseDescription;
     private String typeOfRequest;
-    private String requestDescription;
 
     private List<AssistantCard> deck;
 
@@ -158,22 +157,6 @@ public class ClientModel {
 
     public void setResponse(Boolean response) {
         isResponse = response;
-    }
-
-    public void setRequestDescription(String requestDescription) {
-        this.requestDescription = requestDescription;
-    }
-
-    public String getRequestDescription() {
-        return requestDescription;
-    }
-
-    public String getResponseDescription() {
-        return responseDescription;
-    }
-
-    public void setResponseDescription(String responseDescription) {
-        this.responseDescription = responseDescription;
     }
 
     public void setGameStarded(Boolean gameStarded) {

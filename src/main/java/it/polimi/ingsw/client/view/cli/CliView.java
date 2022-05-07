@@ -8,6 +8,8 @@ import it.polimi.ingsw.server.model.AssistantCard;
 import it.polimi.ingsw.utils.cli.CommandPrompt;
 import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.stateMachine.State;
+
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -194,27 +196,12 @@ public class CliView implements View{
     // Il server mi invia una richiesta di interazione: devo digitare roba da terminale
     public void requestToMe(){
         switch(clientModel.getTypeOfRequest()){
-            case "HELLO" :
-                CommandPrompt.ask("Inserire hello",
-                        "hello>");
-                // l'utente ha inserito hello? Prima parso e inserisco tutto in una variabile locale
-                parsedStrings = new ArrayList<String>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
-
-                //Se si invia tutto al server
-                if (parsedStrings.size() == 1 && parsedStrings.get(0).equals("hello")) {
-                    clientModel.setResponse(true); //lo flaggo come messaggio di risposta
-                    clientModel.setFromTerminal(parsedStrings);
-                    Gson json = new Gson();
-                    Network.send(json.toJson(clientModel));
-                }
-                else{
-                    requestToMe();
-                }
-                break;
 
             case "CHOOSEASSISTANTCARD" :
+                List<Integer> indexList = new ArrayList<>();
                 int i = 0;
                 for (AssistantCard a : clientModel.getDeck()){
+                    indexList.add(i);
                     System.out.println(i+": "+ "valore: " + a.getValues() + "  mosse: " + a.getMoves());
                     i++;
                 }
@@ -222,16 +209,18 @@ public class CliView implements View{
                         "numero della carta>");
                 parsedStrings = new ArrayList<String>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
 
-                //Se si invia tutto al server
-                if (parsedStrings.size() == 1 && isValidNumber(parsedStrings.get(0))) {
-                    clientModel.setResponse(true); //lo flaggo come messaggio di risposta
-                    clientModel.setFromTerminal(parsedStrings);
-                    Gson json = new Gson();
-                    Network.send(json.toJson(clientModel));
-                }
-                else{
+                // la cifra inserita deve essere valida
+               if (!isValidCifra(parsedStrings.get(0))) {
                     requestToMe();
                 }
+               // la cifra inserita deve essere tra quelle proposte (ovvero nelle availableCards)
+               if(!indexList.contains(Integer.parseInt(parsedStrings.get(0)))){
+                   requestToMe();
+               }
+                clientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                clientModel.setFromTerminal(parsedStrings);
+                Gson json = new Gson();
+                Network.send(json.toJson(clientModel));
                 break;
         }
     }
@@ -254,8 +243,13 @@ public class CliView implements View{
     public void response() throws IOException {
         switch(clientModel.getTypeOfRequest()) {
             case "HELLO" :
-                CommandPrompt.println("L'utente " +clientModel.getNickname()+ " ha scritto Hello");
+                System.out.println("L'utente " +clientModel.getNickname()+ " ha scritto Hello");
             break;
+            case "CHOOSEASSISTANTCARD":
+                System.out.println("Il giocatore " + clientModel.getNickname()+" ha scelto " +
+                        "valore = " +clientModel.getDeck().get(Integer.parseInt(clientModel.getFromTerminal().get(0))).getValues() +
+                        " mosse = "+clientModel.getDeck().get(Integer.parseInt(clientModel.getFromTerminal().get(0))).getValues());
+                break;
         }
     }
 

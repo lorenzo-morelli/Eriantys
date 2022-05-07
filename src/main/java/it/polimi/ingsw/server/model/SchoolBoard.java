@@ -9,7 +9,7 @@ import java.util.Random;
 public class SchoolBoard {
     private final StudentSet entranceSpace;
     private final StudentSet dinnerTable;
-    private final TowerColor towerColor;
+    //private final TowerColor towerColor;
     private int numOfTowers;
 
     public SchoolBoard(int numOfPlayer, StudentSet bag, ArrayList<PeopleColor> avaiablePeopleColorinBag,ArrayList<TowerColor> avaiableTower) {
@@ -23,7 +23,7 @@ public class SchoolBoard {
         }
         this.dinnerTable = new StudentSet();
         int rnd = new Random().nextInt(avaiableTower.size());
-        this.towerColor = avaiableTower.get(rnd);
+        //this.towerColor = avaiableTower.get(rnd);
         avaiableTower.remove(rnd);
     }
     public SchoolBoard(Team team, StudentSet bag, ArrayList<PeopleColor> avaiablePeopleColorinBag,ArrayList<TowerColor> avaiableTower) {
@@ -33,15 +33,15 @@ public class SchoolBoard {
         this.dinnerTable = new StudentSet();
         if (team.getPlayer2()==null) {
             int rnd = new Random().nextInt(avaiableTower.size());
-            this.towerColor = avaiableTower.get(rnd);
+            //this.towerColor = avaiableTower.get(rnd);
             avaiableTower.remove(rnd);
         } else {
-            this.towerColor = team.getPlayer1().getTowerColor();
+            //this.towerColor = team.getPlayer1().getTowerColor();
         }
     }
-    public TowerColor getTowerColor() {
-        return towerColor;
-    }
+    //public TowerColor getTowerColor() {
+        //return towerColor;
+    //}
     public void placeTower(){ this.numOfTowers = numOfTowers-1; }
     public void removeTower(){ this.numOfTowers = numOfTowers+1;}
     public void load_dinner(PeopleColor color){
@@ -68,5 +68,9 @@ public class SchoolBoard {
 
     public int getNumOfTowers() {
         return numOfTowers;
+    }
+
+    public Object getTowerColor() {
+        return null;
     }
 }

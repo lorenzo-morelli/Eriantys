@@ -2,9 +2,12 @@ package it.polimi.ingsw.server.model;
 import it.polimi.ingsw.server.model.enums.GameMode;
 import it.polimi.ingsw.server.model.enums.TowerColor;
 
+import java.util.ArrayList;
+
 public class Player implements Comparable<Player>{
     private final String nickname;
-    private final Deck availableCards;
+    private Deck availableCards;  // le availableCards diminuiscono, non può essere final
+    private  ArrayList alreadyChoosen;
     private AssistantCard choosedCard;
     private final SchoolBoard schoolBoard;
 
@@ -19,6 +22,7 @@ public class Player implements Comparable<Player>{
         this.availableCards = new Deck();
         this.choosedCard = null;
         this.numplayerinteam=0;
+        this.alreadyChoosen = new ArrayList<AssistantCard>();
         this.schoolBoard = new SchoolBoard(model.getNumberOfPlayers(), model.getTable().getBag(), model.getTable().getAvaiablePeopleColorinBag(), model.getTable().getAvaiableTowerColor());
         if(model.getGameMode().equals(GameMode.EXPERT) ) this.coins = 1;
     }
@@ -28,6 +32,7 @@ public class Player implements Comparable<Player>{
             this.nickname = nickname;
             this.Ip = Ip;
             this.availableCards = new Deck();
+            this.alreadyChoosen = new ArrayList<AssistantCard>();
             this.choosedCard = null;
             Team team;
             if (model.getTeams().get(0).getTeamNumber() == teamnumber) {
@@ -51,8 +56,9 @@ public class Player implements Comparable<Player>{
             throw new IllegalArgumentException();
         }
     }
-    public void setChoosedCard(AssistantCard choosedCard) {
+    public boolean setChoosedCard(AssistantCard choosedCard) {
         this.choosedCard = choosedCard;
+        return availableCards.remove(choosedCard);
     }
 
     public AssistantCard getChoosedCard() {
@@ -83,5 +89,9 @@ public class Player implements Comparable<Player>{
 
     public int getNumplayerinteam() {
         return numplayerinteam;
+    }
+
+    public ArrayList getAlreadyChoosen() {
+        return alreadyChoosen;
     }
 }

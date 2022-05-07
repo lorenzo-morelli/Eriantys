@@ -14,9 +14,11 @@ import it.polimi.ingsw.utils.stateMachine.Event;
 import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
-public class ChooseAssistantCard extends State {
+public class AssistantCardPhase extends State {
     private Event cardsChoosen;
     private Model model;
 
@@ -31,7 +33,7 @@ public class ChooseAssistantCard extends State {
     public Event cardsChoosen() {
         return cardsChoosen;
     }
-    public ChooseAssistantCard(ServerController serverController) {
+    public AssistantCardPhase(ServerController serverController) {
         super("[Choose Assistant Card]");
         this.serverController = serverController;
         this.controller = serverController.getFsm();
@@ -44,7 +46,7 @@ public class ChooseAssistantCard extends State {
     @Override
     public IEvent entryAction(IEvent cause) throws Exception {
         model = serverController.getModel();
-        ArrayList alreadyChoosen = new ArrayList<AssistantCard>();
+
         // For each player
         for(int i=0; i<model.getNumberOfPlayers(); i++){
             // retrive the current player
@@ -63,9 +65,36 @@ public class ChooseAssistantCard extends State {
             while(!message.parametersReceived()){
                 // il client non ha ancora scelto la carta assistente
             }
+            System.out.println(message.getParameter(0));
+            // ricevo un campo json e lo converto in AssistantCard
+            AssistantCard choosen = currentPlayerData.getDeck().get(Integer.parseInt(json.fromJson(message.getParameter(0),ClientModel.class).getFromTerminal().get(0)));
+
+            // il controllo sul fatto che l'utente scelga una carta appartenente a quelle presenti in availableCars
+            // viene svolto direttamente dal client in CliView
+
+            if (currentPlayer.getAlreadyChoosen().containsAll((currentPlayer.getAvailableCards().getCardsList()))){
+                choosen.lowPriority();
+            }
+
+            currentPlayer.getAlreadyChoosen().add(choosen);
+            boolean checkEndCondition = currentPlayer.setChoosedCard(choosen);
+
+            if (checkEndCondition){
+                // TODO: vai alla ENDPHASE e printa a schermo chi ha vinto
+            }
+            model.nextPlayer();
+
+            // Siccome il network ha latenza non nulla diamo il tempo a tutti i client di elaborare
+            TimeUnit.SECONDS.sleep(1);
 
 
         }
         return super.entryAction(cause);
+    }
+
+    @Override
+    public void exitAction(IEvent cause) throws IOException {
+        model.schedulePlayers();
+        super.exitAction(cause);
     }
 }

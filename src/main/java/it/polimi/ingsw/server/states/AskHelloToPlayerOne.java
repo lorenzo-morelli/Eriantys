@@ -31,7 +31,6 @@ public class AskHelloToPlayerOne extends State {
         datiPrimoClient.setResponse(false); // è una richiesta non una risposta
         datiPrimoClient.setGameStarded(true); // faccio partire il gioco
         datiPrimoClient.setTypeOfRequest("HELLO");  // lato client avrà una nella CliView un metodo per gestire questa richiesta
-        datiPrimoClient.setRequestDescription("the_user_inserted_hello");
 
 
 

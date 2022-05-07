@@ -38,6 +38,8 @@ public class SoggettoOsservato implements Subject {
                 e.printStackTrace();
             } catch (InterruptedException e) {
                 e.printStackTrace();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
         });
 

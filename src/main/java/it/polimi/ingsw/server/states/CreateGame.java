@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.states;
 
+import it.polimi.ingsw.client.ClientModel;
 import it.polimi.ingsw.server.ConnectionModel;
 import it.polimi.ingsw.server.ServerController;
 import it.polimi.ingsw.server.model.Model;
@@ -38,8 +39,11 @@ public class CreateGame extends State {
     @Override
     public IEvent entryAction(IEvent cause) throws Exception {
         model = new Model(connectionModel.getNumOfPlayers(), connectionModel.getGameMode());
-        model.getPlayers().add(new Player(connectionModel.getClientsInfo().get(0).getNickname(),connectionModel.getClientsInfo().get(0).getMyIp(), model));
-        model.getPlayers().add(new Player(connectionModel.getClientsInfo().get(1).getNickname(),connectionModel.getClientsInfo().get(1).getMyIp(), model));
+        int i = 0;
+        for (ClientModel c : connectionModel.getClientsInfo()){
+            model.getPlayers().add(new Player(connectionModel.getClientsInfo().get(i).getNickname(),connectionModel.getClientsInfo().get(i).getMyIp(), model));
+            i++;
+        }
         model.randomschedulePlayers();
         gameCreated.fireStateEvent();
         return super.entryAction(cause);

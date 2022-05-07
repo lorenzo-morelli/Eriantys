@@ -2,11 +2,8 @@ package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.server.model.Model;
 import it.polimi.ingsw.server.states.*;
-import it.polimi.ingsw.utils.cli.CommandPrompt;
 import it.polimi.ingsw.utils.stateMachine.Controller;
 import it.polimi.ingsw.utils.stateMachine.Event;
-
-import java.io.IOException;
 
 public class ServerController{
     Model model;
@@ -26,7 +23,7 @@ public class ServerController{
         WaitFirstPlayerGameInfo waitFirstPlayerGameInfo = new WaitFirstPlayerGameInfo(this);
         WaitOtherClients waitOtherClients = new WaitOtherClients(this);
         CreateGame createGame = new CreateGame(this);
-        ChooseAssistantCard chooseAssistantCard = new ChooseAssistantCard(this);
+        AssistantCardPhase assistantCardPhase = new AssistantCardPhase(this);
 
         // Dichiarazione delle transizioni tra gli stati
         fsm.addTransition(idle, start, specifyPortScreen);
@@ -34,7 +31,7 @@ public class ServerController{
         fsm.addTransition(waitFirstPlayer,waitFirstPlayer.gotFirstMessage(),waitFirstPlayerGameInfo);
         fsm.addTransition(waitFirstPlayerGameInfo,waitFirstPlayerGameInfo.gotNumOfPlayersAndGamemode(),waitOtherClients);
         fsm.addTransition(waitOtherClients, waitOtherClients.allClientsConnected(), createGame);
-        fsm.addTransition(createGame, createGame.gameCreated(), chooseAssistantCard);
+        fsm.addTransition(createGame, createGame.gameCreated(), assistantCardPhase);
         // L'evento di start è l'unico che deve essere fatto partire manualmente
         start.fireStateEvent();
     }
