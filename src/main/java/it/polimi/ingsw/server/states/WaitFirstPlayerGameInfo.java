@@ -3,6 +3,7 @@ package it.polimi.ingsw.server.states;
 import com.google.gson.Gson;
 import it.polimi.ingsw.client.ClientModel;
 import it.polimi.ingsw.server.ConnectionModel;
+import it.polimi.ingsw.server.ServerController;
 import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
 import it.polimi.ingsw.utils.stateMachine.Controller;
@@ -18,13 +19,13 @@ public class WaitFirstPlayerGameInfo extends State {
     private ConnectionModel connectionModel;
 
     private ParametersFromNetwork message;
-    public WaitFirstPlayerGameInfo(Controller controller, ConnectionModel connectionModel) {
+    public WaitFirstPlayerGameInfo(ServerController serverController) {
         super("[Il server è in attesa di gamemode e numero di giocatori]");
         json = new Gson();
         message = new ParametersFromNetwork(1);
         message.setStateEventListener(controller);
-        this.controller = controller;
-        this.connectionModel= connectionModel;
+        this.controller = serverController.getFsm();
+        this.connectionModel= serverController.getConnectionModel();
     }
 
     public ParametersFromNetwork gotNumOfPlayersAndGamemode() {
@@ -32,7 +33,7 @@ public class WaitFirstPlayerGameInfo extends State {
     }
 
     @Override
-    public IEvent entryAction(IEvent cause) throws IOException, InterruptedException {
+    public IEvent entryAction(IEvent cause) throws Exception {
         boolean messageReceived = false;
         System.out.println("[Non ho ancora ricevuto niente]");
 

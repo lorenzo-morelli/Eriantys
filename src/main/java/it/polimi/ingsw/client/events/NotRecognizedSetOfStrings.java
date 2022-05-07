@@ -20,7 +20,6 @@ public class NotRecognizedSetOfStrings extends Event implements Observer {
     public NotRecognizedSetOfStrings(ArrayList<String> words) throws IOException {
         super("[Nessuna delle opzioni riconosciute]");
         this.toListen = words;
-        System.out.println("[Costruito l'evento Stringhe non riconosciute]");
         this.commandPrompt = CommandPrompt.getInstance();
         this.subscribe();
     }
@@ -43,7 +42,7 @@ public class NotRecognizedSetOfStrings extends Event implements Observer {
     }
 
     @Override
-    public void update(Object message) throws IOException, InterruptedException {
+    public void update(Object message) throws Exception {
         if(toListen != null && enabled == true){
             if(!isInList((String)message)){
                 fireStateEvent();

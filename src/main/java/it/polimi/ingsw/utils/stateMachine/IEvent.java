@@ -11,7 +11,7 @@ import java.io.IOException;
  */
 public interface IEvent {
 
-    public void fireStateEvent() throws IOException, InterruptedException;
+    public void fireStateEvent() throws Exception;
     public void setStateEventListener(Controller engine);
 }
 

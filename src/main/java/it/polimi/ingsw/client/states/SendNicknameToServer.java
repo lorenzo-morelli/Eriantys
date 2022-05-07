@@ -41,7 +41,7 @@ public class SendNicknameToServer extends State {
 
 
     @Override
-    public IEvent entryAction(IEvent cause) throws IOException, InterruptedException {
+    public IEvent entryAction(IEvent cause) throws Exception {
         System.out.println("[Inviato nuovo nickname al server: ]");
         System.out.println(json.toJson(clientModel));
         Network.send(json.toJson(clientModel));
@@ -58,17 +58,17 @@ public class SendNicknameToServer extends State {
     }
 
 
-    public void checkAck() throws IOException, InterruptedException {
+    public void checkAck() throws Exception {
 
         ack = new ParametersFromNetwork(1);
         ack.setStateEventListener(controller);
         ack.enable();
-        System.out.println("[Conferma del nickname non ancora ricevuta]");
+        //System.out.println("[Conferma del nickname non ancora ricevuta]");
         while (!ack.parametersReceived()){
             // non ho ancora ricevuto l'ack
         }
 
-        System.out.println("[Conferma del nickname ricevuta]");
+        //System.out.println("[Conferma del nickname ricevuta]");
         ClientModel fromNetwork = json.fromJson(ack.getParameter(0),ClientModel.class);
         System.out.println(ack.getParameter(0));
 

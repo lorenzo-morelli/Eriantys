@@ -32,12 +32,12 @@ public class AmIFirst extends State {
     }
 
     @Override
-    public IEvent entryAction(IEvent cause) throws IOException, InterruptedException {
+    public IEvent entryAction(IEvent cause) throws Exception {
         boolean responseReceived = false;
 
         while(!responseReceived) {
             // invio al server il mio modello
-            System.out.println("[Chiedo al server se sono il primo client]");
+            //System.out.println("[Chiedo al server se sono il primo client]");
             Network.send(json.toJson(clientModel));
 
             response.enable();
@@ -51,19 +51,19 @@ public class AmIFirst extends State {
             }
         }
 
-        System.out.println("[Ho ricevuto la risposta: ");
+        //System.out.println("[Ho ricevuto la risposta: ");
         clientModel = json.fromJson(response.getParameter(0), ClientModel.class);
         if (clientModel.getAmIfirst() == null){
             nicknameAlreadyPresent.fireStateEvent();
-            System.out.println("   il nickname era già presente !!!]");
+            //System.out.println("   il nickname era già presente !!!]");
         }
         else if (clientModel.getAmIfirst().equals(true)){
             yes.fireStateEvent();
-            System.out.println("   sono primo !!!]");
+            //System.out.println("   sono primo !!!]");
         }
         else if (clientModel.getAmIfirst().equals(false)){
             no.fireStateEvent();
-            System.out.println("   non sono primo !!!]");
+            //System.out.println("   non sono primo !!!]");
         }
         return super.entryAction(cause);
     }

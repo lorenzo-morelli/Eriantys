@@ -7,7 +7,7 @@ public interface Observer {
     /**
      * se vieni notificato cosa vuoi fare?
      */
-    public  void update(Object message) throws IOException, InterruptedException;
+    public  void update(Object message) throws Exception;
 
     /**
      * iscriviti

@@ -1,6 +1,10 @@
 package it.polimi.ingsw.client;
 
+import it.polimi.ingsw.server.model.AssistantCard;
+import it.polimi.ingsw.server.model.Deck;
+
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -37,6 +41,8 @@ public class ClientModel {
     private String typeOfRequest;
     private String requestDescription;
 
+    private List<AssistantCard> deck;
+
 
 
     // where to put data that comes from terminal
@@ -65,13 +71,6 @@ public class ClientModel {
 
 
 
-    private int CardChoosed;
-    private int Student_in_entrance_Choosed;
-    private int Island_Choosed;
-    private int Mother_movement_Choosed;
-    private int CloudChoosed;
-
-
 
 
     public ClientModel(){
@@ -82,52 +81,12 @@ public class ClientModel {
 
     // Getters and Setters
 
-    public int getCloudChoosed() {
-        return CloudChoosed;
-    }
-
     public int getNumofplayer() {
         return numofplayer;
     }
 
-    public void setCloudChoosed(int cloudChoosed) {
-        CloudChoosed = cloudChoosed;
-    }
-
-    public int getMother_movement_Choosed() {
-        return Mother_movement_Choosed;
-    }
-
-    public void setMother_movement_Choosed(int mother_movement_Choosed) {
-        Mother_movement_Choosed = mother_movement_Choosed;
-    }
-
-    public int getIsland_Choosed() {
-        return Island_Choosed;
-    }
-
-    public void setIsland_Choosed(int island_Choosed) {
-        Island_Choosed = island_Choosed;
-    }
-
-    public int getStudent_in_entrance_Choosed() {
-        return Student_in_entrance_Choosed;
-    }
-
-    public void setStudent_in_entrance_Choosed(int student_in_entrance_Choosed) {
-        Student_in_entrance_Choosed = student_in_entrance_Choosed;
-    }
-
-    public int getCardChoosed() {
-        return CardChoosed;
-    }
-
     public String getGamemode() {
         return gamemode;
-    }
-
-    public void setCardChoosed(int cardChoosed) {
-        CardChoosed = cardChoosed;
     }
 
     public void setGamemode(String gamemode) {
@@ -227,5 +186,13 @@ public class ClientModel {
 
     public int getClientIdentity() {
         return clientIdentity;
+    }
+
+    public List<AssistantCard> getDeck() {
+        return deck;
+    }
+
+    public void setDeck(List<AssistantCard> deck) {
+        this.deck = deck;
     }
 }

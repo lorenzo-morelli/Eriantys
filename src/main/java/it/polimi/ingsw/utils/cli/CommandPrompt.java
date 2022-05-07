@@ -112,10 +112,8 @@ public class CommandPrompt implements Subject{
         CommandPrompt.observers.stream().forEach(observer -> {
             try {
                 observer.update(fromTerminal);
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            }catch (Exception e) {
+                throw new RuntimeException(e);
             }
         });
     }

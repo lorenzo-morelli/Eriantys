@@ -38,7 +38,7 @@ public class ReadFromTerminal extends State {
         return type;
     }
 
-    public IEvent entryAction(IEvent cause) throws IOException, InterruptedException {
+    public IEvent entryAction(IEvent cause) throws Exception {
         view.setCallingState(this);
         view.askParameters();
 

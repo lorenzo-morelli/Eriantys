@@ -26,7 +26,7 @@ public class Event implements IEvent {
      * possible.  If there is no transaction for the current state + this
      * event, it will throw an IllegalStateException.
      */
-    public void fireStateEvent() throws IOException, InterruptedException {
+    public void fireStateEvent() throws Exception {
             listener.fireStateEvent(this);
     }
 

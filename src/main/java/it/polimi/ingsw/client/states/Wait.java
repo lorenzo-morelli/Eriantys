@@ -34,7 +34,7 @@ public class Wait extends State {
     }
 
     @Override
-    public IEvent entryAction(IEvent cause) throws IOException, InterruptedException {
+    public IEvent entryAction(IEvent cause) throws Exception {
 
 
           ParametersFromNetwork message = new ParametersFromNetwork(1);

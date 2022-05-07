@@ -3,6 +3,7 @@ package it.polimi.ingsw.server.states;
 import com.google.gson.Gson;
 import it.polimi.ingsw.client.ClientModel;
 import it.polimi.ingsw.server.ConnectionModel;
+import it.polimi.ingsw.server.ServerController;
 import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
 import it.polimi.ingsw.utils.stateMachine.Controller;
@@ -22,10 +23,10 @@ public class WaitOtherClients extends State {
 
     private Event allClientsConnected;
 
-    public WaitOtherClients(ConnectionModel connectionModel, Controller controller) {
+    public WaitOtherClients(ServerController serverController) {
         super("[Aspettando gli altri giocatori]");
-        this.connectionModel = connectionModel;
-        this.controller = controller;
+        this.connectionModel = serverController.getConnectionModel();
+        this.controller = serverController.getFsm();
         json = new Gson();
         message = new ParametersFromNetwork(1);
         message.setStateEventListener(controller);
@@ -38,7 +39,7 @@ public class WaitOtherClients extends State {
     }
 
     @Override
-    public IEvent entryAction(IEvent cause) throws IOException, InterruptedException {
+    public IEvent entryAction(IEvent cause) throws Exception {
         // Quanti clients devo ancora aspettare?
         numOfPlayersToWait = connectionModel.getClientsInfo().get(0).getNumofplayer() - 1;
 

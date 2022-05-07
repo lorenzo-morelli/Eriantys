@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import it.polimi.ingsw.client.ClientModel;
 import it.polimi.ingsw.client.states.*;
 import it.polimi.ingsw.client.view.View;
+import it.polimi.ingsw.server.model.AssistantCard;
 import it.polimi.ingsw.utils.cli.CommandPrompt;
 import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.stateMachine.State;
@@ -210,6 +211,28 @@ public class CliView implements View{
                     requestToMe();
                 }
                 break;
+
+            case "CHOOSEASSISTANTCARD" :
+                int i = 0;
+                for (AssistantCard a : clientModel.getDeck()){
+                    System.out.println(i+": "+ "valore: " + a.getValues() + "  mosse: " + a.getMoves());
+                    i++;
+                }
+                CommandPrompt.ask("Scegli una carta assistente",
+                        "numero della carta>");
+                parsedStrings = new ArrayList<String>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
+
+                //Se si invia tutto al server
+                if (parsedStrings.size() == 1 && isValidNumber(parsedStrings.get(0))) {
+                    clientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                    clientModel.setFromTerminal(parsedStrings);
+                    Gson json = new Gson();
+                    Network.send(json.toJson(clientModel));
+                }
+                else{
+                    requestToMe();
+                }
+                break;
         }
     }
 
@@ -218,8 +241,11 @@ public class CliView implements View{
     public void requestToOthers() throws IOException {
         switch(clientModel.getTypeOfRequest()) {
             case "HELLO" :
-            CommandPrompt.println("L'utente " +clientModel.getNickname()+ " sta scrivendo Hello");
-            break;
+                CommandPrompt.println("L'utente " +clientModel.getNickname()+ " sta scrivendo Hello");
+                break;
+            case "CHOOSEASSISTANTCARD" :
+                CommandPrompt.println("L'utente " +clientModel.getNickname()+ " sta scegliendo la carta assistente");
+                break;
         }
     }
 

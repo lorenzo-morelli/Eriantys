@@ -21,7 +21,6 @@ public class NotRecognizedString extends Event implements Observer {
     public NotRecognizedString(String message) throws IOException {
         super("[Non è stata riconosciuta la parola " + message + "]");
         this.toListen = message;
-        System.out.println("[Costruito l'evento di ricenzione da terminale della parola "+message+"]");
         this.commandPrompt = CommandPrompt.getInstance();
         this.subscribe();
     }
@@ -36,7 +35,7 @@ public class NotRecognizedString extends Event implements Observer {
     }
 
     @Override
-    public void update(Object message) throws IOException, InterruptedException {
+    public void update(Object message) throws Exception {
         if(toListen != null && enabled == true){
             if (!this.toListen.equals ((String)message)){
                 fireStateEvent();

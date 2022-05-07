@@ -22,7 +22,7 @@ public class AskHelloToPlayerOne extends State {
     }
 
     @Override
-    public IEvent entryAction(IEvent cause) throws IOException, InterruptedException {
+    public IEvent entryAction(IEvent cause) throws Exception {
 
         ClientModel datiPrimoClient;
         datiPrimoClient = connectionModel.getClientsInfo().get(0);

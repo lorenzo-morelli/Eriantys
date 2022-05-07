@@ -18,7 +18,7 @@ public interface IState {
      * @param cause L'evento che ha causato la transizione in questo stato
      * @return null a meno che tu non voglia forzare la transizione verso un nuovo stato
      */
-    public IEvent entryAction(IEvent cause) throws IOException, InterruptedException;
+    public IEvent entryAction(IEvent cause) throws Exception;
 
     /**
      * Come entryaction, a differenza che questo metodo viene chiamato quando il controllore "sta uscendo" dallo stato

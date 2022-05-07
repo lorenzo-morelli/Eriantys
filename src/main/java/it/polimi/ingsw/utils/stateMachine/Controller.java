@@ -40,6 +40,7 @@ import java.util.LinkedList;
  */
 
 public class Controller {
+    private boolean hideDebugMessages = true;
     public final static Object STATE_DO_NOTHING=null;
 
     /** Memorizza tutte le possibili transazioni */
@@ -147,7 +148,9 @@ public class Controller {
      */
     public void addTransition(IState startingState, IEvent ev, IState nextState) {
         ev.setStateEventListener(this);
-        System.out.println(this + " Transizione (" + startingState + "," + ev + ") --> " + nextState+" aggiunta");
+        if (!hideDebugMessages) {
+            System.out.println(this + " Transizione (" + startingState + "," + ev + ") --> " + nextState + " aggiunta");
+        }
         states.addTransition(startingState, ev, nextState);
     }
 
@@ -175,7 +178,7 @@ public class Controller {
      * @param ev
      *            L'evento azionato.
      */
-    public void fireStateEvent(IEvent ev) throws IOException, InterruptedException {
+    public void fireStateEvent(IEvent ev) throws Exception {
         synchronized (events) {
             // aggiunge in coda l'evento arrivato
             // il primo evento che arriva dovrebbe essere il primo eseguito
@@ -206,8 +209,9 @@ public class Controller {
                 }
 
             } else if (tmp != null ){
-
-                System.out.println(this + " transition from state \"" + currentState + "\" to state \"" + tmp + "\" because of event \"" + ev + "\"");
+                if (!hideDebugMessages) {
+                    System.out.println(this + " transition from state \"" + currentState + "\" to state \"" + tmp + "\" because of event \"" + ev + "\"");
+                }
 
                 if (currentState != null) {
                     currentState.exitAction(ev);
@@ -245,13 +249,22 @@ public class Controller {
     public String toString() {
         return "[FSM " + name + "]";
     }
-    // TODO: add support for multiple listeners.
     private ITransitionListener setListener;
 
     public void addStateEngineTransactionListener(ITransitionListener testEventsMatrix) {
         this.setListener = testEventsMatrix;
     }
+
+    /**
+     * Mostra i log delle transizioni tra gli stati
+     */
+    public void showDebugMessages(){
+        hideDebugMessages = false;
+    }
 }
+
+
+
 /**
  *  Ciascuna riga della tabella ha l'associazione (evento, (stato di partenza , stato prossimo))
  *

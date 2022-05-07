@@ -38,7 +38,7 @@ public class SpecifyPortScreen extends State {
     }
 
     @Override
-    public IEvent entryAction(IEvent cause) throws IOException, InterruptedException {
+    public IEvent entryAction(IEvent cause) throws Exception {
         if(!Network.isServerListening()) {
             CommandPrompt.ask(
                     "Inserire la porta sulla quale mettersi in ascolto dei clients",

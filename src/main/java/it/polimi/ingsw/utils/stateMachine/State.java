@@ -26,7 +26,7 @@ public class State implements IState {
      * @param cause
      * @return any event but NULL causes the system to go straight to that state.
      */
-    public IEvent entryAction(IEvent cause) throws IOException, InterruptedException {
+    public IEvent entryAction(IEvent cause) throws Exception {
         return null;
     }
 

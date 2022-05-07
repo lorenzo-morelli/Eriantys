@@ -18,4 +18,29 @@ public class ConnectionModel {
         return clientsInfo;
     }
 
+    public int getNumOfPlayers(){
+        return clientsInfo.toArray().length;
+    }
+
+    public String getGameMode(){
+        return clientsInfo.get(0).getGamemode();
+    }
+
+    public ClientModel findPlayer(String nickname){
+        for (ClientModel c : clientsInfo){
+            if (c.getNickname().equals(nickname)){
+                return c;
+            }
+        }
+        return null;
+    }
+
+    public void storeDataOfPlayer(String nickname, ClientModel clientData){
+        for (ClientModel c : clientsInfo){
+            if (c.getNickname().equals(nickname)){
+                c = clientData;
+            }
+        }
+    }
+
 }

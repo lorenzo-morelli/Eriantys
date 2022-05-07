@@ -27,7 +27,7 @@ public class SendToServer extends State{
     }
 
     @Override
-    public IEvent entryAction(IEvent cause) throws IOException, InterruptedException {
+    public IEvent entryAction(IEvent cause) throws Exception {
         Network.send(json.toJson(clientModel));
         checkAck();
         return super.entryAction(cause);
@@ -37,13 +37,13 @@ public class SendToServer extends State{
         return ack;
     }
 
-    public void checkAck() throws IOException, InterruptedException {
+    public void checkAck() throws Exception {
 
         ack.enable();
         while (!ack.parametersReceived()){
             // non ho ancora ricevuto l'ack
         }
-        System.out.println("[Conferma ricevuta]");
+        //System.out.println("[Conferma ricevuta]");
         ack.fireStateEvent();
 
     }

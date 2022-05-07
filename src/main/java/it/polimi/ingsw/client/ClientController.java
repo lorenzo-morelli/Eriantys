@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class ClientController {
 
-    public ClientController(View view) throws IOException, InterruptedException {
+    public ClientController(View view) throws Exception {
         // Dati del client (inviabili tramite network)
         ClientModel clientModel = new ClientModel();
 

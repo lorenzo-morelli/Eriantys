@@ -35,11 +35,11 @@ public class IncorrectNumberOfParameters extends Event implements Observer {
     }
 
     @Override
-    public void update(Object message) throws IOException, InterruptedException {
+    public void update(Object message) throws Exception {
         if (enabled == true){
             parsedStrings = new ArrayList<String>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
             if (parsedStrings.size() != numberOfStrings){
-                fireStateEvent();;
+                fireStateEvent();
             }
 
         }

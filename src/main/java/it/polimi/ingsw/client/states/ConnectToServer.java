@@ -25,7 +25,7 @@ public class ConnectToServer extends State{
 
 
 
-    public IEvent entryAction(IEvent cause) throws IOException, InterruptedException {
+    public IEvent entryAction(IEvent cause) throws Exception {
 
         view.setCallingState(this);
         Network.setupClient(clientModel.getIp(), clientModel.getPort());
