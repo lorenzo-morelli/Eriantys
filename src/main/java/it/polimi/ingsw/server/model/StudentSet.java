@@ -11,6 +11,7 @@ public class StudentSet {
     private int numOfBlueStudents;
     private int numOfPinkStudents;
     private int numOfGreenStudents;
+
     public StudentSet(){
         this.numOfRedStudents=0;
         this.numOfGreenStudents=0;

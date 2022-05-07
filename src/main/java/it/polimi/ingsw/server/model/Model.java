@@ -67,6 +67,7 @@ public class Model {
     public CenterTable getTable() {
         return table;
     }
+
     public void randomschedulePlayers(){
         shuffle(players);
     }

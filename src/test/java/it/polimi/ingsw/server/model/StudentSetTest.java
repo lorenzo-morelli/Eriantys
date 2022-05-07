@@ -27,12 +27,13 @@ class StudentSetTest {
         set.removestudent(1,PeopleColor.YELLOW);
         set.addstudents(2,PeopleColor.PINK);
         set.addstudents(27,PeopleColor.BLUE);
+        set.addstudents(1,PeopleColor.BLUE);
         assertEquals(0,set.numStudentsbycolor(PeopleColor.RED));
         assertEquals(0,set.numStudentsbycolor(PeopleColor.GREEN));
         assertEquals(1,set.numStudentsbycolor(PeopleColor.YELLOW));
-        assertEquals(29,set.numStudentsbycolor(PeopleColor.BLUE));
+        assertEquals(30,set.numStudentsbycolor(PeopleColor.BLUE));
         assertEquals(4,set.numStudentsbycolor(PeopleColor.PINK));
-        assertEquals(34,set.size());
+        assertEquals(35,set.size());
     }
 
     @Test

@@ -81,6 +81,7 @@ public class Island {
         return max_influence; //ritorna team con piu influenza
     }
     public void placeTower(){ this.numberOfTowers ++; }
+
     public void controllIsland(Player influence_player){
         setTowerColor(influence_player.getSchoolBoard().getTowerColor());
         influence_player.getSchoolBoard().placeTower();
