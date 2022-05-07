@@ -55,6 +55,7 @@ public class SchoolBoard {
        entranceSpace.addstudents(cloud.getStudentsAccumulator().numStudentsbycolor(PeopleColor.GREEN),PeopleColor.GREEN);
        entranceSpace.addstudents(cloud.getStudentsAccumulator().numStudentsbycolor(PeopleColor.BLUE),PeopleColor.BLUE);
        entranceSpace.addstudents(cloud.getStudentsAccumulator().numStudentsbycolor(PeopleColor.YELLOW),PeopleColor.YELLOW);
+       cloud.getStudentsAccumulator().setAllStudentTozero();
     }
 
     public StudentSet getDinnerTable() {

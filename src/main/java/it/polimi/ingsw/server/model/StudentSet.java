@@ -27,6 +27,14 @@ public class StudentSet {
                 this.numOfYellowStudents=numOfYellowStudents;
     }
 
+    public void setAllStudentTozero(){
+        this.numOfRedStudents=0;
+        this.numOfGreenStudents=0;
+        this.numOfBlueStudents=0;
+        this.numOfPinkStudents=0;
+        this.numOfYellowStudents=0;
+    }
+
     public PeopleColor estractRandomStudent(ArrayList<PeopleColor> avaiableColor) {
         if(avaiableColor.size()>0) {
             int rnd = new Random().nextInt(avaiableColor.size());

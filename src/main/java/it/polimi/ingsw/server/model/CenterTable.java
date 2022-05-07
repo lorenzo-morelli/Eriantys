@@ -137,6 +137,17 @@ public class CenterTable {
         }
         islands.get(index_island).controllIsland(influence_player);
     }
+
+    public void ConquestIsland(int index_island, ArrayList<Team> teams, Team influence_team){
+        for (Team team : teams) {
+            if (team.getPlayer1().getSchoolBoard().getTowerColor().equals(islands.get(index_island).getTowerColor())) {
+                team.getPlayer1().getSchoolBoard().removeTower();
+                team.getPlayer2().getSchoolBoard().removeTower();
+            }
+        }
+        islands.get(index_island).controllIsland(influence_team);
+    }
+
     public void MergeIsland(int index_1, int index_2){
         islands.get(index_1).placeTower();
         for(PeopleColor Color: PeopleColor.values()){
