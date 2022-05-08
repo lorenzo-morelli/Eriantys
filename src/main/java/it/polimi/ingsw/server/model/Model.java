@@ -3,6 +3,7 @@ package it.polimi.ingsw.server.model;
 import it.polimi.ingsw.server.model.enums.GameMode;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import static java.util.Collections.shuffle;
 import static java.util.Collections.sort;
@@ -18,7 +19,7 @@ public class Model {
     private final ArrayList<Player> players;
     boolean islastturn;
 
-    public Model(int numofplayer, String gamemode) throws Exception {
+    public Model(int numofplayer, String gamemode) {
 
         this.islastturn=false;
         this.currentplayer=0;
@@ -44,7 +45,7 @@ public class Model {
     }
 
     public static Model createModel(int numofplayer, String Gamemode) throws Exception {
-        if(numofplayer<5 && numofplayer>1 && (Gamemode=="PRINCIPIANT" || Gamemode=="EXPERT")) {
+        if(numofplayer<5 && numofplayer>1 && (Objects.equals(Gamemode, "PRINCIPIANT") || Objects.equals(Gamemode, "EXPERT"))) {
             return new Model(numofplayer, Gamemode);
         }
         else{

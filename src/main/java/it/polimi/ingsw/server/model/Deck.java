@@ -31,7 +31,7 @@ public class Deck {
 
     public boolean remove(AssistantCard choosen) {
         if (inDeck(choosen)) {
-            cards.removeIf(assistantCard -> assistantCard.getValues() == choosen.getValues() && assistantCard.getMoves() == choosen.getMoves());
+            cards.removeIf(assistantCard -> assistantCard.equals(choosen));
             return cards.size() == 0;
         }else {
             throw new IllegalArgumentException();

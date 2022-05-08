@@ -23,4 +23,13 @@ public class AssistantCard {
     public void lowPriority(){
         values+=0.5;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof AssistantCard) {
+            if (this.getMoves() != ((AssistantCard) obj).getMoves()) return false;
+            return this.getValues() == ((AssistantCard) obj).getValues();
+        }
+        return false;
+    }
 }

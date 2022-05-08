@@ -6,12 +6,12 @@ import it.polimi.ingsw.server.model.enums.TowerColor;
 import java.util.ArrayList;
 
 public class Island {
-    private StudentSet inhabitants;
+    private final StudentSet inhabitants;
     private int numberOfTowers;
     private TowerColor towerColor;
     private boolean isBlocked;
 
-    public Island(int initialstudent, StudentSet bag, ArrayList<PeopleColor> avaiablecolor) throws Exception {
+    public Island(int initialstudent, StudentSet bag, ArrayList<PeopleColor> avaiablecolor) {
         this.inhabitants = new StudentSet();
         this.inhabitants.setStudentsRandomly(initialstudent,bag,avaiablecolor);
         this.numberOfTowers = 0;
@@ -38,11 +38,12 @@ public class Island {
     public void setBlocked(boolean blocked) {
         isBlocked = blocked;
     }
-    /*public Player player_influence(ArrayList<Player> Players, ArrayList<Professor> Professors) { //ritorna nullo se nessuno ha influenza
+
+    public Player player_influence(ArrayList<Player> Players, ArrayList<Professor> Professors) { //ritorna nullo se nessuno ha influenza
         int max = 0, partial_sum = 0;   //2 or 3 player
         Player max_influence = null;
         for (Player player : Players) {
-            if (player.getTowerColor().equals(towerColor)) partial_sum++;
+            if (player.getSchoolBoard().getTowerColor().equals(towerColor)) partial_sum++;
             for (Professor professor : Professors) {
                 if (player.equals(professor.getHeldBy())) {
                     partial_sum = partial_sum + inhabitants.numStudentsbycolor(professor.getColor());
@@ -64,7 +65,7 @@ public class Island {
         Team max_influence = null;
 
         for (Team team : Teams) {
-            if (team.getPlayer1().getTowerColor().equals(towerColor)) partial_sum++;
+            if (team.getPlayer1().getSchoolBoard().getTowerColor().equals(towerColor)) partial_sum++;
             for (Professor professor : Professors) {
                 if (team.getPlayer1().equals(professor.getHeldBy()) || team.getPlayer2().equals(professor.getHeldBy())) {
                     partial_sum = partial_sum + inhabitants.numStudentsbycolor(professor.getColor());
@@ -79,16 +80,16 @@ public class Island {
             partial_sum = 0;
         }
         return max_influence; //ritorna team con piu influenza
-    }*/
+    }
     public void placeTower(){ this.numberOfTowers ++; }
 
     public void controllIsland(Player influence_player){
-        //setTowerColor(influence_player.getSchoolBoard().getTowerColor());
+        setTowerColor(influence_player.getSchoolBoard().getTowerColor());
         influence_player.getSchoolBoard().placeTower();
     }
 
     public void controllIsland(Team influence_team){
-        //setTowerColor(influence_team.getPlayer1().getSchoolBoard().getTowerColor());
+        setTowerColor(influence_team.getPlayer1().getSchoolBoard().getTowerColor());
         influence_team.getPlayer1().getSchoolBoard().placeTower();
         influence_team.getPlayer2().getSchoolBoard().placeTower();
     }

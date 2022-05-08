@@ -17,7 +17,7 @@ public class CenterTable {
     private final ArrayList<TowerColor> avaiableTowerColor;
     private final ArrayList<Character> characterCards;
 
-    public CenterTable(int numplayer, GameMode gamemode) throws Exception {
+    public CenterTable(int numplayer, GameMode gamemode) {
 
         islands=new ArrayList<>();
         StudentSet islandbag=new StudentSet(2,2,2,2,2);
@@ -95,7 +95,7 @@ public class CenterTable {
             if (professor.getColor().equals(color)) professor.setHeldBy(player);
         }
     }
-    public void chargeClouds() throws Exception {
+    public void chargeClouds() {
         for (Cloud cloud : clouds) {
             cloud.charge(bag, avaiablePeopleColorinBag);
         }
