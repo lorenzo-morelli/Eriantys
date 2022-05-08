@@ -133,9 +133,9 @@ This message has no arguments.
 This message is sent from the server to the all the clients, including all the components to start a new game.
 
 #### Arguments
-- CenterTable: a list with all the elements for the game (islands, students, ...)
-- AssistantCards: the deck with the player's assistant cards
-- OtherPlayersNicknames: the list with the nicknames of all the other players.
+- centerTable: a list with all the elements for the game (islands, students, ...)
+- assistantCards: the deck with the player's assistant cards
+- otherPlayersNicknames: the list with the nicknames of all the other players.
 
 #### Possible responses
 - PlayAssistantCard: to play a new assistant card.
@@ -146,7 +146,18 @@ This message is sent from the server to the all the clients, including all the c
 This message is sent from the client when they want to play an assistant card.
 
 #### Arguments
-- ChoosenAssistantCard: the card they want to play.
+- choosenAssistantCard: the card they want to play.
+
+#### Possible responses
+- Ack: the messages has been received.
+
+
+
+### MoveStudent
+This message is sent from the client when they want to move a student.
+
+#### Arguments
+- student: the student they want to move.
 
 #### Possible responses
 - Ack: the messages has been received.
@@ -157,23 +168,21 @@ This message is sent from the client when they want to play an assistant card.
 This message is sent from the client when they want to move mother nature.
 
 #### Arguments
-- NumberOfMoves: the number of moves of mother nature.
+- numberOfMoves: the number of moves of mother nature.
 
 #### Possible responses
 - Ack: the messages has been received.
 
 
 
-### Ack
-This message is sent from the server to the client when a generic message has been acknowledged.
+### EndGame
+This message is sent from the server to the client when the game is ended.
 
 #### Arguments
-This message has no arguments.
+- winnerName: the nickname of the winner.
 
 #### Possible responses
-This message has no responses.
-
-
+- StartGame: to start another game with the same players.
 
 
 
@@ -213,15 +222,19 @@ end
 
 Description
 
-### Game with successful creation and connection
+### Example with successful game creation and connection
 
 ```mermaid
 sequenceDiagram
-Client (host) ->> Server: CreateGame(nickname, numberOfPlayers
-Server->>Client (host): CreationSuccessful
-Client (2)->>Server: Connect(nickname, gameID)
-Server->> Client (2): ConnectionSuccessful
-
+Client 1 (host) ->> Server: CreateGame(nickname, numberOfPlayers
+Server->>Client 1 (host): CreationSuccessful
+par
+    Client 2->>Server: Connect(nickname, gameID)
+    Server->> Client 2: ConnectionSuccessful
+and
+    Client 3->>Server: Connect(nickname, gameID)
+    Server->> Client 3: ConnectionSuccessful
+end
 ```
 
-Description
+This sequence diagram shows the successful creation and connection of a new game between three clients.
