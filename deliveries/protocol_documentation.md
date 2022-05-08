@@ -238,3 +238,8 @@ end
 ```
 
 This sequence diagram shows the successful creation and connection of a new game between three clients.
+
+
+##Architettura
+
+<img src="ClientController.jpg">
