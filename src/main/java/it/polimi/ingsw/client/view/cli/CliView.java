@@ -21,7 +21,6 @@ public class CliView implements View{
 
     // La vista matiene una reference allo stato chiamante (schermata video/command line) ed al precedente.
     private State callingState;
-    private State precedentCallingState;
 
     // parsedString ci serve per parsare l'input e verificare la correttezza dei dati inseriti
     private ArrayList<String> parsedStrings;
@@ -102,7 +101,6 @@ public class CliView implements View{
     // Non è altro che il pattern Observer riadattato per il pattern State
     @Override
     public void setCallingState(State callingState) {
-        this.precedentCallingState = this.callingState;
         this.callingState = callingState;
     }
 
@@ -159,6 +157,7 @@ public class CliView implements View{
                 parsedStrings =
                         new ArrayList<String>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
                 if (parsedStrings.size()!=3 || !isValidIp(parsedStrings.get(1)) || !isValidPort(parsedStrings.get(2))){
+                    System.out.print("ALERT: dati inseriti non validi, riprovare\n");
                     askParameters();
                 }
 
@@ -171,14 +170,17 @@ public class CliView implements View{
                         new ArrayList<String>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
                 // controllo che numOfPlayers sia una cifra
                 if (!isValidCifra(parsedStrings.get(0))){
+                    System.out.print("ALERT: Inserisci una cifra su numOfPlayers, riprovare\n");
                     askParameters();
                 }
                 // se è una cifra allora deve essere compresa tra 2 e 4
                 if(Integer.parseInt(parsedStrings.get(0))<2 || Integer.parseInt(parsedStrings.get(0))>4){
+                    System.out.print("ALERT: numOfPlayers deve essere compresa tra 2 e 4, riprovare\n");
                     askParameters();
                 }
                 // controllo che il gamemode sia tra PRINCIPIANT ed EXPERT
                 if (!parsedStrings.get(1).equals("PRINCIPIANT") && !parsedStrings.get(1).equals("EXPERT")){
+                    System.out.print("ALERT: il gameMode scelto deve essere 'PRINCIPIANT' oppure 'EXPERT', riprovare\n");
                     askParameters();
                 }
                 break;
@@ -195,33 +197,32 @@ public class CliView implements View{
 
     // Il server mi invia una richiesta di interazione: devo digitare roba da terminale
     public void requestToMe(){
-        switch(clientModel.getTypeOfRequest()){
+        if ("CHOOSEASSISTANTCARD".equals(clientModel.getTypeOfRequest())) {
+            List<Integer> indexList = new ArrayList<>();
+            int i = 0;
+            for (AssistantCard a : clientModel.getDeck()) {
+                indexList.add(i);
+                System.out.println(i + ": " + "valore: " + a.getValues() + "  mosse: " + a.getMoves());
+                i++;
+            }
+            CommandPrompt.ask("Scegli una carta assistente",
+                    "numero della carta>");
+            parsedStrings = new ArrayList<String>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
 
-            case "CHOOSEASSISTANTCARD" :
-                List<Integer> indexList = new ArrayList<>();
-                int i = 0;
-                for (AssistantCard a : clientModel.getDeck()){
-                    indexList.add(i);
-                    System.out.println(i+": "+ "valore: " + a.getValues() + "  mosse: " + a.getMoves());
-                    i++;
-                }
-                CommandPrompt.ask("Scegli una carta assistente",
-                        "numero della carta>");
-                parsedStrings = new ArrayList<String>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
-
-                // la cifra inserita deve essere valida
-               if (!isValidCifra(parsedStrings.get(0))) {
-                    requestToMe();
-                }
-               // la cifra inserita deve essere tra quelle proposte (ovvero nelle availableCards)
-               if(!indexList.contains(Integer.parseInt(parsedStrings.get(0)))){
-                   requestToMe();
-               }
-                clientModel.setResponse(true); //lo flaggo come messaggio di risposta
-                clientModel.setFromTerminal(parsedStrings);
-                Gson json = new Gson();
-                Network.send(json.toJson(clientModel));
-                break;
+            // la cifra inserita deve essere valida
+            if (!isValidCifra(parsedStrings.get(0))) {
+                System.out.print("ALERT: cifra inserita non valida, riprovare\n");
+                requestToMe();
+            }
+            // la cifra inserita deve essere tra quelle proposte (ovvero nelle availableCards)
+            if (!indexList.contains(Integer.parseInt(parsedStrings.get(0)))) {
+                System.out.print("ALERT: carta inserita inesistente, riprovare\n");
+                requestToMe();
+            }
+            clientModel.setResponse(true); //lo flaggo come messaggio di risposta
+            clientModel.setFromTerminal(parsedStrings);
+            Gson json = new Gson();
+            Network.send(json.toJson(clientModel));
         }
     }
 
@@ -246,9 +247,9 @@ public class CliView implements View{
                 System.out.println("L'utente " +clientModel.getNickname()+ " ha scritto Hello");
             break;
             case "CHOOSEASSISTANTCARD":
-                System.out.println("Il giocatore " + clientModel.getNickname()+" ha scelto " +
+                System.out.println("Il giocatore " + clientModel.getNickname()+" ha scelto la carta: " +
                         "valore = " +clientModel.getDeck().get(Integer.parseInt(clientModel.getFromTerminal().get(0))).getValues() +
-                        " mosse = "+clientModel.getDeck().get(Integer.parseInt(clientModel.getFromTerminal().get(0))).getValues());
+                        " mosse = "+clientModel.getDeck().get(Integer.parseInt(clientModel.getFromTerminal().get(0))).getMoves());
                 break;
         }
     }
