@@ -197,32 +197,35 @@ public class CliView implements View{
 
     // Il server mi invia una richiesta di interazione: devo digitare roba da terminale
     public void requestToMe(){
-        if ("CHOOSEASSISTANTCARD".equals(clientModel.getTypeOfRequest())) {
-            List<Integer> indexList = new ArrayList<>();
-            int i = 0;
-            for (AssistantCard a : clientModel.getDeck()) {
-                indexList.add(i);
-                System.out.println(i + ": " + "valore: " + a.getValues() + "  mosse: " + a.getMoves());
-                i++;
-            }
-            CommandPrompt.ask("Scegli una carta assistente",
-                    "numero della carta>");
-            parsedStrings = new ArrayList<String>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
+        switch(clientModel.getTypeOfRequest()){
 
-            // la cifra inserita deve essere valida
-            if (!isValidCifra(parsedStrings.get(0))) {
-                System.out.print("ALERT: cifra inserita non valida, riprovare\n");
-                requestToMe();
-            }
-            // la cifra inserita deve essere tra quelle proposte (ovvero nelle availableCards)
-            if (!indexList.contains(Integer.parseInt(parsedStrings.get(0)))) {
-                System.out.print("ALERT: carta inserita inesistente, riprovare\n");
-                requestToMe();
-            }
-            clientModel.setResponse(true); //lo flaggo come messaggio di risposta
-            clientModel.setFromTerminal(parsedStrings);
-            Gson json = new Gson();
-            Network.send(json.toJson(clientModel));
+            case "CHOOSEASSISTANTCARD" :
+                List<Integer> indexList = new ArrayList<>();
+                int i = 0;
+                for (AssistantCard a : clientModel.getDeck()){
+                    indexList.add(i);
+                    System.out.println(i+": "+ "valore: " + a.getValues() + "  mosse: " + a.getMoves());
+                    i++;
+                }
+                CommandPrompt.ask("Scegli una carta assistente",
+                        "numero della carta>");
+                parsedStrings = new ArrayList<String>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
+
+                // la cifra inserita deve essere valida
+               if (!isValidCifra(parsedStrings.get(0))) {
+                    System.out.print("ALERT: cifra inserita non valida, riprovare\n");
+                    requestToMe();
+                }
+               // la cifra inserita deve essere tra quelle proposte (ovvero nelle availableCards)
+               if(!indexList.contains(Integer.parseInt(parsedStrings.get(0)))){
+                   System.out.print("ALERT: carta inserita inesistente, riprovare\n");
+                   requestToMe();
+               }
+                clientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                clientModel.setFromTerminal(parsedStrings);
+                Gson json = new Gson();
+                Network.send(json.toJson(clientModel));
+                break;
         }
     }
 
@@ -247,7 +250,7 @@ public class CliView implements View{
                 System.out.println("L'utente " +clientModel.getNickname()+ " ha scritto Hello");
             break;
             case "CHOOSEASSISTANTCARD":
-                System.out.println("Il giocatore " + clientModel.getNickname()+" ha scelto la carta: " +
+                System.out.println("Il giocatore " + clientModel.getNickname()+" ha scelto " +
                         "valore = " +clientModel.getDeck().get(Integer.parseInt(clientModel.getFromTerminal().get(0))).getValues() +
                         " mosse = "+clientModel.getDeck().get(Integer.parseInt(clientModel.getFromTerminal().get(0))).getMoves());
                 break;
