@@ -10,9 +10,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c193818a-1e92-4991-9439-cb3e4c836bfd" name="Changes" comment="model updates">
-      <change afterPath="$PROJECT_DIR$/deliveries/protocol_documentation.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="c193818a-1e92-4991-9439-cb3e4c836bfd" name="Changes" comment="created protocol_documentation.md">
+      <change beforePath="$PROJECT_DIR$/deliveries/protocol_documentation.md" beforeDir="false" afterPath="$PROJECT_DIR$/deliveries/protocol_documentation.md" afterDir="false" />
     </list>
     <list id="ed38b89b-2f69-4c1d-a7d8-be95ccd584eb" name="Changes by ignaI" comment="Changes by ignaI" />
     <option name="SHOW_DIALOG" value="false" />
@@ -348,7 +347,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652002190591</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="created protocol_documentation.md">
+      <created>1652025610933</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1652025610933</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -385,7 +391,8 @@
     <MESSAGE value="Assistant card Phase" />
     <MESSAGE value="Changes by ignaI" />
     <MESSAGE value="model updates" />
-    <option name="LAST_COMMIT_MESSAGE" value="model updates" />
+    <MESSAGE value="created protocol_documentation.md" />
+    <option name="LAST_COMMIT_MESSAGE" value="created protocol_documentation.md" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
