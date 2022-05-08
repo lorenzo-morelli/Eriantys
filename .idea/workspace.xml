@@ -10,7 +10,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c193818a-1e92-4991-9439-cb3e4c836bfd" name="Changes" comment="edited protocol_documentation.md">
+    <list default="true" id="c193818a-1e92-4991-9439-cb3e4c836bfd" name="Changes" comment="added image">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/deliveries/protocol_documentation.md" beforeDir="false" afterPath="$PROJECT_DIR$/deliveries/protocol_documentation.md" afterDir="false" />
     </list>
@@ -369,7 +369,21 @@
       <option name="project" value="LOCAL" />
       <updated>1652026650980</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="edited protocol_documentation.md">
+      <created>1652027323972</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1652027323972</updated>
+    </task>
+    <task id="LOCAL-00026" summary="added image">
+      <created>1652027504522</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1652027504522</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -408,7 +422,8 @@
     <MESSAGE value="model updates" />
     <MESSAGE value="created protocol_documentation.md" />
     <MESSAGE value="edited protocol_documentation.md" />
-    <option name="LAST_COMMIT_MESSAGE" value="edited protocol_documentation.md" />
+    <MESSAGE value="added image" />
+    <option name="LAST_COMMIT_MESSAGE" value="added image" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

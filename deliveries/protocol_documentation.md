@@ -4,6 +4,30 @@ Fernando Morea, Lorenzo Morelli, Ignazio Neto Dell'Acqua
 
 Group 28
 
+##Architettura
+
+#### A real time thin client protocol
+For the implementation of the communication protocol we chose to use the thin client approach, in the context of a
+real time turn based game.
+First of all, the client has to specify its nickname and ip/port address of the server. If the data provided
+by the client is wrong or the connection to the specified ip/port fails, then the client has to specify again
+the connection infos.
+Once the client is connected to the server, it asks to the server if it is the first one, with a .json serialized
+message containing a boolean “amIFirst”. If the server responds affirmatively (amIFirst = true),
+then the client has to specify the game mode and the number of players he wants to play with,
+otherwise it goes directly into the “command wait state”.
+In this “command wait state” there are only 3 type of allowed messages that a client can receive:
+- A “request to me” message, that is a command from the server to write something in the terminal.
+- A “request to other” message, that is a command from the server to another client that is currently 
+interacting with the terminal
+- A “response” message, from a client to the server.
+
+The following IFML diagram describes the client architecture as an event-based finite state machine.
+
+<img src="ClientController.jpg">
+
+
+
 ## Messages
 
 ### Ack
@@ -21,7 +45,6 @@ This message has no arguments.
 This message is sent from the server to the client to update the game view.
 
 #### Arguments
-- AssistantCards: the list with all the remaining assistant cards.
 - Islands: the status of the islands.
 - Clouds: the status of the clouds.
 - Schools: the status of all the players' schools.
@@ -237,9 +260,20 @@ and
 end
 ```
 
-This sequence diagram shows the successful creation and connection of a new game between three clients.
+### Ack and update game
 
+```mermaid
+sequenceDiagram
+Client 1 ->> Server: *generic game action*
+Server->>Client 1: Ack
+par
+    Server->> Client 1: UpdateGame(islands, clouds, schools)
+and
+    Server->> Client 2: UpdateGame(islands, clouds, schools)
+and
+    Server->> Client 3: UpdateGame(islands, clouds, schools)
+end
+```
 
-##Architettura
+This sequence diagram shows how every client's view is updated after any player's game action.
 
-<img src="ClientController.jpg">
