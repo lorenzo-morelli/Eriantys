@@ -22,7 +22,7 @@ In this “command wait state” there are only 3 type of allowed messages that 
 interacting with the terminal
 - A “response” message, from a client to the server.
 
-The following IFML diagram describes the client architecture as an event-based finite state machine.
+The following IFML diagram describes the client architecture as an event-driven finite state machine.
 
 <img src="ClientController.jpg">
 

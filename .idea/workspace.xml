@@ -10,7 +10,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c193818a-1e92-4991-9439-cb3e4c836bfd" name="Changes" comment="added image">
+    <list default="true" id="c193818a-1e92-4991-9439-cb3e4c836bfd" name="Changes" comment="edited protocol_documentation.md">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/deliveries/protocol_documentation.md" beforeDir="false" afterPath="$PROJECT_DIR$/deliveries/protocol_documentation.md" afterDir="false" />
     </list>
@@ -369,21 +369,7 @@
       <option name="project" value="LOCAL" />
       <updated>1652026650980</updated>
     </task>
-    <task id="LOCAL-00025" summary="edited protocol_documentation.md">
-      <created>1652027323972</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1652027323972</updated>
-    </task>
-    <task id="LOCAL-00026" summary="added image">
-      <created>1652027504522</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1652027504522</updated>
-    </task>
-    <option name="localTasksCounter" value="27" />
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -422,8 +408,7 @@
     <MESSAGE value="model updates" />
     <MESSAGE value="created protocol_documentation.md" />
     <MESSAGE value="edited protocol_documentation.md" />
-    <MESSAGE value="added image" />
-    <option name="LAST_COMMIT_MESSAGE" value="added image" />
+    <option name="LAST_COMMIT_MESSAGE" value="edited protocol_documentation.md" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
@@ -434,17 +419,23 @@
     <SUITE FILE_PATH="coverage/ing_sw_2022_morelli_morea_netodellacqua$ModelTest_testExcepitionOncreation.ic" NAME="ModelTest.testExcepitionOncreation Coverage Results" MODIFIED="1651860084154" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>it.polimi.ingsw.server.model.*</FILTER>
     </SUITE>
+    <SUITE FILE_PATH="coverage/ing_sw_2022_morelli_morea_netodellacqua$Main.ic" NAME="Main Coverage Results" MODIFIED="1649790444598" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/ing_sw_2022_morelli_morea_netodellacqua$ServerController.ic" NAME="ServerController Coverage Results" MODIFIED="1652001174232" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>it.polimi.ingsw.server.*</FILTER>
+    </SUITE>
     <SUITE FILE_PATH="coverage/ing_sw_2022_morelli_morea_netodellacqua$DeckTest_testdeck.ic" NAME="DeckTest.testdeck Coverage Results" MODIFIED="1651833761097" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>it.polimi.ingsw.server.model.*</FILTER>
     </SUITE>
-    <SUITE FILE_PATH="coverage/ing_sw_2022_morelli_morea_netodellacqua$DeckTest.ic" NAME="DeckTest Coverage Results" MODIFIED="1651959362718" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+    <SUITE FILE_PATH="coverage/ing_sw_2022_morelli_morea_netodellacqua$ModelTest.ic" NAME="ModelTest Coverage Results" MODIFIED="1651860104617" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>it.polimi.ingsw.server.model.*</FILTER>
     </SUITE>
-    <SUITE FILE_PATH="coverage/ing_sw_2022_morelli_morea_netodellacqua$ClientLauncher.ic" NAME="ClientLauncher Coverage Results" MODIFIED="1652001016839" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/ing_sw_2022_morelli_morea_netodellacqua$SchoolBoardTest.ic" NAME="SchoolBoardTest Coverage Results" MODIFIED="1651828268494" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>it.polimi.ingsw.server.model.*</FILTER>
     </SUITE>
     <SUITE FILE_PATH="coverage/ing_sw_2022_morelli_morea_netodellacqua$SchoolBoardTest_InizializationTest2player.ic" NAME="SchoolBoardTest.InizializationTest2player Coverage Results" MODIFIED="1651828175316" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>it.polimi.ingsw.server.model.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/ing_sw_2022_morelli_morea_netodellacqua$StudentSetTest_numStudentsbycolor.ic" NAME="StudentSetTest.numStudentsbycolor Coverage Results" MODIFIED="1651823947355" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>it.polimi.ingsw.server.model.*</FILTER>
     </SUITE>
     <SUITE FILE_PATH="coverage/ing_sw_2022_morelli_morea_netodellacqua$ModelTest_testCreateModel3playerPrincipiant.ic" NAME="ModelTest.testCreateModel3playerPrincipiant Coverage Results" MODIFIED="1651837962043" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
@@ -453,19 +444,13 @@
     <SUITE FILE_PATH="coverage/ing_sw_2022_morelli_morea_netodellacqua$StudentSetTest.ic" NAME="StudentSetTest Coverage Results" MODIFIED="1651825985862" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>it.polimi.ingsw.server.model.*</FILTER>
     </SUITE>
-    <SUITE FILE_PATH="coverage/ing_sw_2022_morelli_morea_netodellacqua$ModelTest.ic" NAME="ModelTest Coverage Results" MODIFIED="1651860104617" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>it.polimi.ingsw.server.model.*</FILTER>
-    </SUITE>
-    <SUITE FILE_PATH="coverage/ing_sw_2022_morelli_morea_netodellacqua$StudentSetTest_numStudentsbycolor.ic" NAME="StudentSetTest.numStudentsbycolor Coverage Results" MODIFIED="1651823947355" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>it.polimi.ingsw.server.model.*</FILTER>
-    </SUITE>
-    <SUITE FILE_PATH="coverage/ing_sw_2022_morelli_morea_netodellacqua$ServerController.ic" NAME="ServerController Coverage Results" MODIFIED="1652001174232" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>it.polimi.ingsw.server.*</FILTER>
-    </SUITE>
+    <SUITE FILE_PATH="coverage/ing_sw_2022_morelli_morea_netodellacqua$ClientLauncher.ic" NAME="ClientLauncher Coverage Results" MODIFIED="1652001016839" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/ing_sw_2022_morelli_morea_netodellacqua$StudentSetTest_StudentTest.ic" NAME="StudentSetTest.StudentTest Coverage Results" MODIFIED="1651825976908" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>it.polimi.ingsw.server.model.*</FILTER>
     </SUITE>
+    <SUITE FILE_PATH="coverage/ing_sw_2022_morelli_morea_netodellacqua$DeckTest.ic" NAME="DeckTest Coverage Results" MODIFIED="1651959362718" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>it.polimi.ingsw.server.model.*</FILTER>
+    </SUITE>
     <SUITE FILE_PATH="coverage/Eriantys$FerTest.ic" NAME="FerTest Coverage Results" MODIFIED="1648072489073" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
-    <SUITE FILE_PATH="coverage/ing_sw_2022_morelli_morea_netodellacqua$Main.ic" NAME="Main Coverage Results" MODIFIED="1649790444598" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>
