@@ -66,7 +66,6 @@ public class AssistantCardPhase extends State {
             // put the deck in the data and send it over the network
             currentPlayerData.setDeck(canbBeChooesed);
             currentPlayerData.setResponse(false); // è una richiesta non una risposta
-            currentPlayerData.setGameStarded(true); // faccio partire il gioco
             currentPlayerData.setTypeOfRequest("CHOOSEASSISTANTCARD");  // lato client avrà una nella CliView un metodo per gestire questa richiesta
             Network.send(json.toJson(currentPlayerData));
 
@@ -93,10 +92,6 @@ public class AssistantCardPhase extends State {
                 // TODO: vai alla ENDPHASE
             }
             model.nextPlayer();
-
-            // Siccome il network ha latenza non nulla diamo il tempo a tutti i client di elaborare
-            TimeUnit.SECONDS.sleep(1);
-
         }
         return super.entryAction(cause);
     }

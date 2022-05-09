@@ -42,6 +42,7 @@ public class CreateGame extends State {
         int i = 0;
         for (ClientModel c : connectionModel.getClientsInfo()){
             model.getPlayers().add(new Player(connectionModel.getClientsInfo().get(i).getNickname(),connectionModel.getClientsInfo().get(i).getMyIp(), model));
+            c.setGameStarded(true);
             i++;
         }
         model.randomschedulePlayers();

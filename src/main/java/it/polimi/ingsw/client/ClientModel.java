@@ -1,8 +1,6 @@
 package it.polimi.ingsw.client;
 
-import com.google.gson.annotations.SerializedName;
 import it.polimi.ingsw.server.model.AssistantCard;
-import it.polimi.ingsw.server.model.Deck;
 
 import java.util.ArrayList;
 import java.util.List;

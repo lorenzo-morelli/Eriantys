@@ -12,7 +12,9 @@
   <component name="ChangeListManager">
     <list default="true" id="c193818a-1e92-4991-9439-cb3e4c836bfd" name="Changes" comment="edited protocol_documentation.md">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deliveries/protocol_documentation.md" beforeDir="false" afterPath="$PROJECT_DIR$/deliveries/protocol_documentation.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ClientModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ClientModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/states/AssistantCardPhase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/states/AssistantCardPhase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/states/CreateGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/states/CreateGame.java" afterDir="false" />
     </list>
     <list id="ed38b89b-2f69-4c1d-a7d8-be95ccd584eb" name="Changes by ignaI" comment="Changes by ignaI" />
     <option name="SHOW_DIALOG" value="false" />
