@@ -101,11 +101,9 @@ public class Island {
 
     @Override
     public String toString() {
-        return "Island{" +
-                " inhabitants=" + inhabitants.toString() +
-                ", numberOfTowers=" + numberOfTowers +
-                ", towerColor=" + (towerColor==null ? "null" : towerColor.toString()) +
-                ", isBlocked=" + isBlocked +
-                '}';
+        return "    INHABITANS : " + inhabitants.toString() +
+                "    NUMBER OF TOWER : " + numberOfTowers + "\n"+
+                "    TOWER COLOR :" + (towerColor==null ? "null" : towerColor.toString()) +"\n"+
+                (isBlocked ? "      QUESTA ISOLA E' BLOCCATA !\n" : "\n");
     }
 }

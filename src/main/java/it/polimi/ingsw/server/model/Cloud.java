@@ -36,8 +36,7 @@ public class Cloud {
 
     @Override
     public String toString() {
-        return "Cloud: " +
-                "Students =" + studentsAccumulator.toString()+
-                '}';
+        return "    STUDENTS : " + studentsAccumulator.toString()+
+                '\n';
     }
 }

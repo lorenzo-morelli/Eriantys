@@ -170,4 +170,28 @@ public class Model {
         if(winner==null) return "NON C'E' NESSUN VINCITORE";
         else return winner.getPlayer1().getNickname()+ " " +winner.getPlayer2().getNickname();
     }
+
+    public String toString() {
+        return "\n\n\n-----------------------------------------GAME-----------------------------------------------------------------------------------------------------------------------------------------\n\n" +
+                "    TURN = " + turnNumber + "    " + (islastturn ? " ! LAST TURN OF THE GAME ! ": "" ) +"\n\n" +
+                table.toString() + "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n" +
+                ( numberOfPlayers==4 ? printteam() :  printplayers() )+
+                "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n";
+    }
+
+    public String printteam(){
+        String result="";
+        for (Team team : teams) {
+            result= result + team.toString();
+        }
+        return result;
+    }
+
+    public String printplayers(){
+        String result="";
+        for(Player player: players){
+            result= result + player.toString();
+        }
+        return result;
+    }
 }

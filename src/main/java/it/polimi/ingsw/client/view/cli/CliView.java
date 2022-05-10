@@ -5,9 +5,7 @@ import it.polimi.ingsw.client.ClientModel;
 import it.polimi.ingsw.client.states.*;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.server.model.AssistantCard;
-import it.polimi.ingsw.server.model.Island;
 import it.polimi.ingsw.server.model.Player;
-import it.polimi.ingsw.server.model.Professor;
 import it.polimi.ingsw.utils.cli.CommandPrompt;
 import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.stateMachine.State;
@@ -203,6 +201,7 @@ public class CliView implements View{
         switch(clientModel.getTypeOfRequest()){
 
             case "CHOOSEASSISTANTCARD" :
+                System.out.println(clientModel.getServermodel().toString());
                 List<Integer> indexList = new ArrayList<>();
                 int i = 0;
                 for (AssistantCard a : clientModel.getDeck()){
@@ -230,33 +229,7 @@ public class CliView implements View{
                 Network.send(json.toJson(clientModel));
                 break;
             case "CHOOSEWHERETOMOVESTUDENTS"    :
-                /*System.out.println("PLAYERS SCHOOL BOARDS");
-                for(Player p : clientModel.getPlayers()) {
-                    System.out.println(p.getNickname());
-                    System.out.println(p.getSchoolBoard().getDinnerTable().toString());
-                    System.out.println(p.getSchoolBoard().getEntranceSpace().toString());
-                    System.out.println("TOWERS: "+ p.getSchoolBoard().getNumOfTowers());
-                }
-                System.out.println("PROFESSORS");
-                for(Professor p : clientModel.getProfessors()){
-                    if(p.getHeldBy()==null) System.out.println(p.getColor()+ " " + "NESSUNO");
-                    else {
-                        System.out.println(p.getColor() + " " + p.getHeldBy().getNickname());
-                    }
-                }
-                System.out.println("ISLANDS");
-                int j=0;
-                for(Island is : clientModel.getIslands()){
-                    System.out.println(j);
-                    System.out.println(is.getTowerColor().toString());
-                    System.out.println(is.getInhabitants().toString());
-                    j++;
-                }*/
-                for(Player p : clientModel.getPlayers()) {
-                    System.out.println(p.toString());
-                }
-                System.out.println(clientModel.getCentreTable());
-
+                System.out.println(clientModel.getServermodel().toString());
         }
     }
 

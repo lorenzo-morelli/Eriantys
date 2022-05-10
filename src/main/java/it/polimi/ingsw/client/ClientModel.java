@@ -2,7 +2,6 @@ package it.polimi.ingsw.client;
 
 import it.polimi.ingsw.server.model.*;
 import it.polimi.ingsw.server.model.enums.PeopleColor;
-import it.polimi.ingsw.server.states.StudentPhase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,30 +42,18 @@ public class ClientModel {
     private PeopleColor choosedColor;
     private int choosedIsland;
 
-    private List<Player> players;
-    private List<Professor> professors;
-    private List<Island> islands;
-
-    private CenterTable centreTable;
-
-
+    private Model Servermodel;
     private List<AssistantCard> deck;
-
-
 
     // where to put data that comes from terminal
     private ArrayList<String> fromTerminal;
 
-
     // My nickname
     private String nickname;
-
 
     // server IP and port
     private String Ip;
     private String Port;
-
-
 
     // my IP address
     private String myIp;
@@ -205,35 +192,11 @@ public class ClientModel {
         this.choosedIsland = choosedIsland;
     }
 
-    public void setIslands(List<Island> islands) {
-        this.islands = islands;
+    public Model getServermodel() {
+        return Servermodel;
     }
 
-    public void setPlayers(List<Player> players) {
-        this.players = players;
-    }
-
-    public void setProfessors(List<Professor> professors) {
-        this.professors = professors;
-    }
-
-    public List<Island> getIslands() {
-        return islands;
-    }
-
-    public List<Player> getPlayers() {
-        return players;
-    }
-
-    public List<Professor> getProfessors() {
-        return professors;
-    }
-
-    public CenterTable getCentreTable() {
-        return centreTable;
-    }
-
-    public void setCentreTable(CenterTable centreTable) {
-        this.centreTable = centreTable;
+    public void setServermodel(Model servermodel) {
+        this.Servermodel = servermodel;
     }
 }

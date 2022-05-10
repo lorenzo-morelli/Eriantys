@@ -72,11 +72,10 @@ public class SchoolBoard {
 
     @Override
     public String toString() {
-        return "SchoolBoard{" +
-                "entranceSpace=" + entranceSpace.toString() +
-                ", dinnerTable=" + dinnerTable.toString() +
-                ", towerColor=" + (towerColor==null ? "null" : towerColor.toString()) +
-                ", numOfTowers=" + numOfTowers +
-                '}';
+        return "    ENTRANCE : " + entranceSpace.toString() +
+                "    DINNER : " + dinnerTable.toString() +
+                "    TOWERS : " + numOfTowers + "\n" +
+                "    TOWER COLOR : " + (towerColor==null ? "null" : towerColor.toString()) +
+                '\n';
     }
 }

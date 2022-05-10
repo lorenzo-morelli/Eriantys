@@ -19,6 +19,7 @@ public class Player implements Comparable<Player>{
         this.numplayerinteam=0;
         this.schoolBoard = new SchoolBoard(model.getNumberOfPlayers(), model.getTable().getBag(), model.getTable().getAvaiablePeopleColorinBag(), model.getTable().getAvaiableTowerColor());
         if(model.getGameMode().equals(GameMode.EXPERT) ) this.coins = 1;
+        else{coins=-1;}
     }
     //requies teamnumber== "1 or 2" e un controllo che fa riscegliere il team se team è gia pieno :team.isFull())
     public Player(String nickname,String Ip,int teamnumber,Model model) {
@@ -44,6 +45,7 @@ public class Player implements Comparable<Player>{
             numplayerinteam= team.setPlayer(this);
             this.schoolBoard = new SchoolBoard(team, model.getTable().getBag(), model.getTable().getAvaiablePeopleColorinBag(), model.getTable().getAvaiableTowerColor());
             if (model.getGameMode().equals(GameMode.EXPERT)) this.coins = 1;
+            else{coins=-1;}
         }
         else{
             throw new IllegalArgumentException();
@@ -61,7 +63,7 @@ public class Player implements Comparable<Player>{
     @Override
     public int compareTo(Player player) {
         float compareValues=player.getChoosedCard().getValues();
-        if((this.choosedCard.getValues()-compareValues)<0) return 1;
+        if((this.choosedCard.getValues()-compareValues)>0) return 1;
         else return -1;
     }
 
@@ -85,14 +87,12 @@ public class Player implements Comparable<Player>{
         return numplayerinteam;
     }
 
-    @Override
+
     public String toString() {
-        return "Player{" +
-                "nickname='" + nickname + '\'' +
-                ", moves=" + choosedCard.getMoves() +
-                ", schoolBoard=" + schoolBoard.toString() +
-                ", numplayerinteam=" + (numplayerinteam==0 ? "no team" : numplayerinteam )+
-                ", coins=" + coins +
-                '}';
+        return  "    PLAYER : " + nickname + "\n" +
+                (choosedCard== null ? "    MOVES : 0\n" : "    MOVES : " + choosedCard.getMoves() + "\n" )+
+                "    SCHOOL\n"
+                + schoolBoard.toString() +
+                (coins>=0 ? "    COINS : "+ coins+"\n\n" : "\n\n");
     }
 }

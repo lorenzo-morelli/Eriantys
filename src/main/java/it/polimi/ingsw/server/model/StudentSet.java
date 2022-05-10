@@ -92,12 +92,11 @@ public class StudentSet {
 
     @Override
     public String toString() {
-        return "{" +
-                "numOfRedStudents=" + numOfRedStudents +
-                ", numOfYellowStudents=" + numOfYellowStudents +
-                ", numOfBlueStudents=" + numOfBlueStudents +
-                ", numOfPinkStudents=" + numOfPinkStudents +
-                ", numOfGreenStudents=" + numOfGreenStudents +
-                '}';
+        return "RED=" + numOfRedStudents +
+                " , YELLOW=" + numOfYellowStudents +
+                " , BLUE=" + numOfBlueStudents +
+                " , PINK=" + numOfPinkStudents +
+                " , GREEN=" + numOfGreenStudents +
+                '\n';
     }
 }

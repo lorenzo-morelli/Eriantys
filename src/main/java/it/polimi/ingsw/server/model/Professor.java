@@ -25,9 +25,7 @@ public class Professor {
 
     @Override
     public String toString() {
-        return "Professor{" +
-                "color=" + color.toString() +
-                ", heldBy=" + (heldBy==null ? "null" : heldBy.getNickname())  +
-                '}';
+        return  color.toString() +
+                " - " + (heldBy==null ? "NOBODY" : heldBy.getNickname())  + " ";
     }
 }

@@ -49,6 +49,7 @@ public class AssistantCardPhase extends State {
     public IEvent entryAction(IEvent cause) throws Exception {
         model = serverController.getModel();
         ArrayList<AssistantCard> alreadyChooseds=new ArrayList<>();
+        model.nextTurn();
         // For each player
         for(int i=0; i<model.getNumberOfPlayers(); i++){
             // retrive the current player
@@ -64,6 +65,7 @@ public class AssistantCardPhase extends State {
                 canbBeChooesed.removeAll(alreadyChooseds);
             }
             // put the deck in the data and send it over the network
+            currentPlayerData.setServermodel(model);
             currentPlayerData.setDeck(canbBeChooesed);
             currentPlayerData.setResponse(false); // è una richiesta non una risposta
             currentPlayerData.setTypeOfRequest("CHOOSEASSISTANTCARD");  // lato client avrà una nella CliView un metodo per gestire questa richiesta

@@ -11,20 +11,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c193818a-1e92-4991-9439-cb3e4c836bfd" name="Changes" comment="removed &quot;gamestarted&quot; boolean from assistant card phase">
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/states/StudentPhase.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/utils/cli/TableList.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ClientModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ClientModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/view/cli/CliView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/view/cli/CliView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/ServerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/ServerController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/model/CenterTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/model/CenterTable.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/model/Cloud.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/model/Cloud.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/model/Island.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/model/Island.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/model/Model.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/model/Model.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/model/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/model/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/model/Professor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/model/Professor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/model/SchoolBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/model/SchoolBoard.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/model/StudentSet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/model/StudentSet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/model/Team.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/model/Team.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/states/AssistantCardPhase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/states/AssistantCardPhase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/states/StudentPhase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/states/StudentPhase.java" afterDir="false" />
     </list>
     <list id="ed38b89b-2f69-4c1d-a7d8-be95ccd584eb" name="Changes by ignaI" comment="Changes by ignaI" />
     <option name="SHOW_DIALOG" value="false" />
@@ -93,7 +93,7 @@
       <recent name="it.polimi.ingsw.client" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.ServerController">
+  <component name="RunManager" selected="JUnit.ModelTest.testCreateModel4playerPrincipiant">
     <configuration name="ServerController" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <envs>
         <env name="TERM" value="dumb" />
@@ -135,22 +135,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="DeckTest.testdeck" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Eriantys" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="it.polimi.ingsw.server.model.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="it.polimi.ingsw.server.model" />
-      <option name="MAIN_CLASS_NAME" value="it.polimi.ingsw.server.model.DeckTest" />
-      <option name="METHOD_NAME" value="testdeck" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="ModelTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="Eriantys" />
       <extension name="coverage">
@@ -162,6 +146,22 @@
       <option name="PACKAGE_NAME" value="it.polimi.ingsw.server.model" />
       <option name="MAIN_CLASS_NAME" value="it.polimi.ingsw.server.model.ModelTest" />
       <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ModelTest.testCreateModel4playerPrincipiant" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Eriantys" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="it.polimi.ingsw.server.model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="it.polimi.ingsw.server.model" />
+      <option name="MAIN_CLASS_NAME" value="it.polimi.ingsw.server.model.ModelTest" />
+      <option name="METHOD_NAME" value="testCreateModel4playerPrincipiant" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -184,18 +184,18 @@
     <list>
       <item itemvalue="Application.it.polimi.ingsw.client.ClientLauncher" />
       <item itemvalue="Application.ServerController" />
+      <item itemvalue="JUnit.ModelTest.testCreateModel4playerPrincipiant" />
       <item itemvalue="JUnit.DeckTest" />
-      <item itemvalue="JUnit.DeckTest.testdeck" />
       <item itemvalue="JUnit.ModelTest" />
       <item itemvalue="JUnit.StudentSetTest" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.ServerController" />
+        <item itemvalue="JUnit.ModelTest.testCreateModel4playerPrincipiant" />
         <item itemvalue="JUnit.StudentSetTest" />
         <item itemvalue="JUnit.ModelTest" />
         <item itemvalue="JUnit.DeckTest" />
-        <item itemvalue="JUnit.DeckTest.testdeck" />
       </list>
     </recent_temporary>
   </component>
@@ -443,41 +443,41 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/ing_sw_2022_morelli_morea_netodellacqua$it_polimi_ingsw_client_ClientLauncher.ic" NAME="it.polimi.ingsw.client.ClientLauncher Coverage Results" MODIFIED="1652001187270" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
-    <SUITE FILE_PATH="coverage/ing_sw_2022_morelli_morea_netodellacqua$ModelTest_testExcepitionOncreation.ic" NAME="ModelTest.testExcepitionOncreation Coverage Results" MODIFIED="1651860084154" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+    <SUITE FILE_PATH="coverage/ing_sw_2022_morelli_morea_netodellacqua$ClientLauncher.ic" NAME="ClientLauncher Coverage Results" MODIFIED="1652001016839" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/ing_sw_2022_morelli_morea_netodellacqua$StudentSetTest.ic" NAME="StudentSetTest Coverage Results" MODIFIED="1651825985862" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>it.polimi.ingsw.server.model.*</FILTER>
     </SUITE>
     <SUITE FILE_PATH="coverage/ing_sw_2022_morelli_morea_netodellacqua$Main.ic" NAME="Main Coverage Results" MODIFIED="1649790444598" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/ing_sw_2022_morelli_morea_netodellacqua$DeckTest.ic" NAME="DeckTest Coverage Results" MODIFIED="1651959362718" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>it.polimi.ingsw.server.model.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/ing_sw_2022_morelli_morea_netodellacqua$ModelTest_testExcepitionOncreation.ic" NAME="ModelTest.testExcepitionOncreation Coverage Results" MODIFIED="1651860084154" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>it.polimi.ingsw.server.model.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/ing_sw_2022_morelli_morea_netodellacqua$ModelTest.ic" NAME="ModelTest Coverage Results" MODIFIED="1651860104617" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>it.polimi.ingsw.server.model.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/ing_sw_2022_morelli_morea_netodellacqua$SchoolBoardTest.ic" NAME="SchoolBoardTest Coverage Results" MODIFIED="1651828268494" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>it.polimi.ingsw.server.model.*</FILTER>
+    </SUITE>
     <SUITE FILE_PATH="coverage/ing_sw_2022_morelli_morea_netodellacqua$ServerController.ic" NAME="ServerController Coverage Results" MODIFIED="1652001174232" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>it.polimi.ingsw.server.*</FILTER>
     </SUITE>
     <SUITE FILE_PATH="coverage/ing_sw_2022_morelli_morea_netodellacqua$DeckTest_testdeck.ic" NAME="DeckTest.testdeck Coverage Results" MODIFIED="1651833761097" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>it.polimi.ingsw.server.model.*</FILTER>
     </SUITE>
-    <SUITE FILE_PATH="coverage/ing_sw_2022_morelli_morea_netodellacqua$ModelTest.ic" NAME="ModelTest Coverage Results" MODIFIED="1652191387803" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>it.polimi.ingsw.server.model.*</FILTER>
-    </SUITE>
-    <SUITE FILE_PATH="coverage/ing_sw_2022_morelli_morea_netodellacqua$SchoolBoardTest.ic" NAME="SchoolBoardTest Coverage Results" MODIFIED="1651828268494" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+    <SUITE FILE_PATH="coverage/Eriantys$FerTest.ic" NAME="FerTest Coverage Results" MODIFIED="1648072489073" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/ing_sw_2022_morelli_morea_netodellacqua$StudentSetTest_numStudentsbycolor.ic" NAME="StudentSetTest.numStudentsbycolor Coverage Results" MODIFIED="1651823947355" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>it.polimi.ingsw.server.model.*</FILTER>
     </SUITE>
     <SUITE FILE_PATH="coverage/ing_sw_2022_morelli_morea_netodellacqua$SchoolBoardTest_InizializationTest2player.ic" NAME="SchoolBoardTest.InizializationTest2player Coverage Results" MODIFIED="1651828175316" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>it.polimi.ingsw.server.model.*</FILTER>
     </SUITE>
-    <SUITE FILE_PATH="coverage/ing_sw_2022_morelli_morea_netodellacqua$StudentSetTest_numStudentsbycolor.ic" NAME="StudentSetTest.numStudentsbycolor Coverage Results" MODIFIED="1651823947355" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>it.polimi.ingsw.server.model.*</FILTER>
-    </SUITE>
     <SUITE FILE_PATH="coverage/ing_sw_2022_morelli_morea_netodellacqua$ModelTest_testCreateModel3playerPrincipiant.ic" NAME="ModelTest.testCreateModel3playerPrincipiant Coverage Results" MODIFIED="1651837962043" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>it.polimi.ingsw.server.model.*</FILTER>
     </SUITE>
-    <SUITE FILE_PATH="coverage/ing_sw_2022_morelli_morea_netodellacqua$StudentSetTest.ic" NAME="StudentSetTest Coverage Results" MODIFIED="1652191399997" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>it.polimi.ingsw.server.model.*</FILTER>
-    </SUITE>
-    <SUITE FILE_PATH="coverage/ing_sw_2022_morelli_morea_netodellacqua$ClientLauncher.ic" NAME="ClientLauncher Coverage Results" MODIFIED="1652001016839" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/ing_sw_2022_morelli_morea_netodellacqua$StudentSetTest_StudentTest.ic" NAME="StudentSetTest.StudentTest Coverage Results" MODIFIED="1651825976908" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>it.polimi.ingsw.server.model.*</FILTER>
     </SUITE>
-    <SUITE FILE_PATH="coverage/ing_sw_2022_morelli_morea_netodellacqua$DeckTest.ic" NAME="DeckTest Coverage Results" MODIFIED="1652191378993" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>it.polimi.ingsw.server.model.*</FILTER>
-    </SUITE>
-    <SUITE FILE_PATH="coverage/Eriantys$FerTest.ic" NAME="FerTest Coverage Results" MODIFIED="1648072489073" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>

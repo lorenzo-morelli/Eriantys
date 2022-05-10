@@ -34,4 +34,12 @@ public class Team {
     public boolean isFull(){
         return player1 != null && player2 != null;
     }
+
+    @Override
+    public String toString() {
+        return "  TEAM " + teamNumber + " \n" +
+                "    " + player1.toString() +
+                "    " + player2.toString() +
+                "\n\n\n";
+    }
 }

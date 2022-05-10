@@ -44,7 +44,6 @@ public class StudentPhase extends State {
     public IEvent entryAction(IEvent cause) throws Exception {
         int moves;
         model = serverController.getModel();
-        model.nextPlayer();
         // retrive the current player
         Player currentPlayer = model.getcurrentPlayer();
         // retrive data of the current player
@@ -56,10 +55,7 @@ public class StudentPhase extends State {
             moves = 3;
         }
         for(int i=0; i< moves; i++){
-            currentPlayerData.setPlayers(model.getPlayers());
-            currentPlayerData.setCentreTable(model.getTable());
-            //currentPlayerData.setIslands(model.getTable().getIslands());
-            //currentPlayerData.setProfessors(model.getTable().getProfessors());
+            currentPlayerData.setServermodel(model);
             currentPlayerData.setTypeOfRequest("CHOOSEWHERETOMOVESTUDENTS");
             currentPlayerData.setResponse(false); //non è una risposta, è una richiesta del server al client
 
