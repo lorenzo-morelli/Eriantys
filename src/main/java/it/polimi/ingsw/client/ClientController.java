@@ -5,6 +5,7 @@ import it.polimi.ingsw.client.view.*;
 import it.polimi.ingsw.server.states.Idle;
 import it.polimi.ingsw.utils.cli.CommandPrompt;
 import it.polimi.ingsw.utils.stateMachine.*;
+
 import java.io.IOException;
 
 public class ClientController {
@@ -24,16 +25,16 @@ public class ClientController {
         // Stato di connessione al server
         ConnectToServer connectionToServer = new ConnectToServer(view, clientModel);
         // Chiede al server se è il primo client ad essersi collegato
-        AmIFirst amIFirst = new AmIFirst(clientModel,fsm);
+        AmIFirst amIFirst = new AmIFirst(clientModel, fsm);
         // Reading stuffs from terminal
         ReadUserInfo askUserinfo = new ReadUserInfo(view, clientModel, fsm);
         ReadGameInfo askGameInfo = new ReadGameInfo(view, clientModel, fsm);
-        ReadNickname askNewNickname = new ReadNickname(view,clientModel,fsm);
+        ReadNickname askNewNickname = new ReadNickname(view, clientModel, fsm);
         // Wait state, stato in cui ricevo solo comandi di aggiornamento della vista
-        Wait wait = new Wait(clientModel,view, fsm);
+        Wait wait = new Wait(clientModel, view, fsm);
         // Stati per inviare informazioni al server
-        SendToServer sendToServer = new SendToServer(clientModel,fsm);
-        SendNicknameToServer sendNicknameToServer = new SendNicknameToServer(clientModel,fsm);
+        SendToServer sendToServer = new SendToServer(clientModel, fsm);
+        SendNicknameToServer sendNicknameToServer = new SendNicknameToServer(clientModel, fsm);
 
         // Dichiarazione delle transizioni tra gli stati
         fsm.addTransition(idle, start, waitStart);
@@ -48,16 +49,16 @@ public class ClientController {
         fsm.addTransition(connectionToServer, connectionToServer.connectedToServer(), amIFirst);
         // Se sono il primo client allora devo scegliere il gamemode e il numero dei partecipanti ed inviare al server
         fsm.addTransition(amIFirst, amIFirst.yes(), askGameInfo);
-        fsm.addTransition(askGameInfo,askGameInfo.insertedParameters(),sendToServer);
-        fsm.addTransition(sendToServer, sendToServer.getAck(),wait);
+        fsm.addTransition(askGameInfo, askGameInfo.insertedParameters(), sendToServer);
+        fsm.addTransition(sendToServer, sendToServer.getAck(), wait);
         // Altrimenti se non sono il primo client vado direttamente nello stato di attesa comandi
         fsm.addTransition(amIFirst, amIFirst.no(), wait);
         // Altrimenti il server mi intima di scegliere un nuovo nickname
-        fsm.addTransition(amIFirst,amIFirst.nicknameAlreadyPresent(), askNewNickname);
-        fsm.addTransition(askNewNickname,askNewNickname.insertedParameters(),sendNicknameToServer);
+        fsm.addTransition(amIFirst, amIFirst.nicknameAlreadyPresent(), askNewNickname);
+        fsm.addTransition(askNewNickname, askNewNickname.insertedParameters(), sendNicknameToServer);
         fsm.addTransition(sendNicknameToServer, sendNicknameToServer.nickAlreadyExistent(), askNewNickname);
-        fsm.addTransition(sendNicknameToServer,sendNicknameToServer.nickUnique(),wait);
-        fsm.addTransition(wait,wait.messaggioGestito(),wait);
+        fsm.addTransition(sendNicknameToServer, sendNicknameToServer.nickUnique(), wait);
+        fsm.addTransition(wait, wait.messaggioGestito(), wait);
         // L'evento di start è l'unico che deve essere fatto partire manualmente
         start.fireStateEvent();
     }

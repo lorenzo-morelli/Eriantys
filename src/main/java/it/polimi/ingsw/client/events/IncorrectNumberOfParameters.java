@@ -12,7 +12,7 @@ import java.util.Arrays;
 /**
  * Evento che si attiva quando l'utente inserisce un numero di parametri scorretti
  * da terminale
- *
+ * <p>
  * * @author Fernando
  */
 
@@ -27,7 +27,7 @@ public class IncorrectNumberOfParameters extends Event implements Observer {
     private int numberOfStrings;
 
     public IncorrectNumberOfParameters(ClientModel clientModel, int numberOfStrings) throws IOException {
-        super("[Numero di parametri non corretto (doveva essere "+numberOfStrings+ ")]" );
+        super("[Numero di parametri non corretto (doveva essere " + numberOfStrings + ")]");
         this.commandPrompt = CommandPrompt.getInstance();
         this.subscribe();
         this.clientModel = clientModel;
@@ -36,9 +36,9 @@ public class IncorrectNumberOfParameters extends Event implements Observer {
 
     @Override
     public void update(Object message) throws Exception {
-        if (enabled == true){
+        if (enabled) {
             parsedStrings = new ArrayList<String>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
-            if (parsedStrings.size() != numberOfStrings){
+            if (parsedStrings.size() != numberOfStrings) {
                 fireStateEvent();
             }
 

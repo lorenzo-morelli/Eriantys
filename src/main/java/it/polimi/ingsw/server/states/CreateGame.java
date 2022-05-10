@@ -19,6 +19,7 @@ public class CreateGame extends State {
     private ConnectionModel connectionModel;
     private Controller controller;
     private ServerController serverController;
+
     public CreateGame(ServerController serverController) {
         super("[Create game]");
         this.serverController = serverController;
@@ -40,8 +41,8 @@ public class CreateGame extends State {
     public IEvent entryAction(IEvent cause) throws Exception {
         model = new Model(connectionModel.getNumOfPlayers(), connectionModel.getGameMode());
         int i = 0;
-        for (ClientModel c : connectionModel.getClientsInfo()){
-            model.getPlayers().add(new Player(connectionModel.getClientsInfo().get(i).getNickname(),connectionModel.getClientsInfo().get(i).getMyIp(), model));
+        for (ClientModel c : connectionModel.getClientsInfo()) {
+            model.getPlayers().add(new Player(connectionModel.getClientsInfo().get(i).getNickname(), connectionModel.getClientsInfo().get(i).getMyIp(), model));
             c.setGameStarded(true);
             i++;
         }

@@ -1,7 +1,7 @@
 package it.polimi.ingsw.server.model;
 
 import it.polimi.ingsw.server.model.enums.*;
-import it.polimi.ingsw.server.model.enums.Character;
+import it.polimi.ingsw.server.model.characters.Character;
 
 import java.util.ArrayList;
 import java.util.Collections;

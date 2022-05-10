@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 public class SpecifyPortScreen extends State {
     private Event portSpecified;
 
-    private static final String PORT_REGEX=
+    private static final String PORT_REGEX =
             "^([1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$";
 
 
@@ -26,8 +26,7 @@ public class SpecifyPortScreen extends State {
     }
 
 
-    public static boolean isValidPort(String port)
-    {
+    public static boolean isValidPort(String port) {
         if (port == null) {
             return false;
         }
@@ -39,13 +38,13 @@ public class SpecifyPortScreen extends State {
 
     @Override
     public IEvent entryAction(IEvent cause) throws Exception {
-        if(!Network.isServerListening()) {
+        if (!Network.isServerListening()) {
             CommandPrompt.ask(
                     "Inserire la porta sulla quale mettersi in ascolto dei clients",
                     "porta >");
         }
 
-        while(!isValidPort(CommandPrompt.gotFromTerminal())){
+        while (!isValidPort(CommandPrompt.gotFromTerminal())) {
             CommandPrompt.ask(
                     "La porta inserita non è nel formato giusto (numero da 0 to 65536)",
                     "porta >");
