@@ -61,9 +61,10 @@ public class Player implements Comparable<Player>{
     @Override
     public int compareTo(Player player) {
         float compareValues=player.getChoosedCard().getValues();
-        if((this.choosedCard.getValues()-compareValues)>0) return 1;
+        if((this.choosedCard.getValues()-compareValues)<0) return 1;
         else return -1;
     }
+
     public Deck getAvailableCards() {
         return availableCards;
     }
@@ -82,5 +83,16 @@ public class Player implements Comparable<Player>{
 
     public int getNumplayerinteam() {
         return numplayerinteam;
+    }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "nickname='" + nickname + '\'' +
+                ", moves=" + choosedCard.getMoves() +
+                ", schoolBoard=" + schoolBoard.toString() +
+                ", numplayerinteam=" + (numplayerinteam==0 ? "no team" : numplayerinteam )+
+                ", coins=" + coins +
+                '}';
     }
 }

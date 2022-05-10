@@ -98,4 +98,14 @@ public class Island {
     public int getNumberOfTowers() {
         return numberOfTowers;
     }
+
+    @Override
+    public String toString() {
+        return "Island{" +
+                " inhabitants=" + inhabitants.toString() +
+                ", numberOfTowers=" + numberOfTowers +
+                ", towerColor=" + (towerColor==null ? "null" : towerColor.toString()) +
+                ", isBlocked=" + isBlocked +
+                '}';
+    }
 }

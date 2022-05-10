@@ -69,4 +69,14 @@ public class SchoolBoard {
     public int getNumOfTowers() {
         return numOfTowers;
     }
+
+    @Override
+    public String toString() {
+        return "SchoolBoard{" +
+                "entranceSpace=" + entranceSpace.toString() +
+                ", dinnerTable=" + dinnerTable.toString() +
+                ", towerColor=" + (towerColor==null ? "null" : towerColor.toString()) +
+                ", numOfTowers=" + numOfTowers +
+                '}';
+    }
 }

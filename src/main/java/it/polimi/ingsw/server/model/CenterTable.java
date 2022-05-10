@@ -166,4 +166,15 @@ public class CenterTable {
     public ArrayList<Character> getCharacterCards() {
         return characterCards;
     }
+
+    @Override
+    public String toString() {
+        return "CenterTable{" +
+                "clouds=" + clouds.toString() +
+                ", islands=" + islands.toString() +
+                ", motherNaturePosition=" + motherNaturePosition +
+                ", professors=" + professors.toString() +
+                ", characterCards=" + (characterCards==null ? "no" : characterCards.toString()) +
+                '}';
+    }
 }

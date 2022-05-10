@@ -33,4 +33,11 @@ public class Cloud {
     public int getCloudsize() {
         return cloudsize;
     }
+
+    @Override
+    public String toString() {
+        return "Cloud: " +
+                "Students =" + studentsAccumulator.toString()+
+                '}';
+    }
 }

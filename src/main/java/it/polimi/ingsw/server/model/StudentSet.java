@@ -90,4 +90,14 @@ public class StudentSet {
         }
     }
 
+    @Override
+    public String toString() {
+        return "{" +
+                "numOfRedStudents=" + numOfRedStudents +
+                ", numOfYellowStudents=" + numOfYellowStudents +
+                ", numOfBlueStudents=" + numOfBlueStudents +
+                ", numOfPinkStudents=" + numOfPinkStudents +
+                ", numOfGreenStudents=" + numOfGreenStudents +
+                '}';
+    }
 }

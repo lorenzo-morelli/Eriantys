@@ -22,4 +22,12 @@ public class Professor {
     public PeopleColor getColor() {
         return color;
     }
+
+    @Override
+    public String toString() {
+        return "Professor{" +
+                "color=" + color.toString() +
+                ", heldBy=" + (heldBy==null ? "null" : heldBy.getNickname())  +
+                '}';
+    }
 }

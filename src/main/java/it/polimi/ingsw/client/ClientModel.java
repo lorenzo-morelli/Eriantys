@@ -1,6 +1,8 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.server.model.AssistantCard;
+import it.polimi.ingsw.server.model.*;
+import it.polimi.ingsw.server.model.enums.PeopleColor;
+import it.polimi.ingsw.server.states.StudentPhase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +39,16 @@ public class ClientModel {
 
     private Boolean gameStarded = false;
     private String typeOfRequest;
+
+    private PeopleColor choosedColor;
+    private int choosedIsland;
+
+    private List<Player> players;
+    private List<Professor> professors;
+    private List<Island> islands;
+
+    private CenterTable centreTable;
+
 
     private List<AssistantCard> deck;
 
@@ -175,5 +187,53 @@ public class ClientModel {
 
     public void setDeck(List<AssistantCard> deck) {
         this.deck = deck;
+    }
+
+    public PeopleColor getChoosedColor() {
+        return choosedColor;
+    }
+
+    public void setChoosedColor(PeopleColor choosedColor) {
+        this.choosedColor = choosedColor;
+    }
+
+    public int getChoosedIsland() {
+        return choosedIsland;
+    }
+
+    public void setChoosedIsland(int choosedIsland) {
+        this.choosedIsland = choosedIsland;
+    }
+
+    public void setIslands(List<Island> islands) {
+        this.islands = islands;
+    }
+
+    public void setPlayers(List<Player> players) {
+        this.players = players;
+    }
+
+    public void setProfessors(List<Professor> professors) {
+        this.professors = professors;
+    }
+
+    public List<Island> getIslands() {
+        return islands;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public List<Professor> getProfessors() {
+        return professors;
+    }
+
+    public CenterTable getCentreTable() {
+        return centreTable;
+    }
+
+    public void setCentreTable(CenterTable centreTable) {
+        this.centreTable = centreTable;
     }
 }
