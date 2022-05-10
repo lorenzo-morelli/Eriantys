@@ -93,7 +93,7 @@
       <recent name="it.polimi.ingsw.client" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ModelTest.testCreateModel4playerPrincipiant">
+  <component name="RunManager" selected="Application.it.polimi.ingsw.client.ClientLauncher">
     <configuration name="ServerController" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <envs>
         <env name="TERM" value="dumb" />
