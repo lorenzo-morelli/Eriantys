@@ -17,8 +17,8 @@ public class WaitFirstPlayer extends State {
     private Gson json;
     private Controller controller;
     private ConnectionModel connectionModel;
-
     private ParametersFromNetwork firstMessage;
+
     public WaitFirstPlayer(ServerController serverController) {
         super("[Il server è in attesa del primo giocatore]");
         json = new Gson();
@@ -38,15 +38,15 @@ public class WaitFirstPlayer extends State {
 
         firstMessage.enable();
 
-        while(!firstMessage.parametersReceived() ){
+        while (!firstMessage.parametersReceived()) {
             // non ho ricevuto ancora un messaggio dal primo player
         }
         System.out.println("[Il primo player si è connesso]");
-        if (firstMessage.parametersReceived()){
+        if (firstMessage.parametersReceived()) {
             // Converti il messaggio stringa json in un oggetto clientModel
             clientModel = json.fromJson(firstMessage.getParameter(0), ClientModel.class);
 
-            System.out.println("Ricevuto " + clientModel.getNickname() +" " +clientModel.getMyIp());
+            System.out.println("Ricevuto " + clientModel.getNickname() + " " + clientModel.getMyIp());
             // Appendi alla lista di ClientModel il modello appena ricevuto così da salvarlo per usi futuri
             connectionModel.getClientsInfo().add(clientModel);
             // Compila il campo "sei primo" e invia la risposta al client

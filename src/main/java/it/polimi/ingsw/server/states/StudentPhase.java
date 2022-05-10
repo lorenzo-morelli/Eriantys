@@ -30,6 +30,7 @@ public class StudentPhase extends State {
     public Event cardsChoosen() {
         return cardsChoosen;
     }
+
     public StudentPhase(ServerController serverController) {
         super("[Move students]");
         this.serverController = serverController;
@@ -49,13 +50,12 @@ public class StudentPhase extends State {
         Player currentPlayer = model.getcurrentPlayer();
         // retrive data of the current player
         ClientModel currentPlayerData = connectionModel.findPlayer(currentPlayer.getNickname());
-        if(model.getNumberOfPlayers() == 3){
+        if (model.getNumberOfPlayers() == 3) {
             moves = 4;
-        }
-        else{
+        } else {
             moves = 3;
         }
-        for(int i=0; i< moves; i++){
+        for (int i = 0; i < moves; i++) {
             currentPlayerData.setPlayers(model.getPlayers());
             currentPlayerData.setCentreTable(model.getTable());
             //currentPlayerData.setIslands(model.getTable().getIslands());
@@ -67,19 +67,18 @@ public class StudentPhase extends State {
 
             ParametersFromNetwork message = new ParametersFromNetwork(1);
             message.enable();
-            while(!message.parametersReceived()){
+            while (!message.parametersReceived()) {
                 TimeUnit.SECONDS.sleep(1);
             }
 
-            currentPlayerData = json.fromJson(message.getParameter(0),ClientModel.class);
+            currentPlayerData = json.fromJson(message.getParameter(0), ClientModel.class);
             String type = currentPlayerData.getTypeOfRequest();
 
-            if(type.equals("SCHOOL")){
+            if (type.equals("SCHOOL")) {
                 currentPlayer.getSchoolBoard().load_dinner(currentPlayerData.getChoosedColor());
-                model.getTable().checkProfessor(currentPlayerData.getChoosedColor(),model.getPlayers());
-            }
-            else if(type.equals("ISLAND")){
-                model.getTable().load_island(currentPlayer,currentPlayerData.getChoosedColor(),currentPlayerData.getChoosedIsland());
+                model.getTable().checkProfessor(currentPlayerData.getChoosedColor(), model.getPlayers());
+            } else if (type.equals("ISLAND")) {
+                model.getTable().load_island(currentPlayer, currentPlayerData.getChoosedColor(), currentPlayerData.getChoosedIsland());
             }
 
         }

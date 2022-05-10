@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server;
 
 import it.polimi.ingsw.client.ClientModel;
+
 import java.util.ArrayList;
 
 /**
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 public class ConnectionModel {
     ArrayList<ClientModel> clientsInfo;
 
-    public ConnectionModel(){
+    public ConnectionModel() {
         clientsInfo = new ArrayList<>();
     }
 
@@ -18,26 +19,26 @@ public class ConnectionModel {
         return clientsInfo;
     }
 
-    public int getNumOfPlayers(){
+    public int getNumOfPlayers() {
         return clientsInfo.toArray().length;
     }
 
-    public String getGameMode(){
+    public String getGameMode() {
         return clientsInfo.get(0).getGamemode();
     }
 
-    public ClientModel findPlayer(String nickname){
-        for (ClientModel c : clientsInfo){
-            if (c.getNickname().equals(nickname)){
+    public ClientModel findPlayer(String nickname) {
+        for (ClientModel c : clientsInfo) {
+            if (c.getNickname().equals(nickname)) {
                 return c;
             }
         }
         return null;
     }
 
-    public void storeDataOfPlayer(String nickname, ClientModel clientData){
-        for (ClientModel c : clientsInfo){
-            if (c.getNickname().equals(nickname)){
+    public void storeDataOfPlayer(String nickname, ClientModel clientData) {
+        for (ClientModel c : clientsInfo) {
+            if (c.getNickname().equals(nickname)) {
                 c = clientData;
             }
         }

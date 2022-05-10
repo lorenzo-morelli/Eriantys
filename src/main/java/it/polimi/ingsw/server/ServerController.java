@@ -5,13 +5,12 @@ import it.polimi.ingsw.server.states.*;
 import it.polimi.ingsw.utils.stateMachine.Controller;
 import it.polimi.ingsw.utils.stateMachine.Event;
 
-public class ServerController{
+public class ServerController {
     Model model;
     ConnectionModel connectionModel = new ConnectionModel();
     Idle idle = new Idle();
     Event start = new Event("[Controller Started]");
     Controller fsm = new Controller("Controllore del Server", idle);
-
 
 
     public ServerController() throws Exception {
@@ -29,11 +28,11 @@ public class ServerController{
         // Dichiarazione delle transizioni tra gli stati
         fsm.addTransition(idle, start, specifyPortScreen);
         fsm.addTransition(specifyPortScreen, specifyPortScreen.portSpecified(), waitFirstPlayer);
-        fsm.addTransition(waitFirstPlayer,waitFirstPlayer.gotFirstMessage(),waitFirstPlayerGameInfo);
-        fsm.addTransition(waitFirstPlayerGameInfo,waitFirstPlayerGameInfo.gotNumOfPlayersAndGamemode(),waitOtherClients);
+        fsm.addTransition(waitFirstPlayer, waitFirstPlayer.gotFirstMessage(), waitFirstPlayerGameInfo);
+        fsm.addTransition(waitFirstPlayerGameInfo, waitFirstPlayerGameInfo.gotNumOfPlayersAndGamemode(), waitOtherClients);
         fsm.addTransition(waitOtherClients, waitOtherClients.allClientsConnected(), createGame);
         fsm.addTransition(createGame, createGame.gameCreated(), assistantCardPhase);
-        fsm.addTransition(assistantCardPhase,assistantCardPhase.cardsChoosen(), studentPhase);
+        fsm.addTransition(assistantCardPhase, assistantCardPhase.cardsChoosen(), studentPhase);
         // L'evento di start è l'unico che deve essere fatto partire manualmente
         start.fireStateEvent();
     }
@@ -57,6 +56,8 @@ public class ServerController{
     public static void main(String[] args) {
         try {
             new ServerController();
-        } catch (Exception e){e.printStackTrace();}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

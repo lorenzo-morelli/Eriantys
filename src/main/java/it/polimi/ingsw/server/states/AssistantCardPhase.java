@@ -35,12 +35,13 @@ public class AssistantCardPhase extends State {
     public Event cardsChoosen() {
         return cardsChoosen;
     }
+
     public AssistantCardPhase(ServerController serverController) {
         super("[Choose Assistant Card]");
         this.serverController = serverController;
         this.controller = serverController.getFsm();
         this.connectionModel = serverController.getConnectionModel();
-        cardsChoosen= new Event("game created");
+        cardsChoosen = new Event("game created");
         cardsChoosen.setStateEventListener(controller);
         json = new Gson();
     }
@@ -48,47 +49,46 @@ public class AssistantCardPhase extends State {
     @Override
     public IEvent entryAction(IEvent cause) throws Exception {
         model = serverController.getModel();
-        ArrayList<AssistantCard> alreadyChooseds=new ArrayList<>();
+        ArrayList<AssistantCard> alreadyChoosed = new ArrayList<>();
         // For each player
-        for(int i=0; i<model.getNumberOfPlayers(); i++){
+        for (int i = 0; i < model.getNumberOfPlayers(); i++) {
             // retrive the current player
             Player currentPlayer = model.getcurrentPlayer();
             // retrive data of the current player
             ClientModel currentPlayerData = connectionModel.findPlayer(currentPlayer.getNickname());
-            List<AssistantCard> canbBeChooesed = new ArrayList<>(currentPlayer.getAvailableCards().getCardsList());
-            boolean lowpriority=false;
-            if(alreadyChooseds.containsAll(canbBeChooesed)){
-                lowpriority=true;
-            }
-            else {
-                canbBeChooesed.removeAll(alreadyChooseds);
+            List<AssistantCard> canBeChoosed = new ArrayList<>(currentPlayer.getAvailableCards().getCardsList());
+            boolean lowpriority = false;
+            if (alreadyChoosed.containsAll(canBeChoosed)) {
+                lowpriority = true;
+            } else {
+                canBeChoosed.removeAll(alreadyChoosed);
             }
             // put the deck in the data and send it over the network
-            currentPlayerData.setDeck(canbBeChooesed);
+            currentPlayerData.setDeck(canBeChoosed);
             currentPlayerData.setResponse(false); // è una richiesta non una risposta
             currentPlayerData.setTypeOfRequest("CHOOSEASSISTANTCARD");  // lato client avrà una nella CliView un metodo per gestire questa richiesta
             Network.send(json.toJson(currentPlayerData));
 
             message = new ParametersFromNetwork(1);
             message.enable();
-            while(!message.parametersReceived()){
+            while (!message.parametersReceived()) {
                 TimeUnit.SECONDS.sleep(1);
                 // il client non ha ancora scelto la carta assistente
             }
             //System.out.println(message.getParameter(0));
             // ricevo un campo json e lo converto in AssistantCard
-            AssistantCard choosen = currentPlayerData.getDeck().get(Integer.parseInt(json.fromJson(message.getParameter(0),ClientModel.class).getFromTerminal().get(0)));
+            AssistantCard choosen = currentPlayerData.getDeck().get(Integer.parseInt(json.fromJson(message.getParameter(0), ClientModel.class).getFromTerminal().get(0)));
 
             // il controllo sul fatto che l'utente scelga una carta appartenente a quelle presenti in availableCars
             // viene svolto direttamente dal client in CliView
-            if(lowpriority) {
-                    choosen.lowPriority();
+            if (lowpriority) {
+                choosen.lowPriority();
             }
 
-            alreadyChooseds.add(choosen);
+            alreadyChoosed.add(choosen);
             boolean checkEndCondition = currentPlayer.setChoosedCard(choosen);
 
-            if (checkEndCondition){
+            if (checkEndCondition) {
                 // TODO: vai alla ENDPHASE
             }
             model.nextPlayer();

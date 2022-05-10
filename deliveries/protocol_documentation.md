@@ -4,7 +4,7 @@ Fernando Morea, Lorenzo Morelli, Ignazio Neto Dell'Acqua
 
 Group 28
 
-##Architettura
+## Architecture
 
 #### A real time thin client protocol
 For the implementation of the communication protocol we chose to use the thin client approach, in the context of a
@@ -29,6 +29,7 @@ The following IFML diagram describes the client architecture as an event-driven 
 
 
 ## Messages
+The real implementation may differ relatively to this high level description.
 
 ### Ack
 This message is sent from the server to the client when a generic message has been acknowledged.

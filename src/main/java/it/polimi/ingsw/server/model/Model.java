@@ -21,11 +21,11 @@ public class Model {
 
     public Model(int numofplayer, String gamemode) {
 
-        this.islastturn=false;
-        this.currentplayer=0;
-        this.players =new ArrayList<>();
-        this.numberOfPlayers= numofplayer;
-        switch(gamemode) {
+        this.islastturn = false;
+        this.currentplayer = 0;
+        this.players = new ArrayList<>();
+        this.numberOfPlayers = numofplayer;
+        switch (gamemode) {
             case "PRINCIPIANT":
                 gameMode = GameMode.PRINCIPIANT;
                 break;
@@ -33,22 +33,21 @@ public class Model {
                 gameMode = GameMode.EXPERT;
                 break;
         }
-        this.turnNumber=0;
-        this.table = new CenterTable(numofplayer,this.gameMode);
-        if(numofplayer==4) {
+        this.turnNumber = 0;
+        this.table = new CenterTable(numofplayer, this.gameMode);
+        if (numofplayer == 4) {
             teams = new ArrayList<>();
             teams.add(new Team(1));
             teams.add(new Team(2));
-        }else{
-            teams=null;
+        } else {
+            teams = null;
         }
     }
 
     public static Model createModel(int numofplayer, String Gamemode) throws Exception {
-        if(numofplayer<5 && numofplayer>1 && (Objects.equals(Gamemode, "PRINCIPIANT") || Objects.equals(Gamemode, "EXPERT"))) {
+        if (numofplayer < 5 && numofplayer > 1 && (Objects.equals(Gamemode, "PRINCIPIANT") || Objects.equals(Gamemode, "EXPERT"))) {
             return new Model(numofplayer, Gamemode);
-        }
-        else{
+        } else {
             throw new IllegalArgumentException();
         }
     }
@@ -69,23 +68,22 @@ public class Model {
         return table;
     }
 
-    public void randomschedulePlayers(){
+    public void randomschedulePlayers() {
         shuffle(players);
     }
 
-    public void schedulePlayers(){
+    public void schedulePlayers() {
         sort(players);
     }
 
-    public Player getcurrentPlayer(){
+    public Player getcurrentPlayer() {
         return players.get(currentplayer);
     }
 
-    public void nextPlayer(){
-        if(currentplayer==(players.size()-1)){
-            currentplayer=0;
-        }
-        else{
+    public void nextPlayer() {
+        if (currentplayer == (players.size() - 1)) {
+            currentplayer = 0;
+        } else {
             currentplayer++;
         }
     }
@@ -97,7 +95,8 @@ public class Model {
     public int getTurnNumber() {
         return turnNumber;
     }
-    public void nextTurn(){
+
+    public void nextTurn() {
         turnNumber++;
     }
 
@@ -105,9 +104,9 @@ public class Model {
         this.islastturn = true;
     }
 
-    public String player_winner(){
-        int min=8;
-        Player winner=null;
+    public String player_winner() {
+        int min = 8;
+        Player winner = null;
         for (Player player : players) {
             if (player.getSchoolBoard().getNumOfTowers() < min) {
                 min = player.getSchoolBoard().getNumOfTowers();
@@ -116,8 +115,8 @@ public class Model {
                 winner = null;
             }
         }
-        if(winner==null){
-            int max=0;
+        if (winner == null) {
+            int max = 0;
             for (Player player : players) {
                 int numProf = 0;
                 for (int i = 0; i < getTable().getProfessors().size(); i++) {
@@ -134,13 +133,13 @@ public class Model {
             }
         }
 
-        if(winner==null) return "NON C'E' NESSUN VINCITORE";
+        if (winner == null) return "NON C'E' NESSUN VINCITORE";
         else return winner.getNickname();
     }
 
-    public String team_winner(){
-        int min=8;
-        Team winner=null;
+    public String team_winner() {
+        int min = 8;
+        Team winner = null;
         for (Team team : teams) {
             if (team.getPlayer1().getSchoolBoard().getNumOfTowers() < min) {
                 min = team.getPlayer1().getSchoolBoard().getNumOfTowers();
@@ -149,8 +148,8 @@ public class Model {
                 winner = null;
             }
         }
-        if(winner==null){
-            int max=0;
+        if (winner == null) {
+            int max = 0;
             for (Team team : teams) {
                 int numProf = 0;
                 for (int i = 0; i < getTable().getProfessors().size(); i++) {
@@ -167,7 +166,7 @@ public class Model {
             }
         }
 
-        if(winner==null) return "NON C'E' NESSUN VINCITORE";
-        else return winner.getPlayer1().getNickname()+ " " +winner.getPlayer2().getNickname();
+        if (winner == null) return "NON C'E' NESSUN VINCITORE";
+        else return winner.getPlayer1().getNickname() + " " + winner.getPlayer2().getNickname();
     }
 }
