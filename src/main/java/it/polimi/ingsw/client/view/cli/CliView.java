@@ -197,7 +197,7 @@ public class CliView implements View{
     }
 
     // Il server mi invia una richiesta di interazione: devo digitare roba da terminale
-    public void requestToMe(){
+    public void requestToMe() throws InterruptedException {
         switch(clientModel.getTypeOfRequest()){
 
             case "CHOOSEASSISTANTCARD" :

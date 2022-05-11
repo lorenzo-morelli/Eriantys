@@ -61,11 +61,19 @@ public class StudentPhase extends State {
 
             Network.send(json.toJson(currentPlayerData));
 
-            ParametersFromNetwork message = new ParametersFromNetwork(1);
-            message.enable();
-            while(!message.parametersReceived()){
-                TimeUnit.SECONDS.sleep(1);
+            boolean responseReceived = false;
+
+            while (!responseReceived) {
+                message = new ParametersFromNetwork(1);
+                message.enable();
+                while (!message.parametersReceived()) {
+                    // il client non ha ancora scelto la carta assistente
+                }
+                if(json.fromJson(message.getParameter(0),ClientModel.class).getClientIdentity() == currentPlayerData.getClientIdentity()){
+                    responseReceived = true;
+                }
             }
+
 
             currentPlayerData = json.fromJson(message.getParameter(0),ClientModel.class);
             String type = currentPlayerData.getTypeOfRequest();

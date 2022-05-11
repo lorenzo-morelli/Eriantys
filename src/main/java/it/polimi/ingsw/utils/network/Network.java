@@ -1,6 +1,7 @@
 package it.polimi.ingsw.utils.network;
 
 import java.awt.event.*;
+import java.util.concurrent.TimeUnit;
 import javax.swing.*;
 
 
@@ -91,7 +92,8 @@ public class Network implements ActionListener{
         return instance.gotConnect;
     }
 
-    public static void send(String message){
+    public static void send(String message) throws InterruptedException {
+        TimeUnit.SECONDS.sleep(1);
         connection.sendText(message);
     }
 

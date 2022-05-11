@@ -78,7 +78,7 @@ public class WaitOtherClients extends State {
         return super.entryAction(cause);
     }
 
-    public void isNicknameAlreadyExistent() {
+    public void isNicknameAlreadyExistent() throws InterruptedException {
         for (ClientModel c : connectionModel.getClientsInfo()) {
             if (clientModel.getNickname().equals(c.getNickname())) {
                 // ahia, il nickname esiste già

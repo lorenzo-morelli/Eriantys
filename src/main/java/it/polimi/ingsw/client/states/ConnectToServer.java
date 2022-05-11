@@ -31,6 +31,7 @@ public class ConnectToServer extends State{
         Network.setupClient(clientModel.getIp(), clientModel.getPort());
         clientModel.setMyIp(Network.getMyIp());
 
+
         if (Network.isConnected()){
             connected.fireStateEvent();
         }

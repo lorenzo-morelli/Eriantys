@@ -21,7 +21,7 @@ public interface View {
     /**
      * Come reagisco io client se il server mi fa una richiesta di interagire tramite terminale
      */
-    void requestToMe();
+    void requestToMe() throws InterruptedException;
 
     /**
      * Come reagisco io client se un altro client riceve una richiesta di interazione da terminale

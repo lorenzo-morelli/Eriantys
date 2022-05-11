@@ -71,12 +71,21 @@ public class AssistantCardPhase extends State {
             currentPlayerData.setTypeOfRequest("CHOOSEASSISTANTCARD");  // lato client avrà una nella CliView un metodo per gestire questa richiesta
             Network.send(json.toJson(currentPlayerData));
 
-            message = new ParametersFromNetwork(1);
-            message.enable();
-            while(!message.parametersReceived()){
-                TimeUnit.SECONDS.sleep(1);
-                // il client non ha ancora scelto la carta assistente
+            boolean responseReceived = false;
+
+            while (!responseReceived) {
+                message = new ParametersFromNetwork(1);
+                message.enable();
+                while (!message.parametersReceived()) {
+                    // il client non ha ancora scelto la carta assistente
+                }
+                if(json.fromJson(message.getParameter(0),ClientModel.class).getClientIdentity() == currentPlayerData.getClientIdentity()){
+                    responseReceived = true;
+                }
             }
+
+
+
             //System.out.println(message.getParameter(0));
             // ricevo un campo json e lo converto in AssistantCard
             AssistantCard choosen = currentPlayerData.getDeck().get(Integer.parseInt(json.fromJson(message.getParameter(0),ClientModel.class).getFromTerminal().get(0)));
