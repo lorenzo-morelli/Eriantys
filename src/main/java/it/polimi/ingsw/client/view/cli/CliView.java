@@ -161,6 +161,9 @@ public class CliView implements View{
                     System.out.print("ALERT: dati inseriti non validi, riprovare\n");
                     askParameters();
                 }
+                else{
+                    System.out.println("In attesa che gli altri giocatori si colleghino...");
+                }
 
                 break;
             case "GAMEINFO" :
@@ -184,6 +187,10 @@ public class CliView implements View{
                     System.out.print("ALERT: il gameMode scelto deve essere 'PRINCIPIANT' oppure 'EXPERT', riprovare\n");
                     askParameters();
                 }
+                if(Integer.parseInt(parsedStrings.get(0))>1 && Integer.parseInt(parsedStrings.get(0))<5 && (parsedStrings.get(1).equals("PRINCIPIANT") || parsedStrings.get(1).equals("EXPERT"))){
+                    System.out.println("In attesa che gli altri giocatori si colleghino...");
+                }
+
                 break;
 
             case "NICKNAMEEXISTENT" :
@@ -202,6 +209,7 @@ public class CliView implements View{
 
             case "CHOOSEASSISTANTCARD" :
                 System.out.println(clientModel.getServermodel().toString());
+                System.out.println("Scegli una Carta Assistente");
                 List<Integer> indexList = new ArrayList<>();
                 int i = 0;
                 for (AssistantCard a : clientModel.getDeck()){
@@ -209,8 +217,7 @@ public class CliView implements View{
                     System.out.println(i+": "+ "valore: " + a.getValues() + "  mosse: " + a.getMoves());
                     i++;
                 }
-                CommandPrompt.ask("Scegli una carta assistente",
-                        "numero della carta>");
+                CommandPrompt.ask("inserisci codice indicativo della carta","carta :");
                 parsedStrings = new ArrayList<String>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
 
                 // la cifra inserita deve essere valida
