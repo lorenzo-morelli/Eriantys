@@ -51,6 +51,8 @@ public class ClientModel {
     // My nickname
     private String nickname;
 
+    private ArrayList<String> nicknames;
+
     // server IP and port
     private String ip;
     private String port;
@@ -68,6 +70,7 @@ public class ClientModel {
 
     public ClientModel(){
         fromTerminal = new ArrayList<>();
+        nicknames = new ArrayList<>();
         clientIdentity = rand.nextInt(2147483647);
     }
 
@@ -195,5 +198,13 @@ public class ClientModel {
 
     public void setServermodel(Model serverModel) {
         this.serverModel = serverModel;
+    }
+
+    public ArrayList<String> getNicknames() {
+        return nicknames;
+    }
+
+    public void setNicknames(ArrayList<String> nicknames) {
+        this.nicknames = nicknames;
     }
 }

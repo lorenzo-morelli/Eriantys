@@ -45,14 +45,13 @@ public class AskForTeamMate extends State {
 
     @Override
     public IEvent entryAction(IEvent cause) throws Exception {
-        model = serverController.getModel();
 
-        // retrive the current player
-        Player currentPlayer = model.getcurrentPlayer();
-        // retrive data of the current player
-        ClientModel currentPlayerData = connectionModel.findPlayer(currentPlayer.getNickname());
-        // put the deck in the data and send it over the network
-        currentPlayerData.setServermodel(model);
+        ClientModel currentPlayerData = connectionModel.getClientsInfo().get(0);
+        for(ClientModel c : connectionModel.getClientsInfo()){
+            currentPlayerData.getNicknames().add(c.getNickname());
+            c.setGameStarded(true);
+        }
+        currentPlayerData.getNicknames().remove(currentPlayerData.getNickname());
         currentPlayerData.setResponse(false); // è una richiesta non una risposta
         currentPlayerData.setTypeOfRequest("TEAMMATE");  // lato client avrà una nella CliView un metodo per gestire questa richiesta
         Network.send(json.toJson(currentPlayerData));
@@ -69,8 +68,15 @@ public class AskForTeamMate extends State {
                 responseReceived = true;
             }
         }
-        // Ho ricevuto la risposta, ora devo aggiornare il model
-        serverController.setModel(json.fromJson(message.getParameter(0), ClientModel.class).getServermodel());
+        // Ho ricevuto la risposta, ora devo creare la partita
+        ClientModel received = json.fromJson(message.getParameter(0), ClientModel.class);
+        model = new Model(4, "PRINCIPIANT"); // per il momento hardcodato PRINCIPIANT
+                                                                // todo: parametrizzarlo
+        model.getPlayers().add(new Player(received.getNicknames().get(3), connectionModel.findPlayer(received.getNicknames().get(3)).getMyIp(),1, model));
+        model.getPlayers().add(new Player(received.getNicknames().get(2), connectionModel.findPlayer(received.getNicknames().get(2)).getMyIp(),1, model));
+        model.getPlayers().add(new Player(received.getNicknames().get(1), connectionModel.findPlayer(received.getNicknames().get(1)).getMyIp(),2, model));
+        model.getPlayers().add(new Player(received.getNicknames().get(0), connectionModel.findPlayer(received.getNicknames().get(0)).getMyIp(),2, model));
+        model.randomschedulePlayers();
         teamMateChoosen.fireStateEvent();
 
         return super.entryAction(cause);
@@ -78,6 +84,7 @@ public class AskForTeamMate extends State {
 
     @Override
     public void exitAction(IEvent cause) throws IOException {
+        serverController.setModel(model);
         super.exitAction(cause);
     }
 

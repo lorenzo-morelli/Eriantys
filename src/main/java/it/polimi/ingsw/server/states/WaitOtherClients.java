@@ -21,7 +21,8 @@ public class WaitOtherClients extends State {
     private Controller controller;
     private ParametersFromNetwork message;
 
-    private Event allClientsConnected;
+    private Event twoOrThreeClientsConnected;
+    private Event fourClientsConnected;
 
     public WaitOtherClients(ServerController serverController) {
         super("[Aspettando gli altri giocatori]");
@@ -30,12 +31,18 @@ public class WaitOtherClients extends State {
         json = new Gson();
         message = new ParametersFromNetwork(1);
         message.setStateEventListener(controller);
-        allClientsConnected = new Event("Tutti i clients sono collegati e pronti a giocare");
-        allClientsConnected.setStateEventListener(controller);
+        fourClientsConnected= new Event("4 clients sono collegati e pronti a giocare");
+        fourClientsConnected.setStateEventListener(controller);
+        twoOrThreeClientsConnected= new Event("2 o 3 clients sono collegati e pronti a giocare");
+        twoOrThreeClientsConnected.setStateEventListener(controller);
     }
 
-    public Event allClientsConnected() {
-        return allClientsConnected;
+    public Event twoOrThreeClientsConnected() {
+        return twoOrThreeClientsConnected;
+    }
+
+    public Event fourClientsConnected() {
+        return fourClientsConnected;
     }
 
     @Override
@@ -74,7 +81,12 @@ public class WaitOtherClients extends State {
             message.disable();
             numOfPlayersToWait--;
         }
-        allClientsConnected.fireStateEvent();
+        if (connectionModel.getClientsInfo().size() == 4){
+            fourClientsConnected.fireStateEvent();
+        }
+        else if(connectionModel.getClientsInfo().size() == 3){
+            twoOrThreeClientsConnected.fireStateEvent();
+        }
         return super.entryAction(cause);
     }
 

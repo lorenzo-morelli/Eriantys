@@ -10,13 +10,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d643ab46-721f-40dd-8cfb-2e98075097f3" name="Changes" comment="Fixed &quot;In attesa che gli altri giocatori si colleghino...&quot;, small improvements">
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/states/AskForTeamMate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+    <list default="true" id="d643ab46-721f-40dd-8cfb-2e98075097f3" name="Changes" comment="Team mate choosing">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ClientModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/ClientModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/view/cli/CliView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/client/view/cli/CliView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/ServerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/ServerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/states/AskForTeamMate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/states/AskForTeamMate.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/states/CreateGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/states/CreateGame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/states/WaitOtherClients.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/polimi/ingsw/server/states/WaitOtherClients.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -193,7 +194,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="c193818a-1e92-4991-9439-cb3e4c836bfd" name="Changes" comment="" />
+      <changelist id="d643ab46-721f-40dd-8cfb-2e98075097f3" name="Changes" comment="Team mate choosing" />
       <created>1647955299176</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -210,6 +211,7 @@
       <workItem from="1651921502036" duration="21889000" />
       <workItem from="1652126383149" duration="192000" />
       <workItem from="1652182224566" duration="10004000" />
+      <workItem from="1652387605624" duration="4349000" />
     </task>
     <task id="LOCAL-00001" summary="created resources directory">
       <created>1647955875299</created>
@@ -393,7 +395,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652376276010</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Team mate choosing">
+      <created>1652380116394</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1652380116394</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -434,7 +443,8 @@
     <MESSAGE value="edited protocol_documentation.md" />
     <MESSAGE value="removed &quot;gamestarted&quot; boolean from assistant card phase" />
     <MESSAGE value="Fixed &quot;In attesa che gli altri giocatori si colleghino...&quot;, small improvements" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed &quot;In attesa che gli altri giocatori si colleghino...&quot;, small improvements" />
+    <MESSAGE value="Team mate choosing" />
+    <option name="LAST_COMMIT_MESSAGE" value="Team mate choosing" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

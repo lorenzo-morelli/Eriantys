@@ -52,12 +52,7 @@ public class CreateGame extends State {
             i++;
         }
         model.randomschedulePlayers();
-        if(connectionModel.getClientsInfo().size() == 4){
-            fourPlayersGameCreated.fireStateEvent();
-        }
-        else {
-            gameCreated.fireStateEvent();
-        }
+        gameCreated.fireStateEvent();
         return super.entryAction(cause);
     }
 

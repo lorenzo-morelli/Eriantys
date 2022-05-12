@@ -174,47 +174,19 @@ public class CliView implements View{
                 break;
 
             case "TEAMMATE" :
-                ArrayList<String> nicknames = new ArrayList<>();
-                Model gameModel = clientModel.getServermodel();
-                for (Player p : gameModel.getPlayers()){
-                    nicknames.add(p.getNickname());
-                    System.out.print(p.getNickname() + "\n");
+                for (String nickname : clientModel.getNicknames()){
+                    System.out.println(nickname);
                 }
                 CommandPrompt.ask("Inserisci il nickname del tuo compagno di squadra: ","Nickname> ");
-                if(!nicknames.contains(CommandPrompt.gotFromTerminal())){
+                if(!clientModel.getNicknames().contains(CommandPrompt.gotFromTerminal())){
                     requestToMe();
                 }
-                Team myTeam = new Team(1);
-                Player me = null;
-                Player myMate = null;
-                for (Player p : gameModel.getPlayers()){
-                    if (clientModel.getNickname().equals(p.getNickname())){
-                        me = p;
-                    }
-                    if (CommandPrompt.gotFromTerminal().equals(p.getNickname())){
-                        myMate = p;
-                    }
-                }
-
-                myTeam.setPlayer(me);
-                myTeam.setPlayer(myMate);
-
-                gameModel.getTeams().add(myTeam);
-
-                ArrayList<Player> others = new ArrayList<>();
-                for (Player p : gameModel.getPlayers()) {
-                    if (!p.equals(me) && !p.equals(myMate)) {
-                        others.add(p);
-                    }
-                }
-
-                Team otherTeam = new Team(2);
-                otherTeam.setPlayer(others.get(0));
-                otherTeam.setPlayer(others.get(1));
-
-                gameModel.getTeams().add(otherTeam);
-
-                clientModel.setServermodel(gameModel);
+                String teamMate = CommandPrompt.gotFromTerminal();
+                clientModel.getNicknames().remove(teamMate);
+                clientModel.getNicknames().add(teamMate);
+                clientModel.getNicknames().add(clientModel.getNickname());
+                clientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                clientModel.setFromTerminal(parsedStrings);
                 json = new Gson();
                 Network.send(json.toJson(clientModel));
         }
@@ -244,8 +216,9 @@ public class CliView implements View{
                         " mosse = "+clientModel.getDeck().get(Integer.parseInt(clientModel.getFromTerminal().get(0))).getMoves());
                 break;
             case "TEAMMATE" :
-                System.out.println("Il giocatore " + clientModel.getNickname()+" ha formato i teams:\n " +
-                        clientModel.getServermodel().getTeams().toString());
+                System.out.println("Il giocatore " + clientModel.getNickname()+" ha formato i teams:\n" +
+                        "TEAM 1: " + clientModel.getNicknames().get(3) + " " + clientModel.getNicknames().get(2)+"\n" +
+                        "TEAM 2: " + clientModel.getNicknames().get(1) + " " + clientModel.getNicknames().get(0)+"\n" );
         }
     }
 
