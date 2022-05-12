@@ -24,6 +24,7 @@ public class ServerController {
         CreateGame createGame = new CreateGame(this);
         AssistantCardPhase assistantCardPhase = new AssistantCardPhase(this);
         StudentPhase studentPhase = new StudentPhase(this);
+        AskForTeamMate askForTeamMate = new AskForTeamMate(this);
 
         // Dichiarazione delle transizioni tra gli stati
         fsm.addTransition(idle, start, specifyPortScreen);
@@ -32,6 +33,8 @@ public class ServerController {
         fsm.addTransition(waitFirstPlayerGameInfo, waitFirstPlayerGameInfo.gotNumOfPlayersAndGamemode(), waitOtherClients);
         fsm.addTransition(waitOtherClients, waitOtherClients.allClientsConnected(), createGame);
         fsm.addTransition(createGame, createGame.gameCreated(), assistantCardPhase);
+        fsm.addTransition(createGame, createGame.fourPlayersGameCreated(),askForTeamMate);
+        fsm.addTransition(askForTeamMate, askForTeamMate.teamMateChoosen(), assistantCardPhase);
         fsm.addTransition(assistantCardPhase, assistantCardPhase.cardsChoosen(), studentPhase);
         // L'evento di start è l'unico che deve essere fatto partire manualmente
         start.fireStateEvent();

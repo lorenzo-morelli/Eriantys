@@ -5,7 +5,10 @@ import it.polimi.ingsw.client.ClientModel;
 import it.polimi.ingsw.client.states.*;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.server.model.AssistantCard;
+import it.polimi.ingsw.server.model.Model;
 import it.polimi.ingsw.server.model.Player;
+import it.polimi.ingsw.server.model.Team;
+import it.polimi.ingsw.server.model.enums.GameMode;
 import it.polimi.ingsw.utils.cli.CommandPrompt;
 import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.stateMachine.State;
@@ -168,6 +171,52 @@ public class CliView implements View{
                 break;
             case "CHOOSEWHERETOMOVESTUDENTS"    :
                 System.out.println(clientModel.getServermodel().toString());
+                break;
+
+            case "TEAMMATE" :
+                ArrayList<String> nicknames = new ArrayList<>();
+                Model gameModel = clientModel.getServermodel();
+                for (Player p : gameModel.getPlayers()){
+                    nicknames.add(p.getNickname());
+                    System.out.print(p.getNickname() + "\n");
+                }
+                CommandPrompt.ask("Inserisci il nickname del tuo compagno di squadra: ","Nickname> ");
+                if(!nicknames.contains(CommandPrompt.gotFromTerminal())){
+                    requestToMe();
+                }
+                Team myTeam = new Team(1);
+                Player me = null;
+                Player myMate = null;
+                for (Player p : gameModel.getPlayers()){
+                    if (clientModel.getNickname().equals(p.getNickname())){
+                        me = p;
+                    }
+                    if (CommandPrompt.gotFromTerminal().equals(p.getNickname())){
+                        myMate = p;
+                    }
+                }
+
+                myTeam.setPlayer(me);
+                myTeam.setPlayer(myMate);
+
+                gameModel.getTeams().add(myTeam);
+
+                ArrayList<Player> others = new ArrayList<>();
+                for (Player p : gameModel.getPlayers()) {
+                    if (!p.equals(me) && !p.equals(myMate)) {
+                        others.add(p);
+                    }
+                }
+
+                Team otherTeam = new Team(2);
+                otherTeam.setPlayer(others.get(0));
+                otherTeam.setPlayer(others.get(1));
+
+                gameModel.getTeams().add(otherTeam);
+
+                clientModel.setServermodel(gameModel);
+                json = new Gson();
+                Network.send(json.toJson(clientModel));
         }
     }
 
@@ -175,14 +224,13 @@ public class CliView implements View{
     // Esempio "pippo: sta salutando"
     public void requestToOthers() throws IOException {
         switch(clientModel.getTypeOfRequest()) {
-            case "HELLO" :
-                CommandPrompt.println("L'utente " +clientModel.getNickname()+ " sta scrivendo Hello");
-                break;
             case "CHOOSEASSISTANTCARD" :
                 CommandPrompt.println("L'utente " +clientModel.getNickname()+ " sta scegliendo la carta assistente");
                 break;
             case "CHOOSEWHERETOMOVESTUDENTS"    :
                 CommandPrompt.println("L'utente " +clientModel.getNickname()+ " sta scegliendo dove muovere lo studente");
+            case "TEAMMATE" :
+                CommandPrompt.println("L'utente " +clientModel.getNickname()+ " sta scegliendo il suo compagno di squadra");
         }
     }
 
@@ -190,14 +238,14 @@ public class CliView implements View{
     // Esempio "pippo: ha salutato"
     public void response() throws IOException {
         switch(clientModel.getTypeOfRequest()) {
-            case "HELLO" :
-                System.out.println("L'utente " +clientModel.getNickname()+ " ha scritto Hello");
-            break;
             case "CHOOSEASSISTANTCARD":
                 System.out.println("Il giocatore " + clientModel.getNickname()+" ha scelto " +
                         "valore = " +clientModel.getDeck().get(Integer.parseInt(clientModel.getFromTerminal().get(0))).getValues() +
                         " mosse = "+clientModel.getDeck().get(Integer.parseInt(clientModel.getFromTerminal().get(0))).getMoves());
                 break;
+            case "TEAMMATE" :
+                System.out.println("Il giocatore " + clientModel.getNickname()+" ha formato i teams:\n " +
+                        clientModel.getServermodel().getTeams().toString());
         }
     }
 

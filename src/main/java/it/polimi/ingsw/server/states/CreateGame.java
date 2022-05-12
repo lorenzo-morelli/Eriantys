@@ -13,7 +13,7 @@ import it.polimi.ingsw.utils.stateMachine.State;
 import java.io.IOException;
 
 public class CreateGame extends State {
-    private Event gameCreated;
+    private Event gameCreated, fourPlayersGameCreated;
     private Model model;
 
     private ConnectionModel connectionModel;
@@ -26,11 +26,16 @@ public class CreateGame extends State {
         this.controller = serverController.getFsm();
         this.connectionModel = serverController.getConnectionModel();
         gameCreated = new Event("game created");
+        fourPlayersGameCreated = new Event("Four players game created");
         gameCreated.setStateEventListener(controller);
     }
 
     public Event gameCreated() {
         return gameCreated;
+    }
+
+    public Event fourPlayersGameCreated() {
+        return fourPlayersGameCreated;
     }
 
     public Model getModel() {
@@ -47,7 +52,12 @@ public class CreateGame extends State {
             i++;
         }
         model.randomschedulePlayers();
-        gameCreated.fireStateEvent();
+        if(connectionModel.getClientsInfo().size() == 4){
+            fourPlayersGameCreated.fireStateEvent();
+        }
+        else {
+            gameCreated.fireStateEvent();
+        }
         return super.entryAction(cause);
     }
 
