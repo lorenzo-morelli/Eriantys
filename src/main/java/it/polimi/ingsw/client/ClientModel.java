@@ -42,7 +42,7 @@ public class ClientModel {
     private PeopleColor choosedColor;
     private int choosedIsland;
 
-    private Model Servermodel;
+    private Model serverModel;
     private List<AssistantCard> deck;
 
     // where to put data that comes from terminal
@@ -52,21 +52,18 @@ public class ClientModel {
     private String nickname;
 
     // server IP and port
-    private String Ip;
-    private String Port;
+    private String ip;
+    private String port;
 
     // my IP address
     private String myIp;
 
     // Number of players
-    private int numofplayer;
+    private int numOfPlayer;
 
 
     // Game mode (PRINCIPIANT or EXPERT)
     private String gamemode;
-
-
-
 
 
     public ClientModel(){
@@ -78,7 +75,7 @@ public class ClientModel {
     // Getters and Setters
 
     public int getNumofplayer() {
-        return numofplayer;
+        return numOfPlayer;
     }
 
     public String getGamemode() {
@@ -89,15 +86,15 @@ public class ClientModel {
         this.gamemode = gamemode;
     }
 
-    public void setNumofplayer(int numofplayer) {
-        this.numofplayer = numofplayer;
+    public void setNumofplayer(int numOfPlayer) {
+        this.numOfPlayer = numOfPlayer;
     }
     public void setIp(String ip) {
-        this.Ip = ip;
+        this.ip = ip;
     }
 
     public void setPort(String port) {
-        this.Port = port;
+        this.port = port;
     }
 
     public String getNickname() {
@@ -117,11 +114,11 @@ public class ClientModel {
     }
 
     public String getIp() {
-        return Ip;
+        return ip;
     }
 
     public String getPort() {
-        return Port;
+        return port;
     }
 
     public Boolean getAmIfirst() {
@@ -193,10 +190,10 @@ public class ClientModel {
     }
 
     public Model getServermodel() {
-        return Servermodel;
+        return serverModel;
     }
 
-    public void setServermodel(Model servermodel) {
-        this.Servermodel = servermodel;
+    public void setServermodel(Model serverModel) {
+        this.serverModel = serverModel;
     }
 }

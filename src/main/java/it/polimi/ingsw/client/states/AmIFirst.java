@@ -40,6 +40,9 @@ public class AmIFirst extends State {
             //System.out.println("[Chiedo al server se sono il primo client]");
             Network.send(json.toJson(clientModel));
 
+
+            System.out.println("Sei connesso al server, se è disponibile una partita verrai automaticamente collegato\n" +
+                    "altrimenti vuoi dire che il server è al completo e non può ospitare altri giocatori");
             response.enable();
             while (!response.parametersReceived()) {
                 // Non ho ancora ricevuto una risposta dal server
@@ -62,6 +65,8 @@ public class AmIFirst extends State {
             //System.out.println("   sono primo !!!]");
         }
         else if (clientModel.getAmIfirst().equals(false)){
+
+            System.out.println("In attesa che gli altri giocatori si colleghino...");
             no.fireStateEvent();
             //System.out.println("   non sono primo !!!]");
         }

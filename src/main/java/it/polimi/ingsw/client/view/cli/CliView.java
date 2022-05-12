@@ -28,71 +28,6 @@ public class CliView implements View{
 
     private ClientModel clientModel;
 
-    // Le regular expressions servono per individuare pattern e verificare la correttezza dell'input dell'utente
-    private static final String IP_REGEX =
-            "^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\." +
-                    "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\." +
-                    "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\." +
-                    "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$";
-
-    private static final String PORT_REGEX=
-            "^([1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$";
-
-    private static final String CIFRA_REGEX ="[0-9]";
-    private static final String NUMERO_REGEX ="[0-9]+";
-    private static final Pattern IP_PATTERN = Pattern.compile(IP_REGEX);
-    private static final Pattern PORT_PATTERN = Pattern.compile(PORT_REGEX);
-    private static final Pattern CIFRA_PATTERN = Pattern.compile(CIFRA_REGEX);
-    private static final Pattern NUMERO_PATTERN = Pattern.compile(NUMERO_REGEX);
-
-    // Metodo che controlla se un IP è valido con le regular expressions
-    public static boolean isValidIp(String ip)
-    {
-        if (ip == null) {
-            return false;
-        }
-
-        Matcher matcher = IP_PATTERN.matcher(ip);
-
-        return matcher.matches();
-    }
-
-    // Metodo che controlla se una porta è valida con le regular expressions
-    public static boolean isValidPort(String port)
-    {
-        if (port == null) {
-            return false;
-        }
-
-        Matcher matcher = PORT_PATTERN.matcher(port);
-
-        return matcher.matches();
-    }
-
-    // Metodo che controlla se una cifra è valida con le regular expressions
-    public static boolean isValidCifra(String cifra)
-    {
-        if (cifra == null) {
-            return false;
-        }
-
-        Matcher matcher = CIFRA_PATTERN.matcher(cifra);
-
-        return matcher.matches();
-    }
-
-    // Metodo che controlla se un numero è valido con le regular expressions
-    public static boolean isValidNumber(String number)
-    {
-        if (number == null) {
-            return false;
-        }
-
-        Matcher matcher = NUMERO_PATTERN.matcher(number);
-
-        return matcher.matches();
-    }
-
     public void setClientModel(ClientModel clientModel) {
         this.clientModel = clientModel;
     }
@@ -161,11 +96,8 @@ public class CliView implements View{
                     System.out.print("ALERT: dati inseriti non validi, riprovare\n");
                     askParameters();
                 }
-                else{
-                    System.out.println("In attesa che gli altri giocatori si colleghino...");
-                }
-
                 break;
+
             case "GAMEINFO" :
                 CommandPrompt.ask("Inserire numero di giocatori e modalità di gioco ",
                         "numOfPlayers gameMode>");
@@ -187,10 +119,9 @@ public class CliView implements View{
                     System.out.print("ALERT: il gameMode scelto deve essere 'PRINCIPIANT' oppure 'EXPERT', riprovare\n");
                     askParameters();
                 }
-                if(Integer.parseInt(parsedStrings.get(0))>1 && Integer.parseInt(parsedStrings.get(0))<5 && (parsedStrings.get(1).equals("PRINCIPIANT") || parsedStrings.get(1).equals("EXPERT"))){
-                    System.out.println("In attesa che gli altri giocatori si colleghino...");
-                }
-
+                // Se siamo arrivati quì l'utente ha inserito numero di giocatori e gamemode nel formato richiesto
+                // ovvero 2, 3, o 4 per numOfPlayers e PRINCIPIANT o EXPERT per la modalità di gioco
+                // non occorre fare ulteriori controlli.
                 break;
 
             case "NICKNAMEEXISTENT" :
@@ -217,7 +148,7 @@ public class CliView implements View{
                     System.out.println(i+": "+ "valore: " + a.getValues() + "  mosse: " + a.getMoves());
                     i++;
                 }
-                CommandPrompt.ask("inserisci codice indicativo della carta","carta :");
+                CommandPrompt.ask("Inserisci codice indentficativo della carta","Carta> ");
                 parsedStrings = new ArrayList<String>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
 
                 // la cifra inserita deve essere valida
@@ -270,5 +201,75 @@ public class CliView implements View{
         }
     }
 
+
+
+
+
+    // Methods for client side type-safety checking
+    // Metodo che controlla se un IP è valido con le regular expressions
+    public static boolean isValidIp(String ip)
+    {
+        String IP_REGEX =
+                "^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\." +
+                        "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\." +
+                        "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\." +
+                        "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$";
+        Pattern IP_PATTERN = Pattern.compile(IP_REGEX);
+
+        if (ip == null) {
+            return false;
+        }
+
+        Matcher matcher = IP_PATTERN.matcher(ip);
+
+        return matcher.matches();
+    }
+
+    // Metodo che controlla se una porta è valida con le regular expressions
+    public static boolean isValidPort(String port)
+    {
+        String PORT_REGEX=
+                "^([1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$";
+        Pattern PORT_PATTERN = Pattern.compile(PORT_REGEX);
+        if (port == null) {
+            return false;
+        }
+
+        Matcher matcher = PORT_PATTERN.matcher(port);
+
+        return matcher.matches();
+    }
+
+    // Metodo che controlla se una cifra è valida con le regular expressions
+    public static boolean isValidCifra(String cifra)
+    {
+
+        String CIFRA_REGEX ="[0-9]";
+
+        Pattern CIFRA_PATTERN = Pattern.compile(CIFRA_REGEX);
+
+        if (cifra == null) {
+            return false;
+        }
+
+        Matcher matcher = CIFRA_PATTERN.matcher(cifra);
+
+        return matcher.matches();
+    }
+
+    // Metodo che controlla se un numero è valido con le regular expressions
+    public static boolean isValidNumber(String number)
+    {
+        String NUMERO_REGEX ="[0-9]+";
+        Pattern NUMERO_PATTERN = Pattern.compile(NUMERO_REGEX);
+
+        if (number == null) {
+            return false;
+        }
+
+        Matcher matcher = NUMERO_PATTERN.matcher(number);
+
+        return matcher.matches();
+    }
 }
 

@@ -44,6 +44,8 @@ public class SendToServer extends State{
             // non ho ancora ricevuto l'ack
         }
         //System.out.println("[Conferma ricevuta]");
+
+        System.out.println("In attesa che gli altri giocatori si colleghino...");
         ack.fireStateEvent();
 
     }

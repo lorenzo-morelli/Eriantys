@@ -35,7 +35,6 @@ public class Wait extends State {
 
     @Override
     public IEvent entryAction(IEvent cause) throws Exception {
-
             ParametersFromNetwork message = new ParametersFromNetwork(1);
 
             message.enable();
@@ -47,7 +46,6 @@ public class Wait extends State {
 
 
             if (receivedClientModel.isGameStarded().equals(true)) {
-                System.out.println(message.getParameter(0));
                 Gson json = new Gson();
 
                 view.setClientModel(receivedClientModel);

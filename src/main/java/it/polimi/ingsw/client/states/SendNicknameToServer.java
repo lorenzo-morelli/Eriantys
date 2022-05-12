@@ -78,6 +78,9 @@ public class SendNicknameToServer extends State {
         }
         else {
             // l'utente ha finalmente inserito un nickname valido
+
+
+            System.out.println("In attesa che gli altri giocatori si colleghino...");
             nickUnique.fireStateEvent();
         }
 
