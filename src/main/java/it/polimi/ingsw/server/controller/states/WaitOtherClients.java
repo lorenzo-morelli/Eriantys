@@ -12,20 +12,18 @@ import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
 
 public class WaitOtherClients extends State {
-    private ConnectionModel connectionModel;
-    private int numOfPlayersToWait;
+    private final ConnectionModel connectionModel;
     private ClientModel clientModel = null;
-    private Gson json;
-    private Controller controller;
-    private ParametersFromNetwork message;
+    private final Gson json;
+    private final ParametersFromNetwork message;
 
-    private Event twoOrThreeClientsConnected;
-    private Event fourClientsConnected;
+    private final Event twoOrThreeClientsConnected;
+    private final Event fourClientsConnected;
 
     public WaitOtherClients(ServerController serverController) {
         super("[Aspettando gli altri giocatori]");
         this.connectionModel = serverController.getConnectionModel();
-        this.controller = serverController.getFsm();
+        Controller controller = serverController.getFsm();
         json = new Gson();
         message = new ParametersFromNetwork(1);
         message.setStateEventListener(controller);
@@ -46,7 +44,7 @@ public class WaitOtherClients extends State {
     @Override
     public IEvent entryAction(IEvent cause) throws Exception {
         // Quanti clients devo ancora aspettare?
-        numOfPlayersToWait = connectionModel.getClientsInfo().get(0).getNumofplayer() - 1;
+        int numOfPlayersToWait = connectionModel.getClientsInfo().get(0).getNumofplayer() - 1;
 
         // Bene, aspettiamoli
         while (numOfPlayersToWait > 0) {
@@ -98,7 +96,7 @@ public class WaitOtherClients extends State {
 
                 // attendo un nickname unico
                 ParametersFromNetwork nickname = new ParametersFromNetwork(1);
-                ;
+
 
                 boolean messageReceived = false;
                 while (!messageReceived) {

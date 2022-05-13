@@ -43,7 +43,7 @@ public class Model {
         }
     }
 
-    public static Model createModel(int numofplayer, String Gamemode) throws Exception {
+    public static Model createModel(int numofplayer, String Gamemode) {
         if (numofplayer < 5 && numofplayer > 1 && (Objects.equals(Gamemode, "PRINCIPIANT") || Objects.equals(Gamemode, "EXPERT"))) {
             return new Model(numofplayer, Gamemode);
         } else {
@@ -180,18 +180,18 @@ public class Model {
     }
 
     public String printteam(){
-        String result="";
+        StringBuilder result= new StringBuilder();
         for (Team team : teams) {
-            result= result + team.toString();
+            result.append(team.toString());
         }
-        return result;
+        return result.toString();
     }
 
     public String printplayers(){
-        String result="";
+        StringBuilder result= new StringBuilder();
         for(Player player: players){
-            result= result + player.toString();
+            result.append(player.toString());
         }
-        return result;
+        return result.toString();
     }
 }

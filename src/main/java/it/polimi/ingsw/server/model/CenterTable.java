@@ -183,33 +183,33 @@ public class CenterTable {
     }
 
     public String printclouds(){
-        String result="";
+        StringBuilder result= new StringBuilder();
         int i=1;
         for (Cloud cloud : clouds) {
-            result= result + ANSI_CYAN + "    CLOUD : " + i + ANSI_RESET+ "\n" + cloud.toString();
+            result.append(ANSI_CYAN).append("    CLOUD : ").append(i).append(ANSI_RESET).append("\n").append(cloud.toString());
             i++;
         }
-        return result;
+        return result.toString();
     }
 
     public String printislands(){
-        String result="";
+        StringBuilder result= new StringBuilder();
         int i=1;
         for (Island island : islands) {
-            result= result + ANSI_CYAN+ "    ISLAND : " + i+ ANSI_RESET+ "\n" + island.toString();
+            result.append(ANSI_CYAN).append("    ISLAND : ").append(i).append(ANSI_RESET).append("\n").append(island.toString());
             i++;
         }
-        return result;
+        return result.toString();
     }
 
     public String printprofessors(){
-        String result="";
+        StringBuilder result= new StringBuilder();
         int i=0;
         for (Professor prof : professors) {
-            result= result + (i!=0 ? " |  " + prof.toString() : prof.toString());
+            result.append(i != 0 ? " |  " + prof.toString() : prof.toString());
             i++;
         }
-        return result;
+        return result.toString();
     }
 
 }
