@@ -10,6 +10,10 @@ public class Island {
     private int numberOfTowers;
     private TowerColor towerColor;
     private boolean isBlocked;
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+    public static final String WHITE_BOLD_BRIGHT="\033[1;97m";
+    public static final String ANSI_GRAY="\033[1;90m";
 
     public Island(int initialstudent, StudentSet bag, ArrayList<PeopleColor> avaiablecolor) {
         this.inhabitants = new StudentSet();
@@ -103,7 +107,7 @@ public class Island {
     public String toString() {
         return "    INHABITANS : " + inhabitants.toString() +
                 "    NUMBER OF TOWER : " + numberOfTowers + "\n"+
-                "    TOWER COLOR :" + (towerColor==null ? "null" : towerColor.toString()) +"\n"+
+                "    TOWER COLOR :" +  (towerColor==null ? " Null" : (towerColor==TowerColor.GREY ? ANSI_GRAY+towerColor+ANSI_RESET :(towerColor==TowerColor.WHITE ? WHITE_BOLD_BRIGHT+towerColor+ANSI_RESET :  ANSI_BLACK+towerColor+ANSI_RESET))) +"\n"+
                 (isBlocked ? "      QUESTA ISOLA E' BLOCCATA !\n" : "\n");
     }
 }

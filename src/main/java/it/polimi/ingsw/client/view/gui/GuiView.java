@@ -1,7 +1,7 @@
 /*
 
 
- todo: GUI DA SISTEMARE
+ //todo: GUI DA SISTEMARE
 
 package it.polimi.ingsw.client.view.gui;
 
@@ -15,7 +15,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
 
-public class GuiView implements View, ActionListener {
+public class GuiView implements View, ActionListener{
 
     // La vista matiene una reference allo stato chiamante (schermata video/command line) ed al precedente.
     private State callingState;
@@ -199,4 +199,5 @@ public class GuiView implements View, ActionListener {
         }
     }
 }
-*/
+
+ */

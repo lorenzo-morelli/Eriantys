@@ -1,7 +1,6 @@
 package it.polimi.ingsw.client.view;
 
-import it.polimi.ingsw.client.ClientModel;
-import it.polimi.ingsw.utils.cli.CommandPrompt;
+import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.utils.stateMachine.State;
 
 import java.io.IOException;

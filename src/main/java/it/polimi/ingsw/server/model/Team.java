@@ -1,9 +1,15 @@
 package it.polimi.ingsw.server.model;
 
+import it.polimi.ingsw.server.model.enums.TowerColor;
+
 public class Team {
     private Player player1;
     private Player player2;
     private final int teamNumber;
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+    public static final String ANSI_WHITE="\033[1;97m";
+    public static final String ANSI_GRAY="\033[1;90m";
 
     public Team(int teamNumber){
         player1=null;
@@ -37,9 +43,11 @@ public class Team {
 
     @Override
     public String toString() {
-        return "  TEAM " + teamNumber + " \n" +
-                "    " + player1.toString() +
-                "    " + player2.toString() +
+        return "  TEAM " + teamNumber + " \n\n" +
+                player1.toString() +
+                player2.toString() +
+                "    TOWERS : " + player1.getSchoolBoard().getNumOfTowers() + "\n" +
+                        "    TOWER COLOR : " + (player1.getSchoolBoard().getTowerColor()==null ? " Null" : (player1.getSchoolBoard().getTowerColor()== TowerColor.GREY ? ANSI_GRAY+player1.getSchoolBoard().getTowerColor()+ANSI_RESET :(player1.getSchoolBoard().getTowerColor()==TowerColor.WHITE ? ANSI_WHITE+player1.getSchoolBoard().getTowerColor()+ANSI_RESET :  ANSI_BLACK+player1.getSchoolBoard().getTowerColor()+ANSI_RESET)))  +
                 "\n\n\n";
     }
 }

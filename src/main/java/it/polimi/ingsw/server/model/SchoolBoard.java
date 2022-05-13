@@ -11,6 +11,11 @@ public class SchoolBoard {
     private final StudentSet dinnerTable;
     private final TowerColor towerColor;
     private int numOfTowers;
+    private final boolean showtower;
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+    public static final String ANSI_WHITE="\033[1;97m";
+    public static final String ANSI_GRAY="\033[1;90m";
 
     public SchoolBoard(int numOfPlayer, StudentSet bag, ArrayList<PeopleColor> avaiablePeopleColorinBag,ArrayList<TowerColor> avaiableTower) {
         this.entranceSpace = new StudentSet();   //2 o 3 giocatori
@@ -25,6 +30,7 @@ public class SchoolBoard {
         int rnd = new Random().nextInt(avaiableTower.size());
         this.towerColor = avaiableTower.get(rnd);
         avaiableTower.remove(rnd);
+        showtower=true;
     }
     public SchoolBoard(Team team, StudentSet bag, ArrayList<PeopleColor> avaiablePeopleColorinBag,ArrayList<TowerColor> avaiableTower) {
         this.entranceSpace = new StudentSet();    //4 giocatori
@@ -38,6 +44,7 @@ public class SchoolBoard {
         } else {
             this.towerColor = team.getPlayer1().getSchoolBoard().getTowerColor();
         }
+        showtower=false;
     }
     public TowerColor getTowerColor(){
         return towerColor;
@@ -73,9 +80,9 @@ public class SchoolBoard {
     @Override
     public String toString() {
         return "    ENTRANCE : " + entranceSpace.toString() +
-                "    DINNER : " + dinnerTable.toString() +
-                "    TOWERS : " + numOfTowers + "\n" +
-                "    TOWER COLOR : " + (towerColor==null ? "null" : towerColor.toString()) +
+                "    DINNER   : " + dinnerTable.toString() +
+                (showtower ? "    TOWERS : " + numOfTowers + "\n" +
+                "    TOWER COLOR : " + (towerColor==null ? " Null" : (towerColor==TowerColor.GREY ? ANSI_GRAY+towerColor+ANSI_RESET :(towerColor==TowerColor.WHITE ? ANSI_WHITE+towerColor+ANSI_RESET :  ANSI_BLACK+towerColor+ANSI_RESET))) : "") +
                 '\n';
     }
 }

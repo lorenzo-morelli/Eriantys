@@ -12,6 +12,13 @@ public class StudentSet {
     private int numOfPinkStudents;
     private int numOfGreenStudents;
 
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+
     public StudentSet(){
         this.numOfRedStudents=0;
         this.numOfGreenStudents=0;
@@ -92,11 +99,11 @@ public class StudentSet {
 
     @Override
     public String toString() {
-        return "RED=" + numOfRedStudents +
-                " , YELLOW=" + numOfYellowStudents +
-                " , BLUE=" + numOfBlueStudents +
-                " , PINK=" + numOfPinkStudents +
-                " , GREEN=" + numOfGreenStudents +
+        return ANSI_RED + "RED=" + numOfRedStudents + ANSI_RESET + " , " +
+                ANSI_YELLOW + "YELLOW=" + numOfYellowStudents + ANSI_RESET + " , " +
+                ANSI_BLUE + "BLUE=" + numOfBlueStudents + ANSI_RESET + " , " +
+                ANSI_PURPLE + "PINK=" + numOfPinkStudents + ANSI_RESET + " , " +
+                ANSI_GREEN + "GREEN=" + numOfGreenStudents + ANSI_RESET +
                 '\n';
     }
 }

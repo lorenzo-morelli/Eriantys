@@ -9,6 +9,10 @@ public class Player implements Comparable<Player>{
     private final int numplayerinteam;
     private int coins;
     private final String Ip;
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+    public static final String ANSI_WHITE="\033[1;97m";
+    public static final String ANSI_GRAY="\033[1;90m";
 
     public Player(String nickname,String Ip,Model model) {
         // crea e assegna valori di default
@@ -89,10 +93,26 @@ public class Player implements Comparable<Player>{
 
 
     public String toString() {
-        return  "    PLAYER : " + nickname + "\n" +
-                (choosedCard== null ? "    MOVES : 0\n" : "    MOVES : " + choosedCard.getMoves() + "\n" )+
-                "    SCHOOL\n"
-                + schoolBoard.toString() +
-                (coins>=0 ? "    COINS : "+ coins+"\n\n" : "\n\n");
+        switch (getSchoolBoard().getTowerColor()) {
+            case BLACK:
+                return ANSI_BLACK + "    PLAYER : " + nickname + ANSI_RESET + "\n" +
+                        (choosedCard == null ? "    MOVES : 0\n" : "    MOVES : " + choosedCard.getMoves() + "\n") +
+                        "    SCHOOL\n"
+                        + schoolBoard.toString() +
+                        (coins >= 0 ? "    COINS : " + coins + "\n" : "\n");
+            case WHITE:
+                return ANSI_WHITE + "    PLAYER : " + nickname + ANSI_RESET + "\n" +
+                        (choosedCard == null ? "    MOVES : 0\n" : "    MOVES : " + choosedCard.getMoves() + "\n") +
+                        "    SCHOOL\n"
+                        + schoolBoard.toString() +
+                        (coins >= 0 ? "    COINS : " + coins + "\n" : "\n");
+            case GREY:
+                return ANSI_GRAY + "    PLAYER : " + nickname + ANSI_RESET + "\n" +
+                        (choosedCard == null ? "    MOVES : 0\n" : "    MOVES : " + choosedCard.getMoves() + "\n") +
+                        "    SCHOOL\n"
+                        + schoolBoard.toString() +
+                        (coins >= 0 ? "    COINS : " + coins + "\n" : "\n");
+        }
+        return null;
     }
 }
