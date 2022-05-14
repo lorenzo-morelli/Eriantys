@@ -115,16 +115,19 @@ public class CliView implements View{
                 if (!isValidCifra(parsedStrings.get(0))){
                     System.out.print("ALERT: Inserisci una cifra su numOfPlayers, riprovare\n");
                     askParameters();
+                    return;
                 }
                 // se è una cifra allora deve essere compresa tra 2 e 4
                 if(Integer.parseInt(parsedStrings.get(0))<2 || Integer.parseInt(parsedStrings.get(0))>4){
                     System.out.print("ALERT: numOfPlayers deve essere compresa tra 2 e 4, riprovare\n");
                     askParameters();
+                    return;
                 }
                 // controllo che il gamemode sia tra PRINCIPIANT ed EXPERT
                 if (!parsedStrings.get(1).equals("PRINCIPIANT") && !parsedStrings.get(1).equals("EXPERT")){
                     System.out.print("ALERT: il gameMode scelto deve essere 'PRINCIPIANT' oppure 'EXPERT', riprovare\n");
                     askParameters();
+                    return;
                 }
                 // Se siamo arrivati quì l'utente ha inserito numero di giocatori e gamemode nel formato richiesto
                 // ovvero 2, 3, o 4 per numOfPlayers e PRINCIPIANT o EXPERT per la modalità di gioco
@@ -162,11 +165,13 @@ public class CliView implements View{
                if (!isValidCifra(parsedStrings.get(0))) {
                     System.out.print("ALERT: cifra inserita non valida, riprovare\n");
                     requestToMe();
+                    return;
                 }
                // la cifra inserita deve essere tra quelle proposte (ovvero nelle availableCards)
                if(!indexList.contains(Integer.parseInt(parsedStrings.get(0)))){
                    System.out.print("ALERT: carta inserita inesistente, riprovare\n");
                    requestToMe();
+                   return;
                }
                 clientModel.setResponse(true); //lo flaggo come messaggio di risposta
                 clientModel.setFromTerminal(parsedStrings);
@@ -185,6 +190,7 @@ public class CliView implements View{
                         !CommandPrompt.gotFromTerminal().equals("PINK")   ){
                     System.out.println("Si è inserito un colore non valido, reinserire i dati con più attenzione !!!!");
                     requestToMe();
+                    return;
                 }
 
                 PeopleColor choosedColor;
@@ -212,6 +218,7 @@ public class CliView implements View{
                 if(clientModel.getServermodel().getcurrentPlayer().getSchoolBoard().getEntranceSpace().numStudentsbycolor(choosedColor) == 0 ){
                     System.out.println("Si è inserito un colore non presente tra quelli disponibili, reinserire i dati con più attenzione !!!!");
                     requestToMe();
+                    return;
                 }
 
                 CommandPrompt.ask("Scegliere SCHOOL se si desidera " +
@@ -221,10 +228,12 @@ public class CliView implements View{
                 String command = CommandPrompt.gotFromTerminal();
                 if(!command.equals("SCHOOL") && !command.equals("ISLAND")){
                     requestToMe();
+                    return;
                 }else if(command.equals("SCHOOL")) {
                     if (clientModel.getServermodel().getcurrentPlayer().getSchoolBoard().getDinnerTable().numStudentsbycolor(choosedColor) == 10) {
                         System.out.println("La sala da pranzo di quel colore è piena.");
                         requestToMe();
+                        return;
                     }
                     clientModel.setTypeOfRequest("SCHOOL");
                 }else if(command.equals("ISLAND")){
@@ -232,11 +241,13 @@ public class CliView implements View{
                     if(!isValidNumber(CommandPrompt.gotFromTerminal())){
                         System.out.println("Si è inserito un numero non valido, reinserire i dati con più attenzione !!!!");
                         requestToMe();
+                        return;
                     }
                     if(Integer.parseInt(CommandPrompt.gotFromTerminal()) > clientModel.getServermodel().getTable().getIslands().size() ||
                             Integer.parseInt(CommandPrompt.gotFromTerminal()) < 0 ){
                         System.out.println("L'isola scelta non è valida.");
                         requestToMe();
+                        return;
                     }
                     clientModel.setTypeOfRequest("ISLAND");
                     clientModel.setChoosedIsland(Integer.parseInt(CommandPrompt.gotFromTerminal()) - 1);
@@ -255,6 +266,7 @@ public class CliView implements View{
                 CommandPrompt.ask("Inserisci il nickname del tuo compagno di squadra: ","Nickname> ");
                 if(!clientModel.getNicknames().contains(CommandPrompt.gotFromTerminal())){
                     requestToMe();
+                    return;
                 }
                 String teamMate = CommandPrompt.gotFromTerminal();
                 clientModel.getNicknames().remove(teamMate);
