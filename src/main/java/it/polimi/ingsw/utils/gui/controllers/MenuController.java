@@ -1,5 +1,5 @@
 package it.polimi.ingsw.utils.gui.controllers;
-/*
+
 import it.polimi.ingsw.utils.gui.GUI;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -87,7 +87,7 @@ public class MenuController {
 
     public void start(MouseEvent mouseEvent) {
         //TODO: create game
-        this.otherPlayersLabel.setText("Waiting for other players... "+ 1 + "/" + 4);
+        this.otherPlayersLabel.setText("Waiting for other players... " + 1 + "/" + 4);
         //if raggiunto il totale -> inizia partita
     }
-}*/
+}
