@@ -65,8 +65,8 @@ public class StudentPhase extends State {
                 message = new ParametersFromNetwork(1);
                 message.enable();
                 while (!message.parametersReceived()) {
-                    // il client non ha ancora scelto la carta assistente
-                }
+                        //wait message
+                     }
                 if(json.fromJson(message.getParameter(0),ClientModel.class).getClientIdentity() == currentPlayerData.getClientIdentity()){
                     responseReceived = true;
                 }
@@ -83,7 +83,7 @@ public class StudentPhase extends State {
              * server lo può trovare in currentPlayerData.getChoosedColor()
              */
             String type = currentPlayerData.getTypeOfRequest();
-            System.out.println("HO RICEVUTO" + type + currentPlayerData.getChoosedColor());
+            System.out.println("HO RICEVUTO " + type + " " + currentPlayerData.getChoosedColor());
             if(type.equals("SCHOOL")){
                 currentPlayer.getSchoolBoard().load_dinner(currentPlayerData.getChoosedColor());
                 model.getTable().checkProfessor(currentPlayerData.getChoosedColor(),model.getPlayers());

@@ -1,5 +1,5 @@
 package it.polimi.ingsw.utils.gui;
-
+/*
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -38,4 +38,4 @@ public class GUI extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-}
+}*/

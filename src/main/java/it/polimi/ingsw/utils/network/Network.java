@@ -93,7 +93,7 @@ public class Network implements ActionListener{
     }
 
     public static void send(String message) throws InterruptedException {
-        TimeUnit.MILLISECONDS.sleep(500);
+        TimeUnit.SECONDS.sleep(1);
         connection.sendText(message);
     }
 

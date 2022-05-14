@@ -5,4 +5,5 @@ public enum PeopleColor {
     YELLOW,
     BLUE,
     PINK,
-GREEN}
+GREEN
+}

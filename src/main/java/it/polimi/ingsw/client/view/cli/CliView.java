@@ -243,7 +243,7 @@ public class CliView implements View{
                         return;
                     }
                     clientModel.setTypeOfRequest("ISLAND");
-                    clientModel.setChoosedIsland(Integer.parseInt(CommandPrompt.gotFromTerminal()));
+                    clientModel.setChoosedIsland(Integer.parseInt(CommandPrompt.gotFromTerminal()) - 1);
                 }
                 clientModel.setTypeOfRequest(command);
                 clientModel.setResponse(true); //lo flaggo come messaggio di risposta
@@ -301,6 +301,11 @@ public class CliView implements View{
                 System.out.println("Il giocatore " + clientModel.getNickname()+" ha formato i teams:\n" +
                         "TEAM 1: " + clientModel.getNicknames().get(3) + " " + clientModel.getNicknames().get(2)+"\n" +
                         "TEAM 2: " + clientModel.getNicknames().get(1) + " " + clientModel.getNicknames().get(0)+"\n" );
+                break;
+            case "CHOOSEWHERETOMOVESTUDENTS"    :
+                System.out.println("L'utente " +clientModel.getNickname()+ " ha scelto di muovere 1 studente di colore " +
+                         clientModel.getChoosedColor().toString() +" sulla sua "+clientModel.getTypeOfRequest());
+                break;
         }
     }
 
