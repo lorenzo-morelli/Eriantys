@@ -40,7 +40,11 @@ public class ClientModel {
     private String typeOfRequest;
 
     private PeopleColor choosedColor;
+    private int choosedMoves;
+    private Cloud cloudChoosed;
     private int choosedIsland;
+
+    private String Gamewinner;
 
     private Model serverModel;
     private List<AssistantCard> deck;
@@ -206,5 +210,29 @@ public class ClientModel {
 
     public void setNicknames(ArrayList<String> nicknames) {
         this.nicknames = nicknames;
+    }
+
+    public int getChoosedMoves() {
+        return choosedMoves;
+    }
+
+    public void setChoosedMoves(int choosedMoves) {
+        this.choosedMoves = choosedMoves;
+    }
+
+    public Cloud getCloudChoosed() {
+        return cloudChoosed;
+    }
+
+    public void setCloudChoosed(Cloud cloudChoosed) {
+        this.cloudChoosed = cloudChoosed;
+    }
+
+    public String getGamewinner() {
+        return Gamewinner;
+    }
+
+    public void setGamewinner(String gamewinner) {
+        Gamewinner = gamewinner;
     }
 }

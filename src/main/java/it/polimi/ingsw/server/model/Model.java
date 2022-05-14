@@ -102,6 +102,7 @@ public class Model {
     public void setlastturn() {
         this.islastturn = true;
     }
+    public boolean islastturn(){return islastturn;}
 
     public String player_winner() {
         int min = 8;

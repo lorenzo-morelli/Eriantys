@@ -4,8 +4,10 @@ import com.google.gson.Gson;
 import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.server.controller.ConnectionModel;
 import it.polimi.ingsw.server.controller.ServerController;
+import it.polimi.ingsw.server.model.Island;
 import it.polimi.ingsw.server.model.Model;
 import it.polimi.ingsw.server.model.Player;
+import it.polimi.ingsw.server.model.Team;
 import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
 import it.polimi.ingsw.utils.stateMachine.Controller;
@@ -14,7 +16,7 @@ import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
 
 public class MotherPhase extends State {
-    private Event cardsChoosen;
+    private Event gameEnd, goToStudentPhase,goToCloudPhase;
     private Model model;
 
     private ConnectionModel connectionModel;
@@ -25,29 +27,39 @@ public class MotherPhase extends State {
 
     private ParametersFromNetwork message;
 
-    public Event cardsChoosen() {
-        return cardsChoosen;
+    public Event gameEnd() {
+        return gameEnd;
+    }
+
+    public Event goToStudentPhase() {
+        return goToStudentPhase;
+    }
+
+    public Event GoToCloudPhase() {
+        return goToCloudPhase;
     }
 
     public MotherPhase(ServerController serverController) {
-        super("[Move students]");
+        super("[Move mother]");
         this.serverController = serverController;
         this.controller = serverController.getFsm();
         this.connectionModel = serverController.getConnectionModel();
-        //cardsChoosen= new Event("game created");
-        //cardsChoosen.setStateEventListener(controller);
+        gameEnd= new Event("end phase");
+        gameEnd.setStateEventListener(controller);
+        goToCloudPhase= new Event("go to cloud phase");
+        goToCloudPhase.setStateEventListener(controller);
+        goToStudentPhase= new Event("go to student phase");
+        goToStudentPhase.setStateEventListener(controller);
         json = new Gson();
     }
 
     @Override
     public IEvent entryAction(IEvent cause) throws Exception {
-        int moves;
         model = serverController.getModel();
         // retrive the current player
         Player currentPlayer = model.getcurrentPlayer();
         // retrive data of the current player
         ClientModel currentPlayerData = connectionModel.findPlayer(currentPlayer.getNickname());
-
         currentPlayerData.setServermodel(model);
         currentPlayerData.setTypeOfRequest("CHOOSEWHERETOMOVEMOTHER");
         currentPlayerData.setResponse(false); //non è una risposta, è una richiesta del server al client
@@ -60,24 +72,72 @@ public class MotherPhase extends State {
             message = new ParametersFromNetwork(1);
             message.enable();
             while (!message.parametersReceived()) {
-                // il client non ha ancora scelto la carta assistente
+                // il client non ha ancora scelto dove muovere madre natura
             }
-            if (json.fromJson(message.getParameter(0), ClientModel.class).getClientIdentity() == currentPlayerData.getClientIdentity()) {
+            if(json.fromJson(message.getParameter(0),ClientModel.class).getClientIdentity() == currentPlayerData.getClientIdentity()){
                 responseReceived = true;
             }
         }
-        currentPlayerData = json.fromJson(message.getParameter(0), ClientModel.class);
-        String type = currentPlayerData.getTypeOfRequest();
 
-        if (type.equals("SCHOOL")) {
-            currentPlayer.getSchoolBoard().load_dinner(currentPlayerData.getChoosedColor());
-            model.getTable().checkProfessor(currentPlayerData.getChoosedColor(), model.getPlayers());
-        } else if (type.equals("ISLAND")) {
-            model.getTable().load_island(currentPlayer, currentPlayerData.getChoosedColor(), currentPlayerData.getChoosedIsland());
+        currentPlayerData = json.fromJson(message.getParameter(0),ClientModel.class);
 
-            return super.entryAction(cause);
-
+        int moves= currentPlayerData.getChoosedMoves();
+        model.getTable().movemother(moves);
+        Island target= model.getTable().getIslands().get(model.getTable().getMotherNaturePosition());
+        if(model.getNumberOfPlayers()==4){
+            Team influence_team=target.team_influence(model.getTeams(),model.getTable().getProfessors());
+            if(influence_team != null){
+                if(target.getNumberOfTowers()==0) {
+                    target.controllIsland(influence_team);
+                    target.placeTower();
+                }
+                else if (!(target.getTowerColor().equals(influence_team.getPlayer1().getSchoolBoard().getTowerColor()))) {
+                        model.getTable().ConquestIsland(model.getTable().getMotherNaturePosition(),model.getTeams(),influence_team);
+                }
+                if(influence_team.getPlayer1().getSchoolBoard().getNumOfTowers()==0){
+                    gameEnd().fireStateEvent();
+                    return super.entryAction(cause);
+                }
+            }
         }
-        return cause;
+        else{
+            Player influence_player= target.player_influence(model.getPlayers(),model.getTable().getProfessors());
+            if(influence_player!=null){
+                if(target.getNumberOfTowers()==0) {
+                    target.controllIsland(influence_player);
+                    target.placeTower();
+                } else if (!(target.getTowerColor().equals(influence_player.getSchoolBoard().getTowerColor()))) {
+                    model.getTable().ConquestIsland(model.getTable().getMotherNaturePosition(),model.getPlayers(),influence_player);
+                }
+                if(influence_player.getSchoolBoard().getNumOfTowers()==0){
+                    gameEnd().fireStateEvent();
+                    return super.entryAction(cause);
+                }
+            }
+        }
+        if(model.getTable().getIslands().get((model.getTable().getMotherNaturePosition()+1)%model.getTable().getIslands().size()).equals(model.getTable().getIslands().get(model.getTable().getMotherNaturePosition()))){
+            model.getTable().MergeIsland(model.getTable().getMotherNaturePosition(),((model.getTable().getMotherNaturePosition()+1)%model.getTable().getIslands().size()));
+        }
+        if(model.getTable().getIslands().get((model.getTable().getMotherNaturePosition()-1)%model.getTable().getIslands().size()).equals(model.getTable().getIslands().get(model.getTable().getMotherNaturePosition()))){
+            model.getTable().MergeIsland(model.getTable().getMotherNaturePosition(),((model.getTable().getMotherNaturePosition()-1)%model.getTable().getIslands().size()));
+        }
+        if(model.getTable().getIslands().size()==3){
+            gameEnd().fireStateEvent();
+            return super.entryAction(cause);
+        }
+        else if(model.islastturn()){
+            if(model.getcurrentPlayer().equals(model.getPlayers().get(model.getPlayers().size()-1))){
+                gameEnd().fireStateEvent();
+            }
+            else{
+                model.nextPlayer();
+                goToStudentPhase().fireStateEvent();
+            }
+            return super.entryAction(cause);
+        }
+        else{
+            GoToCloudPhase().fireStateEvent();
+            return super.entryAction(cause);
+        }
+      }
     }
-}
