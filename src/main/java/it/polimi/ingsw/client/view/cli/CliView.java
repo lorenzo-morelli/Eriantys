@@ -221,12 +221,10 @@ public class CliView implements View{
                 String command = CommandPrompt.gotFromTerminal();
                 if(!command.equals("SCHOOL") && !command.equals("ISLAND")){
                     requestToMe();
-                    return;
                 }else if(command.equals("SCHOOL")) {
                     if (clientModel.getServermodel().getcurrentPlayer().getSchoolBoard().getDinnerTable().numStudentsbycolor(choosedColor) == 10) {
                         System.out.println("La sala da pranzo di quel colore è piena.");
                         requestToMe();
-                        return;
                     }
                     clientModel.setTypeOfRequest("SCHOOL");
                 }else if(command.equals("ISLAND")){
@@ -234,13 +232,11 @@ public class CliView implements View{
                     if(!isValidNumber(CommandPrompt.gotFromTerminal())){
                         System.out.println("Si è inserito un numero non valido, reinserire i dati con più attenzione !!!!");
                         requestToMe();
-                        return;
                     }
                     if(Integer.parseInt(CommandPrompt.gotFromTerminal()) > clientModel.getServermodel().getTable().getIslands().size() ||
                             Integer.parseInt(CommandPrompt.gotFromTerminal()) < 0 ){
                         System.out.println("L'isola scelta non è valida.");
                         requestToMe();
-                        return;
                     }
                     clientModel.setTypeOfRequest("ISLAND");
                     clientModel.setChoosedIsland(Integer.parseInt(CommandPrompt.gotFromTerminal()) - 1);
@@ -302,9 +298,13 @@ public class CliView implements View{
                         "TEAM 1: " + clientModel.getNicknames().get(3) + " " + clientModel.getNicknames().get(2)+"\n" +
                         "TEAM 2: " + clientModel.getNicknames().get(1) + " " + clientModel.getNicknames().get(0)+"\n" );
                 break;
-            case "CHOOSEWHERETOMOVESTUDENTS"    :
+            case "SCHOOL"    :
                 System.out.println("L'utente " +clientModel.getNickname()+ " ha scelto di muovere 1 studente di colore " +
-                         clientModel.getChoosedColor().toString() +" sulla sua "+clientModel.getTypeOfRequest());
+                         clientModel.getChoosedColor().toString() +" sulla sua scuola");
+                break;
+            case "ISLAND"    :
+                System.out.println("L'utente " +clientModel.getNickname()+ " ha scelto di muovere 1 studente di colore " +
+                        clientModel.getChoosedColor().toString() +" sulla sua isola");
                 break;
         }
     }
