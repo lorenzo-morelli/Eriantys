@@ -10,16 +10,14 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class GUI extends Application {
-
     Stage stage;
     Scene scene;
-
 
     @Override
     public void start(Stage stage) throws IOException {
         this.stage = stage;
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainMenu.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainMenu.fxml")); //MainMenu
             this.scene = new Scene(loader.load());
             this.stage.setScene(scene);
             this.stage.show();

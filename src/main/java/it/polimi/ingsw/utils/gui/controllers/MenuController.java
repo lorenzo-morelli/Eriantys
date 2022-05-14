@@ -2,21 +2,14 @@ package it.polimi.ingsw.utils.gui.controllers;
 
 import it.polimi.ingsw.utils.gui.GUI;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Objects;
 
-public class MainMenuController {
+public class MenuController {
     private final GUI gui = new GUI();
 
     @FXML
@@ -28,15 +21,29 @@ public class MainMenuController {
     @FXML
     private Label notice;
 
+    @FXML
+    private Label connectedOnIp;
+    @FXML
+    private Label connectedOnPort;
+
+    @FXML
+    private int numberOfPlayers;
+    @FXML
+    private Label otherPlayersLabel;
+    @FXML
+    public Label numberOfPlayersLabel;
+    @FXML
+    public Label gameModeLabel;
+
     public void play(MouseEvent mouseEvent) throws IOException {
-        this.gui.changeScene("SetupGame", mouseEvent);
+        this.gui.changeScene("SetupConnection", mouseEvent);
     }
 
     public void exit() {
         System.exit(0);
     }
 
-    public void start() {
+    public void connect() {
         String nickname = this.nickname.getText();
         String ipText = this.ip.getText();
         String portText = this.port.getText();
@@ -48,10 +55,39 @@ public class MainMenuController {
         } else if (ipText.contains(" ") || portText.contains(" ")) {
             this.notice.setText("FAILURE: ip and port can't contain any spaces!");
         } else {
-            this.notice.setText("Ok, per ora");
             int ip = Integer.parseInt(ipText);
             int port = Integer.parseInt(portText);
+            this.notice.setText("ip: " + ip + "\nport: " + port);
             //TODO: connection verification and game connection with socket
         }
+    }
+
+    public void set2Players(MouseEvent mouseEvent) {
+        this.numberOfPlayers = 2;
+        numberOfPlayersLabel.setText("Number of players: 2");
+    }
+
+    public void set3Players(MouseEvent mouseEvent) {
+        this.numberOfPlayers = 3;
+        numberOfPlayersLabel.setText("Number of players: 3");
+    }
+
+    public void set4Players(MouseEvent mouseEvent) {
+        this.numberOfPlayers = 4;
+        numberOfPlayersLabel.setText("Number of players: 4");
+    }
+
+    public void setPrincipiant(MouseEvent mouseEvent) {
+        this.gameModeLabel.setText("Game mode: principiant");
+    }
+
+    public void setExpert(MouseEvent mouseEvent) {
+        this.gameModeLabel.setText("Game mode: expert");
+    }
+
+    public void start(MouseEvent mouseEvent) {
+        //TODO: create game
+        this.otherPlayersLabel.setText("Waiting for other players... "+ 1 + "/" + 4);
+        //if raggiunto il totale -> inizia partita
     }
 }

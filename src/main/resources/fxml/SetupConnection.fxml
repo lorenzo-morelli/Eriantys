@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.utils.gui.controllers.MenuController">
+    <children>
+        <Button layoutX="274.0" layoutY="322.0" mnemonicParsing="false" onMouseClicked="#connect" text="Connect" />
+        <Label layoutX="134.0" layoutY="134.0" text="Nickname:" />
+        <Label layoutX="140.0" layoutY="174.0" text="IP:" />
+        <Label layoutX="133.0" layoutY="215.0" text="Port:" />
+        <TextField fx:id="nickname" layoutX="203.0" layoutY="130.0" />
+        <TextField fx:id="ip" layoutX="203.0" layoutY="170.0" />
+        <TextField fx:id="port" layoutX="203.0" layoutY="211.0" />
+      <Label fx:id="notice" layoutX="286.0" layoutY="273.0" text="..." />
+    </children>
+</AnchorPane>
