@@ -1,5 +1,8 @@
 package it.polimi.ingsw.utils.gui;
 
+import it.polimi.ingsw.client.model.ClientModel;
+import it.polimi.ingsw.client.view.View;
+import it.polimi.ingsw.utils.stateMachine.State;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -9,9 +12,11 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class GUI extends Application {
+public class GUI extends Application implements View {
     Stage stage;
     Scene scene;
+    public State callingState;
+    private State precedentCallingState;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -37,5 +42,46 @@ public class GUI extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    @Override
+    public void setCallingState(State callingState) {
+        this.precedentCallingState = this.callingState;
+        this.callingState = callingState;
+    }
+
+    @Override
+    public void setClientModel(ClientModel clientModel) {
+
+    }
+
+    @Override
+    public void askToStart() {
+
+    }
+
+    @Override
+    public void askDecision(String option1, String option2) {
+
+    }
+
+    @Override
+    public void askParameters() {
+
+    }
+
+    @Override
+    public void requestToMe() throws InterruptedException {
+
+    }
+
+    @Override
+    public void requestToOthers() throws IOException {
+
+    }
+
+    @Override
+    public void response() throws IOException {
+
     }
 }

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.utils.gui.controllers;
 
+import it.polimi.ingsw.client.controller.states.WelcomeScreen;
 import it.polimi.ingsw.utils.gui.GUI;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -43,7 +44,7 @@ public class MenuController {
         System.exit(0);
     }
 
-    public void connect() {
+    public void connect() throws Exception {
         String nickname = this.nickname.getText();
         String ipText = this.ip.getText();
         String portText = this.port.getText();
@@ -56,7 +57,6 @@ public class MenuController {
             this.notice.setText("FAILURE: ip and port can't contain any spaces!");
         } else {
             try {
-                int ip = Integer.parseInt(ipText);
                 int port = Integer.parseInt(portText);
             } catch (Exception e) {
                 this.notice.setText("FAILURE: ip and port MUST be numbers!");
@@ -64,6 +64,8 @@ public class MenuController {
 
             this.notice.setText("ip: " + ip + "\nport: " + port);
             //TODO: connection verification and game connection with socket
+            ((WelcomeScreen) gui.callingState).start().fireStateEvent();
+
         }
     }
 

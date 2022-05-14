@@ -1,21 +1,15 @@
-/*
-
-
- //todo: GUI DA SISTEMARE
-
 package it.polimi.ingsw.client.view.gui;
 
-import it.polimi.ingsw.client.states.*;
+import it.polimi.ingsw.client.controller.states.WelcomeScreen;
+import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.client.view.View;
-import it.polimi.ingsw.utils.gui.Gui;
-import it.polimi.ingsw.utils.gui.ImagePanel;
 import it.polimi.ingsw.utils.stateMachine.State;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
 
-public class GuiView implements View, ActionListener{
+public class GuiView implements View, ActionListener {
 
     // La vista matiene una reference allo stato chiamante (schermata video/command line) ed al precedente.
     private State callingState;
@@ -30,6 +24,11 @@ public class GuiView implements View, ActionListener{
         this.callingState = callingState;
     }
 
+    @Override
+    public void setClientModel(ClientModel clientModel) {
+
+    }
+
     // Elementi grafici (finestre, bottoni, fuochi d'artificio...) (libreria SWING)
     JFrame window;
     JPanel titleNamePanel, startButtonPanel, userInfoPanel;
@@ -37,8 +36,6 @@ public class GuiView implements View, ActionListener{
     JButton startButton, sendButton;
 
     JTextField nickname,ip, port;
-
-    Image background = (new ImageIcon(getClass().getResource("/GuiResources/background.jpg"))).getImage();
 
 
     public GuiView(){
@@ -86,100 +83,27 @@ public class GuiView implements View, ActionListener{
     }
 
     @Override
-    public void askConnectionInfo() {
-        userInfoPanel = new JPanel();
-        userInfoPanel.setLayout(null);
-        userInfoPanel.setBounds(0,0,800,600);
-        Gui.getContainer().add(userInfoPanel);
-
-        nicknameLabel = new JLabel("Nickname");
-        nicknameLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        nicknameLabel.setFont(Gui.getButtonFont());
-        nicknameLabel.setSize(600, 25);
-        nicknameLabel.setLocation(100, 25);
-        userInfoPanel.add(nicknameLabel);
-        nickname = new JTextField();
-        nickname.setSize(300, 25);
-        nickname.setLocation(250, 50);
-        nickname.addActionListener(this);
-        userInfoPanel.add(nickname);
-
-        ipLabel = new JLabel("Ip");
-        ipLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        ipLabel.setFont(Gui.getButtonFont());
-        ipLabel.setSize(600, 25);
-        ipLabel.setLocation(100, 125);
-        userInfoPanel.add(ipLabel);
-        ip = new JTextField();
-        ip.setSize(300, 25);
-        ip.setLocation(250, 150);
-        ip.addActionListener(this);
-        userInfoPanel.add(ip);
-
-        portLabel = new JLabel("Port");
-        portLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        portLabel.setFont(Gui.getButtonFont());
-        portLabel.setSize(600, 25);
-        portLabel.setLocation(100, 225);
-        userInfoPanel.add(portLabel);
-        port = new JTextField();
-        port.setSize(300, 25);
-        port.setLocation(250, 250);
-        port.addActionListener(this);
-        userInfoPanel.add(port);
-
-        sendButton = new JButton("Confirm");
-        sendButton.setSize(300, 25);
-        sendButton.setLocation(250, 400);
-        sendButton.addActionListener(this);
-        userInfoPanel.add(sendButton);
-
-
+    public void askDecision(String option1, String option2) {
 
     }
 
     @Override
-    public void askConnectOrCreate() {
-        //todo
-    }
-
-    @Override
-    public void showTryToConnect() {
-        //todo
-    }
-
-    @Override
-    public void showConnectingGame() {
+    public void askParameters() {
 
     }
 
     @Override
-    public void showWaitingForOtherPlayer() {
+    public void requestToMe() throws InterruptedException {
 
     }
 
     @Override
-    public void showGameStarted() {
+    public void requestToOthers() throws IOException {
 
     }
 
     @Override
-    public void ComunicationError() {
-
-    }
-
-    @Override
-    public void ask_carta_assistente() {
-
-    }
-
-    @Override
-    public void askGameCode() {
-
-    }
-
-    @Override
-    public void askGameInfo() {
+    public void response() throws IOException {
 
     }
 
@@ -199,5 +123,3 @@ public class GuiView implements View, ActionListener{
         }
     }
 }
-
- */
