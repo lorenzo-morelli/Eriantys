@@ -33,7 +33,7 @@ public class AmIFirst extends State {
     public IEvent entryAction(IEvent cause) throws Exception {
         boolean responseReceived = false;
 
-        while(!responseReceived) {
+        while (!responseReceived) {
             // invio al server il mio modello
             //System.out.println("[Chiedo al server se sono il primo client]");
             Network.send(json.toJson(clientModel));
@@ -47,22 +47,20 @@ public class AmIFirst extends State {
             }
 
             // se il messaggio è rivolto a me allora ho ricevuto l'ack, altrimenti reinvio e riattendo
-            if(json.fromJson(response.getParameter(0), ClientModel.class).getClientIdentity() == clientModel.getClientIdentity()){
+            if (json.fromJson(response.getParameter(0), ClientModel.class).getClientIdentity() == clientModel.getClientIdentity()) {
                 responseReceived = true;
             }
         }
 
         //System.out.println("[Ho ricevuto la risposta: ");
         clientModel = json.fromJson(response.getParameter(0), ClientModel.class);
-        if (clientModel.getAmIfirst() == null){
+        if (clientModel.getAmIfirst() == null) {
             nicknameAlreadyPresent.fireStateEvent();
             //System.out.println("   il nickname era già presente !!!]");
-        }
-        else if (clientModel.getAmIfirst().equals(true)){
+        } else if (clientModel.getAmIfirst().equals(true)) {
             yes.fireStateEvent();
             //System.out.println("   sono primo !!!]");
-        }
-        else if (clientModel.getAmIfirst().equals(false)){
+        } else if (clientModel.getAmIfirst().equals(false)) {
 
             System.out.println("In attesa che gli altri giocatori si colleghino...");
             no.fireStateEvent();

@@ -55,8 +55,13 @@ public class MenuController {
         } else if (ipText.contains(" ") || portText.contains(" ")) {
             this.notice.setText("FAILURE: ip and port can't contain any spaces!");
         } else {
-            int ip = Integer.parseInt(ipText);
-            int port = Integer.parseInt(portText);
+            try {
+                int ip = Integer.parseInt(ipText);
+                int port = Integer.parseInt(portText);
+            } catch (Exception e) {
+                this.notice.setText("FAILURE: ip and port MUST be numbers!");
+            }
+
             this.notice.setText("ip: " + ip + "\nport: " + port);
             //TODO: connection verification and game connection with socket
         }
