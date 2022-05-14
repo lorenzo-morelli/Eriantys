@@ -18,6 +18,11 @@ public class Model {
     private final ArrayList<Team> teams;
     private final ArrayList<Player> players;
     boolean islastturn;
+
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+    public static final String ANSI_WHITE="\033[1;97m";
+    public static final String ANSI_GRAY="\033[1;90m";
     public Model(int numofplayer, String gamemode) {
 
         this.islastturn = false;
@@ -191,7 +196,17 @@ public class Model {
     public String printplayers(){
         StringBuilder result= new StringBuilder();
         for(Player player: players){
-            result.append(player.toString());
+            if(player.equals(getcurrentPlayer())){
+                switch (player.getSchoolBoard().getTowerColor()){
+                    case BLACK: result.append(ANSI_BLACK+"    (YOU) "+ANSI_RESET);
+                    break;
+                    case GREY: result.append(ANSI_GRAY+"    (YOU) "+ANSI_RESET);
+                        break;
+                    case WHITE: result.append(ANSI_WHITE+"    (YOU) "+ANSI_RESET);
+                        break;
+                }
+            }
+            result.append(player);
         }
         return result.toString();
     }

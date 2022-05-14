@@ -83,7 +83,7 @@ public class StudentPhase extends State {
              * server lo può trovare in currentPlayerData.getChoosedColor()
              */
             String type = currentPlayerData.getTypeOfRequest();
-
+            System.out.println("HO RICEVUTO" + type + currentPlayerData.getChoosedColor());
             if(type.equals("SCHOOL")){
                 currentPlayer.getSchoolBoard().load_dinner(currentPlayerData.getChoosedColor());
                 model.getTable().checkProfessor(currentPlayerData.getChoosedColor(),model.getPlayers());

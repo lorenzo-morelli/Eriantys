@@ -227,6 +227,7 @@ public class CliView implements View{
                         System.out.println("La sala da pranzo di quel colore è piena.");
                         requestToMe();
                     }
+                    clientModel.setTypeOfRequest("SCHOOL");
                 }
 
                 if(clientModel.getTypeOfRequest().equals("ISLAND")){
@@ -240,6 +241,7 @@ public class CliView implements View{
                         System.out.println("L'isola scelta non è valida.");
                         requestToMe();
                     }
+                    clientModel.setTypeOfRequest("ISLAND");
                     clientModel.setChoosedIsland(Integer.parseInt(CommandPrompt.gotFromTerminal()));
                 }
 
