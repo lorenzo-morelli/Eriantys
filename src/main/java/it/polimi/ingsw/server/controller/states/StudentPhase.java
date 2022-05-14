@@ -14,7 +14,7 @@ import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
 
 public class StudentPhase extends State {
-    private Event cardsChoosen;
+    private Event studentPhaseEnded;
     private Model model;
 
     private ConnectionModel connectionModel;
@@ -25,16 +25,16 @@ public class StudentPhase extends State {
 
     private ParametersFromNetwork message;
 
-    public Event cardsChoosen() {
-        return cardsChoosen;
+    public Event studentPhaseEnded() {
+        return studentPhaseEnded;
     }
     public StudentPhase(ServerController serverController) {
         super("[Move students]");
         this.serverController = serverController;
         this.controller = serverController.getFsm();
         this.connectionModel = serverController.getConnectionModel();
-        //cardsChoosen= new Event("game created");
-        //cardsChoosen.setStateEventListener(controller);
+        studentPhaseEnded = new Event("game created");
+        studentPhaseEnded.setStateEventListener(controller);
         json = new Gson();
     }
 
@@ -72,8 +72,16 @@ public class StudentPhase extends State {
                 }
             }
 
-
+            // dati ricevuti da network
             currentPlayerData = json.fromJson(message.getParameter(0),ClientModel.class);
+            /**
+             * type:
+             * SCHOOL : il client vuole muovere uno studente dalla entrance space alla SCHOOL
+             * ISLAND : il client vuole muovere uno studente dalla entrance space alla ISLAND
+             *
+             * supposizioni: il client ha già scelto il colore tra quelli disponibili, ed il
+             * server lo può trovare in currentPlayerData.getChoosedColor()
+             */
             String type = currentPlayerData.getTypeOfRequest();
 
             if(type.equals("SCHOOL")){
@@ -83,9 +91,8 @@ public class StudentPhase extends State {
             else if(type.equals("ISLAND")){
                 model.getTable().load_island(currentPlayer,currentPlayerData.getChoosedColor(),currentPlayerData.getChoosedIsland());
             }
-
         }
-
+        studentPhaseEnded.fireStateEvent();
         return super.entryAction(cause);
     }
 }
