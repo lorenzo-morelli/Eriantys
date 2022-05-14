@@ -176,7 +176,6 @@ public class CliView implements View{
             case "CHOOSEWHERETOMOVESTUDENTS"    :
                 System.out.println(clientModel.getServermodel().toString());
 
-                clientModel.setTypeOfRequest(CommandPrompt.gotFromTerminal());
                 CommandPrompt.ask("Scegli il colore dello studente che desideri muovere ","RED or GREEN or BLUE or YELLOW or PINK> ");
 
                 if(     !CommandPrompt.gotFromTerminal().equals("RED")   &&
@@ -184,7 +183,7 @@ public class CliView implements View{
                         !CommandPrompt.gotFromTerminal().equals("BLUE")   &&
                         !CommandPrompt.gotFromTerminal().equals("YELLOW")   &&
                         !CommandPrompt.gotFromTerminal().equals("PINK")   ){
-                    System.out.println("Si è inserito un colore nn valido, reinserire i dati con più attenzione !!!!");
+                    System.out.println("Si è inserito un colore non valido, reinserire i dati con più attenzione !!!!");
                     requestToMe();
                 }
 
@@ -219,32 +218,34 @@ public class CliView implements View{
                         "muovere uno studente dalla tua entrance space alla sala da pranzo, " +
                         "altrimenti scrivi ISLAND se desideri muovere uno studente su un'isola", "SCHOOL or ISLAND> ");
 
-                if(!CommandPrompt.gotFromTerminal().equals("SCHOOL") && !CommandPrompt.gotFromTerminal().equals("ISLAND")){
+                String command = CommandPrompt.gotFromTerminal();
+                if(!command.equals("SCHOOL") && !command.equals("ISLAND")){
                     requestToMe();
-                }
-                if(CommandPrompt.gotFromTerminal().equals("SCHOOL")) {
+                    return;
+                }else if(command.equals("SCHOOL")) {
                     if (clientModel.getServermodel().getcurrentPlayer().getSchoolBoard().getDinnerTable().numStudentsbycolor(choosedColor) == 10) {
                         System.out.println("La sala da pranzo di quel colore è piena.");
                         requestToMe();
+                        return;
                     }
                     clientModel.setTypeOfRequest("SCHOOL");
-                }
-
-                if(clientModel.getTypeOfRequest().equals("ISLAND")){
+                }else if(command.equals("ISLAND")){
                     CommandPrompt.ask("Inserire numero dell'isola su cui si desidera muovere lo studente", "isola> ");
                     if(!isValidNumber(CommandPrompt.gotFromTerminal())){
                         System.out.println("Si è inserito un numero non valido, reinserire i dati con più attenzione !!!!");
                         requestToMe();
+                        return;
                     }
                     if(Integer.parseInt(CommandPrompt.gotFromTerminal()) > clientModel.getServermodel().getTable().getIslands().size() ||
                             Integer.parseInt(CommandPrompt.gotFromTerminal()) < 0 ){
                         System.out.println("L'isola scelta non è valida.");
                         requestToMe();
+                        return;
                     }
                     clientModel.setTypeOfRequest("ISLAND");
                     clientModel.setChoosedIsland(Integer.parseInt(CommandPrompt.gotFromTerminal()));
                 }
-
+                clientModel.setTypeOfRequest(command);
                 clientModel.setResponse(true); //lo flaggo come messaggio di risposta
                 clientModel.setChoosedColor(choosedColor);
                 json = new Gson();
@@ -280,8 +281,10 @@ public class CliView implements View{
                 break;
             case "CHOOSEWHERETOMOVESTUDENTS"    :
                 CommandPrompt.println("L'utente " +clientModel.getNickname()+ " sta scegliendo dove muovere lo studente");
+                break;
             case "TEAMMATE" :
                 CommandPrompt.println("L'utente " +clientModel.getNickname()+ " sta scegliendo il suo compagno di squadra");
+                break;
         }
     }
 
