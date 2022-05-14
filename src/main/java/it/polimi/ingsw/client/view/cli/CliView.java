@@ -304,7 +304,7 @@ public class CliView implements View{
                 break;
             case "ISLAND"    :
                 System.out.println("L'utente " +clientModel.getNickname()+ " ha scelto di muovere 1 studente di colore " +
-                        clientModel.getChoosedColor().toString() +" sulla sua isola");
+                        clientModel.getChoosedColor().toString() +" sull' isola numero " +(clientModel.getChoosedIsland()+1));
                 break;
         }
     }
