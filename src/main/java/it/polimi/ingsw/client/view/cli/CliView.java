@@ -12,6 +12,7 @@ import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.Team;
 import it.polimi.ingsw.server.model.enums.PeopleColor;
 import it.polimi.ingsw.utils.cli.CommandPrompt;
+import it.polimi.ingsw.utils.common.Check;
 import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.stateMachine.State;
 
@@ -22,6 +23,9 @@ import java.util.regex.Pattern;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import static it.polimi.ingsw.utils.common.Check.isValidIp;
+import static it.polimi.ingsw.utils.common.Check.isValidPort;
 
 public class CliView implements View{
 
@@ -374,38 +378,9 @@ public class CliView implements View{
 
     // Methods for client side type-safety checking
     // Metodo che controlla se un IP è valido con le regular expressions
-    public static boolean isValidIp(String ip)
-    {
-        String IP_REGEX =
-                "^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\." +
-                        "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\." +
-                        "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\." +
-                        "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$";
-        Pattern IP_PATTERN = Pattern.compile(IP_REGEX);
 
-        if (ip == null) {
-            return false;
-        }
-
-        Matcher matcher = IP_PATTERN.matcher(ip);
-
-        return matcher.matches();
-    }
 
     // Metodo che controlla se una porta è valida con le regular expressions
-    public static boolean isValidPort(String port)
-    {
-        String PORT_REGEX=
-                "^([1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$";
-        Pattern PORT_PATTERN = Pattern.compile(PORT_REGEX);
-        if (port == null) {
-            return false;
-        }
-
-        Matcher matcher = PORT_PATTERN.matcher(port);
-
-        return matcher.matches();
-    }
 
     // Metodo che controlla se una cifra è valida con le regular expressions
     public static boolean isValidCifra(String cifra)
