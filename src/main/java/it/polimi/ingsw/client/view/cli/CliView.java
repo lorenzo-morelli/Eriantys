@@ -284,9 +284,11 @@ public class CliView implements View{
 
                 if(!isValidNumber(CommandPrompt.gotFromTerminal())){
                     requestToMe();
+                    return;
                 }
                 if(clientModel.getServermodel().getcurrentPlayer().getChoosedCard().getMoves() < Integer.parseInt(CommandPrompt.gotFromTerminal())){
                     requestToMe();
+                    return;
                 }
                 clientModel.setChoosedMoves(Integer.parseInt(CommandPrompt.gotFromTerminal()));
                 clientModel.setResponse(true); //lo flaggo come messaggio di risposta
@@ -295,6 +297,26 @@ public class CliView implements View{
                 Network.send(json.toJson(clientModel));
 
                 break;
+
+            case "CHOOSECLOUDS" :
+                System.out.println(clientModel.getServermodel().toString());
+                CommandPrompt.ask("Scegliere il numero della tessera nuvola da cui si desidera ricaricarsi di studenti","tessera nuvola> ");
+
+                if(!isValidNumber(CommandPrompt.gotFromTerminal())){
+                    requestToMe();
+                    return;
+                }
+                if( clientModel.getServermodel().getTable().getClouds().size() < Integer.parseInt(CommandPrompt.gotFromTerminal()) ||
+                    Integer.parseInt(CommandPrompt.gotFromTerminal()) < 0 ){
+                    requestToMe();
+                    return;
+                }
+                clientModel.setCloudChoosed(clientModel.getServermodel().getTable().getClouds().get(Integer.parseInt(CommandPrompt.gotFromTerminal()) - 1));
+                clientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                clientModel.setFromTerminal(parsedStrings);
+                json = new Gson();
+                Network.send(json.toJson(clientModel));
+
         }
 
     }

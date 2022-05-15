@@ -82,7 +82,7 @@ public class MotherPhase extends State {
         currentPlayerData = json.fromJson(message.getParameter(0),ClientModel.class);
 
         // Si suppone che il client abblia scelto il numero di mosse (passi da far fare a madre natura)
-        int moves= currentPlayerData.getChoosedMoves();
+        int moves = currentPlayerData.getChoosedMoves();
         model.getTable().movemother(moves);
         Island target= model.getTable().getIslands().get(model.getTable().getMotherNaturePosition());
         if(model.getNumberOfPlayers()==4){

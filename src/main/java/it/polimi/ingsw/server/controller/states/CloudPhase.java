@@ -68,13 +68,12 @@ public class CloudPhase extends State {
             message = new ParametersFromNetwork(1);
             message.enable();
             while (!message.parametersReceived()) {
-                // il client non ha ancora scelto la carta assistente
+                // il client non ha ancora scelto la tessera nuvola
             }
             if(json.fromJson(message.getParameter(0),ClientModel.class).getClientIdentity() == currentPlayerData.getClientIdentity()){
                 responseReceived = true;
             }
         }
-
 
         currentPlayerData = json.fromJson(message.getParameter(0),ClientModel.class);
         Cloud cloud = currentPlayerData.getCloudChoosed();
