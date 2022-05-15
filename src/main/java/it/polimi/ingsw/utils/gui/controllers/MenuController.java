@@ -10,6 +10,9 @@ import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 
+import static it.polimi.ingsw.utils.common.Check.isValidIp;
+import static it.polimi.ingsw.utils.common.Check.isValidPort;
+
 public class MenuController {
     private final GUI gui = new GUI();
 
@@ -55,17 +58,13 @@ public class MenuController {
             this.notice.setText("FAILURE: nickname must be less than 13 characters!");
         } else if (ipText.contains(" ") || portText.contains(" ")) {
             this.notice.setText("FAILURE: ip and port can't contain any spaces!");
+        } else if (!isValidIp(ipText) || !isValidPort(portText)) {
+            this.notice.setText("FAILURE: ip or port format not valid!");
         } else {
-            try {
-                int port = Integer.parseInt(portText);
-                this.notice.setText("ip: " + ipText + "\nport: " + port);
-                //TODO: connection verification and game connection with socket
-                //((WelcomeScreen) gui.callingState).start().fireStateEvent();
-            } catch (Exception e) {
-                this.notice.setText("FAILURE: ip or port format not valid!");
-            }
-
-
+            int port = Integer.parseInt(portText);
+            this.notice.setText("ip: " + ipText + "\nport: " + port);
+            //TODO: connection verification and game connection with socket
+            //((WelcomeScreen) gui.callingState).start().fireStateEvent();
         }
     }
 
