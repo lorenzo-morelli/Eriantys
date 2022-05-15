@@ -277,7 +277,26 @@ public class CliView implements View{
                 json = new Gson();
                 Network.send(json.toJson(clientModel));
                 break;
+
+            case "CHOOSEWHERETOMOVEMOTHER" :
+                System.out.println(clientModel.getServermodel().toString());
+                CommandPrompt.ask("Scegliere il numero di mosse di cui far spostare madre natura ","mosse> ");
+
+                if(!isValidNumber(CommandPrompt.gotFromTerminal())){
+                    requestToMe();
+                }
+                if(clientModel.getServermodel().getcurrentPlayer().getChoosedCard().getMoves() < Integer.parseInt(CommandPrompt.gotFromTerminal())){
+                    requestToMe();
+                }
+                clientModel.setChoosedMoves(Integer.parseInt(CommandPrompt.gotFromTerminal()));
+                clientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                clientModel.setFromTerminal(parsedStrings);
+                json = new Gson();
+                Network.send(json.toJson(clientModel));
+
+                break;
         }
+
     }
 
     // Qualcun altro sta interagendo con il terminale: devo gestire il tempo di attesa
@@ -292,6 +311,9 @@ public class CliView implements View{
                 break;
             case "TEAMMATE" :
                 CommandPrompt.println("L'utente " +clientModel.getNickname()+ " sta scegliendo il suo compagno di squadra");
+                break;
+            case "CHOOSEWHERETOMOVEMOTHER"    :
+                CommandPrompt.println("L'utente " +clientModel.getNickname()+ " sta scegliendo il numero di mosse di cui far spostare madre natura");
                 break;
         }
     }
@@ -317,6 +339,9 @@ public class CliView implements View{
             case "ISLAND"    :
                 System.out.println("L'utente " +clientModel.getNickname()+ " ha scelto di muovere 1 studente di colore " +
                         clientModel.getChoosedColor().toString() +" sull' isola numero " +(clientModel.getChoosedIsland()+1));
+                break;
+            case "CHOOSEWHERETOMOVEMOTHER"    :
+                CommandPrompt.println("L'utente " +clientModel.getNickname()+ " ha scelto di spostare madre natura di " + clientModel.getChoosedMoves() + " mosse");
                 break;
         }
     }

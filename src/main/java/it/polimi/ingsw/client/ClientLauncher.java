@@ -4,7 +4,7 @@ import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.view.cli.CliView;
 
 // lancia il gioco lato client
-public class CLILauncher {
+public class ClientLauncher {
     public static void main(String[] args) throws Exception {
         new ClientController(new CliView());
     }
