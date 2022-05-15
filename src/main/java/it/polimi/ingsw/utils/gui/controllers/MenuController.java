@@ -58,13 +58,13 @@ public class MenuController {
         } else {
             try {
                 int port = Integer.parseInt(portText);
+                this.notice.setText("ip: " + ipText + "\nport: " + port);
+                //TODO: connection verification and game connection with socket
+                //((WelcomeScreen) gui.callingState).start().fireStateEvent();
             } catch (Exception e) {
-                this.notice.setText("FAILURE: ip and port MUST be numbers!");
+                this.notice.setText("FAILURE: ip or port format not valid!");
             }
 
-            this.notice.setText("ip: " + ip + "\nport: " + port);
-            //TODO: connection verification and game connection with socket
-            ((WelcomeScreen) gui.callingState).start().fireStateEvent();
 
         }
     }
