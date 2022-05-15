@@ -311,7 +311,7 @@ public class CliView implements View{
                     return;
                 }
                 if( clientModel.getServermodel().getTable().getClouds().size() < Integer.parseInt(CommandPrompt.gotFromTerminal()) ||
-                    Integer.parseInt(CommandPrompt.gotFromTerminal()) < 0 ){
+                    Integer.parseInt(CommandPrompt.gotFromTerminal()) < 1 ){
                     requestToMe();
                     return;
                 }
@@ -320,6 +320,7 @@ public class CliView implements View{
                 clientModel.setFromTerminal(parsedStrings);
                 json = new Gson();
                 Network.send(json.toJson(clientModel));
+                break;
 
         }
 
@@ -340,6 +341,9 @@ public class CliView implements View{
                 break;
             case "CHOOSEWHERETOMOVEMOTHER"    :
                 CommandPrompt.println("L'utente " +clientModel.getNickname()+ " sta scegliendo il numero di mosse di cui far spostare madre natura");
+                break;
+            case "CHOOSECLOUDS"    :
+                CommandPrompt.println("L'utente " +clientModel.getNickname()+ " sta scegliendo la nuvola dalla quale ricaricare gli studenti");
                 break;
         }
     }
@@ -368,6 +372,9 @@ public class CliView implements View{
                 break;
             case "CHOOSEWHERETOMOVEMOTHER"    :
                 CommandPrompt.println("L'utente " +clientModel.getNickname()+ " ha scelto di spostare madre natura di " + clientModel.getChoosedMoves() + " mosse");
+                break;
+            case "CHOOSECLOUDS":
+                CommandPrompt.println("L'utente " +clientModel.getNickname()+ " ha scelto di ricaricare gli studenti dalla nuvola numero " + clientModel.getFromTerminal());
                 break;
         }
     }
