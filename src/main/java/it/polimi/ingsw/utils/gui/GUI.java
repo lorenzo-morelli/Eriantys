@@ -1,5 +1,6 @@
 package it.polimi.ingsw.utils.gui;
 
+import com.google.gson.Gson;
 import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.utils.stateMachine.State;
@@ -16,13 +17,14 @@ public class GUI extends Application implements View {
     Stage stage;
     Scene scene;
     public State callingState;
-    private State precedentCallingState;
+    private ClientModel clientModel;
+    private Gson json;
 
     @Override
     public void start(Stage stage) throws IOException {
         this.stage = stage;
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainMenu.fxml")); //MainMenu
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainMenu.fxml"));
             this.scene = new Scene(loader.load());
             this.stage.setScene(scene);
             this.stage.show();
@@ -46,13 +48,12 @@ public class GUI extends Application implements View {
 
     @Override
     public void setCallingState(State callingState) {
-        this.precedentCallingState = this.callingState;
         this.callingState = callingState;
     }
 
     @Override
     public void setClientModel(ClientModel clientModel) {
-
+        this.clientModel = clientModel;
     }
 
     @Override
