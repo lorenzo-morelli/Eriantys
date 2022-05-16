@@ -17,6 +17,7 @@ import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.stateMachine.State;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -168,12 +169,14 @@ public class CliView implements View{
                 // la cifra inserita deve essere valida
                if (!isValidCifra(parsedStrings.get(0))) {
                     System.out.print("ALERT: cifra inserita non valida, riprovare\n");
+                    TimeUnit.SECONDS.sleep(2);
                     requestToMe();
                     return;
                 }
                // la cifra inserita deve essere tra quelle proposte (ovvero nelle availableCards)
                if(!indexList.contains(Integer.parseInt(parsedStrings.get(0)))){
                    System.out.print("ALERT: carta inserita inesistente, riprovare\n");
+                   TimeUnit.SECONDS.sleep(2);
                    requestToMe();
                    return;
                }
@@ -193,6 +196,7 @@ public class CliView implements View{
                         !CommandPrompt.gotFromTerminal().equals("YELLOW")   &&
                         !CommandPrompt.gotFromTerminal().equals("PINK")   ){
                     System.out.println("Si è inserito un colore non valido, reinserire i dati con più attenzione !!!!");
+                    TimeUnit.SECONDS.sleep(2);
                     requestToMe();
                     return;
                 }
@@ -221,6 +225,7 @@ public class CliView implements View{
 
                 if(clientModel.getServermodel().getcurrentPlayer().getSchoolBoard().getEntranceSpace().numStudentsbycolor(choosedColor) == 0 ){
                     System.out.println("Si è inserito un colore non presente tra quelli disponibili, reinserire i dati con più attenzione !!!!");
+                    TimeUnit.SECONDS.sleep(2);
                     requestToMe();
                     return;
                 }
@@ -236,6 +241,7 @@ public class CliView implements View{
                 }else if(command.equals("SCHOOL")) {
                     if (clientModel.getServermodel().getcurrentPlayer().getSchoolBoard().getDinnerTable().numStudentsbycolor(choosedColor) == 10) {
                         System.out.println("La sala da pranzo di quel colore è piena.");
+                        TimeUnit.SECONDS.sleep(2);
                         requestToMe();
                         return;
                     }
@@ -244,12 +250,14 @@ public class CliView implements View{
                     CommandPrompt.ask("Inserire numero dell'isola su cui si desidera muovere lo studente", "isola> ");
                     if(!isValidNumber(CommandPrompt.gotFromTerminal())){
                         System.out.println("Si è inserito un numero non valido, reinserire i dati con più attenzione !!!!");
+                        TimeUnit.SECONDS.sleep(2);
                         requestToMe();
                         return;
                     }
                     if(Integer.parseInt(CommandPrompt.gotFromTerminal()) > clientModel.getServermodel().getTable().getIslands().size() ||
                             Integer.parseInt(CommandPrompt.gotFromTerminal()) < 0 ){
                         System.out.println("L'isola scelta non è valida.");
+                        TimeUnit.SECONDS.sleep(2);
                         requestToMe();
                         return;
                     }
@@ -269,6 +277,7 @@ public class CliView implements View{
                 }
                 CommandPrompt.ask("Inserisci il nickname del tuo compagno di squadra: ","Nickname> ");
                 if(!clientModel.getNicknames().contains(CommandPrompt.gotFromTerminal())){
+                    System.out.print("Il nickname inserito non esiste, si prega di scegliere un nickname tra quelli specificati");
                     requestToMe();
                     return;
                 }
@@ -287,10 +296,20 @@ public class CliView implements View{
                 CommandPrompt.ask("Scegliere il numero di mosse di cui far spostare madre natura ","mosse> ");
 
                 if(!isValidNumber(CommandPrompt.gotFromTerminal())){
+                    System.out.println("Il numero di mosse da te inserito non è un numero valido, si prega di fare più attenzione");
+                    TimeUnit.SECONDS.sleep(2);
                     requestToMe();
                     return;
                 }
+                if(Integer.parseInt((CommandPrompt.gotFromTerminal()))<=0){
+                    System.out.println("Il numero di mosse deve essere un numero intero positivo, fare più attenzione");
+                    TimeUnit.SECONDS.sleep(2);
+                    requestToMe();
+                }
                 if(clientModel.getServermodel().getcurrentPlayer().getChoosedCard().getMoves() < Integer.parseInt(CommandPrompt.gotFromTerminal())){
+                    System.out.println("Il numero di mosse da te inserito eccede il numero massimo di mosse di cui madre natura può spostarsi," +
+                            " ovvero " + clientModel.getServermodel().getcurrentPlayer().getChoosedCard().getMoves() );
+                    TimeUnit.SECONDS.sleep(2);
                     requestToMe();
                     return;
                 }
@@ -308,10 +327,15 @@ public class CliView implements View{
 
                 if(!isValidNumber(CommandPrompt.gotFromTerminal())){
                     requestToMe();
+                    System.out.println("Il numero inserito non è un numero valido");
+                    TimeUnit.SECONDS.sleep(2);
+                    requestToMe();
                     return;
                 }
                 if( clientModel.getServermodel().getTable().getClouds().size() < Integer.parseInt(CommandPrompt.gotFromTerminal()) ||
                     Integer.parseInt(CommandPrompt.gotFromTerminal()) < 1 ){
+                    System.out.println("Il numero inserito non rappresenta una tessera nuvola esistente, si prega di fare più attenzione");
+                    TimeUnit.SECONDS.sleep(2);
                     requestToMe();
                     return;
                 }
@@ -374,7 +398,7 @@ public class CliView implements View{
                 CommandPrompt.println("L'utente " +clientModel.getNickname()+ " ha scelto di spostare madre natura di " + clientModel.getChoosedMoves() + " mosse");
                 break;
             case "CHOOSECLOUDS":
-                CommandPrompt.println("L'utente " +clientModel.getNickname()+ " ha scelto di ricaricare gli studenti dalla nuvola numero " + clientModel.getFromTerminal());
+                CommandPrompt.println("L'utente " +clientModel.getNickname()+ " ha scelto di ricaricare gli studenti dalla nuvola: " + clientModel.getCloudChoosed());
                 break;
         }
     }
