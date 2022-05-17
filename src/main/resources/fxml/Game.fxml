@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.utils.gui.controllers.GameController">
+   <children>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="227.0" layoutY="98.0" pickOnBounds="true" preserveRatio="true" />
+   </children>
+</AnchorPane>
