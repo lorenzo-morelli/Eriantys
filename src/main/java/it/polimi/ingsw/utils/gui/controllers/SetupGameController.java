@@ -35,22 +35,22 @@ public class SetupGameController implements Initializable {
         this.connectedOnIp.setText("Connected on IP: " + this.gui.getClientModel().getIp());
         this.connectedOnPort.setText("Connected on Port: " + this.gui.getClientModel().getPort());
         this.otherPlayersLabel.setText("okkkkkk");
-        this.connectedPlayers = 1;
+        this.connectedPlayers = 0;
     }
 
     public void set2Players(MouseEvent mouseEvent) {
         this.gui.getClientModel().setNumofplayer(2);
-        numberOfPlayersLabel.setText("Number of players: 2");
+        numberOfPlayersLabel.setText("Number of players: " + this.gui.getClientModel().getNumofplayer());
     }
 
     public void set3Players(MouseEvent mouseEvent) {
         this.gui.getClientModel().setNumofplayer(3);
-        numberOfPlayersLabel.setText("Number of players: 3");
+        numberOfPlayersLabel.setText("Number of players: " + this.gui.getClientModel().getNumofplayer());
     }
 
     public void set4Players(MouseEvent mouseEvent) {
         this.gui.getClientModel().setNumofplayer(4);
-        numberOfPlayersLabel.setText("Number of players: 4");
+        numberOfPlayersLabel.setText("Number of players: " + this.gui.getClientModel().getNumofplayer());
     }
 
     public void setPrincipiant(MouseEvent mouseEvent) {
@@ -64,11 +64,13 @@ public class SetupGameController implements Initializable {
     }
 
     public void start(MouseEvent mouseEvent) {
-        if (this.gui.getClientModel().getNumofplayer() != 2 || this.gui.getClientModel().getNumofplayer() != 3 || this.gui.getClientModel().getNumofplayer() != 4) {
+        if (this.gui.getClientModel().getNumofplayer() != 2 && this.gui.getClientModel().getNumofplayer() != 3 && this.gui.getClientModel().getNumofplayer() != 4) {
             this.otherPlayersLabel.setText("ERROR: Please select a number of players!");
-        } else if (Objects.equals(this.gui.getClientModel().getGameMode(), "")) {
+            System.out.println(this.gui.getClientModel().getNumofplayer());
+        } else if (this.gui.getClientModel().getGameMode() == null) {
             this.otherPlayersLabel.setText("ERROR: Please select a game mode!");
         } else {
+            //todo: send to server
             this.otherPlayersLabel.setText("Waiting for other players... " + connectedPlayers + "/" + this.gui.getClientModel().getNumofplayer());
         }
     }
