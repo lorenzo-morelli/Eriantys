@@ -71,14 +71,26 @@ public class MenuController implements Initializable {
             if (Network.isConnected()) {
 
 
+                boolean responseReceived = false;
+                while (!responseReceived) {
+                    // invio al server il mio modello
+                    //System.out.println("[Chiedo al server se sono il primo client]");
+                    Network.send(gson.toJson(this.gui.getClientModel()));
 
 
+                    System.out.println("Sei connesso al server, se è disponibile una partita verrai automaticamente collegato\n" +
+                            "altrimenti vuoi dire che il server è al completo e non può ospitare altri giocatori");
+                    response.enable();
+                    while (!response.parametersReceived()) {
+                        // Non ho ancora ricevuto una risposta dal server
+                    }
 
 
-
-
-
-
+                    // se il messaggio è rivolto a me allora ho ricevuto l'ack, altrimenti reinvio e riattendo
+                    if (gson.fromJson(response.getParameter(0), ClientModel.class).getClientIdentity() == this.gui.getClientModel().getClientIdentity()) {
+                        responseReceived = true;
+                    }
+                }
 
 
                 if (this.gui.getClientModel().getAmIfirst())
