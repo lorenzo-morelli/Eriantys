@@ -40,6 +40,7 @@ public class MenuController {
     public Label gameModeLabel;
 
     public void play(MouseEvent mouseEvent) throws IOException {
+        // todo
         this.gui.changeScene("SetupConnection", mouseEvent);
     }
 

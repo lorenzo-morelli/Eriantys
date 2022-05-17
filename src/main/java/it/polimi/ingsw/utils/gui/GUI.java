@@ -1,6 +1,7 @@
 package it.polimi.ingsw.utils.gui;
 
 import com.google.gson.Gson;
+import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.utils.stateMachine.State;
@@ -19,6 +20,7 @@ public class GUI extends Application implements View {
     public State callingState;
     private ClientModel clientModel;
     private Gson json;
+    private ClientController clientController;
 
     @Override
     public void start(Stage stage) throws IOException {
