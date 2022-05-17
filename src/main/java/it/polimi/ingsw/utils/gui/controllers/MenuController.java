@@ -1,43 +1,39 @@
 package it.polimi.ingsw.utils.gui.controllers;
 
-import it.polimi.ingsw.client.controller.states.WelcomeScreen;
 import it.polimi.ingsw.utils.gui.GUI;
+import it.polimi.ingsw.utils.network.Network;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import static it.polimi.ingsw.utils.common.Check.isValidIp;
 import static it.polimi.ingsw.utils.common.Check.isValidPort;
 
-public class MenuController {
+public class MenuController implements Initializable {
     private final GUI gui = new GUI();
 
     @FXML
-    private TextField nickname;
+    private TextField nicknameField = new TextField();
     @FXML
-    private TextField ip;
+    private TextField ipField = new TextField();
     @FXML
-    private TextField port;
+    private TextField portField = new TextField();
     @FXML
-    private Label notice;
+    private Label notice = new Label();
 
-    @FXML
-    private Label connectedOnIp;
-    @FXML
-    private Label connectedOnPort;
-
-    @FXML
-    private int numberOfPlayers;
-    @FXML
-    private Label otherPlayersLabel;
-    @FXML
-    public Label numberOfPlayersLabel;
-    @FXML
-    public Label gameModeLabel;
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        this.nicknameField.setText("morel");
+        this.ipField.setText("127.0.0.1");
+        this.portField.setText("5555");
+        this.notice.setText("");
+    }
 
     public void play(MouseEvent mouseEvent) throws IOException {
         // todo
@@ -48,53 +44,39 @@ public class MenuController {
         System.exit(0);
     }
 
-    public void connect() throws Exception {
-        String nickname = this.nickname.getText();
-        String ipText = this.ip.getText();
-        String portText = this.port.getText();
+    public void connect(MouseEvent mouseEvent) throws IOException {
+        String nickname = this.nicknameField.getText();
+        String ip = this.ipField.getText();
+        String port = this.portField.getText();
 
-        if (nickname.equals("") || ipText.equals("") || portText.equals("")) {
+        if (nickname.equals("") || ip.equals("") || port.equals("")) {
             this.notice.setText("FAILURE: missing parameters!");
-        } else if (this.nickname.getText().length() > 13) {
+        } else if (this.nicknameField.getText().length() > 13) {
             this.notice.setText("FAILURE: nickname must be less than 13 characters!");
-        } else if (ipText.contains(" ") || portText.contains(" ")) {
+        } else if (ip.contains(" ") || port.contains(" ")) {
             this.notice.setText("FAILURE: ip and port can't contain any spaces!");
-        } else if (!isValidIp(ipText) || !isValidPort(portText)) {
+        } else if (!isValidIp(ip) || !isValidPort(port)) {
             this.notice.setText("FAILURE: ip or port format not valid!");
         } else {
-            int port = Integer.parseInt(portText);
-            this.notice.setText("ip: " + ipText + "\nport: " + port);
-            //TODO: connection verification and game connection with socket
-            //((WelcomeScreen) gui.callingState).start().fireStateEvent();
+            this.gui.getClientModel().setIp(ip);
+            this.gui.getClientModel().setPort(port);
+            Network.setupClient(ip, port);
+
+            if (Network.isConnected()) {
+                //todo: è primo -> setupGame, altrimenti -> lobby
+//                if (this.gui.getClientModel().getAmIfirst())
+//                    System.out.println("primooo");
+//                else
+//                    System.out.println("secondoooo");
+
+
+                System.out.println(this.gui.getClientModel().getIp());
+                this.gui.changeScene("SetupGame", mouseEvent);
+            } else {
+                this.notice.setText("FAILURE: impossible to connect to server!");
+            }
         }
     }
 
-    public void set2Players(MouseEvent mouseEvent) {
-        this.numberOfPlayers = 2;
-        numberOfPlayersLabel.setText("Number of players: 2");
-    }
 
-    public void set3Players(MouseEvent mouseEvent) {
-        this.numberOfPlayers = 3;
-        numberOfPlayersLabel.setText("Number of players: 3");
-    }
-
-    public void set4Players(MouseEvent mouseEvent) {
-        this.numberOfPlayers = 4;
-        numberOfPlayersLabel.setText("Number of players: 4");
-    }
-
-    public void setPrincipiant(MouseEvent mouseEvent) {
-        this.gameModeLabel.setText("Game mode: principiant");
-    }
-
-    public void setExpert(MouseEvent mouseEvent) {
-        this.gameModeLabel.setText("Game mode: expert");
-    }
-
-    public void start(MouseEvent mouseEvent) {
-        //TODO: create game
-        this.otherPlayersLabel.setText("Waiting for other players... " + 1 + "/" + 4);
-        //if raggiunto il totale -> inizia partita
-    }
 }

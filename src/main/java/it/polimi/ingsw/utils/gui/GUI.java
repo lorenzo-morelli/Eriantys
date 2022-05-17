@@ -14,12 +14,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class GUI extends Application implements View {
+public class GUI extends Application {
     Stage stage;
     Scene scene;
-    public State callingState;
-    private ClientModel clientModel;
-    private Gson json;
+    private static ClientModel clientModel = new ClientModel();
     private ClientController clientController;
 
     @Override
@@ -48,43 +46,11 @@ public class GUI extends Application implements View {
         launch(args);
     }
 
-    @Override
-    public void setCallingState(State callingState) {
-        this.callingState = callingState;
+    public ClientModel getClientModel() {
+        return clientModel;
     }
 
-    @Override
     public void setClientModel(ClientModel clientModel) {
-        this.clientModel = clientModel;
-    }
-
-    @Override
-    public void askToStart() {
-
-    }
-
-    @Override
-    public void askDecision(String option1, String option2) {
-
-    }
-
-    @Override
-    public void askParameters() {
-
-    }
-
-    @Override
-    public void requestToMe() throws InterruptedException {
-
-    }
-
-    @Override
-    public void requestToOthers() throws IOException {
-
-    }
-
-    @Override
-    public void response() throws IOException {
-
+        GUI.clientModel = clientModel;
     }
 }

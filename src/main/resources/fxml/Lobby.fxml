@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="it.polimi.ingsw.utils.gui.controllers.SetupGameController">
+   <Label fx:id="otherPlayersLabel" layoutX="220.0" layoutY="192.0" text="Waiting for other players... 1/4"/>
+</AnchorPane>
