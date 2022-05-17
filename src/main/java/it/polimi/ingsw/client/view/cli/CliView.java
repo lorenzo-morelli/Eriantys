@@ -7,12 +7,8 @@ import it.polimi.ingsw.client.controller.states.ReadFromTerminal;
 import it.polimi.ingsw.client.controller.states.WelcomeScreen;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.server.model.AssistantCard;
-import it.polimi.ingsw.server.model.Model;
-import it.polimi.ingsw.server.model.Player;
-import it.polimi.ingsw.server.model.Team;
 import it.polimi.ingsw.server.model.enums.PeopleColor;
 import it.polimi.ingsw.utils.cli.CommandPrompt;
-import it.polimi.ingsw.utils.common.Check;
 import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.stateMachine.State;
 
@@ -361,7 +357,7 @@ public class CliView implements View{
                 break;
 
             case "GAMEEND":
-                System.out.println("Il vincitore/i è/sono :" + networkClientModel.getGamewinner());
+                System.out.println("Il vincitore/i è/sono :" + networkClientModel.getGameWinner());
                 Network.disconnect();
             break;
 
@@ -391,7 +387,7 @@ public class CliView implements View{
                 message="L'utente " +networkClientModel.getNickname()+ " sta scegliendo la nuvola dalla quale ricaricare gli studenti";
                 break;
         }
-        System.out.println(networkClientModel.getServermodel().toString(getMynickname(),"STATO DEL GIOCO: "+message+ "\n\nPRECEDENTE MOSSA ALTRI GIOCATORI: "+getResponce()));
+        System.out.println(networkClientModel.getServermodel().toString(getMynickname(),"STATO DEL GIOCO: "+message+ "\n\nMOSSE ALTRI GIOCATORI: "+getResponce()));
     }
 
     // Qualcun altro ha risposto al server: devo mostrare a schermo un'interpretazione della risposta
