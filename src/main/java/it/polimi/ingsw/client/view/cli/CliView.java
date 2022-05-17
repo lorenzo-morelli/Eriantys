@@ -344,6 +344,7 @@ public class CliView implements View{
                     System.out.println("Hai scelta una nuvola che è stata già scelta da un altro giocatore");
                     TimeUnit.SECONDS.sleep(2);
                     requestToMe();
+                    return;
                 }
                 clientModel.setCloudChoosed(clientModel.getServermodel().getTable().getClouds().get(Integer.parseInt(CommandPrompt.gotFromTerminal()) - 1));
                 clientModel.setResponse(true); //lo flaggo come messaggio di risposta

@@ -38,7 +38,6 @@ public class EndTurn extends State {
                 break;
             }
         }
-        model.nextTurn();
         model.nextPlayer();
         goToAssistentCardPhase().fireStateEvent();
         return super.entryAction(cause);

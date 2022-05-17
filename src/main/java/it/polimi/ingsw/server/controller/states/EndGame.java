@@ -55,7 +55,6 @@ private Event restart;
 
             Network.send(json.toJson(currentPlayerData));
 
-            //todo: chiudere connessione con il giocatore
         }
         getRestart().fireStateEvent();
         return super.entryAction(cause);
