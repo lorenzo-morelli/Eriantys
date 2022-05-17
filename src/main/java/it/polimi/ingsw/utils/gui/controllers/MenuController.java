@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.utils.gui.GUI;
 import it.polimi.ingsw.utils.network.Network;
+import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -69,31 +70,29 @@ public class MenuController implements Initializable {
             this.gui.getClientModel().setMyIp(Network.getMyIp());
 
             if (Network.isConnected()) {
-
-
                 boolean responseReceived = false;
+
+
                 while (!responseReceived) {
                     // invio al server il mio modello
                     //System.out.println("[Chiedo al server se sono il primo client]");
                     Network.send(gson.toJson(this.gui.getClientModel()));
 
 
-                    System.out.println("Sei connesso al server, se è disponibile una partita verrai automaticamente collegato\n" +
-                            "altrimenti vuoi dire che il server è al completo e non può ospitare altri giocatori");
+                    response = new ParametersFromNetwork(1);
                     response.enable();
                     while (!response.parametersReceived()) {
                         // Non ho ancora ricevuto una risposta dal server
                     }
 
-
-                    // se il messaggio è rivolto a me allora ho ricevuto l'ack, altrimenti reinvio e riattendo
+                    // se il messaggio Ã¨ rivolto a me allora ho ricevuto l'ack, altrimenti reinvio e riattendo
                     if (gson.fromJson(response.getParameter(0), ClientModel.class).getClientIdentity() == this.gui.getClientModel().getClientIdentity()) {
                         responseReceived = true;
                     }
                 }
 
 
-                if (this.gui.getClientModel().getAmIfirst())
+                if (gson.fromJson(response.getParameter(0), ClientModel.class).getAmIfirst())
                     System.out.println("primooo");
                 else
                     System.out.println("secondoooo");
