@@ -57,7 +57,7 @@ public class WaitFirstPlayerGameInfo extends State {
             // rimemorizzo le info nel mio database locale
             connectionModel.getClientsInfo().set(0, clientModel);
 
-            System.out.println("E sono " + clientModel.getGamemode() + " " + clientModel.getNumofplayer());
+            System.out.println("E sono " + clientModel.getGameMode() + " " + clientModel.getNumofplayer());
 
             // Invio il solito ack
             Network.send(json.toJson(clientModel));

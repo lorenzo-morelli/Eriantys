@@ -64,6 +64,7 @@ public class MenuController implements Initializable {
         } else if (!isValidIp(ip) || !isValidPort(port)) {
             this.notice.setText("FAILURE: ip or port format not valid!");
         } else {
+            this.gui.getClientModel().setNickname(nickname);
             this.gui.getClientModel().setIp(ip);
             this.gui.getClientModel().setPort(port);
             Network.setupClient(ip, port);
@@ -71,35 +72,26 @@ public class MenuController implements Initializable {
 
             if (Network.isConnected()) {
                 boolean responseReceived = false;
-
-
                 while (!responseReceived) {
-                    // invio al server il mio modello
-                    //System.out.println("[Chiedo al server se sono il primo client]");
                     Network.send(gson.toJson(this.gui.getClientModel()));
-
-
                     response = new ParametersFromNetwork(1);
                     response.enable();
                     while (!response.parametersReceived()) {
                         // Non ho ancora ricevuto una risposta dal server
                     }
-
-                    // se il messaggio Ã¨ rivolto a me allora ho ricevuto l'ack, altrimenti reinvio e riattendo
                     if (gson.fromJson(response.getParameter(0), ClientModel.class).getClientIdentity() == this.gui.getClientModel().getClientIdentity()) {
                         responseReceived = true;
                     }
                 }
 
-
-                if (gson.fromJson(response.getParameter(0), ClientModel.class).getAmIfirst())
+                this.gui.setClientModel(gson.fromJson(response.getParameter(0), ClientModel.class));
+                if (this.gui.getClientModel().getAmIfirst()) {
                     System.out.println("primooo");
-                else
-                    System.out.println("secondoooo");
-
-
-                System.out.println(this.gui.getClientModel().getIp());
-                this.gui.changeScene("SetupGame", mouseEvent);
+                    this.gui.changeScene("SetupGame", mouseEvent);
+                }
+                else {
+                    this.gui.changeScene("Lobby", mouseEvent);
+                }
             } else {
                 this.notice.setText("FAILURE: impossible to connect to server!");
             }

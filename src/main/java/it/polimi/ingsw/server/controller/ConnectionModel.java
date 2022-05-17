@@ -24,7 +24,7 @@ public class ConnectionModel {
     }
 
     public String getGameMode() {
-        return clientsInfo.get(0).getGamemode();
+        return clientsInfo.get(0).getGameMode();
     }
 
     public ClientModel findPlayer(String nickname) {

@@ -69,7 +69,7 @@ public class ClientModel {
 
 
     // Game mode (PRINCIPIANT or EXPERT)
-    private String gamemode;
+    private String gameMode;
 
 
     public ClientModel(){
@@ -85,12 +85,12 @@ public class ClientModel {
         return numOfPlayer;
     }
 
-    public String getGamemode() {
-        return gamemode;
+    public String getGameMode() {
+        return gameMode;
     }
 
-    public void setGamemode(String gamemode) {
-        this.gamemode = gamemode;
+    public void setGameMode(String gameMode) {
+        this.gameMode = gameMode;
     }
 
     public void setNumofplayer(int numOfPlayer) {

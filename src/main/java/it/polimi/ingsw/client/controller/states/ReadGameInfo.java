@@ -15,7 +15,7 @@ public class ReadGameInfo extends ReadFromTerminal {
     @Override
     public void exitAction(IEvent cause) throws IOException {
         clientModel.setNumofplayer(Integer.parseInt(clientModel.getFromTerminal().get(0)));
-        clientModel.setGamemode(clientModel.getFromTerminal().get(1));
+        clientModel.setGameMode(clientModel.getFromTerminal().get(1));
         super.exitAction(cause);
     }
 }

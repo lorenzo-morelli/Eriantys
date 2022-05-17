@@ -2,13 +2,13 @@ package it.polimi.ingsw.utils.gui.controllers;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.utils.gui.GUI;
-import it.polimi.ingsw.utils.network.Network;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 
@@ -54,20 +54,23 @@ public class SetupGameController implements Initializable {
     }
 
     public void setPrincipiant(MouseEvent mouseEvent) {
-        this.gui.getClientModel().setGamemode("PRINCIPIANT");
+        this.gui.getClientModel().setGameMode("PRINCIPIANT");
         this.gameModeLabel.setText("Game mode: principiant");
     }
 
     public void setExpert(MouseEvent mouseEvent) {
-        this.gui.getClientModel().setGamemode("EXPERT");
+        this.gui.getClientModel().setGameMode("EXPERT");
         this.gameModeLabel.setText("Game mode: expert");
     }
 
     public void start(MouseEvent mouseEvent) {
-        //TODO mandare il clientModel al server
-        //ricevere dal server il numero di persone connesse
-        this.otherPlayersLabel.setText("Waiting for other players... " + connectedPlayers + "/" + this.gui.getClientModel().getNumofplayer());
-        //if raggiunto il totale -> inizia partita
+        if (this.gui.getClientModel().getNumofplayer() != 2 || this.gui.getClientModel().getNumofplayer() != 3 || this.gui.getClientModel().getNumofplayer() != 4) {
+            this.otherPlayersLabel.setText("ERROR: Please select a number of players!");
+        } else if (Objects.equals(this.gui.getClientModel().getGameMode(), "")) {
+            this.otherPlayersLabel.setText("ERROR: Please select a game mode!");
+        } else {
+            this.otherPlayersLabel.setText("Waiting for other players... " + connectedPlayers + "/" + this.gui.getClientModel().getNumofplayer());
+        }
     }
 
 
