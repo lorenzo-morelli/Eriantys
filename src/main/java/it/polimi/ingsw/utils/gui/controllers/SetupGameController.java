@@ -70,7 +70,8 @@ public class SetupGameController implements Initializable {
         } else if (this.gui.getClientModel().getGameMode() == null) {
             this.otherPlayersLabel.setText("ERROR: Please select a game mode!");
         } else {
-            //todo: send to server
+            //todo: send to server game setup
+            //todo: get connected players from server
             this.otherPlayersLabel.setText("Waiting for other players... " + connectedPlayers + "/" + this.gui.getClientModel().getNumofplayer());
         }
     }
