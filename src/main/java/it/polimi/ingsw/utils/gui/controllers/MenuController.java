@@ -69,25 +69,17 @@ public class MenuController implements Initializable {
             this.gui.getClientModel().setMyIp(Network.getMyIp());
 
             if (Network.isConnected()) {
-                //boolean responseReceived = false;
-                //new Thread(() -> System.out.println("blah")).start();
 
-//                while (!responseReceived) {
-//                    Network.send(this.gson.toJson(this.gui.getClientModel()));
-//                    response.enable();
-////                    while (!response.parametersReceived()) {
-////                        TimeUnit.SECONDS.sleep(2);
-////                    }
-//                    TimeUnit.SECONDS.sleep(2);
-//
-//                    if (this.gson.fromJson(response.getParameter(0), ClientModel.class).getClientIdentity() == this.gui.getClientModel().getClientIdentity()) {
-//                        responseReceived = true;
-//                    }
-//                    this.gui.setClientModel(gson.fromJson(response.getParameter(0), ClientModel.class));
-//                }
 
-                String stringa = this.gson.toJson(this.gui.getClientModel());
-                System.out.println(stringa);
+
+
+
+
+
+
+
+
+
 
                 if (this.gui.getClientModel().getAmIfirst())
                     System.out.println("primooo");
