@@ -79,9 +79,9 @@ public class Network implements ActionListener{
         if (instance == null){
             instance = new Network();
         }
-        instance.IPAddress.setText(ip);
-        instance.port.setText(port);
-        instance.clientButton.doClick();
+        Network.IPAddress.setText(ip);
+        Network.port.setText(port);
+        Network.clientButton.doClick();
     };
 
     public static void disconnect(){

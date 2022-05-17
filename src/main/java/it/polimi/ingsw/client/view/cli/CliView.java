@@ -352,6 +352,11 @@ public class CliView implements View{
                 Network.send(json.toJson(clientModel));
                 break;
 
+            case "GAMEEND":
+                System.out.println("Il vincitore/i è/sono :" + clientModel.getGamewinner());
+                Network.disconnect();
+            break;
+
         }
 
     }
