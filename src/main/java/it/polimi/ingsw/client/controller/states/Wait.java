@@ -43,7 +43,7 @@ public class Wait extends State {
 
 
 
-            if (receivedClientModel.isGameStarded().equals(true)) {
+            if (receivedClientModel.isGameStarted().equals(true)) {
                 Gson json = new Gson();
 
                 view.setClientModel(receivedClientModel);

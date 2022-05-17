@@ -4,11 +4,8 @@ import com.google.gson.Gson;
 import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.server.controller.ConnectionModel;
 import it.polimi.ingsw.server.controller.ServerController;
-import it.polimi.ingsw.server.model.Cloud;
 import it.polimi.ingsw.server.model.Model;
-import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.utils.network.Network;
-import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
 import it.polimi.ingsw.utils.stateMachine.Controller;
 import it.polimi.ingsw.utils.stateMachine.Event;
 import it.polimi.ingsw.utils.stateMachine.IEvent;
@@ -49,7 +46,7 @@ private Event restart;
 
             ClientModel currentPlayerData = connectionModel.findPlayer(model.getPlayers().get(i).getNickname());
 
-            currentPlayerData.setGamewinner(winner);
+            currentPlayerData.setGameWinner(winner);
             currentPlayerData.setTypeOfRequest("GAMEEND");
             currentPlayerData.setResponse(false); //non è una risposta, è una richiesta del server al client
 

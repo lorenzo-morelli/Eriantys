@@ -36,7 +36,7 @@ public class ClientModel {
     // isresponse == null, non è ne una richiesta ne una risposta, probabilmente un messaggio di quelli iniziali
     private Boolean isResponse = false;
 
-    private Boolean gameStarded = false;
+    private Boolean gameStarted = false;
     private String typeOfRequest;
 
     private PeopleColor choosedColor;
@@ -45,7 +45,7 @@ public class ClientModel {
     private Cloud cloudChoosed;
     private int choosedIsland;
 
-    private String Gamewinner;
+    private String gameWinner;
 
     private Model serverModel;
     private List<AssistantCard> deck;
@@ -70,7 +70,7 @@ public class ClientModel {
 
 
     // Game mode (PRINCIPIANT or EXPERT)
-    private String gamemode;
+    private String gameMode;
 
 
     public ClientModel(){
@@ -86,12 +86,12 @@ public class ClientModel {
         return numOfPlayer;
     }
 
-    public String getGamemode() {
-        return gamemode;
+    public String getGameMode() {
+        return gameMode;
     }
 
-    public void setGamemode(String gamemode) {
-        this.gamemode = gamemode;
+    public void setGameMode(String gameMode) {
+        this.gameMode = gameMode;
     }
 
     public void setNumofplayer(int numOfPlayer) {
@@ -161,12 +161,12 @@ public class ClientModel {
         isResponse = response;
     }
 
-    public void setGameStarded(Boolean gameStarded) {
-        this.gameStarded = gameStarded;
+    public void setGameStarted(Boolean gameStarted) {
+        this.gameStarted = gameStarted;
     }
 
-    public Boolean isGameStarded() {
-        return gameStarded;
+    public Boolean isGameStarted() {
+        return gameStarted;
     }
 
     public int getClientIdentity() {
@@ -229,12 +229,12 @@ public class ClientModel {
         this.cloudChoosed = cloudChoosed;
     }
 
-    public String getGamewinner() {
-        return Gamewinner;
+    public String getGameWinner() {
+        return gameWinner;
     }
 
-    public void setGamewinner(String gamewinner) {
-        Gamewinner = gamewinner;
+    public void setGameWinner(String gameWinner) {
+        this.gameWinner = gameWinner;
     }
 
     public float getCardChoosedValue() {

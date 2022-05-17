@@ -21,14 +21,14 @@ public class ParametersFromNetwork extends Event implements DocumentListener {
     public ParametersFromNetwork(int numberOfStrings) {
 
         super("[Ricezione di "+numberOfStrings+" parametri da network]");
-        this.ta = Network.checkNewMessages();
+        ta = Network.checkNewMessages();
         this.numberOfStrings = numberOfStrings;
         ta.getDocument().addDocumentListener(this);
     }
 
     @Override
     public void insertUpdate(DocumentEvent e) {
-        if (enabled == true) {
+        if (enabled) {
             checkLastMessage();
         }
     }
