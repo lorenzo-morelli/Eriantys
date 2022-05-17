@@ -32,13 +32,14 @@ public class EndTurn extends State {
     public IEvent entryAction(IEvent cause) throws Exception {
         model = serverController.getModel();
         for(int i=0;i<model.getTable().getClouds().size();i++){
-            boolean check=model.getTable().getClouds().get(i).charge(model.getTable().getBag(),model.getTable().getAvaiablePeopleColorinBag());
-            if(check){
+            boolean check=model.getTable().getClouds().get(i).charge(model.getTable().getBag());
+            if(!check){
                 model.setlastturn();
                 break;
             }
         }
         model.nextTurn();
+        model.nextPlayer();
         goToAssistentCardPhase().fireStateEvent();
         return super.entryAction(cause);
     }

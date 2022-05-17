@@ -21,7 +21,7 @@ public class Player implements Comparable<Player>{
         this.availableCards = new Deck();
         this.choosedCard = null;
         this.numplayerinteam=0;
-        this.schoolBoard = new SchoolBoard(model.getNumberOfPlayers(), model.getTable().getBag(), model.getTable().getAvaiablePeopleColorinBag(), model.getTable().getAvaiableTowerColor());
+        this.schoolBoard = new SchoolBoard(model.getNumberOfPlayers(), model.getTable().getBag(),model.getTable().getAvaiableTowerColor());
         if(model.getGameMode().equals(GameMode.EXPERT) ) this.coins = 1;
         else{coins=-1;}
     }
@@ -47,7 +47,7 @@ public class Player implements Comparable<Player>{
                 }
             }
             numplayerinteam= team.setPlayer(this);
-            this.schoolBoard = new SchoolBoard(team, model.getTable().getBag(), model.getTable().getAvaiablePeopleColorinBag(), model.getTable().getAvaiableTowerColor());
+            this.schoolBoard = new SchoolBoard(team, model.getTable().getBag(), model.getTable().getAvaiableTowerColor());
             if (model.getGameMode().equals(GameMode.EXPERT)) this.coins = 1;
             else{coins=-1;}
         }

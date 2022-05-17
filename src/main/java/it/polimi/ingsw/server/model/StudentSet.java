@@ -43,15 +43,29 @@ public class StudentSet {
         this.numOfYellowStudents=0;
     }
 
-    public PeopleColor estractRandomStudent(ArrayList<PeopleColor> avaiableColor) {
-        if(avaiableColor.size()>0) {
-            int rnd = new Random().nextInt(avaiableColor.size());
-            removestudent(1, avaiableColor.get(rnd));
-            PeopleColor color= avaiableColor.get(rnd);
-            if (numStudentsbycolor(avaiableColor.get(rnd)) == 0) {
-                avaiableColor.remove(rnd);
-            }
-            return color;
+    public PeopleColor estractRandomStudent() {
+        if(this.size()>0) {
+            int rnd = new Random().nextInt(this.size());
+           if(numOfRedStudents!=0 && rnd<numOfRedStudents ) {
+               removestudent(1, PeopleColor.RED);
+               return PeopleColor.RED;
+           }
+           if(numOfGreenStudents!=0 && rnd<numOfRedStudents+numOfGreenStudents){
+               removestudent(1, PeopleColor.GREEN);
+               return PeopleColor.GREEN;
+           }
+           if(numOfBlueStudents!=0 && rnd<numOfRedStudents+numOfGreenStudents+numOfBlueStudents){
+               removestudent(1, PeopleColor.BLUE);
+               return PeopleColor.BLUE;
+           }
+           if(numOfPinkStudents!=0 && rnd<numOfRedStudents+numOfGreenStudents+numOfBlueStudents+numOfPinkStudents){
+               removestudent(1,PeopleColor.PINK);
+               return PeopleColor.PINK;
+           }
+           else{
+               removestudent(1,PeopleColor.YELLOW);
+               return PeopleColor.YELLOW;
+           }
         }
         throw new IllegalArgumentException();
     }
@@ -91,9 +105,9 @@ public class StudentSet {
         }
     }
 
-    public void setStudentsRandomly(int n,StudentSet bag,ArrayList<PeopleColor> avaiableColor) {//rivedere
+    public void setStudentsRandomly(int n,StudentSet bag) {
         for(int i=0;i<n;i++){
-            addstudents(1,bag.estractRandomStudent(avaiableColor));
+            addstudents(1,bag.estractRandomStudent());
         }
     }
 
@@ -105,5 +119,35 @@ public class StudentSet {
                 ANSI_PURPLE + "PINK=" + numOfPinkStudents + ANSI_RESET + " , " +
                 ANSI_GREEN + "GREEN=" + numOfGreenStudents + ANSI_RESET +
                 '\n';
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        StudentSet set = (StudentSet) obj;
+        if (this.getNumOfBlueStudents() == set.getNumOfBlueStudents() && this.getNumOfRedStudents() == set.getNumOfRedStudents() && this.getNumOfYellowStudents() == set.getNumOfYellowStudents() && this.getNumOfPinkStudents() == set.getNumOfPinkStudents() && this.getNumOfGreenStudents() == set.getNumOfGreenStudents())
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public int getNumOfBlueStudents() {
+        return numOfBlueStudents;
+    }
+
+    public int getNumOfGreenStudents() {
+        return numOfGreenStudents;
+    }
+
+    public int getNumOfPinkStudents() {
+        return numOfPinkStudents;
+    }
+
+    public int getNumOfRedStudents() {
+        return numOfRedStudents;
+    }
+
+    public int getNumOfYellowStudents() {
+        return numOfYellowStudents;
     }
 }

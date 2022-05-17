@@ -44,18 +44,18 @@ class StudentSetTest {
         Collections.addAll(colors, PeopleColor.values());
 
         assertEquals(5,colors.size());
-        set.setStudentsRandomly(1,bag,colors);
+        set.setStudentsRandomly(1,bag);
         assertEquals(5,colors.size());
 
         assertEquals(1,set.size());
         assertEquals(9,bag.size());
 
-        set.setStudentsRandomly(9,bag,colors);
+        set.setStudentsRandomly(9,bag);
         assertEquals(0,bag.size());
         assertEquals(10,set.size());
         assertEquals(0,colors.size());
         assertThrows(IllegalArgumentException.class,()->{
-            set.setStudentsRandomly(1,bag,colors);
+            set.setStudentsRandomly(1,bag);
         });
     }
     }

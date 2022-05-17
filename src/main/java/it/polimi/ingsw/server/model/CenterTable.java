@@ -13,7 +13,6 @@ public class CenterTable {
     private int motherNaturePosition;
     private final StudentSet bag;
     private final ArrayList<Professor> professors;
-    private final ArrayList<PeopleColor> avaiablePeopleColorinBag;
     private final ArrayList<TowerColor> avaiableTowerColor;
     private final ArrayList<Character> characterCards;
     public static final String ANSI_CYAN = "\033[0;36m";
@@ -23,23 +22,19 @@ public class CenterTable {
 
         islands=new ArrayList<>();
         StudentSet islandbag=new StudentSet(2,2,2,2,2);
-        ArrayList<PeopleColor> avaiableColorIslandBag = new ArrayList<>();
-        Collections.addAll(avaiableColorIslandBag, PeopleColor.values());
 
         for(int i=0;i<12;i++){
             if(i==0 || i==6) {
-                islands.add(new Island(0,islandbag,avaiableColorIslandBag));
+                islands.add(new Island(0,islandbag));
             }
             else {
-                islands.add(new Island(1,islandbag,avaiableColorIslandBag));
+                islands.add(new Island(1,islandbag));
             }
         }
 
         motherNaturePosition=0;
 
         bag=new StudentSet(24,24,24,24,24);
-        avaiablePeopleColorinBag = new ArrayList<>();
-        Collections.addAll(avaiablePeopleColorinBag, PeopleColor.values());
 
         avaiableTowerColor= new ArrayList<>();
         if (numplayer == 3) {
@@ -57,7 +52,7 @@ public class CenterTable {
         clouds =new ArrayList<>();
         for(int i=0;i<numplayer;i++){
             clouds.add(new Cloud(numplayer));
-            clouds.get(i).charge(bag,avaiablePeopleColorinBag);
+            clouds.get(i).charge(bag);
         }
 
         if(gamemode.equals(GameMode.EXPERT)){  //da controllare
@@ -86,9 +81,6 @@ public class CenterTable {
     public StudentSet getBag() {
         return bag;
     }
-    public ArrayList<PeopleColor> getAvaiablePeopleColorinBag() {
-        return avaiablePeopleColorinBag;
-    }
     public ArrayList<TowerColor> getAvaiableTowerColor() {
         return avaiableTowerColor;
     }
@@ -99,7 +91,7 @@ public class CenterTable {
     }
     public void chargeClouds() {
         for (Cloud cloud : clouds) {
-            cloud.charge(bag, avaiablePeopleColorinBag);
+            cloud.charge(bag);
         }
     }
 
@@ -172,8 +164,8 @@ public class CenterTable {
     @Override
     public String toString() {
         return  "-----------------------------------------TABLE----------------------------------------------------------------------------------------------------------------------------------------\n" +
-                "\n----------------ISLANDS---------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n" +  printislands() +"--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n"+
-                "    MOTHER NATURE POSITION : " + motherNaturePosition +
+                "\n----------------ISLANDS---------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n" +  printislands() +"------------------BAG-----------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n"+
+                "    SIZE : " + bag.size() + "    " + bag +
                 "\n\n----------------CLOUDS----------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n" + printclouds() +
                 "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n"+
                 (characterCards==null ? "\n" :
@@ -196,7 +188,13 @@ public class CenterTable {
         StringBuilder result= new StringBuilder();
         int i=1;
         for (Island island : islands) {
-            result.append(ANSI_CYAN).append("    ISLAND : ").append(i).append(ANSI_RESET).append("\n").append(island.toString());
+            result.append(ANSI_CYAN).append("    ISLAND : ").append(i);
+            if(i==(motherNaturePosition+1)){
+                result.append(" - MOTHER NATURE IS HERE ").append(ANSI_RESET).append("\n").append(island);
+            }
+            else{
+                result.append(ANSI_RESET).append("\n").append(island);
+            }
             i++;
         }
         return result.toString();

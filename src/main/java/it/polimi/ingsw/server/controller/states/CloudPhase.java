@@ -77,12 +77,12 @@ public class CloudPhase extends State {
 
         currentPlayerData = json.fromJson(message.getParameter(0),ClientModel.class);
         Cloud cloud = currentPlayerData.getCloudChoosed();
-        currentPlayer.getSchoolBoard().load_entrance(cloud);
-        model.nextPlayer();
+        currentPlayer.getSchoolBoard().load_entrance(cloud,model.getTable().getClouds());
         if(model.getcurrentPlayer().equals(model.getPlayers().get(model.getPlayers().size()-1))) {
             GoToEndTurn().fireStateEvent();
         }
         else{
+            model.nextPlayer();
             GoToStudentPhase().fireStateEvent();
         }
 
