@@ -175,17 +175,17 @@ public class Model {
         else return winner.getPlayer1().getNickname() + " " + winner.getPlayer2().getNickname();
     }
 
-    public String toString() {
+    public String toString(String nickname,String message) {
         return "\n\n\n-----------------------------------------GAME-----------------------------------------------------------------------------------------------------------------------------------------\n\n" +
                 "    TURN = " + turnNumber + "    " + (islastturn ? " ! LAST TURN OF THE GAME ! ": "" ) +"\n\n" +
                 table.toString() +
-                ( numberOfPlayers==4 ? "-----------------TEAM-----------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n" + printteam() : "-----------------PLAYER---------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n"+ printplayers() )+
-                "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n" + "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n"  + "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n";
+                ( numberOfPlayers==4 ? "-----------------TEAM-----------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n" + printteam(nickname) : "-----------------PLAYER---------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n"+ printplayers(nickname) )+
+                "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n" + "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n" +"--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n"+ message+ "\n" ;
 
 
     }
 
-    public String printteam(){
+    public String printteam(String nickname){
         StringBuilder result= new StringBuilder();
         for (Team team : teams) {
             result.append(team.toString());
@@ -193,18 +193,37 @@ public class Model {
         return result.toString();
     }
 
-    public String printplayers(){
+    public String printplayers(String nickname){
         StringBuilder result= new StringBuilder();
-        for(Player player: players){
-            if(player.equals(getcurrentPlayer())){
-                switch (player.getSchoolBoard().getTowerColor()){
-                    case BLACK: result.append(ANSI_BLACK+"    (YOU) "+ANSI_RESET);
-                    break;
-                    case GREY: result.append(ANSI_GRAY+"    (YOU) "+ANSI_RESET);
+        for(Player player: players) {
+            if (player.equals(getcurrentPlayer())) {
+                switch (player.getSchoolBoard().getTowerColor()) {
+                    case BLACK:
+                        result.append(ANSI_BLACK + "    (CURRENT PLAYER) " + ANSI_RESET);
                         break;
-                    case WHITE: result.append(ANSI_WHITE+"    (YOU) "+ANSI_RESET);
+                    case GREY:
+                        result.append(ANSI_GRAY + "    (CURRENT PLAYER) " + ANSI_RESET);
+                        break;
+                    case WHITE:
+                        result.append(ANSI_WHITE + "    (CURRENT PLAYER) " + ANSI_RESET);
                         break;
                 }
+            }
+            if (player.getNickname().equals(nickname)) {
+                switch (player.getSchoolBoard().getTowerColor()) {
+                    case BLACK:
+                        result.append(ANSI_BLACK + "    (YOU) " + ANSI_RESET);
+                        break;
+                    case GREY:
+                        result.append(ANSI_GRAY + "    (YOU) " + ANSI_RESET);
+                        break;
+                    case WHITE:
+                        result.append(ANSI_WHITE + "    (YOU) " + ANSI_RESET);
+                        break;
+                }
+            }
+            if(player.getNickname().equals(nickname) || player.equals(getcurrentPlayer())){
+                result.append("\n");
             }
             result.append(player);
         }

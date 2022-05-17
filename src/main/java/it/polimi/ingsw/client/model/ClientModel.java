@@ -40,6 +40,7 @@ public class ClientModel {
     private String typeOfRequest;
 
     private PeopleColor choosedColor;
+    private float cardChoosedValue;
     private int choosedMoves;
     private Cloud cloudChoosed;
     private int choosedIsland;
@@ -234,5 +235,13 @@ public class ClientModel {
 
     public void setGamewinner(String gamewinner) {
         Gamewinner = gamewinner;
+    }
+
+    public float getCardChoosedValue() {
+        return cardChoosedValue;
+    }
+
+    public void setCardChoosedValue(float cardChoosedValue) {
+        this.cardChoosedValue = cardChoosedValue;
     }
 }

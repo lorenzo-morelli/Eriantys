@@ -116,11 +116,13 @@ public class MotherPhase extends State {
                 }
             }
         }
-        if(model.getTable().getIslands().get((model.getTable().getMotherNaturePosition()+1)%model.getTable().getIslands().size()).equals(model.getTable().getIslands().get(model.getTable().getMotherNaturePosition()))){
-            model.getTable().MergeIsland(model.getTable().getMotherNaturePosition(),((model.getTable().getMotherNaturePosition()+1)%model.getTable().getIslands().size()));
-        }
-        if(model.getTable().getIslands().get((model.getTable().getMotherNaturePosition()-1)%model.getTable().getIslands().size()).equals(model.getTable().getIslands().get(model.getTable().getMotherNaturePosition()))){
-            model.getTable().MergeIsland(model.getTable().getMotherNaturePosition(),((model.getTable().getMotherNaturePosition()-1)%model.getTable().getIslands().size()));
+        if(model.getTable().getIslands().get(model.getTable().getMotherNaturePosition())!=null) {
+            if (model.getTable().getIslands().get((model.getTable().getMotherNaturePosition() + 1) % model.getTable().getIslands().size()).getTowerColor() != null && model.getTable().getIslands().get((model.getTable().getMotherNaturePosition() + 1) % model.getTable().getIslands().size()).getTowerColor().equals(model.getTable().getIslands().get(model.getTable().getMotherNaturePosition()).getTowerColor())) {
+                model.getTable().MergeIsland(model.getTable().getMotherNaturePosition(), ((model.getTable().getMotherNaturePosition() + 1) % model.getTable().getIslands().size()));
+            }
+            if (model.getTable().getIslands().get((model.getTable().getMotherNaturePosition() - 1) % model.getTable().getIslands().size()).getTowerColor() != null && model.getTable().getIslands().get((model.getTable().getMotherNaturePosition() - 1) % model.getTable().getIslands().size()).getTowerColor().equals(model.getTable().getIslands().get(model.getTable().getMotherNaturePosition()).getTowerColor())) {
+                model.getTable().MergeIsland(model.getTable().getMotherNaturePosition(), ((model.getTable().getMotherNaturePosition() - 1) % model.getTable().getIslands().size()));
+            }
         }
         if(model.getTable().getIslands().size()==3){
             gameEnd().fireStateEvent();

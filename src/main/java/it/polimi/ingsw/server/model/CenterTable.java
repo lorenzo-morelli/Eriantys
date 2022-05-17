@@ -143,7 +143,7 @@ public class CenterTable {
     }
 
     public void MergeIsland(int index_1, int index_2){
-        islands.get(index_1).placeTower();
+        islands.get(index_1).setNumberOfTowers(islands.get(index_1).getNumberOfTowers()+islands.get(index_2).getNumberOfTowers());
         for(PeopleColor Color: PeopleColor.values()){
             islands.get(index_1).getInhabitants().addstudents(islands.get(index_2).getInhabitants().numStudentsbycolor(Color), Color);
         }

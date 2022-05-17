@@ -82,11 +82,14 @@ public class AssistantCardPhase extends State {
                 }
             }
 
-
-
-            //System.out.println(message.getParameter(0));
+            AssistantCard choosen=null;
+            currentPlayerData = json.fromJson(message.getParameter(0),ClientModel.class);
             // ricevo un campo json e lo converto in AssistantCard
-            AssistantCard choosen = currentPlayerData.getDeck().get(Integer.parseInt(json.fromJson(message.getParameter(0),ClientModel.class).getFromTerminal().get(0)));
+            for(int j=0; j<currentPlayer.getAvailableCards().getCardsList().size();j++) {
+                if (currentPlayerData.getCardChoosedValue() == currentPlayer.getAvailableCards().getCardsList().get(j).getValues()) {
+                    choosen = currentPlayer.getAvailableCards().getCardsList().get(j);
+                }
+            }
 
             // il controllo sul fatto che l'utente scelga una carta appartenente a quelle presenti in availableCars
             // viene svolto direttamente dal client in CliView

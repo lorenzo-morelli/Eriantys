@@ -102,6 +102,10 @@ public class Island {
         return numberOfTowers;
     }
 
+    public void setNumberOfTowers(int numberOfTowers) {
+        this.numberOfTowers = numberOfTowers;
+    }
+
     @Override
     public String toString() {
         return "    INHABITANS : " + inhabitants.toString() +

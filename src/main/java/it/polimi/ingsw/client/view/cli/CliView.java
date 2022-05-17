@@ -36,12 +36,16 @@ public class CliView implements View{
     // parsedString ci serve per parsare l'input e verificare la correttezza dei dati inseriti
     private ArrayList<String> parsedStrings;
 
-    private ClientModel clientModel;
+    private ClientModel networkClientModel;
+    private String mynickname;
+    private String responce;
 
     private Gson json;
-
+    public CliView(){
+        responce="\n";
+    }
     public void setClientModel(ClientModel clientModel) {
-        this.clientModel = clientModel;
+        this.networkClientModel = clientModel;
     }
 
     // Uno stato che vuole chiamare un metodo della vista si registra prima chiamando questo metodo
@@ -108,6 +112,7 @@ public class CliView implements View{
                     System.out.print("ALERT: dati inseriti non validi, riprovare\n");
                     askParameters();
                 }
+                setMynickname(parsedStrings.get(0));
                 break;
 
             case "GAMEINFO" :
@@ -142,6 +147,7 @@ public class CliView implements View{
             case "NICKNAMEEXISTENT" :
                 CommandPrompt.ask("Il nickname scelto è già esistente, si prega di reinserirne uno nuovo",
                         "nickname>");
+                setMynickname(CommandPrompt.gotFromTerminal());
                 break;
         }
 
@@ -151,42 +157,43 @@ public class CliView implements View{
 
     // Il server mi invia una richiesta di interazione: devo digitare roba da terminale
     public void requestToMe() throws InterruptedException {
-        switch(clientModel.getTypeOfRequest()){
+        switch(networkClientModel.getTypeOfRequest()){
 
             case "CHOOSEASSISTANTCARD" :
-                System.out.println(clientModel.getServermodel().toString());
+                System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(),"STATO DEL GIOCO: \n"+"E' IL TUO TURNO - ASSISTENT CARD PHASE"+ "\n\nMOSSE ALTRI GIOCATORI: "+getResponce()));
                 System.out.println("Scegli una Carta Assistente");
-                List<Integer> indexList = new ArrayList<>();
-                int i = 0;
-                for (AssistantCard a : clientModel.getDeck()){
-                    indexList.add(i);
-                    System.out.println(i+": "+ "valore: " + a.getValues() + "  mosse: " + a.getMoves());
-                    i++;
+                for (AssistantCard a : networkClientModel.getDeck()){;
+                    System.out.println("valore: " + a.getValues() + "  mosse: " + a.getMoves());
                 }
-                CommandPrompt.ask("Inserisci codice indentficativo della carta","Carta> ");
-                parsedStrings = new ArrayList<String>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
+                CommandPrompt.ask("Inserisci valore della carta scelta","Carta> ");
 
-                // la cifra inserita deve essere valida
-               if (!isValidCifra(parsedStrings.get(0))) {
-                    System.out.print("ALERT: cifra inserita non valida, riprovare\n");
+                if(!isValidNumber(CommandPrompt.gotFromTerminal())){
+                    System.out.println("la carta da te scelta ha un valore non  valido, si prega di fare più attenzione");
                     TimeUnit.SECONDS.sleep(2);
                     requestToMe();
                     return;
                 }
-               // la cifra inserita deve essere tra quelle proposte (ovvero nelle availableCards)
-               if(!indexList.contains(Integer.parseInt(parsedStrings.get(0)))){
-                   System.out.print("ALERT: carta inserita inesistente, riprovare\n");
-                   TimeUnit.SECONDS.sleep(2);
-                   requestToMe();
-                   return;
-               }
-                clientModel.setResponse(true); //lo flaggo come messaggio di risposta
-                clientModel.setFromTerminal(parsedStrings);
+                boolean check=false;
+                for(int i=0;i<networkClientModel.getDeck().size();i++){
+                    if(networkClientModel.getDeck().get(i).getValues()==Integer.parseInt((CommandPrompt.gotFromTerminal()))){
+                        check=true;
+                    }
+                }
+                if(!check){
+                    System.out.println("la carta scelta non è presente, fare più attenzione");
+                    TimeUnit.SECONDS.sleep(2);
+                    requestToMe();
+                    return;
+                }
+                networkClientModel.setCardChoosedValue(Float.parseFloat(CommandPrompt.gotFromTerminal()));
+                networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                networkClientModel.setFromTerminal(parsedStrings);
                 json = new Gson();
-                Network.send(json.toJson(clientModel));
+                Network.send(json.toJson(networkClientModel));
+
                 break;
             case "CHOOSEWHERETOMOVESTUDENTS"    :
-                System.out.println(clientModel.getServermodel().toString());
+                System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(),"STATO DEL GIOCO: \n"+"E' IL TUO TURNO - STUDENT PHASE"+ "\n\nMOSSE ALTRI GIOCATORI: "+getResponce()));
 
                 CommandPrompt.ask("Scegli il colore dello studente che desideri muovere ","RED or GREEN or BLUE or YELLOW or PINK> ");
 
@@ -223,7 +230,7 @@ public class CliView implements View{
                         throw new IllegalStateException("Unexpected value: " + CommandPrompt.gotFromTerminal());
                 }
 
-                if(clientModel.getServermodel().getcurrentPlayer().getSchoolBoard().getEntranceSpace().numStudentsbycolor(choosedColor) == 0 ){
+                if(networkClientModel.getServermodel().getcurrentPlayer().getSchoolBoard().getEntranceSpace().numStudentsbycolor(choosedColor) == 0 ){
                     System.out.println("Si è inserito un colore non presente tra quelli disponibili, reinserire i dati con più attenzione !!!!");
                     TimeUnit.SECONDS.sleep(2);
                     requestToMe();
@@ -239,13 +246,13 @@ public class CliView implements View{
                     requestToMe();
                     return;
                 }else if(command.equals("SCHOOL")) {
-                    if (clientModel.getServermodel().getcurrentPlayer().getSchoolBoard().getDinnerTable().numStudentsbycolor(choosedColor) == 10) {
+                    if (networkClientModel.getServermodel().getcurrentPlayer().getSchoolBoard().getDinnerTable().numStudentsbycolor(choosedColor) == 10) {
                         System.out.println("La sala da pranzo di quel colore è piena.");
                         TimeUnit.SECONDS.sleep(2);
                         requestToMe();
                         return;
                     }
-                    clientModel.setTypeOfRequest("SCHOOL");
+                    networkClientModel.setTypeOfRequest("SCHOOL");
                 }else if(command.equals("ISLAND")){
                     CommandPrompt.ask("Inserire numero dell'isola su cui si desidera muovere lo studente", "isola> ");
                     if(!isValidNumber(CommandPrompt.gotFromTerminal())){
@@ -254,45 +261,45 @@ public class CliView implements View{
                         requestToMe();
                         return;
                     }
-                    if(Integer.parseInt(CommandPrompt.gotFromTerminal()) > clientModel.getServermodel().getTable().getIslands().size() ||
+                    if(Integer.parseInt(CommandPrompt.gotFromTerminal()) > networkClientModel.getServermodel().getTable().getIslands().size() ||
                             Integer.parseInt(CommandPrompt.gotFromTerminal()) < 0 ){
                         System.out.println("L'isola scelta non è valida.");
                         TimeUnit.SECONDS.sleep(2);
                         requestToMe();
                         return;
                     }
-                    clientModel.setTypeOfRequest("ISLAND");
-                    clientModel.setChoosedIsland(Integer.parseInt(CommandPrompt.gotFromTerminal()) - 1);
+                    networkClientModel.setTypeOfRequest("ISLAND");
+                    networkClientModel.setChoosedIsland(Integer.parseInt(CommandPrompt.gotFromTerminal()) - 1);
                 }
-                clientModel.setTypeOfRequest(command);
-                clientModel.setResponse(true); //lo flaggo come messaggio di risposta
-                clientModel.setChoosedColor(choosedColor);
+                networkClientModel.setTypeOfRequest(command);
+                networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                networkClientModel.setChoosedColor(choosedColor);
                 json = new Gson();
-                Network.send(json.toJson(clientModel));
+                Network.send(json.toJson(networkClientModel));
                 break;
 
             case "TEAMMATE" :
-                for (String nickname : clientModel.getNicknames()){
+                for (String nickname : networkClientModel.getNicknames()){
                     System.out.println(nickname);
                 }
                 CommandPrompt.ask("Inserisci il nickname del tuo compagno di squadra: ","Nickname> ");
-                if(!clientModel.getNicknames().contains(CommandPrompt.gotFromTerminal())){
+                if(!networkClientModel.getNicknames().contains(CommandPrompt.gotFromTerminal())){
                     System.out.print("Il nickname inserito non esiste, si prega di scegliere un nickname tra quelli specificati");
                     requestToMe();
                     return;
                 }
                 String teamMate = CommandPrompt.gotFromTerminal();
-                clientModel.getNicknames().remove(teamMate);
-                clientModel.getNicknames().add(teamMate);
-                clientModel.getNicknames().add(clientModel.getNickname());
-                clientModel.setResponse(true); //lo flaggo come messaggio di risposta
-                clientModel.setFromTerminal(parsedStrings);
+                networkClientModel.getNicknames().remove(teamMate);
+                networkClientModel.getNicknames().add(teamMate);
+                networkClientModel.getNicknames().add(networkClientModel.getNickname());
+                networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                networkClientModel.setFromTerminal(parsedStrings);
                 json = new Gson();
-                Network.send(json.toJson(clientModel));
+                Network.send(json.toJson(networkClientModel));
                 break;
 
             case "CHOOSEWHERETOMOVEMOTHER" :
-                System.out.println(clientModel.getServermodel().toString());
+                System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(),"STATO DEL GIOCO:\n "+"E' IL TUO TURNO - MOTHER PHASE"+ "\n\nMOSSE ALTRI GIOCATORI: "+getResponce()));
                 CommandPrompt.ask("Scegliere il numero di mosse di cui far spostare madre natura ","mosse> ");
 
                 if(!isValidNumber(CommandPrompt.gotFromTerminal())){
@@ -305,34 +312,34 @@ public class CliView implements View{
                     System.out.println("Il numero di mosse deve essere un numero intero positivo, fare più attenzione");
                     TimeUnit.SECONDS.sleep(2);
                     requestToMe();
+                    break;
                 }
-                if(clientModel.getServermodel().getcurrentPlayer().getChoosedCard().getMoves() < Integer.parseInt(CommandPrompt.gotFromTerminal())){
+                if(networkClientModel.getServermodel().getcurrentPlayer().getChoosedCard().getMoves() < Integer.parseInt(CommandPrompt.gotFromTerminal())){
                     System.out.println("Il numero di mosse da te inserito eccede il numero massimo di mosse di cui madre natura può spostarsi," +
-                            " ovvero " + clientModel.getServermodel().getcurrentPlayer().getChoosedCard().getMoves() );
+                            " ovvero " + networkClientModel.getServermodel().getcurrentPlayer().getChoosedCard().getMoves() );
                     TimeUnit.SECONDS.sleep(2);
                     requestToMe();
                     return;
                 }
-                clientModel.setChoosedMoves(Integer.parseInt(CommandPrompt.gotFromTerminal()));
-                clientModel.setResponse(true); //lo flaggo come messaggio di risposta
-                clientModel.setFromTerminal(parsedStrings);
+                networkClientModel.setChoosedMoves(Integer.parseInt(CommandPrompt.gotFromTerminal()));
+                networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                networkClientModel.setFromTerminal(parsedStrings);
                 json = new Gson();
-                Network.send(json.toJson(clientModel));
+                Network.send(json.toJson(networkClientModel));
 
                 break;
 
             case "CHOOSECLOUDS" :
-                System.out.println(clientModel.getServermodel().toString());
+                System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(),"STATO DEL GIOCO: \n"+"E' IL TUO TURNO - CLOUD PHASE"+ "\n\nMOSSE ALTRI GIOCATORI: "+getResponce()));
                 CommandPrompt.ask("Scegliere il numero della tessera nuvola da cui si desidera ricaricarsi di studenti","tessera nuvola> ");
 
                 if(!isValidNumber(CommandPrompt.gotFromTerminal())){
-                    requestToMe();
                     System.out.println("Il numero inserito non è un numero valido");
                     TimeUnit.SECONDS.sleep(2);
                     requestToMe();
                     return;
                 }
-                if( clientModel.getServermodel().getTable().getClouds().size() < Integer.parseInt(CommandPrompt.gotFromTerminal()) ||
+                if( networkClientModel.getServermodel().getTable().getClouds().size() < Integer.parseInt(CommandPrompt.gotFromTerminal()) ||
                     Integer.parseInt(CommandPrompt.gotFromTerminal()) < 1 ){
                     System.out.println("Il numero inserito non rappresenta una tessera nuvola esistente, si prega di fare più attenzione");
                     TimeUnit.SECONDS.sleep(2);
@@ -340,78 +347,79 @@ public class CliView implements View{
                     return;
                 }
                 // la nuvola scelta deve avere una size > 0
-                if(clientModel.getServermodel().getTable().getClouds().get(Integer.parseInt(CommandPrompt.gotFromTerminal()) - 1).getStudentsAccumulator().size() == 0){
+                if(networkClientModel.getServermodel().getTable().getClouds().get(Integer.parseInt(CommandPrompt.gotFromTerminal()) - 1).getStudentsAccumulator().size() == 0){
                     System.out.println("Hai scelta una nuvola che è stata già scelta da un altro giocatore");
                     TimeUnit.SECONDS.sleep(2);
                     requestToMe();
                     return;
                 }
-                clientModel.setCloudChoosed(clientModel.getServermodel().getTable().getClouds().get(Integer.parseInt(CommandPrompt.gotFromTerminal()) - 1));
-                clientModel.setResponse(true); //lo flaggo come messaggio di risposta
-                clientModel.setFromTerminal(parsedStrings);
+                networkClientModel.setCloudChoosed(networkClientModel.getServermodel().getTable().getClouds().get(Integer.parseInt(CommandPrompt.gotFromTerminal()) - 1));
+                networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                networkClientModel.setFromTerminal(parsedStrings);
                 json = new Gson();
-                Network.send(json.toJson(clientModel));
+                Network.send(json.toJson(networkClientModel));
                 break;
 
             case "GAMEEND":
-                System.out.println("Il vincitore/i è/sono :" + clientModel.getGamewinner());
+                System.out.println("Il vincitore/i è/sono :" + networkClientModel.getGamewinner());
                 Network.disconnect();
             break;
 
         }
+        clearResponce();
 
     }
 
     // Qualcun altro sta interagendo con il terminale: devo gestire il tempo di attesa
     // Esempio "pippo: sta salutando"
     public void requestToOthers() throws IOException {
-        switch(clientModel.getTypeOfRequest()) {
+        String message=null;
+        switch(networkClientModel.getTypeOfRequest()) {
             case "CHOOSEASSISTANTCARD" :
-                CommandPrompt.println("L'utente " +clientModel.getNickname()+ " sta scegliendo la carta assistente");
+                message="L'utente " +networkClientModel.getNickname()+ " sta scegliendo la carta assistente";
                 break;
             case "CHOOSEWHERETOMOVESTUDENTS"    :
-                CommandPrompt.println("L'utente " +clientModel.getNickname()+ " sta scegliendo dove muovere lo studente");
+                message="L'utente " +networkClientModel.getNickname()+ " sta scegliendo dove muovere lo studente";
                 break;
             case "TEAMMATE" :
-                CommandPrompt.println("L'utente " +clientModel.getNickname()+ " sta scegliendo il suo compagno di squadra");
+                message="L'utente " +networkClientModel.getNickname()+ " sta scegliendo il suo compagno di squadra";
                 break;
             case "CHOOSEWHERETOMOVEMOTHER"    :
-                CommandPrompt.println("L'utente " +clientModel.getNickname()+ " sta scegliendo il numero di mosse di cui far spostare madre natura");
+                message="L'utente " +networkClientModel.getNickname()+ " sta scegliendo il numero di mosse di cui far spostare madre natura";
                 break;
             case "CHOOSECLOUDS"    :
-                CommandPrompt.println("L'utente " +clientModel.getNickname()+ " sta scegliendo la nuvola dalla quale ricaricare gli studenti");
+                message="L'utente " +networkClientModel.getNickname()+ " sta scegliendo la nuvola dalla quale ricaricare gli studenti";
                 break;
         }
+        System.out.println(networkClientModel.getServermodel().toString(getMynickname(),"STATO DEL GIOCO: "+message+ "\n\nPRECEDENTE MOSSA ALTRI GIOCATORI: "+getResponce()));
     }
 
     // Qualcun altro ha risposto al server: devo mostrare a schermo un'interpretazione della risposta
     // Esempio "pippo: ha salutato"
     public void response() throws IOException {
-        switch(clientModel.getTypeOfRequest()) {
+        switch(networkClientModel.getTypeOfRequest()) {
             case "CHOOSEASSISTANTCARD":
-                System.out.println("Il giocatore " + clientModel.getNickname()+" ha scelto " +
-                        "valore = " +clientModel.getDeck().get(Integer.parseInt(clientModel.getFromTerminal().get(0))).getValues() +
-                        " mosse = "+clientModel.getDeck().get(Integer.parseInt(clientModel.getFromTerminal().get(0))).getMoves());
+                setResponce("Il giocatore " + networkClientModel.getNickname()+" ha scelto " +
+                        "la carta col valore = " +networkClientModel.getCardChoosedValue());
                 break;
             case "TEAMMATE" :
-                System.out.println("Il giocatore " + clientModel.getNickname()+" ha formato i teams:\n" +
-                        "TEAM 1: " + clientModel.getNicknames().get(3) + " " + clientModel.getNicknames().get(2)+"\n" +
-                        "TEAM 2: " + clientModel.getNicknames().get(1) + " " + clientModel.getNicknames().get(0)+"\n" );
+                setResponce("Il giocatore " + networkClientModel.getNickname()+" ha formato i teams:\n" +
+                        "TEAM 1: " + networkClientModel.getNicknames().get(3) + " " + networkClientModel.getNicknames().get(2)+"\n" +
+                        "TEAM 2: " + networkClientModel.getNicknames().get(1) + " " + networkClientModel.getNicknames().get(0)+"\n" );
                 break;
             case "SCHOOL"    :
-                System.out.println("L'utente " +clientModel.getNickname()+ " ha scelto di muovere 1 studente di colore " +
-                         clientModel.getChoosedColor().toString() +" sulla sua scuola");
+                setResponce("L'utente " +networkClientModel.getNickname()+ " ha scelto di muovere 1 studente di colore " +
+                         networkClientModel.getChoosedColor().toString() +" sulla sua scuola");
                 break;
             case "ISLAND"    :
-                System.out.println("L'utente " +clientModel.getNickname()+ " ha scelto di muovere 1 studente di colore " +
-                        clientModel.getChoosedColor().toString() +" sull' isola numero " +(clientModel.getChoosedIsland()+1));
+                setResponce("L'utente " +networkClientModel.getNickname()+ " ha scelto di muovere 1 studente di colore " +
+                        networkClientModel.getChoosedColor().toString() +" sull' isola numero " +(networkClientModel.getChoosedIsland()+1));
                 break;
             case "CHOOSEWHERETOMOVEMOTHER"    :
-                CommandPrompt.println("L'utente " +clientModel.getNickname()+ " ha scelto di spostare madre natura di " + clientModel.getChoosedMoves() + " mosse");
+                setResponce("L'utente " +networkClientModel.getNickname()+ " ha scelto di spostare madre natura di " + networkClientModel.getChoosedMoves() + " mosse");
                 break;
             case "CHOOSECLOUDS":
-                CommandPrompt.println("L'utente " +clientModel.getNickname()+ " ha scelto di ricaricare gli studenti dalla nuvola: " + clientModel.getCloudChoosed());
-                break;
+                setResponce("L'utente " +networkClientModel.getNickname()+ " ha scelto di ricaricare gli studenti dalla nuvola: " + networkClientModel.getCloudChoosed());
         }
     }
 
@@ -455,6 +463,25 @@ public class CliView implements View{
         Matcher matcher = NUMERO_PATTERN.matcher(number);
 
         return matcher.matches();
+    }
+
+    public String getMynickname() {
+        return mynickname;
+    }
+
+    public void setMynickname(String mynickname) {
+        this.mynickname = mynickname;
+    }
+
+    public String getResponce() {
+        return responce;
+    }
+
+    public void setResponce(String responce) {
+        this.responce = this.responce+"\n"+responce;
+    }
+    public void clearResponce(){
+        this.responce="\n";
     }
 }
 
