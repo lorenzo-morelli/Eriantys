@@ -46,7 +46,7 @@ public class AskForTeamMate extends State {
         ClientModel currentPlayerData = connectionModel.getClientsInfo().get(0);
         for(ClientModel c : connectionModel.getClientsInfo()){
             currentPlayerData.getNicknames().add(c.getNickname());
-            c.setGameStarded(true);
+            c.setGameStarted(true);
         }
         currentPlayerData.getNicknames().remove(currentPlayerData.getNickname());
         currentPlayerData.setResponse(false); // è una richiesta non una risposta

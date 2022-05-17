@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
 public class SetupGameController implements Initializable {
     private final GUI gui = new GUI();
     private final Gson gson = new Gson();
-    private int numberOfPlayers;
+    private int connectedPlayers;
 
     @FXML
     private Label connectedOnIp = new Label();
@@ -35,6 +35,7 @@ public class SetupGameController implements Initializable {
         this.connectedOnIp.setText("Connected on IP: " + this.gui.getClientModel().getIp());
         this.connectedOnPort.setText("Connected on Port: " + this.gui.getClientModel().getPort());
         this.otherPlayersLabel.setText("okkkkkk");
+        this.connectedPlayers = 1;
     }
 
     public void set2Players(MouseEvent mouseEvent) {
@@ -65,7 +66,7 @@ public class SetupGameController implements Initializable {
     public void start(MouseEvent mouseEvent) {
         //TODO mandare il clientModel al server
         //ricevere dal server il numero di persone connesse
-        this.otherPlayersLabel.setText("Waiting for other players... " + 1 + "/" + 4);
+        this.otherPlayersLabel.setText("Waiting for other players... " + connectedPlayers + "/" + this.gui.getClientModel().getNumofplayer());
         //if raggiunto il totale -> inizia partita
     }
 

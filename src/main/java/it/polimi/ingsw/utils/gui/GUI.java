@@ -18,7 +18,6 @@ public class GUI extends Application {
     Stage stage;
     Scene scene;
     private static ClientModel clientModel = new ClientModel();
-    private ClientController clientController;
 
     @Override
     public void start(Stage stage) throws IOException {

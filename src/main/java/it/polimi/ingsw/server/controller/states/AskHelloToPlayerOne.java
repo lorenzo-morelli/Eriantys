@@ -27,7 +27,7 @@ public class AskHelloToPlayerOne extends State {
 
         // Compilo i campi per effettuare una richiesta
         datiPrimoClient.setResponse(false); // è una richiesta non una risposta
-        datiPrimoClient.setGameStarded(true); // faccio partire il gioco
+        datiPrimoClient.setGameStarted(true); // faccio partire il gioco
         datiPrimoClient.setTypeOfRequest("HELLO");  // lato client avrà una nella CliView un metodo per gestire questa richiesta
 
 

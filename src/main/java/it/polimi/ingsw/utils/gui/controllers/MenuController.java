@@ -1,5 +1,7 @@
 package it.polimi.ingsw.utils.gui.controllers;
 
+import com.google.gson.Gson;
+import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.utils.gui.GUI;
 import it.polimi.ingsw.utils.network.Network;
 import javafx.fxml.FXML;
@@ -8,15 +10,19 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
+import javax.management.timer.Timer;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 
 import static it.polimi.ingsw.utils.common.Check.isValidIp;
 import static it.polimi.ingsw.utils.common.Check.isValidPort;
 
 public class MenuController implements Initializable {
     private final GUI gui = new GUI();
+    private final Gson gson = new Gson();
+    private ParametersFromNetwork response;
 
     @FXML
     private TextField nicknameField = new TextField();
@@ -36,7 +42,6 @@ public class MenuController implements Initializable {
     }
 
     public void play(MouseEvent mouseEvent) throws IOException {
-        // todo
         this.gui.changeScene("SetupConnection", mouseEvent);
     }
 
@@ -44,7 +49,7 @@ public class MenuController implements Initializable {
         System.exit(0);
     }
 
-    public void connect(MouseEvent mouseEvent) throws IOException {
+    public void connect(MouseEvent mouseEvent) throws IOException, InterruptedException {
         String nickname = this.nicknameField.getText();
         String ip = this.ipField.getText();
         String port = this.portField.getText();
@@ -61,13 +66,33 @@ public class MenuController implements Initializable {
             this.gui.getClientModel().setIp(ip);
             this.gui.getClientModel().setPort(port);
             Network.setupClient(ip, port);
+            this.gui.getClientModel().setMyIp(Network.getMyIp());
 
             if (Network.isConnected()) {
-                //todo: è primo -> setupGame, altrimenti -> lobby
-//                if (this.gui.getClientModel().getAmIfirst())
-//                    System.out.println("primooo");
-//                else
-//                    System.out.println("secondoooo");
+                //boolean responseReceived = false;
+                //new Thread(() -> System.out.println("blah")).start();
+
+//                while (!responseReceived) {
+//                    Network.send(this.gson.toJson(this.gui.getClientModel()));
+//                    response.enable();
+////                    while (!response.parametersReceived()) {
+////                        TimeUnit.SECONDS.sleep(2);
+////                    }
+//                    TimeUnit.SECONDS.sleep(2);
+//
+//                    if (this.gson.fromJson(response.getParameter(0), ClientModel.class).getClientIdentity() == this.gui.getClientModel().getClientIdentity()) {
+//                        responseReceived = true;
+//                    }
+//                    this.gui.setClientModel(gson.fromJson(response.getParameter(0), ClientModel.class));
+//                }
+
+                String stringa = this.gson.toJson(this.gui.getClientModel());
+                System.out.println(stringa);
+
+                if (this.gui.getClientModel().getAmIfirst())
+                    System.out.println("primooo");
+                else
+                    System.out.println("secondoooo");
 
 
                 System.out.println(this.gui.getClientModel().getIp());
