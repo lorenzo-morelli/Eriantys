@@ -1,7 +1,7 @@
 package it.polimi.ingsw.utils.gui.controllers;
 
 import com.google.gson.Gson;
-import it.polimi.ingsw.utils.gui.GUI;
+import it.polimi.ingsw.client.GUI;
 import javafx.fxml.Initializable;
 
 import java.net.URL;

@@ -1,14 +1,13 @@
 package it.polimi.ingsw.utils.gui.controllers;
 
 import com.google.gson.Gson;
-import it.polimi.ingsw.utils.gui.GUI;
+import it.polimi.ingsw.client.GUI;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 
@@ -72,7 +71,7 @@ public class SetupGameController implements Initializable {
         } else {
             //todo: send to server game setup
             //todo: get connected players from server
-            this.otherPlayersLabel.setText("Waiting for other players... " + connectedPlayers + "/" + this.gui.getClientModel().getNumofplayer());
+            this.otherPlayersLabel.setText("Waiting for other players to start the game... ");
         }
     }
 

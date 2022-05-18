@@ -1,7 +1,7 @@
 package it.polimi.ingsw.utils.gui.controllers;
 
 import com.google.gson.Gson;
-import it.polimi.ingsw.utils.gui.GUI;
+import it.polimi.ingsw.client.GUI;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -18,7 +18,7 @@ public class LobbyController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        this.otherPlayersLabel.setText("Waiting for other players to connect to the game. ");
-
+        this.otherPlayersLabel.setText("Waiting for other players to start the game...");
+        //todo:
     }
 }

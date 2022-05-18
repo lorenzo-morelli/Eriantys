@@ -1,10 +1,6 @@
-package it.polimi.ingsw.utils.gui;
+package it.polimi.ingsw.client;
 
-import com.google.gson.Gson;
-import it.polimi.ingsw.client.controller.ClientController;
 import it.polimi.ingsw.client.model.ClientModel;
-import it.polimi.ingsw.client.view.View;
-import it.polimi.ingsw.utils.stateMachine.State;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;

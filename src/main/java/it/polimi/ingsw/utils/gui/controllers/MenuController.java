@@ -1,8 +1,8 @@
 package it.polimi.ingsw.utils.gui.controllers;
 
 import com.google.gson.Gson;
+import it.polimi.ingsw.client.GUI;
 import it.polimi.ingsw.client.model.ClientModel;
-import it.polimi.ingsw.utils.gui.GUI;
 import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
 import javafx.fxml.FXML;
@@ -89,13 +89,13 @@ public class MenuController implements Initializable {
 
                 if(this.gui.getClientModel().getAmIfirst() == null){
                     // il nickname inserito è già esistente
-                    this.gui.changeScene("ReinsertNickname",mouseEvent);
+                    this.notice.setText("ERROR: Nickname already taken");
                 }
                 else if (this.gui.getClientModel().getAmIfirst()) {
                     System.out.println("primooo");
                     this.gui.changeScene("SetupGame", mouseEvent);
                 }
-                else if (!this.gui.getClientModel().getAmIfirst()) {
+                else {
                     this.gui.changeScene("Lobby", mouseEvent);
                 }
             }
@@ -106,26 +106,26 @@ public class MenuController implements Initializable {
     }
 
 
-    public void reinsertNickname(MouseEvent mouseEvent) throws InterruptedException {
-        String nickname = this.nicknameField.getText();
-        if (nickname.equals("") ) {
-            this.notice.setText("FAILURE: porcodio inserisci tutti i campi testa di minchiAAAAAAAAA");
-        } else if (this.nicknameField.getText().length() > 13) {
-            this.notice.setText("FAILURE: nickname must be less than 13 characters!");
-        }
-        else {
-            this.gui.getClientModel().setNickname(nickname);
-            Network.send(gson.toJson(this.gui.getClientModel()));
-            try {
-                // Attendi la ricezione dell'ack
-                checkAck(mouseEvent);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
+//    public void reinsertNickname(MouseEvent mouseEvent) throws InterruptedException {
+//        String nickname = this.nicknameField.getText();
+//        if (nickname.equals("") ) {
+//            this.notice.setText("FAILURE: porcodio inserisci tutti i campi testa di minchiAAAAAAAAA");
+//        } else if (this.nicknameField.getText().length() > 13) {
+//            this.notice.setText("FAILURE: nickname must be less than 13 characters!");
+//        }
+//        else {
+//            this.gui.getClientModel().setNickname(nickname);
+//            Network.send(gson.toJson(this.gui.getClientModel()));
+//            try {
+//                // Attendi la ricezione dell'ack
+//                checkAck(mouseEvent);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            } catch (Exception e) {
+//                throw new RuntimeException(e);
+//            }
+//        }
+//    }
 
     public void checkAck(MouseEvent mouseEvent) throws Exception {
 
