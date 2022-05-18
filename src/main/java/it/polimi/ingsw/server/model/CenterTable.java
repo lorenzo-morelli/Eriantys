@@ -1,7 +1,8 @@
 package it.polimi.ingsw.server.model;
 
-import it.polimi.ingsw.server.model.enums.*;
+import it.polimi.ingsw.server.model.characters.*;
 import it.polimi.ingsw.server.model.characters.Character;
+import it.polimi.ingsw.server.model.enums.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,7 +15,12 @@ public class CenterTable {
     private final StudentSet bag;
     private final ArrayList<Professor> professors;
     private final ArrayList<TowerColor> avaiableTowerColor;
-    private final ArrayList<Character> characterCards;
+    private final ArrayList<CharacterCard> characterCards;
+    private boolean centaurEffect;
+    private Player farmerEffect;
+    private PeopleColor mushroomColor;
+    private Player knightEffect;
+
     public static final String ANSI_CYAN = "\033[0;36m";
     public static final String ANSI_RESET = "\u001B[0m";
 
@@ -55,8 +61,10 @@ public class CenterTable {
             clouds.get(i).charge(bag);
         }
 
-        if(gamemode.equals(GameMode.EXPERT)){  //da controllare
+        if(gamemode.equals(GameMode.EXPERT)){
             characterCards=new ArrayList<>();
+            characterCards.add(new Minstrell());/*  //da controllare
+
             ArrayList<Integer> picks=new ArrayList<>();
             var ref = new Object() {
                 int pick;
@@ -67,12 +75,41 @@ public class CenterTable {
                     ref.pick = new Random().nextInt(Character.values().length);
                 }while(picks.stream().anyMatch(j->j.equals(ref.pick)));
                 picks.add(ref.pick);
-                characterCards.add(Character.values()[ref.pick]);
-            }
+                switch (Character.values()[ref.pick]){
+                    case MONK: cards.add(new Monk(this));
+                    break;
+                    case THIEF: cards.add(new Thief(this));
+                        break;
+                    case FARMER: cards.add(new Farmer(this));
+                        break;
+                    case GRANNY: cards.add(new Granny(this));
+                        break;
+                    case HERALD: cards.add(new Herald(this));
+                        break;
+                    case JESTER: cards.add(new Jester(this));
+                        break;
+                    case KNIGHT: cards.add(new Knight(this));
+                        break;
+                    case CENTAUR: cards.add(new Centaur(this));
+                        break;
+                    case POSTMAN: cards.add(new Postman(this));
+                        break;
+                    case PRINCESS: cards.add(new Princess(this));
+                        break;
+                    case MINSTRELL: cards.add(new Minstrell(this));
+                        break;
+                    case MUSHROOM_HUNTER: cards.add(new MushroomHunter(this));
+                        break;
+                }
+            }*/
         }
         else{
             characterCards=null;
         }
+        centaurEffect=false;
+        farmerEffect=null;
+        mushroomColor=null;
+        knightEffect=null;
     }
 
     public ArrayList<Professor> getProfessors() {
@@ -121,7 +158,9 @@ public class CenterTable {
                 moreInfluenced = null;
             }
         }
+        if(farmerEffect!=null && farmerEffect.getSchoolBoard().getDinnerTable().numStudentsbycolor(color)==max) moreInfluenced=farmerEffect;
         if(moreInfluenced!=null) changeProfessor(moreInfluenced,color);
+        setFarmerEffect(null);
     }
     public void ConquestIsland(int index_island, ArrayList<Player> players, Player influence_player){
         for (Player player : players) {
@@ -157,10 +196,6 @@ public class CenterTable {
         return clouds;
     }
 
-    public ArrayList<Character> getCharacterCards() {
-        return characterCards;
-    }
-
     @Override
     public String toString() {
         return  "-----------------------------------------TABLE----------------------------------------------------------------------------------------------------------------------------------------\n" +
@@ -168,8 +203,8 @@ public class CenterTable {
                 "    SIZE : " + bag.size() + "    " + bag +
                 "\n\n----------------CLOUDS----------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n" + printclouds() +
                 "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n"+
-                (characterCards==null ? "\n" :
-                         "CHARACTERS : " + characterCards +"\n")+
+                (characterCards==null ? "" :
+                        characterCards.toString() +"\n")+
                 "---------------PROFESSORS-------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n"+
                 printprofessors() + "\n\n--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n" ;
     }
@@ -210,4 +245,38 @@ public class CenterTable {
         return result.toString();
     }
 
+    public ArrayList<CharacterCard> getCards() {
+        return characterCards;
+    }
+
+    public boolean isCentaurEffect() {
+        return centaurEffect;
+    }
+
+    public void setCentaurEffect(boolean centaurEffect) {
+        this.centaurEffect = centaurEffect;
+    }
+
+    public PeopleColor getMushroomColor() {
+        return mushroomColor;
+    }
+
+    public void setMushroomColor(PeopleColor mushroomColor) {
+        this.mushroomColor = mushroomColor;
+    }
+
+    public Player getKnightEffect() {
+        return knightEffect;
+    }
+
+    public void setKnightEffect(Player knightEffect) {
+        this.knightEffect = knightEffect;
+    }
+    public Player getFarmerEffect() {
+        return farmerEffect;
+    }
+
+    public void setFarmerEffect(Player farmerEffect) {
+        this.farmerEffect = farmerEffect;
+    }
 }

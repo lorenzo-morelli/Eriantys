@@ -34,7 +34,6 @@ public class Wait extends State {
     @Override
     public IEvent entryAction(IEvent cause) throws Exception {
             ParametersFromNetwork message = new ParametersFromNetwork(1);
-
             message.enable();
             while (!message.parametersReceived()) {
                 // non ho ricevuto ancora nessun messaggio
@@ -42,10 +41,8 @@ public class Wait extends State {
             receivedClientModel = json.fromJson(message.getParameter(0), ClientModel.class);
 
 
-
             if (receivedClientModel.isGameStarted().equals(true)) {
                 Gson json = new Gson();
-
                 view.setClientModel(receivedClientModel);
 
 

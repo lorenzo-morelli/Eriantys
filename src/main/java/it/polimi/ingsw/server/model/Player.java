@@ -115,4 +115,14 @@ public class Player implements Comparable<Player>{
         }
         return null;
     }
+
+    public int getCoins() {
+        return coins;
+    }
+    public void improveCoin(){
+        this.coins++;
+    }
+    public void reduceCoin(int cost){
+        this.coins-=cost;
+    }
 }

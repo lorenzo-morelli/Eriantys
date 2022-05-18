@@ -90,6 +90,19 @@ public class StudentSet {
         }
         addstudents(-n,color);
     }
+
+    public void removestudentinBag(int n, PeopleColor color,StudentSet bag){
+        if(numStudentsbycolor(color)<n){
+            addstudents(-numStudentsbycolor(color),color);
+            bag.addstudents(numStudentsbycolor(color),color);
+            return;
+        }
+        addstudents(-n,color);
+        bag.addstudents(n,color);
+    }
+
+
+
     public void addstudents(int n, PeopleColor color){
         switch (color){
             case BLUE: numOfBlueStudents+=n;
@@ -149,5 +162,30 @@ public class StudentSet {
 
     public int getNumOfYellowStudents() {
         return numOfYellowStudents;
+    }
+
+    public boolean contains(ArrayList<PeopleColor> colors){
+        int red=0, pink=0, green=0, yellow=0, blue=0;
+
+        for(int i=0;i<colors.size();i++){
+            switch (colors.get(i)){
+                case YELLOW: yellow++;
+                break;
+                case PINK: pink++;
+                break;
+                case BLUE: blue++;
+                break;
+                case GREEN: green++;
+                break;
+                case RED: red++;
+                break;
+            }
+        }
+        if(red>numStudentsbycolor(PeopleColor.RED)) return false;
+        if(yellow>numStudentsbycolor(PeopleColor.YELLOW)) return false;
+        if(pink>numStudentsbycolor(PeopleColor.PINK)) return false;
+        if(green>numStudentsbycolor(PeopleColor.GREEN)) return false;
+        if(blue>numStudentsbycolor(PeopleColor.BLUE)) return false;
+        return true;
     }
 }
