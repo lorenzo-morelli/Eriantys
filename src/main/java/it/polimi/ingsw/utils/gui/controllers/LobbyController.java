@@ -18,9 +18,7 @@ public class LobbyController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        int connectedPlayers = 2;
-        //todo: far arrivare numofplayer dal server + aggiornare connectedplayers
-        this.otherPlayersLabel.setText("Waiting for other players... " + connectedPlayers + "/" + this.gui.getClientModel().getNumofplayer());
-        //todo:
+        this.otherPlayersLabel.setText("Waiting for other players to connect to the game. ");
+
     }
 }
