@@ -1,7 +1,9 @@
 package it.polimi.ingsw.server.model;
 
+import it.polimi.ingsw.server.model.enums.PeopleColor;
 import it.polimi.ingsw.server.model.enums.TowerColor;
 
+import java.lang.management.BufferPoolMXBean;
 import java.util.ArrayList;
 
 public class Island {
@@ -42,13 +44,14 @@ public class Island {
         isBlocked = blocked;
     }
 
-    public Player player_influence(ArrayList<Player> Players, ArrayList<Professor> Professors) { //ritorna nullo se nessuno ha influenza
+    public Player player_influence(ArrayList<Player> Players, ArrayList<Professor> Professors, boolean centaur, PeopleColor mushroom, Player knight) { //ritorna nullo se nessuno ha influenza
         int max = 0, partial_sum = 0;   //2 or 3 player
         Player max_influence = null;
         for (Player player : Players) {
-            if (player.getSchoolBoard().getTowerColor().equals(towerColor)) partial_sum++;
+            if (player.getSchoolBoard().getTowerColor().equals(towerColor) && !centaur) partial_sum+=numberOfTowers;
+            if( player.equals(knight)) partial_sum+=2;
             for (Professor professor : Professors) {
-                if (player.equals(professor.getHeldBy())) {
+                if (player.equals(professor.getHeldBy()) && professor.getColor()!= mushroom) {
                     partial_sum = partial_sum + inhabitants.numStudentsbycolor(professor.getColor());
                 }
             }
@@ -63,14 +66,16 @@ public class Island {
         return max_influence; //ritorna player con piu influenza
     }
 
-    public Team team_influence(ArrayList<Team> Teams, ArrayList<Professor> Professors){ //ritorna nullo se nessuno ha influenza
+    public Team team_influence(ArrayList<Team> Teams, ArrayList<Professor> Professors, boolean centaur, PeopleColor mushroom, Player knight){ //ritorna nullo se nessuno ha influenza
         int max=0, partial_sum=0;   //4 player
         Team max_influence = null;
 
         for (Team team : Teams) {
-            if (team.getPlayer1().getSchoolBoard().getTowerColor().equals(towerColor)) partial_sum++;
+            if (team.getPlayer1().getSchoolBoard().getTowerColor().equals(towerColor)&& !centaur) partial_sum+=numberOfTowers;
+            if( team.getPlayer1().equals(knight)) partial_sum+=2;
+            if( team.getPlayer2().equals(knight)) partial_sum+=2;
             for (Professor professor : Professors) {
-                if (team.getPlayer1().equals(professor.getHeldBy()) || team.getPlayer2().equals(professor.getHeldBy())) {
+                if (team.getPlayer1().equals(professor.getHeldBy()) || team.getPlayer2().equals(professor.getHeldBy())&& professor.getColor()!= mushroom) {
                     partial_sum = partial_sum + inhabitants.numStudentsbycolor(professor.getColor());
                 }
             }

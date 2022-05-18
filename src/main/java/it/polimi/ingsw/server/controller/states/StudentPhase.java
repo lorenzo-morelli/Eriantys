@@ -6,6 +6,9 @@ import it.polimi.ingsw.server.controller.ConnectionModel;
 import it.polimi.ingsw.server.controller.ServerController;
 import it.polimi.ingsw.server.model.Model;
 import it.polimi.ingsw.server.model.Player;
+import it.polimi.ingsw.server.model.characters.MushroomHunter;
+import it.polimi.ingsw.server.model.characters.Thief;
+import it.polimi.ingsw.server.model.enums.GameMode;
 import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
 import it.polimi.ingsw.utils.stateMachine.Controller;
@@ -86,10 +89,27 @@ public class StudentPhase extends State {
             System.out.println("HO RICEVUTO " + type + " " + currentPlayerData.getChoosedColor());
             if(type.equals("SCHOOL")){
                 currentPlayer.getSchoolBoard().load_dinner(currentPlayerData.getChoosedColor());
+                if(model.getGameMode().equals(GameMode.EXPERT) && currentPlayer.getSchoolBoard().getDinnerTable().numStudentsbycolor(currentPlayerData.getChoosedColor())%3==0){
+                    currentPlayer.improveCoin();
+                }
                 model.getTable().checkProfessor(currentPlayerData.getChoosedColor(),model.getPlayers());
             }
             else if(type.equals("ISLAND")){
                 model.getTable().load_island(currentPlayer,currentPlayerData.getChoosedColor(),currentPlayerData.getChoosedIsland());
+            }
+            else{
+                i--;
+                for(int j=0;j<model.getTable().getCards().size();j++){
+                    if(model.getTable().getCards().get(i).getName().equals(type)){
+                        switch (type){
+                            case "MUSHROOMHUNTER": ((MushroomHunter) model.getTable().getCards().get(j)).useEffect(currentPlayer,currentPlayerData.getChoosedColor(),model.getTable());
+                            break;
+                            case "THIEF": ((Thief) model.getTable().getCards().get(j)).useEffect(currentPlayer,model.getPlayers(),currentPlayerData.getChoosedColor(),model.getTable());
+                            break;
+                            //fare gli altri...
+                        }
+                    }
+                }
             }
         }
         studentPhaseEnded.fireStateEvent();

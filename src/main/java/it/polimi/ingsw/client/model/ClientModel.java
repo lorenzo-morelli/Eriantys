@@ -71,6 +71,8 @@ public class ClientModel {
 
     // Game mode (PRINCIPIANT or EXPERT)
     private String gameMode;
+    private ArrayList<PeopleColor> colors1;
+    private ArrayList<PeopleColor> colors2;
 
 
     public ClientModel(){
@@ -243,5 +245,21 @@ public class ClientModel {
 
     public void setCardChoosedValue(float cardChoosedValue) {
         this.cardChoosedValue = cardChoosedValue;
+    }
+
+    public ArrayList<PeopleColor> getColors1() {
+        return colors1;
+    }
+
+    public void setColors1(ArrayList<PeopleColor> colors1) {
+        this.colors1 = colors1;
+    }
+
+    public ArrayList<PeopleColor> getColors2() {
+        return colors2;
+    }
+
+    public void setColors2(ArrayList<PeopleColor> colors2) {
+        this.colors2 = colors2;
     }
 }

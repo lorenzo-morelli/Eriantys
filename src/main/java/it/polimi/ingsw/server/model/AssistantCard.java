@@ -2,7 +2,7 @@ package it.polimi.ingsw.server.model;
 
 public class AssistantCard {
     private float values;
-    private final int moves;
+    private int moves;
 
 
     public AssistantCard(int values,int moves){
@@ -31,5 +31,9 @@ public class AssistantCard {
             return this.getValues() == ((AssistantCard) obj).getValues();
         }
         return false;
+    }
+
+    public void improveMoves(int moves) {
+        this.moves += moves;
     }
 }

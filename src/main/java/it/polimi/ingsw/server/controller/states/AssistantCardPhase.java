@@ -7,6 +7,7 @@ import it.polimi.ingsw.server.controller.ServerController;
 import it.polimi.ingsw.server.model.AssistantCard;
 import it.polimi.ingsw.server.model.Model;
 import it.polimi.ingsw.server.model.Player;
+import it.polimi.ingsw.server.model.enums.GameMode;
 import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
 import it.polimi.ingsw.utils.stateMachine.Controller;
@@ -63,6 +64,7 @@ public class AssistantCardPhase extends State {
                 canbBeChooesed.removeAll(alreadyChooseds);
             }
             // put the deck in the data and send it over the network
+            //System.out.println(model.toString("fer","ciao"));
             currentPlayerData.setServermodel(model);
             currentPlayerData.setDeck(canbBeChooesed);
             currentPlayerData.setResponse(false); // è una richiesta non una risposta
@@ -70,7 +72,6 @@ public class AssistantCardPhase extends State {
             Network.send(json.toJson(currentPlayerData));
 
             boolean responseReceived = false;
-
             while (!responseReceived) {
                 message = new ParametersFromNetwork(1);
                 message.enable();

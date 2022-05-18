@@ -13,5 +13,4 @@ public enum Character {
     POSTMAN,
     CENTAUR,
     PRINCESS,
-    UNKNOWN
 }

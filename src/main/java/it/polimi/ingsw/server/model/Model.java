@@ -48,14 +48,6 @@ public class Model {
         }
     }
 
-    public static Model createModel(int numofplayer, String Gamemode) {
-        if (numofplayer < 5 && numofplayer > 1 && (Objects.equals(Gamemode, "PRINCIPIANT") || Objects.equals(Gamemode, "EXPERT"))) {
-            return new Model(numofplayer, Gamemode);
-        } else {
-            throw new IllegalArgumentException();
-        }
-    }
-
     public GameMode getGameMode() {
         return gameMode;
     }
