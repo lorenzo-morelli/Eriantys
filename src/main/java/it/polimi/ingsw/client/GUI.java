@@ -19,9 +19,12 @@ public class GUI extends Application {
     public void start(Stage stage) throws IOException {
         this.stage = stage;
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainMenu.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Game.fxml"));
             this.scene = new Scene(loader.load());
             this.stage.setScene(scene);
+            this.stage.setMaximized(true);
+            this.stage.minWidthProperty().bind(scene.heightProperty().multiply(2));
+            this.stage.minHeightProperty().bind(scene.widthProperty().divide(2));
             this.stage.show();
 
         } catch (Exception e) {

@@ -3,9 +3,27 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.utils.gui.controllers.GameController">
+<AnchorPane prefHeight="540.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.utils.gui.controllers.GameController">
    <children>
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="227.0" layoutY="98.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="208.0" fitWidth="508.0" layoutY="512.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../graphics/PLANCIA%20GIOCO_2.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="208.0" fitWidth="508.0" layoutX="625.0" layoutY="512.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../graphics/PLANCIA%20GIOCO_2.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="208.0" fitWidth="508.0" layoutY="304.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../graphics/PLANCIA%20GIOCO_2.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="208.0" fitWidth="508.0" layoutX="625.0" layoutY="304.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../graphics/PLANCIA%20GIOCO_2.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

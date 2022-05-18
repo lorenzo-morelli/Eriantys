@@ -10,12 +10,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-
-import javax.management.timer.Timer;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.concurrent.TimeUnit;
 
 import static it.polimi.ingsw.utils.common.Check.isValidIp;
 import static it.polimi.ingsw.utils.common.Check.isValidPort;
@@ -33,7 +30,7 @@ public class MenuController implements Initializable {
     private TextField portField = new TextField();
     @FXML
     private Label notice = new Label();
-    private ParametersFromNetwork ack;
+//    private ParametersFromNetwork ack;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -78,7 +75,7 @@ public class MenuController implements Initializable {
                     response = new ParametersFromNetwork(1);
                     response.enable();
                     while (!response.parametersReceived()) {
-                        // Non ho ancora ricevuto una risposta dal server
+                        System.out.println("still waiting...");
                     }
                     if (gson.fromJson(response.getParameter(0), ClientModel.class).getClientIdentity() == this.gui.getClientModel().getClientIdentity()) {
                         responseReceived = true;
@@ -89,7 +86,7 @@ public class MenuController implements Initializable {
 
                 if(this.gui.getClientModel().getAmIfirst() == null){
                     // il nickname inserito è già esistente
-                    this.notice.setText("ERROR: Nickname already taken");
+                    this.notice.setText("FAILURE: Nickname already taken");
                 }
                 else if (this.gui.getClientModel().getAmIfirst()) {
                     System.out.println("primooo");
@@ -127,27 +124,27 @@ public class MenuController implements Initializable {
 //        }
 //    }
 
-    public void checkAck(MouseEvent mouseEvent) throws Exception {
-
-        ack = new ParametersFromNetwork(1);
-        ack.enable();
-        //System.out.println("[Conferma del nickname non ancora ricevuta]");
-        while (!ack.parametersReceived()){
-            // non ho ancora ricevuto l'ack
-        }
-
-        //System.out.println("[Conferma del nickname ricevuta]");
-        ClientModel fromNetwork = gson.fromJson(ack.getParameter(0),ClientModel.class);
-        System.out.println(ack.getParameter(0));
-
-        if(fromNetwork.getAmIfirst() == null){
-            // ancora una volta l'utente ha inserito un nickname già esistente
-            this.gui.changeScene("ReinsertNickname",mouseEvent);
-        }
-        else {
-            // l'utente ha finalmente inserito un nickname valido
-            this.gui.changeScene("Lobby", mouseEvent);
-        }
-
-    }
+//    public void checkAck(MouseEvent mouseEvent) throws Exception {
+//
+//        ack = new ParametersFromNetwork(1);
+//        ack.enable();
+//        //System.out.println("[Conferma del nickname non ancora ricevuta]");
+//        while (!ack.parametersReceived()){
+//            // non ho ancora ricevuto l'ack
+//        }
+//
+//        //System.out.println("[Conferma del nickname ricevuta]");
+//        ClientModel fromNetwork = gson.fromJson(ack.getParameter(0),ClientModel.class);
+//        System.out.println(ack.getParameter(0));
+//
+//        if(fromNetwork.getAmIfirst() == null){
+//            // ancora una volta l'utente ha inserito un nickname già esistente
+//            this.gui.changeScene("ReinsertNickname",mouseEvent);
+//        }
+//        else {
+//            // l'utente ha finalmente inserito un nickname valido
+//            this.gui.changeScene("Lobby", mouseEvent);
+//        }
+//
+//    }
 }
