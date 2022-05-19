@@ -4,9 +4,11 @@ import com.google.gson.Gson;
 import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.server.controller.ConnectionModel;
 import it.polimi.ingsw.server.controller.ServerController;
+import it.polimi.ingsw.utils.cli.CommandPrompt;
 import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
 import it.polimi.ingsw.utils.stateMachine.Controller;
+import it.polimi.ingsw.utils.stateMachine.Event;
 import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
 
@@ -16,14 +18,20 @@ public class WaitFirstPlayer extends State {
     private Controller controller;
     private ConnectionModel connectionModel;
     private ParametersFromNetwork firstMessage;
+    private Event reset = new Event("reset");
 
     public WaitFirstPlayer(ServerController serverController) {
         super("[Il server è in attesa del primo giocatore]");
         json = new Gson();
         firstMessage = new ParametersFromNetwork(1);
         firstMessage.setStateEventListener(controller);
+        reset.setStateEventListener(controller);
         this.controller = serverController.getFsm();
         this.connectionModel = serverController.getConnectionModel();
+    }
+
+    public Event getReset() {
+        return reset;
     }
 
     public ParametersFromNetwork gotFirstMessage() {
@@ -32,13 +40,17 @@ public class WaitFirstPlayer extends State {
 
     @Override
     public IEvent entryAction(IEvent cause) throws Exception {
+        Network.setupServer(CommandPrompt.gotFromTerminal());
         System.out.println("[Non ho ancora ricevuto niente]");
 
         firstMessage.enable();
 
-        while (!firstMessage.parametersReceived()) {
-            // non ho ricevuto ancora un messaggio dal primo player
+        while (!firstMessage.parametersReceived() ) {
+            if(Network.disconnectedClient()){
+                reset.fireStateEvent();
+            }
         }
+
         System.out.println("[Il primo player si è connesso]");
         if (firstMessage.parametersReceived()) {
             // Converti il messaggio stringa json in un oggetto clientModel

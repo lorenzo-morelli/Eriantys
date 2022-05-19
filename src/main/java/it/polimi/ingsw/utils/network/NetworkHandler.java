@@ -1,5 +1,8 @@
 package it.polimi.ingsw.utils.network;
 
+import it.polimi.ingsw.server.controller.ServerController;
+import it.polimi.ingsw.utils.stateMachine.Controller;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.AWTEventMulticaster;
@@ -226,29 +229,29 @@ public class NetworkHandler {
         public void removeClient(ClientConnection clientConnection){
             if(clientConnection.socketObject != null){
                 System.out.println("Trying to close server connection to client");
+                // Since two methods might be running this code simultaneously
+                // Some of the objects might be null
+                // So catch the null pointer exception
+                // the first method that accesses this should close everything correctly
                 try{
-                    // Since two methods might be running this code simultaneously
-                    // Some of the objects might be null
-                    // So catch the null pointer exception
-                    // the first method that accesses this should close everything correctly
-                    try{
-                        clientConnection.socketObject.shutdownInput();
-                        clientConnection.socketObject.shutdownOutput();
-                        clientConnection.socketObject.close();
-                        clientConnection.outBuffer.close();
-                        clientConnection.inBuffer.close();
-                        clientConnection.socketObject = null;
-                        clientConnection.inBuffer = null;
-                        clientConnection.outBuffer = null;
-                        clientConnection.incomingText = null;
-                        System.out.println("Done closing server connection to client");
-                        clientConnections.remove(clientConnection);
-                        clientConnection = null;
-                        System.out.println("Server removed a client connection.  Current Size: "+clientConnections.size());
+                    clientConnection.socketObject.shutdownInput();
+                    clientConnection.socketObject.shutdownOutput();
+                    clientConnection.socketObject.close();
+                    clientConnection.outBuffer.close();
+                    clientConnection.inBuffer.close();
+                    clientConnection.socketObject = null;
+                    clientConnection.inBuffer = null;
+                    clientConnection.outBuffer = null;
+                    clientConnection.incomingText = null;
+                    System.out.println("Done closing server connection to client");
+                    clientConnections.remove(clientConnection);
+                    clientConnection = null;
+                    System.out.println("Server removed a client connection.  Current Size: " + clientConnections.size());
+                    Network.setDisconnectedClient(true);
 
-                    }catch(NullPointerException e){
-                    }
-                }catch(IOException e){
+                }catch(NullPointerException e){
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
                 }
             }
         }

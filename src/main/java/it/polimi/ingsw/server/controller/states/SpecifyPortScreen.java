@@ -58,9 +58,4 @@ public class SpecifyPortScreen extends State {
         return portSpecified;
     }
 
-    @Override
-    public void exitAction(IEvent cause) throws IOException {
-        Network.setupServer(CommandPrompt.gotFromTerminal());
-        super.exitAction(cause);
-    }
 }

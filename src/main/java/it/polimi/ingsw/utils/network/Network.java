@@ -1,5 +1,7 @@
 package it.polimi.ingsw.utils.network;
 
+import it.polimi.ingsw.utils.stateMachine.Event;
+
 import java.awt.event.*;
 import java.util.concurrent.TimeUnit;
 import javax.swing.*;
@@ -16,6 +18,8 @@ public class Network implements ActionListener{
     private static JTextField IPAddress,port,textToSend;
     private static JTextArea textReceived;
     private static JButton disconnectButton;
+    private static boolean disconnectedClient = false;
+
 
 
 
@@ -103,6 +107,14 @@ public class Network implements ActionListener{
 
     public static boolean isServerListening() {
         return serverListening;
+    }
+
+    public static boolean disconnectedClient() {
+        return disconnectedClient;
+    }
+
+    public static void setDisconnectedClient(boolean disconnectedClient) {
+        Network.disconnectedClient = disconnectedClient;
     }
 }
 

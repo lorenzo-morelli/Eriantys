@@ -4,14 +4,15 @@ import it.polimi.ingsw.server.controller.states.*;
 import it.polimi.ingsw.server.model.Model;
 import it.polimi.ingsw.utils.stateMachine.Controller;
 import it.polimi.ingsw.utils.stateMachine.Event;
+import it.polimi.ingsw.utils.stateMachine.IEvent;
+import it.polimi.ingsw.utils.stateMachine.State;
 
 public class ServerController {
-    Model model;
-    ConnectionModel connectionModel = new ConnectionModel();
-    Idle idle = new Idle();
-    Event start = new Event("[Controller Started]");
-    Controller fsm = new Controller("Controllore del Server", idle);
-
+    private Model model;
+    private ConnectionModel connectionModel = new ConnectionModel();
+    private static Idle idle = new Idle();
+    private Event start = new Event("[Controller Started]");
+    private static Controller fsm = new Controller("Controllore del Server", idle);
 
     public ServerController() throws Exception {
         fsm.showDebugMessages();
@@ -52,6 +53,9 @@ public class ServerController {
         fsm.addTransition(endTurn,endTurn.goToAssistentCardPhase(),assistantCardPhase);
         fsm.addTransition(endGame,endGame.getRestart(),waitFirstPlayer);
 
+        // gestione disconnessione di un client
+        fsm.addTransition(assistantCardPhase, assistantCardPhase.getReset(), endGame);
+
         // L'evento di start è l'unico che deve essere fatto partire manualmente
         start.fireStateEvent();
     }
@@ -64,12 +68,11 @@ public class ServerController {
         this.model = model;
     }
 
-    public Controller getFsm() {
+    public static Controller getFsm() {
         return fsm;
     }
 
     public ConnectionModel getConnectionModel() {
         return connectionModel;
     }
-
 }

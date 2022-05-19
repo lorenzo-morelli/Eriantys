@@ -30,6 +30,7 @@ public class AssistantCardPhase extends State {
     private ServerController serverController;
 
     private ParametersFromNetwork message;
+    private Event reset = new Event("reset");
 
     public Event cardsChoosen() {
         return cardsChoosen;
@@ -44,9 +45,14 @@ public class AssistantCardPhase extends State {
         this.connectionModel = serverController.getConnectionModel();
         cardsChoosen= new Event("game created");
         cardsChoosen.setStateEventListener(controller);
+        reset.setStateEventListener(controller);
         gameEnd = new Event("end phase");
         gameEnd.setStateEventListener(controller);
         json = new Gson();
+    }
+
+    public Event getReset() {
+        return reset;
     }
 
     @Override
@@ -80,13 +86,21 @@ public class AssistantCardPhase extends State {
             while (!responseReceived) {
                 message = new ParametersFromNetwork(1);
                 message.enable();
-                while (!message.parametersReceived()) {
+                while (!message.parametersReceived() ) {
+                    if(Network.disconnectedClient()){
+                        reset.fireStateEvent();
+                        return super.entryAction(cause);
+                    }
                     // il client non ha ancora scelto la carta assistente
                 }
+
                 if(json.fromJson(message.getParameter(0),ClientModel.class).getClientIdentity() == currentPlayerData.getClientIdentity()){
                     responseReceived = true;
                 }
             }
+
+
+
 
             AssistantCard choosen=null;
             currentPlayerData = json.fromJson(message.getParameter(0),ClientModel.class);
@@ -114,12 +128,8 @@ public class AssistantCardPhase extends State {
 
         }
         cardsChoosen.fireStateEvent();
+        model.schedulePlayers();
         return super.entryAction(cause);
     }
 
-    @Override
-    public void exitAction(IEvent cause) throws IOException {
-        model.schedulePlayers();
-        super.exitAction(cause);
-    }
 }

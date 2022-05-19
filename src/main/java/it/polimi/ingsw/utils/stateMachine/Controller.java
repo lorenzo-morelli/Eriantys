@@ -178,6 +178,8 @@ public class Controller {
      * @param ev
      *            L'evento azionato.
      */
+
+
     public void fireStateEvent(IEvent ev) throws Exception {
         synchronized (events) {
             // aggiunge in coda l'evento arrivato
