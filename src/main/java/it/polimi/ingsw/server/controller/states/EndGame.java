@@ -47,6 +47,7 @@ private Event restart;
 
                 Network.send(json.toJson(currentPlayerData));
                 Network.disconnect();
+                restart.fireStateEvent();
                 return super.entryAction(cause);
 
         }
