@@ -1042,6 +1042,13 @@ public class CliView implements View{
                 break;
             case "CHOOSECLOUDS":
                 setResponce("L'utente " +networkClientModel.getNickname()+ " ha scelto di ricaricare gli studenti dalla nuvola: " + networkClientModel.getCloudChoosed());
+                break;
+
+            case "DISCONNECTION":
+
+                System.out.println("Il gioco è terminato a causa della disconnessione di un client");
+                Network.disconnect();
+                break;
         }
     }
 

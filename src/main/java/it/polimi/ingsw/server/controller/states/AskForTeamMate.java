@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.controller.states;
 
 import com.google.gson.Gson;
+import it.polimi.ingsw.client.controller.events.ClientDisconnection;
 import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.server.controller.ConnectionModel;
 import it.polimi.ingsw.server.controller.ServerController;
@@ -25,7 +26,7 @@ public class AskForTeamMate extends State {
     private ServerController serverController;
 
     private ParametersFromNetwork message;
-    private Event reset = new Event("reset");
+    private Event reset = new ClientDisconnection();
 
     public Event teamMateChoosen() {
         return teamMateChoosen;

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.controller.states;
 
 import com.google.gson.Gson;
+import it.polimi.ingsw.client.controller.events.ClientDisconnection;
 import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.server.controller.ConnectionModel;
 import it.polimi.ingsw.server.controller.ServerController;
@@ -27,7 +28,7 @@ public class MotherPhase extends State {
 
     private Gson json;
     private ServerController serverController;
-    private Event reset = new Event("reset");
+    private Event reset = new ClientDisconnection();
 
     private ParametersFromNetwork message;
     private boolean istorepeat;

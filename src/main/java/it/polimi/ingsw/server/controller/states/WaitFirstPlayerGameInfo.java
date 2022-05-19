@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.controller.states;
 
 import com.google.gson.Gson;
+import it.polimi.ingsw.client.controller.events.ClientDisconnection;
 import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.server.controller.ConnectionModel;
 import it.polimi.ingsw.server.controller.ServerController;
@@ -18,7 +19,7 @@ public class WaitFirstPlayerGameInfo extends State {
     private ConnectionModel connectionModel;
 
     private ParametersFromNetwork message;
-    private Event reset = new Event("reset");
+    private Event reset = new ClientDisconnection();
 
     public WaitFirstPlayerGameInfo(ServerController serverController) {
         super("[Il server è in attesa di gamemode e numero di giocatori]");

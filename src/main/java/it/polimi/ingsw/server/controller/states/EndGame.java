@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.controller.states;
 
 import com.google.gson.Gson;
+import it.polimi.ingsw.client.controller.events.ClientDisconnection;
 import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.server.controller.ConnectionModel;
 import it.polimi.ingsw.server.controller.ServerController;
@@ -33,8 +34,24 @@ private Event restart;
 
     @Override
     public IEvent entryAction(IEvent cause) throws Exception {
-        Network.setDisconnectedClient(false);
         model = serverController.getModel();
+
+        if (Network.disconnectedClient()){
+            Network.setDisconnectedClient(false);
+
+                ClientModel currentPlayerData = connectionModel.findPlayer(model.getPlayers().get(0).getNickname());
+
+                currentPlayerData.setTypeOfRequest("DISCONNECTION");
+                currentPlayerData.setServermodel(model);
+                currentPlayerData.setResponse(true);
+
+                Network.send(json.toJson(currentPlayerData));
+                Network.disconnect();
+                return super.entryAction(cause);
+
+        }
+
+
         String winner;
         if(model.getNumberOfPlayers()==4){
             winner=model.team_winner();

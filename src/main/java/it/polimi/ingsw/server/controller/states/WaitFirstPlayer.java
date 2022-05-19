@@ -1,6 +1,7 @@
 package it.polimi.ingsw.server.controller.states;
 
 import com.google.gson.Gson;
+import it.polimi.ingsw.client.controller.events.ClientDisconnection;
 import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.server.controller.ConnectionModel;
 import it.polimi.ingsw.server.controller.ServerController;
@@ -18,7 +19,7 @@ public class WaitFirstPlayer extends State {
     private Controller controller;
     private ConnectionModel connectionModel;
     private ParametersFromNetwork firstMessage;
-    private Event reset = new Event("reset");
+    private Event reset = new ClientDisconnection();
 
     public WaitFirstPlayer(ServerController serverController) {
         super("[Il server è in attesa del primo giocatore]");
@@ -41,6 +42,7 @@ public class WaitFirstPlayer extends State {
     @Override
     public IEvent entryAction(IEvent cause) throws Exception {
         Network.setupServer(CommandPrompt.gotFromTerminal());
+        connectionModel.getClientsInfo().removeAll(connectionModel.getClientsInfo());
         System.out.println("[Non ho ancora ricevuto niente]");
 
         firstMessage.enable();

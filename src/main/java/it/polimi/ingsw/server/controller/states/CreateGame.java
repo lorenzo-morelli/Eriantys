@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.controller.states;
 
+import it.polimi.ingsw.client.controller.events.ClientDisconnection;
 import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.server.controller.ConnectionModel;
 import it.polimi.ingsw.server.controller.ServerController;
@@ -19,7 +20,7 @@ public class CreateGame extends State {
     private ConnectionModel connectionModel;
     private Controller controller;
     private ServerController serverController;
-    private Event reset = new Event("reset");
+    private Event reset = new ClientDisconnection();
 
     public CreateGame(ServerController serverController) {
         super("[Create game]");
