@@ -26,6 +26,7 @@ public class StudentPhase extends State {
     private ServerController serverController;
 
     private ParametersFromNetwork message;
+    private Event reset = new Event("reset");
 
     public Event studentPhaseEnded() {
         return studentPhaseEnded;
@@ -40,9 +41,13 @@ public class StudentPhase extends State {
         this.connectionModel = serverController.getConnectionModel();
         studentPhaseEnded = new Event("game created");
         studentPhaseEnded.setStateEventListener(controller);
+        reset.setStateEventListener(controller);
         gameEnd = new Event("end phase");
         gameEnd.setStateEventListener(controller);
         json = new Gson();
+    }
+    public Event getReset() {
+        return reset;
     }
 
     @Override
@@ -72,7 +77,10 @@ public class StudentPhase extends State {
                 message = new ParametersFromNetwork(1);
                 message.enable();
                 while (!message.parametersReceived()) {
-                        //wait message
+                    if(Network.disconnectedClient()){
+                        reset.fireStateEvent();
+                        return super.entryAction(cause);
+                    }
                      }
                 if(json.fromJson(message.getParameter(0),ClientModel.class).getClientIdentity() == currentPlayerData.getClientIdentity()){
                     responseReceived = true;

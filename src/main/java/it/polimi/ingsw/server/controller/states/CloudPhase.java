@@ -23,6 +23,7 @@ public class CloudPhase extends State {
 
     private Gson json;
     private ServerController serverController;
+    private Event reset = new Event("reset");
 
     private ParametersFromNetwork message;
 
@@ -41,11 +42,16 @@ public class CloudPhase extends State {
         this.controller = serverController.getFsm();
         this.connectionModel = serverController.getConnectionModel();
         goToEndTurn= new Event("go to end turn");
+        reset.setStateEventListener(controller);
         goToEndTurn.setStateEventListener(controller);
         goToStudentPhase= new Event("go to student phase");
         goToStudentPhase.setStateEventListener(controller);
 
         json = new Gson();
+    }
+
+    public Event getReset() {
+        return reset;
     }
 
     @Override
@@ -68,7 +74,10 @@ public class CloudPhase extends State {
             message = new ParametersFromNetwork(1);
             message.enable();
             while (!message.parametersReceived()) {
-                // il client non ha ancora scelto la tessera nuvola
+                if(Network.disconnectedClient()){
+                    reset.fireStateEvent();
+                    return super.entryAction(cause);
+                }
             }
             if(json.fromJson(message.getParameter(0),ClientModel.class).getClientIdentity() == currentPlayerData.getClientIdentity()){
                 responseReceived = true;

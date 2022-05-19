@@ -19,6 +19,7 @@ public class CreateGame extends State {
     private ConnectionModel connectionModel;
     private Controller controller;
     private ServerController serverController;
+    private Event reset = new Event("reset");
 
     public CreateGame(ServerController serverController) {
         super("[Create game]");
@@ -26,8 +27,13 @@ public class CreateGame extends State {
         this.controller = serverController.getFsm();
         this.connectionModel = serverController.getConnectionModel();
         gameCreated = new Event("game created");
+        reset.setStateEventListener(controller);
         fourPlayersGameCreated = new Event("Four players game created");
         gameCreated.setStateEventListener(controller);
+    }
+
+    public Event getReset() {
+        return reset;
     }
 
     public Event gameCreated() {

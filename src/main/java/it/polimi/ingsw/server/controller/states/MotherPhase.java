@@ -27,6 +27,7 @@ public class MotherPhase extends State {
 
     private Gson json;
     private ServerController serverController;
+    private Event reset = new Event("reset");
 
     private ParametersFromNetwork message;
     private boolean istorepeat;
@@ -48,6 +49,7 @@ public class MotherPhase extends State {
         this.serverController = serverController;
         this.controller = serverController.getFsm();
         this.connectionModel = serverController.getConnectionModel();
+        reset.setStateEventListener(controller);
         gameEnd = new Event("end phase");
         gameEnd.setStateEventListener(controller);
         goToCloudPhase = new Event("go to cloud phase");
@@ -56,6 +58,9 @@ public class MotherPhase extends State {
         goToStudentPhase.setStateEventListener(controller);
         json = new Gson();
         istorepeat=true;
+    }
+    public Event getReset() {
+        return reset;
     }
 
     @Override
@@ -79,7 +84,10 @@ public class MotherPhase extends State {
                 message = new ParametersFromNetwork(1);
                 message.enable();
                 while (!message.parametersReceived()) {
-                    // il client non ha ancora scelto dove muovere madre natura
+                    if(Network.disconnectedClient()){
+                        reset.fireStateEvent();
+                        return super.entryAction(cause);
+                    }
                 }
                 if (json.fromJson(message.getParameter(0), ClientModel.class).getClientIdentity() == currentPlayerData.getClientIdentity()) {
                     responseReceived = true;

@@ -18,6 +18,7 @@ public class WaitOtherClients extends State {
     private final ParametersFromNetwork message;
 
     private final Event twoOrThreeClientsConnected;
+    private Event reset = new Event("reset");
     private final Event fourClientsConnected;
 
     public WaitOtherClients(ServerController serverController) {
@@ -31,6 +32,10 @@ public class WaitOtherClients extends State {
         fourClientsConnected.setStateEventListener(controller);
         twoOrThreeClientsConnected= new Event("2 o 3 clients sono collegati e pronti a giocare");
         twoOrThreeClientsConnected.setStateEventListener(controller);
+        reset.setStateEventListener(controller);
+    }
+    public Event getReset() {
+        return reset;
     }
 
     public Event twoOrThreeClientsConnected() {
@@ -52,7 +57,10 @@ public class WaitOtherClients extends State {
 
             message.enable();
             while (!message.parametersReceived()) {
-                // non ho ricevuto ancora un messaggio
+                if(Network.disconnectedClient()){
+                    reset.fireStateEvent();
+                    return super.entryAction(cause);
+                }
             }
             // Converti il messaggio stringa json in un oggetto clientModel
             clientModel = json.fromJson(message.getParameter(0), ClientModel.class);

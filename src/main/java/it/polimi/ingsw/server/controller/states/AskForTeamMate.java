@@ -25,6 +25,7 @@ public class AskForTeamMate extends State {
     private ServerController serverController;
 
     private ParametersFromNetwork message;
+    private Event reset = new Event("reset");
 
     public Event teamMateChoosen() {
         return teamMateChoosen;
@@ -36,8 +37,12 @@ public class AskForTeamMate extends State {
         this.controller = serverController.getFsm();
         this.connectionModel = serverController.getConnectionModel();
         teamMateChoosen = new Event("game created");
+        reset.setStateEventListener(controller);
         teamMateChoosen.setStateEventListener(controller);
         json = new Gson();
+    }
+    public Event getReset() {
+        return reset;
     }
 
     @Override
@@ -59,7 +64,10 @@ public class AskForTeamMate extends State {
             message = new ParametersFromNetwork(1);
             message.enable();
             while (!message.parametersReceived()) {
-                // il client non ha ancora scelto la carta assistente
+                if(Network.disconnectedClient()){
+                    reset.fireStateEvent();
+                    return super.entryAction(cause);
+                }
             }
             if (json.fromJson(message.getParameter(0), ClientModel.class).getClientIdentity() == currentPlayerData.getClientIdentity()) {
                 responseReceived = true;

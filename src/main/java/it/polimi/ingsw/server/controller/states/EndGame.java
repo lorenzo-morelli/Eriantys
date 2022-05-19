@@ -33,6 +33,7 @@ private Event restart;
 
     @Override
     public IEvent entryAction(IEvent cause) throws Exception {
+        Network.setDisconnectedClient(false);
         model = serverController.getModel();
         String winner;
         if(model.getNumberOfPlayers()==4){
@@ -52,6 +53,7 @@ private Event restart;
             currentPlayerData.setResponse(false); //non è una risposta, è una richiesta del server al client
 
             Network.send(json.toJson(currentPlayerData));
+            Network.disconnect();
 
         }
         getRestart().fireStateEvent();

@@ -7,6 +7,7 @@ import it.polimi.ingsw.server.controller.ServerController;
 import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
 import it.polimi.ingsw.utils.stateMachine.Controller;
+import it.polimi.ingsw.utils.stateMachine.Event;
 import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
 
@@ -17,6 +18,7 @@ public class WaitFirstPlayerGameInfo extends State {
     private ConnectionModel connectionModel;
 
     private ParametersFromNetwork message;
+    private Event reset = new Event("reset");
 
     public WaitFirstPlayerGameInfo(ServerController serverController) {
         super("[Il server è in attesa di gamemode e numero di giocatori]");
@@ -24,7 +26,11 @@ public class WaitFirstPlayerGameInfo extends State {
         message = new ParametersFromNetwork(1);
         message.setStateEventListener(controller);
         this.controller = serverController.getFsm();
+        reset.setStateEventListener(controller);
         this.connectionModel = serverController.getConnectionModel();
+    }
+    public Event getReset() {
+        return reset;
     }
 
     public ParametersFromNetwork gotNumOfPlayersAndGamemode() {
@@ -39,7 +45,10 @@ public class WaitFirstPlayerGameInfo extends State {
         while (!messageReceived) {
             message.enable();
             while (!message.parametersReceived()) {
-                // non ho ricevuto ancora il messaggio
+                if(Network.disconnectedClient()){
+                    reset.fireStateEvent();
+                    return super.entryAction(cause);
+                }
             }
             // controllo se il messaggio è arrivato proprio dal primo client
             if (json.fromJson(message.getParameter(0), ClientModel.class).getClientIdentity() == connectionModel.getClientsInfo().get(0).getClientIdentity()) {
