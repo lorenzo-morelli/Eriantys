@@ -6,8 +6,7 @@ import it.polimi.ingsw.server.controller.ConnectionModel;
 import it.polimi.ingsw.server.controller.ServerController;
 import it.polimi.ingsw.server.model.Model;
 import it.polimi.ingsw.server.model.Player;
-import it.polimi.ingsw.server.model.characters.MushroomHunter;
-import it.polimi.ingsw.server.model.characters.Thief;
+import it.polimi.ingsw.server.model.characters.*;
 import it.polimi.ingsw.server.model.enums.GameMode;
 import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
@@ -17,7 +16,7 @@ import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
 
 public class StudentPhase extends State {
-    private Event studentPhaseEnded;
+    private Event studentPhaseEnded, gameEnd;
     private Model model;
 
     private ConnectionModel connectionModel;
@@ -31,6 +30,9 @@ public class StudentPhase extends State {
     public Event studentPhaseEnded() {
         return studentPhaseEnded;
     }
+    public Event gameEnd() {
+        return gameEnd;
+    }
     public StudentPhase(ServerController serverController) {
         super("[Move students]");
         this.serverController = serverController;
@@ -38,6 +40,8 @@ public class StudentPhase extends State {
         this.connectionModel = serverController.getConnectionModel();
         studentPhaseEnded = new Event("game created");
         studentPhaseEnded.setStateEventListener(controller);
+        gameEnd = new Event("end phase");
+        gameEnd.setStateEventListener(controller);
         json = new Gson();
     }
 
@@ -99,15 +103,36 @@ public class StudentPhase extends State {
             }
             else{
                 i--;
-                for(int j=0;j<model.getTable().getCards().size();j++){
-                    if(model.getTable().getCards().get(i).getName().equals(type)){
+                for(int j = 0; j<model.getTable().getCharachter().size(); j++){
+                    if(model.getTable().getCharachter().get(i).getName().equals(type)){
                         switch (type){
-                            case "MUSHROOMHUNTER": ((MushroomHunter) model.getTable().getCards().get(j)).useEffect(currentPlayer,currentPlayerData.getChoosedColor(),model.getTable());
+                            case "MUSHROOMHUNTER": ((MushroomHunter) model.getTable().getCharachter().get(j)).useEffect(currentPlayer,currentPlayerData.getChoosedColor(),model.getTable());
                             break;
-                            case "THIEF": ((Thief) model.getTable().getCards().get(j)).useEffect(currentPlayer,model.getPlayers(),currentPlayerData.getChoosedColor(),model.getTable());
+                            case "THIEF": ((Thief) model.getTable().getCharachter().get(j)).useEffect(currentPlayer,model.getPlayers(),currentPlayerData.getChoosedColor(),model.getTable());
                             break;
-                            //fare gli altri...
+                            case "CENTAUR": ((Centaur) model.getTable().getCharachter().get(j)).useEffect(currentPlayer,model.getTable());
+                                break;
+                            case "FARMER": ((Farmer) model.getTable().getCharachter().get(j)).useEffect(currentPlayer,model.getTable(),model.getPlayers());
+                                break;
+                            case "KNIGHT": ((Knight) model.getTable().getCharachter().get(j)).useEffect(currentPlayer,model.getTable());
+                                break;
+                            case "MINSTRELL": ((Minstrell) model.getTable().getCharachter().get(j)).useEffect(currentPlayer,currentPlayerData.getColors2(),currentPlayerData.getColors1());
+                                break;
+                            case "JESTER": ((Jester) model.getTable().getCharachter().get(j)).useEffect(currentPlayer,currentPlayerData.getColors2(),currentPlayerData.getColors1());
+                                break;
+                            case "POSTMAN": ((Postman)  model.getTable().getCharachter().get(j)).useEffect(currentPlayer);
+                                break;
+                            case "PRINCESS": ((Princess)  model.getTable().getCharachter().get(j)).useEffect(currentPlayer,currentPlayerData.getChoosedColor(),model.getTable());
+                                break;
+                            case "GRANNY": ((Granny)  model.getTable().getCharachter().get(j)).useEffect(currentPlayer,currentPlayerData.getChoosedIsland(),model.getTable());
+                                break;
+                            case "MONK": ((Monk)  model.getTable().getCharachter().get(j)).useEffect(currentPlayer,currentPlayerData.getChoosedColor(),currentPlayerData.getChoosedIsland(),model.getTable());
+                                break;
+                            case "HERALD": boolean check= ((Herald)  model.getTable().getCharachter().get(j)).useEffect(currentPlayer,currentPlayerData.getChoosedIsland(),model);
+                                if(check) gameEnd().fireStateEvent();
+                                break;
                         }
+                        break;
                     }
                 }
             }

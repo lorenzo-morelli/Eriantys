@@ -17,6 +17,7 @@ public class Thief extends CharacterCard{
         for (Player value : players) {
             value.getSchoolBoard().getDinnerTable().removestudentinBag(3, color, table.getBag());
         }
+        table.checkProfessor(color,players);
     }
     @Override
     public String toString() {

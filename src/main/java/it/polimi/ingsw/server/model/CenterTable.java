@@ -62,46 +62,45 @@ public class CenterTable {
         }
 
         if(gamemode.equals(GameMode.EXPERT)){
-            characterCards=new ArrayList<>();
-            characterCards.add(new Minstrell());/*  //da controllare
 
             ArrayList<Integer> picks=new ArrayList<>();
             var ref = new Object() {
                 int pick;
             };
+            characterCards=new ArrayList<>();
 
             for(int i=0;i<3;i++) {
                 do{
                     ref.pick = new Random().nextInt(Character.values().length);
                 }while(picks.stream().anyMatch(j->j.equals(ref.pick)));
                 picks.add(ref.pick);
-                switch (Character.values()[ref.pick]){
-                    case MONK: cards.add(new Monk(this));
+                switch (Character.values()[ref.pick]){      //CARTE SERIALIZZATE DANNO PROBLEMI
+                    case MONK: characterCards.add(new Monk(bag));
                     break;
-                    case THIEF: cards.add(new Thief(this));
+                    case THIEF: characterCards.add(new Thief());
                         break;
-                    case FARMER: cards.add(new Farmer(this));
+                    case FARMER: characterCards.add(new Farmer());
                         break;
-                    case GRANNY: cards.add(new Granny(this));
+                    case GRANNY: characterCards.add(new Granny());
                         break;
-                    case HERALD: cards.add(new Herald(this));
+                    case HERALD: characterCards.add(new Herald());
                         break;
-                    case JESTER: cards.add(new Jester(this));
+                    case JESTER: characterCards.add(new Jester(bag));
                         break;
-                    case KNIGHT: cards.add(new Knight(this));
+                    case KNIGHT: characterCards.add(new Knight());
                         break;
-                    case CENTAUR: cards.add(new Centaur(this));
+                    case CENTAUR: characterCards.add(new Centaur());
                         break;
-                    case POSTMAN: cards.add(new Postman(this));
+                    case POSTMAN: characterCards.add(new Postman());
                         break;
-                    case PRINCESS: cards.add(new Princess(this));
+                    case PRINCESS: characterCards.add(new Princess(bag));
                         break;
-                    case MINSTRELL: cards.add(new Minstrell(this));
+                    case MINSTRELL: characterCards.add(new Minstrell());
                         break;
-                    case MUSHROOM_HUNTER: cards.add(new MushroomHunter(this));
+                    case MUSHROOM_HUNTER: characterCards.add(new MushroomHunter());
                         break;
                 }
-            }*/
+            }
         }
         else{
             characterCards=null;
@@ -160,7 +159,6 @@ public class CenterTable {
         }
         if(farmerEffect!=null && farmerEffect.getSchoolBoard().getDinnerTable().numStudentsbycolor(color)==max) moreInfluenced=farmerEffect;
         if(moreInfluenced!=null) changeProfessor(moreInfluenced,color);
-        setFarmerEffect(null);
     }
     public void ConquestIsland(int index_island, ArrayList<Player> players, Player influence_player){
         for (Player player : players) {
@@ -245,7 +243,7 @@ public class CenterTable {
         return result.toString();
     }
 
-    public ArrayList<CharacterCard> getCards() {
+    public ArrayList<CharacterCard> getCharachter() {
         return characterCards;
     }
 

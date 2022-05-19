@@ -39,7 +39,7 @@ public class Wait extends State {
                 // non ho ricevuto ancora nessun messaggio
             }
             receivedClientModel = json.fromJson(message.getParameter(0), ClientModel.class);
-
+            //System.out.println(receivedClientModel.isGameStarted().equals(true));
 
             if (receivedClientModel.isGameStarted().equals(true)) {
                 Gson json = new Gson();

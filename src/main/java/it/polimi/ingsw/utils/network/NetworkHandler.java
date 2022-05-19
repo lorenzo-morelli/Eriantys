@@ -245,6 +245,7 @@ public class NetworkHandler {
                         clientConnections.remove(clientConnection);
                         clientConnection = null;
                         System.out.println("Server removed a client connection.  Current Size: "+clientConnections.size());
+
                     }catch(NullPointerException e){
                     }
                 }catch(IOException e){

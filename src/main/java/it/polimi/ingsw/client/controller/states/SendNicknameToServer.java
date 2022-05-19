@@ -42,8 +42,8 @@ public class SendNicknameToServer extends State {
 
     @Override
     public IEvent entryAction(IEvent cause) throws Exception {
-        System.out.println("[Inviato nuovo nickname al server: ]");
-        System.out.println(json.toJson(clientModel));
+        System.out.println("[Inviato nuovo nickname al server]");
+        //System.out.println(json.toJson(clientModel));
         Network.send(json.toJson(clientModel));
         try {
             // Attendi la ricezione dell'ack

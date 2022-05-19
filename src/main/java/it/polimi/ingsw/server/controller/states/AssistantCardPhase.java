@@ -65,10 +65,10 @@ public class AssistantCardPhase extends State {
             }
             // put the deck in the data and send it over the network
             //System.out.println(model.toString("fer","ciao"));
-            currentPlayerData.setServermodel(model);
             currentPlayerData.setDeck(canbBeChooesed);
             currentPlayerData.setResponse(false); // è una richiesta non una risposta
             currentPlayerData.setTypeOfRequest("CHOOSEASSISTANTCARD");  // lato client avrà una nella CliView un metodo per gestire questa richiesta
+            currentPlayerData.setServermodel(model); // questa cosa fa casini in EXPERT
             Network.send(json.toJson(currentPlayerData));
 
             boolean responseReceived = false;

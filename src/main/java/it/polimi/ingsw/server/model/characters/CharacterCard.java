@@ -1,9 +1,8 @@
 package it.polimi.ingsw.server.model.characters;
 
-import it.polimi.ingsw.server.model.CenterTable;
 
 public abstract class CharacterCard {
-    private String Name;
+    private final String Name;
     private int cost;
     private final String descrition;
     public CharacterCard(String descrition,int cost, String name){

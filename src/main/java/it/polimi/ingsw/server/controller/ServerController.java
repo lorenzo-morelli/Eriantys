@@ -42,6 +42,7 @@ public class ServerController {
         fsm.addTransition(askForTeamMate, askForTeamMate.teamMateChoosen(), assistantCardPhase);
         fsm.addTransition(assistantCardPhase, assistantCardPhase.cardsChoosen(), studentPhase);
         fsm.addTransition(studentPhase, studentPhase.studentPhaseEnded(), motherPhase);
+        fsm.addTransition(studentPhase, studentPhase.gameEnd(),endGame);
         fsm.addTransition(motherPhase, motherPhase.GoToCloudPhase(), cloudPhase);
         fsm.addTransition(motherPhase, motherPhase.goToStudentPhase(), studentPhase);
         fsm.addTransition(motherPhase, motherPhase.gameEnd(),endGame );

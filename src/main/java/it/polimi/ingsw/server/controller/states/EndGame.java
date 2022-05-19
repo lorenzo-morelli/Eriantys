@@ -48,6 +48,7 @@ private Event restart;
 
             currentPlayerData.setGameWinner(winner);
             currentPlayerData.setTypeOfRequest("GAMEEND");
+            currentPlayerData.setServermodel(model);
             currentPlayerData.setResponse(false); //non è una risposta, è una richiesta del server al client
 
             Network.send(json.toJson(currentPlayerData));

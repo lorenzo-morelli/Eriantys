@@ -15,7 +15,6 @@ import it.polimi.ingsw.utils.cli.CommandPrompt;
 import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.stateMachine.State;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
@@ -194,7 +193,7 @@ public class CliView implements View{
 
                 break;
             case "CHOOSEWHERETOMOVESTUDENTS" :
-                if(networkClientModel.getServermodel().getGameMode().equals(GameMode.EXPERT) && networkClientModel.getServermodel().getTable().getCards().stream().anyMatch(j->j.getCost()<= networkClientModel.getServermodel().getcurrentPlayer().getCoins() && !isUsed)) {
+                if(networkClientModel.getServermodel().getGameMode().equals(GameMode.EXPERT) && networkClientModel.getServermodel().getTable().getCharachter().stream().anyMatch(j->j.getCost()<= networkClientModel.getServermodel().getcurrentPlayer().getCoins() && !isUsed)) {
                     System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO: \n" + "E' IL TUO TURNO - STUDENT PHASE" + "\n\nMOSSE ALTRI GIOCATORI: " + getResponce()));
 
                     CommandPrompt.ask("Scegli il colore dello studente che desideri muovere OPPURE inserisci CARD per usare una carta personaggio", "RED or GREEN or BLUE or YELLOW or PINK    or CARD> ");
@@ -232,54 +231,54 @@ public class CliView implements View{
                         default:
                             System.out.println("Scegli la carta che vorresti utilizzare: \n");
                             ArrayList<String> avaiable = new ArrayList<>();
-                            for (int i = 0; i < networkClientModel.getServermodel().getTable().getCards().size(); i++) {
-                                if (networkClientModel.getServermodel().getTable().getCards().get(i).getCost() <= networkClientModel.getServermodel().getcurrentPlayer().getCoins()) {
-                                    if (networkClientModel.getServermodel().getTable().getCards().get(i) instanceof Monk) {
+                            for (int i = 0; i < networkClientModel.getServermodel().getTable().getCharachter().size(); i++) {
+                                if (networkClientModel.getServermodel().getTable().getCharachter().get(i).getCost() <= networkClientModel.getServermodel().getcurrentPlayer().getCoins()) {
+                                    if (networkClientModel.getServermodel().getTable().getCharachter().get(i) instanceof Monk) {
                                         System.out.println("MONK: inserisci MONK + Colore scelto separati da uno spazio");
                                         avaiable.add("MONK");
                                     }
-                                    if (networkClientModel.getServermodel().getTable().getCards().get(i) instanceof Princess) {
+                                    if (networkClientModel.getServermodel().getTable().getCharachter().get(i) instanceof Princess) {
                                         System.out.println("PRINCESS: inserisci PRINCESS + Colore scelto separati da uno spazio");
                                         avaiable.add("PRINCESS");
                                     }
-                                    if (networkClientModel.getServermodel().getTable().getCards().get(i) instanceof MushroomHunter) {
+                                    if (networkClientModel.getServermodel().getTable().getCharachter().get(i) instanceof MushroomHunter) {
                                         System.out.println("MUSHROOMHUNTER: inserisci MUSHROOMHUNTER + Colore scelto separati da uno spazio");
                                         avaiable.add("MUSHROOMHUNTER");
                                     }
-                                    if (networkClientModel.getServermodel().getTable().getCards().get(i) instanceof Thief) {
+                                    if (networkClientModel.getServermodel().getTable().getCharachter().get(i) instanceof Thief) {
                                         System.out.println("THIEF: inserisci THIEF + Colore scelto separati da uno spazio");
                                         avaiable.add("THIEF");
                                     }
-                                    if (networkClientModel.getServermodel().getTable().getCards().get(i) instanceof Farmer) {
+                                    if (networkClientModel.getServermodel().getTable().getCharachter().get(i) instanceof Farmer) {
                                         System.out.println("FARMER: inserisci FARMER");
                                         avaiable.add("FARMER");
                                     }
-                                    if (networkClientModel.getServermodel().getTable().getCards().get(i) instanceof Centaur) {
+                                    if (networkClientModel.getServermodel().getTable().getCharachter().get(i) instanceof Centaur) {
                                         System.out.println("CENTAUR: inserisci CENTAUR");
                                         avaiable.add("CENTAUR");
                                     }
-                                    if (networkClientModel.getServermodel().getTable().getCards().get(i) instanceof Knight) {
+                                    if (networkClientModel.getServermodel().getTable().getCharachter().get(i) instanceof Knight) {
                                         System.out.println("KNIGHT: inserisci KNIGHT");
                                         avaiable.add("KNIGHT");
                                     }
-                                    if (networkClientModel.getServermodel().getTable().getCards().get(i) instanceof Postman) {
+                                    if (networkClientModel.getServermodel().getTable().getCharachter().get(i) instanceof Postman) {
                                         System.out.println("POSTMAN: inserisci POSTMAN");
                                         avaiable.add("POSTMAN");
                                     }
-                                    if (networkClientModel.getServermodel().getTable().getCards().get(i) instanceof Granny) {
+                                    if (networkClientModel.getServermodel().getTable().getCharachter().get(i) instanceof Granny) {
                                         System.out.println("GRANNY: inserisci GRANNY + IndiceIsola separati da uno spazio");
                                         avaiable.add("GRANNY");
                                     }
-                                    if (networkClientModel.getServermodel().getTable().getCards().get(i) instanceof Herald) {
+                                    if (networkClientModel.getServermodel().getTable().getCharachter().get(i) instanceof Herald) {
                                         System.out.println("HERALD: inserisci HERALD + IndiceIsola scelto separati da uno spazio");
                                         avaiable.add("HERALD");
                                     }
-                                    if (networkClientModel.getServermodel().getTable().getCards().get(i) instanceof Jester) {
-                                        System.out.println("JESTER: inserisci JESTER + Inserisci i colori da scambiare da Dinner Table e poi i colori da scambiare da questa carta tutti separati da uno spazio (nota il numero di colori di uno e dell'altro deve essere lo stesso");
+                                    if (networkClientModel.getServermodel().getTable().getCharachter().get(i) instanceof Jester) {
+                                        System.out.println("JESTER: inserisci JESTER + Inserisci i colori da scambiare da EntranceTable e poi i colori da scambiare da questa carta tutti separati da uno spazio (nota il numero di colori di uno e dell'altro deve essere lo stesso");
                                         avaiable.add("JESTER");
                                     }
-                                    if (networkClientModel.getServermodel().getTable().getCards().get(i) instanceof Minstrell) {
-                                        System.out.println("MINSTRELL: inserisci MINSTRELL + Inserisci i colori da scambiare da Dinner Table e poi i colori da scambiare da EntranceTable tutti separati da uno spazio (nota il numero di colori di uno e dell'altro deve essere lo stesso");
+                                    if (networkClientModel.getServermodel().getTable().getCharachter().get(i) instanceof Minstrell) {
+                                        System.out.println("MINSTRELL: inserisci MINSTRELL + Inserisci i colori da scambiare da EntranceTable e poi i colori da scambiare da Dinner Table tutti separati da uno spazio (nota il numero di colori di uno e dell'altro deve essere lo stesso");
                                         avaiable.add("MINSTRELL");
                                     }
                                 }
@@ -292,9 +291,9 @@ public class CliView implements View{
                                 return;
                             }
                             CharacterCard modelCard=null;
-                            for(int i=0;i<networkClientModel.getServermodel().getTable().getCards().size();i++){
-                                if(networkClientModel.getServermodel().getTable().getCards().get(i).getName().equals(parsedStrings.get(0))){
-                                    modelCard=networkClientModel.getServermodel().getTable().getCards().get(i);
+                            for(int i = 0; i<networkClientModel.getServermodel().getTable().getCharachter().size(); i++){
+                                if(networkClientModel.getServermodel().getTable().getCharachter().get(i).getName().equals(parsedStrings.get(0))){
+                                    modelCard=networkClientModel.getServermodel().getTable().getCharachter().get(i);
                                 }
                             }
                             switch (parsedStrings.get(0)) {
@@ -404,7 +403,7 @@ public class CliView implements View{
                                 case "MINSTRELL":
                                 case "JESTER":
                                     int max=2;
-                                    StudentSet destination= networkClientModel.getServermodel().getcurrentPlayer().getSchoolBoard().getEntranceSpace();
+                                    StudentSet destination= networkClientModel.getServermodel().getcurrentPlayer().getSchoolBoard().getDinnerTable();
                                     ArrayList<PeopleColor> colors1= new ArrayList<>();
                                     ArrayList<PeopleColor> colors2=new ArrayList<>();
                                     if(parsedStrings.get(0).equals("JESTER")) {
@@ -461,7 +460,7 @@ public class CliView implements View{
                                                 break;
                                         }
                                     }
-                                    if(!networkClientModel.getServermodel().getcurrentPlayer().getSchoolBoard().getDinnerTable().contains(colors1) || !destination.contains(colors2) ) {
+                                    if(!networkClientModel.getServermodel().getcurrentPlayer().getSchoolBoard().getEntranceSpace().contains(colors1) || !destination.contains(colors2) ) {
                                         System.out.println("uno o piu colori scelti non sono presenti, scelta carta rifiutata !!!!");
                                         TimeUnit.SECONDS.sleep(2);
                                         requestToMe();
@@ -630,59 +629,59 @@ public class CliView implements View{
                 break;
 
             case "CHOOSEWHERETOMOVEMOTHER" :
-                if(networkClientModel.getServermodel().getGameMode().equals(GameMode.EXPERT) && networkClientModel.getServermodel().getTable().getCards().stream().anyMatch(j->j.getCost()<= networkClientModel.getServermodel().getcurrentPlayer().getCoins() && !isUsed)) {
+                if(networkClientModel.getServermodel().getGameMode().equals(GameMode.EXPERT) && networkClientModel.getServermodel().getTable().getCharachter().stream().anyMatch(j->j.getCost()<= networkClientModel.getServermodel().getcurrentPlayer().getCoins() && !isUsed)) {
                     System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO:\n " + "E' IL TUO TURNO - MOTHER PHASE" + "\n\nMOSSE ALTRI GIOCATORI: " + getResponce()));
                     CommandPrompt.ask("Scegliere il numero di mosse di cui far spostare madre natura  OPPURE inserisci CARD per usare una carta personaggio", "mosse> ");
                     if (CommandPrompt.gotFromTerminal().equals("CARD")) {
                         System.out.println("Scegli la carta che vorresti utilizzare: \n");
                         ArrayList<String> avaiable = new ArrayList<>();
-                        for (int i = 0; i < networkClientModel.getServermodel().getTable().getCards().size(); i++) {
-                            if (networkClientModel.getServermodel().getTable().getCards().get(i).getCost() <= networkClientModel.getServermodel().getcurrentPlayer().getCoins()) {
-                                if (networkClientModel.getServermodel().getTable().getCards().get(i) instanceof Monk) {
+                        for (int i = 0; i < networkClientModel.getServermodel().getTable().getCharachter().size(); i++) {
+                            if (networkClientModel.getServermodel().getTable().getCharachter().get(i).getCost() <= networkClientModel.getServermodel().getcurrentPlayer().getCoins()) {
+                                if (networkClientModel.getServermodel().getTable().getCharachter().get(i) instanceof Monk) {
                                     System.out.println("MONK: inserisci MONK + Colore scelto separati da uno spazio");
                                     avaiable.add("MONK");
                                 }
-                                if (networkClientModel.getServermodel().getTable().getCards().get(i) instanceof Princess) {
+                                if (networkClientModel.getServermodel().getTable().getCharachter().get(i) instanceof Princess) {
                                     System.out.println("PRINCESS: inserisci PRINCESS + Colore scelto separati da uno spazio");
                                     avaiable.add("PRINCESS");
                                 }
-                                if (networkClientModel.getServermodel().getTable().getCards().get(i) instanceof MushroomHunter) {
+                                if (networkClientModel.getServermodel().getTable().getCharachter().get(i) instanceof MushroomHunter) {
                                     System.out.println("MUSHROOMHUNTER: inserisci MUSHROOMHUNTER + Colore scelto separati da uno spazio");
                                     avaiable.add("MUSHROOMHUNTER");
                                 }
-                                if (networkClientModel.getServermodel().getTable().getCards().get(i) instanceof Thief) {
+                                if (networkClientModel.getServermodel().getTable().getCharachter().get(i) instanceof Thief) {
                                     System.out.println("THIEF: inserisci THIEF + Colore scelto separati da uno spazio");
                                     avaiable.add("THIEF");
                                 }
-                                if (networkClientModel.getServermodel().getTable().getCards().get(i) instanceof Farmer) {
+                                if (networkClientModel.getServermodel().getTable().getCharachter().get(i) instanceof Farmer) {
                                     System.out.println("FARMER: inserisci FARMER");
                                     avaiable.add("FARMER");
                                 }
-                                if (networkClientModel.getServermodel().getTable().getCards().get(i) instanceof Centaur) {
+                                if (networkClientModel.getServermodel().getTable().getCharachter().get(i) instanceof Centaur) {
                                     System.out.println("CENTAUR: inserisci CENTAUR");
                                     avaiable.add("CENTAUR");
                                 }
-                                if (networkClientModel.getServermodel().getTable().getCards().get(i) instanceof Knight) {
+                                if (networkClientModel.getServermodel().getTable().getCharachter().get(i) instanceof Knight) {
                                     System.out.println("KNIGHT: inserisci KNIGHT");
                                     avaiable.add("KNIGHT");
                                 }
-                                if (networkClientModel.getServermodel().getTable().getCards().get(i) instanceof Postman) {
+                                if (networkClientModel.getServermodel().getTable().getCharachter().get(i) instanceof Postman) {
                                     System.out.println("POSTMAN: inserisci POSTMAN");
                                     avaiable.add("POSTMAN");
                                 }
-                                if (networkClientModel.getServermodel().getTable().getCards().get(i) instanceof Granny) {
+                                if (networkClientModel.getServermodel().getTable().getCharachter().get(i) instanceof Granny) {
                                     System.out.println("GRANNY: inserisci GRANNY + IndiceIsola separati da uno spazio");
                                     avaiable.add("GRANNY");
                                 }
-                                if (networkClientModel.getServermodel().getTable().getCards().get(i) instanceof Herald) {
+                                if (networkClientModel.getServermodel().getTable().getCharachter().get(i) instanceof Herald) {
                                     System.out.println("HERALD: inserisci HERALD + IndiceIsola scelto separati da uno spazio");
                                     avaiable.add("HERALD");
                                 }
-                                if (networkClientModel.getServermodel().getTable().getCards().get(i) instanceof Jester) {
+                                if (networkClientModel.getServermodel().getTable().getCharachter().get(i) instanceof Jester) {
                                     System.out.println("JESTER: inserisci JESTER + Inserisci i colori da scambiare da Dinner Table e poi i colori da scambiare da questa carta tutti separati da uno spazio (nota il numero di colori di uno e dell'altro deve essere lo stesso");
                                     avaiable.add("JESTER");
                                 }
-                                if (networkClientModel.getServermodel().getTable().getCards().get(i) instanceof Minstrell) {
+                                if (networkClientModel.getServermodel().getTable().getCharachter().get(i) instanceof Minstrell) {
                                     System.out.println("MINSTRELL: inserisci MINSTRELL + Inserisci i colori da scambiare da Dinner Table e poi i colori da scambiare da EntranceTable tutti separati da uno spazio (nota il numero di colori di uno e dell'altro deve essere lo stesso");
                                     avaiable.add("MINSTRELL");
                                 }
@@ -696,9 +695,9 @@ public class CliView implements View{
                             return;
                         }
                         CharacterCard modelCard=null;
-                        for(int i=0;i<networkClientModel.getServermodel().getTable().getCards().size();i++){
-                            if(networkClientModel.getServermodel().getTable().getCards().get(i).getName().equals(parsedStrings.get(0))){
-                                modelCard=networkClientModel.getServermodel().getTable().getCards().get(i);
+                        for(int i = 0; i<networkClientModel.getServermodel().getTable().getCharachter().size(); i++){
+                            if(networkClientModel.getServermodel().getTable().getCharachter().get(i).getName().equals(parsedStrings.get(0))){
+                                modelCard=networkClientModel.getServermodel().getTable().getCharachter().get(i);
                             }
                         }
                         switch (parsedStrings.get(0)) {
@@ -972,10 +971,17 @@ public class CliView implements View{
                 networkClientModel.setFromTerminal(parsedStrings);
                 json = new Gson();
                 Network.send(json.toJson(networkClientModel));
+                isUsed=false;
                 break;
 
             case "GAMEEND":
-                System.out.println("Il vincitore/i è/sono :" + networkClientModel.getGameWinner());
+                if(networkClientModel.getServermodel().getNumberOfPlayers()<4)
+                {
+                    System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(),"STATO DEL GIOCO: \n"+"IL GIOCO E' FINITO! IL VINCITORE E' "+ networkClientModel.getGameWinner()+ "\n\nMOSSE ALTRI GIOCATORI: "+getResponce()));
+                }
+                else {
+                    System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(),"STATO DEL GIOCO: \n"+"IL GIOCO E' FINITO! I VINCITORI SONO "+ networkClientModel.getGameWinner()+ "\n\nMOSSE ALTRI GIOCATORI: "+getResponce()));
+                }
                 Network.disconnect();
             break;
 
