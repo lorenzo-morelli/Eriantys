@@ -1,14 +1,14 @@
 package it.polimi.ingsw.server.model.characters;
 
 
-public abstract class CharacterCard {
+public class CharacterCard {
     private final String Name;
     private int cost;
-    private final String descrition;
+    //private final String descrition;
     public CharacterCard(String descrition,int cost, String name){
         this.Name= name;
         this.cost=cost;
-        this.descrition="EFFETTO: "+descrition;
+        //this.descrition="EFFETTO: "+descrition;
     }
 
     public int getCost() {
@@ -21,8 +21,8 @@ public abstract class CharacterCard {
 
     @Override
     public String toString() {
-        return "COST: " + cost +
-                "\n" + descrition ;
+        return "COST: " + cost; //+
+               // "\n" + descrition ;
     }
 
     public String getName() {
