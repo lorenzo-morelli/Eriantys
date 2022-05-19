@@ -25,8 +25,8 @@ public class WaitFirstPlayer extends State {
         json = new Gson();
         firstMessage = new ParametersFromNetwork(1);
         firstMessage.setStateEventListener(controller);
-        reset.setStateEventListener(controller);
         this.controller = serverController.getFsm();
+        reset.setStateEventListener(controller);
         this.connectionModel = serverController.getConnectionModel();
     }
 
