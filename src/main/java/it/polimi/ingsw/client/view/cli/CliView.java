@@ -993,25 +993,27 @@ public class CliView implements View{
     // Qualcun altro sta interagendo con il terminale: devo gestire il tempo di attesa
     // Esempio "pippo: sta salutando"
     public void requestToOthers() throws IOException {
-        String message=null;
-        switch(networkClientModel.getTypeOfRequest()) {
-            case "CHOOSEASSISTANTCARD" :
-                message="L'utente " +networkClientModel.getNickname()+ " sta scegliendo la carta assistente";
+        String message = null;
+        switch (networkClientModel.getTypeOfRequest()) {
+            case "CHOOSEASSISTANTCARD":
+                message = "L'utente " + networkClientModel.getNickname() + " sta scegliendo la carta assistente";
                 break;
-            case "CHOOSEWHERETOMOVESTUDENTS"    :
-                message="L'utente " +networkClientModel.getNickname()+ " sta scegliendo dove muovere lo studente";
+            case "CHOOSEWHERETOMOVESTUDENTS":
+                message = "L'utente " + networkClientModel.getNickname() + " sta scegliendo dove muovere lo studente";
                 break;
-            case "TEAMMATE" :
-                message="L'utente " +networkClientModel.getNickname()+ " sta scegliendo il suo compagno di squadra";
+            case "TEAMMATE":
+                message = "L'utente " + networkClientModel.getNickname() + " sta scegliendo il suo compagno di squadra";
                 break;
-            case "CHOOSEWHERETOMOVEMOTHER"    :
-                message="L'utente " +networkClientModel.getNickname()+ " sta scegliendo il numero di mosse di cui far spostare madre natura";
+            case "CHOOSEWHERETOMOVEMOTHER":
+                message = "L'utente " + networkClientModel.getNickname() + " sta scegliendo il numero di mosse di cui far spostare madre natura";
                 break;
-            case "CHOOSECLOUDS"    :
-                message="L'utente " +networkClientModel.getNickname()+ " sta scegliendo la nuvola dalla quale ricaricare gli studenti";
+            case "CHOOSECLOUDS":
+                message = "L'utente " + networkClientModel.getNickname() + " sta scegliendo la nuvola dalla quale ricaricare gli studenti";
                 break;
         }
-        System.out.println(networkClientModel.getServermodel().toString(getMynickname(),"STATO DEL GIOCO: "+message+ "\n\nMOSSE ALTRI GIOCATORI: "+getResponce()));
+        if (!networkClientModel.getTypeOfRequest().equals("TEAMMATE")) {
+            System.out.println(networkClientModel.getServermodel().toString(getMynickname(), "STATO DEL GIOCO: " + message + "\n\nMOSSE ALTRI GIOCATORI: " + getResponce()));
+        }
     }
 
     // Qualcun altro ha risposto al server: devo mostrare a schermo un'interpretazione della risposta

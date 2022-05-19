@@ -39,14 +39,28 @@ public class Herald extends CharacterCard{
                     }
                 }
             }
-            if (model.getTable().getIslands().get(model.getTable().getMotherNaturePosition()) != null) {
-                if (model.getTable().getIslands().get((model.getTable().getMotherNaturePosition() + 1) % model.getTable().getIslands().size()).getTowerColor() != null && model.getTable().getIslands().get((model.getTable().getMotherNaturePosition() + 1) % model.getTable().getIslands().size()).getTowerColor().equals(model.getTable().getIslands().get(model.getTable().getMotherNaturePosition()).getTowerColor())) {
-                    model.getTable().MergeIsland(model.getTable().getMotherNaturePosition(), ((model.getTable().getMotherNaturePosition() + 1) % model.getTable().getIslands().size()));
-                }
-                if (model.getTable().getIslands().get((model.getTable().getMotherNaturePosition() - 1) % model.getTable().getIslands().size()).getTowerColor() != null && model.getTable().getIslands().get((model.getTable().getMotherNaturePosition() - 1) % model.getTable().getIslands().size()).getTowerColor().equals(model.getTable().getIslands().get(model.getTable().getMotherNaturePosition()).getTowerColor())) {
-                    model.getTable().MergeIsland(model.getTable().getMotherNaturePosition(), ((model.getTable().getMotherNaturePosition() - 1) % model.getTable().getIslands().size()));
-                }
+        if (model.getTable().getIslands().get(model.getTable().getMotherNaturePosition()) != null) {
+            if (model.getTable().getIslands().get((model.getTable().getMotherNaturePosition() + 1) % model.getTable().getIslands().size()).getTowerColor() != null && model.getTable().getIslands().get((model.getTable().getMotherNaturePosition() + 1) % model.getTable().getIslands().size()).getTowerColor().equals(model.getTable().getIslands().get(model.getTable().getMotherNaturePosition()).getTowerColor())) {
+                model.getTable().MergeIsland(model.getTable().getMotherNaturePosition(), ((model.getTable().getMotherNaturePosition() + 1) % model.getTable().getIslands().size()));
             }
+            Island merging;
+            if(model.getTable().getMotherNaturePosition()==0){
+                merging=model.getTable().getIslands().get(model.getTable().getIslands().size()-1);
+            }
+            else{
+                merging=model.getTable().getIslands().get((model.getTable().getMotherNaturePosition() - 1)% model.getTable().getIslands().size());
+            }
+            if (merging.getTowerColor() != null && merging.getTowerColor().equals(model.getTable().getIslands().get(model.getTable().getMotherNaturePosition()).getTowerColor())) {
+                int mergingindex;
+                if(model.getTable().getMotherNaturePosition()==0){
+                    mergingindex=model.getTable().getIslands().size()-1;
+                }
+                else{
+                    mergingindex=(model.getTable().getMotherNaturePosition() - 1)% model.getTable().getIslands().size();
+                }
+                model.getTable().MergeIsland(model.getTable().getMotherNaturePosition(), mergingindex);
+            }
+        }
         return model.getTable().getIslands().size() == 3;
     }
     public String toString() {

@@ -180,7 +180,7 @@ public class Model {
     public String printteam(String nickname){
         StringBuilder result= new StringBuilder();
         for (Team team : teams) {
-            result.append(team.toString());
+            result.append(team.toString(nickname,getcurrentPlayer().getNickname()));
         }
         return result.toString();
     }

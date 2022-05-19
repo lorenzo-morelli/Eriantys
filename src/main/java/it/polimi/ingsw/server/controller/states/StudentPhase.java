@@ -129,7 +129,10 @@ public class StudentPhase extends State {
                             case "MONK": ((Monk)  model.getTable().getCharachter().get(j)).useEffect(currentPlayer,currentPlayerData.getChoosedColor(),currentPlayerData.getChoosedIsland(),model.getTable());
                                 break;
                             case "HERALD": boolean check= ((Herald)  model.getTable().getCharachter().get(j)).useEffect(currentPlayer,currentPlayerData.getChoosedIsland(),model);
-                                if(check) gameEnd().fireStateEvent();
+                                if(check) {
+                                    gameEnd().fireStateEvent();
+                                    return super.entryAction(cause);
+                                }
                                 break;
                         }
                         break;

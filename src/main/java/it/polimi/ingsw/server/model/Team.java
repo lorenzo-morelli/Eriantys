@@ -41,13 +41,75 @@ public class Team {
         return player1 != null && player2 != null;
     }
 
-    @Override
-    public String toString() {
-        return "  TEAM " + teamNumber + " \n\n" +
-                player1.toString() +
-                player2.toString() +
+    public String toString(String player,String actualplayer) {
+        //System.out.println(player);
+        StringBuilder result = new StringBuilder();
+        result.append("  TEAM " + teamNumber + " \n\n" );
+        if (getPlayer1().getNickname().equals(actualplayer)) {
+            switch (getPlayer1().getSchoolBoard().getTowerColor()) {
+                case BLACK:
+                    result.append(ANSI_BLACK + "    (CURRENT PLAYER) " + ANSI_RESET);
+                    break;
+                case GREY:
+                    result.append(ANSI_GRAY + "    (CURRENT PLAYER) " + ANSI_RESET);
+                    break;
+                case WHITE:
+                    result.append(ANSI_WHITE + "    (CURRENT PLAYER) " + ANSI_RESET);
+                    break;
+            }
+        }
+        if (getPlayer1().getNickname().equals(player)) {
+            switch (getPlayer1().getSchoolBoard().getTowerColor()) {
+                case BLACK:
+                    result.append(ANSI_BLACK + "    (YOU) " + ANSI_RESET);
+                    break;
+                case GREY:
+                    result.append(ANSI_GRAY + "    (YOU) " + ANSI_RESET);
+                    break;
+                case WHITE:
+                    result.append(ANSI_WHITE + "    (YOU) " + ANSI_RESET);
+                    break;
+            }
+        }
+        if(getPlayer1().getNickname().equals(player) || getPlayer1().getNickname().equals(actualplayer)){
+            result.append("\n");
+        }
+        result.append(getPlayer1().toString());
+
+        if (getPlayer2().getNickname().equals(actualplayer)) {
+            switch (getPlayer2().getSchoolBoard().getTowerColor()) {
+                case BLACK:
+                    result.append(ANSI_BLACK + "    (CURRENT PLAYER) " + ANSI_RESET);
+                    break;
+                case GREY:
+                    result.append(ANSI_GRAY + "    (CURRENT PLAYER) " + ANSI_RESET);
+                    break;
+                case WHITE:
+                    result.append(ANSI_WHITE + "    (CURRENT PLAYER) " + ANSI_RESET);
+                    break;
+            }
+        }
+        if (getPlayer2().getNickname().equals(player)) {
+            switch (getPlayer2().getSchoolBoard().getTowerColor()) {
+                case BLACK:
+                    result.append(ANSI_BLACK + "    (YOU) " + ANSI_RESET);
+                    break;
+                case GREY:
+                    result.append(ANSI_GRAY + "    (YOU) " + ANSI_RESET);
+                    break;
+                case WHITE:
+                    result.append(ANSI_WHITE + "    (YOU) " + ANSI_RESET);
+                    break;
+            }
+        }
+        if(getPlayer2().getNickname().equals(player) || getPlayer2().getNickname().equals(actualplayer)){
+            result.append("\n");
+        }
+        result.append(getPlayer2().toString()+
                 "    TOWERS : " + player1.getSchoolBoard().getNumOfTowers() + "\n" +
                         "    TOWER COLOR : " + (player1.getSchoolBoard().getTowerColor()==null ? " Null" : (player1.getSchoolBoard().getTowerColor()== TowerColor.GREY ? ANSI_GRAY+player1.getSchoolBoard().getTowerColor()+ANSI_RESET :(player1.getSchoolBoard().getTowerColor()==TowerColor.WHITE ? ANSI_WHITE+player1.getSchoolBoard().getTowerColor()+ANSI_RESET :  ANSI_BLACK+player1.getSchoolBoard().getTowerColor()+ANSI_RESET)))  +
-                "\n\n\n";
+                "\n\n\n");
+        return result.toString();
     }
+
 }

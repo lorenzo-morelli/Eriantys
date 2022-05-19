@@ -11,6 +11,9 @@ public class Professor {
     public static final String ANSI_YELLOW = "\u001B[33m";
     public static final String ANSI_BLUE = "\u001B[34m";
     public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+    public static final String ANSI_WHITE="\033[1;97m";
+    public static final String ANSI_GRAY="\033[1;90m";
 
     public Professor(PeopleColor color){
         this.color = color;
@@ -31,17 +34,31 @@ public class Professor {
 
     @Override
     public String toString() {
+        StringBuilder result=new StringBuilder();
+        if(heldBy==null){
+            result.append("Nobody ");
+        }
+        else{
+            switch (heldBy.getSchoolBoard().getTowerColor()){
+                case WHITE: result.append(ANSI_WHITE+heldBy.getNickname()+ANSI_RESET);
+                    break;
+                case GREY:  result.append(ANSI_GRAY +heldBy.getNickname()+ANSI_RESET);
+                    break;
+                case BLACK: result.append(ANSI_BLACK +heldBy.getNickname()+ANSI_RESET);
+                    break;
+            }
+        }
         switch (color){
-            case RED: return  ANSI_RED + "      " +color +
-                " - " + (heldBy==null ? "Nobody" : heldBy.getNickname())  + " "+ANSI_RESET;
-            case BLUE: return  ANSI_BLUE + color +
-                    " - " + (heldBy==null ? "Nobody" : heldBy.getNickname())  + " "+ANSI_RESET;
-            case PINK:return  ANSI_PURPLE + color +
-                    " - " + (heldBy==null ? "Nobody" : heldBy.getNickname())  + " "+ANSI_RESET;
-            case GREEN:return  ANSI_GREEN + color +
-                    " - " + (heldBy==null ? "Nobody" : heldBy.getNickname())  + " "+ANSI_RESET;
-            case YELLOW:return  ANSI_YELLOW + color +
-                    " - " + (heldBy==null ? "Nobody" : heldBy.getNickname())  + " "+ANSI_RESET;
+            case RED: return  ANSI_RED + "      " +color + ANSI_RESET+
+                " - " + result;
+            case BLUE: return  ANSI_BLUE + color +ANSI_RESET+
+                    " - " + result;
+            case PINK:return  ANSI_PURPLE + color +ANSI_RESET+
+                    " - " + result;
+            case GREEN:return  ANSI_GREEN + color +ANSI_RESET+
+                    " - " + result;
+            case YELLOW:return  ANSI_YELLOW + color +ANSI_RESET+
+                    " - " + result;
     }
     return null;
     }

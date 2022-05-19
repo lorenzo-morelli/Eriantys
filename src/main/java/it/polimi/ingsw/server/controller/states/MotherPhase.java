@@ -128,8 +128,22 @@ public class MotherPhase extends State {
                         if (model.getTable().getIslands().get((model.getTable().getMotherNaturePosition() + 1) % model.getTable().getIslands().size()).getTowerColor() != null && model.getTable().getIslands().get((model.getTable().getMotherNaturePosition() + 1) % model.getTable().getIslands().size()).getTowerColor().equals(model.getTable().getIslands().get(model.getTable().getMotherNaturePosition()).getTowerColor())) {
                             model.getTable().MergeIsland(model.getTable().getMotherNaturePosition(), ((model.getTable().getMotherNaturePosition() + 1) % model.getTable().getIslands().size()));
                         }
-                        if (model.getTable().getIslands().get((model.getTable().getMotherNaturePosition() - 1) % model.getTable().getIslands().size()).getTowerColor() != null && model.getTable().getIslands().get((model.getTable().getMotherNaturePosition() - 1) % model.getTable().getIslands().size()).getTowerColor().equals(model.getTable().getIslands().get(model.getTable().getMotherNaturePosition()).getTowerColor())) {
-                            model.getTable().MergeIsland(model.getTable().getMotherNaturePosition(), ((model.getTable().getMotherNaturePosition() - 1) % model.getTable().getIslands().size()));
+                        Island merging;
+                        if(model.getTable().getMotherNaturePosition()==0){
+                            merging=model.getTable().getIslands().get(model.getTable().getIslands().size()-1);
+                        }
+                        else{
+                            merging=model.getTable().getIslands().get((model.getTable().getMotherNaturePosition() - 1)% model.getTable().getIslands().size());
+                        }
+                        if (merging.getTowerColor() != null && merging.getTowerColor().equals(model.getTable().getIslands().get(model.getTable().getMotherNaturePosition()).getTowerColor())) {
+                            int mergingindex;
+                            if(model.getTable().getMotherNaturePosition()==0){
+                                mergingindex=model.getTable().getIslands().size()-1;
+                            }
+                            else{
+                                mergingindex=(model.getTable().getMotherNaturePosition() - 1)% model.getTable().getIslands().size();
+                            }
+                            model.getTable().MergeIsland(model.getTable().getMotherNaturePosition(), mergingindex);
                         }
                     }
                 } else {
@@ -189,7 +203,11 @@ public class MotherPhase extends State {
                             case "MONK": ((Monk)  model.getTable().getCharachter().get(j)).useEffect(currentPlayer,currentPlayerData.getChoosedColor(),currentPlayerData.getChoosedIsland(),model.getTable());
                                 break;
                             case "HERALD": boolean check= ((Herald)  model.getTable().getCharachter().get(j)).useEffect(currentPlayer,currentPlayerData.getChoosedIsland(),model);
-                                if(check) gameEnd().fireStateEvent();
+                                if(check) {
+                                    gameEnd().fireStateEvent();
+                                    return super.entryAction(cause);
+                                }
+
                                 break;
                         }
                         break;

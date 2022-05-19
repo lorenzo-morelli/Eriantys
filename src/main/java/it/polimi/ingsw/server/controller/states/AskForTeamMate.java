@@ -67,8 +67,9 @@ public class AskForTeamMate extends State {
         }
         // Ho ricevuto la risposta, ora devo creare la partita
         ClientModel received = json.fromJson(message.getParameter(0), ClientModel.class);
-        model = new Model(4, "PRINCIPIANT"); // per il momento hardcodato PRINCIPIANT
-                                                                // todo: parametrizzarlo
+
+        //model = new Model(4, "PRINCIPIANT"); // per il momento hardcodato PRINCIPIANT
+        model = new Model(connectionModel.getNumOfPlayers(), connectionModel.getGameMode());
         model.getPlayers().add(new Player(received.getNicknames().get(3), connectionModel.findPlayer(received.getNicknames().get(3)).getMyIp(),1, model));
         model.getPlayers().add(new Player(received.getNicknames().get(2), connectionModel.findPlayer(received.getNicknames().get(2)).getMyIp(),1, model));
         model.getPlayers().add(new Player(received.getNicknames().get(1), connectionModel.findPlayer(received.getNicknames().get(1)).getMyIp(),2, model));
