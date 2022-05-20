@@ -13,6 +13,8 @@ import it.polimi.ingsw.utils.stateMachine.Event;
 import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
 
+import java.util.ArrayList;
+
 public class WaitFirstPlayer extends State {
     private ClientModel clientModel = null;
     private Gson json;
@@ -47,7 +49,7 @@ public class WaitFirstPlayer extends State {
         System.out.println("[Listening on port " + CommandPrompt.gotFromTerminal()+ " ]");
         Network.setupServer(CommandPrompt.gotFromTerminal());
         Network.setDisconnectedClient(false);
-        connectionModel.getClientsInfo().removeAll(connectionModel.getClientsInfo());
+        connectionModel.setClientsInfo(new ArrayList<>());
 
 
         firstMessage.enable();
