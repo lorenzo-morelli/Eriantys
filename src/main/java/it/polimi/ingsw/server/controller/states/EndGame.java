@@ -37,7 +37,7 @@ private Event restart;
         model = serverController.getModel();
 
         if (Network.disconnectedClient()){
-            Network.setDisconnectedClient(false);
+
 
                 ClientModel currentPlayerData = connectionModel.findPlayer(model.getPlayers().get(0).getNickname());
 
@@ -46,7 +46,6 @@ private Event restart;
                 currentPlayerData.setResponse(true);
 
                 Network.send(json.toJson(currentPlayerData));
-                Network.disconnect();
                 restart.fireStateEvent();
                 return super.entryAction(cause);
 
@@ -71,7 +70,7 @@ private Event restart;
             currentPlayerData.setResponse(false); //non è una risposta, è una richiesta del server al client
 
             Network.send(json.toJson(currentPlayerData));
-            Network.disconnect();
+            Network.setDisconnectedClient(true);
 
         }
         getRestart().fireStateEvent();

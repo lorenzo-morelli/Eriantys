@@ -41,9 +41,14 @@ public class WaitFirstPlayer extends State {
 
     @Override
     public IEvent entryAction(IEvent cause) throws Exception {
+        if (Network.disconnectedClient()){
+            Network.disconnect();
+        }
+        System.out.println("[Listening on port " + CommandPrompt.gotFromTerminal()+ " ]");
         Network.setupServer(CommandPrompt.gotFromTerminal());
+        Network.setDisconnectedClient(false);
         connectionModel.getClientsInfo().removeAll(connectionModel.getClientsInfo());
-        System.out.println("[Non ho ancora ricevuto niente]");
+
 
         firstMessage.enable();
 

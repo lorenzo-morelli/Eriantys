@@ -68,14 +68,13 @@ public class Network implements ActionListener{
     }
 
     public static void setupServer(String port){
-        if (instance == null){
             instance = new Network();
             // una volta avviato il server in ascolto su una porta
             // non posso rifare il setup (instance non è null)
             instance.port.setText(port);
             instance.serverButton.doClick();
             serverListening = true;
-        }
+
 
     };
 
