@@ -6,7 +6,7 @@ import it.polimi.ingsw.server.model.Player;
 public class Centaur extends CharacterCard implements SimpleEffect {
 
     public Centaur(){
-        super("Durante il conteggio dell'influenza su un isola, le torri presenti non vengono calcolate",3,"CENTAUR");
+        super(3,"CENTAUR");
     }
     @Override
     public void useEffect(Player player, CenterTable table) {
@@ -15,8 +15,5 @@ public class Centaur extends CharacterCard implements SimpleEffect {
         table.setCentaurEffect(true);
     }
 
-    @Override
-    public String toString() {
-        return "CENTAUR "+ super.toString();
-    }
+
 }

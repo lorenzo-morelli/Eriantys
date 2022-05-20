@@ -1,7 +1,6 @@
 package it.polimi.ingsw.server.controller.states;
 
 import com.google.gson.Gson;
-import it.polimi.ingsw.client.controller.events.ClientDisconnection;
 import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.server.controller.ConnectionModel;
 import it.polimi.ingsw.server.controller.ServerController;
@@ -13,18 +12,16 @@ import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
 
 public class EndGame extends State {
-    private Model model;
-private Event restart;
-    private ConnectionModel connectionModel;
-    private Controller controller;
+    private final Event restart;
+    private final ConnectionModel connectionModel;
 
-    private Gson json;
-    private ServerController serverController;
+    private final Gson json;
+    private final ServerController serverController;
 
     public EndGame(ServerController serverController) {
         super("[End Game]");
         this.serverController = serverController;
-        this.controller = serverController.getFsm();
+        Controller controller = ServerController.getFsm();
         this.connectionModel = serverController.getConnectionModel();
         restart= new Event("Gioco Terminato, server riportato in WaitForPlayerConnection");
         restart.setStateEventListener(controller);
@@ -34,7 +31,7 @@ private Event restart;
 
     @Override
     public IEvent entryAction(IEvent cause) throws Exception {
-        model = serverController.getModel();
+        Model model = serverController.getModel();
 
         if (Network.disconnectedClient()){
 
@@ -54,13 +51,13 @@ private Event restart;
 
         String winner;
         if(model.getNumberOfPlayers()==4){
-            winner=model.team_winner();
+            winner= model.team_winner();
         }
         else {
             winner= model.player_winner();
         }
 
-        for(int i=0;i<model.getPlayers().size();i++){
+        for(int i = 0; i< model.getPlayers().size(); i++){
 
             ClientModel currentPlayerData = connectionModel.findPlayer(model.getPlayers().get(i).getNickname());
 

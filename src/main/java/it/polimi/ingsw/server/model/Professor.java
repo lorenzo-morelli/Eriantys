@@ -40,11 +40,11 @@ public class Professor {
         }
         else{
             switch (heldBy.getSchoolBoard().getTowerColor()){
-                case WHITE: result.append(ANSI_WHITE+heldBy.getNickname()+ANSI_RESET);
+                case WHITE: result.append(ANSI_WHITE).append(heldBy.getNickname()).append(ANSI_RESET);
                     break;
-                case GREY:  result.append(ANSI_GRAY +heldBy.getNickname()+ANSI_RESET);
+                case GREY:  result.append(ANSI_GRAY).append(heldBy.getNickname()).append(ANSI_RESET);
                     break;
-                case BLACK: result.append(ANSI_BLACK +heldBy.getNickname()+ANSI_RESET);
+                case BLACK: result.append(ANSI_BLACK).append(heldBy.getNickname()).append(ANSI_RESET);
                     break;
             }
         }

@@ -17,17 +17,15 @@ import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
 
 public class StudentPhase extends State {
-    private Event studentPhaseEnded, gameEnd;
-    private Model model;
+    private final Event studentPhaseEnded, gameEnd;
 
-    private ConnectionModel connectionModel;
-    private Controller controller;
+    private final ConnectionModel connectionModel;
 
-    private Gson json;
-    private ServerController serverController;
+    private final Gson json;
+    private final ServerController serverController;
 
     private ParametersFromNetwork message;
-    private Event reset = new ClientDisconnection();
+    private final Event reset = new ClientDisconnection();
 
     public Event studentPhaseEnded() {
         return studentPhaseEnded;
@@ -38,7 +36,7 @@ public class StudentPhase extends State {
     public StudentPhase(ServerController serverController) {
         super("[Move students]");
         this.serverController = serverController;
-        this.controller = serverController.getFsm();
+        Controller controller = ServerController.getFsm();
         this.connectionModel = serverController.getConnectionModel();
         studentPhaseEnded = new Event("game created");
         studentPhaseEnded.setStateEventListener(controller);
@@ -54,7 +52,7 @@ public class StudentPhase extends State {
     @Override
     public IEvent entryAction(IEvent cause) throws Exception {
         int moves;
-        model = serverController.getModel();
+        Model model = serverController.getModel();
         // retrive the current player
         Player currentPlayer = model.getcurrentPlayer();
         // retrive data of the current player
@@ -90,13 +88,13 @@ public class StudentPhase extends State {
 
             // dati ricevuti da network
             currentPlayerData = json.fromJson(message.getParameter(0),ClientModel.class);
-            /**
-             * type:
-             * SCHOOL : il client vuole muovere uno studente dalla entrance space alla SCHOOL
-             * ISLAND : il client vuole muovere uno studente dalla entrance space alla ISLAND
-             *
-             * supposizioni: il client ha già scelto il colore tra quelli disponibili, ed il
-             * server lo può trovare in currentPlayerData.getChoosedColor()
+            /*
+              type:
+              SCHOOL : il client vuole muovere uno studente dalla entrance space alla SCHOOL
+              ISLAND : il client vuole muovere uno studente dalla entrance space alla ISLAND
+
+              supposizioni: il client ha già scelto il colore tra quelli disponibili, ed il
+              server lo può trovare in currentPlayerData.getChoosedColor()
              */
             String type = currentPlayerData.getTypeOfRequest();
             System.out.println("HO RICEVUTO " + type + " " + currentPlayerData.getChoosedColor());
@@ -105,25 +103,25 @@ public class StudentPhase extends State {
                 if(model.getGameMode().equals(GameMode.EXPERT) && currentPlayer.getSchoolBoard().getDinnerTable().numStudentsbycolor(currentPlayerData.getChoosedColor())%3==0){
                     currentPlayer.improveCoin();
                 }
-                model.getTable().checkProfessor(currentPlayerData.getChoosedColor(),model.getPlayers());
+                model.getTable().checkProfessor(currentPlayerData.getChoosedColor(), model.getPlayers());
             }
             else if(type.equals("ISLAND")){
                 model.getTable().load_island(currentPlayer,currentPlayerData.getChoosedColor(),currentPlayerData.getChoosedIsland());
             }
             else{
                 i--;
-                for(int j = 0; j<model.getTable().getCharachter().size(); j++){
-                    if(model.getTable().getCharachter().get(i).getName().equals(type)){
+                for(int j = 0; j< model.getTable().getCharachter().size(); j++){
+                    if(model.getTable().getCharachter().get(j).getName().equals(type)){
                         switch (type){
-                            case "MUSHROOMHUNTER": ((MushroomHunter) model.getTable().getCharachter().get(j)).useEffect(currentPlayer,currentPlayerData.getChoosedColor(),model.getTable());
+                            case "MUSHROOMHUNTER": ((MushroomHunter) model.getTable().getCharachter().get(j)).useEffect(currentPlayer,currentPlayerData.getChoosedColor(), model.getTable());
                             break;
-                            case "THIEF": ((Thief) model.getTable().getCharachter().get(j)).useEffect(currentPlayer,model.getPlayers(),currentPlayerData.getChoosedColor(),model.getTable());
+                            case "THIEF": ((Thief) model.getTable().getCharachter().get(j)).useEffect(currentPlayer, model.getPlayers(),currentPlayerData.getChoosedColor(), model.getTable());
                             break;
-                            case "CENTAUR": ((Centaur) model.getTable().getCharachter().get(j)).useEffect(currentPlayer,model.getTable());
+                            case "CENTAUR": ((Centaur) model.getTable().getCharachter().get(j)).useEffect(currentPlayer, model.getTable());
                                 break;
-                            case "FARMER": ((Farmer) model.getTable().getCharachter().get(j)).useEffect(currentPlayer,model.getTable(),model.getPlayers());
+                            case "FARMER": ((Farmer) model.getTable().getCharachter().get(j)).useEffect(currentPlayer, model.getTable(), model.getPlayers());
                                 break;
-                            case "KNIGHT": ((Knight) model.getTable().getCharachter().get(j)).useEffect(currentPlayer,model.getTable());
+                            case "KNIGHT": ((Knight) model.getTable().getCharachter().get(j)).useEffect(currentPlayer, model.getTable());
                                 break;
                             case "MINSTRELL": ((Minstrell) model.getTable().getCharachter().get(j)).useEffect(currentPlayer,currentPlayerData.getColors2(),currentPlayerData.getColors1());
                                 break;
@@ -131,13 +129,13 @@ public class StudentPhase extends State {
                                 break;
                             case "POSTMAN": ((Postman)  model.getTable().getCharachter().get(j)).useEffect(currentPlayer);
                                 break;
-                            case "PRINCESS": ((Princess)  model.getTable().getCharachter().get(j)).useEffect(currentPlayer,currentPlayerData.getChoosedColor(),model.getTable());
+                            case "PRINCESS": ((Princess)  model.getTable().getCharachter().get(j)).useEffect(currentPlayer,currentPlayerData.getChoosedColor(), model.getTable(), model.getPlayers());
                                 break;
-                            case "GRANNY": ((Granny)  model.getTable().getCharachter().get(j)).useEffect(currentPlayer,currentPlayerData.getChoosedIsland(),model.getTable());
+                            case "GRANNY": ((Granny)  model.getTable().getCharachter().get(j)).useEffect(currentPlayer,currentPlayerData.getChoosedIsland(), model.getTable());
                                 break;
-                            case "MONK": ((Monk)  model.getTable().getCharachter().get(j)).useEffect(currentPlayer,currentPlayerData.getChoosedColor(),currentPlayerData.getChoosedIsland(),model.getTable());
+                            case "MONK": ((Monk)  model.getTable().getCharachter().get(j)).useEffect(currentPlayer,currentPlayerData.getChoosedColor(),currentPlayerData.getChoosedIsland(), model.getTable());
                                 break;
-                            case "HERALD": boolean check= ((Herald)  model.getTable().getCharachter().get(j)).useEffect(currentPlayer,currentPlayerData.getChoosedIsland(),model);
+                            case "HERALD": boolean check= ((Herald)  model.getTable().getCharachter().get(j)).useEffect(currentPlayer,currentPlayerData.getChoosedIsland(), model);
                                 if(check) {
                                     gameEnd().fireStateEvent();
                                     return super.entryAction(cause);

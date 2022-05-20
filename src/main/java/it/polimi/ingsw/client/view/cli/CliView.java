@@ -211,8 +211,8 @@ public class CliView implements View{
                     }
 
                     PeopleColor choosedColor = null;
-
-                    switch (CommandPrompt.gotFromTerminal()) {
+                    String terminalinput=CommandPrompt.gotFromTerminal();
+                    switch (terminalinput) {
                         case "RED":
                             choosedColor = PeopleColor.RED;
                             break;
@@ -229,61 +229,61 @@ public class CliView implements View{
                             choosedColor = PeopleColor.PINK;
                             break;
                         default:
-                            System.out.println("Scegli la carta che vorresti utilizzare: \n");
+                            System.out.println("\n\n\n\nScegli la carta che vorresti utilizzare: \n");
                             ArrayList<String> avaiable = new ArrayList<>();
                             for (int i = 0; i < networkClientModel.getServermodel().getTable().getCharachter().size(); i++) {
                                 if (networkClientModel.getServermodel().getTable().getCharachter().get(i).getCost() <= networkClientModel.getServermodel().getcurrentPlayer().getCoins()) {
-                                    if (networkClientModel.getServermodel().getTable().getCharachter().get(i) instanceof Monk) {
-                                        System.out.println("MONK: inserisci MONK + Colore scelto separati da uno spazio");
+                                    if (networkClientModel.getServermodel().getTable().getCharachter().get(i).getName().equals("MONK")) {
+                                        System.out.println("MONK - EFFETTO: Prendi uno studente da questa carta e piazzalo su un isola a tua scelta.\n COMMAND: Inserisci MONK , colore scelto e numero dell'isola separati da uno spazio.\n\n");
                                         avaiable.add("MONK");
                                     }
-                                    if (networkClientModel.getServermodel().getTable().getCharachter().get(i) instanceof Princess) {
-                                        System.out.println("PRINCESS: inserisci PRINCESS + Colore scelto separati da uno spazio");
+                                    if (networkClientModel.getServermodel().getTable().getCharachter().get(i).getName().equals("PRINCESS")) {
+                                        System.out.println("PRINCESS - EFFETTO: Prendi uno studente da questa carta e piazzalo nella tua Sala.\nCOMMAND: Inserisci PRINCESS e colore scelto separati da uno spazio.\n\n");
                                         avaiable.add("PRINCESS");
                                     }
-                                    if (networkClientModel.getServermodel().getTable().getCharachter().get(i) instanceof MushroomHunter) {
-                                        System.out.println("MUSHROOMHUNTER: inserisci MUSHROOMHUNTER + Colore scelto separati da uno spazio");
+                                    if (networkClientModel.getServermodel().getTable().getCharachter().get(i).getName().equals("MUSHROOMHUNTER")) {
+                                        System.out.println("MUSHROOMHUNTER - EFFETTO: Scelgi un colore di studente; in questo turno, durante il calcolo dell'influenza, quel colore non fornisce influenza.\n COMMAND: Inserisci MUSHROOMHUNTER e colore scelto separati da uno spazio.\n\n");
                                         avaiable.add("MUSHROOMHUNTER");
                                     }
-                                    if (networkClientModel.getServermodel().getTable().getCharachter().get(i) instanceof Thief) {
-                                        System.out.println("THIEF: inserisci THIEF + Colore scelto separati da uno spazio");
+                                    if (networkClientModel.getServermodel().getTable().getCharachter().get(i).getName().equals("THIEF")) {
+                                        System.out.println("THIEF - EFFETTO: Scegli un colore di studente; ogni giocatore (incluso te) deve rimettere nel sacchetto tre studenti di quel colore presenti nella Sala (o tutti quelli che ha se ne avesse meno di tre).\nCOMMAND: Inserisci THIEF e colore scelto separati da uno spazio\n\n");
                                         avaiable.add("THIEF");
                                     }
-                                    if (networkClientModel.getServermodel().getTable().getCharachter().get(i) instanceof Farmer) {
-                                        System.out.println("FARMER: inserisci FARMER");
+                                    if (networkClientModel.getServermodel().getTable().getCharachter().get(i).getName().equals("FARMER")) {
+                                        System.out.println("FARMER - EFFETTO: Durante questo turno, prendi il controllo dei professori anche se nella tua sala hai lo stesso numero di studenti del giocatore che li controlla in quel momento.\nCOMMAND: inserisci FARMER.\n\n");
                                         avaiable.add("FARMER");
                                     }
-                                    if (networkClientModel.getServermodel().getTable().getCharachter().get(i) instanceof Centaur) {
-                                        System.out.println("CENTAUR: inserisci CENTAUR");
+                                    if (networkClientModel.getServermodel().getTable().getCharachter().get(i).getName().equals("CENTAUR")) {
+                                        System.out.println("CENTAUR - EFFETTO: Durante il conteggio di un influenza dell'isola le torri presenti non vengono calcolate.\nCOMMAND: inserisci CENTAUR.\n\n");
                                         avaiable.add("CENTAUR");
                                     }
-                                    if (networkClientModel.getServermodel().getTable().getCharachter().get(i) instanceof Knight) {
-                                        System.out.println("KNIGHT: inserisci KNIGHT");
+                                    if (networkClientModel.getServermodel().getTable().getCharachter().get(i).getName().equals("KNIGHT")) {
+                                        System.out.println("KNIGHT - EFFETTO: In questo turno, durante il calcolo dell'influenza, hai due punti di influenza addizionali.\nCOMMAND: inserisci KNIGHT.\n\n");
                                         avaiable.add("KNIGHT");
                                     }
-                                    if (networkClientModel.getServermodel().getTable().getCharachter().get(i) instanceof Postman) {
-                                        System.out.println("POSTMAN: inserisci POSTMAN");
+                                    if (networkClientModel.getServermodel().getTable().getCharachter().get(i).getName().equals("POSTMAN")) {
+                                        System.out.println("POSTMAN - EFFETTO: Puoi muovere madre natura fino a due isole addizionali rispetto a quanto indicato sulla carta assistente che hai giocato.\nCOMMAND: inserisci POSTMAN.\n\n");
                                         avaiable.add("POSTMAN");
                                     }
-                                    if (networkClientModel.getServermodel().getTable().getCharachter().get(i) instanceof Granny) {
-                                        System.out.println("GRANNY: inserisci GRANNY + IndiceIsola separati da uno spazio");
+                                    if (networkClientModel.getServermodel().getTable().getCharachter().get(i).getName().equals("GRANNY")) {
+                                        System.out.println("GRANNY - EFFETTO: Piazza un divieto su un isola a tua scelta. La prima volta che madre natura termina il suo movimento li l'influenza non verrà calcolata e il divieto verrà reinserito in quetsa carta.\nCOMMAND: inserisci GRANNY e numero dell'isola separati da uno spazio.\n\n");
                                         avaiable.add("GRANNY");
                                     }
-                                    if (networkClientModel.getServermodel().getTable().getCharachter().get(i) instanceof Herald) {
-                                        System.out.println("HERALD: inserisci HERALD + IndiceIsola scelto separati da uno spazio");
+                                    if (networkClientModel.getServermodel().getTable().getCharachter().get(i).getName().equals("HERALD")) {
+                                        System.out.println("HERALD - EFFETTO: Scegli un isola e calcola la maggioranza come se madre natura avesse terminato il suo movimento li. In questo turno madre natura si muovera come di consueto e nell'isola dove terminerà il suo movimento la maggioranza verrà normalmente calcolata.\nCOMMAND: inserisci HERALD e numero dell'isola separati da uno spazio.\n\n");
                                         avaiable.add("HERALD");
                                     }
-                                    if (networkClientModel.getServermodel().getTable().getCharachter().get(i) instanceof Jester) {
-                                        System.out.println("JESTER: inserisci JESTER + Inserisci i colori da scambiare da EntranceTable e poi i colori da scambiare da questa carta tutti separati da uno spazio (nota il numero di colori di uno e dell'altro deve essere lo stesso");
+                                    if (networkClientModel.getServermodel().getTable().getCharachter().get(i).getName().equals("JESTER")) {
+                                        System.out.println("JESTER - EFFETTO: Puoi prendere fino a 3 studenti da questa carta e scambiarli con altrettanti studenti presenti nel tuo Ingresso.\nCOMMAND: inserisci JESTER ,di seguito i colori da scambiare da Ingresso e poi i colori da scambiare da questa Carta, tutti separati da uno spazio (il numero di colori di uno e dell'altro deve essere lo stesso).\n\n");
                                         avaiable.add("JESTER");
                                     }
-                                    if (networkClientModel.getServermodel().getTable().getCharachter().get(i) instanceof Minstrell) {
-                                        System.out.println("MINSTRELL: inserisci MINSTRELL + Inserisci i colori da scambiare da EntranceTable e poi i colori da scambiare da Dinner Table tutti separati da uno spazio (nota il numero di colori di uno e dell'altro deve essere lo stesso");
+                                    if (networkClientModel.getServermodel().getTable().getCharachter().get(i).getName().equals("MINSTRELL")) {
+                                        System.out.println("MINSTRELL - EFFETTO: Puoi scambiare fra loro fino a due studenti presenti nella tua Sala e nel tuo Ingresso.\nCOMMAND: Inserisci MINSTRELL ,di seguito i colori da scambiare da Ingresso e poi i colori da scambiare da Sala tutti separati da uno spazio (il numero di colori di uno e dell'altro deve essere lo stesso).\n\n");
                                         avaiable.add("MINSTRELL");
                                     }
                                 }
                             }
-                            CommandPrompt.ask("Scegliere la carta personaggio seguendo le indicazioni, un qualsiasi altra riga se si vuole tornare indietro","CHARACHTER");
+                            CommandPrompt.ask("Scegliere la carta personaggio seguendo le indicazioni, un qualsiasi altra riga se si vuole tornare indietro","CHARACTER>");
                             parsedStrings =
                                     new ArrayList<String>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
                             if(!avaiable.contains(parsedStrings.get(0))) {
@@ -329,8 +329,46 @@ public class CliView implements View{
                                     json = new Gson();
                                     isUsed=true;
                                     Network.send(json.toJson(networkClientModel));
-                                break;
+                                    break;
                                 case "MONK":
+                                    if(!(parsedStrings.size()==3) || !(Objects.equals(parsedStrings.get(1), "RED") || Objects.equals(parsedStrings.get(1), "PINK") || Objects.equals(parsedStrings.get(1), "GREEN") || Objects.equals(parsedStrings.get(1), "YELLOW") || Objects.equals(parsedStrings.get(1), "BLUE")) || (Integer.parseInt(parsedStrings.get(2))<1 || Integer.parseInt(parsedStrings.get(2))>networkClientModel.getServermodel().getTable().getIslands().size())) {
+                                        System.out.println("formato non valido, scelta carta rifiutata !!!!");
+                                        TimeUnit.SECONDS.sleep(2);
+                                        requestToMe();
+                                        return;
+                                    }
+                                    Color=null;
+                                    switch (parsedStrings.get(1)) {
+                                        case "RED":
+                                            Color = PeopleColor.RED;
+                                            break;
+                                        case "GREEN":
+                                            Color = PeopleColor.GREEN;
+                                            break;
+                                        case "PINK":
+                                            Color = PeopleColor.PINK;
+                                            break;
+                                        case "BLUE":
+                                            Color = PeopleColor.BLUE;
+                                            break;
+                                        case "YELLOW":
+                                            Color = PeopleColor.YELLOW;
+                                            break;
+                                    }
+                                    if(modelCard.getName().equals("MONK") && networkClientModel.getServermodel().getTable().getMonkSet().numStudentsbycolor(Color)==0){
+                                        System.out.println("La carta non possiede il colore che hai scelto, scelta carta rifiutata !!!!");
+                                        TimeUnit.SECONDS.sleep(2);
+                                        requestToMe();
+                                        return;
+                                    }
+                                    networkClientModel.setTypeOfRequest(parsedStrings.get(0));
+                                    networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                                    networkClientModel.setChoosedColor(Color);
+                                    networkClientModel.setChoosedIsland(Integer.parseInt(parsedStrings.get(2))-1);
+                                    json = new Gson();
+                                    isUsed=true;
+                                    Network.send(json.toJson(networkClientModel));
+                                    break;
                                 case "PRINCESS":
                                     if(!(parsedStrings.size()==2) || !(Objects.equals(parsedStrings.get(1), "RED") || Objects.equals(parsedStrings.get(1), "PINK") || Objects.equals(parsedStrings.get(1), "GREEN") || Objects.equals(parsedStrings.get(1), "YELLOW") || Objects.equals(parsedStrings.get(1), "BLUE"))) {
                                         System.out.println("formato non valido, scelta carta rifiutata !!!!");
@@ -356,7 +394,7 @@ public class CliView implements View{
                                             Color = PeopleColor.YELLOW;
                                             break;
                                     }
-                                    if(((Monk) modelCard).getSet().numStudentsbycolor(Color)==0){
+                                    if(modelCard.getName().equals("PRINCESS") && networkClientModel.getServermodel().getTable().getPrincessSet().numStudentsbycolor(Color)==0){
                                         System.out.println("La carta non possiede il colore che hai scelto, scelta carta rifiutata !!!!");
                                         TimeUnit.SECONDS.sleep(2);
                                         requestToMe();
@@ -368,7 +406,7 @@ public class CliView implements View{
                                     json = new Gson();
                                     isUsed=true;
                                     Network.send(json.toJson(networkClientModel));
-                                break;
+                                    break;
                                 case "FARMER":
                                 case "CENTAUR":
                                 case "KNIGHT":
@@ -384,7 +422,7 @@ public class CliView implements View{
                                     json = new Gson();
                                     isUsed=true;
                                     Network.send(json.toJson(networkClientModel));
-                                break;
+                                    break;
                                 case "GRANNY":
                                 case "HERALD":
                                     if(!(parsedStrings.size()==2)  || (Integer.parseInt(parsedStrings.get(1))<1 || Integer.parseInt(parsedStrings.get(1))>networkClientModel.getServermodel().getTable().getIslands().size())) {
@@ -393,13 +431,25 @@ public class CliView implements View{
                                         requestToMe();
                                         return;
                                     }
+                                    if(modelCard.getName().equals("GRANNY") && networkClientModel.getServermodel().getTable().getIslands().get(Integer.parseInt(parsedStrings.get(1))-1).isBlocked()){
+                                        System.out.println("isola già bloccata, scelta carta rifiutata !!!!");
+                                        TimeUnit.SECONDS.sleep(2);
+                                        requestToMe();
+                                        return;
+                                    }
+                                    if(modelCard.getName().equals("GRANNY") && networkClientModel.getServermodel().getTable().getNumDivieti()==0){
+                                        System.out.println("non ci sono divieti posizionabili, scelta carta rifiutata !!!!");
+                                        TimeUnit.SECONDS.sleep(2);
+                                        requestToMe();
+                                        return;
+                                    }
                                     networkClientModel.setTypeOfRequest(parsedStrings.get(0));
                                     networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
-                                    networkClientModel.setChoosedIsland(Integer.parseInt(parsedStrings.get(1)));
+                                    networkClientModel.setChoosedIsland(Integer.parseInt(parsedStrings.get(1))-1);
                                     json = new Gson();
                                     isUsed=true;
                                     Network.send(json.toJson(networkClientModel));
-                                break;
+                                    break;
                                 case "MINSTRELL":
                                 case "JESTER":
                                     int max=2;
@@ -408,7 +458,7 @@ public class CliView implements View{
                                     ArrayList<PeopleColor> colors2=new ArrayList<>();
                                     if(parsedStrings.get(0).equals("JESTER")) {
                                         max = 3;
-                                        destination=((Jester) modelCard).getSet();
+                                        destination=networkClientModel.getServermodel().getTable().getJesterSet();
                                     }
                                     if(parsedStrings.size()<3 || parsedStrings.size()>(1+2*max) || parsedStrings.size()%2==0) {
                                         System.out.println("formato non valido, scelta carta rifiutata !!!!");
@@ -419,13 +469,13 @@ public class CliView implements View{
                                     for(int i=1;i<parsedStrings.size();i++) {
                                         switch (parsedStrings.get(i)) {
                                             case "RED":
-                                            if(i<=(parsedStrings.size()-1)/2) {
-                                                colors1.add(PeopleColor.RED);
-                                            }
-                                            else {
-                                                colors2.add(PeopleColor.RED);
-                                            }
-                                            break;
+                                                if(i<=(parsedStrings.size()-1)/2) {
+                                                    colors1.add(PeopleColor.RED);
+                                                }
+                                                else {
+                                                    colors2.add(PeopleColor.RED);
+                                                }
+                                                break;
                                             case "GREEN":
                                                 if(i<=(parsedStrings.size()-1)/2) {
                                                     colors1.add(PeopleColor.GREEN);
@@ -473,12 +523,12 @@ public class CliView implements View{
                                     json = new Gson();
                                     isUsed=true;
                                     Network.send(json.toJson(networkClientModel));
-                                break;
+                                    break;
                             }
                             break;
                     }
                     //lo flaggo come messaggio di risposta
-                    if (!Objects.equals(CommandPrompt.gotFromTerminal(), "CARD")) {
+                    if (!terminalinput.equals("CARD")) {
                         if (networkClientModel.getServermodel().getcurrentPlayer().getSchoolBoard().getEntranceSpace().numStudentsbycolor(choosedColor) == 0) {
                             System.out.println("Si è inserito un colore non presente tra quelli disponibili, reinserire i dati con più attenzione !!!!");
                             TimeUnit.SECONDS.sleep(2);
@@ -521,6 +571,10 @@ public class CliView implements View{
                             networkClientModel.setChoosedIsland(Integer.parseInt(CommandPrompt.gotFromTerminal()) - 1);
                         }
                         networkClientModel.setTypeOfRequest(command);
+                        networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                        networkClientModel.setChoosedColor(choosedColor);
+                        json = new Gson();
+                        Network.send(json.toJson(networkClientModel));
                     }
                 }
                     else {
@@ -633,254 +687,303 @@ public class CliView implements View{
                     System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO:\n " + "E' IL TUO TURNO - MOTHER PHASE" + "\n\nMOSSE ALTRI GIOCATORI: " + getResponce()));
                     CommandPrompt.ask("Scegliere il numero di mosse di cui far spostare madre natura  OPPURE inserisci CARD per usare una carta personaggio", "mosse> ");
                     if (CommandPrompt.gotFromTerminal().equals("CARD")) {
-                        System.out.println("Scegli la carta che vorresti utilizzare: \n");
-                        ArrayList<String> avaiable = new ArrayList<>();
-                        for (int i = 0; i < networkClientModel.getServermodel().getTable().getCharachter().size(); i++) {
-                            if (networkClientModel.getServermodel().getTable().getCharachter().get(i).getCost() <= networkClientModel.getServermodel().getcurrentPlayer().getCoins()) {
-                                if (networkClientModel.getServermodel().getTable().getCharachter().get(i) instanceof Monk) {
-                                    System.out.println("MONK: inserisci MONK + Colore scelto separati da uno spazio");
-                                    avaiable.add("MONK");
-                                }
-                                if (networkClientModel.getServermodel().getTable().getCharachter().get(i) instanceof Princess) {
-                                    System.out.println("PRINCESS: inserisci PRINCESS + Colore scelto separati da uno spazio");
-                                    avaiable.add("PRINCESS");
-                                }
-                                if (networkClientModel.getServermodel().getTable().getCharachter().get(i) instanceof MushroomHunter) {
-                                    System.out.println("MUSHROOMHUNTER: inserisci MUSHROOMHUNTER + Colore scelto separati da uno spazio");
-                                    avaiable.add("MUSHROOMHUNTER");
-                                }
-                                if (networkClientModel.getServermodel().getTable().getCharachter().get(i) instanceof Thief) {
-                                    System.out.println("THIEF: inserisci THIEF + Colore scelto separati da uno spazio");
-                                    avaiable.add("THIEF");
-                                }
-                                if (networkClientModel.getServermodel().getTable().getCharachter().get(i) instanceof Farmer) {
-                                    System.out.println("FARMER: inserisci FARMER");
-                                    avaiable.add("FARMER");
-                                }
-                                if (networkClientModel.getServermodel().getTable().getCharachter().get(i) instanceof Centaur) {
-                                    System.out.println("CENTAUR: inserisci CENTAUR");
-                                    avaiable.add("CENTAUR");
-                                }
-                                if (networkClientModel.getServermodel().getTable().getCharachter().get(i) instanceof Knight) {
-                                    System.out.println("KNIGHT: inserisci KNIGHT");
-                                    avaiable.add("KNIGHT");
-                                }
-                                if (networkClientModel.getServermodel().getTable().getCharachter().get(i) instanceof Postman) {
-                                    System.out.println("POSTMAN: inserisci POSTMAN");
-                                    avaiable.add("POSTMAN");
-                                }
-                                if (networkClientModel.getServermodel().getTable().getCharachter().get(i) instanceof Granny) {
-                                    System.out.println("GRANNY: inserisci GRANNY + IndiceIsola separati da uno spazio");
-                                    avaiable.add("GRANNY");
-                                }
-                                if (networkClientModel.getServermodel().getTable().getCharachter().get(i) instanceof Herald) {
-                                    System.out.println("HERALD: inserisci HERALD + IndiceIsola scelto separati da uno spazio");
-                                    avaiable.add("HERALD");
-                                }
-                                if (networkClientModel.getServermodel().getTable().getCharachter().get(i) instanceof Jester) {
-                                    System.out.println("JESTER: inserisci JESTER + Inserisci i colori da scambiare da Dinner Table e poi i colori da scambiare da questa carta tutti separati da uno spazio (nota il numero di colori di uno e dell'altro deve essere lo stesso");
-                                    avaiable.add("JESTER");
-                                }
-                                if (networkClientModel.getServermodel().getTable().getCharachter().get(i) instanceof Minstrell) {
-                                    System.out.println("MINSTRELL: inserisci MINSTRELL + Inserisci i colori da scambiare da Dinner Table e poi i colori da scambiare da EntranceTable tutti separati da uno spazio (nota il numero di colori di uno e dell'altro deve essere lo stesso");
-                                    avaiable.add("MINSTRELL");
-                                }
-                            }
-                        }
-                        CommandPrompt.ask("Scegliere la carta personaggio seguendo le indicazioni, un qualsiasi altra riga se si vuole tornare indietro","CHARACHTER");
-                        parsedStrings =
-                                new ArrayList<String>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
-                        if(!avaiable.contains(parsedStrings.get(0))) {
-                            requestToMe();
-                            return;
-                        }
-                        CharacterCard modelCard=null;
-                        for(int i = 0; i<networkClientModel.getServermodel().getTable().getCharachter().size(); i++){
-                            if(networkClientModel.getServermodel().getTable().getCharachter().get(i).getName().equals(parsedStrings.get(0))){
-                                modelCard=networkClientModel.getServermodel().getTable().getCharachter().get(i);
-                            }
-                        }
-                        switch (parsedStrings.get(0)) {
-                            case "MUSHROOMHUNTER":
-                            case "THIEF":
-                                if(!(parsedStrings.size()==2) || !(Objects.equals(parsedStrings.get(1), "RED") || Objects.equals(parsedStrings.get(1), "PINK") || Objects.equals(parsedStrings.get(1), "GREEN") || Objects.equals(parsedStrings.get(1), "YELLOW") || Objects.equals(parsedStrings.get(1), "BLUE"))) {
-                                    System.out.println("formato non valido, scelta carta rifiutata !!!!");
-                                    TimeUnit.SECONDS.sleep(2);
-                                    requestToMe();
-                                    return;
-                                }
-                                PeopleColor Color=null;
-                                switch (parsedStrings.get(1)) {
-                                    case "RED":
-                                        Color = PeopleColor.RED;
-                                        break;
-                                    case "GREEN":
-                                        Color = PeopleColor.GREEN;
-                                        break;
-                                    case "PINK":
-                                        Color = PeopleColor.PINK;
-                                        break;
-                                    case "BLUE":
-                                        Color = PeopleColor.BLUE;
-                                        break;
-                                    case "YELLOW":
-                                        Color = PeopleColor.YELLOW;
-                                        break;
-                                }
-                                networkClientModel.setTypeOfRequest(parsedStrings.get(0));
-                                networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
-                                networkClientModel.setChoosedColor(Color);
-                                json = new Gson();
-                                isUsed=true;
-                                Network.send(json.toJson(networkClientModel));
-                                break;
-                            case "MONK":
-                            case "PRINCESS":
-                                if(!(parsedStrings.size()==2) || !(Objects.equals(parsedStrings.get(1), "RED") || Objects.equals(parsedStrings.get(1), "PINK") || Objects.equals(parsedStrings.get(1), "GREEN") || Objects.equals(parsedStrings.get(1), "YELLOW") || Objects.equals(parsedStrings.get(1), "BLUE"))) {
-                                    System.out.println("formato non valido, scelta carta rifiutata !!!!");
-                                    TimeUnit.SECONDS.sleep(2);
-                                    requestToMe();
-                                    return;
-                                }
-                                Color=null;
-                                switch (parsedStrings.get(1)) {
-                                    case "RED":
-                                        Color = PeopleColor.RED;
-                                        break;
-                                    case "GREEN":
-                                        Color = PeopleColor.GREEN;
-                                        break;
-                                    case "PINK":
-                                        Color = PeopleColor.PINK;
-                                        break;
-                                    case "BLUE":
-                                        Color = PeopleColor.BLUE;
-                                        break;
-                                    case "YELLOW":
-                                        Color = PeopleColor.YELLOW;
-                                        break;
-                                }
-                                if(((Monk) modelCard).getSet().numStudentsbycolor(Color)==0){
-                                    System.out.println("La carta non possiede il colore che hai scelto, scelta carta rifiutata !!!!");
-                                    TimeUnit.SECONDS.sleep(2);
-                                    requestToMe();
-                                    return;
-                                }
-                                networkClientModel.setTypeOfRequest(parsedStrings.get(0));
-                                networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
-                                networkClientModel.setChoosedColor(Color);
-                                json = new Gson();
-                                isUsed=true;
-                                Network.send(json.toJson(networkClientModel));
-                                break;
-                            case "FARMER":
-                            case "CENTAUR":
-                            case "KNIGHT":
-                            case "POSTMAN":
-                                if(parsedStrings.size()!=1 ) {
-                                    System.out.println("formato non valido, scelta carta rifiutata !!!!");
-                                    TimeUnit.SECONDS.sleep(2);
-                                    requestToMe();
-                                    return;
-                                }
-                                networkClientModel.setTypeOfRequest(parsedStrings.get(0));
-                                networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
-                                json = new Gson();
-                                isUsed=true;
-                                Network.send(json.toJson(networkClientModel));
-                                break;
-                            case "GRANNY":
-                            case "HERALD":
-                                if(!(parsedStrings.size()==2)  || (Integer.parseInt(parsedStrings.get(1))<1 || Integer.parseInt(parsedStrings.get(1))>networkClientModel.getServermodel().getTable().getIslands().size())) {
-                                    System.out.println("formato non valido, scelta carta rifiutata !!!!");
-                                    TimeUnit.SECONDS.sleep(2);
-                                    requestToMe();
-                                    return;
-                                }
-                                networkClientModel.setTypeOfRequest(parsedStrings.get(0));
-                                networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
-                                networkClientModel.setChoosedIsland(Integer.parseInt(parsedStrings.get(1)));
-                                json = new Gson();
-                                isUsed=true;
-                                Network.send(json.toJson(networkClientModel));
-                                break;
-                            case "MINSTRELL":
-                            case "JESTER":
-                                int max=2;
-                                StudentSet destination= networkClientModel.getServermodel().getcurrentPlayer().getSchoolBoard().getEntranceSpace();
-                                ArrayList<PeopleColor> colors1= new ArrayList<>();
-                                ArrayList<PeopleColor> colors2=new ArrayList<>();
-                                if(parsedStrings.get(0).equals("JESTER")) {
-                                    max = 3;
-                                    destination=((Jester) modelCard).getSet();
-                                }
-                                if(parsedStrings.size()<3 || parsedStrings.size()>(1+2*max) || parsedStrings.size()%2==0) {
-                                    System.out.println("formato non valido, scelta carta rifiutata !!!!");
-                                    TimeUnit.SECONDS.sleep(2);
-                                    requestToMe();
-                                    return;
-                                }
-                                for(int i=1;i<parsedStrings.size();i++) {
-                                    switch (parsedStrings.get(i)) {
-                                        case "RED":
-                                            if(i<=(parsedStrings.size()-1)/2) {
-                                                colors1.add(PeopleColor.RED);
-                                            }
-                                            else {
-                                                colors2.add(PeopleColor.RED);
-                                            }
-                                            break;
-                                        case "GREEN":
-                                            if(i<=(parsedStrings.size()-1)/2) {
-                                                colors1.add(PeopleColor.GREEN);
-                                            }
-                                            else {
-                                                colors2.add(PeopleColor.GREEN);
-                                            }
-                                            break;
-                                        case "BLUE":
-                                            if(i<=(parsedStrings.size()-1)/2) {
-                                                colors1.add(PeopleColor.BLUE);
-                                            }
-                                            else {
-                                                colors2.add(PeopleColor.BLUE);
-                                            }
-                                            break;
-                                        case "YELLOW":
-                                            if(i<=(parsedStrings.size()-1)/2) {
-                                                colors1.add(PeopleColor.YELLOW);
-                                            }
-                                            else {
-                                                colors2.add(PeopleColor.YELLOW);
-                                            }
-                                            break;
-                                        case "PINK":
-                                            if(i<=(parsedStrings.size()-1)/2) {
-                                                colors1.add(PeopleColor.PINK);
-                                            }
-                                            else {
-                                                colors2.add(PeopleColor.PINK);
-                                            }
-                                            break;
+                            System.out.println("\n\n\n\nScegli la carta che vorresti utilizzare: \n");
+                            ArrayList<String> avaiable = new ArrayList<>();
+                            for (int i = 0; i < networkClientModel.getServermodel().getTable().getCharachter().size(); i++) {
+                                if (networkClientModel.getServermodel().getTable().getCharachter().get(i).getCost() <= networkClientModel.getServermodel().getcurrentPlayer().getCoins()) {
+                                    if (networkClientModel.getServermodel().getTable().getCharachter().get(i).getName().equals("MONK")) {
+                                        System.out.println("MONK - EFFETTO: Prendi uno studente da questa carta e piazzalo su un isola a tua scelta.\n COMMAND: Inserisci MONK , colore scelto e numero dell'isola separati da uno spazio.\n\n");
+                                        avaiable.add("MONK");
+                                    }
+                                    if (networkClientModel.getServermodel().getTable().getCharachter().get(i).getName().equals("PRINCESS")) {
+                                        System.out.println("PRINCESS - EFFETTO: Prendi uno studente da questa carta e piazzalo nella tua Sala.\nCOMMAND: Inserisci PRINCESS e colore scelto separati da uno spazio.\n\n");
+                                        avaiable.add("PRINCESS");
+                                    }
+                                    if (networkClientModel.getServermodel().getTable().getCharachter().get(i).getName().equals("MUSHROOMHUNTER")) {
+                                        System.out.println("MUSHROOMHUNTER - EFFETTO: Scelgi un colore di studente; in questo turno, durante il calcolo dell'influenza, quel colore non fornisce influenza.\n COMMAND: Inserisci MUSHROOMHUNTER e colore scelto separati da uno spazio.\n\n");
+                                        avaiable.add("MUSHROOMHUNTER");
+                                    }
+                                    if (networkClientModel.getServermodel().getTable().getCharachter().get(i).getName().equals("THIEF")) {
+                                        System.out.println("THIEF - EFFETTO: Scegli un colore di studente; ogni giocatore (incluso te) deve rimettere nel sacchetto tre studenti di quel colore presenti nella Sala (o tutti quelli che ha se ne avesse meno di tre).\nCOMMAND: Inserisci THIEF e colore scelto separati da uno spazio\n\n");
+                                        avaiable.add("THIEF");
+                                    }
+                                    if (networkClientModel.getServermodel().getTable().getCharachter().get(i).getName().equals("FARMER")) {
+                                        System.out.println("FARMER - EFFETTO: Durante questo turno, prendi il controllo dei professori anche se nella tua sala hai lo stesso numero di studenti del giocatore che li controlla in quel momento.\nCOMMAND: inserisci FARMER.\n\n");
+                                        avaiable.add("FARMER");
+                                    }
+                                    if (networkClientModel.getServermodel().getTable().getCharachter().get(i).getName().equals("CENTAUR")) {
+                                        System.out.println("CENTAUR - EFFETTO: Durante il conteggio di un influenza dell'isola le torri presenti non vengono calcolate.\nCOMMAND: inserisci CENTAUR.\n\n");
+                                        avaiable.add("CENTAUR");
+                                    }
+                                    if (networkClientModel.getServermodel().getTable().getCharachter().get(i).getName().equals("KNIGHT")) {
+                                        System.out.println("KNIGHT - EFFETTO: In questo turno, durante il calcolo dell'influenza, hai due punti di influenza addizionali.\nCOMMAND: inserisci KNIGHT.\n\n");
+                                        avaiable.add("KNIGHT");
+                                    }
+                                    if (networkClientModel.getServermodel().getTable().getCharachter().get(i).getName().equals("POSTMAN")) {
+                                        System.out.println("POSTMAN - EFFETTO: Puoi muovere madre natura fino a due isole addizionali rispetto a quanto indicato sulla carta assistente che hai giocato.\nCOMMAND: inserisci POSTMAN.\n\n");
+                                        avaiable.add("POSTMAN");
+                                    }
+                                    if (networkClientModel.getServermodel().getTable().getCharachter().get(i).getName().equals("GRANNY")) {
+                                        System.out.println("GRANNY - EFFETTO: Piazza un divieto su un isola a tua scelta. La prima volta che madre natura termina il suo movimento li l'influenza non verrà calcolata e il divieto verrà reinserito in quetsa carta.\nCOMMAND: inserisci GRANNY e numero dell'isola separati da uno spazio.\n\n");
+                                        avaiable.add("GRANNY");
+                                    }
+                                    if (networkClientModel.getServermodel().getTable().getCharachter().get(i).getName().equals("HERALD")) {
+                                        System.out.println("HERALD - EFFETTO: Scegli un isola e calcola la maggioranza come se madre natura avesse terminato il suo movimento li. In questo turno madre natura si muovera come di consueto e nell'isola dove terminerà il suo movimento la maggioranza verrà normalmente calcolata.\nCOMMAND: inserisci HERALD e numero dell'isola separati da uno spazio.\n\n");
+                                        avaiable.add("HERALD");
+                                    }
+                                    if (networkClientModel.getServermodel().getTable().getCharachter().get(i).getName().equals("JESTER")) {
+                                        System.out.println("JESTER - EFFETTO: Puoi prendere fino a 3 studenti da questa carta e scambiarli con altrettanti studenti presenti nel tuo Ingresso.\nCOMMAND: inserisci JESTER ,di seguito i colori da scambiare da Ingresso e poi i colori da scambiare da questa Carta, tutti separati da uno spazio (il numero di colori di uno e dell'altro deve essere lo stesso).\n\n");
+                                        avaiable.add("JESTER");
+                                    }
+                                    if (networkClientModel.getServermodel().getTable().getCharachter().get(i).getName().equals("MINSTRELL")) {
+                                        System.out.println("MINSTRELL - EFFETTO: Puoi scambiare fra loro fino a due studenti presenti nella tua Sala e nel tuo Ingresso.\nCOMMAND: Inserisci MINSTRELL ,di seguito i colori da scambiare da Ingresso e poi i colori da scambiare da Sala tutti separati da uno spazio (il numero di colori di uno e dell'altro deve essere lo stesso).\n\n");
+                                        avaiable.add("MINSTRELL");
                                     }
                                 }
-                                if(!networkClientModel.getServermodel().getcurrentPlayer().getSchoolBoard().getDinnerTable().contains(colors1) || !destination.contains(colors2) ) {
-                                    System.out.println("uno o piu colori scelti non sono presenti, scelta carta rifiutata !!!!");
-                                    TimeUnit.SECONDS.sleep(2);
-                                    requestToMe();
-                                    return;
+                            }
+                            CommandPrompt.ask("Scegliere la carta personaggio seguendo le indicazioni, un qualsiasi altra riga se si vuole tornare indietro","CHARACTER>");
+                            parsedStrings =
+                                    new ArrayList<String>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
+                            if(!avaiable.contains(parsedStrings.get(0))) {
+                                requestToMe();
+                                return;
+                            }
+                            CharacterCard modelCard=null;
+                            for(int i = 0; i<networkClientModel.getServermodel().getTable().getCharachter().size(); i++){
+                                if(networkClientModel.getServermodel().getTable().getCharachter().get(i).getName().equals(parsedStrings.get(0))){
+                                    modelCard=networkClientModel.getServermodel().getTable().getCharachter().get(i);
                                 }
-                                networkClientModel.setTypeOfRequest(parsedStrings.get(0));
-                                networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
-                                networkClientModel.setColors1(colors1);
-                                networkClientModel.setColors2(colors2);
-                                json = new Gson();
-                                isUsed=true;
-                                Network.send(json.toJson(networkClientModel));
-                                break;
-                        }
-                        break;
-
+                            }
+                            switch (parsedStrings.get(0)) {
+                                case "MUSHROOMHUNTER":
+                                case "THIEF":
+                                    if(!(parsedStrings.size()==2) || !(Objects.equals(parsedStrings.get(1), "RED") || Objects.equals(parsedStrings.get(1), "PINK") || Objects.equals(parsedStrings.get(1), "GREEN") || Objects.equals(parsedStrings.get(1), "YELLOW") || Objects.equals(parsedStrings.get(1), "BLUE"))) {
+                                        System.out.println("formato non valido, scelta carta rifiutata !!!!");
+                                        TimeUnit.SECONDS.sleep(2);
+                                        requestToMe();
+                                        return;
+                                    }
+                                    PeopleColor Color=null;
+                                    switch (parsedStrings.get(1)) {
+                                        case "RED":
+                                            Color = PeopleColor.RED;
+                                            break;
+                                        case "GREEN":
+                                            Color = PeopleColor.GREEN;
+                                            break;
+                                        case "PINK":
+                                            Color = PeopleColor.PINK;
+                                            break;
+                                        case "BLUE":
+                                            Color = PeopleColor.BLUE;
+                                            break;
+                                        case "YELLOW":
+                                            Color = PeopleColor.YELLOW;
+                                            break;
+                                    }
+                                    networkClientModel.setTypeOfRequest(parsedStrings.get(0));
+                                    networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                                    networkClientModel.setChoosedColor(Color);
+                                    json = new Gson();
+                                    isUsed=true;
+                                    Network.send(json.toJson(networkClientModel));
+                                    break;
+                                case "MONK":
+                                    if(!(parsedStrings.size()==3) || !(Objects.equals(parsedStrings.get(1), "RED") || Objects.equals(parsedStrings.get(1), "PINK") || Objects.equals(parsedStrings.get(1), "GREEN") || Objects.equals(parsedStrings.get(1), "YELLOW") || Objects.equals(parsedStrings.get(1), "BLUE")) || (Integer.parseInt(parsedStrings.get(2))<1 || Integer.parseInt(parsedStrings.get(2))>networkClientModel.getServermodel().getTable().getIslands().size())) {
+                                        System.out.println("formato non valido, scelta carta rifiutata !!!!");
+                                        TimeUnit.SECONDS.sleep(2);
+                                        requestToMe();
+                                        return;
+                                    }
+                                    Color=null;
+                                    switch (parsedStrings.get(1)) {
+                                        case "RED":
+                                            Color = PeopleColor.RED;
+                                            break;
+                                        case "GREEN":
+                                            Color = PeopleColor.GREEN;
+                                            break;
+                                        case "PINK":
+                                            Color = PeopleColor.PINK;
+                                            break;
+                                        case "BLUE":
+                                            Color = PeopleColor.BLUE;
+                                            break;
+                                        case "YELLOW":
+                                            Color = PeopleColor.YELLOW;
+                                            break;
+                                    }
+                                    if(modelCard.getName().equals("MONK") && networkClientModel.getServermodel().getTable().getMonkSet().numStudentsbycolor(Color)==0){
+                                        System.out.println("La carta non possiede il colore che hai scelto, scelta carta rifiutata !!!!");
+                                        TimeUnit.SECONDS.sleep(2);
+                                        requestToMe();
+                                        return;
+                                    }
+                                    networkClientModel.setTypeOfRequest(parsedStrings.get(0));
+                                    networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                                    networkClientModel.setChoosedColor(Color);
+                                    networkClientModel.setChoosedIsland(Integer.parseInt(parsedStrings.get(2))-1);
+                                    json = new Gson();
+                                    isUsed=true;
+                                    Network.send(json.toJson(networkClientModel));
+                                    break;
+                                case "PRINCESS":
+                                    if(!(parsedStrings.size()==2) || !(Objects.equals(parsedStrings.get(1), "RED") || Objects.equals(parsedStrings.get(1), "PINK") || Objects.equals(parsedStrings.get(1), "GREEN") || Objects.equals(parsedStrings.get(1), "YELLOW") || Objects.equals(parsedStrings.get(1), "BLUE"))) {
+                                        System.out.println("formato non valido, scelta carta rifiutata !!!!");
+                                        TimeUnit.SECONDS.sleep(2);
+                                        requestToMe();
+                                        return;
+                                    }
+                                    Color=null;
+                                    switch (parsedStrings.get(1)) {
+                                        case "RED":
+                                            Color = PeopleColor.RED;
+                                            break;
+                                        case "GREEN":
+                                            Color = PeopleColor.GREEN;
+                                            break;
+                                        case "PINK":
+                                            Color = PeopleColor.PINK;
+                                            break;
+                                        case "BLUE":
+                                            Color = PeopleColor.BLUE;
+                                            break;
+                                        case "YELLOW":
+                                            Color = PeopleColor.YELLOW;
+                                            break;
+                                    }
+                                    if(modelCard.getName().equals("PRINCESS") && networkClientModel.getServermodel().getTable().getPrincessSet().numStudentsbycolor(Color)==0){
+                                        System.out.println("La carta non possiede il colore che hai scelto, scelta carta rifiutata !!!!");
+                                        TimeUnit.SECONDS.sleep(2);
+                                        requestToMe();
+                                        return;
+                                    }
+                                    networkClientModel.setTypeOfRequest(parsedStrings.get(0));
+                                    networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                                    networkClientModel.setChoosedColor(Color);
+                                    json = new Gson();
+                                    isUsed=true;
+                                    Network.send(json.toJson(networkClientModel));
+                                    break;
+                                case "FARMER":
+                                case "CENTAUR":
+                                case "KNIGHT":
+                                case "POSTMAN":
+                                    if(parsedStrings.size()!=1 ) {
+                                        System.out.println("formato non valido, scelta carta rifiutata !!!!");
+                                        TimeUnit.SECONDS.sleep(2);
+                                        requestToMe();
+                                        return;
+                                    }
+                                    networkClientModel.setTypeOfRequest(parsedStrings.get(0));
+                                    networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                                    json = new Gson();
+                                    isUsed=true;
+                                    Network.send(json.toJson(networkClientModel));
+                                    break;
+                                case "GRANNY":
+                                case "HERALD":
+                                    if(!(parsedStrings.size()==2)  || (Integer.parseInt(parsedStrings.get(1))<1 || Integer.parseInt(parsedStrings.get(1))>networkClientModel.getServermodel().getTable().getIslands().size())) {
+                                        System.out.println("formato non valido, scelta carta rifiutata !!!!");
+                                        TimeUnit.SECONDS.sleep(2);
+                                        requestToMe();
+                                        return;
+                                    }
+                                    if(modelCard.getName().equals("GRANNY") && networkClientModel.getServermodel().getTable().getIslands().get(Integer.parseInt(parsedStrings.get(1))-1).isBlocked()){
+                                        System.out.println("isola già bloccata, scelta carta rifiutata !!!!");
+                                        TimeUnit.SECONDS.sleep(2);
+                                        requestToMe();
+                                        return;
+                                    }
+                                    if(modelCard.getName().equals("GRANNY") && networkClientModel.getServermodel().getTable().getNumDivieti()==0){
+                                        System.out.println("non ci sono divieti posizionabili, scelta carta rifiutata !!!!");
+                                        TimeUnit.SECONDS.sleep(2);
+                                        requestToMe();
+                                        return;
+                                    }
+                                    networkClientModel.setTypeOfRequest(parsedStrings.get(0));
+                                    networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                                    networkClientModel.setChoosedIsland(Integer.parseInt(parsedStrings.get(1))-1);
+                                    json = new Gson();
+                                    isUsed=true;
+                                    Network.send(json.toJson(networkClientModel));
+                                    break;
+                                case "MINSTRELL":
+                                case "JESTER":
+                                    int max=2;
+                                    StudentSet destination= networkClientModel.getServermodel().getcurrentPlayer().getSchoolBoard().getDinnerTable();
+                                    ArrayList<PeopleColor> colors1= new ArrayList<>();
+                                    ArrayList<PeopleColor> colors2=new ArrayList<>();
+                                    if(parsedStrings.get(0).equals("JESTER")) {
+                                        max = 3;
+                                        destination=networkClientModel.getServermodel().getTable().getJesterSet();
+                                    }
+                                    if(parsedStrings.size()<3 || parsedStrings.size()>(1+2*max) || parsedStrings.size()%2==0) {
+                                        System.out.println("formato non valido, scelta carta rifiutata !!!!");
+                                        TimeUnit.SECONDS.sleep(2);
+                                        requestToMe();
+                                        return;
+                                    }
+                                    for(int i=1;i<parsedStrings.size();i++) {
+                                        switch (parsedStrings.get(i)) {
+                                            case "RED":
+                                                if(i<=(parsedStrings.size()-1)/2) {
+                                                    colors1.add(PeopleColor.RED);
+                                                }
+                                                else {
+                                                    colors2.add(PeopleColor.RED);
+                                                }
+                                                break;
+                                            case "GREEN":
+                                                if(i<=(parsedStrings.size()-1)/2) {
+                                                    colors1.add(PeopleColor.GREEN);
+                                                }
+                                                else {
+                                                    colors2.add(PeopleColor.GREEN);
+                                                }
+                                                break;
+                                            case "BLUE":
+                                                if(i<=(parsedStrings.size()-1)/2) {
+                                                    colors1.add(PeopleColor.BLUE);
+                                                }
+                                                else {
+                                                    colors2.add(PeopleColor.BLUE);
+                                                }
+                                                break;
+                                            case "YELLOW":
+                                                if(i<=(parsedStrings.size()-1)/2) {
+                                                    colors1.add(PeopleColor.YELLOW);
+                                                }
+                                                else {
+                                                    colors2.add(PeopleColor.YELLOW);
+                                                }
+                                                break;
+                                            case "PINK":
+                                                if(i<=(parsedStrings.size()-1)/2) {
+                                                    colors1.add(PeopleColor.PINK);
+                                                }
+                                                else {
+                                                    colors2.add(PeopleColor.PINK);
+                                                }
+                                                break;
+                                        }
+                                    }
+                                    if(!networkClientModel.getServermodel().getcurrentPlayer().getSchoolBoard().getEntranceSpace().contains(colors1) || !destination.contains(colors2) ) {
+                                        System.out.println("uno o piu colori scelti non sono presenti, scelta carta rifiutata !!!!");
+                                        TimeUnit.SECONDS.sleep(2);
+                                        requestToMe();
+                                        return;
+                                    }
+                                    networkClientModel.setTypeOfRequest(parsedStrings.get(0));
+                                    networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                                    networkClientModel.setColors1(colors1);
+                                    networkClientModel.setColors2(colors2);
+                                    json = new Gson();
+                                    isUsed=true;
+                                    Network.send(json.toJson(networkClientModel));
+                                    break;
+                            }
+                            break;
                     } else {
                         if (!isValidNumber(CommandPrompt.gotFromTerminal())) {
                             System.out.println("Il numero di mosse da te inserito non è un numero valido, si prega di fare più attenzione");
@@ -1042,6 +1145,42 @@ public class CliView implements View{
                 break;
             case "CHOOSECLOUDS":
                 setResponce("L'utente " +networkClientModel.getNickname()+ " ha scelto di ricaricare gli studenti dalla nuvola: " + networkClientModel.getCloudChoosed());
+                break;
+            case "MONK":
+                setResponce("L'utente " +networkClientModel.getNickname()+ " ha scelto di usare la carta personaggio MONK, scegliendo come colore: " +networkClientModel.getChoosedColor()+" e scegliendo come isola: " + networkClientModel.getChoosedIsland() + "  (EFFETTO: Prendi uno studente da questa carta e piazzalo su un isola a tua scelta).");
+                break;
+            case "HERALD":
+                setResponce("L'utente " +networkClientModel.getNickname()+ " ha scelto di usare la carta personaggio HERALD, scegliendo come isola: " + networkClientModel.getChoosedIsland() + "  (EFFETTO: Scegli un isola e calcola la maggioranza come se madre natura avesse terminato il suo movimento li. In questo turno madre natura si muovera come di consueto e nell'isola dove terminerà il suo movimento la maggioranza verrà normalmente calcolata).");
+                break;
+            case "PRINCESS":
+                setResponce("L'utente " +networkClientModel.getNickname()+ " ha scelto di usare la carta personaggio PRINCESS, scegliendo come colore: " + networkClientModel.getChoosedIsland() + "  (EFFETTO: Prendi uno studente da questa carta e piazzalo nella tua Sala).");
+                break;
+            case "THIEF":
+                setResponce("L'utente " +networkClientModel.getNickname()+ " ha scelto di usare la carta personaggio THIEF, scegliendo come colore: " + networkClientModel.getChoosedIsland() + "  (EFFETTO: Scegli un colore di studente; ogni giocatore (incluso te) deve rimettere nel sacchetto tre studenti di quel colore presenti nella Sala (o tutti quelli che ha se ne avesse meno di tre) ).");
+                break;
+            case "MUSHROOMHUNTER":
+                setResponce("L'utente " +networkClientModel.getNickname()+ " ha scelto di usare la carta personaggio MUSHROOMHUNTER, scegliendo come colore: " + networkClientModel.getChoosedIsland() + "  (EFFETTO: Scelgi un colore di studente; in questo turno, durante il calcolo dell'influenza, quel colore non fornisce influenza).");
+                break;
+            case "KNIGHT":
+                setResponce("L'utente " +networkClientModel.getNickname()+ " ha scelto di usare la carta personaggio KNIGHT" + "  (EFFETTO: In questo turno, durante il calcolo dell'influenza, hai due punti di influenza addizionali).");
+                break;
+            case "CENTAUR":
+                setResponce("L'utente " +networkClientModel.getNickname()+ " ha scelto di usare la carta personaggio CENTAUR" + "  (EFFETTO: Durante il conteggio di un influenza dell'isola le torri presenti non vengono calcolate).");
+                break;
+            case "FARMER":
+                setResponce("L'utente " +networkClientModel.getNickname()+ " ha scelto di usare la carta personaggio FARMER" + "  (EFFETTO: Durante questo turno, prendi il controllo dei professori anche se nella tua sala hai lo stesso numero di studenti del giocatore che li controlla in quel momento).");
+                break;
+            case "POSTMAN":
+                setResponce("L'utente " +networkClientModel.getNickname()+ " ha scelto di usare la carta personaggio POSTMAN" + "  (EFFETTO: Puoi muovere madre natura fino a due isole addizionali rispetto a quanto indicato sulla carta assistente che hai giocato).");
+                break;
+            case "GRANNY":
+                setResponce("L'utente " +networkClientModel.getNickname()+ " ha scelto di usare la carta personaggio GRANNY, scegliendo come isola: " + networkClientModel.getChoosedIsland() + "  (EFFETTO: Piazza un divieto su un isola a tua scelta. La prima volta che madre natura termina il suo movimento li l'influenza non verrà calcolata e il divieto verrà reinserito in quetsa carta).");
+                break;
+            case "JESTER":
+                setResponce("L'utente " +networkClientModel.getNickname()+ " ha scelto di usare la carta personaggio JESTER, scegliendo di scambiare i colori: " + networkClientModel.getColors1() +" dal suo Ingresso con i colori: " + networkClientModel.getColors2() +" da questa carta"+ "  (EFFETTO: Puoi prendere fino a 3 studenti da questa carta e scambiarli con altrettanti studenti presenti nel tuo Ingresso).");
+                break;
+            case "MINSTRELL":
+                setResponce("L'utente " +networkClientModel.getNickname()+ " ha scelto di usare la carta personaggio MINSTRELL, scegliendo di scambiare i colori: " + networkClientModel.getColors1() +" dal suo Ingresso con i colori: " + networkClientModel.getColors2() +" dalla sua Sala"+ "  (EFFETTO: Puoi scambiare fra loro fino a due studenti presenti nella tua Sala e nel tuo Ingresso).");
                 break;
         }
     }

@@ -8,30 +8,26 @@ import it.polimi.ingsw.server.controller.ServerController;
 import it.polimi.ingsw.server.model.AssistantCard;
 import it.polimi.ingsw.server.model.Model;
 import it.polimi.ingsw.server.model.Player;
-import it.polimi.ingsw.server.model.enums.GameMode;
 import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
 import it.polimi.ingsw.utils.stateMachine.Controller;
 import it.polimi.ingsw.utils.stateMachine.Event;
 import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AssistantCardPhase extends State {
-    private Event cardsChoosen,gameEnd;
-    private Model model;
+    private final Event cardsChoosen;
+    private final Event gameEnd;
 
-    private ConnectionModel connectionModel;
-    private Controller controller;
+    private final ConnectionModel connectionModel;
 
-    private Gson json;
-    private ServerController serverController;
+    private final Gson json;
+    private final ServerController serverController;
 
     private ParametersFromNetwork message;
-    private Event reset = new ClientDisconnection();
+    private final Event reset = new ClientDisconnection();
 
     public Event cardsChoosen() {
         return cardsChoosen;
@@ -42,7 +38,7 @@ public class AssistantCardPhase extends State {
     public AssistantCardPhase(ServerController serverController) {
         super("[Choose Assistant Card]");
         this.serverController = serverController;
-        this.controller = serverController.getFsm();
+        Controller controller = ServerController.getFsm();
         this.connectionModel = serverController.getConnectionModel();
         cardsChoosen= new Event("game created");
         cardsChoosen.setStateEventListener(controller);
@@ -58,11 +54,11 @@ public class AssistantCardPhase extends State {
 
     @Override
     public IEvent entryAction(IEvent cause) throws Exception {
-        model = serverController.getModel();
+        Model model = serverController.getModel();
         ArrayList<AssistantCard> alreadyChooseds=new ArrayList<>();
         model.nextTurn();
         // For each player
-        for(int i=0; i<model.getNumberOfPlayers(); i++){
+        for(int i = 0; i< model.getNumberOfPlayers(); i++){
             // retrive the current player
             Player currentPlayer = model.getcurrentPlayer();
             // retrive data of the current player
@@ -115,7 +111,8 @@ public class AssistantCardPhase extends State {
             // il controllo sul fatto che l'utente scelga una carta appartenente a quelle presenti in availableCars
             // viene svolto direttamente dal client in CliView
             if(lowpriority) {
-                    choosen.lowPriority();
+                assert choosen != null;
+                choosen.lowPriority();
             }
 
             alreadyChooseds.add(choosen);

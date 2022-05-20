@@ -9,19 +9,16 @@ import java.util.ArrayList;
 public class Farmer extends CharacterCard{
 
     public Farmer(){
-        super("Durante questo turno, prendi il controllo dei Professori anche in caso di parità di numero di studenti",2,"FARMER");
+        super(2,"FARMER");
     }
     public void useEffect(Player player, CenterTable table, ArrayList<Player> players) {
         player.reduceCoin(getCost());
         improveCost();
         table.setFarmerEffect(player);
         for(PeopleColor color: PeopleColor.values()){
-            table.checkProfessor(color,players);
+            if(player.getSchoolBoard().getDinnerTable().numStudentsbycolor(color)>0)
+            {table.checkProfessor(color,players);}
         }
     }
 
-    @Override
-    public String toString() {
-        return "FARMER "+ super.toString();
-    }
 }

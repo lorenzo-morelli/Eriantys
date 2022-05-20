@@ -5,7 +5,7 @@ import it.polimi.ingsw.server.model.*;
 public class Herald extends CharacterCard{
 
     public Herald(){
-        super("Scegli un isola e calcola la maggioranza come se madre natura avesse terminato il suo movimento li (questo turno si svolgerà comunque la mother phase)",3,"HERALD");
+        super(3,"HERALD");
     }
 
     public boolean useEffect(Player player, int index_island, Model model) { //ritorna true se gioco è da terminare
@@ -19,7 +19,7 @@ public class Herald extends CharacterCard{
                         target.controllIsland(influence_team);
                         target.placeTower();
                     } else if (!(target.getTowerColor().equals(influence_team.getPlayer1().getSchoolBoard().getTowerColor()))) {
-                        model.getTable().ConquestIsland(model.getTable().getMotherNaturePosition(), model.getTeams(), influence_team);
+                        model.getTable().ConquestIsland(index_island, model.getTeams(), influence_team);
                     }
                     if (influence_team.getPlayer1().getSchoolBoard().getNumOfTowers() == 0) {
                         return true;
@@ -32,38 +32,35 @@ public class Herald extends CharacterCard{
                         target.controllIsland(influence_player);
                         target.placeTower();
                     } else if (!(target.getTowerColor().equals(influence_player.getSchoolBoard().getTowerColor()))) {
-                        model.getTable().ConquestIsland(model.getTable().getMotherNaturePosition(), model.getPlayers(), influence_player);
+                        model.getTable().ConquestIsland(index_island, model.getPlayers(), influence_player);
                     }
                     if (influence_player.getSchoolBoard().getNumOfTowers() == 0) {
                         return true;
                     }
                 }
             }
-        if (model.getTable().getIslands().get(model.getTable().getMotherNaturePosition()) != null) {
-            if (model.getTable().getIslands().get((model.getTable().getMotherNaturePosition() + 1) % model.getTable().getIslands().size()).getTowerColor() != null && model.getTable().getIslands().get((model.getTable().getMotherNaturePosition() + 1) % model.getTable().getIslands().size()).getTowerColor().equals(model.getTable().getIslands().get(model.getTable().getMotherNaturePosition()).getTowerColor())) {
-                model.getTable().MergeIsland(model.getTable().getMotherNaturePosition(), ((model.getTable().getMotherNaturePosition() + 1) % model.getTable().getIslands().size()));
+        if (model.getTable().getIslands().get(index_island) != null) {
+            if (model.getTable().getIslands().get((index_island + 1) % model.getTable().getIslands().size()).getTowerColor() != null && model.getTable().getIslands().get((index_island + 1) % model.getTable().getIslands().size()).getTowerColor().equals(model.getTable().getIslands().get(index_island).getTowerColor())) {
+                model.getTable().MergeIsland(index_island, ((index_island + 1) % model.getTable().getIslands().size()));
             }
             Island merging;
-            if(model.getTable().getMotherNaturePosition()==0){
+            if(index_island==0){
                 merging=model.getTable().getIslands().get(model.getTable().getIslands().size()-1);
             }
             else{
-                merging=model.getTable().getIslands().get((model.getTable().getMotherNaturePosition() - 1)% model.getTable().getIslands().size());
+                merging=model.getTable().getIslands().get((index_island - 1)% model.getTable().getIslands().size());
             }
-            if (merging.getTowerColor() != null && merging.getTowerColor().equals(model.getTable().getIslands().get(model.getTable().getMotherNaturePosition()).getTowerColor())) {
+            if (merging.getTowerColor() != null && merging.getTowerColor().equals(model.getTable().getIslands().get(index_island).getTowerColor())) {
                 int mergingindex;
-                if(model.getTable().getMotherNaturePosition()==0){
+                if(index_island==0){
                     mergingindex=model.getTable().getIslands().size()-1;
                 }
                 else{
-                    mergingindex=(model.getTable().getMotherNaturePosition() - 1)% model.getTable().getIslands().size();
+                    mergingindex=(index_island - 1)% model.getTable().getIslands().size();
                 }
-                model.getTable().MergeIsland(model.getTable().getMotherNaturePosition(), mergingindex);
+                model.getTable().MergeIsland(index_island, mergingindex);
             }
         }
         return model.getTable().getIslands().size() == 3;
-    }
-    public String toString() {
-        return "HERALD - " + super.toString();
     }
 }

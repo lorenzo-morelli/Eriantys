@@ -8,12 +8,9 @@ import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
 
 public class EndTurn extends State {
-    private Event goToAssistentCardPhase;
-    private Model model;
+    private final Event goToAssistentCardPhase;
 
-    private Controller controller;
-
-    private ServerController serverController;
+    private final ServerController serverController;
 
 
     public Event goToAssistentCardPhase() {
@@ -23,16 +20,16 @@ public class EndTurn extends State {
     public EndTurn(ServerController serverController) {
         super("[End Turn]");
         this.serverController = serverController;
-        this.controller = serverController.getFsm();
+        Controller controller = ServerController.getFsm();
         goToAssistentCardPhase= new Event("end turn");
         goToAssistentCardPhase.setStateEventListener(controller);
     }
 
     @Override
     public IEvent entryAction(IEvent cause) throws Exception {
-        model = serverController.getModel();
-        for(int i=0;i<model.getTable().getClouds().size();i++){
-            boolean check=model.getTable().getClouds().get(i).charge(model.getTable().getBag());
+        Model model = serverController.getModel();
+        for(int i = 0; i< model.getTable().getClouds().size(); i++){
+            boolean check= model.getTable().getClouds().get(i).charge(model.getTable().getBag());
             if(!check){
                 model.setlastturn();
                 break;

@@ -14,18 +14,17 @@ import it.polimi.ingsw.utils.stateMachine.State;
 import java.io.IOException;
 
 public class CreateGame extends State {
-    private Event gameCreated, fourPlayersGameCreated;
+    private final Event gameCreated, fourPlayersGameCreated;
     private Model model;
 
-    private ConnectionModel connectionModel;
-    private Controller controller;
-    private ServerController serverController;
-    private Event reset = new ClientDisconnection();
+    private final ConnectionModel connectionModel;
+    private final ServerController serverController;
+    private final Event reset = new ClientDisconnection();
 
     public CreateGame(ServerController serverController) {
         super("[Create game]");
         this.serverController = serverController;
-        this.controller = serverController.getFsm();
+        Controller controller = ServerController.getFsm();
         this.connectionModel = serverController.getConnectionModel();
         gameCreated = new Event("game created");
         reset.setStateEventListener(controller);

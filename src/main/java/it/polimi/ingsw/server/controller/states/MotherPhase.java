@@ -20,15 +20,14 @@ import it.polimi.ingsw.utils.stateMachine.State;
 import java.io.IOException;
 
 public class MotherPhase extends State {
-    private Event gameEnd, goToStudentPhase, goToCloudPhase;
+    private final Event gameEnd, goToStudentPhase, goToCloudPhase;
     private Model model;
 
-    private ConnectionModel connectionModel;
-    private Controller controller;
+    private final ConnectionModel connectionModel;
 
-    private Gson json;
-    private ServerController serverController;
-    private Event reset = new ClientDisconnection();
+    private final Gson json;
+    private final ServerController serverController;
+    private final Event reset = new ClientDisconnection();
 
     private ParametersFromNetwork message;
     private boolean istorepeat;
@@ -48,7 +47,7 @@ public class MotherPhase extends State {
     public MotherPhase(ServerController serverController) {
         super("[Move mother]");
         this.serverController = serverController;
-        this.controller = serverController.getFsm();
+        Controller controller = ServerController.getFsm();
         this.connectionModel = serverController.getConnectionModel();
         reset.setStateEventListener(controller);
         gameEnd = new Event("end phase");
@@ -205,7 +204,7 @@ public class MotherPhase extends State {
                                 break;
                             case "POSTMAN": ((Postman)  model.getTable().getCharachter().get(j)).useEffect(currentPlayer);
                                 break;
-                            case "PRINCESS": ((Princess)  model.getTable().getCharachter().get(j)).useEffect(currentPlayer,currentPlayerData.getChoosedColor(),model.getTable());
+                            case "PRINCESS": ((Princess)  model.getTable().getCharachter().get(j)).useEffect(currentPlayer,currentPlayerData.getChoosedColor(),model.getTable(),model.getPlayers());
                                 break;
                             case "GRANNY": ((Granny)  model.getTable().getCharachter().get(j)).useEffect(currentPlayer,currentPlayerData.getChoosedIsland(),model.getTable());
                                 break;
@@ -223,13 +222,13 @@ public class MotherPhase extends State {
                     }
                 }
             }
-            model.getTable().setFarmerEffect(null);
         }
     return super.entryAction(cause);
     }
 
     @Override
     public void exitAction(IEvent cause) throws IOException {
+        model.getTable().setFarmerEffect(null);
         istorepeat = true;
         super.exitAction(cause);
     }

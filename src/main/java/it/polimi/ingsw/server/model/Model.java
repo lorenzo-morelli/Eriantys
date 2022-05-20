@@ -3,7 +3,6 @@ package it.polimi.ingsw.server.model;
 import it.polimi.ingsw.server.model.enums.GameMode;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 import static java.util.Collections.shuffle;
 import static java.util.Collections.sort;
@@ -87,11 +86,6 @@ public class Model {
     public ArrayList<Player> getPlayers() {
         return players;
     }
-
-    public int getTurnNumber() {
-        return turnNumber;
-    }
-
     public void nextTurn() {
         turnNumber++;
     }
@@ -217,7 +211,7 @@ public class Model {
             if(player.getNickname().equals(nickname) || player.equals(getcurrentPlayer())){
                 result.append("\n");
             }
-            result.append(player);
+            result.append(player).append("\n");
         }
         return result.toString();
     }
