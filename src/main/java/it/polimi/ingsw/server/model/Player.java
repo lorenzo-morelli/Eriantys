@@ -1,6 +1,8 @@
 package it.polimi.ingsw.server.model;
 import it.polimi.ingsw.server.model.enums.GameMode;
 
+import java.util.Objects;
+
 public class Player implements Comparable<Player>{
     private final String nickname;
     private final Deck availableCards;
@@ -84,26 +86,26 @@ public class Player implements Comparable<Player>{
         return Ip;
     }
 
-    public String toString() {
+    public String toString(String nickname) {
         switch (getSchoolBoard().getTowerColor()) {
             case BLACK:
                 return ANSI_BLACK + "    PLAYER : " + nickname + ANSI_RESET + "\n" +
                         (choosedCard == null ? "    MOVES : 0\n" : "    MOVES : " + choosedCard.getMoves() + "\n") +
                         "    SCHOOL\n"
                         + schoolBoard.toString() +
-                        (coins >= 0 ? "    COINS : " + coins + "\n" : "\n");
+                        (coins >= 0 ? "    COINS : " + coins + "\n" : (Objects.equals(nickname, this.nickname) ?"": "\n"))+(Objects.equals(nickname, this.nickname) ?"    AVAIABLE CARDS: "+ availableCards.toString()+"\n": "");
             case WHITE:
                 return ANSI_WHITE + "    PLAYER : " + nickname + ANSI_RESET + "\n" +
                         (choosedCard == null ? "    MOVES : 0\n" : "    MOVES : " + choosedCard.getMoves() + "\n") +
                         "    SCHOOL\n"
                         + schoolBoard.toString() +
-                        (coins >= 0 ? "    COINS : " + coins + "\n" : "\n");
+                        (coins >= 0 ? "    COINS : " + coins + "\n" : (Objects.equals(nickname, this.nickname) ?"": "\n"))+(Objects.equals(nickname, this.nickname) ?"    AVAIABLE CARDS: "+ availableCards.toString()+"\n": "");
             case GREY:
                 return ANSI_GRAY + "    PLAYER : " + nickname + ANSI_RESET + "\n" +
                         (choosedCard == null ? "    MOVES : 0\n" : "    MOVES : " + choosedCard.getMoves() + "\n") +
                         "    SCHOOL\n"
                         + schoolBoard.toString() +
-                        (coins >= 0 ? "    COINS : " + coins + "\n" : "\n");
+                        (coins >= 0 ? "    COINS : " + coins + "\n" : (Objects.equals(nickname, this.nickname) ?"": "\n"))+(Objects.equals(nickname, this.nickname) ?"    AVAIABLE CARDS: "+ availableCards.toString()+"\n": "");
         }
         return null;
     }

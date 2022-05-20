@@ -44,4 +44,9 @@ public class Deck {
         }
         return false;
     }
+
+    @Override
+    public String toString() {
+        return  cards.toString();
+    }
 }

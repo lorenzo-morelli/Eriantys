@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server.model;
 
+import com.sun.jdi.IntegerValue;
+
 public class AssistantCard {
     private float values;
     private int moves;
@@ -35,5 +37,11 @@ public class AssistantCard {
 
     public void improveMoves(int moves) {
         this.moves += moves;
+    }
+
+    @Override
+    public String toString() {
+        return   (int)values +
+                "/" + moves;
     }
 }

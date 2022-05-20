@@ -19,8 +19,6 @@ import java.util.List;
 
 public class AssistantCardPhase extends State {
     private final Event cardsChoosen;
-    private final Event gameEnd;
-
     private final ConnectionModel connectionModel;
 
     private final Gson json;
@@ -32,9 +30,6 @@ public class AssistantCardPhase extends State {
     public Event cardsChoosen() {
         return cardsChoosen;
     }
-    public Event gameEnd() {
-        return gameEnd;
-    }
     public AssistantCardPhase(ServerController serverController) {
         super("[Choose Assistant Card]");
         this.serverController = serverController;
@@ -43,8 +38,6 @@ public class AssistantCardPhase extends State {
         cardsChoosen= new Event("game created");
         cardsChoosen.setStateEventListener(controller);
         reset.setStateEventListener(controller);
-        gameEnd = new Event("end phase");
-        gameEnd.setStateEventListener(controller);
         json = new Gson();
     }
 
@@ -119,8 +112,7 @@ public class AssistantCardPhase extends State {
             boolean checkEndCondition = currentPlayer.setChoosedCard(choosen);
 
             if (checkEndCondition){
-                gameEnd().fireStateEvent();
-                return super.entryAction(cause);
+                model.setlastturn();
             }
             model.nextPlayer();
 

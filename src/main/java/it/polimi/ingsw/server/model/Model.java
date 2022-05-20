@@ -111,7 +111,7 @@ public class Model {
             for (Player player : players) {
                 int numProf = 0;
                 for (int i = 0; i < getTable().getProfessors().size(); i++) {
-                    if (getTable().getProfessors().get(i).getHeldBy().equals(player)) {
+                    if (getTable().getProfessors().get(i).getHeldBy()!=null && getTable().getProfessors().get(i).getHeldBy().equals(player)) {
                         numProf++;
                     }
                 }
@@ -124,7 +124,7 @@ public class Model {
             }
         }
 
-        if (winner == null) return "NON C'E' NESSUN VINCITORE";
+        if (winner == null) return "PAREGGIO";
         else return winner.getNickname();
     }
 
@@ -144,7 +144,7 @@ public class Model {
             for (Team team : teams) {
                 int numProf = 0;
                 for (int i = 0; i < getTable().getProfessors().size(); i++) {
-                    if (getTable().getProfessors().get(i).getHeldBy().equals(team.getPlayer1()) || getTable().getProfessors().get(i).getHeldBy().equals(team.getPlayer2())) {
+                    if (getTable().getProfessors().get(i).getHeldBy()!=null && (getTable().getProfessors().get(i).getHeldBy().equals(team.getPlayer1()) || getTable().getProfessors().get(i).getHeldBy().equals(team.getPlayer2()))) {
                         numProf++;
                     }
                 }
@@ -157,14 +157,14 @@ public class Model {
             }
         }
 
-        if (winner == null) return "NON C'E' NESSUN VINCITORE";
-        else return winner.getPlayer1().getNickname() + " " + winner.getPlayer2().getNickname();
+        if (winner == null) return "PAREGGIO";
+        else return winner.getPlayer1().getNickname() + "+" + winner.getPlayer2().getNickname();
     }
 
     public String toString(String nickname,String message) {
         return "\n\n\n-----------------------------------------GAME-----------------------------------------------------------------------------------------------------------------------------------------\n\n" +
                 "    TURN = " + turnNumber + "    " + (islastturn ? " ! LAST TURN OF THE GAME ! ": "" ) +"\n\n" +
-                table.toString() +
+                table.toString(islastturn) +
                 ( numberOfPlayers==4 ? "-----------------TEAM-----------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n" + printteam(nickname) : "-----------------PLAYER---------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n"+ printplayers(nickname) )+
                 "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n" + "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n" +"--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n"+ message+ "\n" ;
 
@@ -211,7 +211,7 @@ public class Model {
             if(player.getNickname().equals(nickname) || player.equals(getcurrentPlayer())){
                 result.append("\n");
             }
-            result.append(player).append("\n");
+            result.append(player.toString(nickname)).append("\n");
         }
         return result.toString();
     }

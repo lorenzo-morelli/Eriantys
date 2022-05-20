@@ -163,7 +163,7 @@ public class CliView implements View{
                 System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(),"STATO DEL GIOCO: \n"+"E' IL TUO TURNO - ASSISTENT CARD PHASE"+ "\n\nMOSSE ALTRI GIOCATORI: "+getResponce()));
                 System.out.println("Scegli una Carta Assistente");
                 for (AssistantCard a : networkClientModel.getDeck()){;
-                    System.out.println("valore: " + a.getValues() + "  mosse: " + a.getMoves());
+                    System.out.println("valore: " + (int)a.getValues() + "  mosse: " + a.getMoves());
                 }
                 CommandPrompt.ask("Inserisci valore della carta scelta","Carta> ");
 
@@ -1078,12 +1078,15 @@ public class CliView implements View{
                 break;
 
             case "GAMEEND":
-                if(networkClientModel.getServermodel().getNumberOfPlayers()<4)
+                if(networkClientModel.getGameWinner().equals("PAREGGIO")){
+                    System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(),"STATO DEL GIOCO: IL GIOCO E' FINITO IN PARITA', I GIOCATORI SONO TUTTI VINCITORI !!"));
+                }
+                else if(networkClientModel.getServermodel().getNumberOfPlayers()<4)
                 {
-                    System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(),"STATO DEL GIOCO: \n"+"IL GIOCO E' FINITO! IL VINCITORE E' "+ networkClientModel.getGameWinner()+ "\n\nMOSSE ALTRI GIOCATORI: "+getResponce()));
+                    System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(),"STATO DEL GIOCO: "+"IL GIOCO E' FINITO! IL VINCITORE E' "+ networkClientModel.getGameWinner()));
                 }
                 else {
-                    System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(),"STATO DEL GIOCO: \n"+"IL GIOCO E' FINITO! I VINCITORI SONO "+ networkClientModel.getGameWinner()+ "\n\nMOSSE ALTRI GIOCATORI: "+getResponce()));
+                    System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(),"STATO DEL GIOCO: "+"IL GIOCO E' FINITO! I VINCITORI SONO "+ networkClientModel.getGameWinner()));
                 }
                 Network.disconnect();
             break;

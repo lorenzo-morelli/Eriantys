@@ -61,6 +61,17 @@ public class Island {
             }
             partial_sum = 0;
         }
+        int partial_sumofNobody=0;
+            for (Professor professor : Professors) {
+                if (professor.getHeldBy() == null && professor.getColor() != mushroom) {
+                    partial_sumofNobody = inhabitants.numStudentsbycolor(professor.getColor());
+                }
+                if (partial_sumofNobody >= max) {
+                    max_influence = null;
+                    break;
+                }
+                partial_sumofNobody=0;
+            }
         return max_influence; //ritorna player con piu influenza
     }
 
@@ -85,21 +96,45 @@ public class Island {
             }
             partial_sum = 0;
         }
+        int partial_sumofNobody=0;
+        for (Professor professor : Professors) {
+            if (professor.getHeldBy() == null && professor.getColor() != mushroom) {
+                partial_sumofNobody = inhabitants.numStudentsbycolor(professor.getColor());
+            }
+            if (partial_sumofNobody >= max) {
+                max_influence = null;
+                break;
+            }
+            partial_sumofNobody=0;
+        }
         return max_influence; //ritorna team con piu influenza
     }
     public void placeTower(){ this.numberOfTowers ++; }
 
     public void controllIsland(Player influence_player){
         setTowerColor(influence_player.getSchoolBoard().getTowerColor());
-        for(int i=0;i<numberOfTowers;i++) {
+        if(numberOfTowers>0){
+            for(int i=0;i<numberOfTowers;i++) {
+                influence_player.getSchoolBoard().placeTower();
+            }
+        }
+        else{
             influence_player.getSchoolBoard().placeTower();
         }
     }
 
     public void controllIsland(Team influence_team){
         setTowerColor(influence_team.getPlayer1().getSchoolBoard().getTowerColor());
-        influence_team.getPlayer1().getSchoolBoard().placeTower();
-        influence_team.getPlayer2().getSchoolBoard().placeTower();
+        if(numberOfTowers>0){
+            for(int i=0;i<numberOfTowers;i++) {
+                influence_team.getPlayer1().getSchoolBoard().placeTower();
+                influence_team.getPlayer2().getSchoolBoard().placeTower();
+            }
+        }
+        else{
+            influence_team.getPlayer1().getSchoolBoard().placeTower();
+            influence_team.getPlayer2().getSchoolBoard().placeTower();
+        }
     }
 
 
