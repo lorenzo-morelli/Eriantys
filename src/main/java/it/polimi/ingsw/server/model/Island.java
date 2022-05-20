@@ -91,7 +91,9 @@ public class Island {
 
     public void controllIsland(Player influence_player){
         setTowerColor(influence_player.getSchoolBoard().getTowerColor());
-        influence_player.getSchoolBoard().placeTower();
+        for(int i=0;i<numberOfTowers;i++) {
+            influence_player.getSchoolBoard().placeTower();
+        }
     }
 
     public void controllIsland(Team influence_team){

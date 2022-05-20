@@ -168,7 +168,7 @@ public class MotherPhase extends State {
                 model.getTable().setMushroomColor(null);
                 model.getTable().setKnightEffect(null);
 
-                if (model.getTable().getIslands().size() == 3) {
+                if (model.getTable().getIslands().size() <= 3) {
                     gameEnd().fireStateEvent();
                     return super.entryAction(cause);
                 } else if (model.islastturn()) {
