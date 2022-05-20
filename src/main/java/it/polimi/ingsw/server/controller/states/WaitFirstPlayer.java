@@ -16,19 +16,18 @@ import it.polimi.ingsw.utils.stateMachine.State;
 import java.util.ArrayList;
 
 public class WaitFirstPlayer extends State {
-    private ClientModel clientModel = null;
-    private Gson json;
+    private final Gson json;
     private Controller controller;
-    private ConnectionModel connectionModel;
-    private ParametersFromNetwork firstMessage;
-    private Event reset = new ClientDisconnection();
+    private final ConnectionModel connectionModel;
+    private final ParametersFromNetwork firstMessage;
+    private final Event reset = new ClientDisconnection();
 
     public WaitFirstPlayer(ServerController serverController) {
         super("[Il server è in attesa del primo giocatore]");
         json = new Gson();
         firstMessage = new ParametersFromNetwork(1);
         firstMessage.setStateEventListener(controller);
-        this.controller = serverController.getFsm();
+        this.controller = ServerController.getFsm();
         reset.setStateEventListener(controller);
         this.connectionModel = serverController.getConnectionModel();
     }
@@ -63,7 +62,7 @@ public class WaitFirstPlayer extends State {
         System.out.println("[Il primo player si è connesso]");
         if (firstMessage.parametersReceived()) {
             // Converti il messaggio stringa json in un oggetto clientModel
-            clientModel = json.fromJson(firstMessage.getParameter(0), ClientModel.class);
+            ClientModel clientModel = json.fromJson(firstMessage.getParameter(0), ClientModel.class);
 
             System.out.println("Ricevuto " + clientModel.getNickname() + " " + clientModel.getMyIp());
             // Appendi alla lista di ClientModel il modello appena ricevuto così da salvarlo per usi futuri

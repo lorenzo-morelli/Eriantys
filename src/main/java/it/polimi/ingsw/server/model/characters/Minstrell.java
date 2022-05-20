@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class Minstrell extends CharacterCard{
     public Minstrell(){
-        super("Scambia fino a 2 studenti tra la tua sala e ingresso",1,"MINSTRELL");
+        super(1,"MINSTRELL");
     }
     // hp: colorsOfEntrance contiene lista dei colori da scambiare da entrance, colorsOfDinner la lista dei colori da scambiare da dinner
     //controllare che abbiano la stessa lunghezza e che gli studenti scelti (sia come colore che come numero) siano realmente presenti nei rispettivi set
@@ -23,8 +23,5 @@ public class Minstrell extends CharacterCard{
         }
     }
 
-    @Override
-    public String toString() {
-        return "MINSTRELL - " + super.toString();
-    }
+
 }

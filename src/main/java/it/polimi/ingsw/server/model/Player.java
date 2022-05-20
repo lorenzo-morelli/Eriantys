@@ -6,7 +6,6 @@ public class Player implements Comparable<Player>{
     private final Deck availableCards;
     private AssistantCard choosedCard;
     private final SchoolBoard schoolBoard;
-    private final int numplayerinteam;
     private int coins;
     private final String Ip;
     public static final String ANSI_RESET = "\u001B[0m";
@@ -20,9 +19,8 @@ public class Player implements Comparable<Player>{
         this.Ip = Ip;
         this.availableCards = new Deck();
         this.choosedCard = null;
-        this.numplayerinteam=0;
         this.schoolBoard = new SchoolBoard(model.getNumberOfPlayers(), model.getTable().getBag(),model.getTable().getAvaiableTowerColor());
-        if(model.getGameMode().equals(GameMode.EXPERT) ) this.coins = 1;
+        if(model.getGameMode().equals(GameMode.EXPERT) ) this.coins = 100; //todo: modificato per testing: reale valore 1
         else{coins=-1;}
     }
     //requies teamnumber== "1 or 2" e un controllo che fa riscegliere il team se team è gia pieno :team.isFull())
@@ -46,7 +44,6 @@ public class Player implements Comparable<Player>{
                     throw new IllegalArgumentException();
                 }
             }
-            numplayerinteam= team.setPlayer(this);
             this.schoolBoard = new SchoolBoard(team, model.getTable().getBag(), model.getTable().getAvaiableTowerColor());
             if (model.getGameMode().equals(GameMode.EXPERT)) this.coins = 1;
             else{coins=-1;}
@@ -86,11 +83,6 @@ public class Player implements Comparable<Player>{
     public String getIp() {
         return Ip;
     }
-
-    public int getNumplayerinteam() {
-        return numplayerinteam;
-    }
-
 
     public String toString() {
         switch (getSchoolBoard().getTowerColor()) {

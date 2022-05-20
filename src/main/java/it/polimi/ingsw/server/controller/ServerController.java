@@ -4,15 +4,12 @@ import it.polimi.ingsw.server.controller.states.*;
 import it.polimi.ingsw.server.model.Model;
 import it.polimi.ingsw.utils.stateMachine.Controller;
 import it.polimi.ingsw.utils.stateMachine.Event;
-import it.polimi.ingsw.utils.stateMachine.IEvent;
-import it.polimi.ingsw.utils.stateMachine.State;
 
 public class ServerController {
     private Model model;
-    private ConnectionModel connectionModel = new ConnectionModel();
-    private static Idle idle = new Idle();
-    private Event start = new Event("[Controller Started]");
-    private static Controller fsm = new Controller("Controllore del Server", idle);
+    private final ConnectionModel connectionModel = new ConnectionModel();
+    private static final Idle idle = new Idle();
+    private static final Controller fsm = new Controller("Controllore del Server", idle);
 
     public ServerController() throws Exception {
         fsm.showDebugMessages();
@@ -32,6 +29,7 @@ public class ServerController {
         EndGame endGame=new EndGame(this);
 
         // Dichiarazione delle transizioni tra gli stati
+        Event start = new Event("[Controller Started]");
         fsm.addTransition(idle, start, specifyPortScreen);
         fsm.addTransition(specifyPortScreen, specifyPortScreen.portSpecified(), waitFirstPlayer);
         fsm.addTransition(waitFirstPlayer, waitFirstPlayer.gotFirstMessage(), waitFirstPlayerGameInfo);

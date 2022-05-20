@@ -17,16 +17,15 @@ import it.polimi.ingsw.utils.stateMachine.State;
 import java.io.IOException;
 
 public class AskForTeamMate extends State {
-    private Event teamMateChoosen;
+    private final Event teamMateChoosen;
     private Model model;
-    private ConnectionModel connectionModel;
-    private Controller controller;
+    private final ConnectionModel connectionModel;
 
-    private Gson json;
-    private ServerController serverController;
+    private final Gson json;
+    private final ServerController serverController;
 
     private ParametersFromNetwork message;
-    private Event reset = new ClientDisconnection();
+    private final Event reset = new ClientDisconnection();
 
     public Event teamMateChoosen() {
         return teamMateChoosen;
@@ -35,7 +34,7 @@ public class AskForTeamMate extends State {
     public AskForTeamMate(ServerController serverController) {
         super("[Ask for team mate]");
         this.serverController = serverController;
-        this.controller = serverController.getFsm();
+        Controller controller = ServerController.getFsm();
         this.connectionModel = serverController.getConnectionModel();
         teamMateChoosen = new Event("game created");
         reset.setStateEventListener(controller);

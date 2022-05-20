@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class Thief extends CharacterCard{
     public Thief(){
-        super("Scegli un colore di uno studente: ogni giocatore incluso te deve rimettere nel bag 3 studenti del colore scelto presenti nella sala (o tutti quelli che ha se ne avesse meno di 3)",3,"THIEF");
+        super(3,"THIEF");
     }
 
     public void useEffect(Player player, ArrayList<Player> players, PeopleColor color,CenterTable table) {
@@ -18,9 +18,5 @@ public class Thief extends CharacterCard{
             value.getSchoolBoard().getDinnerTable().removestudentinBag(3, color, table.getBag());
         }
         table.checkProfessor(color,players);
-    }
-    @Override
-    public String toString() {
-        return "THIEF - " + super.toString();
     }
 }

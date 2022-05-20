@@ -7,7 +7,7 @@ public class Granny extends CharacterCard{
 
     private int numDivieti;
     public Granny(){
-        super("Piazza un divieto su un isola a tua scelta. La prima volta che madre natura termina il suo movimento li, rimettete la tessera divieto sulla carta senza calcolare influenza ne piazzare torri su di essa",2,"GRANNY");
+        super(2,"GRANNY");
         numDivieti=4;
     }
 
@@ -25,9 +25,4 @@ public class Granny extends CharacterCard{
         this.numDivieti ++;
     }
 
-    @Override
-    public String toString() {
-        return "GRANNY - " + super.toString() +"\n"+
-                "DIVIETI: " + numDivieti+ "\n";
-    }
 }

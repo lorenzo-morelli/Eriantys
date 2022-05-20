@@ -16,15 +16,14 @@ import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
 
 public class CloudPhase extends State {
-    private Event goToEndTurn, goToStudentPhase;
-    private Model model;
+    private final Event goToEndTurn;
+    private final Event goToStudentPhase;
 
-    private ConnectionModel connectionModel;
-    private Controller controller;
+    private final ConnectionModel connectionModel;
 
-    private Gson json;
-    private ServerController serverController;
-    private Event reset = new ClientDisconnection();
+    private final Gson json;
+    private final ServerController serverController;
+    private final Event reset = new ClientDisconnection();
 
     private ParametersFromNetwork message;
 
@@ -40,7 +39,7 @@ public class CloudPhase extends State {
     public CloudPhase(ServerController serverController) {
         super("[Choose Cloud]");
         this.serverController = serverController;
-        this.controller = serverController.getFsm();
+        Controller controller = ServerController.getFsm();
         this.connectionModel = serverController.getConnectionModel();
         goToEndTurn= new Event("go to end turn");
         reset.setStateEventListener(controller);
@@ -57,7 +56,7 @@ public class CloudPhase extends State {
 
     @Override
     public IEvent entryAction(IEvent cause) throws Exception {
-        model = serverController.getModel();
+        Model model = serverController.getModel();
         // retrive the current player
         Player currentPlayer = model.getcurrentPlayer();
         // retrive data of the current player
@@ -87,7 +86,7 @@ public class CloudPhase extends State {
 
         currentPlayerData = json.fromJson(message.getParameter(0),ClientModel.class);
         Cloud cloud = currentPlayerData.getCloudChoosed();
-        currentPlayer.getSchoolBoard().load_entrance(cloud,model.getTable().getClouds());
+        currentPlayer.getSchoolBoard().load_entrance(cloud, model.getTable().getClouds());
         if(model.getcurrentPlayer().equals(model.getPlayers().get(model.getPlayers().size()-1))) {
             GoToEndTurn().fireStateEvent();
         }

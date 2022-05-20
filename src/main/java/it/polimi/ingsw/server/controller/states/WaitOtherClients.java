@@ -19,13 +19,13 @@ public class WaitOtherClients extends State {
     private final ParametersFromNetwork message;
 
     private final Event twoOrThreeClientsConnected;
-    private Event reset = new ClientDisconnection();
+    private final Event reset = new ClientDisconnection();
     private final Event fourClientsConnected;
 
     public WaitOtherClients(ServerController serverController) {
         super("[Aspettando gli altri giocatori]");
         this.connectionModel = serverController.getConnectionModel();
-        Controller controller = serverController.getFsm();
+        Controller controller = ServerController.getFsm();
         json = new Gson();
         message = new ParametersFromNetwork(1);
         message.setStateEventListener(controller);

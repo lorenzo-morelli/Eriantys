@@ -5,25 +5,26 @@ import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.StudentSet;
 import it.polimi.ingsw.server.model.enums.PeopleColor;
 
+import java.util.ArrayList;
+
 public class Princess extends CharacterCard{
-    private StudentSet set;
+    private final StudentSet set;
     public Princess(StudentSet bag){
-        super("Prendi uno studente da questa carta e piazzalo nella tua sala",2,"PRINCESS");
+        super(2,"PRINCESS");
         set=new StudentSet();
         set.setStudentsRandomly(4,bag);
     }
 
-    public void useEffect(Player player, PeopleColor color,CenterTable table) {
+    public void useEffect(Player player, PeopleColor color, CenterTable table, ArrayList<Player> players) {
         player.reduceCoin(getCost());
         improveCost();
         player.getSchoolBoard().getDinnerTable().addstudents(1,color);
         set.removestudent(1,color);
         set.setStudentsRandomly(1,table.getBag());
+        table.checkProfessor(color,players);
     }
 
-    @Override
-    public String toString() {
-        return "PRINCESS - " + super.toString() +"\n"+
-                "STUDENTS: " + set.toString()+ "\n";
+    public StudentSet getSet() {
+        return set;
     }
 }

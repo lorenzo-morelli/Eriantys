@@ -36,14 +36,6 @@ public class ConnectionModel {
         return null;
     }
 
-    public void storeDataOfPlayer(String nickname, ClientModel clientData) {
-        for (ClientModel c : clientsInfo) {
-            if (c.getNickname().equals(nickname)) {
-                c = clientData;
-            }
-        }
-    }
-
     public void setClientsInfo(ArrayList<ClientModel> clientsInfo) {
         this.clientsInfo = clientsInfo;
     }

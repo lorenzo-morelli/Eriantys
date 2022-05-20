@@ -4,11 +4,11 @@ package it.polimi.ingsw.server.model.characters;
 public class CharacterCard {
     private final String Name;
     private int cost;
-    //private final String descrition;
-    public CharacterCard(String descrition,int cost, String name){
+    public static final String ANSI_CYAN = "\033[0;36m";
+    public static final String ANSI_RESET = "\u001B[0m";
+    public CharacterCard(int cost, String name){
         this.Name= name;
         this.cost=cost;
-        //this.descrition="EFFETTO: "+descrition;
     }
 
     public int getCost() {
@@ -21,8 +21,7 @@ public class CharacterCard {
 
     @Override
     public String toString() {
-        return "COST: " + cost; //+
-               // "\n" + descrition ;
+        return ANSI_CYAN + "    "+getName()+ "   COST: " + cost +ANSI_RESET ;
     }
 
     public String getName() {

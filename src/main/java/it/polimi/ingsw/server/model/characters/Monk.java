@@ -9,7 +9,7 @@ public class Monk extends CharacterCard{
 
     private final StudentSet set;
     public Monk(StudentSet bag){
-        super("Prendi uno studente da questa carta e piazzalo su un isola a tua scelta",1,"MONK");
+        super(1,"MONK");
         set=new StudentSet();
         set.setStudentsRandomly(4,bag);
     }
@@ -20,12 +20,6 @@ public class Monk extends CharacterCard{
         table.getIslands().get(index_island).getInhabitants().addstudents(1,color);
         set.removestudent(1,color);
         set.setStudentsRandomly(1,table.getBag());
-    }
-
-    @Override
-    public String toString() {
-        return "MONK - " + super.toString() +"\n"+
-                "STUDENTS: " + set.toString()+ "\n";
     }
 
     public StudentSet getSet() {

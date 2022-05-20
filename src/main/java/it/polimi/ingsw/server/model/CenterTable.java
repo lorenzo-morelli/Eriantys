@@ -20,6 +20,8 @@ public class CenterTable {
     private Player farmerEffect;
     private PeopleColor mushroomColor;
     private Player knightEffect;
+    private StudentSet princessSet, jesterSet,monkSet;
+    private int numDivieti;
 
     public static final String ANSI_CYAN = "\033[0;36m";
     public static final String ANSI_RESET = "\u001B[0m";
@@ -62,30 +64,33 @@ public class CenterTable {
         }
 
         if(gamemode.equals(GameMode.EXPERT)){
-
+            characterCards=new ArrayList<>();
             ArrayList<Integer> picks=new ArrayList<>();
+
             var ref = new Object() {
                 int pick;
             };
-            characterCards=new ArrayList<>();
 
             for(int i=0;i<3;i++) {
                 do{
                     ref.pick = new Random().nextInt(Character.values().length);
                 }while(picks.stream().anyMatch(j->j.equals(ref.pick)));
                 picks.add(ref.pick);
-                switch (Character.values()[ref.pick]){      //CARTE SERIALIZZATE DANNO PROBLEMI
+                switch (Character.values()[ref.pick]){
                     case MONK: characterCards.add(new Monk(bag));
+                        monkSet=((Monk)characterCards.get(i)).getSet();
                     break;
                     case THIEF: characterCards.add(new Thief());
                         break;
                     case FARMER: characterCards.add(new Farmer());
                         break;
                     case GRANNY: characterCards.add(new Granny());
+                        numDivieti=((Granny)characterCards.get(i)).getNumDivieti();
                         break;
                     case HERALD: characterCards.add(new Herald());
                         break;
                     case JESTER: characterCards.add(new Jester(bag));
+                        jesterSet=((Jester)characterCards.get(i)).getSet();
                         break;
                     case KNIGHT: characterCards.add(new Knight());
                         break;
@@ -94,11 +99,14 @@ public class CenterTable {
                     case POSTMAN: characterCards.add(new Postman());
                         break;
                     case PRINCESS: characterCards.add(new Princess(bag));
+                        princessSet=((Princess)characterCards.get(i)).getSet();
                         break;
                     case MINSTRELL: characterCards.add(new Minstrell());
                         break;
                     case MUSHROOM_HUNTER: characterCards.add(new MushroomHunter());
                         break;
+
+
                 }
             }
         }
@@ -123,11 +131,6 @@ public class CenterTable {
     public void changeProfessor(Player player,PeopleColor color){
         for (Professor professor : professors) {
             if (professor.getColor().equals(color)) professor.setHeldBy(player);
-        }
-    }
-    public void chargeClouds() {
-        for (Cloud cloud : clouds) {
-            cloud.charge(bag);
         }
     }
 
@@ -199,10 +202,9 @@ public class CenterTable {
         return  "-----------------------------------------TABLE----------------------------------------------------------------------------------------------------------------------------------------\n" +
                 "\n----------------ISLANDS---------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n" +  printislands() +"------------------BAG-----------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n"+
                 "    SIZE : " + bag.size() + "    " + bag +
-                "\n\n----------------CLOUDS----------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n" + printclouds() +
-                "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n"+
-                (characterCards==null ? "" :
-                        characterCards.toString() +"\n")+
+                "\n----------------CLOUDS----------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n" + printclouds() +
+                (characterCards==null ? "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n" :
+                        "-----------CHARACTER-CARD---------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n"+printCharachter())+
                 "---------------PROFESSORS-------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n"+
                 printprofessors() + "\n\n--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n" ;
     }
@@ -213,6 +215,31 @@ public class CenterTable {
         for (Cloud cloud : clouds) {
             result.append(ANSI_CYAN).append("    CLOUD : ").append(i).append(ANSI_RESET).append("\n").append(cloud.toString());
             i++;
+        }
+        return result.toString();
+    }
+
+    public String printCharachter(){
+        StringBuilder result= new StringBuilder();
+        for(CharacterCard c : characterCards){
+            result.append(c.toString());
+            switch (c.getName()) {
+                case "PRINCESS":
+                    result.append("    STUDENTS:   ").append(princessSet.toString()).append("\n");
+                    break;
+                case "JESTER":
+                    result.append("    STUDENTS:   ").append(jesterSet.toString()).append("\n");
+                    break;
+                case "MONK":
+                    result.append("    STUDENTS:   ").append(monkSet.toString()).append("\n");
+                    break;
+                case "GRANNY":
+                    result.append("    DIVIETI:   ").append(numDivieti).append("\n");
+                    break;
+                default:
+                    result.append("\n\n");
+                    break;
+            }
         }
         return result.toString();
     }
@@ -270,11 +297,24 @@ public class CenterTable {
     public void setKnightEffect(Player knightEffect) {
         this.knightEffect = knightEffect;
     }
-    public Player getFarmerEffect() {
-        return farmerEffect;
-    }
 
     public void setFarmerEffect(Player farmerEffect) {
         this.farmerEffect = farmerEffect;
+    }
+
+    public StudentSet getJesterSet() {
+        return jesterSet;
+    }
+
+    public StudentSet getMonkSet() {
+        return monkSet;
+    }
+
+    public StudentSet getPrincessSet() {
+        return princessSet;
+    }
+
+    public int getNumDivieti() {
+        return numDivieti;
     }
 }

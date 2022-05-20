@@ -13,20 +13,19 @@ import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
 
 public class WaitFirstPlayerGameInfo extends State {
-    private ClientModel clientModel = null;
-    private Gson json;
+    private final Gson json;
     private Controller controller;
-    private ConnectionModel connectionModel;
+    private final ConnectionModel connectionModel;
 
-    private ParametersFromNetwork message;
-    private Event reset = new ClientDisconnection();
+    private final ParametersFromNetwork message;
+    private final Event reset = new ClientDisconnection();
 
     public WaitFirstPlayerGameInfo(ServerController serverController) {
         super("[Il server è in attesa di gamemode e numero di giocatori]");
         json = new Gson();
         message = new ParametersFromNetwork(1);
         message.setStateEventListener(controller);
-        this.controller = serverController.getFsm();
+        this.controller = ServerController.getFsm();
         reset.setStateEventListener(controller);
         this.connectionModel = serverController.getConnectionModel();
     }
@@ -62,7 +61,7 @@ public class WaitFirstPlayerGameInfo extends State {
 
             //converto il messaggio arrivato in un oggetto clientModel
             System.out.println(message.getParameter(0));
-            clientModel = json.fromJson(message.getParameter(0), ClientModel.class);
+            ClientModel clientModel = json.fromJson(message.getParameter(0), ClientModel.class);
 
             // rimemorizzo le info nel mio database locale
             connectionModel.getClientsInfo().set(0, clientModel);

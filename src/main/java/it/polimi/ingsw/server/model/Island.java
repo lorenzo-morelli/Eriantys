@@ -2,8 +2,6 @@ package it.polimi.ingsw.server.model;
 
 import it.polimi.ingsw.server.model.enums.PeopleColor;
 import it.polimi.ingsw.server.model.enums.TowerColor;
-
-import java.lang.management.BufferPoolMXBean;
 import java.util.ArrayList;
 
 public class Island {
@@ -116,6 +114,6 @@ public class Island {
         return "    INHABITANS : " + inhabitants.toString() +
                 "    NUMBER OF TOWER : " + numberOfTowers + "\n"+
                 "    TOWER COLOR :" +  (towerColor==null ? " Null" : (towerColor==TowerColor.GREY ? ANSI_GRAY+towerColor+ANSI_RESET :(towerColor==TowerColor.WHITE ? WHITE_BOLD_BRIGHT+towerColor+ANSI_RESET :  ANSI_BLACK+towerColor+ANSI_RESET))) +"\n"+
-                (isBlocked ? "      QUESTA ISOLA E' BLOCCATA !\n" : "\n");
+                (isBlocked ? "    ! QUESTA ISOLA E' BLOCCATA !\n\n" : "\n");
     }
 }
