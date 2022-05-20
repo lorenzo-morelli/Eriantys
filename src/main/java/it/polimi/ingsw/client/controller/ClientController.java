@@ -57,6 +57,7 @@ public class ClientController {
         fsm.addTransition(sendNicknameToServer, sendNicknameToServer.nickAlreadyExistent(), askNewNickname);
         fsm.addTransition(sendNicknameToServer, sendNicknameToServer.nickUnique(), wait);
         fsm.addTransition(wait, wait.messaggioGestito(), wait);
+        fsm.addTransition(wait,wait.Reset(),askUserinfo);
         // L'evento di start è l'unico che deve essere fatto partire manualmente
         start.fireStateEvent();
     }

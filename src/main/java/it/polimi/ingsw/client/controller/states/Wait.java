@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.controller.states;
 import com.google.gson.Gson;
 import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.client.view.View;
+import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
 import it.polimi.ingsw.utils.stateMachine.Controller;
 import it.polimi.ingsw.utils.stateMachine.Event;
@@ -17,6 +18,7 @@ public class Wait extends State {
     private View view;
 
     private Event messaggioGestito;
+    private Event reset;
     public Wait(ClientModel clientModel, View view, Controller controller) {
         super("[Stato di attesa di comandi (aggiornamento vista o comandi di inserimento da terminale)]");
         json = new Gson();
@@ -25,10 +27,16 @@ public class Wait extends State {
         this.controller = controller;
         messaggioGestito = new Event(" messaggio gestito");
         messaggioGestito.setStateEventListener(controller);
+        reset = new Event("reset");
+        reset.setStateEventListener(controller);
     }
 
     public Event messaggioGestito() {
         return messaggioGestito;
+    }
+
+    public Event Reset() {
+        return reset;
     }
 
     @Override
@@ -40,6 +48,12 @@ public class Wait extends State {
             }
             receivedClientModel = json.fromJson(message.getParameter(0), ClientModel.class);
             //System.out.println(receivedClientModel.isGameStarted().equals(true));
+        if(receivedClientModel.getTypeOfRequest()!= null && receivedClientModel.getTypeOfRequest().equals("DISCONNECTION")){
+            Network.disconnect();
+            System.out.println("Il gioco è terminato a causa della disconnessione di un client");
+            reset.fireStateEvent();
+            return super.entryAction(cause);
+        }
 
             if (receivedClientModel.isGameStarted().equals(true)) {
                 Gson json = new Gson();

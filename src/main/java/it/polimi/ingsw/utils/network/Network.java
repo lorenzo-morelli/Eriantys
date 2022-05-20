@@ -79,9 +79,7 @@ public class Network implements ActionListener{
     };
 
     public static void setupClient(String ip,String port){
-        if (instance == null){
-            instance = new Network();
-        }
+        instance = new Network();
         Network.IPAddress.setText(ip);
         Network.port.setText(port);
         Network.clientButton.doClick();
