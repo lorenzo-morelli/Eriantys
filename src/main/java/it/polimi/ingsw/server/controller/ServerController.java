@@ -54,6 +54,7 @@ public class ServerController {
         fsm.addTransition(endGame,endGame.getRestart(),waitFirstPlayer);
 
         // gestione disconnessione di un client
+        fsm.addTransition(waitFirstPlayerGameInfo, waitFirstPlayerGameInfo.getReset(), endGame);
         fsm.addTransition(waitOtherClients,waitOtherClients.getReset(),endGame);
         fsm.addTransition(assistantCardPhase, assistantCardPhase.getReset(), endGame);
         fsm.addTransition(askForTeamMate, askForTeamMate.getReset(), endGame);
