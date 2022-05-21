@@ -1,5 +1,9 @@
 package it.polimi.ingsw.utils.cli;
 
+import com.google.gson.Gson;
+import it.polimi.ingsw.client.model.ClientModel;
+import it.polimi.ingsw.utils.network.Network;
+import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
 import it.polimi.ingsw.utils.observerPattern.Observer;
 import it.polimi.ingsw.utils.observerPattern.Subject;
 import jline.console.ConsoleReader;
@@ -21,6 +25,7 @@ public class CommandPrompt implements Subject{
     private static List<Observer> observers = null;
     private static CommandPrompt instance = null;
     private static boolean debug = false;
+    private static boolean inputLetto = false;
 
     private CommandPrompt() throws IOException {
         console = new ConsoleReader();
@@ -85,16 +90,44 @@ public class CommandPrompt implements Subject{
     }
 
     public static void ask(String suggestion, String console){
-        try {
-            if(!debug) {
-                CommandPrompt.clearScreen();
+
+        // Interrompere la lettura dell'input se si disconnette un client
+        Thread t= new Thread(){
+            public void run() {
+                try {
+                    if(!debug) {
+                        CommandPrompt.clearScreen();
+                    }
+                    CommandPrompt.println(suggestion);
+                    CommandPrompt.setPrompt(console);
+                    CommandPrompt.read();
+                    if (Network.disconnectedClient()){
+                        System.out.println("Bene, questo input verrà ignorato");
+                        return;
+                    }
+                    setInputLetto(true);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-            CommandPrompt.println(suggestion);
-            CommandPrompt.setPrompt(console);
-            CommandPrompt.read();
-        } catch (IOException e) {
-            e.printStackTrace();
+        };
+        t.start();
+        while(!inputLetto() && !Network.disconnectedClient()){
         }
+        if (Network.disconnectedClient()){
+            t.stop();
+        }
+        setInputLetto(false);
+
+
+    }
+
+    public static void setInputLetto(boolean inputLetto) {
+        CommandPrompt.inputLetto = inputLetto;
+    }
+
+    public static synchronized boolean inputLetto() {
+        return inputLetto;
     }
 
     @Override

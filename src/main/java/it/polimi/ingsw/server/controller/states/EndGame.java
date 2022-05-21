@@ -11,6 +11,8 @@ import it.polimi.ingsw.utils.stateMachine.Event;
 import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
 
+import java.util.concurrent.TimeUnit;
+
 public class EndGame extends State {
     private final Event restart;
     private final ConnectionModel connectionModel;
@@ -34,8 +36,6 @@ public class EndGame extends State {
         Model model = serverController.getModel();
 
         if (Network.disconnectedClient()){
-
-
                 ClientModel currentPlayerData = connectionModel.findPlayer(model.getPlayers().get(0).getNickname());
 
                 currentPlayerData.setTypeOfRequest("DISCONNECTION");

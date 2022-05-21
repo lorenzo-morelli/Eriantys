@@ -47,8 +47,7 @@ public class Wait extends State {
                 // non ho ricevuto ancora nessun messaggio
             }
             receivedClientModel = json.fromJson(message.getParameter(0), ClientModel.class);
-            //System.out.println(receivedClientModel.isGameStarted().equals(true));
-        if(receivedClientModel.getTypeOfRequest()!= null && receivedClientModel.getTypeOfRequest().equals("DISCONNECTION")){
+        if(Network.disconnectedClient()){
             Network.disconnect();
             System.out.println("Il gioco è terminato a causa della disconnessione di un client");
             reset.fireStateEvent();

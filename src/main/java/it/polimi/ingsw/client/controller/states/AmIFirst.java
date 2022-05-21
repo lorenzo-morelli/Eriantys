@@ -9,6 +9,8 @@ import it.polimi.ingsw.utils.stateMachine.Event;
 import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
 
+import java.io.IOException;
+
 public class AmIFirst extends State {
     private ClientModel clientModel;
     private Gson json;
@@ -67,6 +69,32 @@ public class AmIFirst extends State {
             //System.out.println("   non sono primo !!!]");
         }
         return super.entryAction(cause);
+    }
+
+    @Override
+    public void exitAction(IEvent cause) throws IOException {
+        // Ci interessa sapere se il server segnala una disconnessione di qualche client
+        // memorizziamo questo segnale in arrivo dal server in Network.disconnectedClient
+        Thread t= new Thread(){
+            public void run() {
+                while (true) {
+                    ParametersFromNetwork message = new ParametersFromNetwork(1);
+                    message.enable();
+                    while (!message.parametersReceived()) {
+                        // non ho ricevuto ancora nessun messaggio
+                    }
+                    Gson json = new Gson();
+                    ClientModel receivedClientModel = json.fromJson(message.getParameter(0), ClientModel.class);
+                    //System.out.println(receivedClientModel.isGameStarted().equals(true));
+                    if (receivedClientModel.getTypeOfRequest() != null && receivedClientModel.getTypeOfRequest().equals("DISCONNECTION")) {
+                        Network.setDisconnectedClient(true);
+                        System.out.println("\n Un client si è disconnesso.");
+                    }
+
+                }
+            }
+        };
+        t.start();
     }
 
     public Event nicknameAlreadyPresent() {

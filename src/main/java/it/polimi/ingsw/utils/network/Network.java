@@ -106,12 +106,17 @@ public class Network implements ActionListener{
         return serverListening;
     }
 
-    public static boolean disconnectedClient() {
-        return disconnectedClient;
+    public static  boolean disconnectedClient() {
+        synchronized ((Object) disconnectedClient){
+            return disconnectedClient;
+        }
+
     }
 
     public static void setDisconnectedClient(boolean disconnectedClient) {
-        Network.disconnectedClient = disconnectedClient;
+        synchronized ((Object) disconnectedClient){
+            Network.disconnectedClient = disconnectedClient;
+        }
     }
 }
 

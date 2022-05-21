@@ -1,9 +1,12 @@
 package it.polimi.ingsw.client.controller;
 
+import com.google.gson.Gson;
 import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.client.controller.states.*;
 import it.polimi.ingsw.client.view.*;
 import it.polimi.ingsw.server.controller.states.Idle;
+import it.polimi.ingsw.utils.network.Network;
+import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
 import it.polimi.ingsw.utils.stateMachine.*;
 
 public class ClientController {
@@ -17,6 +20,7 @@ public class ClientController {
         Idle idle = new Idle();     // modo elegante di far partire il controllore
         Event start = new Event("[Controller Started]");
         Controller fsm = new Controller("Controllore del Client", idle);
+        //fsm.showDebugMessages();
 
         // La welcomeScreen richiede all'utente una interazione scrivendo (o cliccando il bottone) start
         WelcomeScreen waitStart = new WelcomeScreen(view);
@@ -60,5 +64,7 @@ public class ClientController {
         fsm.addTransition(wait,wait.Reset(),askUserinfo);
         // L'evento di start è l'unico che deve essere fatto partire manualmente
         start.fireStateEvent();
+
+
     }
 }
