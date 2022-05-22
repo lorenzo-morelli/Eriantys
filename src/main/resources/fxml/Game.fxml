@@ -9,59 +9,59 @@
 
 <AnchorPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.utils.gui.Game">
    <children>
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="948.0" layoutY="89.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="884.0" layoutY="171.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../graphics/assistants/assistantCard3.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="assistantCard2" fitHeight="150.0" fitWidth="200.0" layoutX="816.0" layoutY="89.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="assistantCard2" fitHeight="150.0" fitWidth="200.0" layoutX="752.0" layoutY="171.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../graphics/assistants/assistantCard2.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="assistantCard1" fitHeight="150.0" fitWidth="200.0" layoutX="684.0" layoutY="89.0" onMouseClicked="#choosed1" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="assistantCard1" fitHeight="150.0" fitWidth="200.0" layoutX="620.0" layoutY="171.0" onMouseClicked="#choosed1" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../graphics/assistants/assistantCard1.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="1076.0" layoutY="89.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="1012.0" layoutY="171.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../graphics/assistants/assistantCard4.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="1202.0" layoutY="89.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="1138.0" layoutY="171.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../graphics/assistants/assistantCard5.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="1330.0" layoutY="89.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="1266.0" layoutY="171.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../graphics/assistants/assistantCard6.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="1451.0" layoutY="89.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="1387.0" layoutY="171.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../graphics/assistants/assistantCard7.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="1573.0" layoutY="89.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="1509.0" layoutY="171.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../graphics/assistants/assistantCard8.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="1698.0" layoutY="89.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="1634.0" layoutY="171.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../graphics/assistants/assistantCard9.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="179.0" fitWidth="160.0" layoutX="1820.0" layoutY="89.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="158.0" fitWidth="101.0" layoutX="1751.0" layoutY="171.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../graphics/assistants/assistantCard10.png" />
          </image>
       </ImageView>
-      <Button layoutX="1818.0" layoutY="987.0" mnemonicParsing="false" onMouseClicked="#quit" text="Quit" />
-      <Button fx:id="setOnSchoolBtn" layoutX="1384.0" layoutY="333.0" mnemonicParsing="false" onMouseClicked="#setOnSchool" text="Set on school" />
-      <Button fx:id="setOnIsland" layoutX="1532.0" layoutY="334.0" mnemonicParsing="false" text="Set on island" />
+      <Button layoutX="1768.0" layoutY="972.0" mnemonicParsing="false" onMouseClicked="#quit" prefHeight="44.0" prefWidth="81.0" text="Quit" />
+      <Button fx:id="setOnSchoolBtn" layoutX="1609.0" layoutY="364.0" mnemonicParsing="false" onMouseClicked="#setOnSchool" prefHeight="38.0" prefWidth="108.0" text="Set on school" />
+      <Button fx:id="setOnIsland" layoutX="1612.0" layoutY="456.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="108.0" text="Set on island" />
       <ImageView fitHeight="135.0" fitWidth="140.0" layoutX="1010.0" layoutY="433.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../graphics/pieces/islands/island1.png" />
@@ -87,7 +87,7 @@
             <Image url="@../graphics/pieces/clouds/cloud_card_2.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="263.0" fitWidth="593.0" layoutY="766.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="school1" fitHeight="263.0" fitWidth="593.0" layoutY="766.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../graphics/PLANCIA_GIOCO_2.jpeg" />
          </image>
@@ -142,44 +142,54 @@
             <Image url="@../graphics/pieces/islands/island1.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="motherNature" fitHeight="74.0" fitWidth="88.0" layoutX="942.0" layoutY="397.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="motherNature" fitHeight="74.0" fitWidth="88.0" layoutX="954.0" layoutY="402.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../graphics/pieces/mother_nature.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="263.0" fitWidth="593.0" layoutY="508.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="school2" fitHeight="263.0" fitWidth="593.0" layoutY="508.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../graphics/PLANCIA_GIOCO_2.jpeg" />
          </image>
       </ImageView>
-      <ImageView fitHeight="263.0" fitWidth="593.0" layoutY="251.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="school3" fitHeight="263.0" fitWidth="593.0" layoutY="251.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../graphics/PLANCIA_GIOCO_2.jpeg" />
          </image>
       </ImageView>
-      <ImageView fitHeight="263.0" fitWidth="593.0" layoutY="-6.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="school4" fitHeight="263.0" fitWidth="593.0" layoutY="-6.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../graphics/PLANCIA_GIOCO_2.jpeg" />
          </image>
       </ImageView>
-      <Label layoutX="279.0" layoutY="743.0" text="Player 1">
+      <Label fx:id="playerName1" layoutX="259.0" layoutY="761.0" text="Player 1">
          <font>
             <Font name="System Bold" size="19.0" />
          </font>
       </Label>
-      <Label layoutX="279.0" layoutY="316.0" text="Player 2">
+      <Label fx:id="playerName2" layoutX="264.0" layoutY="509.0" text="Player 2">
          <font>
             <Font name="System Bold" size="19.0" />
          </font>
       </Label>
-      <Label layoutX="282.0" layoutY="26.0" text="Player 4">
+      <Label fx:id="playerName4" layoutX="262.0" layoutY="-1.0" text="Player 4">
          <font>
             <Font name="System Bold" size="19.0" />
          </font>
       </Label>
-      <Label layoutX="287.0" layoutY="452.0" text="Player 3">
+      <Label fx:id="playerName3" layoutX="258.0" layoutY="247.0" text="Player 3">
          <font>
             <Font name="System Bold" size="19.0" />
+         </font>
+      </Label>
+      <Label fx:id="phaseLabel" layoutX="1268.0" layoutY="36.0" text="PHASE">
+         <font>
+            <Font name="System Bold" size="28.0" />
+         </font>
+      </Label>
+      <Label fx:id="turnLabel" layoutX="1192.0" layoutY="80.0" text="è il turno di:">
+         <font>
+            <Font size="20.0" />
          </font>
       </Label>
    </children>

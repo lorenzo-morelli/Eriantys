@@ -61,16 +61,13 @@ public class GUI extends Application {
         this.stage.show();
     }
 
-    public void openNewWindow(String newWindow) throws IOException {
+    public void openNewWindow(String newWindow) {
         try {
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/windows/" + newWindow + ".fxml")));
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.show();
-
-            stage.show();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
