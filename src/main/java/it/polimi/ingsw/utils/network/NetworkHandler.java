@@ -247,7 +247,7 @@ public class NetworkHandler {
                     clientConnections.remove(clientConnection);
                     clientConnection = null;
                     System.out.println("Server removed a client connection.  Current Size: " + clientConnections.size());
-                    Network.setDisconnectedClient(true);
+                    //Network.setDisconnectedClient(true);
 
                 }catch(NullPointerException e){
                 } catch (Exception e) {

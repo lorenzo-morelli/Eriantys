@@ -37,6 +37,7 @@ public class ClientModel {
     private Boolean isResponse = false;
 
     private Boolean gameStarted = false;
+    public boolean kicked = false;
     private String typeOfRequest;
 
     private PeopleColor choosedColor;
@@ -261,5 +262,13 @@ public class ClientModel {
 
     public void setColors2(ArrayList<PeopleColor> colors2) {
         this.colors2 = colors2;
+    }
+
+    public boolean isKicked() {
+        return kicked;
+    }
+
+    public void setKicked(boolean kicked) {
+        this.kicked = kicked;
     }
 }

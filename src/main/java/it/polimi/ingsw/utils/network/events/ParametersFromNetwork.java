@@ -43,7 +43,7 @@ public class ParametersFromNetwork extends Event implements DocumentListener {
 
     }
 
-    private void checkLastMessage() {
+    private synchronized void checkLastMessage() {
         try {
             parsedStrings = new ArrayList(Arrays.asList(ta.getText().split(" ")));
             if (parsedStrings.size() == numberOfStrings){
@@ -56,7 +56,7 @@ public class ParametersFromNetwork extends Event implements DocumentListener {
         }
     }
 
-    public String getParameter(int i){
+    public synchronized String getParameter(int i){
         return parsedStrings.get(i);
     }
 
@@ -64,11 +64,11 @@ public class ParametersFromNetwork extends Event implements DocumentListener {
         return parametersReceived;
     }
 
-    public void enable(){
+    public synchronized void enable(){
         enabled = true;
     }
 
-    public void disable(){
+    public synchronized void disable(){
         enabled = false;
         parametersReceived = false;
     }

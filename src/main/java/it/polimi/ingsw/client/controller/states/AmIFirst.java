@@ -33,6 +33,35 @@ public class AmIFirst extends State {
 
     @Override
     public IEvent entryAction(IEvent cause) throws Exception {
+        // Ci interessa sapere se il server segnala una disconnessione di qualche client
+        // memorizziamo questo segnale in arrivo dal server in Network.disconnectedClient
+        Network.setClientModel(clientModel);
+        Thread t= new Thread(){
+            public void run() {
+                while (true) {
+                    ParametersFromNetwork message = new ParametersFromNetwork(1);
+                    message.enable();
+                    while (!message.parametersReceived()) {
+                        // non ho ricevuto ancora nessun messaggio
+                    }
+                    Gson json = new Gson();
+                    ClientModel receivedClientModel = json.fromJson(message.getParameter(0), ClientModel.class);
+                    //System.out.println(receivedClientModel.isGameStarted().equals(true));
+                    if (receivedClientModel.getTypeOfRequest() != null && receivedClientModel.getTypeOfRequest().equals("DISCONNECTION")) {
+                        Network.setDisconnectedClient(true);
+                        System.out.println("\n Un client si è disconnesso.");
+                    }
+                    if (receivedClientModel.getClientIdentity() == Network.getClientModel().getClientIdentity() && receivedClientModel.isKicked() == true && receivedClientModel.getTypeOfRequest() != null && receivedClientModel.getTypeOfRequest().equals("KICK")) {
+                        System.out.println("\n Sei stato disconnesso perché il server è al completo.");
+                        Network.disconnect();
+                        System.exit(0);
+                    }
+
+                }
+            }
+        };
+        t.start();
+
         boolean responseReceived = false;
 
         while (!responseReceived) {
@@ -43,20 +72,21 @@ public class AmIFirst extends State {
 
             System.out.println("Sei connesso al server, se è disponibile una partita verrai automaticamente collegato\n" +
                     "altrimenti vuoi dire che il server è al completo e non può ospitare altri giocatori");
+            response = new ParametersFromNetwork(1);
             response.enable();
             while (!response.parametersReceived()) {
                 // Non ho ancora ricevuto una risposta dal server
             }
 
             // se il messaggio è rivolto a me allora ho ricevuto l'ack, altrimenti reinvio e riattendo
-            if (json.fromJson(response.getParameter(0), ClientModel.class).getClientIdentity() == clientModel.getClientIdentity()) {
+            if (json.fromJson(response.getParameter(0), ClientModel.class).getClientIdentity() == clientModel.getClientIdentity() && !json.fromJson(response.getParameter(0), ClientModel.class).isKicked()) {
                 responseReceived = true;
             }
         }
 
         //System.out.println("[Ho ricevuto la risposta: ");
         clientModel = json.fromJson(response.getParameter(0), ClientModel.class);
-        if (clientModel.getAmIfirst() == null) {
+        if (clientModel.getAmIfirst() == null ) {
             nicknameAlreadyPresent.fireStateEvent();
             //System.out.println("   il nickname era già presente !!!]");
         } else if (clientModel.getAmIfirst().equals(true)) {
@@ -73,28 +103,7 @@ public class AmIFirst extends State {
 
     @Override
     public void exitAction(IEvent cause) throws IOException {
-        // Ci interessa sapere se il server segnala una disconnessione di qualche client
-        // memorizziamo questo segnale in arrivo dal server in Network.disconnectedClient
-        Thread t= new Thread(){
-            public void run() {
-                while (true) {
-                    ParametersFromNetwork message = new ParametersFromNetwork(1);
-                    message.enable();
-                    while (!message.parametersReceived()) {
-                        // non ho ricevuto ancora nessun messaggio
-                    }
-                    Gson json = new Gson();
-                    ClientModel receivedClientModel = json.fromJson(message.getParameter(0), ClientModel.class);
-                    //System.out.println(receivedClientModel.isGameStarted().equals(true));
-                    if (receivedClientModel.getTypeOfRequest() != null && receivedClientModel.getTypeOfRequest().equals("DISCONNECTION")) {
-                        Network.setDisconnectedClient(true);
-                        System.out.println("\n Un client si è disconnesso.");
-                    }
 
-                }
-            }
-        };
-        t.start();
     }
 
     public Event nicknameAlreadyPresent() {

@@ -1,5 +1,7 @@
 package it.polimi.ingsw.utils.network;
 
+import it.polimi.ingsw.client.controller.ClientController;
+import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.utils.stateMachine.Event;
 
 import java.awt.event.*;
@@ -12,6 +14,7 @@ public class Network implements ActionListener{
     private static boolean gotConnect;
     private static boolean serverListening = false;
     private static Network instance = null;
+    private static ClientModel clientModel;
 
     // elementi grafici "virtuali" che astraggono i dettagli implementativi
     private static JButton serverButton,clientButton, sendButton;
@@ -23,7 +26,7 @@ public class Network implements ActionListener{
 
 
 
-    public void actionPerformed(ActionEvent event){
+    public synchronized void actionPerformed(ActionEvent event){
         if(event.getSource() == clientButton){
             connection = new NetworkHandler(IPAddress.getText(), Integer.parseInt(port.getText()), this);
             gotConnect = connection.connect();
@@ -60,7 +63,7 @@ public class Network implements ActionListener{
         disconnectButton.addActionListener(this);
     }
 
-    public static JTextArea checkNewMessages() {
+    public static synchronized JTextArea checkNewMessages() {
         if (instance.textReceived == null){
             instance.textReceived = new JTextArea();
         }
@@ -85,38 +88,46 @@ public class Network implements ActionListener{
         Network.clientButton.doClick();
     };
 
-    public static void disconnect(){
+    public synchronized static void disconnect(){
         instance.disconnectButton.doClick();
     }
 
-    public static boolean isConnected() {
+    public synchronized static boolean isConnected() {
         return instance.gotConnect;
     }
 
-    public static void send(String message) throws InterruptedException {
+    public synchronized static void send(String message) throws InterruptedException {
         TimeUnit.MILLISECONDS.sleep(500);
         connection.sendText(message);
     }
 
-    public static String getMyIp(){
+    public synchronized static String getMyIp(){
         return instance.connection.getMyAddress();
     }
 
-    public static boolean isServerListening() {
+    public synchronized static boolean isServerListening() {
         return serverListening;
     }
 
-    public static  boolean disconnectedClient() {
+    public synchronized static  boolean disconnectedClient() {
         synchronized ((Object) disconnectedClient){
             return disconnectedClient;
         }
 
     }
 
-    public static void setDisconnectedClient(boolean disconnectedClient) {
+    public synchronized static void setDisconnectedClient(boolean disconnectedClient) {
         synchronized ((Object) disconnectedClient){
             Network.disconnectedClient = disconnectedClient;
         }
+    }
+
+    public static void setClientModel(ClientModel clientModel) {
+        Network.clientModel = clientModel;
+    }
+
+    public static ClientModel getClientModel() {
+        return clientModel;
     }
 }
 
