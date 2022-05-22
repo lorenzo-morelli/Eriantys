@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.utils.gui.controllers.SetupGameController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.utils.gui.SetupGameController">
    <children>
       <Label fx:id="connectedOnIp" layoutX="257.0" layoutY="39.0" text="Connected on ip: ..." />
       <Label fx:id="connectedOnPort" layoutX="251.0" layoutY="56.0" text="Connected on port: ..." />
