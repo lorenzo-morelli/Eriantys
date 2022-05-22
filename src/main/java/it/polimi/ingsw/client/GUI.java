@@ -24,7 +24,7 @@ public class GUI extends Application {
     public void start(Stage stage) throws IOException {
         this.stage = stage;
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/GameOld.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Game.fxml"));
             this.scene = new Scene(loader.load());
             this.stage.setScene(scene);
 //            widthChangeListener = (observable, oldValue, newValue) -> {

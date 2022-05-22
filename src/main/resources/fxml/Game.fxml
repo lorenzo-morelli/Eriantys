@@ -87,7 +87,7 @@
             <Image url="@../graphics/pieces/clouds/cloud_card_2.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="263.0" fitWidth="593.0" layoutY="767.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="263.0" fitWidth="593.0" layoutY="766.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../graphics/PLANCIA_GIOCO_2.jpeg" />
          </image>
@@ -147,12 +147,12 @@
             <Image url="@../graphics/pieces/mother_nature.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="263.0" fitWidth="593.0" layoutY="509.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="263.0" fitWidth="593.0" layoutY="508.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../graphics/PLANCIA_GIOCO_2.jpeg" />
          </image>
       </ImageView>
-      <ImageView fitHeight="263.0" fitWidth="593.0" layoutY="252.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="263.0" fitWidth="593.0" layoutY="251.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../graphics/PLANCIA_GIOCO_2.jpeg" />
          </image>
