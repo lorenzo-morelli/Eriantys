@@ -9,7 +9,7 @@ import javafx.scene.control.Label;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class LobbyController implements Initializable {
+public class Lobby implements Initializable {
     private final GUI gui = new GUI();
     private final Gson gson = new Gson();
 

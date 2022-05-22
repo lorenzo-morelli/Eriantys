@@ -2,25 +2,15 @@ package it.polimi.ingsw.utils.gui;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.client.GUI;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class GameController implements Initializable {
+public class Game implements Initializable {
     private final GUI gui = new GUI();
     private final Gson gson = new Gson();
     public ImageView assistantCard1 = new ImageView();
@@ -34,10 +24,15 @@ public class GameController implements Initializable {
     public ImageView assistantCard9;
     public ImageView assistantCard10;
 
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         //assistantCard1
+    }
+
+    public void quit() throws IOException {
+        System.exit(0); //todo: this.gui.openNewWindow("Quit");
     }
 
     public void setOnSchool() throws IOException {

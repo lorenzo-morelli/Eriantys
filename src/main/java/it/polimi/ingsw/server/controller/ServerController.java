@@ -23,10 +23,10 @@ public class ServerController {
         AssistantCardPhase assistantCardPhase = new AssistantCardPhase(this);
         StudentPhase studentPhase = new StudentPhase(this);
         AskForTeamMate askForTeamMate = new AskForTeamMate(this);
-        MotherPhase motherPhase=new MotherPhase(this);
-        CloudPhase cloudPhase=new CloudPhase(this);
-        EndTurn endTurn=new EndTurn(this);
-        EndGame endGame=new EndGame(this);
+        MotherPhase motherPhase = new MotherPhase(this);
+        CloudPhase cloudPhase = new CloudPhase(this);
+        EndTurn endTurn = new EndTurn(this);
+        EndGame endGame = new EndGame(this);
 
         // Dichiarazione delle transizioni tra gli stati
         Event start = new Event("[Controller Started]");
@@ -35,24 +35,24 @@ public class ServerController {
         fsm.addTransition(waitFirstPlayer, waitFirstPlayer.gotFirstMessage(), waitFirstPlayerGameInfo);
         fsm.addTransition(waitFirstPlayerGameInfo, waitFirstPlayerGameInfo.gotNumOfPlayersAndGamemode(), waitOtherClients);
         fsm.addTransition(waitOtherClients, waitOtherClients.twoOrThreeClientsConnected(), createGame);
-        fsm.addTransition(waitOtherClients,waitOtherClients.fourClientsConnected(),askForTeamMate);
+        fsm.addTransition(waitOtherClients, waitOtherClients.fourClientsConnected(), askForTeamMate);
         fsm.addTransition(createGame, createGame.gameCreated(), assistantCardPhase);
-        fsm.addTransition(createGame, createGame.fourPlayersGameCreated(),askForTeamMate);
+        fsm.addTransition(createGame, createGame.fourPlayersGameCreated(), askForTeamMate);
         fsm.addTransition(askForTeamMate, askForTeamMate.teamMateChoosen(), assistantCardPhase);
         fsm.addTransition(assistantCardPhase, assistantCardPhase.cardsChoosen(), studentPhase);
         fsm.addTransition(studentPhase, studentPhase.studentPhaseEnded(), motherPhase);
-        fsm.addTransition(studentPhase, studentPhase.gameEnd(),endGame);
+        fsm.addTransition(studentPhase, studentPhase.gameEnd(), endGame);
         fsm.addTransition(motherPhase, motherPhase.GoToCloudPhase(), cloudPhase);
         fsm.addTransition(motherPhase, motherPhase.goToStudentPhase(), studentPhase);
-        fsm.addTransition(motherPhase, motherPhase.gameEnd(),endGame );
+        fsm.addTransition(motherPhase, motherPhase.gameEnd(), endGame);
         fsm.addTransition(cloudPhase, cloudPhase.GoToStudentPhase(), studentPhase);
-        fsm.addTransition(cloudPhase, cloudPhase.GoToEndTurn(),endTurn );
-        fsm.addTransition(endTurn,endTurn.goToAssistentCardPhase(),assistantCardPhase);
-        fsm.addTransition(endGame,endGame.getRestart(),waitFirstPlayer);
+        fsm.addTransition(cloudPhase, cloudPhase.GoToEndTurn(), endTurn);
+        fsm.addTransition(endTurn, endTurn.goToAssistentCardPhase(), assistantCardPhase);
+        fsm.addTransition(endGame, endGame.getRestart(), waitFirstPlayer);
 
         // gestione disconnessione di un client
         fsm.addTransition(waitFirstPlayerGameInfo, waitFirstPlayerGameInfo.getReset(), waitFirstPlayer);
-        fsm.addTransition(waitOtherClients,waitOtherClients.getReset(),waitOtherClients);
+        fsm.addTransition(waitOtherClients, waitOtherClients.getReset(), waitOtherClients);
         fsm.addTransition(assistantCardPhase, assistantCardPhase.getReset(), assistantCardPhase);
         fsm.addTransition(askForTeamMate, askForTeamMate.getReset(), askForTeamMate);
         fsm.addTransition(assistantCardPhase, assistantCardPhase.getReset(), assistantCardPhase);

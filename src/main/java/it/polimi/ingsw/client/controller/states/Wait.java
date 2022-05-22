@@ -19,6 +19,7 @@ public class Wait extends State {
 
     private Event messaggioGestito;
     private Event reset;
+
     public Wait(ClientModel clientModel, View view, Controller controller) {
         super("[Stato di attesa di comandi (aggiornamento vista o comandi di inserimento da terminale)]");
         json = new Gson();
@@ -41,46 +42,46 @@ public class Wait extends State {
 
     @Override
     public IEvent entryAction(IEvent cause) throws Exception {
-            ParametersFromNetwork message = new ParametersFromNetwork(1);
-            message.enable();
-            while (!message.parametersReceived()) {
-                // non ho ricevuto ancora nessun messaggio
-            }
-            receivedClientModel = json.fromJson(message.getParameter(0), ClientModel.class);
-            //System.out.println(message.getParameter(0));
-        if(Network.disconnectedClient()){
+        ParametersFromNetwork message = new ParametersFromNetwork(1);
+        message.enable();
+        while (!message.parametersReceived()) {
+            // non ho ricevuto ancora nessun messaggio
+        }
+        receivedClientModel = json.fromJson(message.getParameter(0), ClientModel.class);
+        //System.out.println(message.getParameter(0));
+        if (Network.disconnectedClient()) {
             Network.disconnect();
             System.out.println("Il gioco è terminato a causa della disconnessione di un client");
             reset.fireStateEvent();
             return super.entryAction(cause);
         }
 
-            if (receivedClientModel.isGameStarted().equals(true)) {
-                Gson json = new Gson();
-                view.setClientModel(receivedClientModel);
+        if (receivedClientModel.isGameStarted().equals(true)) {
+            Gson json = new Gson();
+            view.setClientModel(receivedClientModel);
 
 
-                // Il messaggio è o una richiesta o una risposta
+            // Il messaggio è o una richiesta o una risposta
 
-                // se il messaggio non è una risposta di un client al server vuol dire che
-                if (receivedClientModel.isResponse().equals(false)) {
-                    // il messaggio è una richiesta del server alla view di un client
+            // se il messaggio non è una risposta di un client al server vuol dire che
+            if (receivedClientModel.isResponse().equals(false)) {
+                // il messaggio è una richiesta del server alla view di un client
 
-                    // se il messaggio è rivolto a me devo essere io a compiere l'azione
-                    if (receivedClientModel.getClientIdentity() == myClientModel.getClientIdentity()) {
-                        // il messaggio è rivolto a me
-                        view.requestToMe();
-                    } else {
-                        // altrimenti devo limitarmi a segnalare che l'altro giocatore sta facendo qualcosa
-                        view.requestToOthers();
-                    }
+                // se il messaggio è rivolto a me devo essere io a compiere l'azione
+                if (receivedClientModel.getClientIdentity() == myClientModel.getClientIdentity()) {
+                    // il messaggio è rivolto a me
+                    view.requestToMe();
+                } else {
+                    // altrimenti devo limitarmi a segnalare che l'altro giocatore sta facendo qualcosa
+                    view.requestToOthers();
                 }
-                // altrimenti il messaggio è una risposta di un altro client ad un server
-                else if (receivedClientModel.isResponse().equals(true)) {
-                    view.response();
-                }
-
             }
+            // altrimenti il messaggio è una risposta di un altro client ad un server
+            else if (receivedClientModel.isResponse().equals(true)) {
+                view.response();
+            }
+
+        }
         messaggioGestito.fireStateEvent();
         return super.entryAction(cause);
     }

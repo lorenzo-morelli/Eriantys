@@ -24,7 +24,7 @@ public class GUI extends Application {
     public void start(Stage stage) throws IOException {
         this.stage = stage;
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainMenu.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/GameOld.fxml"));
             this.scene = new Scene(loader.load());
             this.stage.setScene(scene);
 //            widthChangeListener = (observable, oldValue, newValue) -> {
@@ -55,6 +55,9 @@ public class GUI extends Application {
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         this.scene = new Scene(loader.load());
         this.stage.setScene(scene);
+        if (newScene.equals("Game")) {
+            this.stage.setMaximized(true);
+        }
         this.stage.show();
     }
 

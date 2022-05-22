@@ -11,7 +11,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 
-public class SetupGameController implements Initializable {
+public class SetupGame implements Initializable {
     private final GUI gui = new GUI();
     private final Gson gson = new Gson();
     private int connectedPlayers;

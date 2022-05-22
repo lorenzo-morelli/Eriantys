@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
 import static it.polimi.ingsw.utils.common.Check.isValidIp;
 import static it.polimi.ingsw.utils.common.Check.isValidPort;
 
-public class MenuController implements Initializable {
+public class Menu implements Initializable {
     private final GUI gui = new GUI();
     private final Gson gson = new Gson();
     private ParametersFromNetwork response;
@@ -54,7 +54,7 @@ public class MenuController implements Initializable {
         String port = this.portField.getText();
 
         if (nickname.equals("") || ip.equals("") || port.equals("")) {
-            this.notice.setText("FAILURE: porcodio inserisci tutti i campi testa di minchiAAAAAAAAA");
+            this.notice.setText("FAILURE: make sure to fill all the fields!");
         } else if (this.nicknameField.getText().length() > 13) {
             this.notice.setText("FAILURE: nickname must be less than 13 characters!");
         } else if (ip.contains(" ") || port.contains(" ")) {
