@@ -87,7 +87,7 @@ public class Game implements Initializable {
 
     public void choosed1(MouseEvent mouseEvent) {
         assistantCard1.setVisible(false);
-        clientModel.setCardChoosedValue(1);
-        System.out.println(clientModel.getCardChoosedValue());
+        clientModel.setCardChoosedValue(1); //todo: invio?
+
     }
 }

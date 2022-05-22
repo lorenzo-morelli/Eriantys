@@ -72,6 +72,12 @@ public class GUI extends Application {
         }
     }
 
+    public void closeWindow(MouseEvent mouseEvent) {
+        final Node source = (Node) mouseEvent.getSource();
+        final Stage stage = (Stage) source.getScene().getWindow();
+        stage.close();
+    }
+
     public static void main(String[] args) {
         launch(args);
     }

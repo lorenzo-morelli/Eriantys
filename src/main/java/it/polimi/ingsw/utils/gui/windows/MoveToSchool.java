@@ -20,21 +20,27 @@ public class MoveToSchool implements Initializable {
 
     public void setBlue(MouseEvent mouseEvent) {
         this.gui.getClientModel().setChoosedColor(PeopleColor.BLUE);
+        //todo: invio?
+        this.gui.closeWindow(mouseEvent);
     }
 
     public void setGreen(MouseEvent mouseEvent) {
         this.gui.getClientModel().setChoosedColor(PeopleColor.GREEN);
+        this.gui.closeWindow(mouseEvent);
     }
 
     public void setPink(MouseEvent mouseEvent) {
         this.gui.getClientModel().setChoosedColor(PeopleColor.PINK);
+        this.gui.closeWindow(mouseEvent);
     }
 
     public void setRed(MouseEvent mouseEvent) {
         this.gui.getClientModel().setChoosedColor(PeopleColor.RED);
+        this.gui.closeWindow(mouseEvent);
     }
 
     public void setYellow(MouseEvent mouseEvent) {
         this.gui.getClientModel().setChoosedColor(PeopleColor.YELLOW);
+        this.gui.closeWindow(mouseEvent);
     }
 }
