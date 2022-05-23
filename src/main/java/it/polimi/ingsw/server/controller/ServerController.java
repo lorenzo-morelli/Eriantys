@@ -52,13 +52,7 @@ public class ServerController {
 
         // gestione disconnessione di un client
         fsm.addTransition(waitFirstPlayerGameInfo, waitFirstPlayerGameInfo.getReset(), waitFirstPlayer);
-        fsm.addTransition(waitOtherClients, waitOtherClients.getReset(), waitOtherClients);
-        fsm.addTransition(assistantCardPhase, assistantCardPhase.getReset(), assistantCardPhase);
-        fsm.addTransition(askForTeamMate, askForTeamMate.getReset(), askForTeamMate);
-        fsm.addTransition(assistantCardPhase, assistantCardPhase.getReset(), assistantCardPhase);
-        fsm.addTransition(studentPhase, studentPhase.getReset(), studentPhase);
-        fsm.addTransition(motherPhase, motherPhase.getReset(), motherPhase);
-        fsm.addTransition(cloudPhase, cloudPhase.getReset(), cloudPhase);
+        fsm.addTransition(waitOtherClients, waitOtherClients.getReset(), waitFirstPlayer);
 
 
         // L'evento di start è l'unico che deve essere fatto partire manualmente

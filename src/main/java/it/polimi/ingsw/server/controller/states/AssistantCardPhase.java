@@ -16,6 +16,7 @@ import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class AssistantCardPhase extends State {
     private final Event cardsChoosen;
@@ -71,48 +72,72 @@ public class AssistantCardPhase extends State {
             currentPlayerData.setTypeOfRequest("CHOOSEASSISTANTCARD");  // lato client avrà una nella CliView un metodo per gestire questa richiesta
             currentPlayerData.setServermodel(model); // questa cosa fa casini in EXPERT
             Network.send(json.toJson(currentPlayerData));
+            Thread t= new Thread(){
+                public void run() {
+                    boolean pingmessagereceived = true;
+                    while (pingmessagereceived) {
+                        ParametersFromNetwork pingmessage = new ParametersFromNetwork(1);
+                        pingmessage.enable();
+                        try {
+                            TimeUnit.SECONDS.sleep(10);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                        if( pingmessage.parametersReceived()){
+                            Gson json = new Gson();
+                            if(     json.fromJson(pingmessage.getParameter(0),ClientModel.class).getTypeOfRequest() != null &&
+                                    json.fromJson(pingmessage.getParameter(0),ClientModel.class).getTypeOfRequest().equals("PING")){
+                                pingmessagereceived = true;
+                            }
+                            else pingmessagereceived= false;
+                        }
+                        else pingmessagereceived = false;
+                        if (!pingmessagereceived){
+                            Network.setDisconnectedClient(true);
+                        }
+                    }
+                }
+            };
+            t.start();
 
             boolean responseReceived = false;
-            while (!responseReceived) {
+            while (!responseReceived && !Network.disconnectedClient()) {
                 message = new ParametersFromNetwork(1);
                 message.enable();
-                while (!message.parametersReceived() ) {
-                    if(Network.disconnectedClient()){
-                        reset.fireStateEvent();
-                        return super.entryAction(cause);
-                    }
-                    // il client non ha ancora scelto la carta assistente
-                }
-
-                if(json.fromJson(message.getParameter(0),ClientModel.class).getClientIdentity() == currentPlayerData.getClientIdentity()){
+                while (!message.parametersReceived() && !Network.disconnectedClient()) {}
+                if(     !Network.disconnectedClient() &&
+                        json.fromJson(message.getParameter(0),ClientModel.class).getClientIdentity() == currentPlayerData.getClientIdentity() &&
+                        !json.fromJson(message.getParameter(0),ClientModel.class).getTypeOfRequest().equals("PING") ){
                     responseReceived = true;
                 }
             }
+            t.stop();
 
 
+            if(!Network.disconnectedClient()) {
 
-
-            AssistantCard choosen=null;
-            currentPlayerData = json.fromJson(message.getParameter(0),ClientModel.class);
-            // ricevo un campo json e lo converto in AssistantCard
-            for(int j=0; j<currentPlayer.getAvailableCards().getCardsList().size();j++) {
-                if (currentPlayerData.getCardChoosedValue() == currentPlayer.getAvailableCards().getCardsList().get(j).getValues()) {
-                    choosen = currentPlayer.getAvailableCards().getCardsList().get(j);
+                AssistantCard choosen = null;
+                currentPlayerData = json.fromJson(message.getParameter(0), ClientModel.class);
+                // ricevo un campo json e lo converto in AssistantCard
+                for (int j = 0; j < currentPlayer.getAvailableCards().getCardsList().size(); j++) {
+                    if (currentPlayerData.getCardChoosedValue() == currentPlayer.getAvailableCards().getCardsList().get(j).getValues()) {
+                        choosen = currentPlayer.getAvailableCards().getCardsList().get(j);
+                    }
                 }
-            }
 
-            // il controllo sul fatto che l'utente scelga una carta appartenente a quelle presenti in availableCars
-            // viene svolto direttamente dal client in CliView
-            if(lowpriority) {
-                assert choosen != null;
-                choosen.lowPriority();
-            }
+                // il controllo sul fatto che l'utente scelga una carta appartenente a quelle presenti in availableCars
+                // viene svolto direttamente dal client in CliView
+                if (lowpriority) {
+                    assert choosen != null;
+                    choosen.lowPriority();
+                }
 
-            alreadyChooseds.add(choosen);
-            boolean checkEndCondition = currentPlayer.setChoosedCard(choosen);
+                alreadyChooseds.add(choosen);
+                boolean checkEndCondition = currentPlayer.setChoosedCard(choosen);
 
-            if (checkEndCondition){
-                model.setlastturn();
+                if (checkEndCondition) {
+                    model.setlastturn();
+                }
             }
             model.nextPlayer();
 

@@ -13,6 +13,7 @@ import it.polimi.ingsw.server.model.enums.GameMode;
 import it.polimi.ingsw.server.model.enums.PeopleColor;
 import it.polimi.ingsw.utils.cli.CommandPrompt;
 import it.polimi.ingsw.utils.network.Network;
+import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
 import it.polimi.ingsw.utils.stateMachine.State;
 
 import java.util.Objects;
@@ -157,8 +158,27 @@ public class CliView implements View{
 
     // Il server mi invia una richiesta di interazione: devo digitare roba da terminale
     public void requestToMe() throws InterruptedException {
-        switch(networkClientModel.getTypeOfRequest()){
+        Network.setClientModel(networkClientModel);
+        // Quando il client ha una richiesta di interazione deve inviare messaggi di ping periodici per informare il server che è vivo
+        Thread t= new Thread(){
+            public void run() {
+                while (true) {
+                    try {
+                        TimeUnit.SECONDS.sleep(1);
+                        ClientModel clientModel = Network.getClientModel();
+                        clientModel.setTypeOfRequest("PING");
+                        Gson json = new Gson();
+                        Network.send(json.toJson(clientModel));
+                        //System.out.println("SENT: " + json.toJson(clientModel));
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
 
+                }
+            }
+        };
+        t.start();
+        switch(networkClientModel.getTypeOfRequest()){
             case "CHOOSEASSISTANTCARD" :
                 System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(),"STATO DEL GIOCO: \n"+"E' IL TUO TURNO - ASSISTENT CARD PHASE"+ "\n\nMOSSE ALTRI GIOCATORI: "+getResponce()));
                 System.out.println("Scegli una Carta Assistente");
@@ -1134,7 +1154,7 @@ public class CliView implements View{
 
         }
         clearResponce();
-
+        t.stop();
     }
 
     // Qualcun altro sta interagendo con il terminale: devo gestire il tempo di attesa
@@ -1227,6 +1247,7 @@ public class CliView implements View{
                 setResponce("L'utente " +networkClientModel.getNickname()+ " ha scelto di usare la carta personaggio MINSTRELL, scegliendo di scambiare i colori: " + networkClientModel.getColors1() +" dal suo Ingresso con i colori: " + networkClientModel.getColors2() +" dalla sua Sala"+ "  (EFFETTO: Puoi scambiare fra loro fino a due studenti presenti nella tua Sala e nel tuo Ingresso).");
                 break;
         }
+
     }
 
 

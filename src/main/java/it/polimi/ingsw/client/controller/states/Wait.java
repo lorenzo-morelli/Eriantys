@@ -73,7 +73,10 @@ public class Wait extends State {
                     view.requestToMe();
                 } else {
                     // altrimenti devo limitarmi a segnalare che l'altro giocatore sta facendo qualcosa
-                    view.requestToOthers();
+                    if (receivedClientModel.getTypeOfRequest()!= null &&
+                    !receivedClientModel.getTypeOfRequest().equals("PING")) {
+                        view.requestToOthers();
+                    }
                 }
             }
             // altrimenti il messaggio è una risposta di un altro client ad un server

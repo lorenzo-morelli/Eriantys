@@ -75,12 +75,7 @@ public class StudentPhase extends State {
             while (!responseReceived) {
                 message = new ParametersFromNetwork(1);
                 message.enable();
-                while (!message.parametersReceived()) {
-                    if(Network.disconnectedClient()){
-                        reset.fireStateEvent();
-                        return super.entryAction(cause);
-                    }
-                     }
+                while (!message.parametersReceived()) {}
                 if(json.fromJson(message.getParameter(0),ClientModel.class).getClientIdentity() == currentPlayerData.getClientIdentity()){
                     responseReceived = true;
                 }

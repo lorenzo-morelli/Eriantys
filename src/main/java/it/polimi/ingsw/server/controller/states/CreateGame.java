@@ -72,7 +72,7 @@ public class CreateGame extends State {
                     while (!message.parametersReceived()) {
                         // non ho ricevuto ancora nessun messaggio
                     }
-                    System.out.println("check disconnessione");
+                    //System.out.println("check disconnessione");
                     Gson json = new Gson();
                     ClientModel receivedClientModel = json.fromJson(message.getParameter(0), ClientModel.class);
 
