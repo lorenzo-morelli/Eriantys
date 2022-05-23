@@ -73,4 +73,8 @@ public class ParametersFromNetwork extends Event implements DocumentListener {
         parametersReceived = false;
     }
 
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 }

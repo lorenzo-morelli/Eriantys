@@ -157,27 +157,23 @@ public class CliView implements View{
     }
 
     // Il server mi invia una richiesta di interazione: devo digitare roba da terminale
-    public void requestToMe() throws InterruptedException {
-        Network.setClientModel(networkClientModel);
-        // Quando il client ha una richiesta di interazione deve inviare messaggi di ping periodici per informare il server che è vivo
-        Thread t= new Thread(){
-            public void run() {
-                while (true) {
-                    try {
-                        TimeUnit.SECONDS.sleep(1);
-                        ClientModel clientModel = Network.getClientModel();
-                        clientModel.setTypeOfRequest("PING");
-                        Gson json = new Gson();
-                        Network.send(json.toJson(clientModel));
-                        //System.out.println("SENT: " + json.toJson(clientModel));
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
 
-                }
-            }
-        };
-        t.start();
+    public void requestPing(){
+        try {
+            TimeUnit.SECONDS.sleep(1);
+            Network.setClientModel(networkClientModel);
+            Gson json = new Gson();
+            networkClientModel.setPingMessage(true);
+            Network.send(json.toJson(networkClientModel));
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void requestToMe() throws InterruptedException {
+        Network.setClientModel(networkClientModel);  ///todo: gui
+        // Quando il client ha una richiesta di interazione deve inviare messaggi di ping per informare il server che è vivo
+
         switch(networkClientModel.getTypeOfRequest()){
             case "CHOOSEASSISTANTCARD" :
                 System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(),"STATO DEL GIOCO: \n"+"E' IL TUO TURNO - ASSISTENT CARD PHASE"+ "\n\nMOSSE ALTRI GIOCATORI: "+getResponce()));
@@ -185,11 +181,7 @@ public class CliView implements View{
                 for (AssistantCard a : networkClientModel.getDeck()){;
                     System.out.println("valore: " + (int)a.getValues() + "  mosse: " + a.getMoves());
                 }
-                CommandPrompt.ask("Inserisci valore della carta scelta","Carta> ");
-                if(Network.disconnectedClient()){
-                    return;
-                }
-
+                    CommandPrompt.ask("Inserisci valore della carta scelta", "Carta> ");
                 if(!isValidNumber(CommandPrompt.gotFromTerminal())){
                     System.out.println("la carta da te scelta ha un valore non  valido, si prega di fare più attenzione");
                     TimeUnit.SECONDS.sleep(2);
@@ -208,11 +200,12 @@ public class CliView implements View{
                     requestToMe();
                     return;
                 }
-                networkClientModel.setCardChoosedValue(Float.parseFloat(CommandPrompt.gotFromTerminal()));
+                networkClientModel.setCardChoosedValue(Float.parseFloat(CommandPrompt.gotFromTerminal())); //todo: gui
                 networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                networkClientModel.setPingMessage(false);
                 networkClientModel.setFromTerminal(parsedStrings);
                 json = new Gson();
-                Network.send(json.toJson(networkClientModel));
+                Network.send(json.toJson(networkClientModel));   //todo:gui until here
 
                 break;
             case "CHOOSEWHERETOMOVESTUDENTS" :
@@ -220,9 +213,6 @@ public class CliView implements View{
                     System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO: \n" + "E' IL TUO TURNO - STUDENT PHASE" + "\n\nMOSSE ALTRI GIOCATORI: " + getResponce()));
 
                     CommandPrompt.ask("Scegli il colore dello studente che desideri muovere OPPURE inserisci CARD per usare una carta personaggio", "RED or GREEN or BLUE or YELLOW or PINK    or CARD> ");
-                    if(Network.disconnectedClient()){
-                        return;
-                    }
 
                     if (!CommandPrompt.gotFromTerminal().equals("RED") &&
                             !CommandPrompt.gotFromTerminal().equals("GREEN") &&
@@ -310,12 +300,6 @@ public class CliView implements View{
                                 }
                             }
                             CommandPrompt.ask("Scegliere la carta personaggio seguendo le indicazioni, un qualsiasi altra riga se si vuole tornare indietro","CHARACTER>");
-                            if(Network.disconnectedClient()){
-                                return;
-                            }
-                            if(Network.disconnectedClient()){
-                                return;
-                            }
                             parsedStrings =
                                     new ArrayList<String>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
                             if(!avaiable.contains(parsedStrings.get(0))) {
@@ -571,9 +555,6 @@ public class CliView implements View{
                         CommandPrompt.ask("Scegliere SCHOOL se si desidera " +
                                 "muovere uno studente dalla tua entrance space alla sala da pranzo, " +
                                 "altrimenti scrivi ISLAND se desideri muovere uno studente su un'isola, inserire una qualsiasi altra riga di comando se si vuole tornare indietro", "SCHOOL or ISLAND> ");
-                        if(Network.disconnectedClient()){
-                            return;
-                        }
 
                         String command = CommandPrompt.gotFromTerminal();
                         if (!command.equals("SCHOOL") && !command.equals("ISLAND")) {
@@ -589,9 +570,6 @@ public class CliView implements View{
                             networkClientModel.setTypeOfRequest("SCHOOL");
                         } else if (command.equals("ISLAND")) {
                             CommandPrompt.ask("Inserire numero dell'isola su cui si desidera muovere lo studente", "isola> ");
-                            if(Network.disconnectedClient()){
-                                return;
-                            }
                             if (!isValidNumber(CommandPrompt.gotFromTerminal())) {
                                 System.out.println("Si è inserito un numero non valido, reinserire i dati con più attenzione !!!!");
                                 TimeUnit.SECONDS.sleep(2);
@@ -619,10 +597,6 @@ public class CliView implements View{
                             System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO: \n" + "E' IL TUO TURNO - STUDENT PHASE" + "\n\nMOSSE ALTRI GIOCATORI: " + getResponce()));
 
                             CommandPrompt.ask("Scegli il colore dello studente che desideri muovere ", "RED or GREEN or BLUE or YELLOW or PINK> ");
-                             if(Network.disconnectedClient()){
-                            return;
-                            }
-
                             if (!CommandPrompt.gotFromTerminal().equals("RED") &&
                                     !CommandPrompt.gotFromTerminal().equals("GREEN") &&
                                     !CommandPrompt.gotFromTerminal().equals("BLUE") &&
@@ -664,9 +638,6 @@ public class CliView implements View{
                             CommandPrompt.ask("Scegliere SCHOOL se si desidera " +
                                     "muovere uno studente dalla tua entrance space alla sala da pranzo, " +
                                     "altrimenti scrivi ISLAND se desideri muovere uno studente su un'isola, inserire una qualsiasi altra riga di comando se si vuole tornare indietro", "SCHOOL or ISLAND> ");
-                              if(Network.disconnectedClient()){
-                                  return;
-                              }
                             String command = CommandPrompt.gotFromTerminal();
                             if (!command.equals("SCHOOL") && !command.equals("ISLAND")) {
                                 requestToMe();
@@ -681,9 +652,6 @@ public class CliView implements View{
                                 networkClientModel.setTypeOfRequest("SCHOOL");
                             } else if (command.equals("ISLAND")) {
                                 CommandPrompt.ask("Inserire numero dell'isola su cui si desidera muovere lo studente", "isola> ");
-                                if(Network.disconnectedClient()){
-                                    return;
-                                }
                                 if (!isValidNumber(CommandPrompt.gotFromTerminal())) {
                                     System.out.println("Si è inserito un numero non valido, reinserire i dati con più attenzione !!!!");
                                     TimeUnit.SECONDS.sleep(2);
@@ -713,9 +681,6 @@ public class CliView implements View{
                     System.out.println(nickname);
                 }
                 CommandPrompt.ask("Inserisci il nickname del tuo compagno di squadra: ","Nickname> ");
-                if(Network.disconnectedClient()){
-                    return;
-                }
                 if(!networkClientModel.getNicknames().contains(CommandPrompt.gotFromTerminal())){
                     System.out.print("Il nickname inserito non esiste, si prega di scegliere un nickname tra quelli specificati");
                     requestToMe();
@@ -735,9 +700,6 @@ public class CliView implements View{
                 if(networkClientModel.getServermodel().getGameMode().equals(GameMode.EXPERT) && networkClientModel.getServermodel().getTable().getCharachter().stream().anyMatch(j->j.getCost()<= networkClientModel.getServermodel().getcurrentPlayer().getCoins() && !isUsed)) {
                     System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO:\n " + "E' IL TUO TURNO - MOTHER PHASE" + "\n\nMOSSE ALTRI GIOCATORI: " + getResponce()));
                     CommandPrompt.ask("Scegliere il numero di mosse di cui far spostare madre natura  OPPURE inserisci CARD per usare una carta personaggio", "mosse> ");
-                    if(Network.disconnectedClient()){
-                        return;
-                    }
                     if (CommandPrompt.gotFromTerminal().equals("CARD")) {
                             System.out.println("\n\n\n\nScegli la carta che vorresti utilizzare: \n");
                             ArrayList<String> avaiable = new ArrayList<>();
@@ -794,9 +756,6 @@ public class CliView implements View{
                                 }
                             }
                             CommandPrompt.ask("Scegliere la carta personaggio seguendo le indicazioni, un qualsiasi altra riga se si vuole tornare indietro","CHARACTER>");
-                             if(Network.disconnectedClient()){
-                                 return;
-                             }
                             parsedStrings =
                                     new ArrayList<String>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
                             if(!avaiable.contains(parsedStrings.get(0))) {
@@ -1070,9 +1029,7 @@ public class CliView implements View{
                 else {
                     System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO:\n " + "E' IL TUO TURNO - MOTHER PHASE" + "\n\nMOSSE ALTRI GIOCATORI: " + getResponce()));
                     CommandPrompt.ask("Scegliere il numero di mosse di cui far spostare madre natura  ", "mosse> ");
-                    if(Network.disconnectedClient()){
-                        return;
-                    }
+
 
                     if (!isValidNumber(CommandPrompt.gotFromTerminal())) {
                         System.out.println("Il numero di mosse da te inserito non è un numero valido, si prega di fare più attenzione");
@@ -1106,9 +1063,6 @@ public class CliView implements View{
             case "CHOOSECLOUDS" :
                 System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(),"STATO DEL GIOCO: \n"+"E' IL TUO TURNO - CLOUD PHASE"+ "\n\nMOSSE ALTRI GIOCATORI: "+getResponce()));
                 CommandPrompt.ask("Scegliere il numero della tessera nuvola da cui si desidera ricaricarsi di studenti","tessera nuvola> ");
-                if(Network.disconnectedClient()){
-                    return;
-                }
 
                 if(!isValidNumber(CommandPrompt.gotFromTerminal())){
                     System.out.println("Il numero inserito non è un numero valido");
@@ -1154,7 +1108,6 @@ public class CliView implements View{
 
         }
         clearResponce();
-        t.stop();
     }
 
     // Qualcun altro sta interagendo con il terminale: devo gestire il tempo di attesa

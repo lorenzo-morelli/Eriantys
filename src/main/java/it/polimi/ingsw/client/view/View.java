@@ -32,4 +32,6 @@ public interface View {
      * @throws IOException
      */
     void response() throws IOException;
+
+    void requestPing();
 }

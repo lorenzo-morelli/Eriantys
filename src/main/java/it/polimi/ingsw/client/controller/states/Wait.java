@@ -10,6 +10,8 @@ import it.polimi.ingsw.utils.stateMachine.Event;
 import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
 
+import java.io.IOException;
+
 public class Wait extends State {
     private Gson json;
     private ClientModel myClientModel;
@@ -19,6 +21,8 @@ public class Wait extends State {
 
     private Event messaggioGestito;
     private Event reset;
+
+    private boolean isToReset;
 
     public Wait(ClientModel clientModel, View view, Controller controller) {
         super("[Stato di attesa di comandi (aggiornamento vista o comandi di inserimento da terminale)]");
@@ -30,6 +34,7 @@ public class Wait extends State {
         messaggioGestito.setStateEventListener(controller);
         reset = new Event("reset");
         reset.setStateEventListener(controller);
+        isToReset = false;
     }
 
     public Event messaggioGestito() {
@@ -42,50 +47,73 @@ public class Wait extends State {
 
     @Override
     public IEvent entryAction(IEvent cause) throws Exception {
+
         ParametersFromNetwork message = new ParametersFromNetwork(1);
         message.enable();
         while (!message.parametersReceived()) {
             // non ho ricevuto ancora nessun messaggio
         }
-        receivedClientModel = json.fromJson(message.getParameter(0), ClientModel.class);
-        //System.out.println(message.getParameter(0));
-        if (Network.disconnectedClient()) {
-            Network.disconnect();
-            System.out.println("Il gioco è terminato a causa della disconnessione di un client");
-            reset.fireStateEvent();
-            return super.entryAction(cause);
-        }
+        Thread t = new Thread(() -> {
+            receivedClientModel = json.fromJson(message.getParameter(0), ClientModel.class);
+            //System.out.println(message.getParameter(0));
+            if (Network.disconnectedClient()) {
+                Network.disconnect();
+                System.out.println("Il gioco è terminato a causa della disconnessione di un client");
+                isToReset = true;
+            }
 
-        if (receivedClientModel.isGameStarted().equals(true)) {
-            Gson json = new Gson();
-            view.setClientModel(receivedClientModel);
+            if (receivedClientModel.isGameStarted().equals(true)) {
+                Gson json = new Gson();
+                view.setClientModel(receivedClientModel);
 
 
-            // Il messaggio è o una richiesta o una risposta
+                // Il messaggio è o una richiesta o una risposta
 
-            // se il messaggio non è una risposta di un client al server vuol dire che
-            if (receivedClientModel.isResponse().equals(false)) {
-                // il messaggio è una richiesta del server alla view di un client
+                // se il messaggio non è una risposta di un client al server vuol dire che
+                if (receivedClientModel.isResponse().equals(false)) {
+                    // il messaggio è una richiesta del server alla view di un client
 
-                // se il messaggio è rivolto a me devo essere io a compiere l'azione
-                if (receivedClientModel.getClientIdentity() == myClientModel.getClientIdentity()) {
-                    // il messaggio è rivolto a me
-                    view.requestToMe();
-                } else {
-                    // altrimenti devo limitarmi a segnalare che l'altro giocatore sta facendo qualcosa
-                    if (receivedClientModel.getTypeOfRequest()!= null &&
-                    !receivedClientModel.getTypeOfRequest().equals("PING")) {
-                        view.requestToOthers();
+                    // se il messaggio è rivolto a me devo essere io a compiere l'azione
+                    if (receivedClientModel.getClientIdentity() == myClientModel.getClientIdentity()) {
+                        // il messaggio è rivolto a me
+                        if (receivedClientModel.isPingMessage()) {
+                            view.requestPing();
+                        } else {
+                            try {
+                                view.requestToMe();
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    } else {
+                        // altrimenti devo limitarmi a segnalare che l'altro giocatore sta facendo qualcosa
+                        if (receivedClientModel.getTypeOfRequest() != null &&
+                                !receivedClientModel.isPingMessage()) {
+                            try {
+                                view.requestToOthers();
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    }
+                }
+                // altrimenti il messaggio è una risposta di un altro client ad un server
+                else if (receivedClientModel.isResponse().equals(true)) {
+                    try {
+                        view.response();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
                     }
                 }
             }
-            // altrimenti il messaggio è una risposta di un altro client ad un server
-            else if (receivedClientModel.isResponse().equals(true)) {
-                view.response();
-            }
+        });
+        t.start();
 
+        if (isToReset) {
+            reset.fireStateEvent();
+        } else {
+            messaggioGestito.fireStateEvent();
         }
-        messaggioGestito.fireStateEvent();
         return super.entryAction(cause);
     }
 }

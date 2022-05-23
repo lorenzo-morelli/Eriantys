@@ -19,14 +19,11 @@ public class ClientModel {
     // e potrebbero avere lo stesso indirizzo IP in fase di testing sullo stesso computer
     // si rende necessario un metodo di riconoscimento del client
     private int clientIdentity;
-
-
     // Am I the first client connected to server?
     // amIfirst: true = Identificato come primo,
     // false = identificato come non primo,
     // null = non ancora identificato
     private Boolean amIfirst = null;
-
     // Gestione dei possibili messaggi, si veda CliView
     // Un messaggio o è una richiesta (del server ad un client di avere degli input)
     // o è una risposta di un client al server
@@ -35,6 +32,7 @@ public class ClientModel {
     // !isResponse --> è una richiesta del server al client
     // isresponse == null, non è ne una richiesta ne una risposta, probabilmente un messaggio di quelli iniziali
     private Boolean isResponse = false;
+    private boolean isPingMessage; //differenzia request di ping da request di gioco
 
     private Boolean gameStarted = false;
     public boolean kicked = false;
@@ -270,5 +268,13 @@ public class ClientModel {
 
     public void setKicked(boolean kicked) {
         this.kicked = kicked;
+    }
+
+    public boolean isPingMessage() {
+        return isPingMessage;
+    }
+
+    public void setPingMessage(boolean pingMessage) {
+        isPingMessage = pingMessage;
     }
 }

@@ -14,6 +14,7 @@ public class Player implements Comparable<Player>{
     public static final String ANSI_BLACK = "\u001B[30m";
     public static final String ANSI_WHITE="\033[1;97m";
     public static final String ANSI_GRAY="\033[1;90m";
+    private boolean isDisconnected;
 
     public Player(String nickname,String Ip,Model model) {
         // crea e assegna valori di default
@@ -24,6 +25,7 @@ public class Player implements Comparable<Player>{
         this.schoolBoard = new SchoolBoard(model.getNumberOfPlayers(), model.getTable().getBag(),model.getTable().getAvaiableTowerColor());
         if(model.getGameMode().equals(GameMode.EXPERT) ) this.coins = 1; //todo: modificato per testing: reale valore 1
         else{coins=-1;}
+        isDisconnected=false;
     }
     //requies teamnumber== "1 or 2" e un controllo che fa riscegliere il team se team è gia pieno :team.isFull())
     public Player(String nickname,String Ip,int teamnumber,Model model) {
@@ -53,10 +55,15 @@ public class Player implements Comparable<Player>{
         else{
             throw new IllegalArgumentException();
         }
+        isDisconnected=false;
     }
     public boolean setChoosedCard(AssistantCard choosedCard) {
         this.choosedCard = choosedCard;
         return availableCards.remove(choosedCard);
+    }
+
+    public void setChoosedCardforDisconnection(AssistantCard choosedCard) {
+        this.choosedCard = choosedCard;
     }
 
     public AssistantCard getChoosedCard() {
@@ -89,19 +96,19 @@ public class Player implements Comparable<Player>{
     public String toString(String nickname) {
         switch (getSchoolBoard().getTowerColor()) {
             case BLACK:
-                return ANSI_BLACK + "    PLAYER : " + nickname + ANSI_RESET + "\n" +
+                return ANSI_BLACK + "    PLAYER : " + this.nickname + ANSI_RESET + (isDisconnected ? "IL GIOCATORE E' DISCONNESSO\n":"\n") +
                         (choosedCard == null ? "    MOVES : 0\n" : "    MOVES : " + choosedCard.getMoves() + "\n") +
                         "    SCHOOL\n"
                         + schoolBoard.toString() +
                         (coins >= 0 ? "    COINS : " + coins + "\n" : (Objects.equals(nickname, this.nickname) ?"": "\n"))+(Objects.equals(nickname, this.nickname) ?"    AVAIABLE CARDS: "+ availableCards.toString()+"\n": "");
             case WHITE:
-                return ANSI_WHITE + "    PLAYER : " + nickname + ANSI_RESET + "\n" +
+                return ANSI_WHITE + "    PLAYER : " + this.nickname + ANSI_RESET + (isDisconnected ? "IL GIOCATORE E' DISCONNESSO\n":"\n") +
                         (choosedCard == null ? "    MOVES : 0\n" : "    MOVES : " + choosedCard.getMoves() + "\n") +
                         "    SCHOOL\n"
                         + schoolBoard.toString() +
                         (coins >= 0 ? "    COINS : " + coins + "\n" : (Objects.equals(nickname, this.nickname) ?"": "\n"))+(Objects.equals(nickname, this.nickname) ?"    AVAIABLE CARDS: "+ availableCards.toString()+"\n": "");
             case GREY:
-                return ANSI_GRAY + "    PLAYER : " + nickname + ANSI_RESET + "\n" +
+                return ANSI_GRAY + "    PLAYER : " + this.nickname + ANSI_RESET + (isDisconnected ? "IL GIOCATORE E' DISCONNESSO\n":"\n")+
                         (choosedCard == null ? "    MOVES : 0\n" : "    MOVES : " + choosedCard.getMoves() + "\n") +
                         "    SCHOOL\n"
                         + schoolBoard.toString() +
@@ -118,5 +125,13 @@ public class Player implements Comparable<Player>{
     }
     public void reduceCoin(int cost){
         this.coins-=cost;
+    }
+
+    public void setDisconnected(boolean disconnected) {
+        isDisconnected = disconnected;
+    }
+
+    public boolean isDisconnected() {
+        return isDisconnected;
     }
 }

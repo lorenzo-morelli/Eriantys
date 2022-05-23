@@ -8,15 +8,21 @@ import it.polimi.ingsw.server.controller.ServerController;
 import it.polimi.ingsw.server.model.AssistantCard;
 import it.polimi.ingsw.server.model.Model;
 import it.polimi.ingsw.server.model.Player;
+import it.polimi.ingsw.server.model.Team;
 import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
 import it.polimi.ingsw.utils.stateMachine.Controller;
 import it.polimi.ingsw.utils.stateMachine.Event;
 import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
+
+import javax.management.timer.Timer;
+import java.io.IOException;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 public class AssistantCardPhase extends State {
     private final Event cardsChoosen;
@@ -25,8 +31,10 @@ public class AssistantCardPhase extends State {
     private final Gson json;
     private final ServerController serverController;
 
-    private ParametersFromNetwork message;
+    private ParametersFromNetwork message, pingmessage;
     private final Event reset = new ClientDisconnection();
+    private Player currentPlayer;
+    private static boolean disconnected;
 
     public Event cardsChoosen() {
         return cardsChoosen;
@@ -40,6 +48,7 @@ public class AssistantCardPhase extends State {
         cardsChoosen.setStateEventListener(controller);
         reset.setStateEventListener(controller);
         json = new Gson();
+        message=null;
     }
 
     public Event getReset() {
@@ -51,10 +60,11 @@ public class AssistantCardPhase extends State {
         Model model = serverController.getModel();
         ArrayList<AssistantCard> alreadyChooseds=new ArrayList<>();
         model.nextTurn();
+        disconnected=false;
         // For each player
         for(int i = 0; i< model.getNumberOfPlayers(); i++){
             // retrive the current player
-            Player currentPlayer = model.getcurrentPlayer();
+            currentPlayer = model.getcurrentPlayer();
             // retrive data of the current player
             ClientModel currentPlayerData = connectionModel.findPlayer(currentPlayer.getNickname());
             List<AssistantCard> canbBeChooesed = new ArrayList<>(currentPlayer.getAvailableCards().getCardsList());
@@ -70,51 +80,80 @@ public class AssistantCardPhase extends State {
             currentPlayerData.setDeck(canbBeChooesed);
             currentPlayerData.setResponse(false); // è una richiesta non una risposta
             currentPlayerData.setTypeOfRequest("CHOOSEASSISTANTCARD");  // lato client avrà una nella CliView un metodo per gestire questa richiesta
-            currentPlayerData.setServermodel(model); // questa cosa fa casini in EXPERT
+            currentPlayerData.setPingMessage(false);
+            currentPlayerData.setServermodel(model);
             Network.send(json.toJson(currentPlayerData));
-            Thread t= new Thread(){
-                public void run() {
-                    boolean pingmessagereceived = true;
-                    while (pingmessagereceived) {
-                        ParametersFromNetwork pingmessage = new ParametersFromNetwork(1);
-                        pingmessage.enable();
-                        try {
-                            TimeUnit.SECONDS.sleep(10);
-                        } catch (InterruptedException e) {
-                            throw new RuntimeException(e);
+
+            ClientModel finalCurrentPlayerData = currentPlayerData;
+
+            Thread ping = new Thread(() -> {
+                while(!message.parametersReceived() || json.fromJson(message.getParameter(0), ClientModel.class).isPingMessage()) {
+                    System.out.println("ping sended");
+                    finalCurrentPlayerData.setResponse(false); // è una richiesta non una risposta// lato client avrà una nella CliView un metodo per gestire questa richiesta
+                    finalCurrentPlayerData.setPingMessage(true);
+                    try {
+                        Network.send(json.toJson(finalCurrentPlayerData));
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    long start = System.currentTimeMillis();
+                    long end = start + 10 * 1000;
+                    pingmessage = new ParametersFromNetwork(1);
+                    pingmessage.enable();
+
+                    while (!pingmessage.parametersReceived() && System.currentTimeMillis() < end) {
+                    }
+                    synchronized (this) {
+                        if (!pingmessage.parametersReceived()) {
+                            disconnected=true;
+                            return;
                         }
-                        if( pingmessage.parametersReceived()){
-                            Gson json = new Gson();
-                            if(     json.fromJson(pingmessage.getParameter(0),ClientModel.class).getTypeOfRequest() != null &&
-                                    json.fromJson(pingmessage.getParameter(0),ClientModel.class).getTypeOfRequest().equals("PING")){
-                                pingmessagereceived = true;
+                        if (!json.fromJson(pingmessage.getParameter(0), ClientModel.class).isPingMessage()) {
+                            try {
+                                message =(ParametersFromNetwork) pingmessage.clone();
+                            } catch (CloneNotSupportedException e) {
+                                throw new RuntimeException(e);
                             }
-                            else pingmessagereceived= false;
-                        }
-                        else pingmessagereceived = false;
-                        if (!pingmessagereceived){
-                            Network.setDisconnectedClient(true);
                         }
                     }
                 }
-            };
-            t.start();
+            });
+            ping.start();
 
             boolean responseReceived = false;
-            while (!responseReceived && !Network.disconnectedClient()) {
-                message = new ParametersFromNetwork(1);
-                message.enable();
-                while (!message.parametersReceived() && !Network.disconnectedClient()) {}
-                if(     !Network.disconnectedClient() &&
-                        json.fromJson(message.getParameter(0),ClientModel.class).getClientIdentity() == currentPlayerData.getClientIdentity() &&
-                        !json.fromJson(message.getParameter(0),ClientModel.class).getTypeOfRequest().equals("PING") ){
-                    responseReceived = true;
+            while (!responseReceived) {
+                synchronized (this) {
+                    if (message == null || json.fromJson(message.getParameter(0), ClientModel.class).isPingMessage()) {
+                        if(message!=null && message.parametersReceived() && json.fromJson(message.getParameter(0), ClientModel.class).isPingMessage()){
+                            pingmessage= (ParametersFromNetwork)message.clone();
+                        }
+                        message = new ParametersFromNetwork(1);
+                        message.enable();
+                    }
+                }
+                while (!message.parametersReceived()) {
+                    if(disconnected){
+                        currentPlayer.setDisconnected(true);
+                        currentPlayer.setChoosedCardforDisconnection(new AssistantCard(11, 1));
+                        break;
+                    }
+                }
+                synchronized (this) {
+                    if (disconnected || (json.fromJson(message.getParameter(0), ClientModel.class).getClientIdentity() == currentPlayerData.getClientIdentity() && !json.fromJson(message.getParameter(0), ClientModel.class).isPingMessage())) {
+                        responseReceived = true;
+                        if(disconnected){
+                            currentPlayer.setDisconnected(true);
+                            currentPlayer.setChoosedCardforDisconnection(new AssistantCard(11, 1));
+                        }
+                        else {
+                            ping.interrupt();
+                        }
+                    }
                 }
             }
-            t.stop();
 
-
-            if(!Network.disconnectedClient()) {
+            if(!currentPlayer.isDisconnected()) {
 
                 AssistantCard choosen = null;
                 currentPlayerData = json.fromJson(message.getParameter(0), ClientModel.class);
@@ -139,6 +178,44 @@ public class AssistantCardPhase extends State {
                     model.setlastturn();
                 }
             }
+            else{
+                int check=0;
+                if(model.getNumberOfPlayers()==4){
+                    for(Team team: model.getTeams()){
+                        if(!team.getPlayer1().isDisconnected() || !team.getPlayer2().isDisconnected()){
+                            check++;
+                        }
+                    }
+                }
+                else{
+                    for(Player p: model.getPlayers()){
+                        if(!p.isDisconnected()){
+                            check++;
+                        }
+                    }
+                }
+                if(check<=1){
+                    System.out.println("attendo 60 secondi in attesa di una riconnessione");
+                    check=0;
+                    if(model.getNumberOfPlayers()==4){
+                        for(Team team: model.getTeams()){
+                            if(!team.getPlayer1().isDisconnected() || !team.getPlayer2().isDisconnected()){
+                                check++;
+                            }
+                        }
+                    }
+                    else{
+                        for(Player p: model.getPlayers()){
+                            if(!p.isDisconnected()){
+                                check++;
+                            }
+                        }
+                    }
+                    if(check<=1){
+                        System.out.println("END");
+                    }
+                }
+            }
             model.nextPlayer();
 
         }
@@ -146,5 +223,5 @@ public class AssistantCardPhase extends State {
         model.schedulePlayers();
         return super.entryAction(cause);
     }
-
 }
+

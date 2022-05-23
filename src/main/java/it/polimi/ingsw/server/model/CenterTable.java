@@ -42,7 +42,7 @@ public class CenterTable {
 
         motherNaturePosition=0;
 
-        bag=new StudentSet(5,5,5,5,5); //24
+        bag=new StudentSet(24,24,24,24,24); //24
 
         avaiableTowerColor= new ArrayList<>();
         if (numplayer == 3) {
