@@ -16,7 +16,7 @@ public class Model {
     private int currentplayer;
     private final ArrayList<Team> teams;
     private final ArrayList<Player> players;
-    boolean islastturn;
+    boolean islastturn,disconnection=false;
 
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_BLACK = "\u001B[30m";
@@ -214,5 +214,13 @@ public class Model {
             result.append(player.toString(nickname)).append("\n");
         }
         return result.toString();
+    }
+
+    public void setDisconnection(boolean disconnection) {
+        this.disconnection = disconnection;
+    }
+
+    public boolean isDisconnection() {
+        return disconnection;
     }
 }

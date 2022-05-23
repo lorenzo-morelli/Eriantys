@@ -96,9 +96,9 @@ public class Network implements ActionListener{
         return instance.gotConnect;
     }
 
-    public synchronized static void send(String message) throws InterruptedException {
+    public synchronized static boolean send(String message) throws InterruptedException {
         TimeUnit.MILLISECONDS.sleep(500);
-        connection.sendText(message);
+        return connection.sendText(message);
     }
 
     public synchronized static String getMyIp(){

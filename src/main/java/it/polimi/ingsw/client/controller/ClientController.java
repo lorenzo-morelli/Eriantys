@@ -65,6 +65,5 @@ public class ClientController {
         // L'evento di start è l'unico che deve essere fatto partire manualmente
         start.fireStateEvent();
 
-
     }
 }

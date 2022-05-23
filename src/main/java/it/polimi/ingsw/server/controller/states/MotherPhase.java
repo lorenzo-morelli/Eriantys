@@ -18,6 +18,7 @@ import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 public class MotherPhase extends State {
     private final Event gameEnd, goToStudentPhase, goToCloudPhase;
@@ -30,6 +31,7 @@ public class MotherPhase extends State {
     private final Event reset = new ClientDisconnection();
 
     private ParametersFromNetwork message;
+    private boolean disconnected,fromPing;
     private boolean istorepeat;
 
     public Event gameEnd() {
@@ -66,103 +68,13 @@ public class MotherPhase extends State {
     @Override
     public IEvent entryAction(IEvent cause) throws Exception {
         while (istorepeat) {
-            istorepeat=false;
+            istorepeat = false;
             model = serverController.getModel();
+            disconnected=false;
+
             // retrive the current player
             Player currentPlayer = model.getcurrentPlayer();
-            // retrive data of the current player
-            ClientModel currentPlayerData = connectionModel.findPlayer(currentPlayer.getNickname());
-            currentPlayerData.setServermodel(model);
-            currentPlayerData.setTypeOfRequest("CHOOSEWHERETOMOVEMOTHER");
-            currentPlayerData.setResponse(false); //non è una risposta, è una richiesta del server al client
-
-            Network.send(json.toJson(currentPlayerData));
-
-            boolean responseReceived = false;
-
-            while (!responseReceived) {
-                message = new ParametersFromNetwork(1);
-                message.enable();
-                while (!message.parametersReceived()) {}
-                if (json.fromJson(message.getParameter(0), ClientModel.class).getClientIdentity() == currentPlayerData.getClientIdentity()) {
-                    responseReceived = true;
-                }
-            }
-
-            currentPlayerData = json.fromJson(message.getParameter(0), ClientModel.class);
-            String type = currentPlayerData.getTypeOfRequest();
-            System.out.println("HO RICEVUTO " + type);
-            if (type.equals("MOTHER")) {
-                // Si suppone che il client abblia scelto il numero di mosse (passi da far fare a madre natura)
-                int moves = currentPlayerData.getChoosedMoves();
-                model.getTable().movemother(moves);
-                Island target = model.getTable().getIslands().get(model.getTable().getMotherNaturePosition());
-                if (!target.isBlocked()) {
-                    if (model.getNumberOfPlayers() == 4) {
-                        Team influence_team = target.team_influence(model.getTeams(), model.getTable().getProfessors(), model.getTable().isCentaurEffect(), model.getTable().getMushroomColor(), model.getTable().getKnightEffect());
-                        if (influence_team != null) {
-                            if (target.getNumberOfTowers() == 0) {
-                                target.controllIsland(influence_team);
-                                target.placeTower();
-                            } else if (!(target.getTowerColor().equals(influence_team.getPlayer1().getSchoolBoard().getTowerColor()))) {
-                                model.getTable().ConquestIsland(model.getTable().getMotherNaturePosition(), model.getTeams(), influence_team);
-                            }
-                            if (influence_team.getPlayer1().getSchoolBoard().getNumOfTowers() == 0) {
-                                gameEnd().fireStateEvent();
-                                return super.entryAction(cause);
-                            }
-                        }
-                    } else {
-                        Player influence_player = target.player_influence(model.getPlayers(), model.getTable().getProfessors(), model.getTable().isCentaurEffect(), model.getTable().getMushroomColor(), model.getTable().getKnightEffect());
-                        if (influence_player != null) {
-                            if (target.getNumberOfTowers() == 0) {
-                                target.controllIsland(influence_player);
-                                target.placeTower();
-                            } else if (!(target.getTowerColor().equals(influence_player.getSchoolBoard().getTowerColor()))) {
-                                model.getTable().ConquestIsland(model.getTable().getMotherNaturePosition(), model.getPlayers(), influence_player);
-                            }
-                            if (influence_player.getSchoolBoard().getNumOfTowers() == 0) {
-                                gameEnd().fireStateEvent();
-                                return super.entryAction(cause);
-                            }
-                        }
-                    }
-                    if (model.getTable().getIslands().get(model.getTable().getMotherNaturePosition()) != null) {
-                        if (model.getTable().getIslands().get((model.getTable().getMotherNaturePosition() + 1) % model.getTable().getIslands().size()).getTowerColor() != null && model.getTable().getIslands().get((model.getTable().getMotherNaturePosition() + 1) % model.getTable().getIslands().size()).getTowerColor().equals(model.getTable().getIslands().get(model.getTable().getMotherNaturePosition()).getTowerColor())) {
-                            model.getTable().MergeIsland(model.getTable().getMotherNaturePosition(), ((model.getTable().getMotherNaturePosition() + 1) % model.getTable().getIslands().size()));
-                        }
-                        Island merging;
-                        if(model.getTable().getMotherNaturePosition()==0){
-                            merging=model.getTable().getIslands().get(model.getTable().getIslands().size()-1);
-                        }
-                        else{
-                            merging=model.getTable().getIslands().get((model.getTable().getMotherNaturePosition() - 1)% model.getTable().getIslands().size());
-                        }
-                        if (merging.getTowerColor() != null && merging.getTowerColor().equals(model.getTable().getIslands().get(model.getTable().getMotherNaturePosition()).getTowerColor())) {
-                            int mergingindex;
-                            if(model.getTable().getMotherNaturePosition()==0){
-                                mergingindex=model.getTable().getIslands().size()-1;
-                            }
-                            else{
-                                mergingindex=(model.getTable().getMotherNaturePosition() - 1)% model.getTable().getIslands().size();
-                            }
-                            model.getTable().MergeIsland(model.getTable().getMotherNaturePosition(), mergingindex);
-                        }
-                    }
-                } else {
-                    target.setBlocked(false);
-                    for (int i = 0; i < model.getTable().getCharachter().size(); i++) {
-                        if (model.getTable().getCharachter().get(i) instanceof Granny) {
-                            ((Granny) model.getTable().getCharachter().get(i)).improveDivieti();
-                            break;
-                        }
-                    }
-                }
-
-                model.getTable().setCentaurEffect(false);
-                model.getTable().setMushroomColor(null);
-                model.getTable().setKnightEffect(null);
-
+            if(currentPlayer.isDisconnected()){
                 if (model.getTable().getIslands().size() <= 3) {
                     gameEnd().fireStateEvent();
                     return super.entryAction(cause);
@@ -178,43 +90,286 @@ public class MotherPhase extends State {
                     GoToCloudPhase().fireStateEvent();
                     return super.entryAction(cause);
                 }
-            } else {
-                istorepeat = true;
-                for(int j = 0; j<model.getTable().getCharachter().size(); j++){
-                    if(model.getTable().getCharachter().get(j).getName().equals(type)){
-                        switch (type){
-                            case "MUSHROOMHUNTER": ((MushroomHunter) model.getTable().getCharachter().get(j)).useEffect(currentPlayer,currentPlayerData.getChoosedColor(),model.getTable());
-                                break;
-                            case "THIEF": ((Thief) model.getTable().getCharachter().get(j)).useEffect(currentPlayer,model.getPlayers(),currentPlayerData.getChoosedColor(),model.getTable());
-                                break;
-                            case "CENTAUR": ((Centaur) model.getTable().getCharachter().get(j)).useEffect(currentPlayer,model.getTable());
-                                break;
-                            case "FARMER": ((Farmer) model.getTable().getCharachter().get(j)).useEffect(currentPlayer,model.getTable(),model.getPlayers());
-                                break;
-                            case "KNIGHT": ((Knight) model.getTable().getCharachter().get(j)).useEffect(currentPlayer,model.getTable());
-                                break;
-                            case "MINSTRELL": ((Minstrell) model.getTable().getCharachter().get(j)).useEffect(currentPlayer,currentPlayerData.getColors2(),currentPlayerData.getColors1());
-                                break;
-                            case "JESTER": ((Jester) model.getTable().getCharachter().get(j)).useEffect(currentPlayer,currentPlayerData.getColors2(),currentPlayerData.getColors1());
-                                break;
-                            case "POSTMAN": ((Postman)  model.getTable().getCharachter().get(j)).useEffect(currentPlayer);
-                                break;
-                            case "PRINCESS": ((Princess)  model.getTable().getCharachter().get(j)).useEffect(currentPlayer,currentPlayerData.getChoosedColor(),model.getTable(),model.getPlayers());
-                                break;
-                            case "GRANNY": ((Granny)  model.getTable().getCharachter().get(j)).useEffect(currentPlayer,currentPlayerData.getChoosedIsland(),model.getTable());
-                                break;
-                            case "MONK": ((Monk)  model.getTable().getCharachter().get(j)).useEffect(currentPlayer,currentPlayerData.getChoosedColor(),currentPlayerData.getChoosedIsland(),model.getTable());
-                                break;
-                            case "HERALD": boolean check= ((Herald)  model.getTable().getCharachter().get(j)).useEffect(currentPlayer,currentPlayerData.getChoosedIsland(),model);
-                                if(check) {
+            }
+            // retrive data of the current player
+            ClientModel currentPlayerData = connectionModel.findPlayer(currentPlayer.getNickname());
+            currentPlayerData.setServermodel(model);
+            currentPlayerData.setTypeOfRequest("CHOOSEWHERETOMOVEMOTHER");
+            currentPlayerData.setPingMessage(false);
+            currentPlayerData.setResponse(false); //non è una risposta, è una richiesta del server al client
+
+            boolean checkDisco= Network.send(json.toJson(currentPlayerData));
+            if(!checkDisco){
+                if (model.getTable().getIslands().size() <= 3) {
+                    gameEnd().fireStateEvent();
+                    return super.entryAction(cause);
+                } else if (model.islastturn()) {
+                    if (model.getcurrentPlayer().equals(model.getPlayers().get(model.getPlayers().size() - 1))) {
+                        gameEnd().fireStateEvent();
+                    } else {
+                        model.nextPlayer();
+                        goToStudentPhase().fireStateEvent();
+                    }
+                    return super.entryAction(cause);
+                } else {
+                    GoToCloudPhase().fireStateEvent();
+                    return super.entryAction(cause);
+                }
+            }
+            Thread ping = new MotherThread(this, currentPlayerData);
+            ping.start();
+
+            boolean responseReceived = false;
+            while (!responseReceived) {
+                synchronized (this) {
+                    if (!fromPing) {
+                        message = new ParametersFromNetwork(1);
+                        message.enable();
+                    }
+                }
+                while (!message.parametersReceived()) {
+                    if (disconnected) {
+                        break;
+                    }
+                }
+                synchronized (this) {
+                    if (disconnected || (json.fromJson(message.getParameter(0), ClientModel.class).getClientIdentity() == currentPlayerData.getClientIdentity() && !json.fromJson(message.getParameter(0), ClientModel.class).isPingMessage())) {
+                        responseReceived = true;
+                        if (disconnected) {
+                            currentPlayer.setDisconnected(true);
+                            model.getTable().getClouds().removeIf(cloud -> (cloud.getStudentsAccumulator().size()==0));
+                            if(model.getTable().getClouds().size()==model.getNumberOfPlayers()){
+                                model.getTable().getClouds().remove(0);
+                            }
+                        } else {
+                            ping.interrupt();
+                        }
+                    }
+                }
+            }
+            if (!currentPlayer.isDisconnected()) {
+
+                currentPlayerData = json.fromJson(message.getParameter(0), ClientModel.class);
+                String type = currentPlayerData.getTypeOfRequest();
+                System.out.println("HO RICEVUTO " + type);
+                if (type.equals("MOTHER")) {
+                    // Si suppone che il client abblia scelto il numero di mosse (passi da far fare a madre natura)
+                    int moves = currentPlayerData.getChoosedMoves();
+                    model.getTable().movemother(moves);
+                    Island target = model.getTable().getIslands().get(model.getTable().getMotherNaturePosition());
+                    if (!target.isBlocked()) {
+                        if (model.getNumberOfPlayers() == 4) {
+                            Team influence_team = target.team_influence(model.getTeams(), model.getTable().getProfessors(), model.getTable().isCentaurEffect(), model.getTable().getMushroomColor(), model.getTable().getKnightEffect());
+                            if (influence_team != null) {
+                                if (target.getNumberOfTowers() == 0) {
+                                    target.controllIsland(influence_team);
+                                    target.placeTower();
+                                } else if (!(target.getTowerColor().equals(influence_team.getPlayer1().getSchoolBoard().getTowerColor()))) {
+                                    model.getTable().ConquestIsland(model.getTable().getMotherNaturePosition(), model.getTeams(), influence_team);
+                                }
+                                if (influence_team.getPlayer1().getSchoolBoard().getNumOfTowers() == 0) {
                                     gameEnd().fireStateEvent();
                                     return super.entryAction(cause);
                                 }
-
-                                break;
+                            }
+                        } else {
+                            Player influence_player = target.player_influence(model.getPlayers(), model.getTable().getProfessors(), model.getTable().isCentaurEffect(), model.getTable().getMushroomColor(), model.getTable().getKnightEffect());
+                            if (influence_player != null) {
+                                if (target.getNumberOfTowers() == 0) {
+                                    target.controllIsland(influence_player);
+                                    target.placeTower();
+                                } else if (!(target.getTowerColor().equals(influence_player.getSchoolBoard().getTowerColor()))) {
+                                    model.getTable().ConquestIsland(model.getTable().getMotherNaturePosition(), model.getPlayers(), influence_player);
+                                }
+                                if (influence_player.getSchoolBoard().getNumOfTowers() == 0) {
+                                    gameEnd().fireStateEvent();
+                                    return super.entryAction(cause);
+                                }
+                            }
                         }
-                        break;
+                        if (model.getTable().getIslands().get(model.getTable().getMotherNaturePosition()) != null) {
+                            if (model.getTable().getIslands().get((model.getTable().getMotherNaturePosition() + 1) % model.getTable().getIslands().size()).getTowerColor() != null && model.getTable().getIslands().get((model.getTable().getMotherNaturePosition() + 1) % model.getTable().getIslands().size()).getTowerColor().equals(model.getTable().getIslands().get(model.getTable().getMotherNaturePosition()).getTowerColor())) {
+                                model.getTable().MergeIsland(model.getTable().getMotherNaturePosition(), ((model.getTable().getMotherNaturePosition() + 1) % model.getTable().getIslands().size()));
+                            }
+                            Island merging;
+                            if (model.getTable().getMotherNaturePosition() == 0) {
+                                merging = model.getTable().getIslands().get(model.getTable().getIslands().size() - 1);
+                            } else {
+                                merging = model.getTable().getIslands().get((model.getTable().getMotherNaturePosition() - 1) % model.getTable().getIslands().size());
+                            }
+                            if (merging.getTowerColor() != null && merging.getTowerColor().equals(model.getTable().getIslands().get(model.getTable().getMotherNaturePosition()).getTowerColor())) {
+                                int mergingindex;
+                                if (model.getTable().getMotherNaturePosition() == 0) {
+                                    mergingindex = model.getTable().getIslands().size() - 1;
+                                } else {
+                                    mergingindex = (model.getTable().getMotherNaturePosition() - 1) % model.getTable().getIslands().size();
+                                }
+                                model.getTable().MergeIsland(model.getTable().getMotherNaturePosition(), mergingindex);
+                            }
+                        }
+                    } else {
+                        target.setBlocked(false);
+                        for (int i = 0; i < model.getTable().getCharachter().size(); i++) {
+                            if (model.getTable().getCharachter().get(i) instanceof Granny) {
+                                ((Granny) model.getTable().getCharachter().get(i)).improveDivieti();
+                                break;
+                            }
+                        }
                     }
+
+                    model.getTable().setCentaurEffect(false);
+                    model.getTable().setMushroomColor(null);
+                    model.getTable().setKnightEffect(null);
+
+                    if (model.getTable().getIslands().size() <= 3) {
+                        gameEnd().fireStateEvent();
+                        return super.entryAction(cause);
+                    } else if (model.islastturn()) {
+                        if (model.getcurrentPlayer().equals(model.getPlayers().get(model.getPlayers().size() - 1))) {
+                            gameEnd().fireStateEvent();
+                        } else {
+                            model.nextPlayer();
+                            goToStudentPhase().fireStateEvent();
+                        }
+                        return super.entryAction(cause);
+                    } else {
+                        GoToCloudPhase().fireStateEvent();
+                        return super.entryAction(cause);
+                    }
+                } else {
+                    istorepeat = true;
+                    for (int j = 0; j < model.getTable().getCharachter().size(); j++) {
+                        if (model.getTable().getCharachter().get(j).getName().equals(type)) {
+                            switch (type) {
+                                case "MUSHROOMHUNTER":
+                                    ((MushroomHunter) model.getTable().getCharachter().get(j)).useEffect(currentPlayer, currentPlayerData.getChoosedColor(), model.getTable());
+                                    break;
+                                case "THIEF":
+                                    ((Thief) model.getTable().getCharachter().get(j)).useEffect(currentPlayer, model.getPlayers(), currentPlayerData.getChoosedColor(), model.getTable());
+                                    break;
+                                case "CENTAUR":
+                                    ((Centaur) model.getTable().getCharachter().get(j)).useEffect(currentPlayer, model.getTable());
+                                    break;
+                                case "FARMER":
+                                    ((Farmer) model.getTable().getCharachter().get(j)).useEffect(currentPlayer, model.getTable(), model.getPlayers());
+                                    break;
+                                case "KNIGHT":
+                                    ((Knight) model.getTable().getCharachter().get(j)).useEffect(currentPlayer, model.getTable());
+                                    break;
+                                case "MINSTRELL":
+                                    ((Minstrell) model.getTable().getCharachter().get(j)).useEffect(currentPlayer, currentPlayerData.getColors2(), currentPlayerData.getColors1());
+                                    break;
+                                case "JESTER":
+                                    ((Jester) model.getTable().getCharachter().get(j)).useEffect(currentPlayer, currentPlayerData.getColors2(), currentPlayerData.getColors1());
+                                    break;
+                                case "POSTMAN":
+                                    ((Postman) model.getTable().getCharachter().get(j)).useEffect(currentPlayer);
+                                    break;
+                                case "PRINCESS":
+                                    ((Princess) model.getTable().getCharachter().get(j)).useEffect(currentPlayer, currentPlayerData.getChoosedColor(), model.getTable(), model.getPlayers());
+                                    break;
+                                case "GRANNY":
+                                    ((Granny) model.getTable().getCharachter().get(j)).useEffect(currentPlayer, currentPlayerData.getChoosedIsland(), model.getTable());
+                                    break;
+                                case "MONK":
+                                    ((Monk) model.getTable().getCharachter().get(j)).useEffect(currentPlayer, currentPlayerData.getChoosedColor(), currentPlayerData.getChoosedIsland(), model.getTable());
+                                    break;
+                                case "HERALD":
+                                    boolean check = ((Herald) model.getTable().getCharachter().get(j)).useEffect(currentPlayer, currentPlayerData.getChoosedIsland(), model);
+                                    if (check) {
+                                        gameEnd().fireStateEvent();
+                                        return super.entryAction(cause);
+                                    }
+
+                                    break;
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+            else{
+                int check=0;
+                if(model.getNumberOfPlayers()==4){
+                    for(Team team: model.getTeams()){
+                        if(!team.getPlayer1().isDisconnected() || !team.getPlayer2().isDisconnected()){
+                            check++;
+                        }
+                    }
+                }
+                else{
+                    for(Player p: model.getPlayers()){
+                        if(!p.isDisconnected()){
+                            check++;
+                        }
+                    }
+                }
+                if(check<=1){
+                    System.out.println("attendo 60 secondi in attesa di una riconnessione");
+                    check=0;
+                    if(model.getNumberOfPlayers()==4){
+                        for(Team team: model.getTeams()){
+                            if(!team.getPlayer1().isDisconnected() || !team.getPlayer2().isDisconnected()){
+                                check++;
+                            }
+                        }
+                    }
+                    else{
+                        for(Player p: model.getPlayers()){
+                            if(!p.isDisconnected()){
+                                check++;
+                            }
+                        }
+                    }
+                    if(check<=1){
+                        for (Player p : model.getPlayers()) {
+                            ClientModel Data = connectionModel.findPlayer(p.getNickname());
+
+                            Data.setTypeOfRequest("TRYTORECONNECT");
+                            Data.setServermodel(model);
+                            Data.setResponse(false);
+                            Data.setPingMessage(false);
+
+                            Network.send(json.toJson(Data));
+                        }
+
+                        TimeUnit.SECONDS.sleep(40);
+
+                        check = 0;
+                        if (model.getNumberOfPlayers() == 4) {
+                            for (Team team : model.getTeams()) {
+                                if (!team.getPlayer1().isDisconnected() || !team.getPlayer2().isDisconnected()) {
+                                    check++;
+                                }
+                            }
+                        } else {
+                            for (Player p : model.getPlayers()) {
+                                if (!p.isDisconnected()) {
+                                    check++;
+                                }
+                            }
+                        }
+                        if (check <= 1) {
+                            model.setDisconnection(true);
+                            gameEnd().fireStateEvent();
+                            return super.entryAction(cause);
+                        }
+                    }
+                }
+                if (model.getTable().getIslands().size() <= 3) {
+                    gameEnd().fireStateEvent();
+                    return super.entryAction(cause);
+                } else if (model.islastturn()) {
+                    if (model.getcurrentPlayer().equals(model.getPlayers().get(model.getPlayers().size() - 1))) {
+                        gameEnd().fireStateEvent();
+                    } else {
+                        model.nextPlayer();
+                        goToStudentPhase().fireStateEvent();
+                    }
+                    return super.entryAction(cause);
+                } else {
+                    GoToCloudPhase().fireStateEvent();
+                    return super.entryAction(cause);
                 }
             }
         }
@@ -227,5 +382,69 @@ public class MotherPhase extends State {
         istorepeat = true;
         super.exitAction(cause);
     }
+
+    public ParametersFromNetwork getMessage() {
+        return message;
+    }
+
+    public void setMessage(ParametersFromNetwork message) {
+        this.message = message;
+    }
+
+    public void setDisconnected(boolean disconnected) {
+        this.disconnected = disconnected;
+    }
+
+    public void setFromPing(boolean fromPing) {
+        this.fromPing = fromPing;
+    }
 }
 
+class MotherThread extends Thread {
+    private final MotherPhase phase;
+    private final ClientModel CurrentPlayerData;
+    private final Gson json;
+
+    protected MotherThread(MotherPhase phase,ClientModel CurrentPlayerData) {
+        this.phase = phase;
+        this.CurrentPlayerData=CurrentPlayerData;
+        json=new Gson();
+    }
+
+    public void run() {
+        while (!phase.getMessage().parametersReceived() || json.fromJson(phase.getMessage().getParameter(0), ClientModel.class).isPingMessage()) {
+            try {
+                sleep(15000);
+            } catch (InterruptedException e) {
+                return;
+            }
+            System.out.println("ping sended");
+            CurrentPlayerData.setResponse(false); // è una richiesta non una risposta// lato client avrà una nella CliView un metodo per gestire questa richiesta
+            CurrentPlayerData.setPingMessage(true);
+            try {
+                Network.send(json.toJson(CurrentPlayerData));
+            } catch (InterruptedException e) {
+                return;
+            }
+
+            long start = System.currentTimeMillis();
+            long end = start + 10 * 1000;
+            ParametersFromNetwork pingmessage = new ParametersFromNetwork(1);
+            pingmessage.enable();
+
+            while (!pingmessage.parametersReceived() && System.currentTimeMillis() < end) {
+            }
+            synchronized (phase) {
+                if (!pingmessage.parametersReceived()) {
+                    phase.setDisconnected(true);
+                    return;
+                }
+                if (!json.fromJson(pingmessage.getParameter(0), ClientModel.class).isPingMessage()) {
+                    phase.setMessage(pingmessage);
+                    phase.setFromPing(true);
+                    return;
+                }
+            }
+        }
+    }
+}

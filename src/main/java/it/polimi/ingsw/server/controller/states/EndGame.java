@@ -11,6 +11,7 @@ import it.polimi.ingsw.utils.stateMachine.Event;
 import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
 
+import java.rmi.MarshalledObject;
 import java.util.concurrent.TimeUnit;
 
 public class EndGame extends State {
@@ -35,16 +36,20 @@ public class EndGame extends State {
     public IEvent entryAction(IEvent cause) throws Exception {
         Model model = serverController.getModel();
 
-        if (Network.disconnectedClient()){
-                ClientModel currentPlayerData = connectionModel.findPlayer(model.getPlayers().get(0).getNickname());
+        if (model.isDisconnection()){
 
+            for(int h = 0; h< model.getPlayers().size(); h++){
+
+                ClientModel currentPlayerData = connectionModel.findPlayer(model.getPlayers().get(h).getNickname());
                 currentPlayerData.setTypeOfRequest("DISCONNECTION");
                 currentPlayerData.setServermodel(model);
-                currentPlayerData.setResponse(true);
+                currentPlayerData.setResponse(false);
 
                 Network.send(json.toJson(currentPlayerData));
-                restart.fireStateEvent();
-                return super.entryAction(cause);
+                Network.setDisconnectedClient(true);
+            }
+            restart.fireStateEvent();
+            return super.entryAction(cause);
 
         }
 

@@ -96,19 +96,19 @@ public class Player implements Comparable<Player>{
     public String toString(String nickname) {
         switch (getSchoolBoard().getTowerColor()) {
             case BLACK:
-                return ANSI_BLACK + "    PLAYER : " + this.nickname + ANSI_RESET + (isDisconnected ? "IL GIOCATORE E' DISCONNESSO\n":"\n") +
+                return ANSI_BLACK + "    PLAYER : " + this.nickname + ANSI_RESET + (isDisconnected ? "    IL GIOCATORE E' DISCONNESSO\n":"\n") +
                         (choosedCard == null ? "    MOVES : 0\n" : "    MOVES : " + choosedCard.getMoves() + "\n") +
                         "    SCHOOL\n"
                         + schoolBoard.toString() +
                         (coins >= 0 ? "    COINS : " + coins + "\n" : (Objects.equals(nickname, this.nickname) ?"": "\n"))+(Objects.equals(nickname, this.nickname) ?"    AVAIABLE CARDS: "+ availableCards.toString()+"\n": "");
             case WHITE:
-                return ANSI_WHITE + "    PLAYER : " + this.nickname + ANSI_RESET + (isDisconnected ? "IL GIOCATORE E' DISCONNESSO\n":"\n") +
+                return ANSI_WHITE + "    PLAYER : " + this.nickname + ANSI_RESET + (isDisconnected ? "    IL GIOCATORE E' DISCONNESSO\n":"\n") +
                         (choosedCard == null ? "    MOVES : 0\n" : "    MOVES : " + choosedCard.getMoves() + "\n") +
                         "    SCHOOL\n"
                         + schoolBoard.toString() +
                         (coins >= 0 ? "    COINS : " + coins + "\n" : (Objects.equals(nickname, this.nickname) ?"": "\n"))+(Objects.equals(nickname, this.nickname) ?"    AVAIABLE CARDS: "+ availableCards.toString()+"\n": "");
             case GREY:
-                return ANSI_GRAY + "    PLAYER : " + this.nickname + ANSI_RESET + (isDisconnected ? "IL GIOCATORE E' DISCONNESSO\n":"\n")+
+                return ANSI_GRAY + "    PLAYER : " + this.nickname + ANSI_RESET + (isDisconnected ? "    IL GIOCATORE E' DISCONNESSO\n":"\n")+
                         (choosedCard == null ? "    MOVES : 0\n" : "    MOVES : " + choosedCard.getMoves() + "\n") +
                         "    SCHOOL\n"
                         + schoolBoard.toString() +

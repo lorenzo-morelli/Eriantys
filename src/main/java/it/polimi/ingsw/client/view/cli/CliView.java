@@ -175,6 +175,12 @@ public class CliView implements View{
         // Quando il client ha una richiesta di interazione deve inviare messaggi di ping per informare il server che è vivo
 
         switch(networkClientModel.getTypeOfRequest()){
+            case "TRYTORECONNECT":
+                System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(),"STATO DEL GIOCO: \n"+"IL SERVER STA TENTANDO DI RICONNETTERSI A MINIMO UN GIOCATORE PER PERMETTERE CHE LA PARTITA CONTINUI"+ "\n\nMOSSE ALTRI GIOCATORI: "+getResponce()));
+                break;
+            case "DISCONNECTION":
+                System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(),"STATO DEL GIOCO: \n"+"LA PARTITA E' TERMINATA CAUSA DISCONNESSIONE, NESSUN GIOCATORE SI E' RICONNESSO..."+ "\n\nMOSSE ALTRI GIOCATORI: "+getResponce()));
+                break;
             case "CHOOSEASSISTANTCARD" :
                 System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(),"STATO DEL GIOCO: \n"+"E' IL TUO TURNO - ASSISTENT CARD PHASE"+ "\n\nMOSSE ALTRI GIOCATORI: "+getResponce()));
                 System.out.println("Scegli una Carta Assistente");
@@ -341,6 +347,7 @@ public class CliView implements View{
                                     }
                                     networkClientModel.setTypeOfRequest(parsedStrings.get(0));
                                     networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                                    networkClientModel.setPingMessage(false);
                                     networkClientModel.setChoosedColor(Color);
                                     json = new Gson();
                                     isUsed=true;
@@ -379,6 +386,7 @@ public class CliView implements View{
                                     }
                                     networkClientModel.setTypeOfRequest(parsedStrings.get(0));
                                     networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                                    networkClientModel.setPingMessage(false);
                                     networkClientModel.setChoosedColor(Color);
                                     networkClientModel.setChoosedIsland(Integer.parseInt(parsedStrings.get(2))-1);
                                     json = new Gson();
@@ -418,6 +426,7 @@ public class CliView implements View{
                                     }
                                     networkClientModel.setTypeOfRequest(parsedStrings.get(0));
                                     networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                                    networkClientModel.setPingMessage(false);
                                     networkClientModel.setChoosedColor(Color);
                                     json = new Gson();
                                     isUsed=true;
@@ -435,6 +444,7 @@ public class CliView implements View{
                                     }
                                     networkClientModel.setTypeOfRequest(parsedStrings.get(0));
                                     networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                                    networkClientModel.setPingMessage(false);
                                     json = new Gson();
                                     isUsed=true;
                                     Network.send(json.toJson(networkClientModel));
@@ -461,6 +471,7 @@ public class CliView implements View{
                                     }
                                     networkClientModel.setTypeOfRequest(parsedStrings.get(0));
                                     networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                                    networkClientModel.setPingMessage(false);
                                     networkClientModel.setChoosedIsland(Integer.parseInt(parsedStrings.get(1))-1);
                                     json = new Gson();
                                     isUsed=true;
@@ -534,6 +545,7 @@ public class CliView implements View{
                                     }
                                     networkClientModel.setTypeOfRequest(parsedStrings.get(0));
                                     networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                                    networkClientModel.setPingMessage(false);
                                     networkClientModel.setColors1(colors1);
                                     networkClientModel.setColors2(colors2);
                                     json = new Gson();
@@ -588,6 +600,7 @@ public class CliView implements View{
                         }
                         networkClientModel.setTypeOfRequest(command);
                         networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                        networkClientModel.setPingMessage(false);
                         networkClientModel.setChoosedColor(choosedColor);
                         json = new Gson();
                         Network.send(json.toJson(networkClientModel));
@@ -670,6 +683,7 @@ public class CliView implements View{
                             }
                     networkClientModel.setTypeOfRequest(command);
                     networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                    networkClientModel.setPingMessage(false);
                     networkClientModel.setChoosedColor(choosedColor);
                     json = new Gson();
                     Network.send(json.toJson(networkClientModel));
@@ -691,6 +705,7 @@ public class CliView implements View{
                 networkClientModel.getNicknames().add(teamMate);
                 networkClientModel.getNicknames().add(networkClientModel.getNickname());
                 networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                networkClientModel.setPingMessage(false);
                 networkClientModel.setFromTerminal(parsedStrings);
                 json = new Gson();
                 Network.send(json.toJson(networkClientModel));
@@ -797,6 +812,7 @@ public class CliView implements View{
                                     }
                                     networkClientModel.setTypeOfRequest(parsedStrings.get(0));
                                     networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                                    networkClientModel.setPingMessage(false);
                                     networkClientModel.setChoosedColor(Color);
                                     json = new Gson();
                                     isUsed=true;
@@ -835,6 +851,7 @@ public class CliView implements View{
                                     }
                                     networkClientModel.setTypeOfRequest(parsedStrings.get(0));
                                     networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                                    networkClientModel.setPingMessage(false);
                                     networkClientModel.setChoosedColor(Color);
                                     networkClientModel.setChoosedIsland(Integer.parseInt(parsedStrings.get(2))-1);
                                     json = new Gson();
@@ -874,6 +891,7 @@ public class CliView implements View{
                                     }
                                     networkClientModel.setTypeOfRequest(parsedStrings.get(0));
                                     networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                                    networkClientModel.setPingMessage(false);
                                     networkClientModel.setChoosedColor(Color);
                                     json = new Gson();
                                     isUsed=true;
@@ -891,6 +909,7 @@ public class CliView implements View{
                                     }
                                     networkClientModel.setTypeOfRequest(parsedStrings.get(0));
                                     networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                                    networkClientModel.setPingMessage(false);
                                     json = new Gson();
                                     isUsed=true;
                                     Network.send(json.toJson(networkClientModel));
@@ -917,6 +936,7 @@ public class CliView implements View{
                                     }
                                     networkClientModel.setTypeOfRequest(parsedStrings.get(0));
                                     networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                                    networkClientModel.setPingMessage(false);
                                     networkClientModel.setChoosedIsland(Integer.parseInt(parsedStrings.get(1))-1);
                                     json = new Gson();
                                     isUsed=true;
@@ -990,6 +1010,7 @@ public class CliView implements View{
                                     }
                                     networkClientModel.setTypeOfRequest(parsedStrings.get(0));
                                     networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                                    networkClientModel.setPingMessage(false);
                                     networkClientModel.setColors1(colors1);
                                     networkClientModel.setColors2(colors2);
                                     json = new Gson();
@@ -1021,6 +1042,7 @@ public class CliView implements View{
                         networkClientModel.setTypeOfRequest("MOTHER");
                         networkClientModel.setChoosedMoves(Integer.parseInt(CommandPrompt.gotFromTerminal()));
                         networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                        networkClientModel.setPingMessage(false);
                         networkClientModel.setFromTerminal(parsedStrings);
                         json = new Gson();
                         Network.send(json.toJson(networkClientModel));
@@ -1053,6 +1075,7 @@ public class CliView implements View{
                     networkClientModel.setTypeOfRequest("MOTHER");
                     networkClientModel.setChoosedMoves(Integer.parseInt(CommandPrompt.gotFromTerminal()));
                     networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                    networkClientModel.setPingMessage(false);
                     networkClientModel.setFromTerminal(parsedStrings);
                     json = new Gson();
                     Network.send(json.toJson(networkClientModel));
@@ -1086,6 +1109,7 @@ public class CliView implements View{
                 }
                 networkClientModel.setCloudChoosed(networkClientModel.getServermodel().getTable().getClouds().get(Integer.parseInt(CommandPrompt.gotFromTerminal()) - 1));
                 networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                networkClientModel.setPingMessage(false);
                 networkClientModel.setFromTerminal(parsedStrings);
                 json = new Gson();
                 Network.send(json.toJson(networkClientModel));
@@ -1138,7 +1162,7 @@ public class CliView implements View{
 
     // Qualcun altro ha risposto al server: devo mostrare a schermo un'interpretazione della risposta
     // Esempio "pippo: ha salutato"
-    public void response() throws IOException {
+    public void response(){
         switch(networkClientModel.getTypeOfRequest()) {
             case "CHOOSEASSISTANTCARD":
                 setResponce("Il giocatore " + networkClientModel.getNickname()+" ha scelto " +

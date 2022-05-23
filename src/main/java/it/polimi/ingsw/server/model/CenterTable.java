@@ -228,16 +228,16 @@ public class CenterTable {
             result.append(c.toString());
             switch (c.getName()) {
                 case "PRINCESS":
-                    result.append("    STUDENTS:   ").append(princessSet.toString()).append("\n");
+                    result.append("    STUDENTS:   ").append(princessSet.toString()).append("\n\n");
                     break;
                 case "JESTER":
-                    result.append("    STUDENTS:   ").append(jesterSet.toString()).append("\n");
+                    result.append("    STUDENTS:   ").append(jesterSet.toString()).append("\n\n");
                     break;
                 case "MONK":
-                    result.append("    STUDENTS:   ").append(monkSet.toString()).append("\n");
+                    result.append("    STUDENTS:   ").append(monkSet.toString()).append("\n\n");
                     break;
                 case "GRANNY":
-                    result.append("    DIVIETI:   ").append(numDivieti).append("\n");
+                    result.append("    DIVIETI:   ").append(numDivieti).append("\n\n");
                     break;
                 default:
                     result.append("\n\n");

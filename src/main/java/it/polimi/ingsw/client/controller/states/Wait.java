@@ -11,6 +11,7 @@ import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class Wait extends State {
     private Gson json;
@@ -88,7 +89,7 @@ public class Wait extends State {
                     } else {
                         // altrimenti devo limitarmi a segnalare che l'altro giocatore sta facendo qualcosa
                         if (receivedClientModel.getTypeOfRequest() != null &&
-                                !receivedClientModel.isPingMessage()) {
+                                !receivedClientModel.isPingMessage() && !Objects.equals(receivedClientModel.getTypeOfRequest(), "TRYTORECONNECT") && !Objects.equals(receivedClientModel.getTypeOfRequest(), "DISCONNECTION")) {
                             try {
                                 view.requestToOthers();
                             } catch (IOException e) {
