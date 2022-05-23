@@ -2,19 +2,26 @@ package it.polimi.ingsw.utils.gui;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.client.GUI;
+import it.polimi.ingsw.client.model.ClientModel;
+import it.polimi.ingsw.utils.network.Network;
+import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.concurrent.TimeUnit;
 
 
 public class SetupGame implements Initializable {
     private final GUI gui = new GUI();
     private final Gson gson = new Gson();
     private int connectedPlayers;
+    private ParametersFromNetwork response;
 
     @FXML
     private Label connectedOnIp = new Label();
@@ -62,16 +69,40 @@ public class SetupGame implements Initializable {
         this.gameModeLabel.setText("Game mode: expert");
     }
 
-    public void start(MouseEvent mouseEvent) {
+    public void start(MouseEvent mouseEvent) throws InterruptedException, IOException {
         if (this.gui.getClientModel().getNumofplayer() != 2 && this.gui.getClientModel().getNumofplayer() != 3 && this.gui.getClientModel().getNumofplayer() != 4) {
             this.otherPlayersLabel.setText("ERROR: Please select a number of players!");
             System.out.println(this.gui.getClientModel().getNumofplayer());
         } else if (this.gui.getClientModel().getGameMode() == null) {
             this.otherPlayersLabel.setText("ERROR: Please select a game mode!");
         } else {
-            //todo: send to server game setup
-            //todo: get connected players from server
-            this.otherPlayersLabel.setText("Waiting for other players to start the game... ");
+            this.otherPlayersLabel.setText("Waiting for other players to join the game...");
+
+            boolean responseReceived = false;
+            boolean isStarted = false;
+            while (!isStarted) {
+                while (!responseReceived) {
+                    Network.send(gson.toJson(this.gui.getClientModel()));
+                    response = new ParametersFromNetwork(1);
+                    response.enable();
+                    while (!response.parametersReceived()) {
+                        System.out.println("a");
+                    }
+                    if (gson.fromJson(response.getParameter(0), ClientModel.class).getClientIdentity() == this.gui.getClientModel().getClientIdentity()) {
+                        responseReceived = true;
+                    }
+                }
+                TimeUnit.SECONDS.sleep(1);
+                System.out.println("ancora nada..." + isStarted);
+                isStarted = gson.fromJson(response.getParameter(0), ClientModel.class).isGameStarted();
+            }
+
+            System.out.println(gson.fromJson(response.getParameter(0), ClientModel.class).isGameStarted());
+            //this.gui.setClientModel(gson.fromJson(response.getParameter(0), ClientModel.class));
+            if (gson.fromJson(response.getParameter(0), ClientModel.class).isGameStarted().equals(true)) {
+                System.out.println("aoooo!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                this.gui.changeScene("Game", mouseEvent);
+            }
         }
     }
 

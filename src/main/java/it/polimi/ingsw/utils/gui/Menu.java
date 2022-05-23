@@ -36,7 +36,7 @@ public class Menu implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.nicknameField.setText("morel");
         this.ipField.setText("127.0.0.1");
-        this.portField.setText("5555");
+        this.portField.setText("55555");
         this.notice.setText("");
     }
 

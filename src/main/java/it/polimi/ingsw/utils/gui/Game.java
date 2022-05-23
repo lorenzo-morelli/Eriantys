@@ -39,13 +39,12 @@ public class Game implements Initializable {
     public Label playerName2;
     public Label playerName3;
     public Label playerName4;
-    private List<Label> playerNames = new ArrayList<>();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         clientModel = this.gui.getClientModel();
         clientModel.setNumofplayer(3);
-        playerNames = Arrays.asList(playerName1, playerName2, playerName3, playerName4);
+        List<Label> playerNames = Arrays.asList(playerName1, playerName2, playerName3, playerName4);
 
         //testing...
         ArrayList<String> nomi = new ArrayList<>();
@@ -65,6 +64,8 @@ public class Game implements Initializable {
             school3.setVisible(false);
             playerName3.setVisible(false);
         }
+
+        
 
         //players name set
         for (int i = 0; i < clientModel.getNumofplayer(); i++) {
