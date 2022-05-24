@@ -42,6 +42,7 @@ public class EndGame extends State {
 
                 ClientModel currentPlayerData = connectionModel.findPlayer(model.getPlayers().get(h).getNickname());
                 currentPlayerData.setTypeOfRequest("DISCONNECTION");
+                System.out.println("invio disconnessione: numero di giocatori minimo non disponibile");
                 currentPlayerData.setServermodel(model);
                 currentPlayerData.setResponse(false);
 

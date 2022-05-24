@@ -265,6 +265,7 @@ public class StudentPhase extends State {
                         }
                     }
                     if (check <= 1) {
+                        System.out.println("numero minimo di giocatori non disponibile, attendo 40 secondi in attesa che un altro giocatore si riconnette");
                         for (Player p : model.getPlayers()) {
                             ClientModel Data = connectionModel.findPlayer(p.getNickname());
 
@@ -287,6 +288,7 @@ public class StudentPhase extends State {
                             gameEnd().fireStateEvent();
                             return super.entryAction(cause);
                         }
+                        System.out.println("un giocatore si è riconnesso, la partita può ricominciare");
                     }
                 }
                 break;

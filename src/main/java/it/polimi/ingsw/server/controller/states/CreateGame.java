@@ -5,6 +5,7 @@ import it.polimi.ingsw.client.controller.events.ClientDisconnection;
 import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.server.controller.ConnectionModel;
 import it.polimi.ingsw.server.controller.ServerController;
+import it.polimi.ingsw.server.model.Cloud;
 import it.polimi.ingsw.server.model.Model;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.utils.network.Network;
@@ -110,6 +111,9 @@ public class CreateGame extends State {
                                         throw new RuntimeException(e);
                                     }
                                     model.setDisconnection(false);
+                                    model.getTable().getClouds().add(new Cloud(model.getNumberOfPlayers()));
+                                    model.getTable().getClouds().get(model.getTable().getClouds().size()-1).charge(model.getTable().getBag());
+
                                     return;
                                 }
                             }
