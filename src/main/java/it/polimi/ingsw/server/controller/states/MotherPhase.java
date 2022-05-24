@@ -95,8 +95,8 @@ public class MotherPhase extends State {
                     }
                     return super.entryAction(cause);
                 } else {
-                    GoToCloudPhase().fireStateEvent();
-                    return super.entryAction(cause);
+                    model.nextPlayer();
+                    goToStudentPhase().fireStateEvent();
                 }
             }
 
@@ -384,7 +384,8 @@ public class MotherPhase extends State {
                     }
                     return super.entryAction(cause);
                 } else {
-                    GoToCloudPhase().fireStateEvent();
+                    model.nextPlayer();
+                    goToStudentPhase().fireStateEvent();
                     return super.entryAction(cause);
                 }
             }

@@ -39,38 +39,6 @@ public class AmIFirst extends State {
         // Ci interessa sapere se il server segnala una disconnessione di qualche client
         // memorizziamo questo segnale in arrivo dal server in Network.disconnectedClient
         Network.setClientModel(clientModel);
-
-        Thread t= new Thread(() -> {
-            while (true) {
-                ParametersFromNetwork message = new ParametersFromNetwork(1);
-                message.enable();
-                while (!message.parametersReceived()) {
-                    // non ho ricevuto ancora nessun messaggio
-                    try {
-                        TimeUnit.MILLISECONDS.sleep(250);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-                Gson json = new Gson();
-                ClientModel receivedClientModel = json.fromJson(message.getParameter(0), ClientModel.class);
-                //System.out.println(receivedClientModel.isGameStarted().equals(true));
-                if (receivedClientModel.getTypeOfRequest() != null && receivedClientModel.getTypeOfRequest().equals("DISCONNECTION")) {
-                    Network.setDisconnectedClient(true);
-                    System.out.println("\n L'ultimo client si è disconnesso.");
-                }
-                if (receivedClientModel.getClientIdentity() == Network.getClientModel().getClientIdentity() && receivedClientModel.isKicked() && receivedClientModel.getTypeOfRequest() != null && receivedClientModel.getTypeOfRequest().equals("KICK")) {
-                    System.out.println("\n Sei stato disconnesso perché il server è al completo.");
-                    Network.disconnect();
-                    System.exit(0);
-                }
-                if(receivedClientModel.getClientIdentity() == Network.getClientModel().getClientIdentity() && receivedClientModel.isKicked() && receivedClientModel.getTypeOfRequest() != null && receivedClientModel.getTypeOfRequest().equals("CONNECTTOEXISTINGGAME")) {
-                    System.out.println("\n Sei stato connesso a una partita già esistente.");
-                }
-            }
-        });
-        t.start();
-
         boolean responseReceived = false;
 
         while (!responseReceived) {
@@ -89,7 +57,7 @@ public class AmIFirst extends State {
             }
 
             // se il messaggio è rivolto a me allora ho ricevuto l'ack, altrimenti reinvio e riattendo
-            if (json.fromJson(response.getParameter(0), ClientModel.class).getClientIdentity() == clientModel.getClientIdentity() && !json.fromJson(response.getParameter(0), ClientModel.class).isKicked()) {
+            if (json.fromJson(response.getParameter(0), ClientModel.class).getClientIdentity() == clientModel.getClientIdentity()) {
                 responseReceived = true;
             }
         }
@@ -97,6 +65,23 @@ public class AmIFirst extends State {
 
         //System.out.println("[Ho ricevuto la risposta: ");
         clientModel = json.fromJson(response.getParameter(0), ClientModel.class);
+
+        if(clientModel.getClientIdentity() == Network.getClientModel().getClientIdentity() && !clientModel.isKicked() && clientModel.getTypeOfRequest() != null && clientModel.getTypeOfRequest().equals("CONNECTTOEXISTINGGAME")) {
+            System.out.println("\n Sei stato connesso a una partita già esistente.");
+            no.fireStateEvent();
+        }
+
+        if(clientModel.getClientIdentity() == Network.getClientModel().getClientIdentity() && clientModel.isKicked() && clientModel.getTypeOfRequest() != null && clientModel.getTypeOfRequest().equals("KICKBYNICKNAME")) {
+            System.out.println("\n Sei stato disconnesso perché il nickname è gia stato scelto da un client esistente");
+            Network.disconnect();
+            System.exit(0);
+        }
+
+        if (clientModel.getClientIdentity() == Network.getClientModel().getClientIdentity() && clientModel.isKicked() && clientModel.getTypeOfRequest() != null && clientModel.getTypeOfRequest().equals("KICK")) {
+            System.out.println("\n Sei stato disconnesso perché il server è al completo.");
+            Network.disconnect();
+            System.exit(0);
+        }
 
         if (clientModel.getAmIfirst() == null ) {
             nicknameAlreadyPresent.fireStateEvent();

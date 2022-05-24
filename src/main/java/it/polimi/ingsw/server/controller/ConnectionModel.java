@@ -36,6 +36,10 @@ public class ConnectionModel {
         return null;
     }
 
+    public void change(ClientModel target, ClientModel nuovo){
+        clientsInfo.removeIf(c -> c.equals(target));
+        clientsInfo.add(nuovo);
+    }
     public void setClientsInfo(ArrayList<ClientModel> clientsInfo) {
         this.clientsInfo = clientsInfo;
     }

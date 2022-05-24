@@ -104,24 +104,44 @@ public class CreateGame extends State {
                                 throw new RuntimeException(e);
                             }
                         } else if(receivedClientModel.getAmIfirst() == null){
-                            for (Player p : getModel().getPlayers()) {
-                                if (p.isDisconnected()) {
-                                    ClientModel target=connectionModel.findPlayer(p.getNickname());
-                                    target.setNickname(receivedClientModel.getNickname());
-                                    p.setNickname(receivedClientModel.getNickname());
-                                    p.setDisconnected(false);
-                                    receivedClientModel.setAmIfirst(false);
-                                    receivedClientModel.setTypeOfRequest("CONNECTTOEXISTINGGAME");
-                                    try {
-                                        Network.send(json.toJson(receivedClientModel));
-                                    } catch (InterruptedException e) {
-                                        throw new RuntimeException(e);
-                                    }
-                                    model.setDisconnection(false);
-                                    model.getTable().getClouds().add(new Cloud(model.getNumberOfPlayers()));
-                                    model.getTable().getClouds().get(model.getTable().getClouds().size()-1).charge(model.getTable().getBag());
+                            boolean check2=true;
 
-                                    return;
+                            for(Player p: getModel().getPlayers()){
+                                    if(!p.isDisconnected() && p.getNickname().equals(receivedClientModel.getNickname())){
+                                        receivedClientModel.setTypeOfRequest("KICKBYNICKNAME");
+                                        receivedClientModel.setKicked(true);
+                                        System.out.println("invio segnale di disconnessione");
+                                        try {
+                                            Network.send(json.toJson(receivedClientModel));
+                                        } catch (InterruptedException e) {
+                                            throw new RuntimeException(e);
+                                        }
+                                        check2=false;
+                                        break;
+                                    }
+                                }
+
+                            if(check2) {
+                                for (Player p : getModel().getPlayers()) {
+                                    if (p.isDisconnected()) {
+                                        ClientModel target = connectionModel.findPlayer(p.getNickname());
+                                        p.setNickname(receivedClientModel.getNickname());
+                                        p.setDisconnected(false);
+                                        receivedClientModel.setAmIfirst(false);
+                                        receivedClientModel.setKicked(false);
+                                        receivedClientModel.setTypeOfRequest("CONNECTTOEXISTINGGAME");
+                                        connectionModel.change(target, receivedClientModel);
+                                        try {
+                                            Network.send(json.toJson(receivedClientModel));
+                                        } catch (InterruptedException e) {
+                                            throw new RuntimeException(e);
+                                        }
+                                        model.setDisconnection(false);
+                                        model.getTable().getClouds().add(new Cloud(model.getNumberOfPlayers()));
+                                        model.getTable().getClouds().get(model.getTable().getClouds().size() - 1).charge(model.getTable().getBag());
+
+                                        return;
+                                    }
                                 }
                             }
                         }
