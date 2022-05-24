@@ -92,8 +92,8 @@ public class SetupGame implements Initializable {
                         responseReceived = true;
                     }
                 }
-                TimeUnit.SECONDS.sleep(1);
                 System.out.println("ancora nada..." + isStarted);
+                responseReceived = false;
                 isStarted = gson.fromJson(response.getParameter(0), ClientModel.class).isGameStarted();
             }
 

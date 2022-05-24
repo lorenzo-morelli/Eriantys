@@ -1,15 +1,15 @@
 package it.polimi.ingsw.utils.gui;
 
-import com.google.gson.Gson;
 import it.polimi.ingsw.client.GUI;
-import it.polimi.ingsw.client.model.ClientModel;
+import it.polimi.ingsw.utils.common.SendModelAndGetResponse;
+import it.polimi.ingsw.utils.common.SetConnection;
 import it.polimi.ingsw.utils.network.Network;
-import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -19,8 +19,6 @@ import static it.polimi.ingsw.utils.common.Check.isValidPort;
 
 public class Menu implements Initializable {
     private final GUI gui = new GUI();
-    private final Gson gson = new Gson();
-    private ParametersFromNetwork response;
 
     @FXML
     private TextField nicknameField = new TextField();
@@ -62,41 +60,19 @@ public class Menu implements Initializable {
         } else if (!isValidIp(ip) || !isValidPort(port)) {
             this.notice.setText("FAILURE: ip or port format not valid!");
         } else {
-            this.gui.getClientModel().setNickname(nickname);
-            this.gui.getClientModel().setIp(ip);
-            this.gui.getClientModel().setPort(port);
-            Network.setupClient(ip, port);
-            this.gui.getClientModel().setMyIp(Network.getMyIp());
-
+            SetConnection.setConnection(nickname, ip, port, this.gui.getClientModel());
             if (Network.isConnected()) {
-                boolean responseReceived = false;
-                while (!responseReceived) {
-                    Network.send(gson.toJson(this.gui.getClientModel()));
-                    response = new ParametersFromNetwork(1);
-                    response.enable();
-                    while (!response.parametersReceived()) {
-                        System.out.println("still waiting...");
-                    }
-                    if (gson.fromJson(response.getParameter(0), ClientModel.class).getClientIdentity() == this.gui.getClientModel().getClientIdentity()) {
-                        responseReceived = true;
-                    }
-                }
-
-                this.gui.setClientModel(gson.fromJson(response.getParameter(0), ClientModel.class));
-
-                if(this.gui.getClientModel().getAmIfirst() == null){
+                this.gui.setClientModel(SendModelAndGetResponse.sendAndGetModel(this.gui.getClientModel()));
+                if (this.gui.getClientModel().getAmIfirst() == null) {
                     // il nickname inserito è già esistente
-                    this.notice.setText("FAILURE: Nickname already taken");
-                }
-                else if (this.gui.getClientModel().getAmIfirst()) {
+                    this.notice.setText("FAILURE: Nickname already taken"); //todo: bugfix
+                } else if (this.gui.getClientModel().getAmIfirst()) {
                     System.out.println("primooo");
                     this.gui.changeScene("SetupGame", mouseEvent);
-                }
-                else {
+                } else {
                     this.gui.changeScene("Lobby", mouseEvent);
                 }
-            }
-            else {
+            } else {
                 this.notice.setText("FAILURE: impossible to connect to server!");
             }
         }
