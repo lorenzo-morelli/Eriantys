@@ -208,7 +208,7 @@ public class StudentPhase extends State {
                                     ((Knight) model.getTable().getCharachter().get(j)).useEffect(currentPlayer, model.getTable());
                                     break;
                                 case "MINSTRELL":
-                                    ((Minstrell) model.getTable().getCharachter().get(j)).useEffect(currentPlayer, currentPlayerData.getColors2(), currentPlayerData.getColors1());
+                                    ((Minstrell) model.getTable().getCharachter().get(j)).useEffect(currentPlayer, currentPlayerData.getColors2(), currentPlayerData.getColors1(),model.getTable(),model.getPlayers());
                                     break;
                                 case "JESTER":
                                     ((Jester) model.getTable().getCharachter().get(j)).useEffect(currentPlayer, currentPlayerData.getColors2(), currentPlayerData.getColors1());
