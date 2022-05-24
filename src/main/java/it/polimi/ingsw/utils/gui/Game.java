@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import it.polimi.ingsw.client.GUI;
 import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.utils.network.Network;
+import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -40,21 +41,21 @@ public class Game implements Initializable {
     public Label playerName2;
     public Label playerName3;
     public Label playerName4;
+    private ParametersFromNetwork response;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         clientModel = this.gui.getClientModel();
-        clientModel.setNumofplayer(3);
+
+        response = new ParametersFromNetwork(1);
+        response.enable();
+        while (!response.parametersReceived()) {
+            System.out.println("waiting...");
+        }
+        this.gui.setClientModel(gson.fromJson(response.getParameter(0), ClientModel.class));
+        this.gui.getClientModel().getServermodel().getPlayers().forEach(System.out::println);
+        System.out.println(response.getParameter(0));
         List<Label> playerNames = Arrays.asList(playerName1, playerName2, playerName3, playerName4);
-
-        //testing...
-        ArrayList<String> nomi = new ArrayList<>();
-        nomi.add("ue");
-        nomi.add("ao");
-        nomi.add("eskere");
-        clientModel.setNicknames(nomi);
-
-
 
         if (clientModel.getNumofplayer() < 4) {
             school4.setVisible(false);
@@ -88,13 +89,8 @@ public class Game implements Initializable {
     }
 
     public void choosed1(MouseEvent mouseEvent) throws InterruptedException {
-
-
         assistantCard1.setVisible(false);
         clientModel.setCardChoosedValue(1); //todo: invio?
         Network.send(gson.toJson(clientModel));
-
-
-
     }
 }

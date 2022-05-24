@@ -12,9 +12,12 @@ import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Time;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.concurrent.TimeUnit;
+
+import static java.lang.Thread.sleep;
 
 
 public class SetupGame implements Initializable {
@@ -89,14 +92,15 @@ public class SetupGame implements Initializable {
             response = new ParametersFromNetwork(1);
             response.enable();
             while (!response.parametersReceived()) {
-                System.out.println("attesa inizio");
+                System.out.println("waiting...");
+                TimeUnit.SECONDS.sleep(2);
             }
             this.gui.setClientModel(gson.fromJson(response.getParameter(0), ClientModel.class));
-            System.out.println(this.gui.getClientModel().isGameStarted());
+            //System.out.println(this.gui.getClientModel().isGameStarted());
 
             if (!this.gui.getClientModel().isGameStarted()) { // todo: bah...
-                System.out.println("aoooo!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                 this.gui.changeScene("Game", mouseEvent);
+
             }
         }
     }
