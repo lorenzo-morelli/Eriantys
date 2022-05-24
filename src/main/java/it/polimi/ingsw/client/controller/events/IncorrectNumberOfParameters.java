@@ -1,13 +1,10 @@
 package it.polimi.ingsw.client.controller.events;
 
-import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.utils.cli.CommandPrompt;
 import it.polimi.ingsw.utils.observerPattern.Observer;
 import it.polimi.ingsw.utils.stateMachine.Event;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Evento che si attiva quando l'utente inserisce un numero di parametri scorretti
@@ -17,32 +14,16 @@ import java.util.Arrays;
  */
 
 public class IncorrectNumberOfParameters extends Event implements Observer {
-    private CommandPrompt commandPrompt;
-    private boolean enabled = false;
+    private final CommandPrompt commandPrompt;
 
-    private ClientModel clientModel;
-
-    private ArrayList<String> parsedStrings;
-
-    private int numberOfStrings;
-
-    public IncorrectNumberOfParameters(ClientModel clientModel, int numberOfStrings) throws IOException {
+    public IncorrectNumberOfParameters(int numberOfStrings) throws IOException {
         super("[Numero di parametri non corretto (doveva essere " + numberOfStrings + ")]");
         this.commandPrompt = CommandPrompt.getInstance();
         this.subscribe();
-        this.clientModel = clientModel;
-        this.numberOfStrings = numberOfStrings;
     }
 
     @Override
     public void update(Object message) throws Exception {
-        if (enabled) {
-            parsedStrings = new ArrayList<String>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
-            if (parsedStrings.size() != numberOfStrings) {
-                fireStateEvent();
-            }
-
-        }
     }
 
     @Override

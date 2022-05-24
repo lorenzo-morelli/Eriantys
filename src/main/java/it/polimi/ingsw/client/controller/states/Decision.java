@@ -40,11 +40,7 @@ public class Decision extends State {
             return scelta2Riconosciuta;
         }
 
-        public NotRecognizedSetOfStrings sceltaNonValida(){
-            return nessunaDellePrecedenti;
-        }
-
-        public IEvent entryAction(IEvent cause) throws IOException{
+    public IEvent entryAction(IEvent cause) throws IOException, InterruptedException {
             view.setCallingState(this);
             view.askDecision(scelta1,scelta2);
             return null;

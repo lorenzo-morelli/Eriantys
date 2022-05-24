@@ -1,6 +1,5 @@
 package it.polimi.ingsw.server.model;
 
-import com.sun.jdi.IntegerValue;
 
 public class AssistantCard {
     private float values;

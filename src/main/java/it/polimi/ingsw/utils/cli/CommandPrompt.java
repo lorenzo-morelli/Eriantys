@@ -1,9 +1,6 @@
 package it.polimi.ingsw.utils.cli;
 
-import com.google.gson.Gson;
-import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.utils.network.Network;
-import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
 import it.polimi.ingsw.utils.observerPattern.Observer;
 import it.polimi.ingsw.utils.observerPattern.Subject;
 import jline.console.ConsoleReader;
@@ -11,6 +8,7 @@ import jline.console.ConsoleReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Classe che rappresenta il terminale (o cmd in windows)
@@ -24,7 +22,7 @@ public class CommandPrompt implements Subject{
     private static ConsoleReader console;
     private static List<Observer> observers = null;
     private static CommandPrompt instance = null;
-    private static boolean debug = false;
+    private static final boolean debug = false;
     private static boolean inputLetto = false;
 
     private CommandPrompt() throws IOException {
@@ -66,56 +64,51 @@ public class CommandPrompt implements Subject{
             System.out.print("\033[H\033[2J");
             System.out.flush();
         }
-        instance.getConsole().println(toPrint);
-        instance.getConsole().flush();
+        getConsole().println(toPrint);
+        getConsole().flush();
     }
 
     public static void setPrompt(String toSet) throws IOException {
         if (instance == null) {
             instance = new CommandPrompt();
         }
-        instance.getConsole().setPrompt(toSet);
-        instance.getConsole().flush();
+        getConsole().setPrompt(toSet);
+        getConsole().flush();
     }
 
     public static void clearScreen() throws IOException {
         if (instance == null) {
             instance = new CommandPrompt();
         }
-        instance.getConsole().clearScreen();
+        getConsole().clearScreen();
     }
 
-    public static void setDebug() {
-        CommandPrompt.debug = true;
-    }
-
-    public static void ask(String suggestion, String console){
+    public static void ask(String suggestion, String console) throws InterruptedException {
 
         // Interrompere la lettura dell'input se si disconnette un client
-        Thread t= new Thread(){
-            public void run() {
-                try {
-                    if(!debug) {
-                        CommandPrompt.clearScreen();
-                    }
-                    CommandPrompt.println(suggestion);
-                    CommandPrompt.setPrompt(console);
-                    CommandPrompt.read();
-                    if (Network.disconnectedClient()){
-                        System.out.println("Bene, questo input verrà ignorato");
-                        return;
-                    }
-                    setInputLetto(true);
-                } catch (IOException e) {
-                    e.printStackTrace();
+        Thread t= new Thread(() -> {
+            try {
+                if(!debug) {
+                    CommandPrompt.clearScreen();
                 }
+                CommandPrompt.println(suggestion);
+                CommandPrompt.setPrompt(console);
+                CommandPrompt.read();
+                if (Network.disconnectedClient()){
+                    System.out.println("Bene, questo input verrà ignorato");
+                    return;
+                }
+                setInputLetto(true);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        };
+        });
         t.start();
         while(!inputLetto() && !Network.disconnectedClient()){
+            TimeUnit.MILLISECONDS.sleep(250);
         }
         if (Network.disconnectedClient()){
-            t.stop();
+            t.interrupt();
         }
         setInputLetto(false);
 
@@ -142,7 +135,7 @@ public class CommandPrompt implements Subject{
 
     @Override
     public void notifyObservers() {
-        CommandPrompt.observers.stream().forEach(observer -> {
+        CommandPrompt.observers.forEach(observer -> {
             try {
                 observer.update(fromTerminal);
             }catch (Exception e) {

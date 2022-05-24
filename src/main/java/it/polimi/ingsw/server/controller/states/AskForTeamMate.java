@@ -15,6 +15,7 @@ import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 public class AskForTeamMate extends State {
     private final Event teamMateChoosen;
@@ -63,7 +64,9 @@ public class AskForTeamMate extends State {
         while (!responseReceived) {
             message = new ParametersFromNetwork(1);
             message.enable();
-            while (!message.parametersReceived()) {}
+            while (!message.parametersReceived()) {
+                TimeUnit.MILLISECONDS.sleep(250);
+            }
             if (json.fromJson(message.getParameter(0), ClientModel.class).getClientIdentity() == currentPlayerData.getClientIdentity()) {
                 responseReceived = true;
             }

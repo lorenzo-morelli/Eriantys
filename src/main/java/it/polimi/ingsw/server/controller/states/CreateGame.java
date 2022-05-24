@@ -15,6 +15,8 @@ import it.polimi.ingsw.utils.stateMachine.Event;
 import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
 
+import java.util.concurrent.TimeUnit;
+
 
 public class CreateGame extends State {
     private final Event gameCreated, fourPlayersGameCreated;
@@ -71,6 +73,11 @@ public class CreateGame extends State {
                     message.enable();
                     while (!message.parametersReceived()) {
                         // non ho ricevuto ancora nessun messaggio
+                        try {
+                            TimeUnit.MILLISECONDS.sleep(250);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                     //System.out.println("check disconnessione");
                     Gson json = new Gson();

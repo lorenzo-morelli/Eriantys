@@ -6,14 +6,16 @@ import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
 import it.polimi.ingsw.utils.stateMachine.*;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * Generico stato di invio dati al server
  * Attende la ricezione di un generico ack dal server
  */
 public class SendToServer extends State{
-    private Gson json;
-    private ClientModel clientModel;
-    private ParametersFromNetwork ack;
+    private final Gson json;
+    private final ClientModel clientModel;
+    private final ParametersFromNetwork ack;
     public SendToServer(ClientModel clientModel, Controller controller) {
         super("[Invio dati al server ed attesa di un ack]");
         this.clientModel = clientModel;
@@ -38,6 +40,8 @@ public class SendToServer extends State{
         ack.enable();
         while (!ack.parametersReceived()){
             // non ho ancora ricevuto l'ack
+            TimeUnit.MILLISECONDS.sleep(250);
+
         }
         //System.out.println("[Conferma ricevuta]");
 

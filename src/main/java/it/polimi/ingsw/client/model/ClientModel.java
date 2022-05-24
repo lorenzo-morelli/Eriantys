@@ -18,7 +18,7 @@ public class ClientModel {
     // Questo perché in fase di setup i client potrebbero proporre al server dei nickname identici
     // e potrebbero avere lo stesso indirizzo IP in fase di testing sullo stesso computer
     // si rende necessario un metodo di riconoscimento del client
-    private int clientIdentity;
+    private final int clientIdentity;
     // Am I the first client connected to server?
     // amIfirst: true = Identificato come primo,
     // false = identificato come non primo,
@@ -33,7 +33,6 @@ public class ClientModel {
     // isresponse == null, non è ne una richiesta ne una risposta, probabilmente un messaggio di quelli iniziali
     private Boolean isResponse = false;
     private boolean isPingMessage; //differenzia request di ping da request di gioco
-    private boolean isTokick=true;
 
     private Boolean gameStarted = false;
     public boolean kicked = false;
@@ -53,10 +52,9 @@ public class ClientModel {
     // where to put data that comes from terminal
     private ArrayList<String> fromTerminal;
 
-    // My nickname
-    private String nickname;
-
     private ArrayList<String> nicknames;
+
+    private String nickname;
 
     // server IP and port
     private String ip;
@@ -105,14 +103,6 @@ public class ClientModel {
 
     public void setPort(String port) {
         this.port = port;
-    }
-
-    public String getNickname() {
-        return this.nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
     }
 
     public ArrayList<String> getFromTerminal() {
@@ -279,11 +269,12 @@ public class ClientModel {
         isPingMessage = pingMessage;
     }
 
-    public void setFirstTry(boolean tokick) {
-        isTokick = tokick;
+
+    public String getNickname() {
+        return nickname;
     }
 
-    public boolean isFistTry() {
-        return isTokick;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 }

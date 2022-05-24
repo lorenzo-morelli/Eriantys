@@ -13,9 +13,9 @@ public interface View {
      */
     void setCallingState(State callingState);
     void setClientModel(ClientModel clientModel);
-    void askToStart();
-    void askDecision(String option1, String option2);
-    void askParameters();
+    void askToStart() throws InterruptedException;
+    void askDecision(String option1, String option2) throws InterruptedException;
+    void askParameters() throws InterruptedException;
 
     /**
      * Come reagisco io client se il server mi fa una richiesta di interagire tramite terminale
@@ -29,7 +29,6 @@ public interface View {
 
     /**
      * Come reagisco io client in caso di risposta di un altro client al server
-     * @throws IOException
      */
     void response() throws IOException;
 

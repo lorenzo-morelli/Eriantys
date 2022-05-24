@@ -282,7 +282,7 @@ public class StudentPhase extends State {
                         long end = start + 40 * 1000;
 
                         while (model.isDisconnection() && System.currentTimeMillis()<end){
-
+                            TimeUnit.MILLISECONDS.sleep(250);
                         }
                         if (model.isDisconnection()) {
                             gameEnd().fireStateEvent();

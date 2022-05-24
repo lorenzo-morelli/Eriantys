@@ -15,8 +15,8 @@ import java.io.IOException;
  * @author Fernando
  */
 public class RecognizedString extends Event implements Observer {
-    public String toListen = null;
-    private CommandPrompt commandPrompt;
+    public String toListen;
+    private final CommandPrompt commandPrompt;
     private boolean enabled = false;
 
     public RecognizedString(String message) throws IOException {
@@ -38,7 +38,7 @@ public class RecognizedString extends Event implements Observer {
     @Override
     public void update(Object message) throws Exception {
         if(toListen != null && enabled){
-            if (this.toListen.equals ((String)message)){
+            if (this.toListen.equals (message)){
                 fireStateEvent();
             }
         }

@@ -61,11 +61,6 @@ public class Player implements Comparable<Player>{
         this.choosedCard = choosedCard;
         return availableCards.remove(choosedCard);
     }
-
-    public void setChoosedCardforDisconnection(AssistantCard choosedCard) {
-        this.choosedCard = choosedCard;
-    }
-
     public AssistantCard getChoosedCard() {
         return choosedCard;
     }

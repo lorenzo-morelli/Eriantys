@@ -22,7 +22,7 @@ public class ReadFromTerminal extends State {
         this.type = type;
 
         insertedParameters = new Event("Inserimento da terminale di tipo " +type );
-        numberOfParametersIncorrect = new IncorrectNumberOfParameters(clientModel, numofparameters);
+        numberOfParametersIncorrect = new IncorrectNumberOfParameters(numofparameters);
         fromTerminal = new ParametersFromTerminal(clientModel, numofparameters);
         insertedParameters.setStateEventListener(controller);
     }
