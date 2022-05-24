@@ -43,4 +43,8 @@ public class ConnectionModel {
     public void setClientsInfo(ArrayList<ClientModel> clientsInfo) {
         this.clientsInfo = clientsInfo;
     }
+
+    public void empty(){
+        clientsInfo.clear();
+    }
 }

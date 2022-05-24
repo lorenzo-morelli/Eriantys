@@ -33,7 +33,7 @@ public class ServerController {
         fsm.addTransition(idle, start, specifyPortScreen);
         fsm.addTransition(specifyPortScreen, specifyPortScreen.portSpecified(), waitFirstPlayer);
         fsm.addTransition(waitFirstPlayer, waitFirstPlayer.gotFirstMessage(), waitFirstPlayerGameInfo);
-        fsm.addTransition(waitFirstPlayerGameInfo, waitFirstPlayerGameInfo.gotNumOfPlayersAndGamemode(), waitOtherClients);
+        fsm.addTransition(waitFirstPlayerGameInfo, waitFirstPlayerGameInfo.gotNumOfPlayersAndGamemode(),waitOtherClients);
         fsm.addTransition(waitOtherClients, waitOtherClients.twoOrThreeClientsConnected(), createGame);
         fsm.addTransition(waitOtherClients, waitOtherClients.fourClientsConnected(), askForTeamMate);
         fsm.addTransition(createGame, createGame.gameCreated(), assistantCardPhase);

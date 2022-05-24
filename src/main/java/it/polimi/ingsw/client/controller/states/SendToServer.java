@@ -38,11 +38,7 @@ public class SendToServer extends State{
     public void checkAck() throws Exception {
 
         ack.enable();
-        while (!ack.parametersReceived()){
-            // non ho ancora ricevuto l'ack
-            TimeUnit.MILLISECONDS.sleep(250);
-
-        }
+        ack.waitParametersReceived();
         //System.out.println("[Conferma ricevuta]");
 
         System.out.println("In attesa che gli altri giocatori si colleghino...");

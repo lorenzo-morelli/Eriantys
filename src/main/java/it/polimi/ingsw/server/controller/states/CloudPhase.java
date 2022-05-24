@@ -76,6 +76,15 @@ public class CloudPhase extends State {
         //salto fase se player se si è disconnesso precedentemente
 
         if(currentPlayer.isDisconnected()){  //se giocatore è disconnesso lo salto
+
+            currentPlayer.setDisconnected(true);
+            for(Cloud c: model.getTable().getClouds()) {
+                if(c.getStudentsAccumulator().size()!=0) {
+                    currentPlayer.getSchoolBoard().load_entrance(c,model.getTable().getClouds());
+                    break;
+                }
+            }
+
             if (model.getcurrentPlayer().equals(model.getPlayers().get(model.getPlayers().size() - 1))) {
                 GoToEndTurn().fireStateEvent();
             } else {
@@ -123,7 +132,8 @@ public class CloudPhase extends State {
                 }
             }
             while (!message.parametersReceived()) {
-                if(disconnected){
+                message.waitParametersReceived(5);
+                if (disconnected) {
                     break;
                 }
             }
@@ -138,7 +148,13 @@ public class CloudPhase extends State {
                                 break;
                             }
                         }
-                        model.getTable().getClouds().removeIf(cloud -> (cloud.getStudentsAccumulator().size()==0));
+                        for(int j=0;j<model.getTable().getClouds().size();j++) {
+                            if(model.getTable().getClouds().get(j).getStudentsAccumulator().size()==0)
+                            {
+                                model.getTable().getClouds().remove(j);
+                                break;
+                            }
+                        }
                     }
                     else {
                         ping.interrupt();
@@ -205,12 +221,8 @@ public class CloudPhase extends State {
                     }
 
                     model.setDisconnection(true);
-                    long start = System.currentTimeMillis();
-                    long end = start + 40 * 1000;
+                    TimeUnit.MILLISECONDS.sleep(40000); //aspetto 40 secondi nella speranza che qualcuno si riconnetta
 
-                    while (model.isDisconnection() && System.currentTimeMillis()<end){
-                        TimeUnit.MILLISECONDS.sleep(250);
-                    }
                     if (model.isDisconnection()) {
                         gameEnd().fireStateEvent();
                         return super.entryAction(cause);

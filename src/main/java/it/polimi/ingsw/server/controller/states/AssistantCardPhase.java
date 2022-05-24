@@ -123,6 +123,7 @@ public class AssistantCardPhase extends State {
                             }
                         }
                         while (!message.parametersReceived()) {
+                            message.waitParametersReceived(5);
                             if (disconnected) {
                                 break;
                             }
@@ -132,8 +133,15 @@ public class AssistantCardPhase extends State {
                                 responseReceived = true;
                                 if (disconnected) {
                                     currentPlayer.setDisconnected(true);
-                                    currentPlayer.setChoosedCard(currentPlayer.getAvailableCards().getCardsList().get(currentPlayer.getAvailableCards().getCardsList().size() - 1));
-                                    model.getTable().getClouds().removeIf(cloud -> (cloud.getStudentsAccumulator().size() == 0));
+                                    currentPlayer.setChoosedCard(canbBeChooesed.get(canbBeChooesed.size()-1));
+                                    alreadyChooseds.add(currentPlayer.getAvailableCards().getCardsList().get(currentPlayer.getAvailableCards().getCardsList().size() - 1));
+                                    for(int j=0;j<model.getTable().getClouds().size();j++) {
+                                        if(model.getTable().getClouds().get(j).getStudentsAccumulator().size()==0)
+                                        {
+                                            model.getTable().getClouds().remove(j);
+                                            break;
+                                        }
+                                    }
                                     if (model.getTable().getClouds().size() == model.getNumberOfPlayers()) {
                                         model.getTable().getClouds().remove(0);
                                     }
@@ -206,12 +214,9 @@ public class AssistantCardPhase extends State {
                         }
 
                         model.setDisconnection(true);
-                        long start = System.currentTimeMillis();
-                        long end = start + 40 * 1000;
+                        TimeUnit.MILLISECONDS.sleep(40000); //aspetto 40 secondi nella speranza che qualcuno si riconnetta
 
-                        while (model.isDisconnection() && System.currentTimeMillis()<end){
-                            TimeUnit.MILLISECONDS.sleep(250);
-                        }
+
                         if (model.isDisconnection()) {
                             gameEnd().fireStateEvent();
                             return super.entryAction(cause);

@@ -60,6 +60,7 @@ public class WaitOtherClients extends State {
 
             message.enable();
             while (!message.parametersReceived()) {
+                message.waitParametersReceived(10);
                 if(Network.disconnectedClient()){
                     reset.fireStateEvent();
                     return super.entryAction(cause);
@@ -87,6 +88,7 @@ public class WaitOtherClients extends State {
             message.fireStateEvent();
             message.disable();
             numOfPlayersToWait--;
+
         }
         if (connectionModel.getClientsInfo().size() == 4){
             fourClientsConnected.fireStateEvent();
@@ -113,10 +115,7 @@ public class WaitOtherClients extends State {
                 while (!messageReceived) {
                     nickname = new ParametersFromNetwork(1);
                     nickname.enable();
-                    while (!nickname.parametersReceived()) {
-                        // non ho ricevuto ancora un messaggio
-                        TimeUnit.MILLISECONDS.sleep(250);
-                    }
+                    nickname.waitParametersReceived();
                     if (json.fromJson(nickname.getParameter(0), ClientModel.class).getClientIdentity() == clientModel.getClientIdentity()) {
                         messageReceived = true;
                     }

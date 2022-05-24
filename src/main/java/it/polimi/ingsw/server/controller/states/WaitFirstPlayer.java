@@ -54,6 +54,7 @@ public class WaitFirstPlayer extends State {
         firstMessage.enable();
 
         while (!firstMessage.parametersReceived() ) {
+            firstMessage.waitParametersReceived(10);
             if(Network.disconnectedClient()){
                 reset.fireStateEvent();
             }
@@ -65,9 +66,8 @@ public class WaitFirstPlayer extends State {
             ClientModel clientModel = json.fromJson(firstMessage.getParameter(0), ClientModel.class);
 
             System.out.println("Ricevuto " + clientModel.getNickname() + " " + clientModel.getMyIp());
-            // Appendi alla lista di ClientModel il modello appena ricevuto così da salvarlo per usi futuri
-            connectionModel.getClientsInfo().add(clientModel);
             // Compila il campo "sei primo" e invia la risposta al client
+            connectionModel.getClientsInfo().add(0, clientModel);
             clientModel.setAmIfirst(true);
             Network.send(json.toJson(clientModel));
             System.out.println("[Inviato ack al primo player]");

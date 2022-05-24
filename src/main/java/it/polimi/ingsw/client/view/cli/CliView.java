@@ -1171,7 +1171,7 @@ public class CliView implements View{
                 message = "L'utente " + networkClientModel.getNickname() + " sta scegliendo la nuvola dalla quale ricaricare gli studenti";
                 break;
         }
-        if (!networkClientModel.getTypeOfRequest().equals("TEAMMATE")) {
+        if (!networkClientModel.getTypeOfRequest().equals("TEAMMATE") && networkClientModel.getServermodel()!=null) {
             System.out.println(networkClientModel.getServermodel().toString(getMynickname(), "STATO DEL GIOCO: " + message + "\n\nMOSSE ALTRI GIOCATORI: " + getResponce()));
         }
     }

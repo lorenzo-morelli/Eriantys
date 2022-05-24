@@ -65,11 +65,7 @@ public class SendNicknameToServer extends State {
         ack.setStateEventListener(controller);
         ack.enable();
         //System.out.println("[Conferma del nickname non ancora ricevuta]");
-        while (!ack.parametersReceived()){
-            // non ho ancora ricevuto l'ack
-            TimeUnit.MILLISECONDS.sleep(250);
-
-        }
+        ack.waitParametersReceived();
 
         //System.out.println("[Conferma del nickname ricevuta]");
         ClientModel fromNetwork = json.fromJson(ack.getParameter(0),ClientModel.class);

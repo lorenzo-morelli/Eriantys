@@ -45,6 +45,7 @@ public class WaitFirstPlayerGameInfo extends State {
         while (!messageReceived) {
             message.enable();
             while (!message.parametersReceived()) {
+                message.waitParametersReceived(10);
                 if(Network.disconnectedClient()){
                     reset.fireStateEvent();
                     return super.entryAction(cause);

@@ -123,6 +123,7 @@ public class StudentPhase extends State {
                     }
                 }
                 while (!message.parametersReceived()) {
+                    message.waitParametersReceived(5);
                     if (disconnected) {
                         break;
                     }
@@ -137,15 +138,21 @@ public class StudentPhase extends State {
                             int j=0;
                             for(PeopleColor color: colors) {
                                 if(currentPlayer.getSchoolBoard().getEntranceSpace().numStudentsbycolor(color)!=0) {
-                                    currentPlayer.getSchoolBoard().getEntranceSpace().setStudentsRandomly(1, model.getTable().getBag());
                                     currentPlayer.getSchoolBoard().load_dinner(color);
+                                    model.getTable().checkProfessor(color,model.getPlayers());
                                     j++;
                                     if (j == moves - i) {
                                         break;
                                     }
                                 }
                             }
-                            model.getTable().getClouds().removeIf(cloud -> (cloud.getStudentsAccumulator().size()==0));
+                            for(int k=0;k<model.getTable().getClouds().size();k++) {
+                                if(model.getTable().getClouds().get(k).getStudentsAccumulator().size()==0)
+                                {
+                                    model.getTable().getClouds().remove(k);
+                                    break;
+                                }
+                            }
                             if(model.getTable().getClouds().size()==model.getNumberOfPlayers()){
                                 model.getTable().getClouds().remove(0);
                             }
@@ -278,12 +285,8 @@ public class StudentPhase extends State {
                         }
 
                         model.setDisconnection(true);
-                        long start = System.currentTimeMillis();
-                        long end = start + 40 * 1000;
+                        TimeUnit.MILLISECONDS.sleep(40000); //aspetto 40 secondi nella speranza che qualcuno si riconnetta
 
-                        while (model.isDisconnection() && System.currentTimeMillis()<end){
-                            TimeUnit.MILLISECONDS.sleep(250);
-                        }
                         if (model.isDisconnection()) {
                             gameEnd().fireStateEvent();
                             return super.entryAction(cause);

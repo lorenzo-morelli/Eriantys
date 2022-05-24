@@ -29,10 +29,12 @@ public class EndTurn extends State {
     public IEvent entryAction(IEvent cause) throws Exception {
         Model model = serverController.getModel();
         for(int i = 0; i< model.getTable().getClouds().size(); i++){
-            boolean check= model.getTable().getClouds().get(i).charge(model.getTable().getBag());
-            if(!check){
-                model.setlastturn();
-                break;
+            if(model.getTable().getClouds().get(i).getStudentsAccumulator().size()==0) {
+                boolean check = model.getTable().getClouds().get(i).charge(model.getTable().getBag());
+                if (!check) {
+                    model.setlastturn();
+                    break;
+                }
             }
         }
         model.nextPlayer();

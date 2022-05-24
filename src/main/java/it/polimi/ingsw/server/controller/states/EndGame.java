@@ -47,6 +47,7 @@ public class EndGame extends State {
                 Network.setDisconnectedClient(true);
             }
             restart.fireStateEvent();
+            connectionModel.empty();
             return super.entryAction(cause);
 
         }
@@ -74,6 +75,7 @@ public class EndGame extends State {
 
         }
         getRestart().fireStateEvent();
+        connectionModel.empty();
         return super.entryAction(cause);
     }
 

@@ -104,7 +104,9 @@ public class CommandPrompt implements Subject{
             }
         });
         t.start();
+
         while(!inputLetto() && !Network.disconnectedClient()){
+
             TimeUnit.MILLISECONDS.sleep(250);
         }
         if (Network.disconnectedClient()){

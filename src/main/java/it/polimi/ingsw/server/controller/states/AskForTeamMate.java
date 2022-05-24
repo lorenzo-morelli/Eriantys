@@ -64,9 +64,7 @@ public class AskForTeamMate extends State {
         while (!responseReceived) {
             message = new ParametersFromNetwork(1);
             message.enable();
-            while (!message.parametersReceived()) {
-                TimeUnit.MILLISECONDS.sleep(250);
-            }
+            message.waitParametersReceived();
             if (json.fromJson(message.getParameter(0), ClientModel.class).getClientIdentity() == currentPlayerData.getClientIdentity()) {
                 responseReceived = true;
             }

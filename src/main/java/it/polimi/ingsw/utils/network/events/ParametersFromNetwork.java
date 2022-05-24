@@ -70,6 +70,15 @@ public class ParametersFromNetwork extends Event implements DocumentListener {
         }
     }
 
+    public synchronized boolean waitParametersReceived(int sec) throws InterruptedException {
+        long start = System.currentTimeMillis();
+        long end = start + sec * 1000L;
+        while (!parametersReceived && System.currentTimeMillis()<end) {
+            wait(sec * 1000L);
+        }
+        return System.currentTimeMillis() >= end;
+    }
+
     public synchronized void enable(){
         enabled = true;
     }

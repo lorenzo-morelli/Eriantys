@@ -71,81 +71,60 @@ public class CreateGame extends State {
                 while (true) {
                     ParametersFromNetwork message = new ParametersFromNetwork(1);
                     message.enable();
-                    while (!message.parametersReceived()) {
-                        // non ho ricevuto ancora nessun messaggio
-                        try {
-                            TimeUnit.MILLISECONDS.sleep(250);
-                        } catch (InterruptedException e) {
-                            throw new RuntimeException(e);
-                        }
+                    try {
+                        message.waitParametersReceived();
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
                     }
                     //System.out.println("check disconnessione");
                     Gson json = new Gson();
                     ClientModel receivedClientModel = json.fromJson(message.getParameter(0), ClientModel.class);
                     synchronized (this) {
 
-                        //controllo se ci siano player disconnessi
-                        boolean check = false;
+                        if(receivedClientModel.getAmIfirst()==null) {
+                            boolean check = false;
 
-                        for (Player p : getModel().getPlayers()) {
-                            if (p.isDisconnected()) {
-                                check = true;
-                                break;
+                            for (Player p : getModel().getPlayers()) {
+                                if (p.isDisconnected()) {
+                                    check = true;
+                                    break;
+                                }
                             }
-                        }
 
-                        if (receivedClientModel.getAmIfirst() == null && !check) {
-                            try {
-                                receivedClientModel.setTypeOfRequest("KICK");
-                                receivedClientModel.setKicked(true);
-                                System.out.println("invio segnale di disconnessione");
-                                Network.send(json.toJson(receivedClientModel));
-                            } catch (InterruptedException e) {
-                                throw new RuntimeException(e);
-                            }
-                        } else if(receivedClientModel.getAmIfirst() == null){
-                            boolean check2=true;
+                            if (check) {
+                                boolean check2 = true;
 
-                            for(Player p: getModel().getPlayers()){
-                                    if(!p.isDisconnected() && p.getNickname().equals(receivedClientModel.getNickname())){
-                                        receivedClientModel.setTypeOfRequest("KICKBYNICKNAME");
-                                        receivedClientModel.setKicked(true);
-                                        System.out.println("invio segnale di disconnessione");
-                                        try {
-                                            Network.send(json.toJson(receivedClientModel));
-                                        } catch (InterruptedException e) {
-                                            throw new RuntimeException(e);
-                                        }
-                                        check2=false;
+                                for (Player p : getModel().getPlayers()) {
+                                    if (!p.isDisconnected() && p.getNickname().equals(receivedClientModel.getNickname())) {
+                                        check2 = false;
                                         break;
                                     }
                                 }
 
-                            if(check2) {
-                                for (Player p : getModel().getPlayers()) {
-                                    if (p.isDisconnected()) {
-                                        ClientModel target = connectionModel.findPlayer(p.getNickname());
-                                        p.setNickname(receivedClientModel.getNickname());
-                                        p.setDisconnected(false);
-                                        receivedClientModel.setAmIfirst(false);
-                                        receivedClientModel.setKicked(false);
-                                        receivedClientModel.setTypeOfRequest("CONNECTTOEXISTINGGAME");
-                                        connectionModel.change(target, receivedClientModel);
-                                        try {
-                                            Network.send(json.toJson(receivedClientModel));
-                                        } catch (InterruptedException e) {
-                                            throw new RuntimeException(e);
+                                if (check2) {
+                                    for (Player p : getModel().getPlayers()) {
+                                        if (p.isDisconnected()) {
+                                            ClientModel target = connectionModel.findPlayer(p.getNickname());
+                                            p.setNickname(receivedClientModel.getNickname());
+                                            p.setDisconnected(false);
+                                            receivedClientModel.setAmIfirst(false);
+                                            receivedClientModel.setKicked(false);
+                                            receivedClientModel.setGameStarted(true);
+                                            receivedClientModel.setTypeOfRequest("CONNECTTOEXISTINGGAME");
+                                            connectionModel.change(target, receivedClientModel);
+                                            try {
+                                                Network.send(json.toJson(receivedClientModel));
+                                            } catch (InterruptedException e) {
+                                                throw new RuntimeException(e);
+                                            }
+                                            model.setDisconnection(false);
+                                            model.getTable().getClouds().add(new Cloud(model.getNumberOfPlayers()));
+                                            model.getTable().getClouds().get(model.getTable().getClouds().size()-1).charge(model.getTable().getBag());
                                         }
-                                        model.setDisconnection(false);
-                                        model.getTable().getClouds().add(new Cloud(model.getNumberOfPlayers()));
-                                        model.getTable().getClouds().get(model.getTable().getClouds().size() - 1).charge(model.getTable().getBag());
-
-                                        return;
                                     }
                                 }
                             }
                         }
-
                     }
                 }
             }

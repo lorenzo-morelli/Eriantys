@@ -35,17 +35,13 @@ public class StudentThread extends Thread {
                 return;
             }
 
-            long start = System.currentTimeMillis();
-            long end = start + 5 * 1000;
             ParametersFromNetwork pingmessage = new ParametersFromNetwork(1);
             pingmessage.enable();
 
-            while (!pingmessage.parametersReceived() && System.currentTimeMillis() < end) {
-                try {
-                    TimeUnit.MILLISECONDS.sleep(250);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
+            try {
+                pingmessage.waitParametersReceived(5);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
             synchronized (phase) {
                 if (!pingmessage.parametersReceived()) {
