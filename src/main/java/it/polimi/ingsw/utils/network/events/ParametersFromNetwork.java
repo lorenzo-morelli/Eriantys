@@ -47,6 +47,7 @@ public class ParametersFromNetwork extends Event implements DocumentListener {
             parsedStrings = new ArrayList<>(Arrays.asList(ta.getText().split(" ")));
             if (parsedStrings.size() == numberOfStrings){
                 this.parametersReceived = true;
+                notifyAll();
                 enabled = false;
             }
 
@@ -61,6 +62,12 @@ public class ParametersFromNetwork extends Event implements DocumentListener {
 
     public synchronized boolean parametersReceived() {
         return parametersReceived;
+    }
+
+    public synchronized void waitParametersReceived() throws InterruptedException {
+        while (!parametersReceived) {
+            wait();
+        }
     }
 
     public synchronized void enable(){

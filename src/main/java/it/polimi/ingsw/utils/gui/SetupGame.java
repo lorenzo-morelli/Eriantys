@@ -84,17 +84,15 @@ public class SetupGame implements Initializable {
 
             response = new ParametersFromNetwork(1);
             response.enable();
-            while (!response.parametersReceived()) {
-                System.out.println("attesa di mandare un ack");
-            }
+            response.waitParametersReceived();
+            //while (!response.parametersReceived()) {
+            //    System.out.println("attesa di mandare un ack");
+            //}
 
 
             response = new ParametersFromNetwork(1);
             response.enable();
-            while (!response.parametersReceived()) {
-                System.out.println("waiting...");
-                TimeUnit.SECONDS.sleep(2);
-            }
+            response.waitParametersReceived();
             this.gui.setClientModel(gson.fromJson(response.getParameter(0), ClientModel.class));
             //System.out.println(this.gui.getClientModel().isGameStarted());
 

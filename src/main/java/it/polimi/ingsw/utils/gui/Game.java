@@ -49,11 +49,14 @@ public class Game implements Initializable {
 
         response = new ParametersFromNetwork(1);
         response.enable();
-        while (!response.parametersReceived()) {
-            System.out.println("waiting...");
+        try {
+            response.waitParametersReceived();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
         this.gui.setClientModel(gson.fromJson(response.getParameter(0), ClientModel.class));
         this.gui.getClientModel().getServermodel().getPlayers().forEach((player) -> System.out.println(player.getNickname()));
+        System.out.println("giocatori connessi: " + this.gui.getClientModel().getServermodel().getPlayers().size());
         System.out.println(response.getParameter(0));
         List<Label> playerNames = Arrays.asList(playerName1, playerName2, playerName3, playerName4);
 
@@ -70,8 +73,9 @@ public class Game implements Initializable {
         
 
         //players name set
-        for (int i = 0; i < clientModel.getNumofplayer(); i++) {
-            playerNames.get(i).setText(clientModel.getNicknames().get(i));
+        for (int i = 0; i < this.gui.getClientModel().getServermodel().getPlayers().size(); i++) {
+            System.out.println("giocatore " + i + ": " + this.gui.getClientModel().getServermodel().getPlayers().get(i).getNickname());
+            playerNames.get(i).setText(this.gui.getClientModel().getServermodel().getPlayers().get(i).getNickname());
         }
 
         //if planning -> phaseLabel.set planning, else -> set action

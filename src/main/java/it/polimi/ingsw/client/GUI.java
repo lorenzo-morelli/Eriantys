@@ -14,8 +14,8 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class GUI extends Application {
-    Stage stage;
-    Scene scene;
+    public Stage stage;
+    public Scene scene;
     private static ClientModel clientModel = new ClientModel();
     private ChangeListener<? super Number> widthChangeListener;
     private ChangeListener<? super Number> heightChangeListener;
@@ -27,22 +27,6 @@ public class GUI extends Application {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainMenu.fxml"));
             this.scene = new Scene(loader.load());
             this.stage.setScene(scene);
-//            widthChangeListener = (observable, oldValue, newValue) -> {
-//                stage.heightProperty().removeListener(heightChangeListener);
-//                stage.setHeight(newValue.doubleValue() / 2.0);
-//                stage.heightProperty().addListener(heightChangeListener);
-//            };
-//            heightChangeListener = (observable, oldValue, newValue) -> {
-//                stage.widthProperty().removeListener(widthChangeListener);
-//                stage.setWidth(newValue.doubleValue() * 2.0);
-//                stage.widthProperty().addListener(widthChangeListener);
-//            };
-//
-//            stage.widthProperty().addListener(widthChangeListener);
-//            stage.heightProperty().addListener(heightChangeListener);
-//            this.stage.setMaximized(true);
-//            this.stage.minWidthProperty().bind(scene.heightProperty().multiply(2));
-//            this.stage.minHeightProperty().bind(scene.widthProperty().divide(2));
             this.stage.show();
 
         } catch (Exception e) {
@@ -57,6 +41,7 @@ public class GUI extends Application {
         this.stage.setScene(scene);
         if (newScene.equals("Game")) {
             this.stage.setMaximized(true);
+            System.out.println("massimizzo");
         }
         this.stage.show();
     }
