@@ -14,7 +14,6 @@ import it.polimi.ingsw.utils.stateMachine.Event;
 import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
 
-import java.io.IOException;
 
 public class CreateGame extends State {
     private final Event gameCreated, fourPlayersGameCreated;
@@ -87,7 +86,7 @@ public class CreateGame extends State {
                             }
                         }
 
-                        if (receivedClientModel.getAmIfirst() == null && !check && receivedClientModel.isFistTry()) {
+                        if (receivedClientModel.getAmIfirst() == null && !check) {
                             try {
                                 receivedClientModel.setTypeOfRequest("KICK");
                                 receivedClientModel.setKicked(true);
@@ -96,16 +95,22 @@ public class CreateGame extends State {
                             } catch (InterruptedException e) {
                                 throw new RuntimeException(e);
                             }
-                        } else{
+                        } else if(receivedClientModel.getAmIfirst() == null){
                             for (Player p : getModel().getPlayers()) {
                                 if (p.isDisconnected()) {
                                     ClientModel target=connectionModel.findPlayer(p.getNickname());
                                     target.setNickname(receivedClientModel.getNickname());
                                     p.setNickname(receivedClientModel.getNickname());
                                     p.setDisconnected(false);
-                                    receivedClientModel.setFirstTry(false);
+                                    receivedClientModel.setAmIfirst(false);
+                                    receivedClientModel.setTypeOfRequest("CONNECTTOEXISTINGGAME");
+                                    try {
+                                        Network.send(json.toJson(receivedClientModel));
+                                    } catch (InterruptedException e) {
+                                        throw new RuntimeException(e);
+                                    }
                                     model.setDisconnection(false);
-                                    break;
+                                    return;
                                 }
                             }
                         }
