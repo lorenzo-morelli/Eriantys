@@ -33,6 +33,7 @@ public class ClientModel {
     // isresponse == null, non è ne una richiesta ne una risposta, probabilmente un messaggio di quelli iniziali
     private Boolean isResponse = false;
     private boolean isPingMessage; //differenzia request di ping da request di gioco
+    private boolean isTokick=true;
 
     private Boolean gameStarted = false;
     public boolean kicked = false;
@@ -276,5 +277,13 @@ public class ClientModel {
 
     public void setPingMessage(boolean pingMessage) {
         isPingMessage = pingMessage;
+    }
+
+    public void setFirstTry(boolean tokick) {
+        isTokick = tokick;
+    }
+
+    public boolean isFistTry() {
+        return isTokick;
     }
 }

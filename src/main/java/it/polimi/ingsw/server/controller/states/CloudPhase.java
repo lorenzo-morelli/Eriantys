@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import it.polimi.ingsw.client.controller.events.ClientDisconnection;
 import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.server.controller.ConnectionModel;
+import it.polimi.ingsw.server.controller.PingThread.CloudThread;
 import it.polimi.ingsw.server.controller.ServerController;
 import it.polimi.ingsw.server.model.*;
 import it.polimi.ingsw.utils.network.Network;
@@ -32,6 +33,7 @@ public class CloudPhase extends State {
     public Event GoToEndTurn() {
         return goToEndTurn;
     }
+
     public Event gameEnd() {
         return gameEnd;
     }
@@ -63,9 +65,16 @@ public class CloudPhase extends State {
     @Override
     public IEvent entryAction(IEvent cause) throws Exception {
         Model model = serverController.getModel();
+
         // retrive the current player
+
         Player currentPlayer = model.getcurrentPlayer();
-        if(currentPlayer.isDisconnected()){
+        disconnected=false; //flag che indica se si disconnette durante questo turno
+        fromPing=false; //risposta non proviene da ping
+
+        //salto fase se player se si è disconnesso precedentemente
+
+        if(currentPlayer.isDisconnected()){  //se giocatore è disconnesso lo salto
             if (model.getcurrentPlayer().equals(model.getPlayers().get(model.getPlayers().size() - 1))) {
                 GoToEndTurn().fireStateEvent();
             } else {
@@ -74,16 +83,21 @@ public class CloudPhase extends State {
             }
             return super.entryAction(cause);
         }
-        // retrive data of the current player
-        ClientModel currentPlayerData = connectionModel.findPlayer(currentPlayer.getNickname());
-        disconnected=false;
 
+        // retrive data of the current player
+
+        ClientModel currentPlayerData = connectionModel.findPlayer(currentPlayer.getNickname());
         currentPlayerData.setServermodel(model);
         currentPlayerData.setTypeOfRequest("CHOOSECLOUDS");
         currentPlayerData.setPingMessage(false);
         currentPlayerData.setResponse(false); //non è una risposta, è una richiesta del server al client
 
+        //invio e controllo che invio network sia fatto correttamente
+
         boolean chekDisco= Network.send(json.toJson(currentPlayerData));
+
+        // se invio non va a buon fine salta il giocatore
+
         if(!chekDisco){
             if (model.getcurrentPlayer().equals(model.getPlayers().get(model.getPlayers().size() - 1))) {
                 GoToEndTurn().fireStateEvent();
@@ -93,6 +107,8 @@ public class CloudPhase extends State {
             }
             return super.entryAction(cause);
         }
+
+        //controllo ricezione risposta invio ping e settaggio del giocatore in disconnessione in caso di ricezione ping fallita
 
         Thread ping = new CloudThread(this,currentPlayerData);
         ping.start();
@@ -130,12 +146,18 @@ public class CloudPhase extends State {
             }
         }
 
+        //codice effettivo della fase se non si è disconnesso
+
         if(!currentPlayer.isDisconnected()) {
 
             currentPlayerData = json.fromJson(message.getParameter(0), ClientModel.class);
             Cloud cloud = currentPlayerData.getCloudChoosed();
             currentPlayer.getSchoolBoard().load_entrance(cloud, model.getTable().getClouds());
+
         }
+
+        //codice per disconnessione durante questo turno
+
         else {
             int check=0;
             if(model.getNumberOfPlayers()==4){
@@ -180,30 +202,23 @@ public class CloudPhase extends State {
                         Network.send(json.toJson(Data));
                     }
 
-                    TimeUnit.SECONDS.sleep(40);
+                    model.setDisconnection(true);
+                    long start = System.currentTimeMillis();
+                    long end = start + 40 * 1000;
 
-                    check = 0;
-                    if (model.getNumberOfPlayers() == 4) {
-                        for (Team team : model.getTeams()) {
-                            if (!team.getPlayer1().isDisconnected() || !team.getPlayer2().isDisconnected()) {
-                                check++;
-                            }
-                        }
-                    } else {
-                        for (Player p : model.getPlayers()) {
-                            if (!p.isDisconnected()) {
-                                check++;
-                            }
-                        }
+                    while (model.isDisconnection() && System.currentTimeMillis()<end){
+
                     }
-                    if (check <= 1) {
-                        model.setDisconnection(true);
+                    if (model.isDisconnection()) {
                         gameEnd().fireStateEvent();
                         return super.entryAction(cause);
                     }
                 }
             }
         }
+
+        //gestione scoppio eventi per fase successiva
+
         if (model.getcurrentPlayer().equals(model.getPlayers().get(model.getPlayers().size() - 1))) {
             GoToEndTurn().fireStateEvent();
         } else {
@@ -228,54 +243,5 @@ public class CloudPhase extends State {
 
     public void setFromPing(boolean fromPing) {
         this.fromPing = fromPing;
-    }
-}
-
-class CloudThread extends Thread {
-    private final CloudPhase phase;
-    private final ClientModel CurrentPlayerData;
-    private final Gson json;
-
-    protected CloudThread(CloudPhase phase,ClientModel CurrentPlayerData) {
-        this.phase = phase;
-        this.CurrentPlayerData=CurrentPlayerData;
-        json=new Gson();
-    }
-
-    public void run() {
-        while (!phase.getMessage().parametersReceived() || json.fromJson(phase.getMessage().getParameter(0), ClientModel.class).isPingMessage()) {
-            try {
-                sleep(15000);
-            } catch (InterruptedException e) {
-                return;
-            }
-            System.out.println("ping sended");
-            CurrentPlayerData.setResponse(false); // è una richiesta non una risposta// lato client avrà una nella CliView un metodo per gestire questa richiesta
-            CurrentPlayerData.setPingMessage(true);
-            try {
-                Network.send(json.toJson(CurrentPlayerData));
-            } catch (InterruptedException e) {
-                return;
-            }
-
-            long start = System.currentTimeMillis();
-            long end = start + 10 * 1000;
-            ParametersFromNetwork pingmessage = new ParametersFromNetwork(1);
-            pingmessage.enable();
-
-            while (!pingmessage.parametersReceived() && System.currentTimeMillis() < end) {
-            }
-            synchronized (phase) {
-                if (!pingmessage.parametersReceived()) {
-                    phase.setDisconnected(true);
-                    return;
-                }
-                if (!json.fromJson(pingmessage.getParameter(0), ClientModel.class).isPingMessage()) {
-                    phase.setMessage(pingmessage);
-                    phase.setFromPing(true);
-                    return;
-                }
-            }
-        }
     }
 }

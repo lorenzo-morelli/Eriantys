@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import it.polimi.ingsw.client.controller.events.ClientDisconnection;
 import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.server.controller.ConnectionModel;
+import it.polimi.ingsw.server.controller.PingThread.StudentThread;
 import it.polimi.ingsw.server.controller.ServerController;
 import it.polimi.ingsw.server.model.*;
 import it.polimi.ingsw.server.model.characters.*;
@@ -16,8 +17,6 @@ import it.polimi.ingsw.utils.stateMachine.Event;
 import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
 
-import java.awt.*;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -63,15 +62,25 @@ public class StudentPhase extends State {
     public IEvent entryAction(IEvent cause) throws Exception {
         int moves;
         Model model = serverController.getModel();
+
         // retrive the current player
+
         Player currentPlayer = model.getcurrentPlayer();
+        disconnected=false; //flag che indica se si disconnette durante questo turno
+        fromPing=false; //risposta non proviene da ping
+
+        //salto fase se player se si è disconnesso precedentemente
+
         if(currentPlayer.isDisconnected()){
             studentPhaseEnded.fireStateEvent();
             return super.entryAction(cause);
         }
+
         // retrive data of the current player
+
         ClientModel currentPlayerData = connectionModel.findPlayer(currentPlayer.getNickname());
-        disconnected=false;
+
+        //gestione numero mosse che il player puo fare
 
         if(model.getNumberOfPlayers() == 3){
             moves = 4;
@@ -79,17 +88,29 @@ public class StudentPhase extends State {
         else{
             moves = 3;
         }
+
+        //codice looppa per ogni mossa che player puo fare
+
         for(int i=0; i< moves; i++) {
+
             currentPlayerData.setServermodel(model);
             currentPlayerData.setTypeOfRequest("CHOOSEWHERETOMOVESTUDENTS");
             currentPlayerData.setPingMessage(false);
             currentPlayerData.setResponse(false); //non è una risposta, è una richiesta del server al client
 
-            boolean checkDisco= Network.send(json.toJson(currentPlayerData));
-            if(!checkDisco){
+            //invio e controllo che invio network sia fatto correttamente
+
+            boolean checkError= Network.send(json.toJson(currentPlayerData));
+
+            // se invio non va a buon fine salta il giocatore
+
+            if(!checkError){
                 studentPhaseEnded.fireStateEvent();
                 return super.entryAction(cause);
             }
+
+            //controllo ricezione risposta invio ping e settaggio del giocatore in disconnessione in caso di ricezione ping fallita
+
             Thread ping = new StudentThread(this, currentPlayerData);
             ping.start();
 
@@ -135,6 +156,9 @@ public class StudentPhase extends State {
                     }
                 }
             }
+
+            //codice effettivo della fase se non si è disconnesso
+
             if (!currentPlayer.isDisconnected()) {
                 // dati ricevuti da network
                 currentPlayerData = json.fromJson(message.getParameter(0), ClientModel.class);
@@ -206,7 +230,11 @@ public class StudentPhase extends State {
                         }
                     }
                 }
-            } else {
+            }
+
+            //codice per disconnessione durante questo turno
+
+            else {
                 int check = 0;
                 if (model.getNumberOfPlayers() == 4) {
                     for (Team team : model.getTeams()) {
@@ -222,7 +250,6 @@ public class StudentPhase extends State {
                     }
                 }
                 if (check <= 1) {
-                    System.out.println("attendo 60 secondi in attesa di una riconnessione");
                     check = 0;
                     if (model.getNumberOfPlayers() == 4) {
                         for (Team team : model.getTeams()) {
@@ -249,24 +276,14 @@ public class StudentPhase extends State {
                             Network.send(json.toJson(Data));
                         }
 
-                        TimeUnit.SECONDS.sleep(40);
+                        model.setDisconnection(true);
+                        long start = System.currentTimeMillis();
+                        long end = start + 40 * 1000;
 
-                        check = 0;
-                        if (model.getNumberOfPlayers() == 4) {
-                            for (Team team : model.getTeams()) {
-                                if (!team.getPlayer1().isDisconnected() || !team.getPlayer2().isDisconnected()) {
-                                    check++;
-                                }
-                            }
-                        } else {
-                            for (Player p : model.getPlayers()) {
-                                if (!p.isDisconnected()) {
-                                    check++;
-                                }
-                            }
+                        while (model.isDisconnection() && System.currentTimeMillis()<end){
+
                         }
-                        if (check <= 1) {
-                            model.setDisconnection(true);
+                        if (model.isDisconnection()) {
                             gameEnd().fireStateEvent();
                             return super.entryAction(cause);
                         }
@@ -275,6 +292,9 @@ public class StudentPhase extends State {
                 break;
             }
         }
+
+        //scoppia evento fine fase
+
         studentPhaseEnded.fireStateEvent();
         return super.entryAction(cause);
     }
@@ -293,54 +313,5 @@ public class StudentPhase extends State {
 
     public void setFromPing(boolean fromPing) {
         this.fromPing = fromPing;
-    }
-}
-
-class StudentThread extends Thread {
-    private final StudentPhase phase;
-    private final ClientModel CurrentPlayerData;
-    private final Gson json;
-
-    protected StudentThread(StudentPhase phase,ClientModel CurrentPlayerData) {
-        this.phase = phase;
-        this.CurrentPlayerData=CurrentPlayerData;
-        json=new Gson();
-    }
-
-    public void run() {
-        while (!phase.getMessage().parametersReceived() || json.fromJson(phase.getMessage().getParameter(0), ClientModel.class).isPingMessage()) {
-            try {
-                sleep(15000);
-            } catch (InterruptedException e) {
-                return;
-            }
-            System.out.println("ping sended");
-            CurrentPlayerData.setResponse(false); // è una richiesta non una risposta// lato client avrà una nella CliView un metodo per gestire questa richiesta
-            CurrentPlayerData.setPingMessage(true);
-            try {
-                Network.send(json.toJson(CurrentPlayerData));
-            } catch (InterruptedException e) {
-                return;
-            }
-
-            long start = System.currentTimeMillis();
-            long end = start + 10 * 1000;
-            ParametersFromNetwork pingmessage = new ParametersFromNetwork(1);
-            pingmessage.enable();
-
-            while (!pingmessage.parametersReceived() && System.currentTimeMillis() < end) {
-            }
-            synchronized (phase) {
-                if (!pingmessage.parametersReceived()) {
-                    phase.setDisconnected(true);
-                    return;
-                }
-                if (!json.fromJson(pingmessage.getParameter(0), ClientModel.class).isPingMessage()) {
-                    phase.setMessage(pingmessage);
-                    phase.setFromPing(true);
-                    return;
-                }
-            }
-        }
     }
 }

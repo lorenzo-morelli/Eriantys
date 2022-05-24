@@ -75,18 +75,42 @@ public class CreateGame extends State {
                     //System.out.println("check disconnessione");
                     Gson json = new Gson();
                     ClientModel receivedClientModel = json.fromJson(message.getParameter(0), ClientModel.class);
+                    synchronized (this) {
 
-                    if (receivedClientModel.getAmIfirst() == null) {
-                        try {
-                            receivedClientModel.setTypeOfRequest("KICK");
-                            receivedClientModel.setKicked(true);
-                            System.out.println("invio segnale di disconnessione");
-                            Network.send(json.toJson(receivedClientModel));
-                        } catch (InterruptedException e) {
-                            throw new RuntimeException(e);
+                        //controllo se ci siano player disconnessi
+                        boolean check = false;
+
+                        for (Player p : getModel().getPlayers()) {
+                            if (p.isDisconnected()) {
+                                check = true;
+                                break;
+                            }
                         }
-                    }
 
+                        if (receivedClientModel.getAmIfirst() == null && !check && receivedClientModel.isFistTry()) {
+                            try {
+                                receivedClientModel.setTypeOfRequest("KICK");
+                                receivedClientModel.setKicked(true);
+                                System.out.println("invio segnale di disconnessione");
+                                Network.send(json.toJson(receivedClientModel));
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
+                        } else{
+                            for (Player p : getModel().getPlayers()) {
+                                if (p.isDisconnected()) {
+                                    ClientModel target=connectionModel.findPlayer(p.getNickname());
+                                    target.setNickname(receivedClientModel.getNickname());
+                                    p.setNickname(receivedClientModel.getNickname());
+                                    p.setDisconnected(false);
+                                    receivedClientModel.setFirstTry(false);
+                                    model.setDisconnection(false);
+                                    break;
+                                }
+                            }
+                        }
+
+                    }
                 }
             }
         };

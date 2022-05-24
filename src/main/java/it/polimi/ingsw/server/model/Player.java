@@ -4,7 +4,7 @@ import it.polimi.ingsw.server.model.enums.GameMode;
 import java.util.Objects;
 
 public class Player implements Comparable<Player>{
-    private final String nickname;
+    private String nickname;
     private final Deck availableCards;
     private AssistantCard choosedCard;
     private final SchoolBoard schoolBoard;
@@ -133,5 +133,9 @@ public class Player implements Comparable<Player>{
 
     public boolean isDisconnected() {
         return isDisconnected;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 }

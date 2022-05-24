@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import it.polimi.ingsw.client.controller.events.ClientDisconnection;
 import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.server.controller.ConnectionModel;
+import it.polimi.ingsw.server.controller.PingThread.AssistantCardThread;
 import it.polimi.ingsw.server.controller.ServerController;
 import it.polimi.ingsw.server.model.AssistantCard;
 import it.polimi.ingsw.server.model.Model;
@@ -59,32 +60,58 @@ public class AssistantCardPhase extends State {
         Model model = serverController.getModel();
         ArrayList<AssistantCard> alreadyChooseds=new ArrayList<>();
         model.nextTurn();
+
         // For each player
+
         for(int i = 0; i< model.getNumberOfPlayers(); i++){
+
             // retrive the current player
+
             Player currentPlayer = model.getcurrentPlayer();
+            disconnected=false; //flag che indica se si disconnette durante questo turno
+            fromPing=false; //risposta non proviene da ping
+
+            //salto player se si è disconnesso precedentemente
+
             if(!currentPlayer.isDisconnected()) {
+
+                //se non è disconnesso allora:
+
                 ClientModel currentPlayerData;
                 boolean lowpriority = false;
-                disconnected = false;
                 fromPing = false;
+
                 // retrive data of the current player
+
                 currentPlayerData = connectionModel.findPlayer(currentPlayer.getNickname());
+
+                //gestione delle carte che puo scegliere
+
                 List<AssistantCard> canbBeChooesed = new ArrayList<>(currentPlayer.getAvailableCards().getCardsList());
                 if (alreadyChooseds.containsAll(canbBeChooesed)) {
                     lowpriority = true;
                 } else {
                     canbBeChooesed.removeAll(alreadyChooseds);
                 }
+
                 // put the deck in the data and send it over the network
-                //System.out.println(model.toString("fer","ciao"));
+
                 currentPlayerData.setDeck(canbBeChooesed);
                 currentPlayerData.setResponse(false); // è una richiesta non una risposta
                 currentPlayerData.setTypeOfRequest("CHOOSEASSISTANTCARD");  // lato client avrà una nella CliView un metodo per gestire questa richiesta
                 currentPlayerData.setPingMessage(false);
                 currentPlayerData.setServermodel(model);
+
+                //invio e controllo che invio network sia fatto correttamente
+
                 boolean checkDisc = Network.send(json.toJson(currentPlayerData));
+
+                // se invio va a buon fine continua sennò salta il player
+
                 if (checkDisc) {
+
+                    //controllo ricezione risposta invio ping e settaggio del giocatore in disconnessione in caso di ricezione ping fallita
+
                     Thread ping = new AssistantCardThread(this, currentPlayerData);
                     ping.start();
 
@@ -117,7 +144,11 @@ public class AssistantCardPhase extends State {
                             }
                         }
                     }
+
                 }
+
+                //codice effettivo della fase se non si è disconnesso
+
                 if (!currentPlayer.isDisconnected()) {
 
                     AssistantCard choosen = null;
@@ -142,7 +173,12 @@ public class AssistantCardPhase extends State {
                     if (checkEndCondition) {
                         model.setlastturn();
                     }
-                } else {
+
+                }
+
+                //codice per disconnessione di questo player durante questo turno
+
+                else {
                     int check = 0;
                     if (model.getNumberOfPlayers() == 4) {
                         for (Team team : model.getTeams()) {
@@ -169,30 +205,23 @@ public class AssistantCardPhase extends State {
                             Network.send(json.toJson(Data));
                         }
 
-                        TimeUnit.SECONDS.sleep(40);
+                        model.setDisconnection(true);
+                        long start = System.currentTimeMillis();
+                        long end = start + 40 * 1000;
 
-                        check = 0;
-                        if (model.getNumberOfPlayers() == 4) {
-                            for (Team team : model.getTeams()) {
-                                if (!team.getPlayer1().isDisconnected() || !team.getPlayer2().isDisconnected()) {
-                                    check++;
-                                }
-                            }
-                        } else {
-                            for (Player p : model.getPlayers()) {
-                                if (!p.isDisconnected()) {
-                                    check++;
-                                }
-                            }
+                        while (model.isDisconnection() && System.currentTimeMillis()<end){
+
                         }
-                        if (check <= 1) {
-                            model.setDisconnection(true);
+                        if (model.isDisconnection()) {
                             gameEnd().fireStateEvent();
                             return super.entryAction(cause);
                         }
                     }
                 }
             }
+
+            //prossimo player
+
             model.nextPlayer();
         }
         cardsChoosen.fireStateEvent();
@@ -213,54 +242,5 @@ public class AssistantCardPhase extends State {
 
     public void setFromPing(boolean fromPing) {
         this.fromPing = fromPing;
-    }
-}
-
-class AssistantCardThread extends Thread {
-    private final AssistantCardPhase phase;
-    private final ClientModel CurrentPlayerData;
-    private final Gson json;
-
-    protected AssistantCardThread(AssistantCardPhase phase,ClientModel CurrentPlayerData) {
-        this.phase = phase;
-        this.CurrentPlayerData=CurrentPlayerData;
-        json=new Gson();
-    }
-
-    public void run() {
-        while (!phase.getMessage().parametersReceived() || json.fromJson(phase.getMessage().getParameter(0), ClientModel.class).isPingMessage()) {
-            try {
-                sleep(15000);
-            } catch (InterruptedException e) {
-                return;
-            }
-            System.out.println("ping sended");
-            CurrentPlayerData.setResponse(false); // è una richiesta non una risposta// lato client avrà una nella CliView un metodo per gestire questa richiesta
-            CurrentPlayerData.setPingMessage(true);
-            try {
-                Network.send(json.toJson(CurrentPlayerData));
-            } catch (InterruptedException e) {
-                return;
-            }
-
-            long start = System.currentTimeMillis();
-            long end = start + 10 * 1000;
-            ParametersFromNetwork pingmessage = new ParametersFromNetwork(1);
-            pingmessage.enable();
-
-            while (!pingmessage.parametersReceived() && System.currentTimeMillis() < end) {
-            }
-            synchronized (phase) {
-                if (!pingmessage.parametersReceived()) {
-                    phase.setDisconnected(true);
-                    return;
-                }
-                if (!json.fromJson(pingmessage.getParameter(0), ClientModel.class).isPingMessage()) {
-                        phase.setMessage(pingmessage);
-                        phase.setFromPing(true);
-                        return;
-                }
-            }
-        }
     }
 }
