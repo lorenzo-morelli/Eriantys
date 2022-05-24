@@ -3,6 +3,7 @@ package it.polimi.ingsw.utils.gui;
 import com.google.gson.Gson;
 import it.polimi.ingsw.client.GUI;
 import it.polimi.ingsw.client.model.ClientModel;
+import it.polimi.ingsw.utils.network.Network;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -86,9 +87,14 @@ public class Game implements Initializable {
         this.gui.openNewWindow("MoveToSchool");
     }
 
-    public void choosed1(MouseEvent mouseEvent) {
+    public void choosed1(MouseEvent mouseEvent) throws InterruptedException {
+
+
         assistantCard1.setVisible(false);
         clientModel.setCardChoosedValue(1); //todo: invio?
+        Network.send(gson.toJson(clientModel));
+
+
 
     }
 }

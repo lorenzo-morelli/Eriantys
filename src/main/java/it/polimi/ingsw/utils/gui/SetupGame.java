@@ -77,29 +77,24 @@ public class SetupGame implements Initializable {
             this.otherPlayersLabel.setText("ERROR: Please select a game mode!");
         } else {
             this.otherPlayersLabel.setText("Waiting for other players to join the game...");
+            Network.send(gson.toJson(this.gui.getClientModel()));
 
-            boolean responseReceived = false;
-            boolean isStarted = false;
-            while (!isStarted) {
-                while (!responseReceived) {
-                    Network.send(gson.toJson(this.gui.getClientModel()));
-                    response = new ParametersFromNetwork(1);
-                    response.enable();
-                    while (!response.parametersReceived()) {
-                        System.out.println("a");
-                    }
-                    if (gson.fromJson(response.getParameter(0), ClientModel.class).getClientIdentity() == this.gui.getClientModel().getClientIdentity()) {
-                        responseReceived = true;
-                    }
-                }
-                System.out.println("ancora nada..." + isStarted);
-                responseReceived = false;
-                isStarted = gson.fromJson(response.getParameter(0), ClientModel.class).isGameStarted();
+            response = new ParametersFromNetwork(1);
+            response.enable();
+            while (!response.parametersReceived()) {
+                System.out.println("attesa di mandare un ack");
             }
 
-            System.out.println(gson.fromJson(response.getParameter(0), ClientModel.class).isGameStarted());
-            //this.gui.setClientModel(gson.fromJson(response.getParameter(0), ClientModel.class));
-            if (gson.fromJson(response.getParameter(0), ClientModel.class).isGameStarted().equals(true)) {
+
+            response = new ParametersFromNetwork(1);
+            response.enable();
+            while (!response.parametersReceived()) {
+                System.out.println("attesa inizio");
+            }
+            this.gui.setClientModel(gson.fromJson(response.getParameter(0), ClientModel.class));
+            System.out.println(this.gui.getClientModel().isGameStarted());
+
+            if (!this.gui.getClientModel().isGameStarted()) { // todo: bah...
                 System.out.println("aoooo!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                 this.gui.changeScene("Game", mouseEvent);
             }
