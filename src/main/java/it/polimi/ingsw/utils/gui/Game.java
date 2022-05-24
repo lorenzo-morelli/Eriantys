@@ -85,7 +85,7 @@ public class Game implements Initializable {
     }
 
     public void quit() throws IOException {
-        System.exit(0); //todo: this.gui.openNewWindow("Quit");
+        this.gui.openNewWindow("Quit");
     }
 
     public void setOnSchool() throws IOException {

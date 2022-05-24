@@ -98,7 +98,6 @@ public class SetupGame implements Initializable {
 
             if (!this.gui.getClientModel().isGameStarted()) { // todo: bah...
                 this.gui.changeScene("Game", mouseEvent);
-
             }
         }
     }
