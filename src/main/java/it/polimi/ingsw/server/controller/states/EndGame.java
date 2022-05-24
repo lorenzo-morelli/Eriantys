@@ -11,9 +11,6 @@ import it.polimi.ingsw.utils.stateMachine.Event;
 import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
 
-import java.rmi.MarshalledObject;
-import java.util.concurrent.TimeUnit;
-
 public class EndGame extends State {
     private final Event restart;
     private final ConnectionModel connectionModel;

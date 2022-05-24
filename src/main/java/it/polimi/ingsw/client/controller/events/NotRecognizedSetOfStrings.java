@@ -13,8 +13,8 @@ import java.util.ArrayList;
  * @author Fernando
  */
 public class NotRecognizedSetOfStrings extends Event implements Observer {
-    public ArrayList<String> toListen = null;
-    private CommandPrompt commandPrompt;
+    public ArrayList<String> toListen;
+    private final CommandPrompt commandPrompt;
     private boolean enabled = false;
 
     public NotRecognizedSetOfStrings(ArrayList<String> words) throws IOException {
@@ -32,7 +32,7 @@ public class NotRecognizedSetOfStrings extends Event implements Observer {
         this.enabled = false;
     }
 
-    private boolean isInList(String message) throws IOException {
+    private boolean isInList(String message) {
         for (String x : toListen){
             if (message.equals(x)){
                 return true;
@@ -43,7 +43,7 @@ public class NotRecognizedSetOfStrings extends Event implements Observer {
 
     @Override
     public void update(Object message) throws Exception {
-        if(toListen != null && enabled == true){
+        if(toListen != null && enabled){
             if(!isInList((String)message)){
                 fireStateEvent();
             }

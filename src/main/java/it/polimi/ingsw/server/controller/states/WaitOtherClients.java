@@ -12,7 +12,7 @@ import it.polimi.ingsw.utils.stateMachine.Event;
 import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
 
-import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 public class WaitOtherClients extends State {
     private final ConnectionModel connectionModel;
@@ -115,6 +115,7 @@ public class WaitOtherClients extends State {
                     nickname.enable();
                     while (!nickname.parametersReceived()) {
                         // non ho ricevuto ancora un messaggio
+                        TimeUnit.MILLISECONDS.sleep(250);
                     }
                     if (json.fromJson(nickname.getParameter(0), ClientModel.class).getClientIdentity() == clientModel.getClientIdentity()) {
                         messageReceived = true;

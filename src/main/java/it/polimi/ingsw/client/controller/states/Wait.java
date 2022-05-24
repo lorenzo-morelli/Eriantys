@@ -12,16 +12,16 @@ import it.polimi.ingsw.utils.stateMachine.State;
 
 import java.io.IOException;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 public class Wait extends State {
-    private Gson json;
-    private ClientModel myClientModel;
+    private final Gson json;
+    private final ClientModel myClientModel;
     private ClientModel receivedClientModel;
-    private Controller controller;
-    private View view;
+    private final View view;
 
-    private Event messaggioGestito;
-    private Event reset;
+    private final Event messaggioGestito;
+    private final Event reset;
 
     private boolean isToReset;
 
@@ -30,7 +30,6 @@ public class Wait extends State {
         json = new Gson();
         myClientModel = clientModel;
         this.view = view;
-        this.controller = controller;
         messaggioGestito = new Event(" messaggio gestito");
         messaggioGestito.setStateEventListener(controller);
         reset = new Event("reset");
@@ -53,6 +52,8 @@ public class Wait extends State {
         message.enable();
         while (!message.parametersReceived()) {
             // non ho ricevuto ancora nessun messaggio
+            TimeUnit.MILLISECONDS.sleep(250);
+
         }
         Thread t = new Thread(() -> {
             receivedClientModel = json.fromJson(message.getParameter(0), ClientModel.class);
@@ -64,7 +65,6 @@ public class Wait extends State {
             }
 
             if (receivedClientModel.isGameStarted().equals(true)) {
-                Gson json = new Gson();
                 view.setClientModel(receivedClientModel);
 
 

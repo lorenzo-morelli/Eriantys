@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-
 public class AssistantCardPhase extends State {
     private final Event cardsChoosen ,gameEnd;
     private final ConnectionModel connectionModel;
@@ -211,7 +210,7 @@ public class AssistantCardPhase extends State {
                         long end = start + 40 * 1000;
 
                         while (model.isDisconnection() && System.currentTimeMillis()<end){
-
+                            TimeUnit.MILLISECONDS.sleep(250);
                         }
                         if (model.isDisconnection()) {
                             gameEnd().fireStateEvent();

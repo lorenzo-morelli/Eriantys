@@ -13,7 +13,6 @@ import it.polimi.ingsw.server.model.enums.GameMode;
 import it.polimi.ingsw.server.model.enums.PeopleColor;
 import it.polimi.ingsw.utils.cli.CommandPrompt;
 import it.polimi.ingsw.utils.network.Network;
-import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
 import it.polimi.ingsw.utils.stateMachine.State;
 
 import java.util.Objects;
@@ -21,7 +20,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -40,7 +38,7 @@ public class CliView implements View{
     private String mynickname;
     private String responce;
     private boolean isUsed;
-    private Gson json;
+
     public CliView(){
         responce="\n";
         isUsed=false;
@@ -58,7 +56,7 @@ public class CliView implements View{
     }
 
     @Override
-    public void askToStart() {
+    public void askToStart() throws InterruptedException {
         if (callingState instanceof WelcomeScreen) {
             ((WelcomeScreen) callingState).start().enable();
             ((WelcomeScreen) callingState).notStart().enable();
@@ -74,7 +72,7 @@ public class CliView implements View{
     }
 
     @Override
-    public void askDecision(String option1, String option2) {
+    public void askDecision(String option1, String option2) throws InterruptedException {
         if (callingState instanceof Decision) {
             ((Decision) callingState).haScelto1().enable();
             ((Decision) callingState).haScelto2().enable();
@@ -97,7 +95,7 @@ public class CliView implements View{
      * indirizzo IP è valido o meno.
      */
     @Override
-    public void askParameters() {
+    public void askParameters() throws InterruptedException {
         ((ReadFromTerminal) callingState).numberOfParametersIncorrect().enable();
         ((ReadFromTerminal) callingState).insertedParameters().enable();
 
@@ -108,7 +106,7 @@ public class CliView implements View{
                                       "nickname ip porta>");
                 // Controllo di correttezza dei dati inseriti lato client
                 parsedStrings =
-                        new ArrayList<String>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
+                        new ArrayList<>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
                 if (parsedStrings.size()!=3 || !isValidIp(parsedStrings.get(1)) || !isValidPort(parsedStrings.get(2))){
                     System.out.print("ALERT: dati inseriti non validi, riprovare\n");
                     askParameters();
@@ -121,7 +119,7 @@ public class CliView implements View{
                         "numOfPlayers gameMode>");
                 // Controllo di correttezza dei dati inseriti lato client
                 parsedStrings =
-                        new ArrayList<String>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
+                        new ArrayList<>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
                 // controllo che numOfPlayers sia una cifra
                 if (!isValidCifra(parsedStrings.get(0))){
                     System.out.print("ALERT: Inserisci una cifra su numOfPlayers, riprovare\n");
@@ -184,11 +182,11 @@ public class CliView implements View{
             case "CHOOSEASSISTANTCARD" :
                 System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(),"STATO DEL GIOCO: \n"+"E' IL TUO TURNO - ASSISTENT CARD PHASE"+ "\n\nMOSSE ALTRI GIOCATORI: "+getResponce()));
                 System.out.println("Scegli una Carta Assistente");
-                for (AssistantCard a : networkClientModel.getDeck()){;
+                for (AssistantCard a : networkClientModel.getDeck()){
                     System.out.println("valore: " + (int)a.getValues() + "  mosse: " + a.getMoves());
                 }
                     CommandPrompt.ask("Inserisci valore della carta scelta", "Carta> ");
-                if(!isValidNumber(CommandPrompt.gotFromTerminal())){
+                if(isValidNumber(CommandPrompt.gotFromTerminal())){
                     System.out.println("la carta da te scelta ha un valore non  valido, si prega di fare più attenzione");
                     TimeUnit.SECONDS.sleep(2);
                     requestToMe();
@@ -210,7 +208,7 @@ public class CliView implements View{
                 networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
                 networkClientModel.setPingMessage(false);
                 networkClientModel.setFromTerminal(parsedStrings);
-                json = new Gson();
+                Gson json = new Gson();
                 Network.send(json.toJson(networkClientModel));   //todo:gui until here
 
                 break;
@@ -307,7 +305,7 @@ public class CliView implements View{
                             }
                             CommandPrompt.ask("Scegliere la carta personaggio seguendo le indicazioni, un qualsiasi altra riga se si vuole tornare indietro","CHARACTER>");
                             parsedStrings =
-                                    new ArrayList<String>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
+                                    new ArrayList<>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
                             if(!avaiable.contains(parsedStrings.get(0))) {
                                 requestToMe();
                                 return;
@@ -378,11 +376,15 @@ public class CliView implements View{
                                             Color = PeopleColor.YELLOW;
                                             break;
                                     }
-                                    if(modelCard.getName().equals("MONK") && networkClientModel.getServermodel().getTable().getMonkSet().numStudentsbycolor(Color)==0){
-                                        System.out.println("La carta non possiede il colore che hai scelto, scelta carta rifiutata !!!!");
-                                        TimeUnit.SECONDS.sleep(2);
-                                        requestToMe();
-                                        return;
+                                    assert modelCard != null;
+                                    if(modelCard.getName().equals("MONK")) {
+                                        assert Color != null;
+                                        if (networkClientModel.getServermodel().getTable().getMonkSet().numStudentsbycolor(Color)==0) {
+                                            System.out.println("La carta non possiede il colore che hai scelto, scelta carta rifiutata !!!!");
+                                            TimeUnit.SECONDS.sleep(2);
+                                            requestToMe();
+                                            return;
+                                        }
                                     }
                                     networkClientModel.setTypeOfRequest(parsedStrings.get(0));
                                     networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
@@ -418,11 +420,15 @@ public class CliView implements View{
                                             Color = PeopleColor.YELLOW;
                                             break;
                                     }
-                                    if(modelCard.getName().equals("PRINCESS") && networkClientModel.getServermodel().getTable().getPrincessSet().numStudentsbycolor(Color)==0){
-                                        System.out.println("La carta non possiede il colore che hai scelto, scelta carta rifiutata !!!!");
-                                        TimeUnit.SECONDS.sleep(2);
-                                        requestToMe();
-                                        return;
+                                    assert modelCard != null;
+                                    if(modelCard.getName().equals("PRINCESS")) {
+                                        assert Color != null;
+                                        if (networkClientModel.getServermodel().getTable().getPrincessSet().numStudentsbycolor(Color)==0) {
+                                            System.out.println("La carta non possiede il colore che hai scelto, scelta carta rifiutata !!!!");
+                                            TimeUnit.SECONDS.sleep(2);
+                                            requestToMe();
+                                            return;
+                                        }
                                     }
                                     networkClientModel.setTypeOfRequest(parsedStrings.get(0));
                                     networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
@@ -457,6 +463,7 @@ public class CliView implements View{
                                         requestToMe();
                                         return;
                                     }
+                                    assert modelCard != null;
                                     if(modelCard.getName().equals("GRANNY") && networkClientModel.getServermodel().getTable().getIslands().get(Integer.parseInt(parsedStrings.get(1))-1).isBlocked()){
                                         System.out.println("isola già bloccata, scelta carta rifiutata !!!!");
                                         TimeUnit.SECONDS.sleep(2);
@@ -580,9 +587,9 @@ public class CliView implements View{
                                 return;
                             }
                             networkClientModel.setTypeOfRequest("SCHOOL");
-                        } else if (command.equals("ISLAND")) {
+                        } else {
                             CommandPrompt.ask("Inserire numero dell'isola su cui si desidera muovere lo studente", "isola> ");
-                            if (!isValidNumber(CommandPrompt.gotFromTerminal())) {
+                            if (isValidNumber(CommandPrompt.gotFromTerminal())) {
                                 System.out.println("Si è inserito un numero non valido, reinserire i dati con più attenzione !!!!");
                                 TimeUnit.SECONDS.sleep(2);
                                 requestToMe();
@@ -663,9 +670,9 @@ public class CliView implements View{
                                     return;
                                 }
                                 networkClientModel.setTypeOfRequest("SCHOOL");
-                            } else if (command.equals("ISLAND")) {
+                            } else {
                                 CommandPrompt.ask("Inserire numero dell'isola su cui si desidera muovere lo studente", "isola> ");
-                                if (!isValidNumber(CommandPrompt.gotFromTerminal())) {
+                                if (isValidNumber(CommandPrompt.gotFromTerminal())) {
                                     System.out.println("Si è inserito un numero non valido, reinserire i dati con più attenzione !!!!");
                                     TimeUnit.SECONDS.sleep(2);
                                     requestToMe();
@@ -772,7 +779,7 @@ public class CliView implements View{
                             }
                             CommandPrompt.ask("Scegliere la carta personaggio seguendo le indicazioni, un qualsiasi altra riga se si vuole tornare indietro","CHARACTER>");
                             parsedStrings =
-                                    new ArrayList<String>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
+                                    new ArrayList<>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
                             if(!avaiable.contains(parsedStrings.get(0))) {
                                 requestToMe();
                                 return;
@@ -843,11 +850,15 @@ public class CliView implements View{
                                             Color = PeopleColor.YELLOW;
                                             break;
                                     }
-                                    if(modelCard.getName().equals("MONK") && networkClientModel.getServermodel().getTable().getMonkSet().numStudentsbycolor(Color)==0){
-                                        System.out.println("La carta non possiede il colore che hai scelto, scelta carta rifiutata !!!!");
-                                        TimeUnit.SECONDS.sleep(2);
-                                        requestToMe();
-                                        return;
+                                    assert modelCard != null;
+                                    if(modelCard.getName().equals("MONK")) {
+                                        assert Color != null;
+                                        if (networkClientModel.getServermodel().getTable().getMonkSet().numStudentsbycolor(Color)==0) {
+                                            System.out.println("La carta non possiede il colore che hai scelto, scelta carta rifiutata !!!!");
+                                            TimeUnit.SECONDS.sleep(2);
+                                            requestToMe();
+                                            return;
+                                        }
                                     }
                                     networkClientModel.setTypeOfRequest(parsedStrings.get(0));
                                     networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
@@ -883,11 +894,15 @@ public class CliView implements View{
                                             Color = PeopleColor.YELLOW;
                                             break;
                                     }
-                                    if(modelCard.getName().equals("PRINCESS") && networkClientModel.getServermodel().getTable().getPrincessSet().numStudentsbycolor(Color)==0){
-                                        System.out.println("La carta non possiede il colore che hai scelto, scelta carta rifiutata !!!!");
-                                        TimeUnit.SECONDS.sleep(2);
-                                        requestToMe();
-                                        return;
+                                    assert modelCard != null;
+                                    if(modelCard.getName().equals("PRINCESS")) {
+                                        assert Color != null;
+                                        if (networkClientModel.getServermodel().getTable().getPrincessSet().numStudentsbycolor(Color)==0) {
+                                            System.out.println("La carta non possiede il colore che hai scelto, scelta carta rifiutata !!!!");
+                                            TimeUnit.SECONDS.sleep(2);
+                                            requestToMe();
+                                            return;
+                                        }
                                     }
                                     networkClientModel.setTypeOfRequest(parsedStrings.get(0));
                                     networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
@@ -922,6 +937,7 @@ public class CliView implements View{
                                         requestToMe();
                                         return;
                                     }
+                                    assert modelCard != null;
                                     if(modelCard.getName().equals("GRANNY") && networkClientModel.getServermodel().getTable().getIslands().get(Integer.parseInt(parsedStrings.get(1))-1).isBlocked()){
                                         System.out.println("isola già bloccata, scelta carta rifiutata !!!!");
                                         TimeUnit.SECONDS.sleep(2);
@@ -1020,7 +1036,7 @@ public class CliView implements View{
                             }
                             break;
                     } else {
-                        if (!isValidNumber(CommandPrompt.gotFromTerminal())) {
+                        if (isValidNumber(CommandPrompt.gotFromTerminal())) {
                             System.out.println("Il numero di mosse da te inserito non è un numero valido, si prega di fare più attenzione");
                             TimeUnit.SECONDS.sleep(2);
                             requestToMe();
@@ -1053,7 +1069,7 @@ public class CliView implements View{
                     CommandPrompt.ask("Scegliere il numero di mosse di cui far spostare madre natura  ", "mosse> ");
 
 
-                    if (!isValidNumber(CommandPrompt.gotFromTerminal())) {
+                    if (isValidNumber(CommandPrompt.gotFromTerminal())) {
                         System.out.println("Il numero di mosse da te inserito non è un numero valido, si prega di fare più attenzione");
                         TimeUnit.SECONDS.sleep(2);
                         requestToMe();
@@ -1087,7 +1103,7 @@ public class CliView implements View{
                 System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(),"STATO DEL GIOCO: \n"+"E' IL TUO TURNO - CLOUD PHASE"+ "\n\nMOSSE ALTRI GIOCATORI: "+getResponce()));
                 CommandPrompt.ask("Scegliere il numero della tessera nuvola da cui si desidera ricaricarsi di studenti","tessera nuvola> ");
 
-                if(!isValidNumber(CommandPrompt.gotFromTerminal())){
+                if(isValidNumber(CommandPrompt.gotFromTerminal())){
                     System.out.println("Il numero inserito non è un numero valido");
                     TimeUnit.SECONDS.sleep(2);
                     requestToMe();
@@ -1136,7 +1152,7 @@ public class CliView implements View{
 
     // Qualcun altro sta interagendo con il terminale: devo gestire il tempo di attesa
     // Esempio "pippo: sta salutando"
-    public void requestToOthers() throws IOException {
+    public void requestToOthers() {
         String message = null;
         switch (networkClientModel.getTypeOfRequest()) {
             case "CHOOSEASSISTANTCARD":
@@ -1241,7 +1257,7 @@ public class CliView implements View{
     public static boolean isValidCifra(String cifra)
     {
 
-        String CIFRA_REGEX ="[0-9]";
+        String CIFRA_REGEX ="\\d";
 
         Pattern CIFRA_PATTERN = Pattern.compile(CIFRA_REGEX);
 
@@ -1257,16 +1273,16 @@ public class CliView implements View{
     // Metodo che controlla se un numero è valido con le regular expressions
     public static boolean isValidNumber(String number)
     {
-        String NUMERO_REGEX ="[0-9]+";
+        String NUMERO_REGEX ="\\d+";
         Pattern NUMERO_PATTERN = Pattern.compile(NUMERO_REGEX);
 
         if (number == null) {
-            return false;
+            return true;
         }
 
         Matcher matcher = NUMERO_PATTERN.matcher(number);
 
-        return matcher.matches();
+        return !matcher.matches();
     }
 
     public String getMynickname() {
@@ -1288,4 +1304,3 @@ public class CliView implements View{
         this.responce="\n";
     }
 }
-

@@ -10,14 +10,15 @@ import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 public class SendNicknameToServer extends State {
-    private Gson json;
-    private ClientModel clientModel;
-    private Controller controller;
+    private final Gson json;
+    private final ClientModel clientModel;
+    private final Controller controller;
     private ParametersFromNetwork ack;
-    private Event nickAlreadyExistent;
-    private Event nickUnique;
+    private final Event nickAlreadyExistent;
+    private final Event nickUnique;
 
     public SendNicknameToServer(ClientModel clientModel, Controller controller) {
         super("[Invio dati al server ed attesa di un ack]");
@@ -66,6 +67,8 @@ public class SendNicknameToServer extends State {
         //System.out.println("[Conferma del nickname non ancora ricevuta]");
         while (!ack.parametersReceived()){
             // non ho ancora ricevuto l'ack
+            TimeUnit.MILLISECONDS.sleep(250);
+
         }
 
         //System.out.println("[Conferma del nickname ricevuta]");

@@ -10,12 +10,15 @@ import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 public class AmIFirst extends State {
     private ClientModel clientModel;
-    private Gson json;
+    private final Gson json;
     private ParametersFromNetwork response;
-    private Event yes, no, nicknameAlreadyPresent;
+    private final Event yes;
+    private final Event no;
+    private final Event nicknameAlreadyPresent;
 
     public AmIFirst(ClientModel clientModel, Controller controller) {
         super("[Il client chiede al server se è il primo ad essersi collegato (AmIFirst.java)]");
@@ -43,6 +46,11 @@ public class AmIFirst extends State {
                 message.enable();
                 while (!message.parametersReceived()) {
                     // non ho ricevuto ancora nessun messaggio
+                    try {
+                        TimeUnit.MILLISECONDS.sleep(250);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
                 Gson json = new Gson();
                 ClientModel receivedClientModel = json.fromJson(message.getParameter(0), ClientModel.class);
@@ -77,6 +85,7 @@ public class AmIFirst extends State {
             response.enable();
             while (!response.parametersReceived()) {
                 // Non ho ancora ricevuto una risposta dal server
+                TimeUnit.MILLISECONDS.sleep(250);
             }
 
             // se il messaggio è rivolto a me allora ho ricevuto l'ack, altrimenti reinvio e riattendo

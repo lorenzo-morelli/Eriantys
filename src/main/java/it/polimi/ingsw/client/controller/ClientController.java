@@ -1,12 +1,9 @@
 package it.polimi.ingsw.client.controller;
 
-import com.google.gson.Gson;
 import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.client.controller.states.*;
 import it.polimi.ingsw.client.view.*;
 import it.polimi.ingsw.server.controller.states.Idle;
-import it.polimi.ingsw.utils.network.Network;
-import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
 import it.polimi.ingsw.utils.stateMachine.*;
 
 public class ClientController {

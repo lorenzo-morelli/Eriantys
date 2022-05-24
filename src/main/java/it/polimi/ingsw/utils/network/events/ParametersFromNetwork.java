@@ -1,7 +1,6 @@
 package it.polimi.ingsw.utils.network.events;
 
 import it.polimi.ingsw.utils.network.Network;
-import it.polimi.ingsw.utils.stateMachine.Controller;
 import it.polimi.ingsw.utils.stateMachine.Event;
 
 import javax.swing.*;
@@ -12,7 +11,7 @@ import java.util.Arrays;
 
 public class ParametersFromNetwork extends Event implements DocumentListener {
     private static JTextArea ta;
-    private int numberOfStrings;
+    private final int numberOfStrings;
     private ArrayList<String> parsedStrings;
     private boolean parametersReceived = false;
 
@@ -45,7 +44,7 @@ public class ParametersFromNetwork extends Event implements DocumentListener {
 
     private synchronized void checkLastMessage() {
         try {
-            parsedStrings = new ArrayList(Arrays.asList(ta.getText().split(" ")));
+            parsedStrings = new ArrayList<>(Arrays.asList(ta.getText().split(" ")));
             if (parsedStrings.size() == numberOfStrings){
                 this.parametersReceived = true;
                 enabled = false;

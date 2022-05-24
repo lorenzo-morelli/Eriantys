@@ -16,6 +16,7 @@ import it.polimi.ingsw.utils.stateMachine.State;
 
 import java.util.concurrent.TimeUnit;
 
+
 public class CloudPhase extends State {
     private final Event goToEndTurn, gameEnd;
     private final Event goToStudentPhase;
@@ -208,7 +209,7 @@ public class CloudPhase extends State {
                     long end = start + 40 * 1000;
 
                     while (model.isDisconnection() && System.currentTimeMillis()<end){
-
+                        TimeUnit.MILLISECONDS.sleep(250);
                     }
                     if (model.isDisconnection()) {
                         gameEnd().fireStateEvent();

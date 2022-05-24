@@ -17,10 +17,9 @@ import java.util.Arrays;
  */
 
 public class ParametersFromTerminal extends Event implements Observer {
-    private CommandPrompt commandPrompt;
-    private ClientModel clientModel;
-    private ArrayList<String> parsedStrings;
-    private int numberOfStrings;
+    private final CommandPrompt commandPrompt;
+    private final ClientModel clientModel;
+    private final int numberOfStrings;
     private boolean parametersReceived = false;
 
     public ParametersFromTerminal(ClientModel clientModel, int numberOfStrings) throws IOException {
@@ -33,7 +32,7 @@ public class ParametersFromTerminal extends Event implements Observer {
 
     @Override
     public void update(Object message) throws IOException, InterruptedException {
-            parsedStrings = new ArrayList<String>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
+        ArrayList<String> parsedStrings = new ArrayList<>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
             if (parsedStrings.size() == numberOfStrings){
                 clientModel.setFromTerminal(parsedStrings);
                 this.parametersReceived = true;
