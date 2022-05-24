@@ -53,7 +53,7 @@ public class Game implements Initializable {
             System.out.println("waiting...");
         }
         this.gui.setClientModel(gson.fromJson(response.getParameter(0), ClientModel.class));
-        this.gui.getClientModel().getServermodel().getPlayers().forEach(System.out::println);
+        this.gui.getClientModel().getServermodel().getPlayers().forEach((player) -> System.out.println(player.getNickname()));
         System.out.println(response.getParameter(0));
         List<Label> playerNames = Arrays.asList(playerName1, playerName2, playerName3, playerName4);
 
