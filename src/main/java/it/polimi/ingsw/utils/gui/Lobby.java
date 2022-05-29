@@ -34,7 +34,11 @@ public class Lobby implements Initializable {
         this.gui.setClientModel(gson.fromJson(response.getParameter(0), ClientModel.class));
 
         if (!this.gui.getClientModel().isGameStarted()) { // todo: bah...
-            //this.gui.changeScene("Game", mouseEvent);
+            try {
+                this.gui.changeScene("Game", otherPlayersLabel);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         //todo:
     }
