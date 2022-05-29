@@ -12,11 +12,8 @@ import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Time;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.concurrent.TimeUnit;
 
 import static java.lang.Thread.sleep;
 
@@ -98,7 +95,7 @@ public class SetupGame implements Initializable {
                     isToReset = true;
                 }
 
-                if (receivedClientModel.isGameStarted().equals(true) && !receivedClientModel.isKicked()) {
+                if (receivedClientModel.isGameStarted().equals(true) && receivedClientModel.NotisKicked()) {
 
 
                     // Il messaggio è o una richiesta o una risposta

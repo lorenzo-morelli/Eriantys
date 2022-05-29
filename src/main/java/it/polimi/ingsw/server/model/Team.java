@@ -23,14 +23,12 @@ public class Team {
         return player2;
     }
 
-    public int setPlayer(Player player){
+    public void setPlayer(Player player){
         if(player1==null){
             player1=player;
-            return 1;
         }
         else {
             player2=player;
-            return 2;
         }
     }
 

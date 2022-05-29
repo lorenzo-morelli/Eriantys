@@ -52,7 +52,7 @@ public class ClientModel {
     // where to put data that comes from terminal
     private ArrayList<String> fromTerminal;
 
-    private ArrayList<String> nicknames;
+    private final ArrayList<String> nicknames;
 
     private String nickname;
 
@@ -201,10 +201,6 @@ public class ClientModel {
         return nicknames;
     }
 
-    public void setNicknames(ArrayList<String> nicknames) {
-        this.nicknames = nicknames;
-    }
-
     public int getChoosedMoves() {
         return choosedMoves;
     }
@@ -253,8 +249,8 @@ public class ClientModel {
         this.colors2 = colors2;
     }
 
-    public boolean isKicked() {
-        return kicked;
+    public boolean NotisKicked() {
+        return !kicked;
     }
 
     public void setKicked(boolean kicked) {

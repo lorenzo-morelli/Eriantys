@@ -10,7 +10,6 @@ import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
 
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
 public class SendNicknameToServer extends State {
     private final Gson json;

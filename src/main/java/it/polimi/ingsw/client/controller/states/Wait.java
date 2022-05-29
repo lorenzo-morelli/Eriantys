@@ -12,7 +12,6 @@ import it.polimi.ingsw.utils.stateMachine.State;
 
 import java.io.IOException;
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 
 public class Wait extends State {
     private final Gson json;
@@ -67,7 +66,7 @@ public class Wait extends State {
                     isToReset = true;
                 }
 
-                if (receivedClientModel.isGameStarted().equals(true) && !receivedClientModel.isKicked()) {
+                if (receivedClientModel.isGameStarted().equals(true) && receivedClientModel.NotisKicked()) {
 
 
                     // Il messaggio è o una richiesta o una risposta

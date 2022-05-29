@@ -12,7 +12,6 @@ import it.polimi.ingsw.utils.stateMachine.Event;
 import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
 
-import java.util.concurrent.TimeUnit;
 
 public class WaitOtherClients extends State {
     private final ConnectionModel connectionModel;

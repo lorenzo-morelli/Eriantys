@@ -6,7 +6,6 @@ import it.polimi.ingsw.server.controller.states.StudentPhase;
 import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
 
-import java.util.concurrent.TimeUnit;
 
 public class StudentThread extends Thread {
     private final StudentPhase phase;
@@ -22,7 +21,7 @@ public class StudentThread extends Thread {
     public synchronized void run() {
         while (!phase.getMessage().parametersReceived() || json.fromJson(phase.getMessage().getParameter(0), ClientModel.class).isPingMessage()) {
             try {
-                TimeUnit.MILLISECONDS.sleep(10000);
+                sleep(10000);
             } catch (InterruptedException e) {
                 return;
             }

@@ -15,9 +15,6 @@ import it.polimi.ingsw.utils.stateMachine.Event;
 import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
 
-import java.util.concurrent.TimeUnit;
-
-
 public class CreateGame extends State {
     private final Event gameCreated, fourPlayersGameCreated;
     private Model model;

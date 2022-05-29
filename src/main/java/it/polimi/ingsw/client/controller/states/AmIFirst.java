@@ -75,7 +75,7 @@ public class AmIFirst extends State {
         //System.out.println("[Ho ricevuto la risposta: ");
         clientModel = json.fromJson(response.getParameter(0), ClientModel.class);
 
-        if(clientModel.getClientIdentity() == Network.getClientModel().getClientIdentity() && !clientModel.isKicked() && clientModel.getTypeOfRequest() != null && clientModel.getTypeOfRequest().equals("CONNECTTOEXISTINGGAME")) {
+        if(clientModel.getClientIdentity() == Network.getClientModel().getClientIdentity() && clientModel.NotisKicked() && clientModel.getTypeOfRequest() != null && clientModel.getTypeOfRequest().equals("CONNECTTOEXISTINGGAME")) {
             System.out.println("\n Sei stato connesso a una partita già esistente.");
             no.fireStateEvent();
             return super.entryAction(cause);

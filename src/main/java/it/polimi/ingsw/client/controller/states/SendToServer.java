@@ -6,7 +6,6 @@ import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
 import it.polimi.ingsw.utils.stateMachine.*;
 
-import java.util.concurrent.TimeUnit;
 
 /**
  * Generico stato di invio dati al server
