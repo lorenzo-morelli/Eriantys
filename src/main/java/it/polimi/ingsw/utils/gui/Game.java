@@ -3,12 +3,14 @@ package it.polimi.ingsw.utils.gui;
 import com.google.gson.Gson;
 import it.polimi.ingsw.client.GUI;
 import it.polimi.ingsw.client.model.ClientModel;
+import it.polimi.ingsw.utils.common.SendModelAndGetResponse;
 import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
 import java.net.URL;
@@ -41,12 +43,12 @@ public class Game implements Initializable {
     public Label playerName2;
     public Label playerName3;
     public Label playerName4;
+    public GridPane school4Grid;
     private ParametersFromNetwork response;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        clientModel = this.gui.getClientModel();
-
         response = new ParametersFromNetwork(1);
         response.enable();
         try {
@@ -54,12 +56,13 @@ public class Game implements Initializable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        this.gui.setClientModel(gson.fromJson(response.getParameter(0), ClientModel.class));
+
         this.gui.getClientModel().getServermodel().getPlayers().forEach((player) -> System.out.println(player.getNickname()));
         System.out.println("giocatori connessi: " + this.gui.getClientModel().getServermodel().getPlayers().size());
         System.out.println(response.getParameter(0));
         List<Label> playerNames = Arrays.asList(playerName1, playerName2, playerName3, playerName4);
 
+        //settare i constraints per partite <4 e <3
         if (clientModel.getNumofplayer() < 4) {
             school4.setVisible(false);
             playerName4.setVisible(false);
@@ -70,9 +73,7 @@ public class Game implements Initializable {
             playerName3.setVisible(false);
         }
 
-        
-
-        //players name set
+        //setto i nomi
         for (int i = 0; i < this.gui.getClientModel().getServermodel().getPlayers().size(); i++) {
             System.out.println("giocatore " + i + ": " + this.gui.getClientModel().getServermodel().getPlayers().get(i).getNickname());
             playerNames.get(i).setText(this.gui.getClientModel().getServermodel().getPlayers().get(i).getNickname());
@@ -80,6 +81,12 @@ public class Game implements Initializable {
 
         //if planning -> phaseLabel.set planning, else -> set action
         //turn player...
+
+        //setto le torri
+
+        //setto gli studenti
+
+        //setto le carte personaggio
 
 
     }
@@ -93,8 +100,9 @@ public class Game implements Initializable {
     }
 
     public void choosed1(MouseEvent mouseEvent) throws InterruptedException {
+        //if è assistant phase and è il suo turno
         assistantCard1.setVisible(false);
-        clientModel.setCardChoosedValue(1); //todo: invio?
+        this.gui.getClientModel().setCardChoosedValue(1); //todo: invio?
         Network.send(gson.toJson(clientModel));
     }
 }

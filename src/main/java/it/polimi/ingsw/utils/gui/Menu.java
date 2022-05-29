@@ -6,6 +6,7 @@ import it.polimi.ingsw.utils.common.SetConnection;
 import it.polimi.ingsw.utils.network.Network;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -20,6 +21,8 @@ import static it.polimi.ingsw.utils.common.Check.isValidPort;
 public class Menu implements Initializable {
     private final GUI gui = new GUI();
 
+    @FXML
+    private Button playButton = new Button();
     @FXML
     private TextField nicknameField = new TextField();
     @FXML
@@ -39,7 +42,7 @@ public class Menu implements Initializable {
     }
 
     public void play(MouseEvent mouseEvent) throws IOException {
-        this.gui.changeScene("SetupConnection", mouseEvent);
+        this.gui.changeScene("SetupConnection", playButton);
     }
 
     public void exit() {
@@ -68,9 +71,9 @@ public class Menu implements Initializable {
                     this.notice.setText("FAILURE: Nickname already taken"); //todo: bugfix
                 } else if (this.gui.getClientModel().getAmIfirst()) {
                     System.out.println("primooo");
-                    this.gui.changeScene("SetupGame", mouseEvent);
+                    this.gui.changeScene("SetupGame", nicknameField);
                 } else {
-                    this.gui.changeScene("Lobby", mouseEvent);
+                    this.gui.changeScene("Lobby", nicknameField);
                 }
             } else {
                 this.notice.setText("FAILURE: impossible to connect to server!");

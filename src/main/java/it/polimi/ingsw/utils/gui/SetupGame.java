@@ -13,6 +13,7 @@ import javafx.scene.input.MouseEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Time;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.concurrent.TimeUnit;
@@ -25,6 +26,8 @@ public class SetupGame implements Initializable {
     private final Gson gson = new Gson();
     private int connectedPlayers;
     private ParametersFromNetwork response;
+    private ClientModel receivedClientModel;
+    private boolean isToReset;
 
     @FXML
     private Label connectedOnIp = new Label();
@@ -45,6 +48,7 @@ public class SetupGame implements Initializable {
         this.connectedOnPort.setText("Connected on Port: " + this.gui.getClientModel().getPort());
         this.otherPlayersLabel.setText("okkkkkk");
         this.connectedPlayers = 0;
+        isToReset = false;
     }
 
     public void set2Players(MouseEvent mouseEvent) {
@@ -82,26 +86,73 @@ public class SetupGame implements Initializable {
             this.otherPlayersLabel.setText("Waiting for other players to join the game...");
             Network.send(gson.toJson(this.gui.getClientModel()));
 
-            response = new ParametersFromNetwork(1);
-            response.enable();
-            response.waitParametersReceived();
-            //while (!response.parametersReceived()) {
-            //    System.out.println("attesa di mandare un ack");
-            //}
+            ParametersFromNetwork message = new ParametersFromNetwork(1);
+            message.enable();
+            message.waitParametersReceived();
+            Thread t = new Thread(() -> {
+                receivedClientModel = gson.fromJson(message.getParameter(0), ClientModel.class);
+
+                if (Network.disconnectedClient()) {
+                    Network.disconnect();
+                    System.out.println("Il gioco è terminato a causa della disconnessione di un client");
+                    isToReset = true;
+                }
+
+                if (receivedClientModel.isGameStarted().equals(true) && !receivedClientModel.isKicked()) {
 
 
-            response = new ParametersFromNetwork(1);
-            response.enable();
-            response.waitParametersReceived();
-            this.gui.setClientModel(gson.fromJson(response.getParameter(0), ClientModel.class));
-            //System.out.println(this.gui.getClientModel().isGameStarted());
+                    // Il messaggio è o una richiesta o una risposta
 
-            if (!this.gui.getClientModel().isGameStarted()) { // todo: bah...
-                this.gui.changeScene("Game", mouseEvent);
+                    // se il messaggio non è una risposta di un client al server vuol dire che
+                    if (receivedClientModel.isResponse().equals(false) && receivedClientModel.getTypeOfRequest() != null) {
+                        // il messaggio è una richiesta del server alla view di un client
+
+                        // se il messaggio è rivolto a me devo essere io a compiere l'azione
+                        if (receivedClientModel.getClientIdentity() == this.gui.getClientModel().getClientIdentity()) {
+                            // il messaggio è rivolto a me
+                            if (receivedClientModel.isPingMessage()) {
+                                this.gui.setClientModel(receivedClientModel);
+                                this.gui.requestPing();
+                            } else {
+                                try {
+                                    this.gui.setClientModel(receivedClientModel);
+                                    this.gui.requestToMe();
+                                } catch (InterruptedException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+                        } else {
+                            // altrimenti devo limitarmi a segnalare che l'altro giocatore sta facendo qualcosa
+                            if (receivedClientModel.getTypeOfRequest() != null &&
+                                    !receivedClientModel.isPingMessage() && !Objects.equals(receivedClientModel.getTypeOfRequest(), "TRYTORECONNECT") && !Objects.equals(receivedClientModel.getTypeOfRequest(), "DISCONNECTION")) {
+                                try {
+                                    this.gui.setClientModel(receivedClientModel);
+                                    this.gui.requestToOthers();
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+                        }
+                    }
+                    // altrimenti il messaggio è una risposta di un altro client ad un server
+                    else if (receivedClientModel.isResponse().equals(true) && receivedClientModel.getTypeOfRequest() != null) {
+                        try {
+                            this.gui.setClientModel(receivedClientModel);
+                            this.gui.response();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }
+            });
+            t.start();
+
+            if (isToReset) {
+                //this.gui.changeScene("MainMenu", );
+            } else {
+               // this.gui.changeScene("Game", mouseEvent);
             }
         }
     }
-
-
 }
 
