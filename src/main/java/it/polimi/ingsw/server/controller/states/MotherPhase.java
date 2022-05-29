@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 public class MotherPhase extends State {
-    private final Event gameEnd, goToStudentPhase, goToCloudPhase;
+    private final Event gameEnd, goToStudentPhase, goToCloudPhase, goToEndTurn;
     private Model model;
 
     private final ConnectionModel connectionModel;
@@ -46,6 +46,9 @@ public class MotherPhase extends State {
     public Event GoToCloudPhase() {
         return goToCloudPhase;
     }
+    public Event GoToEndTurn() {
+        return goToEndTurn;
+    }
 
     public MotherPhase(ServerController serverController) {
         super("[Move mother]");
@@ -58,7 +61,8 @@ public class MotherPhase extends State {
         goToCloudPhase = new Event("go to cloud phase");
         goToCloudPhase.setStateEventListener(controller);
         goToStudentPhase = new Event("go to student phase");
-        goToStudentPhase.setStateEventListener(controller);
+        goToStudentPhase.setStateEventListener(controller);goToEndTurn= new Event("go to end turn");
+        goToEndTurn.setStateEventListener(controller);
         json = new Gson();
         istorepeat=true;
     }
@@ -94,11 +98,13 @@ public class MotherPhase extends State {
                         goToStudentPhase().fireStateEvent();
                     }
                     return super.entryAction(cause);
+                } else if (model.getcurrentPlayer().equals(model.getPlayers().get(model.getPlayers().size() - 1))) {
+                    GoToEndTurn().fireStateEvent();
                 } else {
                     model.nextPlayer();
                     goToStudentPhase().fireStateEvent();
-                    return super.entryAction(cause);
                 }
+                return super.entryAction(cause);
             }
 
             // retrive data of the current player
@@ -141,38 +147,38 @@ public class MotherPhase extends State {
 
             boolean responseReceived = false;
             while (!responseReceived) {
-                synchronized (this) {
                     if (!fromPing) {
                         message = new ParametersFromNetwork(1);
                         message.enable();
-                    }
                 }
                 while (!message.parametersReceived()) {
+                    System.out.println("non arrivato nulla");
                     message.waitParametersReceived(5);
                     if (disconnected) {
                         break;
                     }
                 }
-                synchronized (this) {
                     if (disconnected || (json.fromJson(message.getParameter(0), ClientModel.class).getClientIdentity() == currentPlayerData.getClientIdentity() && !json.fromJson(message.getParameter(0), ClientModel.class).isPingMessage())) {
                         responseReceived = true;
                         if (disconnected) {
                             currentPlayer.setDisconnected(true);
+                            boolean check=true;
                             for(int j=0;j<model.getTable().getClouds().size();j++) {
                                 if(model.getTable().getClouds().get(j).getStudentsAccumulator().size()==0)
                                 {
                                     model.getTable().getClouds().remove(j);
+                                    check=false;
                                     break;
                                 }
                             }
-                            if(model.getTable().getClouds().size()==model.getNumberOfPlayers()){
+                            if (check) {
                                 model.getTable().getClouds().remove(0);
                             }
                         } else {
                             ping.interrupt();
                         }
                     }
-                }
+                    fromPing=false;
             }
 
             //codice effettivo della fase se non si è disconnesso
@@ -390,7 +396,7 @@ public class MotherPhase extends State {
                     return super.entryAction(cause);
                 } else {
                     model.nextPlayer();
-                    goToStudentPhase().fireStateEvent();
+                    GoToCloudPhase().fireStateEvent();
                     return super.entryAction(cause);
                 }
             }

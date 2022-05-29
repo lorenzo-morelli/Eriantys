@@ -51,62 +51,69 @@ public class Wait extends State {
         ParametersFromNetwork message = new ParametersFromNetwork(1);
         message.enable();
         message.waitParametersReceived();
-        Thread t = new Thread(() -> {
-            receivedClientModel = json.fromJson(message.getParameter(0), ClientModel.class);
+        Thread t = new Thread(){
+            public synchronized void run() {
+                ClientModel TryreceivedClientModel = json.fromJson(message.getParameter(0), ClientModel.class);
 
-            if (Network.disconnectedClient()) {
-                Network.disconnect();
-                System.out.println("Il gioco è terminato a causa della disconnessione di un client");
-                isToReset = true;
-            }
+                if(Objects.equals(TryreceivedClientModel.getTypeOfRequest(), "CONNECTTOEXISTINGGAME")){
+                    return;
+                }
 
-            if (receivedClientModel.isGameStarted().equals(true) && !receivedClientModel.isKicked()) {
+                receivedClientModel=TryreceivedClientModel;
+
+                if (Network.disconnectedClient()) {
+                    Network.disconnect();
+                    System.out.println("Il gioco è terminato a causa della disconnessione di un client");
+                    isToReset = true;
+                }
+
+                if (receivedClientModel.isGameStarted().equals(true) && !receivedClientModel.isKicked()) {
 
 
-                // Il messaggio è o una richiesta o una risposta
+                    // Il messaggio è o una richiesta o una risposta
 
-                // se il messaggio non è una risposta di un client al server vuol dire che
-                if (receivedClientModel.isResponse().equals(false)&& receivedClientModel.getTypeOfRequest() != null) {
-                    // il messaggio è una richiesta del server alla view di un client
+                    // se il messaggio non è una risposta di un client al server vuol dire che
+                    if (receivedClientModel.isResponse().equals(false) && receivedClientModel.getTypeOfRequest() != null) {
+                        // il messaggio è una richiesta del server alla view di un client
 
-                    // se il messaggio è rivolto a me devo essere io a compiere l'azione
-                    if (receivedClientModel.getClientIdentity()== myClientModel.getClientIdentity()) {
-                        // il messaggio è rivolto a me
-                        if (receivedClientModel.isPingMessage()) {
-                            view.setClientModel(receivedClientModel);
-                            view.requestPing();
+                        // se il messaggio è rivolto a me devo essere io a compiere l'azione
+                        if (receivedClientModel.getClientIdentity() == myClientModel.getClientIdentity()) {
+                            // il messaggio è rivolto a me
+                            if (receivedClientModel.isPingMessage()) {
+                                view.requestPing();
+                            } else {
+                                try {
+                                    view.setClientModel(receivedClientModel);
+                                    view.requestToMe();
+                                } catch (InterruptedException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
                         } else {
-                            try {
-                                view.setClientModel(receivedClientModel);
-                                view.requestToMe();
-                            } catch (InterruptedException e) {
-                                throw new RuntimeException(e);
-                            }
-                        }
-                    } else {
-                        // altrimenti devo limitarmi a segnalare che l'altro giocatore sta facendo qualcosa
-                        if (receivedClientModel.getTypeOfRequest() != null &&
-                                !receivedClientModel.isPingMessage() && !Objects.equals(receivedClientModel.getTypeOfRequest(), "TRYTORECONNECT") && !Objects.equals(receivedClientModel.getTypeOfRequest(), "DISCONNECTION")) {
-                            try {
-                                view.setClientModel(receivedClientModel);
-                                view.requestToOthers();
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
+                            // altrimenti devo limitarmi a segnalare che l'altro giocatore sta facendo qualcosa
+                            if (receivedClientModel.getTypeOfRequest() != null &&
+                                    !receivedClientModel.isPingMessage() && !Objects.equals(receivedClientModel.getTypeOfRequest(), "TRYTORECONNECT") && !Objects.equals(receivedClientModel.getTypeOfRequest(), "DISCONNECTION")) {
+                                try {
+                                    view.setClientModel(receivedClientModel);
+                                    view.requestToOthers();
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
                             }
                         }
                     }
-                }
-                // altrimenti il messaggio è una risposta di un altro client ad un server
-                else if (receivedClientModel.isResponse().equals(true) && receivedClientModel.getTypeOfRequest() != null) {
-                    try {
-                        view.setClientModel(receivedClientModel);
-                        view.response();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
+                    // altrimenti il messaggio è una risposta di un altro client ad un server
+                    else if (receivedClientModel.isResponse().equals(true) && receivedClientModel.getTypeOfRequest() != null) {
+                        try {
+                            view.setClientModel(receivedClientModel);
+                            view.response();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                 }
             }
-        });
+        };
         t.start();
 
         if (isToReset) {

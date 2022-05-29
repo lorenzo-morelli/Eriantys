@@ -48,6 +48,7 @@ public class Player implements Comparable<Player>{
                     throw new IllegalArgumentException();
                 }
             }
+            team.setPlayer(this);
             this.schoolBoard = new SchoolBoard(team, model.getTable().getBag(), model.getTable().getAvaiableTowerColor());
             if (model.getGameMode().equals(GameMode.EXPERT)) this.coins = 1;
             else{coins=-1;}
@@ -133,4 +134,5 @@ public class Player implements Comparable<Player>{
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
+
 }

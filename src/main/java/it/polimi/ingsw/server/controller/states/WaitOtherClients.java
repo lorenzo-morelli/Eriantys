@@ -18,7 +18,7 @@ public class WaitOtherClients extends State {
     private final ConnectionModel connectionModel;
     private ClientModel clientModel = null;
     private final Gson json;
-    private final ParametersFromNetwork message;
+    private ParametersFromNetwork message;
 
     private final Event twoOrThreeClientsConnected;
     private final Event reset = new ClientDisconnection();
@@ -58,6 +58,7 @@ public class WaitOtherClients extends State {
         while (numOfPlayersToWait > 0) {
             System.out.println("[aspettando altri " + numOfPlayersToWait + " clients]");
 
+            message=new ParametersFromNetwork(1);
             message.enable();
             while (!message.parametersReceived()) {
                 message.waitParametersReceived(10);
@@ -85,8 +86,6 @@ public class WaitOtherClients extends State {
             connectionModel.getClientsInfo().add(clientModel);
 
             //scateno l'evento ed esco dallo stato
-            message.fireStateEvent();
-            message.disable();
             numOfPlayersToWait--;
 
         }

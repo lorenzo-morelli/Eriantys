@@ -19,7 +19,7 @@ public class StudentThread extends Thread {
         json=new Gson();
     }
 
-    public void run() {
+    public synchronized void run() {
         while (!phase.getMessage().parametersReceived() || json.fromJson(phase.getMessage().getParameter(0), ClientModel.class).isPingMessage()) {
             try {
                 TimeUnit.MILLISECONDS.sleep(10000);

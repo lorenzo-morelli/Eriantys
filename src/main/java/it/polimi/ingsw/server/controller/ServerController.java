@@ -46,6 +46,7 @@ public class ServerController {
         fsm.addTransition(motherPhase, motherPhase.GoToCloudPhase(), cloudPhase);
         fsm.addTransition(motherPhase, motherPhase.goToStudentPhase(), studentPhase);
         fsm.addTransition(motherPhase, motherPhase.gameEnd(), endGame);
+        fsm.addTransition(motherPhase, motherPhase.GoToEndTurn(), endTurn);
         fsm.addTransition(cloudPhase, cloudPhase.GoToStudentPhase(), studentPhase);
         fsm.addTransition(cloudPhase, cloudPhase.GoToEndTurn(), endTurn);
         fsm.addTransition(cloudPhase, cloudPhase.gameEnd(), endGame);

@@ -5,8 +5,10 @@ import it.polimi.ingsw.client.controller.events.ClientDisconnection;
 import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.server.controller.ConnectionModel;
 import it.polimi.ingsw.server.controller.ServerController;
+import it.polimi.ingsw.server.model.Cloud;
 import it.polimi.ingsw.server.model.Model;
 import it.polimi.ingsw.server.model.Player;
+import it.polimi.ingsw.server.model.Team;
 import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
 import it.polimi.ingsw.utils.stateMachine.Controller;
@@ -79,9 +81,110 @@ public class AskForTeamMate extends State {
         model.getPlayers().add(new Player(received.getNicknames().get(1), connectionModel.findPlayer(received.getNicknames().get(1)).getMyIp(),2, model));
         model.getPlayers().add(new Player(received.getNicknames().get(0), connectionModel.findPlayer(received.getNicknames().get(0)).getMyIp(),2, model));
         model.randomschedulePlayers();
+
+
+        Thread t= new Thread(){
+            public synchronized void run() {
+                while (true) {
+                    if(connectionModel.isCloseThred()){
+                        connectionModel.setCloseThred(false);
+                        return;
+                    }
+                    System.out.println("in loop");
+                    ParametersFromNetwork message = new ParametersFromNetwork(1);
+                    message.enable();
+                    try {
+                        message.waitParametersReceived();
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    //System.out.println("check disconnessione");
+                    Gson json = new Gson();
+                    ClientModel receivedClientModel = json.fromJson(message.getParameter(0), ClientModel.class);
+
+                    if(receivedClientModel.getAmIfirst()==null && !connectionModel.isCloseThred()) {
+                        boolean check = false;
+
+                        for (Player p : getModel().getPlayers()) {
+                            if (p.isDisconnected()) {
+                                check = true;
+                                break;
+                            }
+                        }
+
+                        if (check) {
+                            boolean check2 = true;
+
+                            for (Player p : getModel().getPlayers()) {
+                                if (!p.isDisconnected() && p.getNickname().equals(receivedClientModel.getNickname())) {
+                                    check2 = false;
+                                    break;
+                                }
+                            }
+
+                            if (check2) {
+                                for (Team team : getModel().getTeams()) {
+                                    if (team.getPlayer1().isDisconnected()) {
+                                        ClientModel target = connectionModel.findPlayer(team.getPlayer1().getNickname());
+                                        team.getPlayer1().setNickname(receivedClientModel.getNickname());
+                                        team.getPlayer1().setDisconnected(false);
+                                        receivedClientModel.setAmIfirst(false);
+                                        receivedClientModel.setKicked(false);
+                                        receivedClientModel.setGameStarted(true);
+                                        receivedClientModel.setTypeOfRequest("CONNECTTOEXISTINGGAME");
+                                        connectionModel.change(target, receivedClientModel);
+                                        try {
+                                            Network.send(json.toJson(receivedClientModel));
+                                        } catch (InterruptedException e) {
+                                            throw new RuntimeException(e);
+                                        }
+                                        model.setDisconnection(false);
+                                        model.getTable().getClouds().add(new Cloud(model.getNumberOfPlayers()));
+                                        model.getTable().getClouds().get(model.getTable().getClouds().size()-1).charge(model.getTable().getBag());
+                                        System.out.println("accepted");
+                                        break;
+                                    }
+                                    if (team.getPlayer2().isDisconnected()) {
+                                        ClientModel target = connectionModel.findPlayer(team.getPlayer2().getNickname());
+                                        team.getPlayer2().setNickname(receivedClientModel.getNickname());
+                                        team.getPlayer2().setDisconnected(false);
+                                        receivedClientModel.setAmIfirst(false);
+                                        receivedClientModel.setKicked(false);
+                                        receivedClientModel.setGameStarted(true);
+                                        receivedClientModel.setTypeOfRequest("CONNECTTOEXISTINGGAME");
+                                        connectionModel.change(target, receivedClientModel);
+                                        try {
+                                            Network.send(json.toJson(receivedClientModel));
+                                        } catch (InterruptedException e) {
+                                            throw new RuntimeException(e);
+                                        }
+                                        model.setDisconnection(false);
+                                        model.getTable().getClouds().add(new Cloud(model.getNumberOfPlayers()));
+                                        model.getTable().getClouds().get(model.getTable().getClouds().size()-1).charge(model.getTable().getBag());
+                                        System.out.println("accepted");
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    System.out.println("exit loop");
+                    try {
+                        sleep(5000);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        };
+        t.start();
         teamMateChoosen.fireStateEvent();
 
         return super.entryAction(cause);
+    }
+
+    private Model getModel() {
+        return model;
     }
 
     @Override

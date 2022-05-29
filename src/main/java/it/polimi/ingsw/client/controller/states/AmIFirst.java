@@ -44,16 +44,22 @@ public class AmIFirst extends State {
         System.out.println("Sei connesso al server, se è disponibile una partita verrai automaticamente collegato\n" +
                 "altrimenti vuoi dire che il server è al completo e non può ospitare altri giocatori");
 
+        System.out.println("Attendo 10 secondi per non intasare la rete...");
+        TimeUnit.MILLISECONDS.sleep(10000);
+
+        long start = System.currentTimeMillis();
+        long end = start + 15 * 1000L;
+
         while (!responseReceived) {
             // invio al server il mio modello
-            //System.out.println("[Chiedo al server se sono il primo client]");
+
             Network.send(json.toJson(clientModel));
 
             response = new ParametersFromNetwork(1);
             response.enable();
             boolean check =response.waitParametersReceived(5);
 
-            if(check){
+            if(check || System.currentTimeMillis()>=end){
                 System.out.println("\n\nServer non ha dato risposta, si vede che il gioco era già pieno oppure la partita non è stata ancora creata oppure che il nickname non è valido... si prega di riprovare");
                 Network.disconnect();
                 System.exit(0);

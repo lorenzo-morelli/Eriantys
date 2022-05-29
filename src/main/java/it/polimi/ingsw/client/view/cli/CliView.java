@@ -42,8 +42,9 @@ public class CliView implements View{
     public CliView(){
         responce="\n";
         isUsed=false;
+        networkClientModel=new ClientModel();
     }
-    public void setClientModel(ClientModel clientModel) {
+    public synchronized void setClientModel(ClientModel clientModel) {
         this.networkClientModel = clientModel;
     }
 
@@ -51,7 +52,7 @@ public class CliView implements View{
     // ad esempio sono nello stato WelcomeScreen e faccio "view.setCallingState(this)"
     // Non è altro che il pattern Observer riadattato per il pattern State
     @Override
-    public void setCallingState(State callingState) {
+    public synchronized void setCallingState(State callingState) {
         this.callingState = callingState;
     }
 
@@ -156,7 +157,7 @@ public class CliView implements View{
 
     // Il server mi invia una richiesta di interazione: devo digitare roba da terminale
 
-    public void requestPing(){
+    public synchronized void requestPing(){
         try {
             TimeUnit.SECONDS.sleep(1);
             Network.setClientModel(networkClientModel);
@@ -1152,7 +1153,7 @@ public class CliView implements View{
 
     // Qualcun altro sta interagendo con il terminale: devo gestire il tempo di attesa
     // Esempio "pippo: sta salutando"
-    public void requestToOthers() {
+    public synchronized void requestToOthers() {
         String message = null;
         switch (networkClientModel.getTypeOfRequest()) {
             case "CHOOSEASSISTANTCARD":
@@ -1178,7 +1179,7 @@ public class CliView implements View{
 
     // Qualcun altro ha risposto al server: devo mostrare a schermo un'interpretazione della risposta
     // Esempio "pippo: ha salutato"
-    public void response(){
+    public synchronized void response(){
         switch(networkClientModel.getTypeOfRequest()) {
             case "CHOOSEASSISTANTCARD":
                 setResponce("Il giocatore " + networkClientModel.getNickname()+" ha scelto " +

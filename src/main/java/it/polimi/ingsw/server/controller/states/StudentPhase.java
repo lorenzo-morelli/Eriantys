@@ -116,19 +116,18 @@ public class StudentPhase extends State {
 
             boolean responseReceived = false;
             while (!responseReceived) {
-                synchronized (this) {
+                System.out.println("ancora qua");
                     if (!fromPing) {
                         message = new ParametersFromNetwork(1);
                         message.enable();
                     }
-                }
                 while (!message.parametersReceived()) {
+                    System.out.println("non arrivato nulla");
                     message.waitParametersReceived(5);
                     if (disconnected) {
                         break;
                     }
                 }
-                synchronized (this) {
                     if (disconnected || (json.fromJson(message.getParameter(0), ClientModel.class).getClientIdentity() == currentPlayerData.getClientIdentity() && !json.fromJson(message.getParameter(0), ClientModel.class).isPingMessage())) {
                         responseReceived = true;
                         if (disconnected) {
@@ -147,21 +146,19 @@ public class StudentPhase extends State {
                                 }
                             }
                             for(int k=0;k<model.getTable().getClouds().size();k++) {
-                                if(model.getTable().getClouds().get(k).getStudentsAccumulator().size()==0)
+                                if(model.getTable().getClouds().get(k).getStudentsAccumulator().size()!=0)
                                 {
+                                    currentPlayer.getSchoolBoard().load_entrance(model.getTable().getClouds().get(k),model.getTable().getClouds());
                                     model.getTable().getClouds().remove(k);
                                     break;
                                 }
-                            }
-                            if(model.getTable().getClouds().size()==model.getNumberOfPlayers()){
-                                model.getTable().getClouds().remove(0);
                             }
                             break;
                         } else {
                             ping.interrupt();
                         }
                     }
-                }
+                    fromPing=false;
             }
 
             //codice effettivo della fase se non si è disconnesso

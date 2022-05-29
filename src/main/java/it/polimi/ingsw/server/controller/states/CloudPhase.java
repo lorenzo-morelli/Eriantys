@@ -125,19 +125,16 @@ public class CloudPhase extends State {
 
         boolean responseReceived = false;
         while (!responseReceived) {
-            synchronized (this) {
                 if(!fromPing) {
                     message = new ParametersFromNetwork(1);
                     message.enable();
                 }
-            }
             while (!message.parametersReceived()) {
                 message.waitParametersReceived(5);
                 if (disconnected) {
                     break;
                 }
             }
-            synchronized (this) {
                 if (disconnected || (json.fromJson(message.getParameter(0), ClientModel.class).getClientIdentity() == currentPlayerData.getClientIdentity() && !json.fromJson(message.getParameter(0), ClientModel.class).isPingMessage())) {
                     responseReceived = true;
                     if(disconnected){
@@ -160,7 +157,7 @@ public class CloudPhase extends State {
                         ping.interrupt();
                     }
                 }
-            }
+                fromPing=false;
         }
 
         //codice effettivo della fase se non si è disconnesso

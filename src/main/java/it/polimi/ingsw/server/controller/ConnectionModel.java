@@ -9,7 +9,9 @@ import java.util.ArrayList;
  */
 
 public class ConnectionModel {
-    ArrayList<ClientModel> clientsInfo;
+    private ArrayList<ClientModel> clientsInfo;
+
+    private boolean closeThred=false;
 
     public ConnectionModel() {
         clientsInfo = new ArrayList<>();
@@ -46,5 +48,19 @@ public class ConnectionModel {
 
     public void empty(){
         clientsInfo.clear();
+    }
+
+    public void close(){
+        empty();
+        closeThred=true;
+    }
+
+
+    public boolean isCloseThred() {
+        return closeThred;
+    }
+
+    public void setCloseThred(boolean closeThred) {
+        this.closeThred = closeThred;
     }
 }

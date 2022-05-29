@@ -65,7 +65,10 @@ public class WaitFirstPlayerGameInfo extends State {
             ClientModel clientModel = json.fromJson(message.getParameter(0), ClientModel.class);
 
             // rimemorizzo le info nel mio database locale
-            connectionModel.getClientsInfo().set(0, clientModel);
+            ClientModel target= connectionModel.findPlayer(clientModel.getNickname());
+            connectionModel.change(target,clientModel);
+
+            connectionModel.getClientsInfo().removeIf(c -> c!=clientModel);
 
             System.out.println("E sono " + clientModel.getGameMode() + " " + clientModel.getNumofplayer());
 

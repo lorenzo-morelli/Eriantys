@@ -21,7 +21,6 @@ import java.util.concurrent.TimeUnit;
 public class CreateGame extends State {
     private final Event gameCreated, fourPlayersGameCreated;
     private Model model;
-
     private final ConnectionModel connectionModel;
     private final ServerController serverController;
     private final Event reset = new ClientDisconnection();
@@ -67,8 +66,13 @@ public class CreateGame extends State {
         serverController.setModel(model);
 
         Thread t= new Thread(){
-            public void run() {
+            public synchronized void run() {
                 while (true) {
+                    if(connectionModel.isCloseThred()){
+                        connectionModel.setCloseThred(false);
+                        return;
+                    }
+                    System.out.println("in loop");
                     ParametersFromNetwork message = new ParametersFromNetwork(1);
                     message.enable();
                     try {
@@ -79,9 +83,8 @@ public class CreateGame extends State {
                     //System.out.println("check disconnessione");
                     Gson json = new Gson();
                     ClientModel receivedClientModel = json.fromJson(message.getParameter(0), ClientModel.class);
-                    synchronized (this) {
 
-                        if(receivedClientModel.getAmIfirst()==null) {
+                        if(receivedClientModel.getAmIfirst()==null && !connectionModel.isCloseThred()) {
                             boolean check = false;
 
                             for (Player p : getModel().getPlayers()) {
@@ -120,14 +123,21 @@ public class CreateGame extends State {
                                             model.setDisconnection(false);
                                             model.getTable().getClouds().add(new Cloud(model.getNumberOfPlayers()));
                                             model.getTable().getClouds().get(model.getTable().getClouds().size()-1).charge(model.getTable().getBag());
+                                            System.out.println("accepted");
+                                            break;
                                         }
                                     }
                                 }
                             }
                         }
+                    System.out.println("exit loop");
+                        try {
+                            sleep(5000);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                 }
-            }
         };
         t.start();
         gameCreated.fireStateEvent();

@@ -3,8 +3,8 @@ package it.polimi.ingsw.server.model;
 import it.polimi.ingsw.server.model.enums.TowerColor;
 
 public class Team {
-    private final Player player1;
-    private final Player player2;
+    private Player player1;
+    private Player player2;
     private final int teamNumber;
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_BLACK = "\u001B[30m";
@@ -23,6 +23,17 @@ public class Team {
         return player2;
     }
 
+    public int setPlayer(Player player){
+        if(player1==null){
+            player1=player;
+            return 1;
+        }
+        else {
+            player2=player;
+            return 2;
+        }
+    }
+
     public int getTeamNumber() {
         return teamNumber;
     }
@@ -31,7 +42,7 @@ public class Team {
     }
 
     public String toString(String player,String actualplayer) {
-        //System.out.println(player);
+
         StringBuilder result = new StringBuilder();
         result.append("  TEAM ").append(teamNumber).append(" \n\n");
         if (getPlayer1().getNickname().equals(actualplayer)) {
@@ -63,7 +74,7 @@ public class Team {
         if(getPlayer1().getNickname().equals(player) || getPlayer1().getNickname().equals(actualplayer)){
             result.append("\n");
         }
-        result.append(getPlayer1().toString());
+        result.append(getPlayer1().toString(actualplayer));
 
         if (getPlayer2().getNickname().equals(actualplayer)) {
             switch (getPlayer2().getSchoolBoard().getTowerColor()) {
@@ -95,7 +106,7 @@ public class Team {
             result.append("\n");
         }
         assert player1 != null;
-        result.append(getPlayer2().toString()).append("    TOWERS : ").append(player1.getSchoolBoard().getNumOfTowers()).append("\n").append("    TOWER COLOR : ").append(player1.getSchoolBoard().getTowerColor() == null ? " Null" : (player1.getSchoolBoard().getTowerColor() == TowerColor.GREY ? ANSI_GRAY + player1.getSchoolBoard().getTowerColor() + ANSI_RESET : (player1.getSchoolBoard().getTowerColor() == TowerColor.WHITE ? ANSI_WHITE + player1.getSchoolBoard().getTowerColor() + ANSI_RESET : ANSI_BLACK + player1.getSchoolBoard().getTowerColor() + ANSI_RESET))).append("\n\n\n");
+        result.append(getPlayer2().toString(actualplayer)).append("    TOWERS : ").append(player1.getSchoolBoard().getNumOfTowers()).append("\n").append("    TOWER COLOR : ").append(player1.getSchoolBoard().getTowerColor() == null ? " Null" : (player1.getSchoolBoard().getTowerColor() == TowerColor.GREY ? ANSI_GRAY + player1.getSchoolBoard().getTowerColor() + ANSI_RESET : (player1.getSchoolBoard().getTowerColor() == TowerColor.WHITE ? ANSI_WHITE + player1.getSchoolBoard().getTowerColor() + ANSI_RESET : ANSI_BLACK + player1.getSchoolBoard().getTowerColor() + ANSI_RESET))).append("\n\n\n");
         return result.toString();
     }
 
