@@ -3,6 +3,7 @@ package it.polimi.ingsw.client;
 import com.google.gson.Gson;
 import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.client.view.View;
+import it.polimi.ingsw.server.model.AssistantCard;
 import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.stateMachine.State;
 import javafx.application.Application;
@@ -19,11 +20,13 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
-public class GUI extends Application implements View {
+public class GUI extends Application{
     public Stage stage;
     public Scene scene;
     private static ClientModel clientModel = new ClientModel();
     private ClientModel networkClientModel;
+    public static String gameState;
+    public static String messageToOthers = "aa";
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -76,46 +79,57 @@ public class GUI extends Application implements View {
         return clientModel;
     }
 
-    @Override
-    public void setCallingState(State callingState) {
-
-    }
-
     public void setClientModel(ClientModel clientModel) {
         GUI.clientModel = clientModel;
     }
 
-    @Override
-    public void askToStart() throws InterruptedException {
 
-    }
-
-    @Override
-    public void askDecision(String option1, String option2) throws InterruptedException {
-
-    }
-
-    @Override
-    public void askParameters() throws InterruptedException {
-
-    }
-
-    @Override
-    public void requestToMe() throws InterruptedException {
+    public void requestToMe(Node node) throws InterruptedException, IOException {
         Network.setClientModel(networkClientModel);
+
+        switch (networkClientModel.getTypeOfRequest()) {
+            case "TRYTORECONNECT":
+                System.out.println("boh");
+                break;
+            case "DISCONNECTION":
+                System.out.println("boh");
+                break;
+            case "CHOOSEASSISTANTCARD":
+                System.out.println("assistent!");
+                gameState = "Assistant Card phase";
+                changeScene("ChooseAssistantCard", node);
+                break;
+
+        }
     }
 
-    @Override
     public void requestToOthers() throws IOException {
-
+        switch (networkClientModel.getTypeOfRequest()) {
+            case "CHOOSEASSISTANTCARD":
+                messageToOthers = "L'utente " + networkClientModel.getNickname() + " sta scegliendo la carta assistente";
+                break;
+            case "CHOOSEWHERETOMOVESTUDENTS":
+                messageToOthers = "L'utente " + networkClientModel.getNickname() + " sta scegliendo dove muovere lo studente";
+                break;
+            case "TEAMMATE":
+                messageToOthers = "L'utente " + networkClientModel.getNickname() + " sta scegliendo il suo compagno di squadra";
+                break;
+            case "CHOOSEWHERETOMOVEMOTHER":
+                messageToOthers = "L'utente " + networkClientModel.getNickname() + " sta scegliendo il numero di mosse di cui far spostare madre natura";
+                break;
+            case "CHOOSECLOUDS":
+                messageToOthers = "L'utente " + networkClientModel.getNickname() + " sta scegliendo la nuvola dalla quale ricaricare gli studenti";
+                break;
+        }
+        if (!networkClientModel.getTypeOfRequest().equals("TEAMMATE") && networkClientModel.getServermodel()!=null) {
+            //todo: what?
+        }
     }
 
-    @Override
     public void response() throws IOException {
 
     }
 
-    @Override
     public void requestPing() {
         try {
             TimeUnit.SECONDS.sleep(1);
