@@ -90,7 +90,7 @@ public class SetupGame implements Initializable {
 
             Thread t = new Thread(){
                 public synchronized void run() {
-                    System.out.println("invio il model...");
+                    System.out.println("ricevo il model...");
                     ClientModel tryreceivedClientModel = gson.fromJson(message.getParameter(0), ClientModel.class);
 
                     if(Objects.equals(tryreceivedClientModel.getTypeOfRequest(), "CONNECTTOEXISTINGGAME")){
