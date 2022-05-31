@@ -23,7 +23,7 @@ public class Player implements Comparable<Player>{
         this.availableCards = new Deck();
         this.choosedCard = null;
         this.schoolBoard = new SchoolBoard(model.getNumberOfPlayers(), model.getTable().getBag(),model.getTable().getAvaiableTowerColor());
-        if(model.getGameMode().equals(GameMode.EXPERT) ) this.coins = 1; //todo: modificato per testing: reale valore 1
+        if(model.getGameMode().equals(GameMode.EXPERT) ) this.coins = 100; //todo: modificato per testing: reale valore 1
         else{coins=-1;}
         isDisconnected=false;
     }
