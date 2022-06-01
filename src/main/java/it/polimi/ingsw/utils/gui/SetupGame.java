@@ -118,76 +118,107 @@ public class SetupGame implements Initializable {
                 message.enable();
                 message.waitParametersReceived();
 
-                Thread t = new Thread(){
-                    @Override
-                    public synchronized void run() {
-                        System.out.println("ricevo un model...");
-                        ClientModel tryreceivedClientModel = gson.fromJson(message.getParameter(0), ClientModel.class);
+                System.out.println("ricevo un model...");
+                ClientModel tryreceivedClientModel = gson.fromJson(message.getParameter(0), ClientModel.class);
 
-                        if (!Objects.equals(tryreceivedClientModel.getTypeOfRequest(), "CONNECTTOEXISTINGGAME")) {
+                if (!Objects.equals(tryreceivedClientModel.getTypeOfRequest(), "CONNECTTOEXISTINGGAME")) {
 
-                            receivedClientModel = tryreceivedClientModel;
+                    receivedClientModel = tryreceivedClientModel;
 
-                            if (Network.disconnectedClient()) {
-                                Network.disconnect();
-                                System.out.println("Il gioco è terminato a causa della disconnessione di un client");
-                                isToReset = true;
-                            }
+                    if (Network.disconnectedClient()) {
+                        Network.disconnect();
+                        System.out.println("Il gioco è terminato a causa della disconnessione di un client");
+                        isToReset = true;
+                    }
 
-                            if (receivedClientModel.isGameStarted().equals(true) && receivedClientModel.NotisKicked()) {
-                                System.out.println("gioco iniziato");
+                    if (receivedClientModel.isGameStarted().equals(true) && receivedClientModel.NotisKicked()) {
+                        System.out.println("gioco iniziato");
 
-                                // Il messaggio è o una richiesta o una risposta
+                        // Il messaggio è o una richiesta o una risposta
 
-                                // se il messaggio non è una risposta di un client al server vuol dire che
-                                if (receivedClientModel.isResponse().equals(false) && receivedClientModel.getTypeOfRequest() != null) {
-                                    // il messaggio è una richiesta del server alla view di un client
+                        // se il messaggio non è una risposta di un client al server vuol dire che
+                        if (receivedClientModel.isResponse().equals(false) && receivedClientModel.getTypeOfRequest() != null) {
+                            // il messaggio è una richiesta del server alla view di un client
 
-                                    // se il messaggio è rivolto a me devo essere io a compiere l'azione
-                                    if (receivedClientModel.getClientIdentity() == gui.getClientModel().getClientIdentity()) {
-                                        // il messaggio è rivolto a me
-                                        if (receivedClientModel.isPingMessage()) {
-                                            gui.requestPing();
-                                        } else {
-                                            try {
-                                                System.out.println("request to me");
-                                                gui.setClientModel(receivedClientModel);
-                                                gui.requestToMe(otherPlayersLabel);
-                                                //gui.changeScene("ChooseAssistantCard", otherPlayersLabel);
-                                            } catch (InterruptedException | IOException e) {
-                                                throw new RuntimeException(e);
+                            // se il messaggio è rivolto a me devo essere io a compiere l'azione
+                            if (receivedClientModel.getClientIdentity() == gui.getClientModel().getClientIdentity()) {
+                                // il messaggio è rivolto a me
+                                    try {
+                                        System.out.println("request to me");
+                                        Thread t = new Thread() {
+                                            public synchronized void run() {
+                                                while (true){
+                                                    ParametersFromNetwork message = new ParametersFromNetwork(1);
+                                                    message.enable();
+                                                    try {
+                                                        message.waitParametersReceived();
+                                                    } catch (InterruptedException e) {
+                                                        throw new RuntimeException(e);
+                                                    }
+
+                                                    System.out.println("ricevuto un ping...");
+                                                    ClientModel tryreceivedClientModel = gson.fromJson(message.getParameter(0), ClientModel.class);
+
+                                                    if (!Objects.equals(tryreceivedClientModel.getTypeOfRequest(), "CONNECTTOEXISTINGGAME")) {
+
+                                                        receivedClientModel = tryreceivedClientModel;
+
+                                                        if (receivedClientModel.isGameStarted().equals(true) && receivedClientModel.NotisKicked()) {
+                                                            // Il messaggio è o una richiesta o una risposta
+
+                                                            // se il messaggio non è una risposta di un client al server vuol dire che
+                                                            if (receivedClientModel.isResponse().equals(false) && receivedClientModel.getTypeOfRequest() != null) {
+                                                                // il messaggio è una richiesta del server alla view di un client
+
+                                                                // se il messaggio è rivolto a me devo essere io a compiere l'azione
+                                                                if (receivedClientModel.getClientIdentity() == gui.getClientModel().getClientIdentity()) {
+                                                                    // il messaggio è rivolto a me
+                                                                    if (receivedClientModel.isPingMessage()) {
+                                                                        gui.requestPing();
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
                                             }
-                                        }
-                                    } else {
-                                        // altrimenti devo limitarmi a segnalare che l'altro giocatore sta facendo qualcosa
-                                        if (receivedClientModel.getTypeOfRequest() != null &&
-                                                !receivedClientModel.isPingMessage() && !Objects.equals(receivedClientModel.getTypeOfRequest(), "TRYTORECONNECT") && !Objects.equals(receivedClientModel.getTypeOfRequest(), "DISCONNECTION")) {
-                                            try {
-                                                System.out.println("request to others");
-                                                gui.setClientModel(receivedClientModel);
-                                                gui.requestToOthers(otherPlayersLabel);
-                                                gui.changeScene("ChooseAssistantCard", otherPlayersLabel);
-                                            } catch (IOException e) {
-                                                throw new RuntimeException(e);
-                                            }
-                                        }
+                                        };
+                                        t.start();
+                                        gui.setClientModel(receivedClientModel);
+                                        gui.requestToMe(otherPlayersLabel);
+                                        wait();
+                                        t.interrupt();
+                                        //gui.changeScene("ChooseAssistantCard", otherPlayersLabel);
+                                    } catch (InterruptedException | IOException e) {
+                                        throw new RuntimeException(e);
                                     }
                                 }
-                                // altrimenti il messaggio è una risposta di un altro client ad un server
-                                else if (receivedClientModel.isResponse().equals(true) && receivedClientModel.getTypeOfRequest() != null) {
+                            } else {
+                                // altrimenti devo limitarmi a segnalare che l'altro giocatore sta facendo qualcosa
+                                if (receivedClientModel.getTypeOfRequest() != null &&
+                                        !receivedClientModel.isPingMessage() && !Objects.equals(receivedClientModel.getTypeOfRequest(), "TRYTORECONNECT") && !Objects.equals(receivedClientModel.getTypeOfRequest(), "DISCONNECTION")) {
                                     try {
-                                        System.out.println("response");
+                                        System.out.println("request to others");
                                         gui.setClientModel(receivedClientModel);
-                                        gui.response();
+                                        gui.requestToOthers(otherPlayersLabel);
+                                        gui.changeScene("ChooseAssistantCard", otherPlayersLabel);
                                     } catch (IOException e) {
                                         throw new RuntimeException(e);
                                     }
                                 }
                             }
                         }
+                        // altrimenti il messaggio è una risposta di un altro client ad un server
+                        else if (receivedClientModel.isResponse().equals(true) && receivedClientModel.getTypeOfRequest() != null) {
+                            try {
+                                System.out.println("response");
+                                gui.setClientModel(receivedClientModel);
+                                gui.response();
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
                     }
-                };
-                t.start();
 
             } while (!isToReset);
         }

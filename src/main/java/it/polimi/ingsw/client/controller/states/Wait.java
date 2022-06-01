@@ -49,7 +49,20 @@ public class Wait extends State {
 
         ParametersFromNetwork message = new ParametersFromNetwork(1);
         message.enable();
-        message.waitParametersReceived();
+
+        long start = System.currentTimeMillis();
+        long end = start + 15 * 1000L;
+        boolean check=true;
+
+        while (check || System.currentTimeMillis()>=end){
+            check=message.waitParametersReceived(5);
+        }
+
+        if(System.currentTimeMillis()>=end){
+            System.out.println("Server non piu raggiungibile");
+            reset.fireStateEvent();
+            return super.entryAction(cause);
+        }
         Thread t = new Thread(){
             public synchronized void run() {
                 ClientModel TryreceivedClientModel = json.fromJson(message.getParameter(0), ClientModel.class);

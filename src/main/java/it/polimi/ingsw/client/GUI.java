@@ -100,16 +100,9 @@ public class GUI extends Application{
                 System.out.println("assistent!");
                 gameState = "Assistant Card phase";
                 changeScene("ChooseAssistantCard", node);
-//                Platform.runLater(() -> {
-//                    try {
-//                        changeScene("ChooseAssistantCard", node);
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                });
                 break;
-
         }
+        notifyAll();
     }
 
     public synchronized void requestToOthers(Node node) throws IOException {
