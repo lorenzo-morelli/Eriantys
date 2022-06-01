@@ -5,6 +5,7 @@ import it.polimi.ingsw.client.GUI;
 import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -117,7 +118,8 @@ public class SetupGame implements Initializable {
                 message.enable();
                 message.waitParametersReceived();
 
-                Thread t = new Thread() {
+                Thread t = new Thread(){
+                    @Override
                     public synchronized void run() {
                         System.out.println("ricevo un model...");
                         ClientModel tryreceivedClientModel = gson.fromJson(message.getParameter(0), ClientModel.class);
@@ -151,6 +153,7 @@ public class SetupGame implements Initializable {
                                                 System.out.println("request to me");
                                                 gui.setClientModel(receivedClientModel);
                                                 gui.requestToMe(otherPlayersLabel);
+                                                //gui.changeScene("ChooseAssistantCard", otherPlayersLabel);
                                             } catch (InterruptedException | IOException e) {
                                                 throw new RuntimeException(e);
                                             }
@@ -162,7 +165,8 @@ public class SetupGame implements Initializable {
                                             try {
                                                 System.out.println("request to others");
                                                 gui.setClientModel(receivedClientModel);
-                                                gui.requestToOthers();
+                                                gui.requestToOthers(otherPlayersLabel);
+                                                gui.changeScene("ChooseAssistantCard", otherPlayersLabel);
                                             } catch (IOException e) {
                                                 throw new RuntimeException(e);
                                             }
@@ -182,7 +186,7 @@ public class SetupGame implements Initializable {
                             }
                         }
                     }
-                    };
+                };
                 t.start();
 
             } while (!isToReset);

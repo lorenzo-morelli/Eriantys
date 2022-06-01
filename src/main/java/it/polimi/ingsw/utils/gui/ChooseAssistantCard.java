@@ -1,4 +1,4 @@
-package it.polimi.ingsw.utils.gui.windows;
+package it.polimi.ingsw.utils.gui;
 
 import javafx.fxml.Initializable;
 

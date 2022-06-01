@@ -1,4 +1,4 @@
-package it.polimi.ingsw.utils.gui.windows;
+package it.polimi.ingsw.utils.gui;
 
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -13,6 +13,6 @@ public class Wait implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        label.setText(messageToOthers);
+        //label.setText(messageToOthers);
     }
 }

@@ -7,6 +7,7 @@ import it.polimi.ingsw.server.model.AssistantCard;
 import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.stateMachine.State;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -41,7 +42,7 @@ public class GUI extends Application{
         }
     }
 
-    public void changeScene(String newScene, Node node) throws IOException {
+    public synchronized void changeScene(String newScene, Node node) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/" + newScene + ".fxml"));
         this.stage = (Stage) node.getScene().getWindow();
         this.scene = new Scene(loader.load());
@@ -53,7 +54,7 @@ public class GUI extends Application{
         this.stage.show();
     }
 
-    public void openNewWindow(String newWindow) {
+    public synchronized void openNewWindow(String newWindow) {
         try {
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/windows/" + newWindow + ".fxml")));
             Stage stage = new Stage();
@@ -64,7 +65,7 @@ public class GUI extends Application{
         }
     }
 
-    public void closeWindow(MouseEvent mouseEvent) {
+    public synchronized void closeWindow(MouseEvent mouseEvent) {
         final Node source = (Node) mouseEvent.getSource();
         final Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
@@ -79,12 +80,12 @@ public class GUI extends Application{
         return clientModel;
     }
 
-    public void setClientModel(ClientModel clientModel) {
+    public synchronized void setClientModel(ClientModel clientModel) {
         GUI.clientModel = clientModel;
     }
 
 
-    public void requestToMe(Node node) throws InterruptedException, IOException {
+    public synchronized void requestToMe(Node node) throws InterruptedException, IOException {
 
         Network.setClientModel(GUI.clientModel);
 
@@ -99,15 +100,30 @@ public class GUI extends Application{
                 System.out.println("assistent!");
                 gameState = "Assistant Card phase";
                 changeScene("ChooseAssistantCard", node);
+//                Platform.runLater(() -> {
+//                    try {
+//                        changeScene("ChooseAssistantCard", node);
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                });
                 break;
 
         }
     }
 
-    public void requestToOthers() throws IOException {
+    public synchronized void requestToOthers(Node node) throws IOException {
         switch (GUI.clientModel.getTypeOfRequest()) {
             case "CHOOSEASSISTANTCARD":
                 messageToOthers = "L'utente " + GUI.clientModel.getNickname() + " sta scegliendo la carta assistente";
+//                Platform.runLater(() -> {
+//                    try {
+//                        changeScene("ChooseAssistantCard", node);
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                });
+                changeScene("ChooseAssistantCard", node);
                 break;
             case "CHOOSEWHERETOMOVESTUDENTS":
                 messageToOthers = "L'utente " + GUI.clientModel.getNickname() + " sta scegliendo dove muovere lo studente";
@@ -127,11 +143,11 @@ public class GUI extends Application{
         }
     }
 
-    public void response() throws IOException {
+    public synchronized void response() throws IOException {
 
     }
 
-    public void requestPing() {
+    public synchronized void requestPing() {
         try {
             TimeUnit.SECONDS.sleep(1);
             Network.setClientModel(GUI.clientModel);
