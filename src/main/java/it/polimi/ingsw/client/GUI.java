@@ -24,7 +24,6 @@ public class GUI extends Application{
     public Stage stage;
     public Scene scene;
     private static ClientModel clientModel = new ClientModel();
-    private ClientModel networkClientModel;
     public static String gameState;
     public static String messageToOthers = "aa";
 
@@ -73,6 +72,7 @@ public class GUI extends Application{
 
     public static void main(String[] args) {
         launch(args);
+        GUI.clientModel=new ClientModel();
     }
 
     public ClientModel getClientModel() {
@@ -85,14 +85,15 @@ public class GUI extends Application{
 
 
     public void requestToMe(Node node) throws InterruptedException, IOException {
-        Network.setClientModel(networkClientModel);
 
-        switch (networkClientModel.getTypeOfRequest()) {
+        Network.setClientModel(GUI.clientModel);
+
+        switch (GUI.clientModel.getTypeOfRequest()) {
             case "TRYTORECONNECT":
                 System.out.println("boh");
                 break;
             case "DISCONNECTION":
-                System.out.println("boh");
+                System.out.println("boh2");
                 break;
             case "CHOOSEASSISTANTCARD":
                 System.out.println("assistent!");
@@ -104,25 +105,25 @@ public class GUI extends Application{
     }
 
     public void requestToOthers() throws IOException {
-        switch (networkClientModel.getTypeOfRequest()) {
+        switch (GUI.clientModel.getTypeOfRequest()) {
             case "CHOOSEASSISTANTCARD":
-                messageToOthers = "L'utente " + networkClientModel.getNickname() + " sta scegliendo la carta assistente";
+                messageToOthers = "L'utente " + GUI.clientModel.getNickname() + " sta scegliendo la carta assistente";
                 break;
             case "CHOOSEWHERETOMOVESTUDENTS":
-                messageToOthers = "L'utente " + networkClientModel.getNickname() + " sta scegliendo dove muovere lo studente";
+                messageToOthers = "L'utente " + GUI.clientModel.getNickname() + " sta scegliendo dove muovere lo studente";
                 break;
             case "TEAMMATE":
-                messageToOthers = "L'utente " + networkClientModel.getNickname() + " sta scegliendo il suo compagno di squadra";
+                messageToOthers = "L'utente " + GUI.clientModel.getNickname() + " sta scegliendo il suo compagno di squadra";
                 break;
             case "CHOOSEWHERETOMOVEMOTHER":
-                messageToOthers = "L'utente " + networkClientModel.getNickname() + " sta scegliendo il numero di mosse di cui far spostare madre natura";
+                messageToOthers = "L'utente " + GUI.clientModel.getNickname() + " sta scegliendo il numero di mosse di cui far spostare madre natura";
                 break;
             case "CHOOSECLOUDS":
-                messageToOthers = "L'utente " + networkClientModel.getNickname() + " sta scegliendo la nuvola dalla quale ricaricare gli studenti";
+                messageToOthers = "L'utente " + GUI.clientModel.getNickname() + " sta scegliendo la nuvola dalla quale ricaricare gli studenti";
                 break;
         }
-        if (!networkClientModel.getTypeOfRequest().equals("TEAMMATE") && networkClientModel.getServermodel()!=null) {
-            //todo: what?
+        if (!GUI.clientModel.getTypeOfRequest().equals("TEAMMATE") && GUI.clientModel.getServermodel()!=null) {
+            //todo: what?  -> just ignore
         }
     }
 
@@ -133,10 +134,10 @@ public class GUI extends Application{
     public void requestPing() {
         try {
             TimeUnit.SECONDS.sleep(1);
-            Network.setClientModel(networkClientModel);
+            Network.setClientModel(GUI.clientModel);
             Gson json = new Gson();
-            networkClientModel.setPingMessage(true);
-            Network.send(json.toJson(networkClientModel));
+            GUI.clientModel.setPingMessage(true);
+            Network.send(json.toJson(GUI.clientModel));
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

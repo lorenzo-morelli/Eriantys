@@ -65,6 +65,7 @@ public class AmIFirst extends State {
                 System.exit(0);
             }
 
+
             // se il messaggio è rivolto a me allora ho ricevuto l'ack, altrimenti reinvio e riattendo
             if (json.fromJson(response.getParameter(0), ClientModel.class).getClientIdentity() == clientModel.getClientIdentity()) {
                 responseReceived = true;

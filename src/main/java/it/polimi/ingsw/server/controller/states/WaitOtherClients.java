@@ -1,7 +1,6 @@
 package it.polimi.ingsw.server.controller.states;
 
 import com.google.gson.Gson;
-import it.polimi.ingsw.client.controller.events.ClientDisconnection;
 import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.server.controller.ConnectionModel;
 import it.polimi.ingsw.server.controller.ServerController;
@@ -20,7 +19,6 @@ public class WaitOtherClients extends State {
     private ParametersFromNetwork message;
 
     private final Event twoOrThreeClientsConnected;
-    private final Event reset = new ClientDisconnection();
     private final Event fourClientsConnected;
 
     public WaitOtherClients(ServerController serverController) {
@@ -34,10 +32,6 @@ public class WaitOtherClients extends State {
         fourClientsConnected.setStateEventListener(controller);
         twoOrThreeClientsConnected= new Event("2 o 3 clients sono collegati e pronti a giocare");
         twoOrThreeClientsConnected.setStateEventListener(controller);
-        reset.setStateEventListener(controller);
-    }
-    public Event getReset() {
-        return reset;
     }
 
     public Event twoOrThreeClientsConnected() {
@@ -61,10 +55,6 @@ public class WaitOtherClients extends State {
             message.enable();
             while (!message.parametersReceived()) {
                 message.waitParametersReceived(10);
-                if(Network.disconnectedClient()){
-                    reset.fireStateEvent();
-                    return super.entryAction(cause);
-                }
             }
             // Converti il messaggio stringa json in un oggetto clientModel
             clientModel = json.fromJson(message.getParameter(0), ClientModel.class);

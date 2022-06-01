@@ -53,9 +53,8 @@ public class ServerController {
         fsm.addTransition(endTurn, endTurn.goToAssistentCardPhase(), assistantCardPhase);
         fsm.addTransition(endGame, endGame.getRestart(), waitFirstPlayer);
 
-        // gestione disconnessione di un client
+        // gestione disconnessione di un client durante il setup
         fsm.addTransition(waitFirstPlayerGameInfo, waitFirstPlayerGameInfo.getReset(), waitFirstPlayer);
-        fsm.addTransition(waitOtherClients, waitOtherClients.getReset(), waitFirstPlayer);
 
 
         // L'evento di start è l'unico che deve essere fatto partire manualmente

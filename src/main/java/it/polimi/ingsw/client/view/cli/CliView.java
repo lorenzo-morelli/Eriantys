@@ -170,7 +170,7 @@ public class CliView implements View{
     }
 
     public void requestToMe() throws InterruptedException {
-        Network.setClientModel(networkClientModel);  ///todo: gui
+        Network.setClientModel(networkClientModel);
         // Quando il client ha una richiesta di interazione deve inviare messaggi di ping per informare il server che è vivo
 
         switch(networkClientModel.getTypeOfRequest()){
@@ -205,12 +205,12 @@ public class CliView implements View{
                     requestToMe();
                     return;
                 }
-                networkClientModel.setCardChoosedValue(Float.parseFloat(CommandPrompt.gotFromTerminal())); //todo: gui
+                networkClientModel.setCardChoosedValue(Float.parseFloat(CommandPrompt.gotFromTerminal()));
                 networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
                 networkClientModel.setPingMessage(false);
                 networkClientModel.setFromTerminal(parsedStrings);
                 Gson json = new Gson();
-                Network.send(json.toJson(networkClientModel));   //todo:gui until here
+                Network.send(json.toJson(networkClientModel));
 
                 break;
             case "CHOOSEWHERETOMOVESTUDENTS" :
@@ -1097,7 +1097,6 @@ public class CliView implements View{
                     json = new Gson();
                     Network.send(json.toJson(networkClientModel));
                 }
-
                 break;
 
             case "CHOOSECLOUDS" :

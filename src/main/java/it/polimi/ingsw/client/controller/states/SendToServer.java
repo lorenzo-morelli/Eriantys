@@ -36,13 +36,28 @@ public class SendToServer extends State{
 
     public void checkAck() throws Exception {
 
-        ack.enable();
-        ack.waitParametersReceived();
-        //System.out.println("[Conferma ricevuta]");
+        boolean responseReceived=false;
+        long start = System.currentTimeMillis();
+        long end = start + 15 * 1000L;
+        while (!responseReceived) {
+            // invio al server il mio modello
 
+            ack.enable();
+            boolean check =ack.waitParametersReceived(5);
+
+            if(check || System.currentTimeMillis()>=end){
+                System.out.println("\n\nServer non ha dato risposta");
+                Network.disconnect();
+                System.exit(0);
+            }
+
+
+            // se il messaggio è rivolto a me allora ho ricevuto l'ack, altrimenti reinvio e riattendo
+            if (json.fromJson(ack.getParameter(0), ClientModel.class).getClientIdentity() == clientModel.getClientIdentity()) {
+                responseReceived = true;
+            }
+        }
         System.out.println("In attesa che gli altri giocatori si colleghino...");
-        System.out.println(ack.getParameter(0));
         ack.fireStateEvent();
-
     }
 }

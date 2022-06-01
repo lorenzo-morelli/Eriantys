@@ -42,14 +42,18 @@ public class WaitFirstPlayerGameInfo extends State {
         boolean messageReceived = false;
         System.out.println("[Non ho ancora ricevuto niente]");
 
+        long start = System.currentTimeMillis();
+        long end = start + 15 * 1000L;
+
         while (!messageReceived) {
             message.enable();
-            while (!message.parametersReceived()) {
-                message.waitParametersReceived(10);
-                if(Network.disconnectedClient()){
-                    reset.fireStateEvent();
-                    return super.entryAction(cause);
-                }
+            boolean check =message.waitParametersReceived(20);
+
+            if((check || System.currentTimeMillis()>=end) && Network.disconnectedClient()){
+                System.out.println("\n\nGiocatore non ha dato risposta, chiudo il gioco");
+                connectionModel.close();
+                getReset().fireStateEvent();
+                return super.entryAction(cause);
             }
             // controllo se il messaggio è arrivato proprio dal primo client
             if (json.fromJson(message.getParameter(0), ClientModel.class).getClientIdentity() == connectionModel.getClientsInfo().get(0).getClientIdentity()) {
