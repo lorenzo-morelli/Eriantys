@@ -147,12 +147,13 @@ public class MotherPhase extends State {
 
             boolean responseReceived = false;
             while (!responseReceived) {
+                //System.out.println("another one");
                     if (!fromPing) {
                         message = new ParametersFromNetwork(1);
                         message.enable();
                 }
                 while (!message.parametersReceived()) {
-                    System.out.println("non arrivato nulla");
+                    //System.out.println("loop");
                     message.waitParametersReceived(5);
                     if (disconnected) {
                         break;
@@ -187,7 +188,7 @@ public class MotherPhase extends State {
 
                 currentPlayerData = json.fromJson(message.getParameter(0), ClientModel.class);
                 String type = currentPlayerData.getTypeOfRequest();
-                System.out.println("HO RICEVUTO " + type);
+                //System.out.println("HO RICEVUTO " + type);
                 if (type.equals("MOTHER")) {
                     // Si suppone che il client abblia scelto il numero di mosse (passi da far fare a madre natura)
                     int moves = currentPlayerData.getChoosedMoves();
@@ -344,7 +345,7 @@ public class MotherPhase extends State {
                     }
                 }
                 if(check<=1){
-                    System.out.println("attendo 60 secondi in attesa di una riconnessione");
+                    System.out.println("attendo 40 secondi in attesa di una riconnessione");
                     check=0;
                     if(model.getNumberOfPlayers()==4){
                         for(Team team: model.getTeams()){

@@ -89,7 +89,7 @@ public class AskForTeamMate extends State {
                         connectionModel.setCloseThred(false);
                         return;
                     }
-                    System.out.println("in loop");
+                    //System.out.println("in connection controll loop");
                     ParametersFromNetwork message = new ParametersFromNetwork(1);
                     message.enable();
                     try {
@@ -140,7 +140,7 @@ public class AskForTeamMate extends State {
                                         model.setDisconnection(false);
                                         model.getTable().getClouds().add(new Cloud(model.getNumberOfPlayers()));
                                         model.getTable().getClouds().get(model.getTable().getClouds().size()-1).charge(model.getTable().getBag());
-                                        System.out.println("accepted");
+                                        //System.out.println("accepted");
                                         break;
                                     }
                                     if (team.getPlayer2().isDisconnected()) {
@@ -160,14 +160,13 @@ public class AskForTeamMate extends State {
                                         model.setDisconnection(false);
                                         model.getTable().getClouds().add(new Cloud(model.getNumberOfPlayers()));
                                         model.getTable().getClouds().get(model.getTable().getClouds().size()-1).charge(model.getTable().getBag());
-                                        System.out.println("accepted");
+                                        //System.out.println("accepted");
                                         break;
                                     }
                                 }
                             }
                         }
                     }
-                    System.out.println("exit loop");
                     try {
                         sleep(5000);
                     } catch (InterruptedException e) {

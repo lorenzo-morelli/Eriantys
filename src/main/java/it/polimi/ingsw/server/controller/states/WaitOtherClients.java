@@ -54,6 +54,7 @@ public class WaitOtherClients extends State {
             message=new ParametersFromNetwork(1);
             message.enable();
             while (!message.parametersReceived()) {
+                //System.out.println("loop");
                 message.waitParametersReceived(10);
             }
             // Converti il messaggio stringa json in un oggetto clientModel
@@ -101,6 +102,7 @@ public class WaitOtherClients extends State {
 
                 boolean messageReceived = false;
                 while (!messageReceived) {
+                    //System.out.println("waitining clients");
                     nickname = new ParametersFromNetwork(1);
                     nickname.enable();
                     nickname.waitParametersReceived();

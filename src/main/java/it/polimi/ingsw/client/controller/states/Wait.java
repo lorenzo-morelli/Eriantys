@@ -55,6 +55,7 @@ public class Wait extends State {
         boolean check=true;
 
         while (check || System.currentTimeMillis()>=end){
+            //System.out.println("loop");
             check=message.waitParametersReceived(5);
         }
 

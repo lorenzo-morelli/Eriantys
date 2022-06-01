@@ -41,9 +41,11 @@ public class SendToServer extends State{
         long end = start + 15 * 1000L;
         while (!responseReceived) {
             // invio al server il mio modello
+            //System.out.println("loop");
 
             ack.enable();
             boolean check =ack.waitParametersReceived(5);
+
 
             if(check || System.currentTimeMillis()>=end){
                 System.out.println("\n\nServer non ha dato risposta");

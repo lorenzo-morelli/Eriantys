@@ -54,6 +54,7 @@ public class WaitFirstPlayer extends State {
         firstMessage.enable();
 
         while (!firstMessage.parametersReceived() ) {
+            //System.out.println("loop");
             firstMessage.waitParametersReceived(10);
             if(Network.disconnectedClient()){
                 reset.fireStateEvent();

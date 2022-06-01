@@ -116,12 +116,13 @@ public class AssistantCardPhase extends State {
 
                     boolean responseReceived = false;
                     while (!responseReceived) {
-                        System.out.println("ancora qua");
+                        //System.out.println("another one");
                             if (!fromPing) {
                                 message = new ParametersFromNetwork(1);
                                 message.enable();
                             }
                         while (!message.parametersReceived()) {
+                            //System.out.println("loop");
                             message.waitParametersReceived(5);
                             if (disconnected) {
                                 break;

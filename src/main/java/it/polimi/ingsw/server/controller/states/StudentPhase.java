@@ -116,13 +116,13 @@ public class StudentPhase extends State {
 
             boolean responseReceived = false;
             while (!responseReceived) {
-                System.out.println("ancora qua");
+                //System.out.println("another one");
                     if (!fromPing) {
                         message = new ParametersFromNetwork(1);
                         message.enable();
                     }
                 while (!message.parametersReceived()) {
-                    System.out.println("non arrivato nulla");
+                    //System.out.println("loop");
                     message.waitParametersReceived(5);
                     if (disconnected) {
                         break;
@@ -175,7 +175,7 @@ public class StudentPhase extends State {
               server lo può trovare in currentPlayerData.getChoosedColor()
              */
                 String type = currentPlayerData.getTypeOfRequest();
-                System.out.println("HO RICEVUTO " + type + " " + currentPlayerData.getChoosedColor());
+                //System.out.println("HO RICEVUTO " + type + " " + currentPlayerData.getChoosedColor());
                 if (type.equals("SCHOOL")) {
                     currentPlayer.getSchoolBoard().load_dinner(currentPlayerData.getChoosedColor());
                     if (model.getGameMode().equals(GameMode.EXPERT) && currentPlayer.getSchoolBoard().getDinnerTable().numStudentsbycolor(currentPlayerData.getChoosedColor()) % 3 == 0) {

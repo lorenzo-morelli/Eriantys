@@ -52,6 +52,7 @@ public class AmIFirst extends State {
 
         while (!responseReceived) {
             // invio al server il mio modello
+            //System.out.println("another one");
 
             Network.send(json.toJson(clientModel));
 

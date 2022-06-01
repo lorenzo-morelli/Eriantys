@@ -46,6 +46,7 @@ public class WaitFirstPlayerGameInfo extends State {
         long end = start + 15 * 1000L;
 
         while (!messageReceived) {
+            //System.out.println("loop");
             message.enable();
             boolean check =message.waitParametersReceived(20);
 
@@ -65,7 +66,7 @@ public class WaitFirstPlayerGameInfo extends State {
         if (message.parametersReceived()) {
 
             //converto il messaggio arrivato in un oggetto clientModel
-            System.out.println(message.getParameter(0));
+            //System.out.println(message.getParameter(0));
             ClientModel clientModel = json.fromJson(message.getParameter(0), ClientModel.class);
 
             // rimemorizzo le info nel mio database locale
