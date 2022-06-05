@@ -97,7 +97,6 @@ public class Network implements ActionListener{
     }
 
     public synchronized static boolean send(String message) throws InterruptedException {
-        TimeUnit.MILLISECONDS.sleep(500);
         return connection.sendText(message);
     }
 

@@ -18,7 +18,7 @@ public class AssistantCardThread extends Thread {
     }
 
     public synchronized void run() {
-        while (!phase.getMessage().parametersReceived() || json.fromJson(phase.getMessage().getParameter(0), ClientModel.class).isPingMessage()) {
+        while (phase.getMessage() == null || !phase.getMessage().parametersReceived() || json.fromJson(phase.getMessage().getParameter(0), ClientModel.class).isPingMessage()) {
             try {
                sleep(10000);
             } catch (InterruptedException e) {
