@@ -1165,7 +1165,7 @@ public class CliView implements View{
 
     // Qualcun altro sta interagendo con il terminale: devo gestire il tempo di attesa
     // Esempio "pippo: sta salutando"
-    public synchronized void requestToOthers() {
+    public void requestToOthers() {
         String message = null;
         switch (networkClientModel.getTypeOfRequest()) {
             case "CHOOSEASSISTANTCARD":
@@ -1184,6 +1184,7 @@ public class CliView implements View{
                 message = "L'utente " + networkClientModel.getNickname() + " sta scegliendo la nuvola dalla quale ricaricare gli studenti";
                 break;
         }
+        System.out.println(message);
         if (!networkClientModel.getTypeOfRequest().equals("TEAMMATE") && networkClientModel.getServermodel()!=null) {
             System.out.println(networkClientModel.getServermodel().toString(getMynickname(), "STATO DEL GIOCO: " + message + "\n\nMOSSE ALTRI GIOCATORI: " + getResponce()));
         }
