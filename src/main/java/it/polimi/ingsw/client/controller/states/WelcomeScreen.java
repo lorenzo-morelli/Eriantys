@@ -26,10 +26,11 @@ public class WelcomeScreen extends State{
         return notStart;
     }
 
-    public IEvent entryAction(IEvent cause) throws IOException, InterruptedException {
+    public IEvent entryAction(IEvent cause) throws Exception {
 
-        view.setCallingState(this);
-        view.askToStart();
+        //view.setCallingState(this);
+        //view.askToStart();
+        start.fireStateEvent();
         return null;
     }
 }

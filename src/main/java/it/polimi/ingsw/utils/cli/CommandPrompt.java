@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
  * @author Fernando
  */
 public class CommandPrompt implements Subject{
-    private static String fromTerminal;
+    private static String fromTerminal = null;
     private static ConsoleReader console;
     private static List<Observer> observers = null;
     private static CommandPrompt instance = null;
@@ -51,6 +51,10 @@ public class CommandPrompt implements Subject{
 
     public static String gotFromTerminal() {
         return fromTerminal;
+    }
+
+    public static void forceInput(String input){
+        CommandPrompt.fromTerminal = input;
     }
 
     public static void println(String toPrint) throws IOException {

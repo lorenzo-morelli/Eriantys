@@ -16,6 +16,7 @@ import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.stateMachine.State;
 
 import java.util.Objects;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -103,28 +104,40 @@ public class CliView implements View{
         switch (((ReadFromTerminal) callingState).getType()){
 
             case "USERINFO":
-                CommandPrompt.ask("Inserire Nickname Ip e porta separati da uno spazio e premere invio",
+                CommandPrompt.ask("Inserire Nickname Ip e porta separati da uno spazio e premere invio [empty String: default setup in localhost]",
                                       "nickname ip porta>");
                 // Controllo di correttezza dei dati inseriti lato client
                 parsedStrings =
                         new ArrayList<>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
-                if (parsedStrings.size()!=3 || !isValidIp(parsedStrings.get(1)) || !isValidPort(parsedStrings.get(2))){
-                    System.out.print("ALERT: dati inseriti non validi, riprovare\n");
-                    askParameters();
+                if(!CommandPrompt.gotFromTerminal().equals("")) {
+                    if (parsedStrings.size() != 3 || !isValidIp(parsedStrings.get(1)) || !isValidPort(parsedStrings.get(2))) {
+                        System.out.print("ALERT: dati inseriti non validi, riprovare\n");
+                        askParameters();
+                    }
+
+                    System.out.println("This:\n");
+                    setMynickname(parsedStrings.get(0));
                 }
-                setMynickname(parsedStrings.get(0));
+                else{
+                    setMynickname("Default");
+                }
                 break;
 
             case "GAMEINFO" :
-                CommandPrompt.ask("Inserire numero di giocatori e modalità di gioco ",
+                CommandPrompt.ask("Inserire numero di giocatori e modalità di gioco [empty String: default 4 EXPERT]",
                         "numOfPlayers gameMode>");
                 // Controllo di correttezza dei dati inseriti lato client
                 parsedStrings =
                         new ArrayList<>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
                 // controllo che numOfPlayers sia una cifra
-                if (!isValidCifra(parsedStrings.get(0))){
-                    System.out.print("ALERT: Inserisci una cifra su numOfPlayers, riprovare\n");
-                    askParameters();
+                if(!parsedStrings.get(0).equals("")) {
+                    if (!isValidCifra(parsedStrings.get(0))) {
+                        System.out.print("ALERT: Inserisci una cifra su numOfPlayers, riprovare\n");
+                        askParameters();
+                        return;
+                    }
+                }
+                else{
                     return;
                 }
                 // se è una cifra allora deve essere compresa tra 2 e 4

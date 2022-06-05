@@ -44,8 +44,8 @@ public class AmIFirst extends State {
         System.out.println("Sei connesso al server, se è disponibile una partita verrai automaticamente collegato\n" +
                 "altrimenti vuoi dire che il server è al completo e non può ospitare altri giocatori");
 
-        System.out.println("Attendo 10 secondi per non intasare la rete...");
-        TimeUnit.MILLISECONDS.sleep(10000);
+        //System.out.println("Attendo x secondi per non intasare la rete...");
+        TimeUnit.MILLISECONDS.sleep(2000);
 
         long start = System.currentTimeMillis();
         long end = start + 15 * 1000L;

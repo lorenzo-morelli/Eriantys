@@ -39,8 +39,12 @@ public class SpecifyPortScreen extends State {
     public IEvent entryAction(IEvent cause) throws Exception {
         if (!Network.isServerListening()) {
             CommandPrompt.ask(
-                    "Inserire la porta sulla quale mettersi in ascolto dei clients",
+                    "Inserire la porta sulla quale mettersi in ascolto dei clients [ENTER with empty string: default 55555]",
                     "porta >");
+        }
+        // empty string --> default port
+        if (CommandPrompt.gotFromTerminal().equals("")){
+            CommandPrompt.forceInput("1234");
         }
 
         while (!isValidPort(CommandPrompt.gotFromTerminal())) {
