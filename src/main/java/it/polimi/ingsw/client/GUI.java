@@ -106,6 +106,7 @@ public class GUI extends Application{
     }
 
     public synchronized void requestToOthers(Node node) throws IOException {
+        Network.setClientModel(GUI.clientModel);
         switch (GUI.clientModel.getTypeOfRequest()) {
             case "CHOOSEASSISTANTCARD":
                 messageToOthers = "L'utente " + GUI.clientModel.getNickname() + " sta scegliendo la carta assistente";
@@ -116,7 +117,7 @@ public class GUI extends Application{
 //                        e.printStackTrace();
 //                    }
 //                });
-                changeScene("ChooseAssistantCard", node);
+                changeScene("Wait", node);
                 break;
             case "CHOOSEWHERETOMOVESTUDENTS":
                 messageToOthers = "L'utente " + GUI.clientModel.getNickname() + " sta scegliendo dove muovere lo studente";
@@ -134,6 +135,7 @@ public class GUI extends Application{
         if (!GUI.clientModel.getTypeOfRequest().equals("TEAMMATE") && GUI.clientModel.getServermodel()!=null) {
             //todo: what?  -> just ignore
         }
+        notifyAll();
     }
 
     public synchronized void response() throws IOException {
