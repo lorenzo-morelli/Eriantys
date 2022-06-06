@@ -104,13 +104,10 @@ public class Wait extends State {
                             }
                         } else {
                             // altrimenti devo limitarmi a segnalare che l'altro giocatore sta facendo qualcosa
-                            if (    receivedClientModel.getTypeOfRequest() == null                                                 ||
-                                    receivedClientModel.isPingMessage()                                                            ||
-                                    receivedClientModel.getTypeOfRequest().equals( "TRYTORECONNECT")                               ||
-                                    receivedClientModel.getTypeOfRequest().equals("DISCONNECTION")                                   ) {
-                                return;
-                            }
-                            else{
+                            if (    receivedClientModel.getTypeOfRequest() != null                                                &&
+                                    !receivedClientModel.isPingMessage()                                                           &&
+                                    !receivedClientModel.getTypeOfRequest().equals( "TRYTORECONNECT")                              &&
+                                    !receivedClientModel.getTypeOfRequest().equals("DISCONNECTION")                                   ) {
                                 try {
                                     view.setClientModel(receivedClientModel);
                                     view.requestToOthers();

@@ -13,6 +13,7 @@ import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.LinkOption;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -25,6 +26,11 @@ public class SetupGame implements Initializable {
     private int connectedPlayers;
     private ClientModel receivedClientModel;
     private boolean isToReset;
+    private int myID;
+
+    ParametersFromNetwork message;
+
+    private boolean notdone=false,notread=false;
 
     @FXML
     private Label connectedOnIp = new Label();
@@ -100,167 +106,164 @@ public class SetupGame implements Initializable {
             }
             System.out.println("[Conferma ricevuta]");
             System.out.println("In attesa che gli altri giocatori si colleghino...");
-            this.otherPlayersLabel.setText("...Waiting for other players to join the game...");
-            do {
-                ParametersFromNetwork message = new ParametersFromNetwork(1);
-                message.enable();
-                message.waitParametersReceived();
-                System.out.println("ricevo un model...");
-                ClientModel tryreceivedClientModel = gson.fromJson(message.getParameter(0), ClientModel.class);
-                if (!Objects.equals(tryreceivedClientModel.getTypeOfRequest(), "CONNECTTOEXISTINGGAME")) {
-                    receivedClientModel = tryreceivedClientModel;
-                    if (Network.disconnectedClient()) {
-                        Network.disconnect();
-                        System.out.println("Il gioco è terminato a causa della disconnessione di un client");
-                        isToReset = true;
-                    }
+            otherPlayersLabel.setText("...Waiting for other players to join the game...");
 
-                    if (receivedClientModel.isGameStarted() && receivedClientModel.NotisKicked()) {
-                        System.out.println("gioco iniziato");
+            myID=gui.getClientModel().getClientIdentity();
+            waitings();
+            }
+        }
+        public void waitings() throws InterruptedException {
+             do {
+                 if(!notread) {
+                     message = new ParametersFromNetwork(1);
+                     message.enable();
+                     message.waitParametersReceived();
+                 }
+            //System.out.println(message.getParameter(0));
+            ClientModel tryreceivedClientModel = gson.fromJson(message.getParameter(0), ClientModel.class);
+            if (!Objects.equals(tryreceivedClientModel.getTypeOfRequest(), "CONNECTTOEXISTINGGAME")) {
+                receivedClientModel = tryreceivedClientModel;
+                if (Network.disconnectedClient()) {
+                    Network.disconnect();
+                    System.out.println("Il gioco è terminato a causa della disconnessione di un client");
+                    isToReset = true;
+                }
 
-                        // Il messaggio è o una richiesta o una risposta
+                if (receivedClientModel.isGameStarted() && receivedClientModel.NotisKicked()) {
 
-                        // se il messaggio non è una risposta di un client al server vuol dire che
-                        if (!receivedClientModel.isResponse() && receivedClientModel.getTypeOfRequest() != null) {
-                            // il messaggio è una richiesta del server alla view di un client
+                    // Il messaggio è o una richiesta o una risposta
 
-                            // se il messaggio è rivolto a me devo essere io a compiere l'azione
-                            if (receivedClientModel.getClientIdentity() == gui.getClientModel().getClientIdentity()) {
-                                // il messaggio è rivolto a me
-                                try {
-                                    System.out.println("request to me");
-                                    Thread t = new Thread() {
-                                        public synchronized void run() {
-                                            while (true) {
-                                                ParametersFromNetwork message = new ParametersFromNetwork(1);
-                                                message.enable();
-                                                try {
-                                                    message.waitParametersReceived();
-                                                } catch (InterruptedException e) {
-                                                    throw new RuntimeException(e);
-                                                }
+                    // se il messaggio non è una risposta di un client al server vuol dire che
+                    if (!receivedClientModel.isResponse() && receivedClientModel.getTypeOfRequest() != null) {
+                        // il messaggio è una richiesta del server alla view di un client
 
-                                                System.out.println("ricevuto un ping...");
-                                                ClientModel tryreceivedClientModel = gson.fromJson(message.getParameter(0), ClientModel.class);
+                        // se il messaggio è rivolto a me devo essere io a compiere l'azione
+                        if (receivedClientModel.getClientIdentity() == myID) {
+                            // il messaggio è rivolto a me
+                            try {
+                                System.out.println("request to me");
+                                gui.setClientModel(receivedClientModel);
+                                gui.requestToMe(otherPlayersLabel);
 
-                                                if (!Objects.equals(tryreceivedClientModel.getTypeOfRequest(), "CONNECTTOEXISTINGGAME")) { //todo received.gettype.equals("connect")
+                                Thread t= new Thread(() -> {
+                                    try {
+                                        wait_pings(tryreceivedClientModel);
+                                    } catch (InterruptedException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                });
+                                t.start();
+                                notdone=true;
 
-                                                    receivedClientModel = tryreceivedClientModel;
-
-                                                    if (receivedClientModel.isGameStarted() && receivedClientModel.NotisKicked()) {
-                                                        // Il messaggio è o una richiesta o una risposta
-
-                                                        // se il messaggio non è una risposta di un client al server vuol dire che
-                                                        if (receivedClientModel.isResponse().equals(false) && receivedClientModel.getTypeOfRequest() != null) {
-                                                            // il messaggio è una richiesta del server alla view di un client
-
-                                                            // se il messaggio è rivolto a me devo essere io a compiere l'azione
-                                                            if (receivedClientModel.getClientIdentity() == gui.getClientModel().getClientIdentity()) {
-                                                                // il messaggio è rivolto a me
-                                                                if (receivedClientModel.isPingMessage()) {
-                                                                    gui.requestPing();
-                                                                }
-                                                            }
-
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    };
-                                    t.start();
-                                    gui.setClientModel(receivedClientModel);
-                                    gui.requestToMe(otherPlayersLabel);
-                                    wait();
-                                    t.interrupt();
-                                } catch (InterruptedException | IOException e) {
-                                    throw new RuntimeException(e);
-                                }
+                            } catch (InterruptedException | IOException e) {
+                                throw new RuntimeException(e);
                             }
-                        } else {
+                        }
+
+                        if (!notdone && receivedClientModel.getClientIdentity() != myID && receivedClientModel.getTypeOfRequest() != null &&
+                                !receivedClientModel.isPingMessage() &&
+                                !receivedClientModel.getTypeOfRequest().equals("TRYTORECONNECT") &&
+                                !receivedClientModel.getTypeOfRequest().equals("DISCONNECTION"))
+                        {
                             try {
                                 System.out.println("request to other");
-                                Thread t = new Thread() {
-                                    public synchronized void run() {
-                                        while (true) {
-                                            ParametersFromNetwork message = new ParametersFromNetwork(1);
-                                            message.enable();
-                                            try {
-                                                message.waitParametersReceived();
-                                            } catch (InterruptedException e) {
-                                                throw new RuntimeException(e);
-                                            }
-
-                                            System.out.println("ricevuto un ping...");
-                                            ClientModel tryreceivedClientModel = gson.fromJson(message.getParameter(0), ClientModel.class);
-
-                                            if (!Objects.equals(tryreceivedClientModel.getTypeOfRequest(), "CONNECTTOEXISTINGGAME")) { //todo received.gettype.equals("connect")
-                                                receivedClientModel = tryreceivedClientModel;
-                                            }
-                                        }
-                                    }
-                                };
-                                t.start();
                                 gui.setClientModel(receivedClientModel);
                                 gui.requestToOthers(otherPlayersLabel);
-                                wait();
-                                t.interrupt();
-                            } catch (InterruptedException | IOException e) {
+                            } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
                         }
                     }
                     // altrimenti il messaggio è una risposta di un altro client ad un server
-//                    else if (receivedClientModel.isResponse().equals(true) && receivedClientModel.getTypeOfRequest() != null) {
-//                        try {
-//                            System.out.println("response");
-//                            Thread t = new Thread() {
-//                                public synchronized void run() {
-//                                    while (true) {
-//                                        ParametersFromNetwork message = new ParametersFromNetwork(1);
-//                                        message.enable();
-//                                        try {
-//                                            message.waitParametersReceived();
-//                                        } catch (InterruptedException e) {
-//                                            throw new RuntimeException(e);
-//                                        }
-//
-//                                        System.out.println("ricevuto un ping...");
-//                                        ClientModel tryreceivedClientModel = gson.fromJson(message.getParameter(0), ClientModel.class);
-//
-//                                        if (!Objects.equals(tryreceivedClientModel.getTypeOfRequest(), "CONNECTTOEXISTINGGAME")) { //todo received.gettype.equals("connect")
-//
-//                                            receivedClientModel = tryreceivedClientModel;
-//
-//                                            if (receivedClientModel.isGameStarted() && receivedClientModel.NotisKicked()) {
-//                                                // Il messaggio è o una richiesta o una risposta
-//
-//                                                // se il messaggio non è una risposta di un client al server vuol dire che
-//                                                if (receivedClientModel.isResponse().equals(false) && receivedClientModel.getTypeOfRequest() != null) {
-//                                                    // il messaggio è una richiesta del server alla view di un client
-//
-//                                                    // se il messaggio è rivolto a me devo essere io a compiere l'azione
-//
-//
-//                                                }
-//                                            }
-//                                        }
-//                                    }
-//                                }
-//                            };
-//                            t.start();
-//                            gui.setClientModel(receivedClientModel);
-//                            gui.response();
-//                            wait();
-//                            t.interrupt();
-//                        } catch (InterruptedException | IOException e) {
-//                            throw new RuntimeException(e);
-//                        }
-//                    }
+    //                    else if (receivedClientModel.isResponse().equals(true) && receivedClientModel.getTypeOfRequest() != null) {
+    //                        try {
+    //                            System.out.println("response");
+    //                            Thread t = new Thread() {
+    //                                public synchronized void run() {
+    //                                    while (true) {
+    //                                        ParametersFromNetwork message = new ParametersFromNetwork(1);
+    //                                        message.enable();
+    //                                        try {
+    //                                            message.waitParametersReceived();
+    //                                        } catch (InterruptedException e) {
+    //                                            throw new RuntimeException(e);
+    //                                        }
+    //
+    //                                        System.out.println("ricevuto un ping...");
+    //                                        ClientModel tryreceivedClientModel = gson.fromJson(message.getParameter(0), ClientModel.class);
+    //
+    //                                        if (!Objects.equals(tryreceivedClientModel.getTypeOfRequest(), "CONNECTTOEXISTINGGAME")) { //todo received.gettype.equals("connect")
+    //
+    //                                            receivedClientModel = tryreceivedClientModel;
+    //
+    //                                            if (receivedClientModel.isGameStarted() && receivedClientModel.NotisKicked()) {
+    //                                                // Il messaggio è o una richiesta o una risposta
+    //
+    //                                                // se il messaggio non è una risposta di un client al server vuol dire che
+    //                                                if (receivedClientModel.isResponse().equals(false) && receivedClientModel.getTypeOfRequest() != null) {
+    //                                                    // il messaggio è una richiesta del server alla view di un client
+    //
+    //                                                    // se il messaggio è rivolto a me devo essere io a compiere l'azione
+    //
+    //
+    //                                                }
+    //                                            }
+    //                                        }
+    //                                    }
+    //                                }
+    //                            };
+    //                            t.start();
+    //                            gui.setClientModel(receivedClientModel);
+    //                            gui.response();
+    //                            wait();
+    //                            t.interrupt();
+    //                        } catch (InterruptedException | IOException e) {
+    //                            throw new RuntimeException(e);
+    //                        }
+    //                    }
                 }
 
-            } while (!isToReset);
+            }
+        }while (!isToReset && !notdone) ;
+    }
+        public synchronized void wait_pings(ClientModel tryreceivedClientModel) throws InterruptedException {
+            while (!Objects.equals(tryreceivedClientModel.getTypeOfRequest(), "CONNECTTOEXISTINGGAME") && receivedClientModel.isGameStarted() && receivedClientModel.NotisKicked() && receivedClientModel.isResponse().equals(false) && receivedClientModel.getTypeOfRequest() != null && receivedClientModel.getClientIdentity() == myID) {
+                message = new ParametersFromNetwork(1);
+                message.enable();
+                try {
+                    message.waitParametersReceived();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+
+                System.out.println("ricevuto un ping...");
+                tryreceivedClientModel = gson.fromJson(message.getParameter(0), ClientModel.class);
+
+                if (!Objects.equals(tryreceivedClientModel.getTypeOfRequest(), "CONNECTTOEXISTINGGAME")) { //todo received.gettype.equals("connect")
+
+                    receivedClientModel = tryreceivedClientModel;
+
+                    if (receivedClientModel.isGameStarted() && receivedClientModel.NotisKicked()) {
+                        // Il messaggio è o una richiesta o una risposta
+
+                        // se il messaggio non è una risposta di un client al server vuol dire che
+                        if (receivedClientModel.isResponse().equals(false) && receivedClientModel.getTypeOfRequest() != null) {
+                            // il messaggio è una richiesta del server alla view di un client
+
+                            // se il messaggio è rivolto a me devo essere io a compiere l'azione
+                            if (receivedClientModel.getClientIdentity() == myID) {
+                                // il messaggio è rivolto a me
+                                if (receivedClientModel.isPingMessage()) {
+                                    gui.requestPing();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            notdone=false;
+            notread=true;
+            waitings();
         }
     }
-}
 

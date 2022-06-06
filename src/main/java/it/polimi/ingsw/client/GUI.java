@@ -101,8 +101,10 @@ public class GUI extends Application{
                 gameState = "Assistant Card phase";
                 changeScene("ChooseAssistantCard", node);
                 break;
+            case "CHOOSEWHERETOMOVESTUDENTS":
+                System.out.println("student");
+                break;
         }
-        notifyAll();
     }
 
     public synchronized void requestToOthers(Node node) throws IOException {
@@ -110,14 +112,8 @@ public class GUI extends Application{
         switch (GUI.clientModel.getTypeOfRequest()) {
             case "CHOOSEASSISTANTCARD":
                 messageToOthers = "L'utente " + GUI.clientModel.getNickname() + " sta scegliendo la carta assistente";
-//                Platform.runLater(() -> {
-//                    try {
-//                        changeScene("ChooseAssistantCard", node);
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                });
                 changeScene("Wait", node);
+                System.out.println("funziono");
                 break;
             case "CHOOSEWHERETOMOVESTUDENTS":
                 messageToOthers = "L'utente " + GUI.clientModel.getNickname() + " sta scegliendo dove muovere lo studente";
@@ -144,6 +140,7 @@ public class GUI extends Application{
 
     public synchronized void requestPing() {
         try {
+            System.out.println(("risposta ping"));
             TimeUnit.SECONDS.sleep(1);
             Network.setClientModel(GUI.clientModel);
             Gson json = new Gson();
