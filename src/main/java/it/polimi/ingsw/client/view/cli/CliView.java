@@ -115,7 +115,6 @@ public class CliView implements View{
                         askParameters();
                     }
 
-                    System.out.println("This:\n");
                     setMynickname(parsedStrings.get(0));
                 }
                 else{
