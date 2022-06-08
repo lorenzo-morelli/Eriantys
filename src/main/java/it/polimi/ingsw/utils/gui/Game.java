@@ -2,15 +2,10 @@ package it.polimi.ingsw.utils.gui;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.client.GUI;
-import it.polimi.ingsw.client.model.ClientModel;
-import it.polimi.ingsw.server.model.StudentSet;
 import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -25,7 +20,8 @@ import java.util.ResourceBundle;
 
 import static it.polimi.ingsw.client.GUI.currNode;
 import static it.polimi.ingsw.client.GUI.gameState;
-import static it.polimi.ingsw.utils.gui.Converter.toImage;
+import static it.polimi.ingsw.utils.gui.Converter.toImageAssistants;
+import static it.polimi.ingsw.utils.gui.Converter.toImageCharacters;
 import static it.polimi.ingsw.utils.gui.Position.*;
 
 public class Game implements Initializable {
@@ -96,12 +92,16 @@ public class Game implements Initializable {
         characterCardsString.add("MONK");
         characterCardsString.add("PRINCESS");
         characterCardsString.add("HERALD");
-
         List<String> studentIslandString = new ArrayList<>();
         studentIslandString.add("rosso");
         studentIslandString.add("rosso");
         studentIslandString.add("blu");
         studentIslandString.add("verde");
+        List<Integer> assistantCardsString = new ArrayList<>();
+        assistantCardsString.add(10);
+        assistantCardsString.add(3);
+        assistantCardsString.add(5);
+        assistantCardsString.add(6);
 
         List<Label> playerNames = Arrays.asList(playerName1, playerName2, playerName3, playerName4);
         List<ImageView> assistantCards = Arrays.asList(assistantCard1, assistantCard2, assistantCard3, assistantCard4);
@@ -131,7 +131,7 @@ public class Game implements Initializable {
             GridPane studentsIsland = new GridPane();
             studentsIsland.setAlignment(Pos.CENTER);
             List<ImageView> studentsIslandImages;
-            studentsIslandImages = toImage(studentIslandString);
+            studentsIslandImages = Converter.toImageCharacters(studentIslandString);
 
             for (int j = 0; j < studentsIslandImages.size(); j++) {
                 studentsIslandImages.get(j).setFitHeight(20);
@@ -184,9 +184,17 @@ public class Game implements Initializable {
             islandGrid.add(tile, cloudX(i), cloudY(i));
         }
 
+        // STUDENT GRID
+        int numOfStudents = 5;
+        for (int i = 1; i <= numOfStudents; i++) {
+            ImageView student = new ImageView("/graphics/pieces/students/student_blue.png");
+            student.setFitHeight(30);
+            student.setFitWidth(30);
+            students1Grid.add(student, i % 2, i / 2);
+        }
 
 
-        // INIZIALIZZO LA GAMEMODE
+        // GAMEMODE
         if (gameMode.equals("PRINCIPIANT")) {
             for (ImageView characterCard : characterCards) {
                 characterCard.setVisible(false);
@@ -199,34 +207,16 @@ public class Game implements Initializable {
             }
 
         } else {
-            toImage(characterCardsString, characterCards);
+            Converter.toImageCharacters(characterCardsString, characterCards);
         }
 
-        //settare i constraints per partite <4 e <3
-//        if (clientModel.getNumofplayer() < 4) {
-//            school4.setVisible(false);
-//            playerName4.setVisible(false);
-//
-//        }
-//        if (clientModel.getNumofplayer() < 3) {
-//            school3.setVisible(false);
-//            playerName3.setVisible(false);
-//        }
+        // NUMERO GIOCATORI
 
-        //setto i nomi
-//        for (int i = 0; i < this.gui.getClientModel().getServermodel().getPlayers().size(); i++) {
-//            System.out.println("giocatore " + i + ": " + this.gui.getClientModel().getServermodel().getPlayers().get(i).getNickname());
-//            playerNames.get(i).setText(this.gui.getClientModel().getServermodel().getPlayers().get(i).getNickname());
-//        }
 
-        //if planning -> phaseLabel.set planning, else -> set action
-        //turn player...
 
-        //setto le torri
+        // ASSISTANT CARDS
+        toImageAssistants(assistantCardsString, assistantCards);
 
-        //setto gli studenti
-
-        //setto le carte personaggio
 
 
     }

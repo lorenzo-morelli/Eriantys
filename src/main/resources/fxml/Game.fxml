@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.utils.gui.Game">
+<AnchorPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.utils.gui.Game">
    <children>
       <Button layoutX="1768.0" layoutY="972.0" mnemonicParsing="false" onMouseClicked="#quit" prefHeight="44.0" prefWidth="81.0" text="Quit" />
       <Button fx:id="setOnSchoolBtn" layoutX="1626.0" layoutY="756.0" mnemonicParsing="false" onMouseClicked="#setOnSchool" prefHeight="38.0" prefWidth="135.0" text="Set student on school" />
@@ -60,22 +65,22 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <ImageView fx:id="assistantCard4" fitHeight="103.0" fitWidth="65.0" layoutX="600.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="assistantCard4" fitHeight="130.0" fitWidth="89.0" layoutX="600.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../graphics/assistants/assistantCard1.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="assistantCard3" fitHeight="103.0" fitWidth="65.0" layoutX="600.0" layoutY="335.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="assistantCard3" fitHeight="130.0" fitWidth="89.0" layoutX="600.0" layoutY="300.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../graphics/assistants/assistantCard1.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="assistantCard2" fitHeight="103.0" fitWidth="65.0" layoutX="600.0" layoutY="591.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="assistantCard2" fitHeight="130.0" fitWidth="89.0" layoutX="600.0" layoutY="556.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../graphics/assistants/assistantCard1.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="assistantCard1" fitHeight="103.0" fitWidth="65.0" layoutX="600.0" layoutY="849.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="assistantCard1" fitHeight="134.0" fitWidth="89.0" layoutX="596.0" layoutY="811.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../graphics/assistants/assistantCard1.png" />
          </image>
@@ -101,45 +106,57 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
       </GridPane>
-      <ImageView fx:id="characterCard1" fitHeight="248.0" fitWidth="143.0" layoutX="1170.0" layoutY="143.0" onMouseClicked="#characterCard1" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="characterCard1" fitHeight="244.0" fitWidth="177.0" layoutX="1170.0" layoutY="116.0" onMouseClicked="#characterCard1" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../graphics/characters/monk.jpg" />
          </image>
       </ImageView>
-      <ImageView fx:id="characterCard2" fitHeight="248.0" fitWidth="143.0" layoutX="1355.0" layoutY="143.0" onMouseClicked="#characterCard2" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="characterCard2" fitHeight="244.0" fitWidth="167.0" layoutX="1355.0" layoutY="116.0" onMouseClicked="#characterCard2" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../graphics/characters/monk.jpg" />
          </image>
       </ImageView>
-      <ImageView fx:id="characterCard3" fitHeight="248.0" fitWidth="143.0" layoutX="1538.0" layoutY="143.0" onMouseClicked="#characterCard3" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="characterCard3" fitHeight="244.0" fitWidth="172.0" layoutX="1538.0" layoutY="116.0" onMouseClicked="#characterCard3" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../graphics/characters/monk.jpg" />
          </image>
       </ImageView>
-      <ImageView fx:id="coin4" fitHeight="44.0" fitWidth="36.0" layoutX="614.0" layoutY="197.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="coin4" fitHeight="51.0" fitWidth="45.0" layoutX="618.0" layoutY="194.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../graphics/Moneta_base.png" />
          </image>
       </ImageView>
-      <Label fx:id="coin4Label" layoutX="629.0" layoutY="184.0" text="0" />
-      <ImageView fx:id="coin3" fitHeight="44.0" fitWidth="36.0" layoutX="618.0" layoutY="462.0" pickOnBounds="true" preserveRatio="true">
+      <Label fx:id="coin4Label" layoutX="637.0" layoutY="180.0" text="0">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <ImageView fx:id="coin3" fitHeight="51.0" fitWidth="53.0" layoutX="622.0" layoutY="459.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../graphics/Moneta_base.png" />
          </image>
       </ImageView>
-      <Label fx:id="coin3Label" layoutX="633.0" layoutY="449.0" text="0" />
-      <ImageView fx:id="coin2" fitHeight="44.0" fitWidth="36.0" layoutX="612.0" layoutY="706.0" pickOnBounds="true" preserveRatio="true">
+      <Label fx:id="coin3Label" layoutX="641.0" layoutY="445.0" text="0">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <ImageView fx:id="coin2" fitHeight="51.0" fitWidth="53.0" layoutX="616.0" layoutY="703.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../graphics/Moneta_base.png" />
          </image>
       </ImageView>
-      <Label fx:id="coin2Label" layoutX="627.0" layoutY="693.0" text="0" />
-      <ImageView fx:id="coin1" fitHeight="44.0" fitWidth="36.0" layoutX="616.0" layoutY="971.0" pickOnBounds="true" preserveRatio="true">
+      <Label fx:id="coin2Label" layoutX="635.0" layoutY="689.0" text="0">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <ImageView fx:id="coin1" fitHeight="51.0" fitWidth="45.0" layoutX="620.0" layoutY="968.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../graphics/Moneta_base.png" />
          </image>
       </ImageView>
-      <Label fx:id="coin1Label" layoutX="631.0" layoutY="958.0" text="0" />
+      <Label fx:id="coin1Label" layoutX="639.0" layoutY="954.0" text="0">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
       <GridPane fx:id="p3school" layoutX="108.0" layoutY="280.0" prefHeight="198.0" prefWidth="285.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
