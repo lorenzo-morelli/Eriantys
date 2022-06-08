@@ -13,7 +13,6 @@ import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.LinkOption;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -121,6 +120,7 @@ public class SetupGame implements Initializable {
                      message.enable();
                      message.waitParametersReceived();
                  }
+                 notread=false;
             //System.out.println(message.getParameter(0));
             ClientModel tryreceivedClientModel = gson.fromJson(message.getParameter(0), ClientModel.class);
             if (!Objects.equals(tryreceivedClientModel.getTypeOfRequest(), "CONNECTTOEXISTINGGAME")) {
@@ -149,7 +149,7 @@ public class SetupGame implements Initializable {
 
                                 Thread t= new Thread(() -> {
                                     try {
-                                        wait_pings(tryreceivedClientModel);
+                                        wait_pings();
                                     } catch (InterruptedException e) {
                                         throw new RuntimeException(e);
                                     }
@@ -181,8 +181,9 @@ public class SetupGame implements Initializable {
             }
         }while (!isToReset && !notdone) ;
     }
-        public synchronized void wait_pings(ClientModel tryreceivedClientModel) throws InterruptedException {
-            while (!Objects.equals(tryreceivedClientModel.getTypeOfRequest(), "CONNECTTOEXISTINGGAME") && receivedClientModel.isGameStarted() && receivedClientModel.NotisKicked() && receivedClientModel.isResponse().equals(false) && receivedClientModel.getTypeOfRequest() != null && receivedClientModel.getClientIdentity() == myID) {
+        public synchronized void wait_pings() throws InterruptedException {
+            ClientModel tryreceivedClientModel;
+            do {
                 message = new ParametersFromNetwork(1);
                 message.enable();
                 try {
@@ -215,10 +216,16 @@ public class SetupGame implements Initializable {
                         }
                     }
                 }
-            }
+            }while (!Objects.equals(tryreceivedClientModel.getTypeOfRequest(), "CONNECTTOEXISTINGGAME") && receivedClientModel.isGameStarted() && receivedClientModel.NotisKicked() && receivedClientModel.isResponse().equals(false) && receivedClientModel.getTypeOfRequest() != null && receivedClientModel.getClientIdentity() == myID && receivedClientModel.isPingMessage());
             notdone=false;
             notread=true;
-            waitings();
+            Platform.runLater(() -> {
+                try {
+                    waitings();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            });
         }
     }
 
