@@ -19,8 +19,7 @@ public class MoveToSchool implements Initializable {
     }
 
     public void setBlue(MouseEvent mouseEvent) {
-        this.gui.getClientModel().setChoosedColor(PeopleColor.BLUE);
-        //todo: invio?
+        //todo if user ha quello studente -> ok, else -> openNewWindow("Error");
         this.gui.closeWindow(mouseEvent);
     }
 
