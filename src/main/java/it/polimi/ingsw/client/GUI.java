@@ -2,20 +2,14 @@ package it.polimi.ingsw.client;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.client.model.ClientModel;
-import it.polimi.ingsw.client.view.View;
-import it.polimi.ingsw.server.model.AssistantCard;
 import it.polimi.ingsw.utils.network.Network;
-import it.polimi.ingsw.utils.stateMachine.State;
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -27,6 +21,7 @@ public class GUI extends Application{
     private static ClientModel clientModel = new ClientModel();
     public static String gameState;
     public static String messageToOthers = "aa";
+    public static Node currNode = null;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -42,9 +37,9 @@ public class GUI extends Application{
         }
     }
 
-    public synchronized void changeScene(String newScene, Node node) throws IOException {
+    public synchronized void changeScene(String newScene) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/" + newScene + ".fxml"));
-        this.stage = (Stage) node.getScene().getWindow();
+        this.stage = (Stage) currNode.getScene().getWindow();
         this.scene = new Scene(loader.load());
         this.stage.setScene(scene);
         if (newScene.equals("Game")) {
@@ -86,9 +81,7 @@ public class GUI extends Application{
 
 
     public synchronized void requestToMe(Node node) throws InterruptedException, IOException {
-
         Network.setClientModel(GUI.clientModel);
-
         switch (GUI.clientModel.getTypeOfRequest()) {
             case "TRYTORECONNECT":
                 System.out.println("boh");
@@ -99,12 +92,14 @@ public class GUI extends Application{
             case "CHOOSEASSISTANTCARD":
                 System.out.println("assistent!");
                 gameState = "Assistant Card phase";
-                changeScene("ChooseAssistantCard", node);
+                changeScene("ChooseAssistantCard");
                 break;
             case "CHOOSEWHERETOMOVESTUDENTS":
                 System.out.println("student");
+                changeScene("Game");
                 break;
         }
+        notifyAll();
     }
 
     public synchronized void requestToOthers(Node node) throws IOException {
@@ -112,7 +107,7 @@ public class GUI extends Application{
         switch (GUI.clientModel.getTypeOfRequest()) {
             case "CHOOSEASSISTANTCARD":
                 messageToOthers = "L'utente " + GUI.clientModel.getNickname() + " sta scegliendo la carta assistente";
-                changeScene("Wait", node);
+                changeScene("ChooseAssistantCard");
                 System.out.println("funziono");
                 break;
             case "CHOOSEWHERETOMOVESTUDENTS":

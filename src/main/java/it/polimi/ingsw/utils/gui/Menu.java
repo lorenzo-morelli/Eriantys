@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import static it.polimi.ingsw.client.GUI.currNode;
 import static it.polimi.ingsw.utils.common.Check.isValidIp;
 import static it.polimi.ingsw.utils.common.Check.isValidPort;
 
@@ -42,7 +43,8 @@ public class Menu implements Initializable {
     }
 
     public void play(MouseEvent mouseEvent) throws IOException {
-        this.gui.changeScene("SetupConnection", playButton);
+        currNode = playButton;
+        this.gui.changeScene("SetupConnection");
     }
 
     public void exit() {
@@ -66,14 +68,16 @@ public class Menu implements Initializable {
             SetConnection.setConnection(nickname, ip, port, this.gui.getClientModel());
             if (Network.isConnected()) {
                 this.gui.setClientModel(SendModelAndGetResponse.sendAndGetModel(this.gui.getClientModel()));
+                currNode = notice;
                 if (this.gui.getClientModel().getAmIfirst() == null) {
                     // il nickname inserito è già esistente
                     this.notice.setText("FAILURE: Nickname already taken"); //todo: bugfix
                 } else if (this.gui.getClientModel().getAmIfirst()) {
                     System.out.println("primooo");
-                    this.gui.changeScene("SetupGame", nicknameField);
+                    //
+                    this.gui.changeScene("SetupGame");
                 } else {
-                    this.gui.changeScene("Lobby", nicknameField);
+                    this.gui.changeScene("Lobby");
                 }
             } else {
                 this.notice.setText("FAILURE: impossible to connect to server!");

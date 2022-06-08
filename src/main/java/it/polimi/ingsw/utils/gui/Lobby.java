@@ -7,12 +7,12 @@ import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.concurrent.TimeUnit;
+
+import static it.polimi.ingsw.client.GUI.currNode;
 
 public class Lobby implements Initializable {
     private final GUI gui = new GUI();
@@ -24,6 +24,7 @@ public class Lobby implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        currNode = otherPlayersLabel;
         this.otherPlayersLabel.setText("Waiting for other players to start the game...");
 
         response = new ParametersFromNetwork(1);
@@ -35,7 +36,7 @@ public class Lobby implements Initializable {
 
         if (!this.gui.getClientModel().isGameStarted()) { // todo: bah...
             try {
-                this.gui.changeScene("Game", otherPlayersLabel);
+                this.gui.changeScene("Game");
             } catch (IOException e) {
                 e.printStackTrace();
             }

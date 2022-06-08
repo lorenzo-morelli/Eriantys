@@ -17,6 +17,7 @@ import java.nio.file.LinkOption;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+import static it.polimi.ingsw.client.GUI.currNode;
 import static java.lang.Thread.sleep;
 
 
@@ -50,6 +51,7 @@ public class SetupGame implements Initializable {
         this.connectedOnIp.setText("Connected on IP: " + this.gui.getClientModel().getIp());
         this.connectedOnPort.setText("Connected on Port: " + this.gui.getClientModel().getPort());
         this.connectedPlayers = 0;
+        currNode = otherPlayersLabel;
         isToReset = false;
     }
 
@@ -79,12 +81,12 @@ public class SetupGame implements Initializable {
     }
 
     public void start(MouseEvent mouseEvent) throws InterruptedException, IOException { //todo : questo è lo start da primo client, c'è da fare anche quello da non primo client
-
         if (this.gui.getClientModel().getNumofplayer() != 2 && this.gui.getClientModel().getNumofplayer() != 3 && this.gui.getClientModel().getNumofplayer() != 4) {
             this.otherPlayersLabel.setText("ERROR: Please select a number of players!");
         } else if (this.gui.getClientModel().getGameMode() == null) {
             this.otherPlayersLabel.setText("ERROR: Please select a game mode!");
         } else {
+            currNode = otherPlayersLabel;
             boolean responseReceived = false;
             while (!responseReceived) {
                 Network.send(gson.toJson(this.gui.getClientModel()));
@@ -174,53 +176,6 @@ public class SetupGame implements Initializable {
                             }
                         }
                     }
-                    // altrimenti il messaggio è una risposta di un altro client ad un server
-    //                    else if (receivedClientModel.isResponse().equals(true) && receivedClientModel.getTypeOfRequest() != null) {
-    //                        try {
-    //                            System.out.println("response");
-    //                            Thread t = new Thread() {
-    //                                public synchronized void run() {
-    //                                    while (true) {
-    //                                        ParametersFromNetwork message = new ParametersFromNetwork(1);
-    //                                        message.enable();
-    //                                        try {
-    //                                            message.waitParametersReceived();
-    //                                        } catch (InterruptedException e) {
-    //                                            throw new RuntimeException(e);
-    //                                        }
-    //
-    //                                        System.out.println("ricevuto un ping...");
-    //                                        ClientModel tryreceivedClientModel = gson.fromJson(message.getParameter(0), ClientModel.class);
-    //
-    //                                        if (!Objects.equals(tryreceivedClientModel.getTypeOfRequest(), "CONNECTTOEXISTINGGAME")) { //todo received.gettype.equals("connect")
-    //
-    //                                            receivedClientModel = tryreceivedClientModel;
-    //
-    //                                            if (receivedClientModel.isGameStarted() && receivedClientModel.NotisKicked()) {
-    //                                                // Il messaggio è o una richiesta o una risposta
-    //
-    //                                                // se il messaggio non è una risposta di un client al server vuol dire che
-    //                                                if (receivedClientModel.isResponse().equals(false) && receivedClientModel.getTypeOfRequest() != null) {
-    //                                                    // il messaggio è una richiesta del server alla view di un client
-    //
-    //                                                    // se il messaggio è rivolto a me devo essere io a compiere l'azione
-    //
-    //
-    //                                                }
-    //                                            }
-    //                                        }
-    //                                    }
-    //                                }
-    //                            };
-    //                            t.start();
-    //                            gui.setClientModel(receivedClientModel);
-    //                            gui.response();
-    //                            wait();
-    //                            t.interrupt();
-    //                        } catch (InterruptedException | IOException e) {
-    //                            throw new RuntimeException(e);
-    //                        }
-    //                    }
                 }
 
             }

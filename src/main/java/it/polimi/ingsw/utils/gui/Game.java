@@ -19,6 +19,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import static it.polimi.ingsw.client.GUI.currNode;
+
 public class Game implements Initializable {
     private final GUI gui = new GUI();
     private final Gson gson = new Gson();
@@ -49,6 +51,7 @@ public class Game implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        currNode = phaseLabel;
         response = new ParametersFromNetwork(1);
         response.enable();
         try {
