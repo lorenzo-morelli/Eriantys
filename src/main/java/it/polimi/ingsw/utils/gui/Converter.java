@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Converter {
 
-    public static List<ImageView> toImage(List<String> stringList) {
+    public static List<ImageView> toImageCharacters(List<String> stringList) {
         List<ImageView> images = new ArrayList<>();
         stringList.forEach((student) -> {
             switch (student) {
@@ -30,7 +30,7 @@ public class Converter {
         return images;
     }
 
-    public static void toImage(List<String> stringList, List<ImageView> images) {
+    public static void toImageCharacters(List<String> stringList, List<ImageView> images) {
         for (int i = 0; i < 3; i++) {
             Image character = null;
             switch (stringList.get(i)) {
@@ -73,7 +73,27 @@ public class Converter {
             }
             images.get(i).setImage(character);
         }
-       // return images;
+    }
+
+    public static void toImageAssistants(List<Integer> valueList, List<ImageView> images) {
+        for (int i = 0; i < valueList.size(); i++) {
+            System.out.println(i);
+            Image assistant = new Image("graphics/assistants/assistantCard" + valueList.get(i) + ".png");
+            images.get(i).setImage(assistant);
+        }
+    }
+
+    public static int getColorPlace(String color) {
+        int n = -1;
+        switch (color) {
+            case "green": n = 0; break;
+            case "red": n = 1; break;
+            case "yellow": n = 2; break;
+            case "pink": n = 3; break;
+            case "blue": n = 4; break;
+
+        }
+        return n;
     }
 
 }
