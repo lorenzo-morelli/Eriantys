@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 
 import static it.polimi.ingsw.client.GUI.currNode;
 import static java.lang.Thread.sleep;
@@ -87,8 +88,9 @@ public class SetupGame implements Initializable {
         } else {
             currNode = otherPlayersLabel;
             boolean responseReceived = false;
+            Network.send(gson.toJson(this.gui.getClientModel()));
+
             while (!responseReceived) {
-                Network.send(gson.toJson(this.gui.getClientModel()));
                 System.out.println("invio al server in attesa di ack...");
                 ParametersFromNetwork ack = new ParametersFromNetwork(1);
                 ack.enable();
@@ -98,6 +100,9 @@ public class SetupGame implements Initializable {
                 if (check || System.currentTimeMillis() >= end) {
                     System.out.println("\n\nServer non ha dato risposta");
                     Network.disconnect();
+                    currNode = otherPlayersLabel;
+                    this.otherPlayersLabel.setText("...Server non ha dato alcuna risposta, mi disconnetto...");
+                    TimeUnit.SECONDS.sleep(5);
                     System.exit(0);
                 }
 
@@ -107,7 +112,8 @@ public class SetupGame implements Initializable {
             }
             System.out.println("[Conferma ricevuta]");
             System.out.println("In attesa che gli altri giocatori si colleghino...");
-            otherPlayersLabel.setText("...Waiting for other players to join the game...");
+            currNode = otherPlayersLabel;
+            this.otherPlayersLabel.setText("...Waiting for other players to join the game...");
 
             myID=gui.getClientModel().getClientIdentity();
             waitings();
@@ -118,7 +124,17 @@ public class SetupGame implements Initializable {
                  if(!notread) {
                      message = new ParametersFromNetwork(1);
                      message.enable();
-                     message.waitParametersReceived();
+                     long start = System.currentTimeMillis();
+                     long end = start + 15 * 1000L;
+                     boolean check = message.waitParametersReceivedMax(end);
+                     if(check){
+                         System.out.println("\n\nServer non ha dato risposta");
+                         Network.disconnect();
+                         currNode = otherPlayersLabel;
+                         this.otherPlayersLabel.setText("...Server si è disconnesso, mi disconnetto...");
+                         TimeUnit.SECONDS.sleep(5);
+                         System.exit(0);
+                     }
                  }
                  notread=false;
             //System.out.println(message.getParameter(0));
@@ -186,13 +202,18 @@ public class SetupGame implements Initializable {
             do {
                 message = new ParametersFromNetwork(1);
                 message.enable();
-                try {
-                    message.waitParametersReceived();
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
+                long start = System.currentTimeMillis();
+                long end = start + 15 * 1000L;
+                boolean check = message.waitParametersReceivedMax(end);
+                if(check){
+                    System.out.println("\n\nServer non ha dato risposta");
+                    Network.disconnect();
+                    currNode = otherPlayersLabel;
+                    this.otherPlayersLabel.setText("...Server si è disconnesso, mi disconnetto...");
+                    TimeUnit.SECONDS.sleep(5);
+                    System.exit(0);
                 }
 
-                System.out.println("ricevuto un ping...");
                 tryreceivedClientModel = gson.fromJson(message.getParameter(0), ClientModel.class);
 
                 if (!Objects.equals(tryreceivedClientModel.getTypeOfRequest(), "CONNECTTOEXISTINGGAME")) { //todo received.gettype.equals("connect")

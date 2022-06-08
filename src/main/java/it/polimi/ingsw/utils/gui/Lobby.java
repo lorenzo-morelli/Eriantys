@@ -7,6 +7,7 @@ import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.net.URL;
@@ -43,4 +44,5 @@ public class Lobby implements Initializable {
         }
         //todo:
     }
+
 }

@@ -1,6 +1,8 @@
 package it.polimi.ingsw.utils.gui;
 
 import it.polimi.ingsw.client.GUI;
+import it.polimi.ingsw.client.model.ClientModel;
+import it.polimi.ingsw.server.model.Model;
 import it.polimi.ingsw.utils.common.SendModelAndGetResponse;
 import it.polimi.ingsw.utils.common.SetConnection;
 import it.polimi.ingsw.utils.network.Network;
@@ -14,6 +16,7 @@ import javafx.scene.input.MouseEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 
 import static it.polimi.ingsw.client.GUI.currNode;
 import static it.polimi.ingsw.utils.common.Check.isValidIp;
@@ -67,7 +70,21 @@ public class Menu implements Initializable {
         } else {
             SetConnection.setConnection(nickname, ip, port, this.gui.getClientModel());
             if (Network.isConnected()) {
-                this.gui.setClientModel(SendModelAndGetResponse.sendAndGetModel(this.gui.getClientModel()));
+                currNode = notice;
+                this.notice.setText("In attesa che il server dia una risposta...");
+                ClientModel model=SendModelAndGetResponse.sendAndGetModel(this.gui.getClientModel());
+
+                if(model!=null) {
+                    this.gui.setClientModel(model);
+                }
+                else {
+                    System.out.println("\n\nServer non ha dato risposta");
+                    Network.disconnect();
+                    currNode = notice;
+                    this.notice.setText("Server non ha dato alcuna risposta, mi disconnetto...");
+                    TimeUnit.SECONDS.sleep(5);
+                    System.exit(0);
+                }
                 currNode = notice;
                 if (this.gui.getClientModel().getAmIfirst() == null) {
                     // il nickname inserito è già esistente
