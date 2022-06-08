@@ -40,10 +40,10 @@ public class Menu implements Initializable {
         this.ipField.setText("127.0.0.1");
         this.portField.setText("1234");
         this.notice.setText("");
+        currNode = playButton;
     }
 
     public void play(MouseEvent mouseEvent) throws IOException {
-        currNode = playButton;
         this.gui.changeScene("SetupConnection");
     }
 

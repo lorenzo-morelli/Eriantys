@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import static it.polimi.ingsw.client.GUI.currNode;
 import static it.polimi.ingsw.client.GUI.messageToOthers;
 
 public class Wait implements Initializable {
@@ -13,6 +14,6 @@ public class Wait implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //label.setText(messageToOthers);
+        currNode = label;
     }
 }

@@ -76,12 +76,16 @@ public class ChooseAssistantCard implements Initializable {
         }
     }
 
-
-    public void setAssistantCard1(MouseEvent mouseEvent) throws InterruptedException {
-        this.gui.getClientModel().setCardChoosedValue(1);
+    public void setCard(int value) throws InterruptedException {
+        this.gui.getClientModel().setCardChoosedValue(value);
         this.gui.getClientModel().setResponse(true); //lo flaggo come messaggio di risposta
         this.gui.getClientModel().setPingMessage(false);
         Gson json = new Gson();
         Network.send(json.toJson(this.gui.getClientModel()));
     }
+
+    public void setAssistantCard1(MouseEvent mouseEvent) throws InterruptedException {
+        setCard(1);
+    }
+
 }

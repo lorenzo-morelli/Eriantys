@@ -27,7 +27,7 @@ public class GUI extends Application{
     public void start(Stage stage) throws IOException {
         this.stage = stage;
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainMenu.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Game.fxml"));
             this.scene = new Scene(loader.load());
             this.stage.setScene(scene);
             this.stage.show();
@@ -96,8 +96,20 @@ public class GUI extends Application{
                 break;
             case "CHOOSEWHERETOMOVESTUDENTS":
                 System.out.println("student");
+                gameState = "Moving students";
                 changeScene("Game");
                 break;
+            case "TEAMMATE":
+                break;
+            case "CHOOSEWHERETOMOVEMOTHER":
+                break;
+            case "CHOOSECLOUDS" :
+                break;
+            case "GAMEEND":
+                changeScene("EndGame");
+                Network.disconnect();
+                break;
+
         }
         notifyAll();
     }
