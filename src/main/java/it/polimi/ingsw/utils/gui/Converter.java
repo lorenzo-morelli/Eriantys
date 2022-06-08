@@ -83,4 +83,17 @@ public class Converter {
         }
     }
 
+    public static int getColorPlace(String color) {
+        int n = -1;
+        switch (color) {
+            case "green": n = 0; break;
+            case "red": n = 1; break;
+            case "yellow": n = 2; break;
+            case "pink": n = 3; break;
+            case "blue": n = 4; break;
+
+        }
+        return n;
+    }
+
 }

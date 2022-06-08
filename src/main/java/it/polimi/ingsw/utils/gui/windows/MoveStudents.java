@@ -18,7 +18,7 @@ import static it.polimi.ingsw.utils.gui.Position.islandY;
 public class MoveStudents implements Initializable {
     private final GUI gui = new GUI();
     public GridPane islandGrid;
-    public Label notice;
+    public Label notice = new Label();
     PeopleColor studentColor;
 
     @Override
@@ -52,26 +52,26 @@ public class MoveStudents implements Initializable {
     }
 
     public void setBlue(MouseEvent mouseEvent) {
-       setColor("blue");
+       setColor("blue", mouseEvent);
     }
 
     public void setGreen(MouseEvent mouseEvent) {
-        setColor("green");
+        setColor("green", mouseEvent);
     }
 
     public void setPink(MouseEvent mouseEvent) {
-        setColor("pink");
+        setColor("pink", mouseEvent);
     }
 
     public void setRed(MouseEvent mouseEvent) {
-        setColor("red");
+        setColor("red", mouseEvent);
     }
 
     public void setYellow(MouseEvent mouseEvent) {
-        setColor("yellow");
+        setColor("yellow", mouseEvent);
     }
 
-    public void setColor(String color) {
+    public void setColor(String color, MouseEvent mouseEvent) {
         if (true) { //todo: ha quello studente
             switch (color) {
                 case "yellow": studentColor = PeopleColor.YELLOW; break;
@@ -80,7 +80,9 @@ public class MoveStudents implements Initializable {
                 case "green": studentColor = PeopleColor.GREEN; break;
                 case "pink": studentColor = PeopleColor.PINK; break;
             }
-            System.out.println("selected " + color);
+            if (islandGrid == null) {
+                this.gui.closeWindow(mouseEvent);
+            }
         } else {
             notice.setText("ERROR: Student unavailable!");
         }
