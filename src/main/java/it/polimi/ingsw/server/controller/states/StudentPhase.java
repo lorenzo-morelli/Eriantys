@@ -271,14 +271,16 @@ public class StudentPhase extends State {
                     if (check <= 1) {
                         System.out.println("numero minimo di giocatori non disponibile, attendo 40 secondi in attesa che un altro giocatore si riconnette");
                         for (Player p : model.getPlayers()) {
-                            ClientModel Data = connectionModel.findPlayer(p.getNickname());
+                            if(!p.isDisconnected()) {
+                                ClientModel Data = connectionModel.findPlayer(p.getNickname());
 
-                            Data.setTypeOfRequest("TRYTORECONNECT");
-                            Data.setServermodel(model);
-                            Data.setResponse(false);
-                            Data.setPingMessage(false);
+                                Data.setTypeOfRequest("TRYTORECONNECT");
+                                Data.setServermodel(model);
+                                Data.setResponse(false);
+                                Data.setPingMessage(false);
 
-                            Network.send(json.toJson(Data));
+                                Network.send(json.toJson(Data));
+                            }
                         }
 
                         model.setDisconnection(true);
