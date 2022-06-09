@@ -80,7 +80,7 @@ public class GUI extends Application{
     }
 
 
-    public synchronized void requestToMe(Node node) throws InterruptedException, IOException {
+    public synchronized void requestToMe() throws InterruptedException, IOException {
         Network.setClientModel(GUI.clientModel);
         switch (GUI.clientModel.getTypeOfRequest()) {
             case "TRYTORECONNECT":
@@ -114,12 +114,12 @@ public class GUI extends Application{
         notifyAll();
     }
 
-    public synchronized void requestToOthers(Node node) throws IOException {
+    public synchronized void requestToOthers() throws IOException {
         Network.setClientModel(GUI.clientModel);
         switch (GUI.clientModel.getTypeOfRequest()) {
             case "CHOOSEASSISTANTCARD":
                 messageToOthers = "L'utente " + GUI.clientModel.getNickname() + " sta scegliendo la carta assistente";
-                changeScene("ChooseAssistantCard");
+                changeScene("Wait");
                 System.out.println("funziono");
                 break;
             case "CHOOSEWHERETOMOVESTUDENTS":

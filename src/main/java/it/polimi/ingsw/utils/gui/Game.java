@@ -2,6 +2,10 @@ package it.polimi.ingsw.utils.gui;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.client.GUI;
+import it.polimi.ingsw.server.model.AssistantCard;
+import it.polimi.ingsw.server.model.Player;
+import it.polimi.ingsw.server.model.characters.CharacterCard;
+import it.polimi.ingsw.server.model.enums.GameMode;
 import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
@@ -25,7 +29,6 @@ import static it.polimi.ingsw.utils.gui.Position.*;
 
 public class Game implements Initializable {
     private final GUI gui = new GUI();
-    private final Gson gson = new Gson();
     public Label phaseLabel;
     public Label turnLabel;
     public GridPane islandGrid;
@@ -88,33 +91,25 @@ public class Game implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         currNode = phaseLabel;
         phaseLabel.setText(gameState);
-//        this.gui.getClientModel().getServermodel().getPlayers().forEach((player) -> System.out.println(player.getNickname()));
-//        System.out.println("giocatori connessi: " + this.gui.getClientModel().getServermodel().getPlayers().size());
-//        System.out.println(response.getParameter(0));
 
-
-        String gameMode = "PRINCIPIANT";
-        int motherNaturePos = 4; //todo testing
+        GameMode gameMode = this.gui.getClientModel().getServermodel().getGameMode();
+        int motherNaturePos = this.gui.getClientModel().getServermodel().getTable().getMotherNaturePosition();
         int towerNumbers = 2; //todo testing
         int islandNumber = 11;
+
+        List<Player> players = this.gui.getClientModel().getServermodel().getPlayers();
         List<String> playerNamesString = new ArrayList<>();
-        playerNamesString.add("paolo");
-        playerNamesString.add("pippo");
-        playerNamesString.add("paperino");
-        List<String> characterCardsString = new ArrayList<>();
-        characterCardsString.add("MONK");
-        characterCardsString.add("PRINCESS");
-        characterCardsString.add("HERALD");
+        players.forEach(player -> playerNamesString.add(player.getNickname()));
+
+
+        List<Integer> assistantCardsValues = new ArrayList<>();
+        players.forEach(player -> assistantCardsValues.add((int) player.getChoosedCard().getValues()));
+
         List<String> studentIslandString = new ArrayList<>();
         studentIslandString.add("rosso");
         studentIslandString.add("rosso");
         studentIslandString.add("blu");
         studentIslandString.add("verde");
-        List<Integer> assistantCardsString = new ArrayList<>();
-        assistantCardsString.add(10);
-        assistantCardsString.add(3);
-        assistantCardsString.add(5);
-        assistantCardsString.add(6);
 
         List<Label> playerNames = Arrays.asList(playerName1, playerName2, playerName3, playerName4);
         List<ImageView> assistantCards = Arrays.asList(assistantCard1, assistantCard2, assistantCard3, assistantCard4);
@@ -262,8 +257,8 @@ public class Game implements Initializable {
         }
 
 
-        // GAMEMODE
-        if (gameMode.equals("PRINCIPIANT")) {
+        // OK! GAMEMODE
+        if (gameMode.equals(GameMode.PRINCIPIANT)) {
             for (ImageView characterCard : characterCards) {
                 characterCard.setVisible(false);
             }
@@ -275,10 +270,13 @@ public class Game implements Initializable {
             }
 
         } else {
+            List<CharacterCard> characters = this.gui.getClientModel().getServermodel().getTable().getCharachter();
+            List<String> characterCardsString = new ArrayList<>();
+            characters.forEach(character -> characterCardsString.add(character.getName()));
             toImageCharacters(characterCardsString, characterCards);
         }
 
-        // NOMI E NUMERO GIOCATORI
+        // OK! NOMI E NUMERO GIOCATORI
         for (int i = 0; i < playerNamesString.size(); i++) {
             playerNames.get(i).setText(playerNamesString.get(i));
         }
@@ -298,8 +296,8 @@ public class Game implements Initializable {
             coinLabels.get(2).setVisible(false);
         }
 
-        // ASSISTANT CARDS
-        toImageAssistants(assistantCardsString, assistantCards);
+        // OK! ASSISTANT CARDS
+        toImageAssistants(assistantCardsValues, assistantCards);
 
 
     }

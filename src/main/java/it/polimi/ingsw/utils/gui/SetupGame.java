@@ -161,7 +161,7 @@ public class SetupGame implements Initializable {
                             try {
                                 System.out.println("request to me");
                                 gui.setClientModel(receivedClientModel);
-                                gui.requestToMe(otherPlayersLabel);
+                                gui.requestToMe();
 
                                 Thread t= new Thread(() -> {
                                     try {
@@ -186,7 +186,7 @@ public class SetupGame implements Initializable {
                             try {
                                 System.out.println("request to other");
                                 gui.setClientModel(receivedClientModel);
-                                gui.requestToOthers(otherPlayersLabel);
+                                gui.requestToOthers();
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }

@@ -33,7 +33,8 @@ public class ChooseAssistantCard implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         currNode = assistantCard1;
-        List<ImageView> cards = Arrays.asList(assistantCard1,
+        List<ImageView> cards = Arrays.asList(
+                assistantCard1,
                 assistantCard2,
                 assistantCard3,
                 assistantCard4,
@@ -44,37 +45,30 @@ public class ChooseAssistantCard implements Initializable {
                 assistantCard9,
                 assistantCard10
         );
-
-        for (int i = 0; i < 10; i++) {
-            cards.get(i).setVisible(false);
-        }
-
-        for (AssistantCard a : gui.getClientModel().getDeck()){
-            System.out.println("valore: " + (int)a.getValues() + "  mosse: " + a.getMoves());
-            switch ((int) a.getValues()) {
-                case 1:
-                    assistantCard1.setVisible(true);
-                case 2:
-                    assistantCard2.setVisible(true);
-                case 3:
-                    assistantCard3.setVisible(true);
-                case 4:
-                    assistantCard4.setVisible(true);
-                case 5:
-                    assistantCard5.setVisible(true);
-                case 6:
-                    assistantCard6.setVisible(true);
-                case 7:
-                    assistantCard7.setVisible(true);
-                case 8:
-                    assistantCard8.setVisible(true);
-                case 9:
-                    assistantCard9.setVisible(true);
-                case 10:
-                    assistantCard10.setVisible(true);
+        List<AssistantCard> deck = this.gui.getClientModel().getDeck();
+        deck.forEach((card) -> System.out.println(card.getValues()));
+        cards.forEach((card) -> card.setVisible(false));
+        cards.forEach((card) -> {
+            boolean show = false;
+            for (AssistantCard assistantCard : deck) {
+                if (assistantCard.getValues() == cards.indexOf(card) + 1) {
+                    show = true;
+                }
             }
-        }
+            if (show) {
+                card.setVisible(true);
+            }
+        });
+        cards.forEach((card) -> card.setOnMouseClicked((event) -> {
+                    try {
+                        setCard(cards.indexOf(card) + 1);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                })
+        );
     }
+
 
     public void setCard(int value) throws InterruptedException {
         this.gui.getClientModel().setCardChoosedValue(value);
@@ -83,9 +77,4 @@ public class ChooseAssistantCard implements Initializable {
         Gson json = new Gson();
         Network.send(json.toJson(this.gui.getClientModel()));
     }
-
-    public void setAssistantCard1(MouseEvent mouseEvent) throws InterruptedException {
-        setCard(1);
-    }
-
 }
