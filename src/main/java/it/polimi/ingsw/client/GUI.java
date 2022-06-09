@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
-public class GUI extends Application{
+public class GUI extends Application {
     public Stage stage;
     public Scene scene;
     private static ClientModel clientModel = new ClientModel();
@@ -68,7 +68,7 @@ public class GUI extends Application{
 
     public static void main(String[] args) {
         launch(args);
-        GUI.clientModel=new ClientModel();
+        GUI.clientModel = new ClientModel();
     }
 
     public ClientModel getClientModel() {
@@ -102,8 +102,10 @@ public class GUI extends Application{
             case "TEAMMATE":
                 break;
             case "CHOOSEWHERETOMOVEMOTHER":
+                changeScene("Game");
                 break;
-            case "CHOOSECLOUDS" :
+            case "CHOOSECLOUDS":
+                changeScene("ChooseCloud");
                 break;
             case "GAMEEND":
                 changeScene("EndGame");
@@ -119,30 +121,35 @@ public class GUI extends Application{
         switch (GUI.clientModel.getTypeOfRequest()) {
             case "CHOOSEASSISTANTCARD":
                 messageToOthers = "L'utente " + GUI.clientModel.getNickname() + " sta scegliendo la carta assistente";
+                System.out.println("wait choose assistant card");
                 changeScene("Wait");
                 System.out.println("funziono");
                 break;
             case "CHOOSEWHERETOMOVESTUDENTS":
                 messageToOthers = "L'utente " + GUI.clientModel.getNickname() + " sta scegliendo dove muovere lo studente";
+                System.out.println("wait choose where to move students");
+                changeScene("Wait");
                 break;
             case "TEAMMATE":
                 messageToOthers = "L'utente " + GUI.clientModel.getNickname() + " sta scegliendo il suo compagno di squadra";
+                System.out.println("wait team mate");
+                changeScene("Wait");
                 break;
             case "CHOOSEWHERETOMOVEMOTHER":
                 messageToOthers = "L'utente " + GUI.clientModel.getNickname() + " sta scegliendo il numero di mosse di cui far spostare madre natura";
+                System.out.println("wait choose where to move mother");
+                changeScene("Wait");
                 break;
             case "CHOOSECLOUDS":
                 messageToOthers = "L'utente " + GUI.clientModel.getNickname() + " sta scegliendo la nuvola dalla quale ricaricare gli studenti";
+                System.out.println("wait choose clouds");
+                changeScene("Wait");
                 break;
         }
-        if (!GUI.clientModel.getTypeOfRequest().equals("TEAMMATE") && GUI.clientModel.getServermodel()!=null) {
+        if (!GUI.clientModel.getTypeOfRequest().equals("TEAMMATE") && GUI.clientModel.getServermodel() != null) {
             //todo: what?  -> just ignore
         }
         notifyAll();
-    }
-
-    public synchronized void response() throws IOException {
-
     }
 
     public synchronized void requestPing() {
