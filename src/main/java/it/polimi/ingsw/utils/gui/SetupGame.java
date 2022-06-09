@@ -26,7 +26,7 @@ public class SetupGame implements Initializable {
     private final Gson gson = new Gson();
     private int connectedPlayers;
     private ClientModel receivedClientModel;
-    private boolean isToReset;
+   private boolean isToReset, waitForFirst=true;
     private int myID;
 
     ParametersFromNetwork message;
@@ -126,14 +126,19 @@ public class SetupGame implements Initializable {
                      message.enable();
                      long start = System.currentTimeMillis();
                      long end = start + 15 * 1000L;
-                     boolean check = message.waitParametersReceivedMax(end);
-                     if(check){
-                         System.out.println("\n\nServer non ha dato risposta");
-                         Network.disconnect();
-                         currNode = otherPlayersLabel;
-                         this.otherPlayersLabel.setText("...Server si è disconnesso, mi disconnetto...");
-                         TimeUnit.SECONDS.sleep(5);
-                         System.exit(0);
+                     if(waitForFirst){
+                         message.waitParametersReceived();
+                     }
+                     else {
+                         boolean check = message.waitParametersReceivedMax(end);
+                         if (check) {
+                             System.out.println("\n\nServer non ha dato risposta");
+                             Network.disconnect();
+                             currNode = otherPlayersLabel;
+                             this.otherPlayersLabel.setText("...Server si è disconnesso, mi disconnetto...");
+                             TimeUnit.SECONDS.sleep(5);
+                             System.exit(0);
+                         }
                      }
                  }
                  notread=false;
@@ -148,6 +153,7 @@ public class SetupGame implements Initializable {
                 }
 
                 if (receivedClientModel.isGameStarted() && receivedClientModel.NotisKicked()) {
+                    waitForFirst=false;
 
                     // Il messaggio è o una richiesta o una risposta
 
