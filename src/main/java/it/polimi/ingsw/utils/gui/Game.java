@@ -102,6 +102,7 @@ public class Game implements Initializable {
         ArrayList<Integer> assistantCardsValues = new ArrayList<>();
         players.forEach(player -> assistantCardsValues.add((int) player.getChoosedCard().getValues()));
         ArrayList<Professor> professors = this.gui.getClientModel().getServermodel().getTable().getProfessors();
+        ArrayList<Cloud> clouds = this.gui.getClientModel().getServermodel().getTable().getClouds();
 
         ArrayList<Label> playerNames = new ArrayList<>(Arrays.asList(playerName1, playerName2, playerName3, playerName4));
         ArrayList<ImageView> assistantCards = new ArrayList<>(Arrays.asList(assistantCard1, assistantCard2, assistantCard3, assistantCard4));
@@ -151,7 +152,7 @@ public class Game implements Initializable {
             towers.setHgap(-15);
             for (int j = 0; j < island.getNumberOfTowers(); j++) {
                 ImageView towerImage = null;
-                switch (islands.get(0).getTowerColor()) {
+                switch (island.getTowerColor()) {
                     case BLACK:
                         towerImage = new ImageView("graphics/pieces/towers/black_tower.png");
                     case GREY:
@@ -175,28 +176,24 @@ public class Game implements Initializable {
         });
 
         //NUVOLE
-        int cloudNumber = 2;
-        int numStudCloud = 3;
-        for (int i = 0; i < cloudNumber; i++) {
+        clouds.forEach(cloud -> {
             StackPane tile = new StackPane();
-            ImageView cloud = new ImageView("/graphics/pieces/clouds/cloud_card.png");
-            cloud.setFitHeight(130);
-            cloud.setFitWidth(130);
-            tile.getChildren().add(cloud);
+            ImageView cloudImage = new ImageView("/graphics/pieces/clouds/cloud_card.png");
+            cloudImage.setFitHeight(130);
+            cloudImage.setFitWidth(130);
+            tile.getChildren().add(cloudImage);
+
             GridPane studentsCloudGrid = new GridPane();
             studentsCloudGrid.setAlignment(Pos.CENTER);
             studentsCloudGrid.setHgap(10);
 
-            //INIZIALIZZO STUDENTI ALLE NUVOLE
-            for (int j = 0; j < numStudCloud; j++) {
-                ImageView student = new ImageView("/graphics/pieces/students/student_blue.png");
-                student.setFitHeight(30);
-                student.setFitWidth(30);
-                studentsCloudGrid.add(student, j % 2, j / 2);
-            }
-            tile.getChildren().add(studentsCloudGrid);
-            islandGrid.add(tile, cloudX(i), cloudY(i));
-        }
+            int green = cloud.getStudentsAccumulator().getNumOfGreenStudents();
+            int blue = cloud.getStudentsAccumulator().getNumOfBlueStudents();
+            int red = cloud.getStudentsAccumulator().getNumOfRedStudents();
+            int yellow = cloud.getStudentsAccumulator().getNumOfYellowStudents();
+            int pink = cloud.getStudentsAccumulator().getNumOfPinkStudents();
+            populateGrid(studentsCloudGrid, 0, 2, green, red, blue, pink, yellow);
+        });
 
         // OK! STUDENT IN ENTRANCE
         entranceGrids.forEach(entrance -> {
@@ -246,30 +243,37 @@ public class Game implements Initializable {
             players.forEach(player -> {
                 if (professor.getHeldBy() == player) {
                     ImageView profImage = null;
+                    String color = "";
                     switch (professor.getColor()) {
                         case BLUE:
                             profImage = new ImageView("graphics/pieces/professors/teacher_blue.png");
+                            color = "blue";
                             break;
                         case RED:
                             profImage = new ImageView("graphics/pieces/professors/teacher_red.png");
+                            color = "red";
                             break;
                         case PINK:
                             profImage = new ImageView("graphics/pieces/professors/teacher_pink.png");
+                            color = "pink";
                             break;
                         case GREEN:
                             profImage = new ImageView("graphics/pieces/professors/teacher_green.png");
+                            color = "green";
                             break;
                         case YELLOW:
                             profImage = new ImageView("graphics/pieces/professors/teacher_yellow.png");
+                            color = "yellow";
                             break;
                     }
                     profImage.setFitWidth(30);
                     profImage.setFitHeight(30);
                     ImageView finalProfImage = profImage;
+                    String finalColor = color;
                     professorGrids.forEach(professorGrid -> {
                         professorGrid.setAlignment(Pos.CENTER);
                         if (professorGrids.indexOf(professorGrid) == players.indexOf(player)) {
-                            professorGrid.add(finalProfImage, 0, getColorPlace("blue"));
+                            professorGrid.add(finalProfImage, 0, getColorPlace(finalColor));
                         }
                     });
                 }
@@ -344,8 +348,6 @@ public class Game implements Initializable {
 
         // OK! ASSISTANT CARDS
         toImageAssistants(assistantCardsValues, assistantCards);
-
-
     }
 
     public void quit() throws IOException {
@@ -356,7 +358,7 @@ public class Game implements Initializable {
         this.gui.openNewWindow("MoveToSchool");
     }
 
-    public void setOnIsland(MouseEvent mouseEvent) {
+    public void setOnIsland() {
         this.gui.openNewWindow("MoveToIsland");
     }
 
