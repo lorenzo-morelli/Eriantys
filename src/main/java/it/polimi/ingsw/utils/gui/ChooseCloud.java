@@ -16,6 +16,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import static it.polimi.ingsw.client.GUI.currNode;
 import static it.polimi.ingsw.utils.gui.Game.populateGrid;
 
 public class ChooseCloud implements Initializable {
@@ -25,6 +26,7 @@ public class ChooseCloud implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        currNode = cloudGrid;
         ArrayList<Cloud> clouds = this.gui.getClientModel().getServermodel().getTable().getClouds();
         if (clouds.size() == 2) {
             cloudGrid.setLayoutX(150);
@@ -51,7 +53,7 @@ public class ChooseCloud implements Initializable {
                 if (cloud.getStudentsAccumulator().size() == 0) {
                     notice.setText("ERROR: Cloud already chosen!");
                 } else {
-                    this.gui.getClientModel().setCloudChoosed(this.gui.getClientModel().getServermodel().getTable().getClouds().get(Integer.parseInt(CommandPrompt.gotFromTerminal()) - 1));
+                    this.gui.getClientModel().setCloudChoosed(cloud);
                     this.gui.getClientModel().setResponse(true); //lo flaggo come messaggio di risposta
                     this.gui.getClientModel().setPingMessage(false);
                     Gson gson = new Gson();
