@@ -19,7 +19,7 @@ public class Herald extends CharacterCard{
                         target.controllIsland(influence_team);
                         target.placeTower();
                     } else if (!(target.getTowerColor().equals(influence_team.getPlayer1().getSchoolBoard().getTowerColor()))) {
-                        model.getTable().ConquestIsland(index_island, model.getTeams(), influence_team);
+                        model.getTable().conquestIsland(index_island, model.getTeams(), influence_team);
                     }
                     if (influence_team.getPlayer1().getSchoolBoard().getNumOfTowers() == 0) {
                         return true;
@@ -32,7 +32,7 @@ public class Herald extends CharacterCard{
                         target.controllIsland(influence_player);
                         target.placeTower();
                     } else if (!(target.getTowerColor().equals(influence_player.getSchoolBoard().getTowerColor()))) {
-                        model.getTable().ConquestIsland(index_island, model.getPlayers(), influence_player);
+                        model.getTable().conquestIsland(index_island, model.getPlayers(), influence_player);
                     }
                     if (influence_player.getSchoolBoard().getNumOfTowers() == 0) {
                         return true;
@@ -41,7 +41,7 @@ public class Herald extends CharacterCard{
             }
         if (model.getTable().getIslands().get(index_island) != null) {
             if (model.getTable().getIslands().get((index_island + 1) % model.getTable().getIslands().size()).getTowerColor() != null && model.getTable().getIslands().get((index_island + 1) % model.getTable().getIslands().size()).getTowerColor().equals(model.getTable().getIslands().get(index_island).getTowerColor())) {
-                model.getTable().MergeIsland(index_island, ((index_island + 1) % model.getTable().getIslands().size()));
+                model.getTable().mergeIsland(index_island, ((index_island + 1) % model.getTable().getIslands().size()));
             }
             Island merging;
             if(index_island==0){
@@ -58,7 +58,7 @@ public class Herald extends CharacterCard{
                 else{
                     mergingindex=(index_island - 1)% model.getTable().getIslands().size();
                 }
-                model.getTable().MergeIsland(index_island, mergingindex);
+                model.getTable().mergeIsland(index_island, mergingindex);
             }
         }
         return model.getTable().getIslands().size() == 3;

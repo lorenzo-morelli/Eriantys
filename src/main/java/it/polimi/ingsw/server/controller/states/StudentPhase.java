@@ -183,47 +183,47 @@ public class StudentPhase extends State {
                     }
                     model.getTable().checkProfessor(currentPlayerData.getChoosedColor(), model.getPlayers());
                 } else if (type.equals("ISLAND")) {
-                    model.getTable().load_island(currentPlayer, currentPlayerData.getChoosedColor(), currentPlayerData.getChoosedIsland());
+                    model.getTable().loadIsland(currentPlayer, currentPlayerData.getChoosedColor(), currentPlayerData.getChoosedIsland());
                 } else {
                     i--;
-                    for (int j = 0; j < model.getTable().getCharachter().size(); j++) {
-                        if (model.getTable().getCharachter().get(j).getName().equals(type)) {
+                    for (int j = 0; j < model.getTable().getCharacters().size(); j++) {
+                        if (model.getTable().getCharacters().get(j).getName().equals(type)) {
                             switch (type) {
                                 case "MUSHROOMHUNTER":
-                                    ((MushroomHunter) model.getTable().getCharachter().get(j)).useEffect(currentPlayer, currentPlayerData.getChoosedColor(), model.getTable());
+                                    ((MushroomHunter) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, currentPlayerData.getChoosedColor(), model.getTable());
                                     break;
                                 case "THIEF":
-                                    ((Thief) model.getTable().getCharachter().get(j)).useEffect(currentPlayer, model.getPlayers(), currentPlayerData.getChoosedColor(), model.getTable());
+                                    ((Thief) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, model.getPlayers(), currentPlayerData.getChoosedColor(), model.getTable());
                                     break;
                                 case "CENTAUR":
-                                    ((Centaur) model.getTable().getCharachter().get(j)).useEffect(currentPlayer, model.getTable());
+                                    ((Centaur) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, model.getTable());
                                     break;
                                 case "FARMER":
-                                    ((Farmer) model.getTable().getCharachter().get(j)).useEffect(currentPlayer, model.getTable(), model.getPlayers());
+                                    ((Farmer) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, model.getTable(), model.getPlayers());
                                     break;
                                 case "KNIGHT":
-                                    ((Knight) model.getTable().getCharachter().get(j)).useEffect(currentPlayer, model.getTable());
+                                    ((Knight) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, model.getTable());
                                     break;
                                 case "MINSTRELL":
-                                    ((Minstrell) model.getTable().getCharachter().get(j)).useEffect(currentPlayer, currentPlayerData.getColors2(), currentPlayerData.getColors1(),model.getTable(),model.getPlayers());
+                                    ((Minstrell) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, currentPlayerData.getColors2(), currentPlayerData.getColors1(),model.getTable(),model.getPlayers());
                                     break;
                                 case "JESTER":
-                                    ((Jester) model.getTable().getCharachter().get(j)).useEffect(currentPlayer, currentPlayerData.getColors2(), currentPlayerData.getColors1());
+                                    ((Jester) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, currentPlayerData.getColors2(), currentPlayerData.getColors1());
                                     break;
                                 case "POSTMAN":
-                                    ((Postman) model.getTable().getCharachter().get(j)).useEffect(currentPlayer);
+                                    ((Postman) model.getTable().getCharacters().get(j)).useEffect(currentPlayer);
                                     break;
                                 case "PRINCESS":
-                                    ((Princess) model.getTable().getCharachter().get(j)).useEffect(currentPlayer, currentPlayerData.getChoosedColor(), model.getTable(), model.getPlayers());
+                                    ((Princess) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, currentPlayerData.getChoosedColor(), model.getTable(), model.getPlayers());
                                     break;
                                 case "GRANNY":
-                                    ((Granny) model.getTable().getCharachter().get(j)).useEffect(currentPlayer, currentPlayerData.getChoosedIsland(), model.getTable());
+                                    ((Granny) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, currentPlayerData.getChoosedIsland(), model.getTable());
                                     break;
                                 case "MONK":
-                                    ((Monk) model.getTable().getCharachter().get(j)).useEffect(currentPlayer, currentPlayerData.getChoosedColor(), currentPlayerData.getChoosedIsland(), model.getTable());
+                                    ((Monk) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, currentPlayerData.getChoosedColor(), currentPlayerData.getChoosedIsland(), model.getTable());
                                     break;
                                 case "HERALD":
-                                    boolean check = ((Herald) model.getTable().getCharachter().get(j)).useEffect(currentPlayer, currentPlayerData.getChoosedIsland(), model);
+                                    boolean check = ((Herald) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, currentPlayerData.getChoosedIsland(), model);
                                     if (check) {
                                         gameEnd().fireStateEvent();
                                         return super.entryAction(cause);

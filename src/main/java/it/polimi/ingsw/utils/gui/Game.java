@@ -1,11 +1,9 @@
 package it.polimi.ingsw.utils.gui;
 
-import com.google.gson.Gson;
 import it.polimi.ingsw.client.GUI;
 import it.polimi.ingsw.server.model.*;
 import it.polimi.ingsw.server.model.characters.CharacterCard;
 import it.polimi.ingsw.server.model.enums.GameMode;
-import it.polimi.ingsw.server.model.enums.TowerColor;
 import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
@@ -86,40 +84,24 @@ public class Game implements Initializable {
 
     private ParametersFromNetwork response;
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         currNode = phaseLabel;
         phaseLabel.setText(gameState);
+        turnLabel.setText("è il turno di: " + this.gui.getClientModel().getServermodel().getcurrentPlayer().getNickname());
 
         // OK! valori partita
         GameMode gameMode = this.gui.getClientModel().getServermodel().getGameMode();
         int motherNaturePos = this.gui.getClientModel().getServermodel().getTable().getMotherNaturePosition();
-        int islandNumber = 1;con
-
-        // OK! valore players
-        List<Player> players = this.gui.getClientModel().getServermodel().getPlayers();
-        List<String> playerNamesString = new ArrayList<>();
-        players.forEach(player -> playerNamesString.add(player.getNickname()));
-
-        List<StudentSet> dinnerTables = new ArrayList<>();
+        ArrayList<Island> islands = this.gui.getClientModel().getServermodel().getTable().getIslands();
+        ArrayList<Player> players = this.gui.getClientModel().getServermodel().getPlayers();
+        ArrayList<StudentSet> dinnerTables = new ArrayList<>();
         players.forEach(player -> dinnerTables.add(player.getSchoolBoard().getDinnerTable()));
-        List<StudentSet> entranceSpace = new ArrayList<>();
+        ArrayList<StudentSet> entranceSpace = new ArrayList<>();
         players.forEach(player -> entranceSpace.add(player.getSchoolBoard().getEntranceSpace()));
-
-        // valore assistant card scelte
-        List<Integer> assistantCardsValues = new ArrayList<>();
+        ArrayList<Integer> assistantCardsValues = new ArrayList<>();
         players.forEach(player -> assistantCardsValues.add((int) player.getChoosedCard().getValues()));
-
-        // valore professori
-        List<Professor> professors = this.gui.getClientModel().getServermodel().getTable().getProfessors();
-
-
-        List<String> studentIslandString = new ArrayList<>();
-        studentIslandString.add("rosso");
-        studentIslandString.add("rosso");
-        studentIslandString.add("blu");
-        studentIslandString.add("verde");
+        ArrayList<Professor> professors = this.gui.getClientModel().getServermodel().getTable().getProfessors();
 
         ArrayList<Label> playerNames = new ArrayList<>(Arrays.asList(playerName1, playerName2, playerName3, playerName4));
         ArrayList<ImageView> assistantCards = new ArrayList<>(Arrays.asList(assistantCard1, assistantCard2, assistantCard3, assistantCard4));
@@ -132,61 +114,65 @@ public class Game implements Initializable {
         ArrayList<ImageView> coins = new ArrayList<>(Arrays.asList(coin1, coin2, coin3, coin4));
         ArrayList<Label> coinLabels = new ArrayList<>(Arrays.asList(coin1Label, coin2Label, coin3Label, coin4Label));
 
-        //ISOLE
+        // OK! ISOLE
         islandGrid.setAlignment(Pos.CENTER);
-        for (int i = 0; i < islandNumber; i++) {
+        islands.forEach(island -> {
             StackPane tile = new StackPane();
-
-            //INIZIALIZZO LE ISOLE
-            ImageView island = new ImageView();
-            switch (i % 3) {
+            ImageView islandImage = new ImageView();
+            switch (islands.indexOf(island) % 3) {
                 case 0:
-                    island = new ImageView("/graphics/pieces/islands/island1.png");
+                    islandImage = new ImageView("/graphics/pieces/islands/island1.png");
                     break;
                 case 1:
-                    island = new ImageView("/graphics/pieces/islands/island2.png");
+                    islandImage = new ImageView("/graphics/pieces/islands/island2.png");
                     break;
                 case 2:
-                    island = new ImageView("/graphics/pieces/islands/island3.png");
+                    islandImage = new ImageView("/graphics/pieces/islands/island3.png");
                     break;
             }
-            island.setFitHeight(180);
-            island.setFitWidth(180);
-            tile.getChildren().add(island);
+            islandImage.setFitHeight(180);
+            islandImage.setFitWidth(180);
+            tile.getChildren().add(islandImage);
 
-            //INIZIALIZZO GLI STUDENTI NELLE ISOLE
-            GridPane studentsIsland = new GridPane();
-            studentsIsland.setAlignment(Pos.CENTER);
-            List<ImageView> studentsIslandImages;
-            studentsIslandImages = Converter.toImageCharacters(studentIslandString);
-
-            for (int j = 0; j < studentsIslandImages.size(); j++) {
-                studentsIslandImages.get(j).setFitHeight(20);
-                studentsIslandImages.get(j).setFitWidth(20);
-                studentsIsland.add(studentsIslandImages.get(j), j % 3, j / 3);
-            }
-            tile.getChildren().add(studentsIsland);
+            //INIZIALIZZO GLI INHABITANTS
+            GridPane students = new GridPane();
+            students.setAlignment(Pos.CENTER);
+            int green = island.getInhabitants().getNumOfGreenStudents();
+            int red = island.getInhabitants().getNumOfRedStudents();
+            int blue = island.getInhabitants().getNumOfBlueStudents();
+            int yellow = island.getInhabitants().getNumOfYellowStudents();
+            int pink = island.getInhabitants().getNumOfPinkStudents();
+            populateGrid(students, 0, 3, green, red, blue, pink, yellow);
+            tile.getChildren().add(students);
 
             //INIZIALIZZO LE TORRI NELLE ISOLE
-            int towernnnn = 3;
             GridPane towers = new GridPane();
             towers.setAlignment(Pos.BOTTOM_CENTER);
             towers.setHgap(-15);
-            for (int j = 0; j < towernnnn; j++) {
-                ImageView tower = new ImageView("graphics/pieces/towers/black_tower.png");
-                tower.setFitWidth(40);
-                tower.setFitHeight(40);
-                towers.addRow(1, tower);
+            for (int j = 0; j < island.getNumberOfTowers(); j++) {
+                ImageView towerImage = null;
+                switch (islands.get(0).getTowerColor()) {
+                    case BLACK:
+                        towerImage = new ImageView("graphics/pieces/towers/black_tower.png");
+                    case GREY:
+                        towerImage = new ImageView("graphics/pieces/towers/grey_tower.png");
+                    case WHITE:
+                        towerImage = new ImageView("graphics/pieces/towers/white_tower.png");
+                }
+                towerImage.setFitWidth(40);
+                towerImage.setFitHeight(40);
+                towers.addRow(1, towerImage);
             }
             tile.getChildren().add(towers);
 
             //INIZIALIZZO MADRE NATURA
-            if (i == motherNaturePos) {
+            if (islands.indexOf(island) == motherNaturePos) {
                 tile.getChildren().add(motherNature);
                 StackPane.setAlignment(motherNature, Pos.TOP_CENTER);
             }
-            islandGrid.add(tile, islandX(i), islandY(i));
-        }
+            islandGrid.add(tile, islandX(islands.indexOf(island)), islandY(islands.indexOf(island)));
+
+        });
 
         //NUVOLE
         int cloudNumber = 2;
@@ -216,70 +202,40 @@ public class Game implements Initializable {
         entranceGrids.forEach(entrance -> {
             players.forEach(player -> {
                 if (entranceGrids.indexOf(entrance) == players.indexOf(player)) {
-                    int position = 1;
-                    for (int i = 0; i < player.getSchoolBoard().getEntranceSpace().getNumOfGreenStudents(); i++) {
-                        ImageView student = new ImageView("/graphics/pieces/students/student_green.png");
-                        student.setFitHeight(30);
-                        student.setFitWidth(30);
-                        entrance.add(student, position % 2, position / 2);
-                        position++;
-                    }
-                    for (int i = 0; i < player.getSchoolBoard().getEntranceSpace().getNumOfRedStudents(); i++) {
-                        ImageView student = new ImageView("/graphics/pieces/students/student_red.png");
-                        student.setFitHeight(30);
-                        student.setFitWidth(30);
-                        entrance.add(student, position % 2, position / 2);
-                        position++;
-                    }
-                    for (int i = 0; i < player.getSchoolBoard().getEntranceSpace().getNumOfYellowStudents(); i++) {
-                        ImageView student = new ImageView("/graphics/pieces/students/student_yellow.png");
-                        student.setFitHeight(30);
-                        student.setFitWidth(30);
-                        entrance.add(student, position % 2, position / 2);
-                        position++;
-                    }
-                    for (int i = 0; i < player.getSchoolBoard().getEntranceSpace().getNumOfPinkStudents(); i++) {
-                        ImageView student = new ImageView("/graphics/pieces/students/student_pink.png");
-                        student.setFitHeight(30);
-                        student.setFitWidth(30);
-                        entrance.add(student, position % 2, position / 2);
-                        position++;
-                    }
-                    for (int i = 0; i < player.getSchoolBoard().getEntranceSpace().getNumOfBlueStudents(); i++) {
-                        ImageView student = new ImageView("/graphics/pieces/students/student_blue.png");
-                        student.setFitHeight(30);
-                        student.setFitWidth(30);
-                        entrance.add(student, position % 2, position / 2);
-                        position++;
-                    }
+                    int green = player.getSchoolBoard().getEntranceSpace().getNumOfGreenStudents();
+                    int blue = player.getSchoolBoard().getEntranceSpace().getNumOfBlueStudents();
+                    int red = player.getSchoolBoard().getEntranceSpace().getNumOfRedStudents();
+                    int yellow = player.getSchoolBoard().getEntranceSpace().getNumOfYellowStudents();
+                    int pink = player.getSchoolBoard().getEntranceSpace().getNumOfPinkStudents();
+                    populateGrid(entrance, 1, 2, green, red, blue, pink, yellow);
                 }
             });
         });
 
-        // OK! STUDENT IN SCHOOL
+        // STUDENT IN SCHOOL
         schoolGrids.forEach(school -> {
-            school.setAlignment(Pos.CENTER);
+            if (school != null) school.setAlignment(Pos.CENTER);
             players.forEach(player -> {
                 if (schoolGrids.indexOf(school) == players.indexOf(player)) {
                     for (int i = 0; i < player.getSchoolBoard().getDinnerTable().getNumOfBlueStudents(); i++) {
                         ImageView studentBlue = new ImageView("/graphics/pieces/students/student_blue.png");
-                        school1Grid.add(studentBlue, i, getColorPlace("blue"));
+                        school.add(studentBlue, i, getColorPlace("blue"));
                     }
                     for (int i = 0; i < player.getSchoolBoard().getDinnerTable().getNumOfRedStudents(); i++) {
                         ImageView studentRed = new ImageView("/graphics/pieces/students/student_red.png");
-                        school1Grid.add(studentRed, i, getColorPlace("red"));
+                        school.add(studentRed, i, getColorPlace("red"));
                     }
                     for (int i = 0; i < player.getSchoolBoard().getDinnerTable().getNumOfGreenStudents(); i++) {
                         ImageView studentGreen = new ImageView("/graphics/pieces/students/student_green.png");
-                        school1Grid.add(studentGreen, i, getColorPlace("green"));
+                        school.add(studentGreen, i, getColorPlace("green"));
                     }
                     for (int i = 0; i < player.getSchoolBoard().getDinnerTable().getNumOfPinkStudents(); i++) {
                         ImageView studentPink = new ImageView("/graphics/pieces/students/student_pink.png");
-                        school1Grid.add(studentPink, i, getColorPlace("pink"));
+                        school.add(studentPink, i, getColorPlace("pink"));
                     }
                     for (int i = 0; i < player.getSchoolBoard().getDinnerTable().getNumOfYellowStudents(); i++) {
                         ImageView studentYellow = new ImageView("/graphics/pieces/students/student_yellow.png");
-                        school1Grid.add(studentYellow, i, getColorPlace("yellow"));
+                        school.add(studentYellow, i, getColorPlace("yellow"));
                     }
                 }
             });
@@ -291,11 +247,21 @@ public class Game implements Initializable {
                 if (professor.getHeldBy() == player) {
                     ImageView profImage = null;
                     switch (professor.getColor()) {
-                        case BLUE: profImage = new ImageView("graphics/pieces/professors/teacher_blue.png"); break;
-                        case RED: profImage = new ImageView("graphics/pieces/professors/teacher_red.png"); break;
-                        case PINK: profImage = new ImageView("graphics/pieces/professors/teacher_pink.png"); break;
-                        case GREEN: profImage = new ImageView("graphics/pieces/professors/teacher_green.png"); break;
-                        case YELLOW: profImage = new ImageView("graphics/pieces/professors/teacher_yellow.png"); break;
+                        case BLUE:
+                            profImage = new ImageView("graphics/pieces/professors/teacher_blue.png");
+                            break;
+                        case RED:
+                            profImage = new ImageView("graphics/pieces/professors/teacher_red.png");
+                            break;
+                        case PINK:
+                            profImage = new ImageView("graphics/pieces/professors/teacher_pink.png");
+                            break;
+                        case GREEN:
+                            profImage = new ImageView("graphics/pieces/professors/teacher_green.png");
+                            break;
+                        case YELLOW:
+                            profImage = new ImageView("graphics/pieces/professors/teacher_yellow.png");
+                            break;
                     }
                     profImage.setFitWidth(30);
                     profImage.setFitHeight(30);
@@ -320,9 +286,15 @@ public class Game implements Initializable {
                     for (int i = 0; i < player.getSchoolBoard().getNumOfTowers(); i++) {
                         ImageView towerImage = null;
                         switch (player.getSchoolBoard().getTowerColor()) {
-                            case BLACK: towerImage = new ImageView("graphics/pieces/towers/black_tower.png"); break;
-                            case WHITE: towerImage = new ImageView("graphics/pieces/towers/white_tower.png"); break;
-                            case GREY: towerImage = new ImageView("graphics/pieces/towers/grey_tower.png"); break;
+                            case BLACK:
+                                towerImage = new ImageView("graphics/pieces/towers/black_tower.png");
+                                break;
+                            case WHITE:
+                                towerImage = new ImageView("graphics/pieces/towers/white_tower.png");
+                                break;
+                            case GREY:
+                                towerImage = new ImageView("graphics/pieces/towers/grey_tower.png");
+                                break;
                         }
                         towerImage.setFitHeight(50);
                         towerImage.setFitWidth(50);
@@ -335,36 +307,34 @@ public class Game implements Initializable {
 
         // OK! GAMEMODE
         if (gameMode.equals(GameMode.PRINCIPIANT)) {
-            for (ImageView characterCard : characterCards) {
-                characterCard.setVisible(false);
-            }
-            for (ImageView coin : coins) {
-                coin.setVisible(false);
-            }
-            for (Label coinLabel : coinLabels) {
-                coinLabel.setVisible(false);
-            }
+            characterCards.forEach(card -> card.setVisible(false));
+            coins.forEach(coin -> coin.setVisible(false));
+            coinLabels.forEach(coinLabel -> coinLabel.setVisible(false));
 
         } else {
-            List<CharacterCard> characters = this.gui.getClientModel().getServermodel().getTable().getCharachter();
+            List<CharacterCard> characters = this.gui.getClientModel().getServermodel().getTable().getCharacters();
             List<String> characterCardsString = new ArrayList<>();
             characters.forEach(character -> characterCardsString.add(character.getName()));
             toImageCharacters(characterCardsString, characterCards);
         }
 
         // OK! NOMI E NUMERO GIOCATORI
-        for (int i = 0; i < playerNamesString.size(); i++) {
-            playerNames.get(i).setText(playerNamesString.get(i));
-        }
+        players.forEach(player -> {
+            playerNames.forEach(playerLabel -> {
+                if (players.indexOf(player) == playerNames.indexOf(playerLabel)) {
+                    playerLabel.setText(player.getNickname());
+                }
+            });
+        });
 
-        if (playerNamesString.size() < 4) {
+        if (players.size() < 4) {
             playerNames.get(3).setVisible(false);
             assistantCards.get(3).setVisible(false);
             schools.get(3).setVisible(false);
             coins.get(3).setVisible(false);
             coinLabels.get(3).setVisible(false);
         }
-        if (playerNamesString.size() < 3) {
+        if (players.size() < 3) {
             playerNames.get(2).setVisible(false);
             assistantCards.get(2).setVisible(false);
             schools.get(2).setVisible(false);
@@ -400,5 +370,44 @@ public class Game implements Initializable {
 
     public void characterCard3(MouseEvent mouseEvent) {
 
+    }
+
+    public void populateGrid(GridPane grid, int init, int rows, int green, int red, int blue, int pink, int yellow) {
+        int position = init;
+        for (int i = 0; i < green; i++) {
+            ImageView student = new ImageView("/graphics/pieces/students/student_green.png");
+            student.setFitHeight(30);
+            student.setFitWidth(30);
+            grid.add(student, position % rows, position / rows);
+            position++;
+        }
+        for (int i = 0; i < red; i++) {
+            ImageView student = new ImageView("/graphics/pieces/students/student_red.png");
+            student.setFitHeight(30);
+            student.setFitWidth(30);
+            grid.add(student, position % rows, position / rows);
+            position++;
+        }
+        for (int i = 0; i < yellow; i++) {
+            ImageView student = new ImageView("/graphics/pieces/students/student_yellow.png");
+            student.setFitHeight(30);
+            student.setFitWidth(30);
+            grid.add(student, position % rows, position / rows);
+            position++;
+        }
+        for (int i = 0; i < pink; i++) {
+            ImageView student = new ImageView("/graphics/pieces/students/student_pink.png");
+            student.setFitHeight(30);
+            student.setFitWidth(30);
+            grid.add(student, position % rows, position / rows);
+            position++;
+        }
+        for (int i = 0; i < blue; i++) {
+            ImageView student = new ImageView("/graphics/pieces/students/student_blue.png");
+            student.setFitHeight(30);
+            student.setFitWidth(30);
+            grid.add(student, position % rows, position / rows);
+            position++;
+        }
     }
 }

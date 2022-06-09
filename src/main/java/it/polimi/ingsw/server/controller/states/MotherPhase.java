@@ -202,7 +202,7 @@ public class MotherPhase extends State {
                                     target.controllIsland(influence_team);
                                     target.placeTower();
                                 } else if (!(target.getTowerColor().equals(influence_team.getPlayer1().getSchoolBoard().getTowerColor()))) {
-                                    model.getTable().ConquestIsland(model.getTable().getMotherNaturePosition(), model.getTeams(), influence_team);
+                                    model.getTable().conquestIsland(model.getTable().getMotherNaturePosition(), model.getTeams(), influence_team);
                                 }
                                 if (influence_team.getPlayer1().getSchoolBoard().getNumOfTowers() == 0) {
                                     gameEnd().fireStateEvent();
@@ -216,7 +216,7 @@ public class MotherPhase extends State {
                                     target.controllIsland(influence_player);
                                     target.placeTower();
                                 } else if (!(target.getTowerColor().equals(influence_player.getSchoolBoard().getTowerColor()))) {
-                                    model.getTable().ConquestIsland(model.getTable().getMotherNaturePosition(), model.getPlayers(), influence_player);
+                                    model.getTable().conquestIsland(model.getTable().getMotherNaturePosition(), model.getPlayers(), influence_player);
                                 }
                                 if (influence_player.getSchoolBoard().getNumOfTowers() == 0) {
                                     gameEnd().fireStateEvent();
@@ -226,7 +226,7 @@ public class MotherPhase extends State {
                         }
                         if (model.getTable().getIslands().get(model.getTable().getMotherNaturePosition()) != null) {
                             if (model.getTable().getIslands().get((model.getTable().getMotherNaturePosition() + 1) % model.getTable().getIslands().size()).getTowerColor() != null && model.getTable().getIslands().get((model.getTable().getMotherNaturePosition() + 1) % model.getTable().getIslands().size()).getTowerColor().equals(model.getTable().getIslands().get(model.getTable().getMotherNaturePosition()).getTowerColor())) {
-                                model.getTable().MergeIsland(model.getTable().getMotherNaturePosition(), ((model.getTable().getMotherNaturePosition() + 1) % model.getTable().getIslands().size()));
+                                model.getTable().mergeIsland(model.getTable().getMotherNaturePosition(), ((model.getTable().getMotherNaturePosition() + 1) % model.getTable().getIslands().size()));
                             }
                             Island merging;
                             if (model.getTable().getMotherNaturePosition() == 0) {
@@ -241,14 +241,14 @@ public class MotherPhase extends State {
                                 } else {
                                     mergingindex = (model.getTable().getMotherNaturePosition() - 1) % model.getTable().getIslands().size();
                                 }
-                                model.getTable().MergeIsland(model.getTable().getMotherNaturePosition(), mergingindex);
+                                model.getTable().mergeIsland(model.getTable().getMotherNaturePosition(), mergingindex);
                             }
                         }
                     } else {
                         target.setBlocked(false);
-                        for (int i = 0; i < model.getTable().getCharachter().size(); i++) {
-                            if (model.getTable().getCharachter().get(i) instanceof Granny) {
-                                ((Granny) model.getTable().getCharachter().get(i)).improveDivieti();
+                        for (int i = 0; i < model.getTable().getCharacters().size(); i++) {
+                            if (model.getTable().getCharacters().get(i) instanceof Granny) {
+                                ((Granny) model.getTable().getCharacters().get(i)).improveDivieti();
                                 break;
                             }
                         }
@@ -275,44 +275,44 @@ public class MotherPhase extends State {
                     }
                 } else {
                     istorepeat = true;
-                    for (int j = 0; j < model.getTable().getCharachter().size(); j++) {
-                        if (model.getTable().getCharachter().get(j).getName().equals(type)) {
+                    for (int j = 0; j < model.getTable().getCharacters().size(); j++) {
+                        if (model.getTable().getCharacters().get(j).getName().equals(type)) {
                             switch (type) {
                                 case "MUSHROOMHUNTER":
-                                    ((MushroomHunter) model.getTable().getCharachter().get(j)).useEffect(currentPlayer, currentPlayerData.getChoosedColor(), model.getTable());
+                                    ((MushroomHunter) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, currentPlayerData.getChoosedColor(), model.getTable());
                                     break;
                                 case "THIEF":
-                                    ((Thief) model.getTable().getCharachter().get(j)).useEffect(currentPlayer, model.getPlayers(), currentPlayerData.getChoosedColor(), model.getTable());
+                                    ((Thief) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, model.getPlayers(), currentPlayerData.getChoosedColor(), model.getTable());
                                     break;
                                 case "CENTAUR":
-                                    ((Centaur) model.getTable().getCharachter().get(j)).useEffect(currentPlayer, model.getTable());
+                                    ((Centaur) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, model.getTable());
                                     break;
                                 case "FARMER":
-                                    ((Farmer) model.getTable().getCharachter().get(j)).useEffect(currentPlayer, model.getTable(), model.getPlayers());
+                                    ((Farmer) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, model.getTable(), model.getPlayers());
                                     break;
                                 case "KNIGHT":
-                                    ((Knight) model.getTable().getCharachter().get(j)).useEffect(currentPlayer, model.getTable());
+                                    ((Knight) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, model.getTable());
                                     break;
                                 case "MINSTRELL":
-                                    ((Minstrell) model.getTable().getCharachter().get(j)).useEffect(currentPlayer, currentPlayerData.getColors2(), currentPlayerData.getColors1(),model.getTable(),model.getPlayers());
+                                    ((Minstrell) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, currentPlayerData.getColors2(), currentPlayerData.getColors1(),model.getTable(),model.getPlayers());
                                     break;
                                 case "JESTER":
-                                    ((Jester) model.getTable().getCharachter().get(j)).useEffect(currentPlayer, currentPlayerData.getColors2(), currentPlayerData.getColors1());
+                                    ((Jester) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, currentPlayerData.getColors2(), currentPlayerData.getColors1());
                                     break;
                                 case "POSTMAN":
-                                    ((Postman) model.getTable().getCharachter().get(j)).useEffect(currentPlayer);
+                                    ((Postman) model.getTable().getCharacters().get(j)).useEffect(currentPlayer);
                                     break;
                                 case "PRINCESS":
-                                    ((Princess) model.getTable().getCharachter().get(j)).useEffect(currentPlayer, currentPlayerData.getChoosedColor(), model.getTable(), model.getPlayers());
+                                    ((Princess) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, currentPlayerData.getChoosedColor(), model.getTable(), model.getPlayers());
                                     break;
                                 case "GRANNY":
-                                    ((Granny) model.getTable().getCharachter().get(j)).useEffect(currentPlayer, currentPlayerData.getChoosedIsland(), model.getTable());
+                                    ((Granny) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, currentPlayerData.getChoosedIsland(), model.getTable());
                                     break;
                                 case "MONK":
-                                    ((Monk) model.getTable().getCharachter().get(j)).useEffect(currentPlayer, currentPlayerData.getChoosedColor(), currentPlayerData.getChoosedIsland(), model.getTable());
+                                    ((Monk) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, currentPlayerData.getChoosedColor(), currentPlayerData.getChoosedIsland(), model.getTable());
                                     break;
                                 case "HERALD":
-                                    boolean check = ((Herald) model.getTable().getCharachter().get(j)).useEffect(currentPlayer, currentPlayerData.getChoosedIsland(), model);
+                                    boolean check = ((Herald) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, currentPlayerData.getChoosedIsland(), model);
                                     if (check) {
                                         gameEnd().fireStateEvent();
                                         return super.entryAction(cause);

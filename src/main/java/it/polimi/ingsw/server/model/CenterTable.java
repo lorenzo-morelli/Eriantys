@@ -20,7 +20,7 @@ public class CenterTable {
     private Player farmerEffect;
     private PeopleColor mushroomColor;
     private Player knightEffect;
-    private StudentSet princessSet, jesterSet,monkSet;
+    private StudentSet princessSet, jesterSet, monkSet;
     private int numDivieti;
 
     public static final String ANSI_CYAN = "\033[0;36m";
@@ -28,23 +28,22 @@ public class CenterTable {
 
     public CenterTable(int numplayer, GameMode gamemode) {
 
-        islands=new ArrayList<>();
-        StudentSet islandbag=new StudentSet(2,2,2,2,2);
+        islands = new ArrayList<>();
+        StudentSet islandbag = new StudentSet(2, 2, 2, 2, 2);
 
-        for(int i=0;i<12;i++){
-            if(i==0 || i==6) {
-                islands.add(new Island(0,islandbag));
-            }
-            else {
-                islands.add(new Island(1,islandbag));
+        for (int i = 0; i < 12; i++) {
+            if (i == 0 || i == 6) {
+                islands.add(new Island(0, islandbag));
+            } else {
+                islands.add(new Island(1, islandbag));
             }
         }
 
-        motherNaturePosition=0;
+        motherNaturePosition = 0;
 
-        bag=new StudentSet(24,24,24,24,24); //24
+        bag = new StudentSet(24, 24, 24, 24, 24); //24
 
-        avaiableTowerColor= new ArrayList<>();
+        avaiableTowerColor = new ArrayList<>();
         if (numplayer == 3) {
             Collections.addAll(avaiableTowerColor, TowerColor.values());
         } else {
@@ -52,83 +51,97 @@ public class CenterTable {
             avaiableTowerColor.add(TowerColor.BLACK);
         }
 
-        professors=new ArrayList<>();
-        for(PeopleColor Color: PeopleColor.values()) {
+        professors = new ArrayList<>();
+        for (PeopleColor Color : PeopleColor.values()) {
             professors.add(new Professor(Color));
         }
 
-        clouds =new ArrayList<>();
-        for(int i=0;i<numplayer;i++){
+        clouds = new ArrayList<>();
+        for (int i = 0; i < numplayer; i++) {
             clouds.add(new Cloud(numplayer));
             clouds.get(i).charge(bag);
         }
 
-        if(gamemode.equals(GameMode.EXPERT)){
-            characterCards=new ArrayList<>();
-            ArrayList<Integer> picks=new ArrayList<>();
+        if (gamemode.equals(GameMode.EXPERT)) {
+            characterCards = new ArrayList<>();
+            ArrayList<Integer> picks = new ArrayList<>();
 
             var ref = new Object() {
                 int pick;
             };
 
-            for(int i=0;i<3;i++) {
-                do{
+            for (int i = 0; i < 3; i++) {
+                do {
                     ref.pick = new Random().nextInt(Character.values().length);
-                }while(picks.stream().anyMatch(j->j.equals(ref.pick)));
+                } while (picks.stream().anyMatch(j -> j.equals(ref.pick)));
                 picks.add(ref.pick);
-                switch (Character.values()[ref.pick]){
-                    case MONK: characterCards.add(new Monk(bag));
-                        monkSet=((Monk)characterCards.get(i)).getSet();
-                    break;
-                    case THIEF: characterCards.add(new Thief());
+                switch (Character.values()[ref.pick]) {
+                    case MONK:
+                        characterCards.add(new Monk(bag));
+                        monkSet = ((Monk) characterCards.get(i)).getSet();
                         break;
-                    case FARMER: characterCards.add(new Farmer());
+                    case THIEF:
+                        characterCards.add(new Thief());
                         break;
-                    case GRANNY: characterCards.add(new Granny());
-                        numDivieti=((Granny)characterCards.get(i)).getNumDivieti();
+                    case FARMER:
+                        characterCards.add(new Farmer());
                         break;
-                    case HERALD: characterCards.add(new Herald());
+                    case GRANNY:
+                        characterCards.add(new Granny());
+                        numDivieti = ((Granny) characterCards.get(i)).getNumDivieti();
                         break;
-                    case JESTER: characterCards.add(new Jester(bag));
-                        jesterSet=((Jester)characterCards.get(i)).getSet();
+                    case HERALD:
+                        characterCards.add(new Herald());
                         break;
-                    case KNIGHT: characterCards.add(new Knight());
+                    case JESTER:
+                        characterCards.add(new Jester(bag));
+                        jesterSet = ((Jester) characterCards.get(i)).getSet();
                         break;
-                    case CENTAUR: characterCards.add(new Centaur());
+                    case KNIGHT:
+                        characterCards.add(new Knight());
                         break;
-                    case POSTMAN: characterCards.add(new Postman());
+                    case CENTAUR:
+                        characterCards.add(new Centaur());
                         break;
-                    case PRINCESS: characterCards.add(new Princess(bag));
-                        princessSet=((Princess)characterCards.get(i)).getSet();
+                    case POSTMAN:
+                        characterCards.add(new Postman());
                         break;
-                    case MINSTRELL: characterCards.add(new Minstrell());
+                    case PRINCESS:
+                        characterCards.add(new Princess(bag));
+                        princessSet = ((Princess) characterCards.get(i)).getSet();
                         break;
-                    case MUSHROOM_HUNTER: characterCards.add(new MushroomHunter());
+                    case MINSTRELL:
+                        characterCards.add(new Minstrell());
+                        break;
+                    case MUSHROOM_HUNTER:
+                        characterCards.add(new MushroomHunter());
                         break;
 
 
                 }
             }
+        } else {
+            characterCards = null;
         }
-        else{
-            characterCards=null;
-        }
-        centaurEffect=false;
-        farmerEffect=null;
-        mushroomColor=null;
-        knightEffect=null;
+        centaurEffect = false;
+        farmerEffect = null;
+        mushroomColor = null;
+        knightEffect = null;
     }
 
     public ArrayList<Professor> getProfessors() {
         return professors;
     }
+
     public StudentSet getBag() {
         return bag;
     }
+
     public ArrayList<TowerColor> getAvaiableTowerColor() {
         return avaiableTowerColor;
     }
-    public void changeProfessor(Player player,PeopleColor color){
+
+    public void changeProfessor(Player player, PeopleColor color) {
         for (Professor professor : professors) {
             if (professor.getColor().equals(color)) professor.setHeldBy(player);
         }
@@ -138,20 +151,22 @@ public class CenterTable {
         return islands;
     }
 
-    public void movemother(int moves){
-        motherNaturePosition= (motherNaturePosition + moves)% islands.size();
+    public void movemother(int moves) {
+        motherNaturePosition = (motherNaturePosition + moves) % islands.size();
     }
 
     public int getMotherNaturePosition() {
         return motherNaturePosition;
     }
-    public void load_island(Player player,PeopleColor color,int index_island){
-        player.getSchoolBoard().getEntranceSpace().removestudent(1,color);
-        islands.get(index_island).getInhabitants().addstudents(1,color);
+
+    public void loadIsland(Player player, PeopleColor color, int index_island) {
+        player.getSchoolBoard().getEntranceSpace().removestudent(1, color);
+        islands.get(index_island).getInhabitants().addstudents(1, color);
     }
-    public void checkProfessor(PeopleColor color, ArrayList<Player> players){
-        int max=0;
-        Player moreInfluenced=null;
+
+    public void checkProfessor(PeopleColor color, ArrayList<Player> players) {
+        int max = 0;
+        Player moreInfluenced = null;
         for (Player player : players) {
             if (player.getSchoolBoard().getDinnerTable().numStudentsbycolor(color) > max) {
                 max = player.getSchoolBoard().getDinnerTable().numStudentsbycolor(color);
@@ -160,13 +175,15 @@ public class CenterTable {
                 moreInfluenced = null;
             }
         }
-        if(farmerEffect!=null && farmerEffect.getSchoolBoard().getDinnerTable().numStudentsbycolor(color)==max) moreInfluenced=farmerEffect;
-        if(moreInfluenced!=null) changeProfessor(moreInfluenced,color);
+        if (farmerEffect != null && farmerEffect.getSchoolBoard().getDinnerTable().numStudentsbycolor(color) == max)
+            moreInfluenced = farmerEffect;
+        if (moreInfluenced != null) changeProfessor(moreInfluenced, color);
     }
-    public void ConquestIsland(int index_island, ArrayList<Player> players, Player influence_player){
+
+    public void conquestIsland(int index_island, ArrayList<Player> players, Player influence_player) {
         for (Player player : players) {
             if (player.getSchoolBoard().getTowerColor().equals(islands.get(index_island).getTowerColor())) {
-                for(int i=0; i<islands.get(index_island).getNumberOfTowers();i++) {
+                for (int i = 0; i < islands.get(index_island).getNumberOfTowers(); i++) {
                     player.getSchoolBoard().removeTower();
                 }
             }
@@ -174,10 +191,10 @@ public class CenterTable {
         islands.get(index_island).controllIsland(influence_player);
     }
 
-    public void ConquestIsland(int index_island, ArrayList<Team> teams, Team influence_team){
+    public void conquestIsland(int index_island, ArrayList<Team> teams, Team influence_team) {
         for (Team team : teams) {
             if (team.getPlayer1().getSchoolBoard().getTowerColor().equals(islands.get(index_island).getTowerColor())) {
-                for(int i=0; i<islands.get(index_island).getNumberOfTowers();i++) {
+                for (int i = 0; i < islands.get(index_island).getNumberOfTowers(); i++) {
                     team.getPlayer1().getSchoolBoard().removeTower();
                     team.getPlayer2().getSchoolBoard().removeTower();
                 }
@@ -186,15 +203,15 @@ public class CenterTable {
         islands.get(index_island).controllIsland(influence_team);
     }
 
-    public void MergeIsland(int index_1, int index_2){
-        islands.get(index_1).setNumberOfTowers(islands.get(index_1).getNumberOfTowers()+islands.get(index_2).getNumberOfTowers());
-        for(PeopleColor Color: PeopleColor.values()){
+    public void mergeIsland(int index_1, int index_2) {
+        islands.get(index_1).setNumberOfTowers(islands.get(index_1).getNumberOfTowers() + islands.get(index_2).getNumberOfTowers());
+        for (PeopleColor Color : PeopleColor.values()) {
             islands.get(index_1).getInhabitants().addstudents(islands.get(index_2).getInhabitants().numStudentsbycolor(Color), Color);
         }
         islands.get(index_1).setBlocked(islands.get(index_1).isBlocked());
         islands.remove(index_2);
-        if(index_2 < index_1) motherNaturePosition--;
-        if(index_2==0 && index_1== islands.size()) motherNaturePosition=islands.size()-1;
+        if (index_2 < index_1) motherNaturePosition--;
+        if (index_2 == 0 && index_1 == islands.size()) motherNaturePosition = islands.size() - 1;
     }
 
     public ArrayList<Cloud> getClouds() {
@@ -202,19 +219,19 @@ public class CenterTable {
     }
 
     public String toString(boolean islastturn) {
-        return  "-----------------------------------------TABLE----------------------------------------------------------------------------------------------------------------------------------------\n" +
-                "\n----------------ISLANDS---------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n" +  printislands() +(!islastturn ?"------------------BAG-----------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n"+
+        return "-----------------------------------------TABLE----------------------------------------------------------------------------------------------------------------------------------------\n" +
+                "\n----------------ISLANDS---------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n" + printIslands() + (!islastturn ? "------------------BAG-----------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n" +
                 "    SIZE : " + bag.size() + "    " + bag +
-                "\n----------------CLOUDS----------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n" + printclouds(): "") +
-                (characterCards==null ? "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n" :
-                        "-----------CHARACTER-CARD---------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n"+printCharachter())+
-                "---------------PROFESSORS-------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n"+
-                printprofessors() + "\n\n--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n" ;
+                "\n----------------CLOUDS----------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n" + printClouds() : "") +
+                (characterCards == null ? "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n" :
+                        "-----------CHARACTER-CARD---------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n" + printCharachter()) +
+                "---------------PROFESSORS-------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n" +
+                printProfessors() + "\n\n--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n";
     }
 
-    public String printclouds(){
-        StringBuilder result= new StringBuilder();
-        int i=1;
+    public String printClouds() {
+        StringBuilder result = new StringBuilder();
+        int i = 1;
         for (Cloud cloud : clouds) {
             result.append(ANSI_CYAN).append("    CLOUD : ").append(i).append(ANSI_RESET).append("\n").append(cloud.toString());
             i++;
@@ -222,9 +239,9 @@ public class CenterTable {
         return result.toString();
     }
 
-    public String printCharachter(){
-        StringBuilder result= new StringBuilder();
-        for(CharacterCard c : characterCards){
+    public String printCharachter() {
+        StringBuilder result = new StringBuilder();
+        for (CharacterCard c : characterCards) {
             result.append(c.toString());
             switch (c.getName()) {
                 case "PRINCESS":
@@ -247,15 +264,14 @@ public class CenterTable {
         return result.toString();
     }
 
-    public String printislands(){
-        StringBuilder result= new StringBuilder();
-        int i=1;
+    public String printIslands() {
+        StringBuilder result = new StringBuilder();
+        int i = 1;
         for (Island island : islands) {
             result.append(ANSI_CYAN).append("    ISLAND : ").append(i);
-            if(i==(motherNaturePosition+1)){
+            if (i == (motherNaturePosition + 1)) {
                 result.append(" - MOTHER NATURE IS HERE ").append(ANSI_RESET).append("\n").append(island);
-            }
-            else{
+            } else {
                 result.append(ANSI_RESET).append("\n").append(island);
             }
             i++;
@@ -263,9 +279,9 @@ public class CenterTable {
         return result.toString();
     }
 
-    public String printprofessors(){
-        StringBuilder result= new StringBuilder();
-        int i=0;
+    public String printProfessors() {
+        StringBuilder result = new StringBuilder();
+        int i = 0;
         for (Professor prof : professors) {
             result.append(i != 0 ? " |  " + prof.toString() : prof.toString());
             i++;
@@ -273,7 +289,7 @@ public class CenterTable {
         return result.toString();
     }
 
-    public ArrayList<CharacterCard> getCharachter() {
+    public ArrayList<CharacterCard> getCharacters() {
         return characterCards;
     }
 
