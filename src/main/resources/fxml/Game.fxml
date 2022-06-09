@@ -8,8 +8,8 @@
 <AnchorPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.utils.gui.Game">
    <children>
       <Button layoutX="1768.0" layoutY="972.0" mnemonicParsing="false" onMouseClicked="#quit" prefHeight="44.0" prefWidth="81.0" text="Quit" />
-      <Button fx:id="setOnSchoolBtn" layoutX="1626.0" layoutY="756.0" mnemonicParsing="false" onMouseClicked="#setOnSchool" prefHeight="38.0" prefWidth="135.0" text="Set student on school" />
-      <Button fx:id="setOnIsland" layoutX="1626.0" layoutY="834.0" mnemonicParsing="false" onMouseClicked="#setOnIsland" prefHeight="42.0" prefWidth="135.0" text="Set student on island" />
+      <Button fx:id="setOnSchoolBtn" layoutX="1631.0" layoutY="589.0" mnemonicParsing="false" onMouseClicked="#setOnSchool" prefHeight="38.0" prefWidth="135.0" text="Set student on school" />
+      <Button fx:id="setOnIslandBtn" layoutX="1631.0" layoutY="667.0" mnemonicParsing="false" onMouseClicked="#setOnIsland" prefHeight="42.0" prefWidth="135.0" text="Set student on island" />
       <ImageView fx:id="school1" fitHeight="263.0" fitWidth="593.0" layoutY="766.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../graphics/PLANCIA_GIOCO_2.jpeg" />
@@ -403,5 +403,6 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
       </GridPane>
+      <Button fx:id="moveBtn" layoutX="1631.0" layoutY="754.0" mnemonicParsing="false" onMouseClicked="#move" prefHeight="42.0" prefWidth="135.0" text="Move mother nature" />
    </children>
 </AnchorPane>
