@@ -17,7 +17,7 @@ public class SendModelAndGetResponse {
         long start = System.currentTimeMillis();
         long end = start + 15 * 1000L;
 
-        TimeUnit.MILLISECONDS.sleep(5000);
+        TimeUnit.MILLISECONDS.sleep(500);
 
         Network.send(gson.toJson(clientModel));
 

@@ -128,11 +128,11 @@ public class CreateGame extends State {
                             }
                         }
                     //System.out.println("exit loop");
-                        try {
+                        /*try {
                             sleep(5000);
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
-                        }
+                        }*/
                     }
                 }
         };
