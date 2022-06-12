@@ -40,12 +40,7 @@ public class ChooseCloud implements Initializable {
             studentsCloudGrid.setAlignment(Pos.CENTER);
             studentsCloudGrid.setHgap(10);
 
-            int green = cloud.getStudentsAccumulator().getNumOfGreenStudents();
-            int blue = cloud.getStudentsAccumulator().getNumOfBlueStudents();
-            int red = cloud.getStudentsAccumulator().getNumOfRedStudents();
-            int yellow = cloud.getStudentsAccumulator().getNumOfYellowStudents();
-            int pink = cloud.getStudentsAccumulator().getNumOfPinkStudents();
-            populateGrid(studentsCloudGrid, 0, 2, green, red, blue, pink, yellow);
+            populateGrid(studentsCloudGrid, 0, 2, cloud.getStudentsAccumulator());
             tile.getChildren().add(studentsCloudGrid);
             cloudGrid.add(tile, clouds.indexOf(cloud), 0);
             tile.setOnMouseClicked(event -> {

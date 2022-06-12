@@ -1,6 +1,7 @@
 package it.polimi.ingsw.utils.gui;
 
 
+import it.polimi.ingsw.server.model.characters.CharacterCard;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -30,10 +31,10 @@ public class Converter {
         return images;
     }
 
-    public static void toImageCharacters(List<String> stringList, List<ImageView> images) {
+    public static void toImageCharacters(ArrayList<CharacterCard> characterCard, List<ImageView> images) {
         for (int i = 0; i < 3; i++) {
             Image character = null;
-            switch (stringList.get(i)) {
+            switch (characterCard.get(i).getName()) {
                 case "MONK":
                     character = new Image("graphics/characters/monk.jpg");
                     break;
