@@ -1,6 +1,6 @@
-package it.polimi.ingsw.client.view.cli.controller.events;
+package it.polimi.ingsw.client.view.cli.CLIcontroller.events;
 
-import it.polimi.ingsw.utils.cli.CommandPrompt;
+import it.polimi.ingsw.client.view.cli.CommandPrompt;
 import it.polimi.ingsw.utils.observerPattern.Observer;
 import it.polimi.ingsw.utils.stateMachine.Event;
 

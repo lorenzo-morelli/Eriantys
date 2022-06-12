@@ -2,9 +2,8 @@ package it.polimi.ingsw.client.view.gui;
 
 import it.polimi.ingsw.client.GUI;
 import it.polimi.ingsw.client.model.ClientModel;
-import it.polimi.ingsw.server.model.Model;
-import it.polimi.ingsw.utils.common.SendModelAndGetResponse;
-import it.polimi.ingsw.utils.common.SetConnection;
+import it.polimi.ingsw.client.view.gui.common.SendModelAndGetResponse;
+import it.polimi.ingsw.client.view.gui.common.SetConnection;
 import it.polimi.ingsw.utils.network.Network;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,8 +17,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
-import static it.polimi.ingsw.utils.common.Check.isValidIp;
-import static it.polimi.ingsw.utils.common.Check.isValidPort;
+import static it.polimi.ingsw.client.view.gui.common.Check.isValidIp;
+import static it.polimi.ingsw.client.view.gui.common.Check.isValidPort;
 
 public class Menu implements Initializable {
     private final GUI gui = new GUI();

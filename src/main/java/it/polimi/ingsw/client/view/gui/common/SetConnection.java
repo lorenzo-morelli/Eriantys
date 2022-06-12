@@ -1,4 +1,4 @@
-package it.polimi.ingsw.utils.common;
+package it.polimi.ingsw.client.view.gui.common;
 
 import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.utils.network.Network;

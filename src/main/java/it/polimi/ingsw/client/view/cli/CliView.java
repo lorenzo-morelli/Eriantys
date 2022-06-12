@@ -2,16 +2,15 @@ package it.polimi.ingsw.client.view.cli;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.client.model.ClientModel;
-import it.polimi.ingsw.client.view.cli.controller.states.Decision;
-import it.polimi.ingsw.client.view.cli.controller.states.ReadFromTerminal;
-import it.polimi.ingsw.client.view.cli.controller.states.WelcomeScreen;
+import it.polimi.ingsw.client.view.cli.CLIcontroller.states.Decision;
+import it.polimi.ingsw.client.view.cli.CLIcontroller.states.ReadFromTerminal;
+import it.polimi.ingsw.client.view.cli.CLIcontroller.states.WelcomeScreen;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.server.model.AssistantCard;
 import it.polimi.ingsw.server.model.StudentSet;
 import it.polimi.ingsw.server.model.characters.*;
 import it.polimi.ingsw.server.model.enums.GameMode;
 import it.polimi.ingsw.server.model.enums.PeopleColor;
-import it.polimi.ingsw.utils.cli.CommandPrompt;
 import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.stateMachine.State;
 
@@ -23,8 +22,8 @@ import java.util.regex.Pattern;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static it.polimi.ingsw.utils.common.Check.isValidIp;
-import static it.polimi.ingsw.utils.common.Check.isValidPort;
+import static it.polimi.ingsw.client.view.gui.common.Check.isValidIp;
+import static it.polimi.ingsw.client.view.gui.common.Check.isValidPort;
 
 public class CliView implements View {
 

@@ -1,8 +1,8 @@
-package it.polimi.ingsw.client.view.cli.controller.states;
+package it.polimi.ingsw.client.view.cli.CLIcontroller.states;
 
 import it.polimi.ingsw.client.model.ClientModel;
-import it.polimi.ingsw.client.view.cli.controller.events.IncorrectNumberOfParameters;
-import it.polimi.ingsw.client.view.cli.controller.events.ParametersFromTerminal;
+import it.polimi.ingsw.client.view.cli.CLIcontroller.events.IncorrectNumberOfParameters;
+import it.polimi.ingsw.client.view.cli.CLIcontroller.events.ParametersFromTerminal;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.utils.stateMachine.*;
 import java.io.IOException;

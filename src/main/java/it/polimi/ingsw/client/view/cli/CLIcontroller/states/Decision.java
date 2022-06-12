@@ -1,8 +1,8 @@
-package it.polimi.ingsw.client.view.cli.controller.states;
+package it.polimi.ingsw.client.view.cli.CLIcontroller.states;
 
 import it.polimi.ingsw.client.model.ClientModel;
-import it.polimi.ingsw.client.view.cli.controller.events.NotRecognizedSetOfStrings;
-import it.polimi.ingsw.client.view.cli.controller.events.RecognizedString;
+import it.polimi.ingsw.client.view.cli.CLIcontroller.events.NotRecognizedSetOfStrings;
+import it.polimi.ingsw.client.view.cli.CLIcontroller.events.RecognizedString;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;

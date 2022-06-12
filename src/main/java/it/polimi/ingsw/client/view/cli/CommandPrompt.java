@@ -1,4 +1,4 @@
-package it.polimi.ingsw.utils.cli;
+package it.polimi.ingsw.client.view.cli;
 
 import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.observerPattern.Observer;

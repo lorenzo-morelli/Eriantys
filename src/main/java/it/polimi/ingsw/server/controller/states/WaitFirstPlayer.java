@@ -1,11 +1,11 @@
 package it.polimi.ingsw.server.controller.states;
 
 import com.google.gson.Gson;
-import it.polimi.ingsw.client.view.cli.controller.events.ClientDisconnection;
+import it.polimi.ingsw.client.view.cli.CLIcontroller.events.ClientDisconnection;
 import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.server.controller.ConnectionModel;
 import it.polimi.ingsw.server.controller.ServerController;
-import it.polimi.ingsw.utils.cli.CommandPrompt;
+import it.polimi.ingsw.client.view.cli.CommandPrompt;
 import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
 import it.polimi.ingsw.utils.stateMachine.Controller;

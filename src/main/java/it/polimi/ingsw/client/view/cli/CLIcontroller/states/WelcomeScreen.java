@@ -1,8 +1,8 @@
-package it.polimi.ingsw.client.view.cli.controller.states;
+package it.polimi.ingsw.client.view.cli.CLIcontroller.states;
 
 import it.polimi.ingsw.client.view.View;
-import it.polimi.ingsw.client.view.cli.controller.events.NotRecognizedString;
-import it.polimi.ingsw.client.view.cli.controller.events.RecognizedString;
+import it.polimi.ingsw.client.view.cli.CLIcontroller.events.NotRecognizedString;
+import it.polimi.ingsw.client.view.cli.CLIcontroller.events.RecognizedString;
 import it.polimi.ingsw.utils.stateMachine.*;
 import java.io.IOException;
 

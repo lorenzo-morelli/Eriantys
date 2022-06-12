@@ -1,6 +1,6 @@
 package it.polimi.ingsw.server.controller.states;
 
-import it.polimi.ingsw.utils.cli.CommandPrompt;
+import it.polimi.ingsw.client.view.cli.CommandPrompt;
 import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.stateMachine.Event;
 import it.polimi.ingsw.utils.stateMachine.IEvent;
