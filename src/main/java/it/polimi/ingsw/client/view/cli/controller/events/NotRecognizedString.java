@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client.controller.events;
+package it.polimi.ingsw.client.view.cli.controller.events;
 
 import it.polimi.ingsw.utils.cli.CommandPrompt;
 import it.polimi.ingsw.utils.observerPattern.Observer;
@@ -7,20 +7,19 @@ import it.polimi.ingsw.utils.stateMachine.Event;
 import java.io.IOException;
 
 /**
- * L'evento di riconoscimento di una parola inserita dall'utente.
+ * L'evento di riconoscimento di quando una parola NON viene inserita dall'utente.
  * Vogliamo poter comparare la stringa ricevuta dal cmd con una stringa memorizzata,
- * quando l'utente inserisce proprio quella stringa scateniamo l'evento
- * Ho utilizzato il pattern observer per poter osservare la CommandPrompt
+ * quando l'utente NON inserisce proprio quella stringa scateniamo l'evento
  *
  * @author Fernando
  */
-public class RecognizedString extends Event implements Observer {
+public class NotRecognizedString extends Event implements Observer {
     public String toListen;
     private final CommandPrompt commandPrompt;
     private boolean enabled = false;
 
-    public RecognizedString(String message) throws IOException {
-        super("[Riconosciuta la parola " + message + "]");
+    public NotRecognizedString(String message) throws IOException {
+        super("[Non è stata riconosciuta la parola " + message + "]");
         this.toListen = message;
         this.commandPrompt = CommandPrompt.getInstance();
         this.subscribe();
@@ -37,8 +36,8 @@ public class RecognizedString extends Event implements Observer {
 
     @Override
     public void update(Object message) throws Exception {
-        if(toListen != null && enabled){
-            if (this.toListen.equals (message)){
+        if (toListen != null && enabled) {
+            if (!this.toListen.equals(message)) {
                 fireStateEvent();
             }
         }
@@ -54,3 +53,4 @@ public class RecognizedString extends Event implements Observer {
         this.commandPrompt.unsubscribeObserver(this);
     }
 }
+

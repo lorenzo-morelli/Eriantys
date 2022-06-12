@@ -1,8 +1,8 @@
-package it.polimi.ingsw.client.controller.states;
+package it.polimi.ingsw.client.view.cli.controller.states;
 
 import it.polimi.ingsw.client.model.ClientModel;
-import it.polimi.ingsw.client.controller.events.ConnectedToServer;
-import it.polimi.ingsw.client.controller.events.NotConnectedToServer;
+import it.polimi.ingsw.client.view.cli.controller.events.ConnectedToServer;
+import it.polimi.ingsw.client.view.cli.controller.events.NotConnectedToServer;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.stateMachine.*;

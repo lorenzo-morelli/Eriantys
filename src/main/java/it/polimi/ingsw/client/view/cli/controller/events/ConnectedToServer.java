@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client.controller.events;
+package it.polimi.ingsw.client.view.cli.controller.events;
 
 import it.polimi.ingsw.utils.stateMachine.Event;
 

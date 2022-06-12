@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client.controller.states;
+package it.polimi.ingsw.client.view.cli.controller.states;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.client.model.ClientModel;

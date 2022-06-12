@@ -1,7 +1,7 @@
 package it.polimi.ingsw.server.controller.states;
 
 import com.google.gson.Gson;
-import it.polimi.ingsw.client.controller.events.ClientDisconnection;
+import it.polimi.ingsw.client.view.cli.controller.events.ClientDisconnection;
 import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.server.controller.ConnectionModel;
 import it.polimi.ingsw.server.controller.PingThread.StudentThread;

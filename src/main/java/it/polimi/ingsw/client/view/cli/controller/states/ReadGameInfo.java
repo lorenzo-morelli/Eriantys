@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client.controller.states;
+package it.polimi.ingsw.client.view.cli.controller.states;
 
 import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.client.view.View;
@@ -6,7 +6,6 @@ import it.polimi.ingsw.utils.stateMachine.Controller;
 import it.polimi.ingsw.utils.stateMachine.IEvent;
 
 import java.io.IOException;
-import java.util.Random;
 
 public class ReadGameInfo extends ReadFromTerminal {
     public ReadGameInfo(View view, ClientModel clientModel, Controller controller) throws IOException {
