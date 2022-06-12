@@ -25,13 +25,18 @@ public class Character implements Initializable {
     public Label notice = new Label();
     private boolean canClose = false;
     public GridPane islandGrid;
-    public GridPane studentGrid;
-    private PeopleColor color = null;
+    public ImageView student1;
+    public ImageView student2;
+    public ImageView student3;
+    public ImageView student4;
+    public ImageView student5;
+    private PeopleColor color;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         CharacterCard card = currentCharacter;
         ArrayList<Island> islands = this.gui.getClientModel().getServermodel().getTable().getIslands();
+        ArrayList<ImageView> students = new ArrayList<>(Arrays.asList(student1, student2, student3, student4, student5));
 
         switch (card.getName()) {
             case "KNIGHT":
@@ -52,7 +57,27 @@ public class Character implements Initializable {
                 break;
             case "MONK":
                 explaination.setText("You can select 1 student from this card and place it on an island of your choice");
-
+                students.forEach(student -> {
+                    student.setOnMouseClicked(event -> {
+                        switch (students.indexOf(student)) {
+                            case 0:
+                                color = PeopleColor.BLUE;
+                                break;
+                            case 1:
+                                color = PeopleColor.GREEN;
+                                break;
+                            case 2:
+                                color = PeopleColor.PINK;
+                                break;
+                            case 3:
+                                color = PeopleColor.RED;
+                                break;
+                            case 4:
+                                color = PeopleColor.YELLOW;
+                                break;
+                        }
+                    });
+                });
                 islands.forEach(island -> {
                     ImageView islandImage = new ImageView();
                     switch (islands.indexOf(island) % 3) {
@@ -70,7 +95,12 @@ public class Character implements Initializable {
                     islandImage.setFitWidth(60);
                     islandGrid.add(islandImage, islandX(islands.indexOf(island)), islandY(islands.indexOf(island)));
                     islandImage.setOnMouseClicked((event) -> {
-
+                        if (color == null) {
+                            notice.setText("Missing information!");
+                        } else {
+                            //todo invia al server
+                            //todo fai piu righe (3?) di students.
+                        }
                     });
                 });
                 break;
@@ -96,21 +126,6 @@ public class Character implements Initializable {
 
                 break;
         }
-    }
-
-    public static void chooseStudents(GridPane studentGrid) {
-        PeopleColor color = null;
-        ArrayList<ImageView> students = new ArrayList<>(Arrays.asList(
-                new ImageView("/graphics/pieces/students/student_blue.png"),
-                new ImageView("/graphics/pieces/students/student_green.png"),
-                new ImageView("/graphics/pieces/students/student_pink.png"),
-                new ImageView("/graphics/pieces/students/student_red.png"),
-                new ImageView("/graphics/pieces/students/student_yellow.png")
-        ));
-        students.forEach(student -> {
-            studentGrid.add(student, students.indexOf(student), 0);
-
-        });
     }
 
     public void okay(MouseEvent mouseEvent) {
