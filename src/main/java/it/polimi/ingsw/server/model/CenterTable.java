@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.Random;
 
 public class CenterTable {
+    private boolean debug = true; // todo: change to unlock all the character cards
     private final ArrayList<Cloud> clouds;
     private final ArrayList<Island> islands;
     private int motherNaturePosition;
@@ -70,54 +71,103 @@ public class CenterTable {
                 int pick;
             };
 
-            for (int i = 0; i < 3; i++) {
-                do {
-                    ref.pick = new Random().nextInt(Character.values().length);
-                } while (picks.stream().anyMatch(j -> j.equals(ref.pick)));
-                picks.add(ref.pick);
-                switch (Character.values()[ref.pick]) {
-                    case MONK:
-                        characterCards.add(new Monk(bag));
-                        monkSet = ((Monk) characterCards.get(i)).getSet();
-                        break;
-                    case THIEF:
-                        characterCards.add(new Thief());
-                        break;
-                    case FARMER:
-                        characterCards.add(new Farmer());
-                        break;
-                    case GRANNY:
-                        characterCards.add(new Granny());
-                        numDivieti = ((Granny) characterCards.get(i)).getNumDivieti();
-                        break;
-                    case HERALD:
-                        characterCards.add(new Herald());
-                        break;
-                    case JESTER:
-                        characterCards.add(new Jester(bag));
-                        jesterSet = ((Jester) characterCards.get(i)).getSet();
-                        break;
-                    case KNIGHT:
-                        characterCards.add(new Knight());
-                        break;
-                    case CENTAUR:
-                        characterCards.add(new Centaur());
-                        break;
-                    case POSTMAN:
-                        characterCards.add(new Postman());
-                        break;
-                    case PRINCESS:
-                        characterCards.add(new Princess(bag));
-                        princessSet = ((Princess) characterCards.get(i)).getSet();
-                        break;
-                    case MINSTRELL:
-                        characterCards.add(new Minstrell());
-                        break;
-                    case MUSHROOM_HUNTER:
-                        characterCards.add(new MushroomHunter());
-                        break;
+            if (debug == true){
+                for (int i = 0; i < Character.values().length ; i++) {
+                    picks.add(i);
+                    switch (Character.values()[i]) {
+                        case MONK:
+                            characterCards.add(new Monk(bag));
+                            monkSet = ((Monk) characterCards.get(i)).getSet();
+                            break;
+                        case THIEF:
+                            characterCards.add(new Thief());
+                            break;
+                        case FARMER:
+                            characterCards.add(new Farmer());
+                            break;
+                        case GRANNY:
+                            characterCards.add(new Granny());
+                            numDivieti = ((Granny) characterCards.get(i)).getNumDivieti();
+                            break;
+                        case HERALD:
+                            characterCards.add(new Herald());
+                            break;
+                        case JESTER:
+                            characterCards.add(new Jester(bag));
+                            jesterSet = ((Jester) characterCards.get(i)).getSet();
+                            break;
+                        case KNIGHT:
+                            characterCards.add(new Knight());
+                            break;
+                        case CENTAUR:
+                            characterCards.add(new Centaur());
+                            break;
+                        case POSTMAN:
+                            characterCards.add(new Postman());
+                            break;
+                        case PRINCESS:
+                            characterCards.add(new Princess(bag));
+                            princessSet = ((Princess) characterCards.get(i)).getSet();
+                            break;
+                        case MINSTRELL:
+                            characterCards.add(new Minstrell());
+                            break;
+                        case MUSHROOM_HUNTER:
+                            characterCards.add(new MushroomHunter());
+                            break;
+                    }
+                }
+            }
+            else {
+                for (int i = 0; i < 3; i++) {
+                    do {
+                        ref.pick = new Random().nextInt(Character.values().length);
+                    } while (picks.stream().anyMatch(j -> j.equals(ref.pick)));
+                    picks.add(ref.pick);
+                    switch (Character.values()[ref.pick]) {
+                        case MONK:
+                            characterCards.add(new Monk(bag));
+                            monkSet = ((Monk) characterCards.get(i)).getSet();
+                            break;
+                        case THIEF:
+                            characterCards.add(new Thief());
+                            break;
+                        case FARMER:
+                            characterCards.add(new Farmer());
+                            break;
+                        case GRANNY:
+                            characterCards.add(new Granny());
+                            numDivieti = ((Granny) characterCards.get(i)).getNumDivieti();
+                            break;
+                        case HERALD:
+                            characterCards.add(new Herald());
+                            break;
+                        case JESTER:
+                            characterCards.add(new Jester(bag));
+                            jesterSet = ((Jester) characterCards.get(i)).getSet();
+                            break;
+                        case KNIGHT:
+                            characterCards.add(new Knight());
+                            break;
+                        case CENTAUR:
+                            characterCards.add(new Centaur());
+                            break;
+                        case POSTMAN:
+                            characterCards.add(new Postman());
+                            break;
+                        case PRINCESS:
+                            characterCards.add(new Princess(bag));
+                            princessSet = ((Princess) characterCards.get(i)).getSet();
+                            break;
+                        case MINSTRELL:
+                            characterCards.add(new Minstrell());
+                            break;
+                        case MUSHROOM_HUNTER:
+                            characterCards.add(new MushroomHunter());
+                            break;
 
 
+                    }
                 }
             }
         } else {

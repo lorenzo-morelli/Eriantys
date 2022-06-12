@@ -4,6 +4,7 @@ import it.polimi.ingsw.server.model.enums.GameMode;
 import java.util.Objects;
 
 public class Player implements Comparable<Player>{
+    private boolean debug = true; //TODO: to unlock coins set true
     private String nickname;
     private final Deck availableCards;
     private AssistantCard choosedCard;
@@ -23,8 +24,14 @@ public class Player implements Comparable<Player>{
         this.availableCards = new Deck();
         this.choosedCard = null;
         this.schoolBoard = new SchoolBoard(model.getNumberOfPlayers(), model.getTable().getBag(),model.getTable().getAvaiableTowerColor());
-        if(model.getGameMode().equals(GameMode.EXPERT) ) this.coins = 1; //todo: modificato per testing: reale valore 1
-        else{coins=-1;}
+        if(debug){
+            if (model.getGameMode().equals(GameMode.EXPERT)) this.coins = 100;
+            else{coins=-1;}
+        }
+        else{
+            if (model.getGameMode().equals(GameMode.EXPERT)) this.coins = 1;
+            else{coins=-1;}
+        }
         isDisconnected=false;
     }
     //requies teamnumber== "1 or 2" e un controllo che fa riscegliere il team se team è gia pieno :team.isFull())
@@ -50,8 +57,16 @@ public class Player implements Comparable<Player>{
             }
             team.setPlayer(this);
             this.schoolBoard = new SchoolBoard(team, model.getTable().getBag(), model.getTable().getAvaiableTowerColor());
-            if (model.getGameMode().equals(GameMode.EXPERT)) this.coins = 1;
-            else{coins=-1;}
+            if(debug){
+                if (model.getGameMode().equals(GameMode.EXPERT)) this.coins = 100;
+                else{coins=-1;}
+            }
+            else{
+                if (model.getGameMode().equals(GameMode.EXPERT)) this.coins = 1;
+                else{coins=-1;}
+            }
+
+
         }
         else{
             throw new IllegalArgumentException();
