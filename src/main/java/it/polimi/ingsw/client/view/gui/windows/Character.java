@@ -1,11 +1,9 @@
-package it.polimi.ingsw.utils.gui.windows;
+package it.polimi.ingsw.client.view.gui.windows;
 
-import com.google.gson.Gson;
 import it.polimi.ingsw.client.GUI;
 import it.polimi.ingsw.server.model.Island;
 import it.polimi.ingsw.server.model.characters.CharacterCard;
 import it.polimi.ingsw.server.model.enums.PeopleColor;
-import it.polimi.ingsw.utils.network.Network;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -18,8 +16,8 @@ import java.util.Arrays;
 import java.util.ResourceBundle;
 
 import static it.polimi.ingsw.client.GUI.currentCharacter;
-import static it.polimi.ingsw.utils.gui.Position.islandX;
-import static it.polimi.ingsw.utils.gui.Position.islandY;
+import static it.polimi.ingsw.client.view.gui.Position.islandX;
+import static it.polimi.ingsw.client.view.gui.Position.islandY;
 
 public class Character implements Initializable {
     private final GUI gui = new GUI();

@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.utils.gui.Game">
+<AnchorPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.gui.Game">
    <Button layoutX="1768.0" layoutY="972.0" mnemonicParsing="false" onMouseClicked="#quit" prefHeight="44.0" prefWidth="81.0" text="Quit" />
    <Button fx:id="setOnSchoolBtn" layoutX="1631.0" layoutY="589.0" mnemonicParsing="false" onMouseClicked="#setOnSchool" prefHeight="38.0" prefWidth="135.0" text="Set student on school" />
    <Button fx:id="setOnIslandBtn" layoutX="1631.0" layoutY="667.0" mnemonicParsing="false" onMouseClicked="#setOnIsland" prefHeight="42.0" prefWidth="135.0" text="Set student on island" />

@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.utils.gui.EndGame">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.gui.EndGame">
    <children>
       <Button layoutX="236.0" layoutY="299.0" mnemonicParsing="false" onMouseClicked="#toMainMenu" text="Return to main menu" />
       <Label fx:id="winnerName" alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="181.0" prefHeight="39.0" prefWidth="600.0" text="Try again" textAlignment="CENTER" AnchorPane.bottomAnchor="180.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="181.0" />

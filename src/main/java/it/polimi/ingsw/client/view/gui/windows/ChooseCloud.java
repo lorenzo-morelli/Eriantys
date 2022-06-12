@@ -1,9 +1,9 @@
-package it.polimi.ingsw.utils.gui.windows;
+package it.polimi.ingsw.client.view.gui.windows;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.client.GUI;
+import it.polimi.ingsw.client.view.gui.Game;
 import it.polimi.ingsw.server.model.Cloud;
-import it.polimi.ingsw.utils.cli.CommandPrompt;
 import it.polimi.ingsw.utils.network.Network;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
@@ -15,8 +15,6 @@ import javafx.scene.layout.StackPane;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-
-import static it.polimi.ingsw.utils.gui.Game.populateGrid;
 
 public class ChooseCloud implements Initializable {
     private final GUI gui = new GUI();
@@ -40,7 +38,7 @@ public class ChooseCloud implements Initializable {
             studentsCloudGrid.setAlignment(Pos.CENTER);
             studentsCloudGrid.setHgap(10);
 
-            populateGrid(studentsCloudGrid, 0, 2, cloud.getStudentsAccumulator());
+            Game.populateGrid(studentsCloudGrid, 0, 2, cloud.getStudentsAccumulator());
             tile.getChildren().add(studentsCloudGrid);
             cloudGrid.add(tile, clouds.indexOf(cloud), 0);
             tile.setOnMouseClicked(event -> {

@@ -1,8 +1,7 @@
-package it.polimi.ingsw.utils.gui;
+package it.polimi.ingsw.client.view.gui;
 
 import it.polimi.ingsw.client.GUI;
 import it.polimi.ingsw.server.model.*;
-import it.polimi.ingsw.server.model.characters.Character;
 import it.polimi.ingsw.server.model.characters.CharacterCard;
 import it.polimi.ingsw.server.model.enums.GameMode;
 import javafx.fxml.Initializable;
@@ -10,7 +9,6 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 
@@ -18,13 +16,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 import static it.polimi.ingsw.client.GUI.*;
-import static it.polimi.ingsw.utils.gui.Converter.*;
-import static it.polimi.ingsw.utils.gui.Position.*;
+import static it.polimi.ingsw.client.view.gui.Converter.*;
+import static it.polimi.ingsw.client.view.gui.Position.*;
 
 public class Game implements Initializable {
     private final GUI gui = new GUI();

@@ -84,7 +84,7 @@ public class ParametersFromNetwork extends Event implements DocumentListener {
             if(System.currentTimeMillis()>=time){
                 return true;
             }
-            //wait(5000);
+            wait(5000);
         }
         return false;
     }

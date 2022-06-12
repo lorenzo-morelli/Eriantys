@@ -1,4 +1,4 @@
-package it.polimi.ingsw.utils.gui;
+package it.polimi.ingsw.client.view.gui;
 
 public class Position {
     private static int x;

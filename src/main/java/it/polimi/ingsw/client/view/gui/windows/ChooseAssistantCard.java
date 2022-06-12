@@ -1,4 +1,4 @@
-package it.polimi.ingsw.utils.gui.windows;
+package it.polimi.ingsw.client.view.gui.windows;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.client.GUI;

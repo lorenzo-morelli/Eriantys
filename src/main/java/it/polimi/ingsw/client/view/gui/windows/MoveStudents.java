@@ -1,4 +1,4 @@
-package it.polimi.ingsw.utils.gui.windows;
+package it.polimi.ingsw.client.view.gui.windows;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.client.GUI;
@@ -16,8 +16,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import static it.polimi.ingsw.utils.gui.Position.islandX;
-import static it.polimi.ingsw.utils.gui.Position.islandY;
+import static it.polimi.ingsw.client.view.gui.Position.islandX;
+import static it.polimi.ingsw.client.view.gui.Position.islandY;
 
 public class MoveStudents implements Initializable {
     private final GUI gui = new GUI();

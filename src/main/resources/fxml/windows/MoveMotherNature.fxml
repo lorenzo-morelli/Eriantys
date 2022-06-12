@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.utils.gui.windows.MoveMotherNature">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.gui.windows.MoveMotherNature">
    <children>
       <Label layoutX="178.0" layoutY="82.0" text="Select an island where to move mother nature" textAlignment="CENTER" />
       <Label fx:id="notice" layoutX="283.0" layoutY="354.0" text="eskere" textAlignment="CENTER" />

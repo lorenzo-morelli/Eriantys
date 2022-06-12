@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.utils.gui.windows.Character">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.gui.windows.Character">
    <Label fx:id="explaination" alignment="CENTER" layoutX="118.0" layoutY="14.0" prefHeight="77.0" prefWidth="365.0" text="explaination..." textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="309.0" AnchorPane.leftAnchor="118.0" AnchorPane.rightAnchor="117.0" AnchorPane.topAnchor="14.0" />
    <Button layoutX="279.0" layoutY="355.0" mnemonicParsing="false" onMouseClicked="#okay" text="Okay" />
    <Label fx:id="notice" alignment="CENTER" layoutX="286.0" layoutY="328.0" prefHeight="25.0" prefWidth="600.0" text="blabla" AnchorPane.bottomAnchor="47.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="328.0" />

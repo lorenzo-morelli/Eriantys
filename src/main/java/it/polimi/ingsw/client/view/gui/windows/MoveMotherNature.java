@@ -1,7 +1,8 @@
-package it.polimi.ingsw.utils.gui.windows;
+package it.polimi.ingsw.client.view.gui.windows;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.client.GUI;
+import it.polimi.ingsw.client.view.gui.Position;
 import it.polimi.ingsw.server.model.Island;
 import it.polimi.ingsw.utils.network.Network;
 import javafx.fxml.Initializable;
@@ -12,9 +13,6 @@ import javafx.scene.layout.GridPane;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-
-import static it.polimi.ingsw.utils.gui.Position.islandX;
-import static it.polimi.ingsw.utils.gui.Position.islandY;
 
 public class MoveMotherNature implements Initializable {
     private final GUI gui = new GUI();
@@ -43,7 +41,7 @@ public class MoveMotherNature implements Initializable {
             }
             islandImage.setFitHeight(60);
             islandImage.setFitWidth(60);
-            islandGrid.add(islandImage, islandX(islands.indexOf(island)), islandY(islands.indexOf(island)));
+            islandGrid.add(islandImage, Position.islandX(islands.indexOf(island)), Position.islandY(islands.indexOf(island)));
 
             islandImage.setOnMouseClicked((event) -> {
                 int distance = islands.indexOf(island) - motherNaturePos;
