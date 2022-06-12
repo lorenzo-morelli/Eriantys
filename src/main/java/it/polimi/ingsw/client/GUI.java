@@ -56,12 +56,12 @@ public class GUI extends Application {
         stage.show();
     }
 
-    public synchronized void openCharacterWindow(String character) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/windows/characters" + character + ".fxml")));
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.show();
-    }
+//    public synchronized void openCharacterWindow(String character) throws IOException {
+//        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/windows/characters" + character + ".fxml")));
+//        Stage stage = new Stage();
+//        stage.setScene(new Scene(root));
+//        stage.show();
+//    }
 
     public synchronized void closeWindow(MouseEvent mouseEvent) {
         final Node source = (Node) mouseEvent.getSource();

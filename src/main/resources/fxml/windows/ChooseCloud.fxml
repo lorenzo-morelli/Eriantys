@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="it.polimi.ingsw.utils.gui.ChooseCloud">
+            fx:controller="it.polimi.ingsw.utils.gui.windows.ChooseCloud">
     <Label layoutX="286.0" layoutY="111.0" text="Choose a cloud"/>
     <GridPane fx:id="cloudGrid" layoutX="79.0" layoutY="182.0" prefHeight="167.0" prefWidth="435.0">
       <columnConstraints>

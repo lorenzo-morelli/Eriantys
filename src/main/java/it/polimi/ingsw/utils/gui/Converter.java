@@ -32,7 +32,7 @@ public class Converter {
     }
 
     public static void toImageCharacters(ArrayList<CharacterCard> characterCard, List<ImageView> images) {
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 12; i++) { //todo debug
             Image character = null;
             switch (characterCard.get(i).getName()) {
                 case "MONK":

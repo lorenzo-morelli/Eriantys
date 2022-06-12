@@ -74,6 +74,20 @@ public class Game implements Initializable {
     public ImageView characterCard1;
     public ImageView characterCard2;
     public ImageView characterCard3;
+    public ImageView characterCard4;
+    public ImageView characterCard5;
+    public ImageView characterCard6;
+    public ImageView characterCard7;
+    public ImageView characterCard8;
+    public ImageView characterCard9;
+    public ImageView characterCard10;
+    public ImageView characterCard11;
+    public ImageView characterCard12;
+
+    public GridPane character1Grid;
+    public GridPane character2Grid;
+    public GridPane character3Grid;
+    public GridPane character4Grid;
 
     public ImageView coin1;
     public ImageView coin2;
@@ -155,7 +169,7 @@ public class Game implements Initializable {
 
         ArrayList<Label> playerNames = new ArrayList<>(Arrays.asList(playerName1, playerName2, playerName3, playerName4));
         ArrayList<ImageView> assistantCards = new ArrayList<>(Arrays.asList(assistantCard1, assistantCard2, assistantCard3, assistantCard4));
-        ArrayList<ImageView> characterCardsImages = new ArrayList<>(Arrays.asList(characterCard1, characterCard2, characterCard3));
+        ArrayList<ImageView> characterCardsImages = new ArrayList<>(Arrays.asList(characterCard1, characterCard2, characterCard3, characterCard4, characterCard5, characterCard6, characterCard7, characterCard8, characterCard9, characterCard10, characterCard11, characterCard12));
         ArrayList<GridPane> professorGrids = new ArrayList<>(Arrays.asList(professor1Grid, professor2Grid, professor3Grid, professor4Grid));
         ArrayList<GridPane> entranceGrids = new ArrayList<>(Arrays.asList(entrance1Grid, entrance2Grid, entrance3Grid, entrance4Grid));
         ArrayList<GridPane> schoolGrids = new ArrayList<>(Arrays.asList(school1Grid, school2Grid, school3Grid, school4Grid));
@@ -234,7 +248,7 @@ public class Game implements Initializable {
             studentsCloudGrid.setHgap(10);
             StudentSet cloudSet = cloud.getStudentsAccumulator();
 
-            populateGrid(studentsCloudGrid, 0, 2,  cloudSet);
+            populateGrid(studentsCloudGrid, 0, 2, cloudSet);
             tile.getChildren().add(studentsCloudGrid);
             islandGrid.add(tile, cloudX(clouds.indexOf(cloud)), cloudY(clouds.indexOf(cloud)));
         });
@@ -353,12 +367,37 @@ public class Game implements Initializable {
                 Label coinLabel = coinLabels.get(players.indexOf(player));
                 coinLabel.setText("" + player.getCoins());
             });
+            ArrayList<GridPane> characterGrids = new ArrayList<>(Arrays.asList(character1Grid, character2Grid, character3Grid, character4Grid));
+            characterGrids.forEach(grid -> {
+                grid.setAlignment(Pos.CENTER);
+                StudentSet studentSet = null;
+                switch (characterGrids.indexOf(grid)) {
+                    case 0:
+                        studentSet = gui.getClientModel().getServermodel().getTable().getMonkSet();
+                        break;
+                    case 1:
+                        studentSet = gui.getClientModel().getServermodel().getTable().getPrincessSet();
+                        break;
+                    case 2:
+                        studentSet = gui.getClientModel().getServermodel().getTable().getJesterSet();
+                        break;
+                    case 3:
+                        studentSet = new StudentSet();
+                        break;
+                }
+                assert studentSet != null;
+                System.out.println("lo student set ha studenti rossi: " + studentSet.getNumOfRedStudents());
+                populateGrid(grid, 0, 2, studentSet);
+            });
+
             characterCards.forEach(card -> {
                 characterCardsImages.get(characterCards.indexOf(card)).setOnMouseClicked(event -> {
+                    System.out.println("ho premuto " + card.getName());
                     int cost = card.getCost();
                     if (currentPlayer.getCoins() >= cost) {
+                        currentCharacter = card;
                         try {
-                            activateEffect(this.gui, card, characterCardsImages.get(characterCards.indexOf(card)));
+                            gui.openNewWindow("Character");
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -415,11 +454,11 @@ public class Game implements Initializable {
         this.gui.openNewWindow("MoveMotherNature");
     }
 
-    public static void populateGrid(GridPane grid, int init, int cols,StudentSet studentSet) {
+    public static void populateGrid(GridPane grid, int init, int cols, StudentSet studentSet) {
         int green = studentSet.getNumOfGreenStudents();
         int blue = studentSet.getNumOfBlueStudents();
         int red = studentSet.getNumOfRedStudents();
-        int yellow =studentSet.getNumOfYellowStudents();
+        int yellow = studentSet.getNumOfYellowStudents();
         int pink = studentSet.getNumOfPinkStudents();
         int position = init;
         for (int i = 0; i < green; i++) {
@@ -459,19 +498,4 @@ public class Game implements Initializable {
         image.setFitWidth(size);
     }
 
-    public static void activateEffect(GUI gui, CharacterCard card, ImageView characterCardsImages) throws IOException {
-        currentCharacter = card;
-        String name = card.getName();
-        switch (name) {
-            case "MONK":
-                StackPane tile = new StackPane();
-                tile.getChildren().add(characterCardsImages);
-                StudentSet monkSet = gui.getClientModel().getServermodel().getTable().getMonkSet();
-                GridPane monkGrid = new GridPane();
-                populateGrid(monkGrid, 0, 3, monkSet);
-                tile.getChildren().add(monkGrid);
-                break;
-        }
-        gui.openCharacterWindow(card.getName());
-    }
 }
