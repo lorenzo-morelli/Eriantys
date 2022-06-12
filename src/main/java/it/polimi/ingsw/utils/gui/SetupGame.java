@@ -17,21 +17,17 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
-import static it.polimi.ingsw.client.GUI.currNode;
-import static java.lang.Thread.sleep;
-
-
 public class SetupGame implements Initializable {
     private final GUI gui = new GUI();
     private final Gson gson = new Gson();
     private int connectedPlayers;
     private ClientModel receivedClientModel;
-   private boolean isToReset, waitForFirst=true;
+    private boolean isToReset, waitForFirst = true;
     private int myID;
 
     ParametersFromNetwork message;
 
-    private boolean notdone=false,notread=false;
+    private boolean notdone = false, notread = false;
 
     @FXML
     private Label connectedOnIp = new Label();
@@ -51,7 +47,7 @@ public class SetupGame implements Initializable {
         this.connectedOnIp.setText("Connected on IP: " + this.gui.getClientModel().getIp());
         this.connectedOnPort.setText("Connected on Port: " + this.gui.getClientModel().getPort());
         this.connectedPlayers = 0;
-        currNode = otherPlayersLabel;
+        this.gui.currNode = otherPlayersLabel;
         isToReset = false;
     }
 
@@ -86,7 +82,7 @@ public class SetupGame implements Initializable {
         } else if (this.gui.getClientModel().getGameMode() == null) {
             this.otherPlayersLabel.setText("ERROR: Please select a game mode!");
         } else {
-            currNode = otherPlayersLabel;
+            this.gui.currNode = otherPlayersLabel;
             boolean responseReceived = false;
             Network.send(gson.toJson(this.gui.getClientModel()));
 
@@ -100,7 +96,7 @@ public class SetupGame implements Initializable {
                 if (check || System.currentTimeMillis() >= end) {
                     System.out.println("\n\nServer non ha dato risposta");
                     Network.disconnect();
-                    currNode = otherPlayersLabel;
+                    gui.currNode = otherPlayersLabel;
                     this.otherPlayersLabel.setText("...Server non ha dato alcuna risposta, mi disconnetto...");
                     TimeUnit.SECONDS.sleep(5);
                     System.exit(0);
@@ -112,36 +108,36 @@ public class SetupGame implements Initializable {
             }
             System.out.println("[Conferma ricevuta]");
             System.out.println("In attesa che gli altri giocatori si colleghino...");
-            currNode = otherPlayersLabel;
+            this.gui.currNode = otherPlayersLabel;
             this.otherPlayersLabel.setText("...Waiting for other players to join the game...");
 
-            myID=gui.getClientModel().getClientIdentity();
+            myID = gui.getClientModel().getClientIdentity();
             waitings();
-            }
         }
-        public void waitings() throws InterruptedException {
-             do {
-                 if(!notread) {
-                     message = new ParametersFromNetwork(1);
-                     message.enable();
-                     long start = System.currentTimeMillis();
-                     long end = start + 15 * 1000L;
-                     if(waitForFirst){
-                         message.waitParametersReceived();
-                     }
-                     else {
-                         boolean check = message.waitParametersReceivedMax(end);
-                         if (check) {
-                             System.out.println("\n\nServer non ha dato risposta");
-                             Network.disconnect();
-                             currNode = otherPlayersLabel;
-                             this.otherPlayersLabel.setText("...Server si è disconnesso, mi disconnetto...");
-                             TimeUnit.SECONDS.sleep(5);
-                             System.exit(0);
-                         }
-                     }
-                 }
-                 notread=false;
+    }
+
+    public void waitings() throws InterruptedException {
+        do {
+            if (!notread) {
+                message = new ParametersFromNetwork(1);
+                message.enable();
+                long start = System.currentTimeMillis();
+                long end = start + 15 * 1000L;
+                if (waitForFirst) {
+                    message.waitParametersReceived();
+                } else {
+                    boolean check = message.waitParametersReceivedMax(end);
+                    if (check) {
+                        System.out.println("\n\nServer non ha dato risposta");
+                        Network.disconnect();
+                        this.gui.currNode = otherPlayersLabel;
+                        this.otherPlayersLabel.setText("...Server si è disconnesso, mi disconnetto...");
+                        TimeUnit.SECONDS.sleep(5);
+                        System.exit(0);
+                    }
+                }
+            }
+            notread = false;
             //System.out.println(message.getParameter(0));
             ClientModel tryreceivedClientModel = gson.fromJson(message.getParameter(0), ClientModel.class);
             if (!Objects.equals(tryreceivedClientModel.getTypeOfRequest(), "CONNECTTOEXISTINGGAME")) {
@@ -153,7 +149,7 @@ public class SetupGame implements Initializable {
                 }
 
                 if (receivedClientModel.isGameStarted() && receivedClientModel.NotisKicked()) {
-                    waitForFirst=false;
+                    waitForFirst = false;
 
                     // Il messaggio è o una richiesta o una risposta
 
@@ -169,7 +165,7 @@ public class SetupGame implements Initializable {
                                 gui.setClientModel(receivedClientModel);
                                 gui.requestToMe();
 
-                                Thread t= new Thread(() -> {
+                                Thread t = new Thread(() -> {
                                     try {
                                         wait_pings();
                                     } catch (InterruptedException e) {
@@ -177,7 +173,7 @@ public class SetupGame implements Initializable {
                                     }
                                 });
                                 t.start();
-                                notdone=true;
+                                notdone = true;
 
                             } catch (InterruptedException | IOException e) {
                                 throw new RuntimeException(e);
@@ -187,8 +183,7 @@ public class SetupGame implements Initializable {
                         if (!notdone && receivedClientModel.getClientIdentity() != myID && receivedClientModel.getTypeOfRequest() != null &&
                                 !receivedClientModel.isPingMessage() &&
                                 !receivedClientModel.getTypeOfRequest().equals("TRYTORECONNECT") &&
-                                !receivedClientModel.getTypeOfRequest().equals("DISCONNECTION"))
-                        {
+                                !receivedClientModel.getTypeOfRequest().equals("DISCONNECTION")) {
                             try {
                                 System.out.println("request to other");
                                 gui.setClientModel(receivedClientModel);
@@ -201,58 +196,59 @@ public class SetupGame implements Initializable {
                 }
 
             }
-        }while (!isToReset && !notdone) ;
+        } while (!isToReset && !notdone);
     }
-        public synchronized void wait_pings() throws InterruptedException {
-            ClientModel tryreceivedClientModel;
-            do {
-                message = new ParametersFromNetwork(1);
-                message.enable();
-                long start = System.currentTimeMillis();
-                long end = start + 15 * 1000L;
-                boolean check = message.waitParametersReceivedMax(end);
-                if(check){
-                    System.out.println("\n\nServer non ha dato risposta");
-                    Network.disconnect();
-                    currNode = otherPlayersLabel;
-                    this.otherPlayersLabel.setText("...Server si è disconnesso, mi disconnetto...");
-                    TimeUnit.SECONDS.sleep(5);
-                    System.exit(0);
-                }
 
-                tryreceivedClientModel = gson.fromJson(message.getParameter(0), ClientModel.class);
+    public synchronized void wait_pings() throws InterruptedException {
+        ClientModel tryreceivedClientModel;
+        do {
+            message = new ParametersFromNetwork(1);
+            message.enable();
+            long start = System.currentTimeMillis();
+            long end = start + 15 * 1000L;
+            boolean check = message.waitParametersReceivedMax(end);
+            if (check) {
+                System.out.println("\n\nServer non ha dato risposta");
+                Network.disconnect();
+                this.gui.currNode = otherPlayersLabel;
+                this.otherPlayersLabel.setText("...Server si è disconnesso, mi disconnetto...");
+                TimeUnit.SECONDS.sleep(5);
+                System.exit(0);
+            }
 
-                if (!Objects.equals(tryreceivedClientModel.getTypeOfRequest(), "CONNECTTOEXISTINGGAME")) { //todo received.gettype.equals("connect")
+            tryreceivedClientModel = gson.fromJson(message.getParameter(0), ClientModel.class);
 
-                    receivedClientModel = tryreceivedClientModel;
+            if (!Objects.equals(tryreceivedClientModel.getTypeOfRequest(), "CONNECTTOEXISTINGGAME")) { //todo received.gettype.equals("connect")
 
-                    if (receivedClientModel.isGameStarted() && receivedClientModel.NotisKicked()) {
-                        // Il messaggio è o una richiesta o una risposta
+                receivedClientModel = tryreceivedClientModel;
 
-                        // se il messaggio non è una risposta di un client al server vuol dire che
-                        if (receivedClientModel.isResponse().equals(false) && receivedClientModel.getTypeOfRequest() != null) {
-                            // il messaggio è una richiesta del server alla view di un client
+                if (receivedClientModel.isGameStarted() && receivedClientModel.NotisKicked()) {
+                    // Il messaggio è o una richiesta o una risposta
 
-                            // se il messaggio è rivolto a me devo essere io a compiere l'azione
-                            if (receivedClientModel.getClientIdentity() == myID) {
-                                // il messaggio è rivolto a me
-                                if (receivedClientModel.isPingMessage()) {
-                                    gui.requestPing();
-                                }
+                    // se il messaggio non è una risposta di un client al server vuol dire che
+                    if (receivedClientModel.isResponse().equals(false) && receivedClientModel.getTypeOfRequest() != null) {
+                        // il messaggio è una richiesta del server alla view di un client
+
+                        // se il messaggio è rivolto a me devo essere io a compiere l'azione
+                        if (receivedClientModel.getClientIdentity() == myID) {
+                            // il messaggio è rivolto a me
+                            if (receivedClientModel.isPingMessage()) {
+                                gui.requestPing();
                             }
                         }
                     }
                 }
-            }while (!Objects.equals(tryreceivedClientModel.getTypeOfRequest(), "CONNECTTOEXISTINGGAME") && receivedClientModel.isGameStarted() && receivedClientModel.NotisKicked() && receivedClientModel.isResponse().equals(false) && receivedClientModel.getTypeOfRequest() != null && receivedClientModel.getClientIdentity() == myID && receivedClientModel.isPingMessage());
-            notdone=false;
-            notread=true;
-            Platform.runLater(() -> {
-                try {
-                    waitings();
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            });
-        }
+            }
+        } while (!Objects.equals(tryreceivedClientModel.getTypeOfRequest(), "CONNECTTOEXISTINGGAME") && receivedClientModel.isGameStarted() && receivedClientModel.NotisKicked() && receivedClientModel.isResponse().equals(false) && receivedClientModel.getTypeOfRequest() != null && receivedClientModel.getClientIdentity() == myID && receivedClientModel.isPingMessage());
+        notdone = false;
+        notread = true;
+        Platform.runLater(() -> {
+            try {
+                waitings();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
+}
 

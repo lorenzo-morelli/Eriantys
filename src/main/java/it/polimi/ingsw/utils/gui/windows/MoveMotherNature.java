@@ -19,7 +19,7 @@ import static it.polimi.ingsw.utils.gui.Position.islandY;
 public class MoveMotherNature implements Initializable {
     private final GUI gui = new GUI();
     public GridPane islandGrid;
-    private Label notice = new Label();
+    public Label notice = new Label();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

@@ -22,6 +22,7 @@ public class GUI extends Application {
     public static String gameState;
     public static String messageToOthers = "aa";
     public static Node currNode = null;
+    public static boolean myTurn = false;
 
     public static void main(String[] args) {
         launch(args);
@@ -68,6 +69,7 @@ public class GUI extends Application {
     }
 
     public synchronized void requestToMe() throws InterruptedException, IOException {
+        myTurn = true;
         Network.setClientModel(GUI.clientModel);
         switch (GUI.clientModel.getTypeOfRequest()) {
             case "TRYTORECONNECT":
@@ -81,7 +83,7 @@ public class GUI extends Application {
             case "CHOOSEASSISTANTCARD":
                 System.out.println("assistent!");
                 gameState = "Assistant Card phase";
-                changeScene("ChooseAssistantCard");
+                changeScene("Game");
                 break;
             case "CHOOSEWHERETOMOVESTUDENTS":
                 System.out.println("student");
@@ -89,6 +91,7 @@ public class GUI extends Application {
                 changeScene("Game");
                 break;
             case "TEAMMATE":
+                //todo
                 break;
             case "CHOOSEWHERETOMOVEMOTHER":
                 gameState = "Moving mother nature";
@@ -108,33 +111,33 @@ public class GUI extends Application {
     }
 
     public synchronized void requestToOthers() throws IOException {
+        myTurn = false;
         Network.setClientModel(GUI.clientModel);
         switch (GUI.clientModel.getTypeOfRequest()) {
             case "CHOOSEASSISTANTCARD":
                 messageToOthers = "L'utente " + GUI.clientModel.getNickname() + " sta scegliendo la carta assistente";
                 System.out.println("wait choose assistant card");
-                changeScene("Wait");
-                System.out.println("funziono");
+                changeScene("Game");
                 break;
             case "CHOOSEWHERETOMOVESTUDENTS":
                 messageToOthers = "L'utente " + GUI.clientModel.getNickname() + " sta scegliendo dove muovere lo studente";
                 System.out.println("wait choose where to move students");
-                changeScene("Wait");
+                changeScene("Game");
                 break;
             case "TEAMMATE":
                 messageToOthers = "L'utente " + GUI.clientModel.getNickname() + " sta scegliendo il suo compagno di squadra";
                 System.out.println("wait team mate");
-                changeScene("Wait");
+                changeScene("Game");
                 break;
             case "CHOOSEWHERETOMOVEMOTHER":
                 messageToOthers = "L'utente " + GUI.clientModel.getNickname() + " sta scegliendo il numero di mosse di cui far spostare madre natura";
                 System.out.println("wait choose where to move mother");
-                changeScene("Wait");
+                changeScene("Game");
                 break;
             case "CHOOSECLOUDS":
                 messageToOthers = "L'utente " + GUI.clientModel.getNickname() + " sta scegliendo la nuvola dalla quale ricaricare gli studenti";
                 System.out.println("wait choose clouds");
-                changeScene("Wait");
+                changeScene("Game");
                 break;
         }
         if (!GUI.clientModel.getTypeOfRequest().equals("TEAMMATE") && GUI.clientModel.getServermodel() != null) {

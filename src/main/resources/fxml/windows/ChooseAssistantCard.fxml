@@ -4,57 +4,57 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.utils.gui.ChooseAssistantCard">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.utils.gui.windows.ChooseAssistantCard">
    <children>
       <ImageView fx:id="assistantCard1" fitHeight="127.0" fitWidth="74.0" layoutX="22.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../graphics/assistants/assistantCard1.png" />
+            <Image url="@../../graphics/assistants/assistantCard1.png" />
          </image>
       </ImageView>
       <Label layoutX="235.0" layoutY="81.0" text="Choose assistant card" />
       <ImageView fx:id="assistantCard2" fitHeight="127.0" fitWidth="74.0" layoutX="107.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../graphics/assistants/assistantCard2.png" />
+            <Image url="@../../graphics/assistants/assistantCard2.png" />
          </image>
       </ImageView>
       <ImageView fx:id="assistantCard3" fitHeight="127.0" fitWidth="74.0" layoutX="198.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../graphics/assistants/assistantCard3.png" />
+            <Image url="@../../graphics/assistants/assistantCard3.png" />
          </image>
       </ImageView>
       <ImageView fx:id="assistantCard4" fitHeight="127.0" fitWidth="74.0" layoutX="300.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../graphics/assistants/assistantCard4.png" />
+            <Image url="@../../graphics/assistants/assistantCard4.png" />
          </image>
       </ImageView>
       <ImageView fx:id="assistantCard5" fitHeight="127.0" fitWidth="74.0" layoutX="397.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../graphics/assistants/assistantCard5.png" />
+            <Image url="@../../graphics/assistants/assistantCard5.png" />
          </image>
       </ImageView>
       <ImageView fx:id="assistantCard6" fitHeight="127.0" fitWidth="74.0" layoutX="495.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../graphics/assistants/assistantCard6.png" />
+            <Image url="@../../graphics/assistants/assistantCard6.png" />
          </image>
       </ImageView>
       <ImageView fx:id="assistantCard7" fitHeight="127.0" fitWidth="74.0" layoutX="114.0" layoutY="265.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../graphics/assistants/assistantCard7.png" />
+            <Image url="@../../graphics/assistants/assistantCard7.png" />
          </image>
       </ImageView>
       <ImageView fx:id="assistantCard8" fitHeight="127.0" fitWidth="74.0" layoutX="204.0" layoutY="265.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../graphics/assistants/assistantCard8.png" />
+            <Image url="@../../graphics/assistants/assistantCard8.png" />
          </image>
       </ImageView>
       <ImageView fx:id="assistantCard9" fitHeight="127.0" fitWidth="74.0" layoutX="300.0" layoutY="265.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../graphics/assistants/assistantCard9.png" />
+            <Image url="@../../graphics/assistants/assistantCard9.png" />
          </image>
       </ImageView>
       <ImageView fx:id="assistantCard10" fitHeight="127.0" fitWidth="74.0" layoutX="397.0" layoutY="265.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../graphics/assistants/assistantCard10.png" />
+            <Image url="@../../graphics/assistants/assistantCard10.png" />
          </image>
       </ImageView>
    </children>

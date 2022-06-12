@@ -34,7 +34,6 @@ public class MoveStudents implements Initializable {
 
         if (islandGrid != null) {
             islands.forEach(island -> {
-                System.out.println("stampo l'isola numero " + islands.indexOf(island));
                 ImageView islandImage = new ImageView();
                 switch (islands.indexOf(island) % 3) {
                     case 0:
@@ -57,7 +56,7 @@ public class MoveStudents implements Initializable {
                     } else {
                         this.gui.getClientModel().setTypeOfRequest("ISLAND");
                         this.gui.getClientModel().setChoosedIsland(islands.indexOf(island));
-                        this.gui.getClientModel().setResponse(true); //lo flaggo come messaggio di risposta
+                        this.gui.getClientModel().setResponse(true);
                         this.gui.getClientModel().setPingMessage(false);
                         this.gui.getClientModel().setChoosedColor(studentColor);
                         Gson gson = new Gson();
@@ -109,7 +108,6 @@ public class MoveStudents implements Initializable {
                 else studentColor = PeopleColor.RED;
                 break;
             case "blue":
-                System.out.println("nel case");
                 if (blue == 0) notice.setText("ERROR: Student unavailable!");
                 else studentColor = PeopleColor.BLUE;
                 break;
@@ -124,7 +122,7 @@ public class MoveStudents implements Initializable {
         }
         if (islandGrid == null && studentColor != null) {
             this.gui.getClientModel().setTypeOfRequest("SCHOOL");
-            this.gui.getClientModel().setResponse(true); //lo flaggo come messaggio di risposta
+            this.gui.getClientModel().setResponse(true);
             this.gui.getClientModel().setPingMessage(false);
             this.gui.getClientModel().setChoosedColor(studentColor);
             Gson gson = new Gson();

@@ -17,24 +17,21 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
-import static it.polimi.ingsw.client.GUI.currNode;
-
 public class Lobby implements Initializable {
     private final GUI gui = new GUI();
     private final Gson gson = new Gson();
     ParametersFromNetwork message;
-    private int connectedPlayers;
     private ClientModel receivedClientModel;
-    private boolean isToReset, waitForFirst=true;
+    private boolean isToReset, waitForFirst = true;
     private int myID;
-    private boolean notdone=false,notread=false;
+    private boolean notdone = false, notread = false;
 
     @FXML
     private Label otherPlayersLabel = new Label();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        currNode = otherPlayersLabel;
+        this.gui.currNode = otherPlayersLabel;
         boolean responseReceived = false;
         try {
             Network.send(gson.toJson(this.gui.getClientModel()));
@@ -57,7 +54,7 @@ public class Lobby implements Initializable {
             if (check || System.currentTimeMillis() >= end) {
                 System.out.println("\n\nServer non ha dato risposta");
                 Network.disconnect();
-                currNode = otherPlayersLabel;
+                this.gui.currNode = otherPlayersLabel;
                 this.otherPlayersLabel.setText("...Server non ha dato alcuna risposta, mi disconnetto...");
                 try {
                     TimeUnit.SECONDS.sleep(5);
@@ -73,10 +70,10 @@ public class Lobby implements Initializable {
         }
         System.out.println("[Conferma ricevuta]");
         System.out.println("In attesa che gli altri giocatori si colleghino...");
-        currNode = otherPlayersLabel;
+        this.gui.currNode = otherPlayersLabel;
         this.otherPlayersLabel.setText("...Waiting for other players to join the game...");
 
-        myID=gui.getClientModel().getClientIdentity();
+        myID = gui.getClientModel().getClientIdentity();
         try {
             waitings();
         } catch (InterruptedException e) {
@@ -86,27 +83,26 @@ public class Lobby implements Initializable {
 
     public void waitings() throws InterruptedException {
         do {
-            if(!notread) {
+            if (!notread) {
                 message = new ParametersFromNetwork(1);
                 message.enable();
                 long start = System.currentTimeMillis();
                 long end = start + 15 * 1000L;
-                if(waitForFirst){
+                if (waitForFirst) {
                     message.waitParametersReceived();
-                }
-                else {
+                } else {
                     boolean check = message.waitParametersReceivedMax(end);
                     if (check) {
                         System.out.println("\n\nServer non ha dato risposta");
                         Network.disconnect();
-                        currNode = otherPlayersLabel;
+                        this.gui.currNode = otherPlayersLabel;
                         this.otherPlayersLabel.setText("...Server si è disconnesso, mi disconnetto...");
                         TimeUnit.SECONDS.sleep(5);
                         System.exit(0);
                     }
                 }
             }
-            notread=false;
+            notread = false;
             //System.out.println(message.getParameter(0));
             ClientModel tryreceivedClientModel = gson.fromJson(message.getParameter(0), ClientModel.class);
             if (!Objects.equals(tryreceivedClientModel.getTypeOfRequest(), "CONNECTTOEXISTINGGAME")) {
@@ -118,7 +114,7 @@ public class Lobby implements Initializable {
                 }
 
                 if (receivedClientModel.isGameStarted() && receivedClientModel.NotisKicked()) {
-                    waitForFirst=false;
+                    waitForFirst = false;
 
                     // Il messaggio è o una richiesta o una risposta
 
@@ -134,7 +130,7 @@ public class Lobby implements Initializable {
                                 gui.setClientModel(receivedClientModel);
                                 gui.requestToMe();
 
-                                Thread t= new Thread(() -> {
+                                Thread t = new Thread(() -> {
                                     try {
                                         wait_pings();
                                     } catch (InterruptedException e) {
@@ -142,7 +138,7 @@ public class Lobby implements Initializable {
                                     }
                                 });
                                 t.start();
-                                notdone=true;
+                                notdone = true;
 
                             } catch (InterruptedException | IOException e) {
                                 throw new RuntimeException(e);
@@ -152,8 +148,7 @@ public class Lobby implements Initializable {
                         if (!notdone && receivedClientModel.getClientIdentity() != myID && receivedClientModel.getTypeOfRequest() != null &&
                                 !receivedClientModel.isPingMessage() &&
                                 !receivedClientModel.getTypeOfRequest().equals("TRYTORECONNECT") &&
-                                !receivedClientModel.getTypeOfRequest().equals("DISCONNECTION"))
-                        {
+                                !receivedClientModel.getTypeOfRequest().equals("DISCONNECTION")) {
                             try {
                                 System.out.println("request to other");
                                 gui.setClientModel(receivedClientModel);
@@ -166,8 +161,9 @@ public class Lobby implements Initializable {
                 }
 
             }
-        }while (!isToReset && !notdone) ;
+        } while (!isToReset && !notdone);
     }
+
     public synchronized void wait_pings() throws InterruptedException {
         ClientModel tryreceivedClientModel;
         do {
@@ -176,10 +172,10 @@ public class Lobby implements Initializable {
             long start = System.currentTimeMillis();
             long end = start + 15 * 1000L;
             boolean check = message.waitParametersReceivedMax(end);
-            if(check){
+            if (check) {
                 System.out.println("\n\nServer non ha dato risposta");
                 Network.disconnect();
-                currNode = otherPlayersLabel;
+                this.gui.currNode = otherPlayersLabel;
                 this.otherPlayersLabel.setText("...Server si è disconnesso, mi disconnetto...");
                 TimeUnit.SECONDS.sleep(5);
                 System.exit(0);
@@ -208,9 +204,9 @@ public class Lobby implements Initializable {
                     }
                 }
             }
-        }while (!Objects.equals(tryreceivedClientModel.getTypeOfRequest(), "CONNECTTOEXISTINGGAME") && receivedClientModel.isGameStarted() && receivedClientModel.NotisKicked() && receivedClientModel.isResponse().equals(false) && receivedClientModel.getTypeOfRequest() != null && receivedClientModel.getClientIdentity() == myID && receivedClientModel.isPingMessage());
-        notdone=false;
-        notread=true;
+        } while (!Objects.equals(tryreceivedClientModel.getTypeOfRequest(), "CONNECTTOEXISTINGGAME") && receivedClientModel.isGameStarted() && receivedClientModel.NotisKicked() && receivedClientModel.isResponse().equals(false) && receivedClientModel.getTypeOfRequest() != null && receivedClientModel.getClientIdentity() == myID && receivedClientModel.isPingMessage());
+        notdone = false;
+        notread = true;
         Platform.runLater(() -> {
             try {
                 waitings();

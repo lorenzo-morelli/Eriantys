@@ -18,7 +18,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
-import static it.polimi.ingsw.client.GUI.currNode;
 import static it.polimi.ingsw.utils.common.Check.isValidIp;
 import static it.polimi.ingsw.utils.common.Check.isValidPort;
 
@@ -43,7 +42,7 @@ public class Menu implements Initializable {
         this.ipField.setText("127.0.0.1");
         this.portField.setText("1234");
         this.notice.setText("");
-        currNode = playButton;
+        this.gui.currNode = playButton;
     }
 
     public void play(MouseEvent mouseEvent) throws IOException {
@@ -70,7 +69,7 @@ public class Menu implements Initializable {
         } else {
             SetConnection.setConnection(nickname, ip, port, this.gui.getClientModel());
             if (Network.isConnected()) {
-                currNode = notice;
+                this.gui.currNode = notice;
                 this.notice.setText("In attesa che il server dia una risposta...");
                 ClientModel model=SendModelAndGetResponse.sendAndGetModel(this.gui.getClientModel());
 
@@ -80,12 +79,12 @@ public class Menu implements Initializable {
                 else {
                     System.out.println("\n\nServer non ha dato risposta");
                     Network.disconnect();
-                    currNode = notice;
+                    this.gui.currNode = notice;
                     this.notice.setText("Server non ha dato alcuna risposta, mi disconnetto...");
                     TimeUnit.SECONDS.sleep(5);
                     System.exit(0);
                 }
-                currNode = notice;
+                this.gui.currNode = notice;
                 if (this.gui.getClientModel().getAmIfirst() == null) {
                     // il nickname inserito è già esistente
                     this.notice.setText("FAILURE: Nickname already taken"); //todo: bugfix

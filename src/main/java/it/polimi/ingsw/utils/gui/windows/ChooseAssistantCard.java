@@ -1,12 +1,10 @@
-package it.polimi.ingsw.utils.gui;
+package it.polimi.ingsw.utils.gui.windows;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.client.GUI;
 import it.polimi.ingsw.server.model.AssistantCard;
-import it.polimi.ingsw.utils.cli.CommandPrompt;
 import it.polimi.ingsw.utils.network.Network;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
@@ -14,8 +12,6 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
-
-import static it.polimi.ingsw.client.GUI.currNode;
 
 public class ChooseAssistantCard implements Initializable {
     public ImageView assistantCard1 = new ImageView();
@@ -32,7 +28,6 @@ public class ChooseAssistantCard implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        currNode = assistantCard1;
         List<ImageView> cards = Arrays.asList(
                 assistantCard1,
                 assistantCard2,
@@ -46,7 +41,6 @@ public class ChooseAssistantCard implements Initializable {
                 assistantCard10
         );
         List<AssistantCard> deck = this.gui.getClientModel().getDeck();
-        deck.forEach((card) -> System.out.println(card.getValues()));
         cards.forEach((card) -> card.setVisible(false));
         cards.forEach((card) -> {
             boolean show = false;
@@ -61,7 +55,7 @@ public class ChooseAssistantCard implements Initializable {
         });
         cards.forEach((card) -> card.setOnMouseClicked((event) -> {
                     try {
-                        setCard(cards.indexOf(card) + 1);
+                        setCard(cards.indexOf(card) + 1, event);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -70,11 +64,12 @@ public class ChooseAssistantCard implements Initializable {
     }
 
 
-    public void setCard(int value) throws InterruptedException {
+    public void setCard(int value, MouseEvent mouseEvent) throws InterruptedException {
         this.gui.getClientModel().setCardChoosedValue(value);
         this.gui.getClientModel().setResponse(true); //lo flaggo come messaggio di risposta
         this.gui.getClientModel().setPingMessage(false);
         Gson json = new Gson();
         Network.send(json.toJson(this.gui.getClientModel()));
+        this.gui.closeWindow(mouseEvent);
     }
 }

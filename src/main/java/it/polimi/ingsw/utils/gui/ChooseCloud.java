@@ -16,7 +16,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import static it.polimi.ingsw.client.GUI.currNode;
 import static it.polimi.ingsw.utils.gui.Game.populateGrid;
 
 public class ChooseCloud implements Initializable {
@@ -26,7 +25,7 @@ public class ChooseCloud implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        currNode = cloudGrid;
+        //currNode = cloudGrid;
         ArrayList<Cloud> clouds = this.gui.getClientModel().getServermodel().getTable().getClouds();
         if (clouds.size() == 2) {
             cloudGrid.setLayoutX(150);
