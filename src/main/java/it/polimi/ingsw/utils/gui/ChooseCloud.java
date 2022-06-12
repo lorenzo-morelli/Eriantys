@@ -62,6 +62,7 @@ public class ChooseCloud implements Initializable {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+                    this.gui.closeWindow(event);
                 }
             });
         });

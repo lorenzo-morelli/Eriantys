@@ -23,18 +23,18 @@ public class GUI extends Application {
     public static String messageToOthers = "aa";
     public static Node currNode = null;
 
+    public static void main(String[] args) {
+        launch(args);
+        GUI.clientModel = new ClientModel();
+    }
+
     @Override
     public void start(Stage stage) throws IOException {
         this.stage = stage;
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainMenu.fxml"));
-            this.scene = new Scene(loader.load());
-            this.stage.setScene(scene);
-            this.stage.show();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainMenu.fxml"));
+        this.scene = new Scene(loader.load());
+        this.stage.setScene(scene);
+        this.stage.show();
     }
 
     public synchronized void changeScene(String newScene) throws IOException {
@@ -42,33 +42,21 @@ public class GUI extends Application {
         this.stage = (Stage) currNode.getScene().getWindow();
         this.scene = new Scene(loader.load());
         this.stage.setScene(scene);
-        if (newScene.equals("Game")) {
-            this.stage.setMaximized(true);
-            System.out.println("massimizzo");
-        }
+        this.stage.setMaximized(newScene.equals("Game"));
         this.stage.show();
     }
 
-    public synchronized void openNewWindow(String newWindow) {
-        try {
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/windows/" + newWindow + ".fxml")));
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public synchronized void openNewWindow(String newWindow) throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/windows/" + newWindow + ".fxml")));
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 
     public synchronized void closeWindow(MouseEvent mouseEvent) {
         final Node source = (Node) mouseEvent.getSource();
         final Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
-    }
-
-    public static void main(String[] args) {
-        launch(args);
-        GUI.clientModel = new ClientModel();
     }
 
     public ClientModel getClientModel() {
@@ -79,14 +67,15 @@ public class GUI extends Application {
         GUI.clientModel = clientModel;
     }
 
-
     public synchronized void requestToMe() throws InterruptedException, IOException {
         Network.setClientModel(GUI.clientModel);
         switch (GUI.clientModel.getTypeOfRequest()) {
             case "TRYTORECONNECT":
+                //todo
                 System.out.println("boh");
                 break;
             case "DISCONNECTION":
+                //todo
                 System.out.println("boh2");
                 break;
             case "CHOOSEASSISTANTCARD":
@@ -102,10 +91,12 @@ public class GUI extends Application {
             case "TEAMMATE":
                 break;
             case "CHOOSEWHERETOMOVEMOTHER":
+                gameState = "Moving mother nature";
                 changeScene("Game");
                 break;
             case "CHOOSECLOUDS":
-                changeScene("ChooseCloud");
+                gameState = "Choosing cloud";
+                changeScene("Game");
                 break;
             case "GAMEEND":
                 changeScene("EndGame");
@@ -157,9 +148,9 @@ public class GUI extends Application {
             System.out.println(("risposta ping"));
             TimeUnit.SECONDS.sleep(1);
             Network.setClientModel(GUI.clientModel);
-            Gson json = new Gson();
+            Gson gson = new Gson();
             GUI.clientModel.setPingMessage(true);
-            Network.send(json.toJson(GUI.clientModel));
+            Network.send(gson.toJson(GUI.clientModel));
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
