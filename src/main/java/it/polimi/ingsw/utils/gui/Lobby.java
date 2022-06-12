@@ -9,13 +9,14 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
+
+import static it.polimi.ingsw.client.GUI.currNode;
 
 public class Lobby implements Initializable {
     private final GUI gui = new GUI();
@@ -31,7 +32,7 @@ public class Lobby implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        this.gui.currNode = otherPlayersLabel;
+        currNode = otherPlayersLabel;
         boolean responseReceived = false;
         try {
             Network.send(gson.toJson(this.gui.getClientModel()));
@@ -54,7 +55,7 @@ public class Lobby implements Initializable {
             if (check || System.currentTimeMillis() >= end) {
                 System.out.println("\n\nServer non ha dato risposta");
                 Network.disconnect();
-                this.gui.currNode = otherPlayersLabel;
+                currNode = otherPlayersLabel;
                 this.otherPlayersLabel.setText("...Server non ha dato alcuna risposta, mi disconnetto...");
                 try {
                     TimeUnit.SECONDS.sleep(5);
@@ -70,7 +71,7 @@ public class Lobby implements Initializable {
         }
         System.out.println("[Conferma ricevuta]");
         System.out.println("In attesa che gli altri giocatori si colleghino...");
-        this.gui.currNode = otherPlayersLabel;
+        currNode = otherPlayersLabel;
         this.otherPlayersLabel.setText("...Waiting for other players to join the game...");
 
         myID = gui.getClientModel().getClientIdentity();
@@ -95,7 +96,7 @@ public class Lobby implements Initializable {
                     if (check) {
                         System.out.println("\n\nServer non ha dato risposta");
                         Network.disconnect();
-                        this.gui.currNode = otherPlayersLabel;
+                        currNode = otherPlayersLabel;
                         this.otherPlayersLabel.setText("...Server si è disconnesso, mi disconnetto...");
                         TimeUnit.SECONDS.sleep(5);
                         System.exit(0);
@@ -175,7 +176,7 @@ public class Lobby implements Initializable {
             if (check) {
                 System.out.println("\n\nServer non ha dato risposta");
                 Network.disconnect();
-                this.gui.currNode = otherPlayersLabel;
+                currNode = otherPlayersLabel;
                 this.otherPlayersLabel.setText("...Server si è disconnesso, mi disconnetto...");
                 TimeUnit.SECONDS.sleep(5);
                 System.exit(0);

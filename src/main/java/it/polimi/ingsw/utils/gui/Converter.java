@@ -76,22 +76,22 @@ public class Converter {
     }
 
     public static void toImageAssistants(List<Integer> values, List<ImageView> images) {
-        for (int i = 0; i < values.size(); i++) {
-            if (values.get(i) == 0) {
-                images.get(i).setVisible(false);
-            } else {
-                Image assistant = new Image("graphics/assistants/assistantCard" + values.get(i) + ".png");
-                images.get(i).setImage(assistant);
-            }
-        }
-//        values.forEach(value -> {
-//            if (value == 0) {
-//                images.get(values.indexOf(value)).setVisible(false);
+//        for (int i = 0; i < values.size(); i++) {
+//            if (values.get(i) == 0) {
+//                images.get(i).setVisible(false);
 //            } else {
-//                Image assistantImage = new Image("graphics/assistants/assistantCard" + values.get(values.indexOf(value)) + ".png");
-//                images.get(values.indexOf(value)).setImage(assistantImage);
+//                Image assistant = new Image("graphics/assistants/assistantCard" + values.get(i) + ".png");
+//                images.get(i).setImage(assistant);
 //            }
-//        });
+//        }
+        values.forEach(value -> {
+            if (value == 0) {
+                images.get(values.indexOf(value)).setVisible(false);
+            } else {
+                Image assistantImage = new Image("graphics/assistants/assistantCard" + values.get(values.indexOf(value)) + ".png");
+                images.get(values.indexOf(value)).setImage(assistantImage);
+            }
+        });
     }
 
     public static int getColorPlace(String color) {

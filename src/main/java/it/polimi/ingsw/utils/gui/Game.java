@@ -292,7 +292,8 @@ public class Game implements Initializable {
         professorGrids.forEach(profGrid -> profGrid.setAlignment(Pos.CENTER));
         professors.forEach(prof -> {
             if (prof.getHeldBy() != null) {
-                Player choosenPlayer = players.stream()
+                Player choosenPlayer = null;
+                choosenPlayer = players.stream()
                         .filter(p -> p.getIp().equals(prof.getHeldBy().getIp()))
                         .collect(Collectors.toList())
                         .get(0);
@@ -324,13 +325,10 @@ public class Game implements Initializable {
                 imageResize(profImage, 30);
                 professorGrids.get(players.indexOf(choosenPlayer)).add(profImage, 0, getColorPlace(color));
             }
-
         });
 
         // OK! TORRI
-        players.forEach(player ->
-
-        {
+        players.forEach(player -> {
             GridPane tower = towerGrids.get(players.indexOf(player));
             tower.setAlignment(Pos.CENTER);
             for (int i = 0; i < player.getSchoolBoard().getNumOfTowers(); i++) {
@@ -357,7 +355,6 @@ public class Game implements Initializable {
             characterCards.forEach(card -> card.setVisible(false));
             coins.forEach(coin -> coin.setVisible(false));
             coinLabels.forEach(coinLabel -> coinLabel.setVisible(false));
-
         } else {
             List<CharacterCard> characters = this.gui.getClientModel().getServermodel().getTable().getCharacters();
             List<String> characterCardsString = new ArrayList<>();
@@ -370,13 +367,7 @@ public class Game implements Initializable {
         }
 
         // OK! NOMI E NUMERO GIOCATORI
-        players.forEach(player ->
-
-        {
-            Label playerLabel = playerNames.get(players.indexOf(player));
-            playerLabel.setText(player.getNickname());
-        });
-
+        players.forEach(player -> playerNames.get(players.indexOf(player)).setText(player.getNickname()));
         if (players.size() < 4) {
             playerNames.get(3).setVisible(false);
             assistantCards.get(3).setVisible(false);
@@ -401,12 +392,20 @@ public class Game implements Initializable {
         this.gui.openNewWindow("Quit");
     }
 
+    public void assistant() throws IOException {
+        this.gui.openNewWindow("ChooseAssistantCard");
+    }
+
     public void setOnSchool() throws IOException {
         this.gui.openNewWindow("MoveToSchool");
     }
 
     public void setOnIsland() throws IOException {
         this.gui.openNewWindow("MoveToIsland");
+    }
+
+    public void cloud() throws IOException {
+        this.gui.openNewWindow("ChooseCloud");
     }
 
     public void characterCard1(MouseEvent mouseEvent) {
@@ -462,13 +461,5 @@ public class Game implements Initializable {
     public static void imageResize(ImageView image, int size) {
         image.setFitHeight(size);
         image.setFitWidth(size);
-    }
-
-    public void cloud() throws IOException {
-        this.gui.openNewWindow("ChooseCloud");
-    }
-
-    public void assistant() throws IOException {
-        this.gui.openNewWindow("ChooseAssistantCard");
     }
 }

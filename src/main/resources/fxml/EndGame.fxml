@@ -6,11 +6,12 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.utils.gui.EndGame">
    <children>
-      <Label fx:id="winLabel" alignment="CENTER" layoutX="162.0" layoutY="147.0" prefHeight="53.0" prefWidth="276.0" text="Hai vinto/perso???" textAlignment="RIGHT">
+      <Label fx:id="winLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="162.0" layoutY="147.0" prefHeight="53.0" prefWidth="276.0" text="Hai vinto/perso???" textAlignment="CENTER">
          <font>
             <Font size="23.0" />
          </font>
       </Label>
       <Button layoutX="236.0" layoutY="299.0" mnemonicParsing="false" onMouseClicked="#toMainMenu" text="Return to main menu" />
+      <Label fx:id="winnerName" contentDisplay="CENTER" layoutX="261.0" layoutY="212.0" text="I vincitori sono" textAlignment="CENTER" />
    </children>
 </AnchorPane>
