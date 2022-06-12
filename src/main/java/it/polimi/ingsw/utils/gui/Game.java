@@ -2,6 +2,7 @@ package it.polimi.ingsw.utils.gui;
 
 import it.polimi.ingsw.client.GUI;
 import it.polimi.ingsw.server.model.*;
+import it.polimi.ingsw.server.model.characters.Character;
 import it.polimi.ingsw.server.model.characters.CharacterCard;
 import it.polimi.ingsw.server.model.enums.GameMode;
 import javafx.fxml.Initializable;
@@ -150,10 +151,11 @@ public class Game implements Initializable {
         });
         ArrayList<Professor> professors = this.gui.getClientModel().getServermodel().getTable().getProfessors();
         ArrayList<Cloud> clouds = this.gui.getClientModel().getServermodel().getTable().getClouds();
+        Player currentPlayer = this.gui.getClientModel().getServermodel().getcurrentPlayer();
 
         ArrayList<Label> playerNames = new ArrayList<>(Arrays.asList(playerName1, playerName2, playerName3, playerName4));
         ArrayList<ImageView> assistantCards = new ArrayList<>(Arrays.asList(assistantCard1, assistantCard2, assistantCard3, assistantCard4));
-        ArrayList<ImageView> characterCards = new ArrayList<>(Arrays.asList(characterCard1, characterCard2, characterCard3));
+        ArrayList<ImageView> characterCardsImages = new ArrayList<>(Arrays.asList(characterCard1, characterCard2, characterCard3));
         ArrayList<GridPane> professorGrids = new ArrayList<>(Arrays.asList(professor1Grid, professor2Grid, professor3Grid, professor4Grid));
         ArrayList<GridPane> entranceGrids = new ArrayList<>(Arrays.asList(entrance1Grid, entrance2Grid, entrance3Grid, entrance4Grid));
         ArrayList<GridPane> schoolGrids = new ArrayList<>(Arrays.asList(school1Grid, school2Grid, school3Grid, school4Grid));
@@ -185,12 +187,8 @@ public class Game implements Initializable {
             //INIZIALIZZO GLI INHABITANTS
             GridPane students = new GridPane();
             students.setAlignment(Pos.CENTER);
-            int green = island.getInhabitants().getNumOfGreenStudents();
-            int red = island.getInhabitants().getNumOfRedStudents();
-            int blue = island.getInhabitants().getNumOfBlueStudents();
-            int yellow = island.getInhabitants().getNumOfYellowStudents();
-            int pink = island.getInhabitants().getNumOfPinkStudents();
-            populateGrid(students, 0, 3, green, red, blue, pink, yellow);
+            StudentSet islandSet = island.getInhabitants();
+            populateGrid(students, 0, 3, islandSet);
             tile.getChildren().add(students);
 
             //INIZIALIZZO LE TORRI NELLE ISOLE
@@ -234,12 +232,9 @@ public class Game implements Initializable {
             GridPane studentsCloudGrid = new GridPane();
             studentsCloudGrid.setAlignment(Pos.CENTER);
             studentsCloudGrid.setHgap(10);
-            int green = cloud.getStudentsAccumulator().getNumOfGreenStudents();
-            int blue = cloud.getStudentsAccumulator().getNumOfBlueStudents();
-            int red = cloud.getStudentsAccumulator().getNumOfRedStudents();
-            int yellow = cloud.getStudentsAccumulator().getNumOfYellowStudents();
-            int pink = cloud.getStudentsAccumulator().getNumOfPinkStudents();
-            populateGrid(studentsCloudGrid, 0, 2, green, red, blue, pink, yellow);
+            StudentSet cloudSet = cloud.getStudentsAccumulator();
+
+            populateGrid(studentsCloudGrid, 0, 2,  cloudSet);
             tile.getChildren().add(studentsCloudGrid);
             islandGrid.add(tile, cloudX(clouds.indexOf(cloud)), cloudY(clouds.indexOf(cloud)));
         });
@@ -247,12 +242,8 @@ public class Game implements Initializable {
         // OK! STUDENT IN ENTRANCE
         entranceGrids.forEach(entrance -> entrance.setAlignment(Pos.CENTER));
         players.forEach(player -> {
-            int green = player.getSchoolBoard().getEntranceSpace().getNumOfGreenStudents();
-            int blue = player.getSchoolBoard().getEntranceSpace().getNumOfBlueStudents();
-            int red = player.getSchoolBoard().getEntranceSpace().getNumOfRedStudents();
-            int yellow = player.getSchoolBoard().getEntranceSpace().getNumOfYellowStudents();
-            int pink = player.getSchoolBoard().getEntranceSpace().getNumOfPinkStudents();
-            populateGrid(entranceGrids.get(players.indexOf(player)), 1, 2, green, red, blue, pink, yellow);
+            StudentSet entranceSet = player.getSchoolBoard().getEntranceSpace();
+            populateGrid(entranceGrids.get(players.indexOf(player)), 1, 2, entranceSet);
         });
 
         // STUDENT IN SCHOOL
@@ -352,17 +343,29 @@ public class Game implements Initializable {
 
         // OK! GAMEMODE
         if (gameMode.equals(GameMode.PRINCIPIANT)) {
-            characterCards.forEach(card -> card.setVisible(false));
+            characterCardsImages.forEach(card -> card.setVisible(false));
             coins.forEach(coin -> coin.setVisible(false));
             coinLabels.forEach(coinLabel -> coinLabel.setVisible(false));
         } else {
-            List<CharacterCard> characters = this.gui.getClientModel().getServermodel().getTable().getCharacters();
-            List<String> characterCardsString = new ArrayList<>();
-            characters.forEach(character -> characterCardsString.add(character.getName()));
-            toImageCharacters(characterCardsString, characterCards);
+            ArrayList<CharacterCard> characterCards = this.gui.getClientModel().getServermodel().getTable().getCharacters();
+            toImageCharacters(characterCards, characterCardsImages);
             players.forEach(player -> {
                 Label coinLabel = coinLabels.get(players.indexOf(player));
                 coinLabel.setText("" + player.getCoins());
+            });
+            characterCards.forEach(card -> {
+                characterCardsImages.get(characterCards.indexOf(card)).setOnMouseClicked(event -> {
+                    int cost = card.getCost();
+                    if (currentPlayer.getCoins() >= cost) {
+                        try {
+                            activateEffect(this.gui, card, characterCardsImages.get(characterCards.indexOf(card)));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        System.out.println("non puoi!");
+                    }
+                });
             });
         }
 
@@ -408,23 +411,16 @@ public class Game implements Initializable {
         this.gui.openNewWindow("ChooseCloud");
     }
 
-    public void characterCard1(MouseEvent mouseEvent) {
-
-    }
-
-    public void characterCard2(MouseEvent mouseEvent) {
-
-    }
-
-    public void characterCard3(MouseEvent mouseEvent) {
-
-    }
-
     public void move() throws IOException {
         this.gui.openNewWindow("MoveMotherNature");
     }
 
-    public static void populateGrid(GridPane grid, int init, int cols, int green, int red, int blue, int pink, int yellow) {
+    public static void populateGrid(GridPane grid, int init, int cols,StudentSet studentSet) {
+        int green = studentSet.getNumOfGreenStudents();
+        int blue = studentSet.getNumOfBlueStudents();
+        int red = studentSet.getNumOfRedStudents();
+        int yellow =studentSet.getNumOfYellowStudents();
+        int pink = studentSet.getNumOfPinkStudents();
         int position = init;
         for (int i = 0; i < green; i++) {
             ImageView student = new ImageView("/graphics/pieces/students/student_green.png");
@@ -461,5 +457,21 @@ public class Game implements Initializable {
     public static void imageResize(ImageView image, int size) {
         image.setFitHeight(size);
         image.setFitWidth(size);
+    }
+
+    public static void activateEffect(GUI gui, CharacterCard card, ImageView characterCardsImages) throws IOException {
+        currentCharacter = card;
+        String name = card.getName();
+        switch (name) {
+            case "MONK":
+                StackPane tile = new StackPane();
+                tile.getChildren().add(characterCardsImages);
+                StudentSet monkSet = gui.getClientModel().getServermodel().getTable().getMonkSet();
+                GridPane monkGrid = new GridPane();
+                populateGrid(monkGrid, 0, 3, monkSet);
+                tile.getChildren().add(monkGrid);
+                break;
+        }
+        gui.openCharacterWindow(card.getName());
     }
 }

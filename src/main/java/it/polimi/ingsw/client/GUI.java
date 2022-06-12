@@ -2,6 +2,7 @@ package it.polimi.ingsw.client;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.client.model.ClientModel;
+import it.polimi.ingsw.server.model.characters.CharacterCard;
 import it.polimi.ingsw.utils.network.Network;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -23,6 +24,7 @@ public class GUI extends Application {
     public static String messageToOthers = "aa";
     public static Node currNode = null;
     public static boolean myTurn = false;
+    public static CharacterCard currentCharacter = null;
 
     public static void main(String[] args) {
         launch(args);
@@ -49,6 +51,13 @@ public class GUI extends Application {
 
     public synchronized void openNewWindow(String newWindow) throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/windows/" + newWindow + ".fxml")));
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+
+    public synchronized void openCharacterWindow(String character) throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/windows/characters" + character + ".fxml")));
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
         stage.show();
