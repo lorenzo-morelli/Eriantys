@@ -4,10 +4,12 @@ import it.polimi.ingsw.client.GUI;
 import it.polimi.ingsw.server.model.*;
 import it.polimi.ingsw.server.model.characters.CharacterCard;
 import it.polimi.ingsw.server.model.enums.GameMode;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -16,90 +18,150 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
 import static it.polimi.ingsw.client.GUI.*;
-import static it.polimi.ingsw.client.view.gui.Converter.*;
 import static it.polimi.ingsw.client.view.gui.Position.*;
 
 public class Game implements Initializable {
     private final GUI gui = new GUI();
-    public Label phaseLabel;
-    public Label turnLabel;
+    @FXML
+    private Label phaseLabel;
+    @FXML
+    private Label turnLabel;
 
-    public Button assistantCardBtn;
-    public Button setOnSchoolBtn;
-    public Button setOnIslandBtn;
-    public Button moveBtn;
-    public Button cloudBtn;
+    @FXML
+    private Button assistantCardBtn;
+    @FXML
+    private Button setOnSchoolBtn;
+    @FXML
+    private Button setOnIslandBtn;
+    @FXML
+    private Button moveBtn;
+    @FXML
+    private Button cloudBtn;
 
-    public GridPane islandGrid;
+    @FXML
+    private GridPane islandGrid;
 
-    public GridPane entrance1Grid;
-    public GridPane entrance2Grid;
-    public GridPane entrance3Grid;
-    public GridPane entrance4Grid;
+    @FXML
+    private GridPane entrance1Grid;
+    @FXML
+    private GridPane entrance2Grid;
+    @FXML
+    private GridPane entrance3Grid;
+    @FXML
+    private GridPane entrance4Grid;
 
-    public GridPane school1Grid;
-    public GridPane school2Grid;
-    public GridPane school3Grid;
-    public GridPane school4Grid;
+    @FXML
+    private GridPane school1Grid;
+    @FXML
+    private GridPane school2Grid;
+    @FXML
+    private GridPane school3Grid;
+    @FXML
+    private GridPane school4Grid;
 
-    public GridPane tower1Grid;
-    public GridPane tower2Grid;
-    public GridPane tower3Grid;
-    public GridPane tower4Grid;
+    @FXML
+    private GridPane tower1Grid;
+    @FXML
+    private GridPane tower2Grid;
+    @FXML
+    private GridPane tower3Grid;
+    @FXML
+    private GridPane tower4Grid;
 
-    public ImageView school1;
-    public ImageView school2;
-    public ImageView school3;
-    public ImageView school4;
+    @FXML
+    private ImageView school1;
+    @FXML
+    private ImageView school2;
+    @FXML
+    private ImageView school3;
+    @FXML
+    private ImageView school4;
 
-    public GridPane professor1Grid;
-    public GridPane professor2Grid;
-    public GridPane professor3Grid;
-    public GridPane professor4Grid;
+    @FXML
+    private GridPane professor1Grid;
+    @FXML
+    private GridPane professor2Grid;
+    @FXML
+    private GridPane professor3Grid;
+    @FXML
+    private GridPane professor4Grid;
 
-    public ImageView motherNature;
+    @FXML
+    private ImageView motherNature;
 
-    public ImageView assistantCard1;
-    public ImageView assistantCard2;
-    public ImageView assistantCard3;
-    public ImageView assistantCard4;
+    @FXML
+    private ImageView assistantCard1;
+    @FXML
+    private ImageView assistantCard2;
+    @FXML
+    private ImageView assistantCard3;
+    @FXML
+    private ImageView assistantCard4;
 
-    public ImageView characterCard1;
-    public ImageView characterCard2;
-    public ImageView characterCard3;
-    public ImageView characterCard4;
-    public ImageView characterCard5;
-    public ImageView characterCard6;
-    public ImageView characterCard7;
-    public ImageView characterCard8;
-    public ImageView characterCard9;
-    public ImageView characterCard10;
-    public ImageView characterCard11;
-    public ImageView characterCard12;
+    @FXML
+    private ImageView characterCard1;
+    @FXML
+    private ImageView characterCard2;
+    @FXML
+    private ImageView characterCard3;
+    @FXML
+    private ImageView characterCard4;
+    @FXML
+    private ImageView characterCard5;
+    @FXML
+    private ImageView characterCard6;
+    @FXML
+    private ImageView characterCard7;
+    @FXML
+    private ImageView characterCard8;
+    @FXML
+    private ImageView characterCard9;
+    @FXML
+    private ImageView characterCard10;
+    @FXML
+    private ImageView characterCard11;
+    @FXML
+    private ImageView characterCard12;
 
-    public GridPane character1Grid;
-    public GridPane character2Grid;
-    public GridPane character3Grid;
-    public GridPane character4Grid;
+    @FXML
+    private GridPane character1Grid;
+    @FXML
+    private GridPane character2Grid;
+    @FXML
+    private GridPane character3Grid;
+    @FXML
+    private GridPane character4Grid;
 
-    public ImageView coin1;
-    public ImageView coin2;
-    public ImageView coin3;
-    public ImageView coin4;
+    @FXML
+    private ImageView coin1;
+    @FXML
+    private ImageView coin2;
+    @FXML
+    private ImageView coin3;
+    @FXML
+    private ImageView coin4;
 
-    public Label coin1Label;
-    public Label coin2Label;
-    public Label coin3Label;
-    public Label coin4Label;
+    @FXML
+    private Label coin1Label;
+    @FXML
+    private Label coin2Label;
+    @FXML
+    private Label coin3Label;
+    @FXML
+    private Label coin4Label;
 
-    public Label playerName1;
-    public Label playerName2;
-    public Label playerName3;
-    public Label playerName4;
+    @FXML
+    private Label playerName1;
+    @FXML
+    private Label playerName2;
+    @FXML
+    private Label playerName3;
+    @FXML
+    private Label playerName4;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -263,27 +325,27 @@ public class Game implements Initializable {
                 for (int i = 0; i < player.getSchoolBoard().getDinnerTable().getNumOfBlueStudents(); i++) {
                     ImageView studentBlue = new ImageView("/graphics/pieces/students/student_blue.png");
                     imageResize(studentBlue, 30);
-                    school.add(studentBlue, i, getColorPlace("blue"));
+                    school.add(studentBlue, i, this.getColorPlace("blue"));
                 }
                 for (int i = 0; i < player.getSchoolBoard().getDinnerTable().getNumOfRedStudents(); i++) {
                     ImageView studentRed = new ImageView("/graphics/pieces/students/student_red.png");
                     imageResize(studentRed, 30);
-                    school.add(studentRed, i, getColorPlace("red"));
+                    school.add(studentRed, i, this.getColorPlace("red"));
                 }
                 for (int i = 0; i < player.getSchoolBoard().getDinnerTable().getNumOfGreenStudents(); i++) {
                     ImageView studentGreen = new ImageView("/graphics/pieces/students/student_green.png");
                     imageResize(studentGreen, 30);
-                    school.add(studentGreen, i, getColorPlace("green"));
+                    school.add(studentGreen, i, this.getColorPlace("green"));
                 }
                 for (int i = 0; i < player.getSchoolBoard().getDinnerTable().getNumOfPinkStudents(); i++) {
                     ImageView studentPink = new ImageView("/graphics/pieces/students/student_pink.png");
                     imageResize(studentPink, 30);
-                    school.add(studentPink, i, getColorPlace("pink"));
+                    school.add(studentPink, i, this.getColorPlace("pink"));
                 }
                 for (int i = 0; i < player.getSchoolBoard().getDinnerTable().getNumOfYellowStudents(); i++) {
                     ImageView studentYellow = new ImageView("/graphics/pieces/students/student_yellow.png");
                     imageResize(studentYellow, 30);
-                    school.add(studentYellow, i, getColorPlace("yellow"));
+                    school.add(studentYellow, i, this.getColorPlace("yellow"));
                 }
             }
         });
@@ -384,26 +446,23 @@ public class Game implements Initializable {
                         break;
                 }
                 assert studentSet != null;
-                System.out.println("lo student set ha studenti rossi: " + studentSet.getNumOfRedStudents());
                 populateGrid(grid, 0, 2, studentSet);
             });
 
-            characterCards.forEach(card -> {
-                characterCardsImages.get(characterCards.indexOf(card)).setOnMouseClicked(event -> {
-                    System.out.println("ho premuto " + card.getName());
-                    int cost = card.getCost();
-                    if (currentPlayer.getCoins() >= cost) {
-                        currentCharacter = card;
-                        try {
-                            gui.openNewWindow("Character");
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    } else {
-                        System.out.println("non puoi!");
+            characterCards.forEach(card -> characterCardsImages.get(characterCards.indexOf(card)).setOnMouseClicked(event -> {
+                System.out.println("ho premuto " + card.getName());
+                int cost = card.getCost();
+                if (currentPlayer.getCoins() >= cost) {
+                    currentCharacter = card;
+                    try {
+                        gui.openNewWindow("Character");
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                });
-            });
+                } else {
+                    System.out.println("non puoi!");
+                }
+            }));
         }
 
         // OK! NOMI E NUMERO GIOCATORI
@@ -424,7 +483,14 @@ public class Game implements Initializable {
         }
 
         // OK! ASSISTANT CARDS
-        toImageAssistants(assistantCardsValues, assistantCards);
+        assistantCardsValues.forEach(value -> {
+            if (value == 0) {
+                assistantCards.get(assistantCardsValues.indexOf(value)).setVisible(false);
+            } else {
+                Image assistantImage = new Image("graphics/assistants/assistantCard" + assistantCardsValues.get(assistantCardsValues.indexOf(value)) + ".png");
+                assistantCards.get(assistantCardsValues.indexOf(value)).setImage(assistantImage);
+            }
+        });
 
     }
 
@@ -453,7 +519,7 @@ public class Game implements Initializable {
         this.gui.openNewWindow("MoveMotherNature");
     }
 
-    public static void populateGrid(GridPane grid, int init, int cols, StudentSet studentSet) {
+    public void populateGrid(GridPane grid, int init, int cols, StudentSet studentSet) {
         int green = studentSet.getNumOfGreenStudents();
         int blue = studentSet.getNumOfBlueStudents();
         int red = studentSet.getNumOfRedStudents();
@@ -462,39 +528,95 @@ public class Game implements Initializable {
         int position = init;
         for (int i = 0; i < green; i++) {
             ImageView student = new ImageView("/graphics/pieces/students/student_green.png");
-            imageResize(student, 25);
+            this.imageResize(student, 25);
             grid.add(student, position % cols, position / cols);
             position++;
         }
         for (int i = 0; i < red; i++) {
             ImageView student = new ImageView("/graphics/pieces/students/student_red.png");
-            imageResize(student, 25);
+            this.imageResize(student, 25);
             grid.add(student, position % cols, position / cols);
             position++;
         }
         for (int i = 0; i < yellow; i++) {
             ImageView student = new ImageView("/graphics/pieces/students/student_yellow.png");
-            imageResize(student, 25);
+            this.imageResize(student, 25);
             grid.add(student, position % cols, position / cols);
             position++;
         }
         for (int i = 0; i < pink; i++) {
             ImageView student = new ImageView("/graphics/pieces/students/student_pink.png");
-            imageResize(student, 25);
+            this.imageResize(student, 25);
             grid.add(student, position % cols, position / cols);
             position++;
         }
         for (int i = 0; i < blue; i++) {
             ImageView student = new ImageView("/graphics/pieces/students/student_blue.png");
-            imageResize(student, 25);
+            this.imageResize(student, 25);
             grid.add(student, position % cols, position / cols);
             position++;
         }
     }
 
-    public static void imageResize(ImageView image, int size) {
+    public void imageResize(ImageView image, int size) {
         image.setFitHeight(size);
         image.setFitWidth(size);
     }
+    public int getColorPlace(String color) {
+        int n = -1;
+        switch (color) {
+            case "green": n = 0; break;
+            case "red": n = 1; break;
+            case "yellow": n = 2; break;
+            case "pink": n = 3; break;
+            case "blue": n = 4; break;
 
+        }
+        return n;
+    }
+
+    public void toImageCharacters(ArrayList<CharacterCard> characterCard, List<ImageView> images) {
+        for (int i = 0; i < 12; i++) { //todo debug
+            Image character = null;
+            switch (characterCard.get(i).getName()) {
+                case "MONK":
+                    character = new Image("graphics/characters/monk.jpg");
+                    break;
+                case "PRINCESS":
+                    character = new Image("graphics/characters/princess.jpg");
+                    break;
+                case "MUSHROOMHUNTER":
+                    character = new Image("graphics/characters/mushroom_hunter.jpg");
+                    break;
+                case "THIEF":
+                    character = new Image("graphics/characters/thief.jpg");
+                    break;
+                case "FARMER":
+                    character = new Image("graphics/characters/farmer.jpg");
+                    break;
+                case "CENTAUR":
+                    character = new Image("graphics/characters/centaur.jpg");
+                    break;
+                case "KNIGHT":
+                    character = new Image("graphics/characters/knight.jpg");
+                    break;
+                case "POSTMAN":
+                    character = new Image("graphics/characters/postman.jpg");
+                    break;
+                case "GRANNY":
+                    character = new Image("graphics/characters/granny.jpg");
+                    break;
+                case "JESTER":
+                    character = new Image("graphics/characters/jester.jpg");
+                    break;
+                case "HERALD":
+                    character = new Image("graphics/characters/herald.jpg");
+                    break;
+                case "MINSTRELL":
+                    character = new Image("graphics/characters/minstrell.jpg");
+                    break;
+            }
+            images.get(i).setImage(character);
+        }
+    }
 }

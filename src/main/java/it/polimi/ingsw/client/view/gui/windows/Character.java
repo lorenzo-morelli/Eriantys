@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import it.polimi.ingsw.client.GUI;
 import it.polimi.ingsw.server.model.Island;
 import it.polimi.ingsw.server.model.StudentSet;
-import it.polimi.ingsw.server.model.characters.CharacterCard;
 import it.polimi.ingsw.server.model.enums.PeopleColor;
 import it.polimi.ingsw.utils.network.Network;
 import javafx.fxml.Initializable;
@@ -16,7 +15,6 @@ import javafx.scene.layout.GridPane;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import static it.polimi.ingsw.client.GUI.currentCharacter;
