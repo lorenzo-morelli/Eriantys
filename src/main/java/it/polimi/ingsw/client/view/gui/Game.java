@@ -107,7 +107,6 @@ public class Game implements Initializable {
         phaseLabel.setText(gameState);
         turnLabel.setText("è il turno di: " + this.gui.getClientModel().getServermodel().getcurrentPlayer().getNickname());
         if (myTurn) {
-            System.out.println("posso selezionare");
             switch (this.gui.getClientModel().getTypeOfRequest()) {
                 case "CHOOSEASSISTANTCARD":
                     System.out.println("si sceglie la carta assistente");
@@ -140,7 +139,6 @@ public class Game implements Initializable {
                     break;
             }
         } else {
-            System.out.println("NON posso selezionare");
             assistantCardBtn.setVisible(false);
             setOnSchoolBtn.setVisible(false);
             setOnIslandBtn.setVisible(false);
@@ -291,41 +289,44 @@ public class Game implements Initializable {
         });
 
         //PROFESSORI
-        professorGrids.forEach(profGrid -> profGrid.setAlignment(Pos.CENTER));
         professors.forEach(prof -> {
             if (prof.getHeldBy() != null) {
                 Player choosenPlayer = null;
-                choosenPlayer = players.stream()
-                        .filter(p -> p.getIp().equals(prof.getHeldBy().getIp()))
-                        .collect(Collectors.toList())
-                        .get(0);
-                System.out.println("il player " + choosenPlayer.getNickname() + " si piglia il prof " + prof.getColor().name());
-                ImageView profImage = null;
-                String color = "";
-                switch (prof.getColor()) {
-                    case BLUE:
-                        profImage = new ImageView("graphics/pieces/professors/teacher_blue.png");
-                        color = "blue";
-                        break;
-                    case RED:
-                        profImage = new ImageView("graphics/pieces/professors/teacher_red.png");
-                        color = "red";
-                        break;
-                    case PINK:
-                        profImage = new ImageView("graphics/pieces/professors/teacher_pink.png");
-                        color = "pink";
-                        break;
-                    case GREEN:
-                        profImage = new ImageView("graphics/pieces/professors/teacher_green.png");
-                        color = "green";
-                        break;
-                    case YELLOW:
-                        profImage = new ImageView("graphics/pieces/professors/teacher_yellow.png");
-                        color = "yellow";
-                        break;
+                for (Player player : players) {
+                    if (player.getNickname().equals(prof.getHeldBy().getNickname())) {
+                        choosenPlayer = player;
+                    }
                 }
-                imageResize(profImage, 30);
-                professorGrids.get(players.indexOf(choosenPlayer)).add(profImage, 0, getColorPlace(color));
+                if (choosenPlayer != null) {
+                    System.out.println("il player " + choosenPlayer.getNickname() + " si piglia il prof " + prof.getColor().name());
+                    ImageView profImage = null;
+                    String color = "";
+                    switch (prof.getColor()) {
+                        case BLUE:
+                            profImage = new ImageView("graphics/pieces/professors/teacher_blue.png");
+                            color = "blue";
+                            break;
+                        case RED:
+                            profImage = new ImageView("graphics/pieces/professors/teacher_red.png");
+                            color = "red";
+                            break;
+                        case PINK:
+                            profImage = new ImageView("graphics/pieces/professors/teacher_pink.png");
+                            color = "pink";
+                            break;
+                        case GREEN:
+                            profImage = new ImageView("graphics/pieces/professors/teacher_green.png");
+                            color = "green";
+                            break;
+                        case YELLOW:
+                            profImage = new ImageView("graphics/pieces/professors/teacher_yellow.png");
+                            color = "yellow";
+                            break;
+                    }
+                    imageResize(profImage, 30);
+                    professorGrids.get(players.indexOf(choosenPlayer)).add(profImage, 0, getColorPlace(color));
+                }
+
             }
         });
 
@@ -432,6 +433,7 @@ public class Game implements Initializable {
     }
 
     public void assistant() throws IOException {
+        System.out.println("apro la finestra");
         this.gui.openNewWindow("ChooseAssistantCard");
     }
 
