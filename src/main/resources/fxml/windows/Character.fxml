@@ -9,7 +9,7 @@
    <Label fx:id="explaination" alignment="CENTER" layoutX="118.0" layoutY="41.0" prefHeight="60.0" prefWidth="365.0" text="explaination..." textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="299.0" AnchorPane.leftAnchor="118.0" AnchorPane.rightAnchor="117.0" AnchorPane.topAnchor="41.0" />
    <Button layoutX="279.0" layoutY="361.0" mnemonicParsing="false" onMouseClicked="#okay" text="Okay" />
    <Label fx:id="notice" alignment="CENTER" layoutY="336.0" prefHeight="25.0" prefWidth="600.0" text="blabla" AnchorPane.bottomAnchor="39.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="336.0" />
-   <GridPane fx:id="islandGrid" layoutX="208.0" layoutY="195.0" prefHeight="135.0" prefWidth="185.0">
+   <GridPane fx:id="islandGrid" alignment="CENTER" layoutX="165.0" layoutY="165.0" prefHeight="165.0" prefWidth="245.0">
      <columnConstraints>
          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

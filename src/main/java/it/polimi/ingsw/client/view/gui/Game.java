@@ -109,24 +109,6 @@ public class Game implements Initializable {
     private ImageView characterCard2;
     @FXML
     private ImageView characterCard3;
-    @FXML
-    private ImageView characterCard4;
-    @FXML
-    private ImageView characterCard5;
-    @FXML
-    private ImageView characterCard6;
-    @FXML
-    private ImageView characterCard7;
-    @FXML
-    private ImageView characterCard8;
-    @FXML
-    private ImageView characterCard9;
-    @FXML
-    private ImageView characterCard10;
-    @FXML
-    private ImageView characterCard11;
-    @FXML
-    private ImageView characterCard12;
 
     @FXML
     private GridPane character1Grid;
@@ -134,8 +116,6 @@ public class Game implements Initializable {
     private GridPane character2Grid;
     @FXML
     private GridPane character3Grid;
-    @FXML
-    private GridPane character4Grid;
 
     @FXML
     private ImageView coin1;
@@ -154,6 +134,13 @@ public class Game implements Initializable {
     private Label coin3Label;
     @FXML
     private Label coin4Label;
+
+    @FXML
+    private Label cost1 = new Label();
+    @FXML
+    private Label cost2 = new Label();
+    @FXML
+    private Label cost3 = new Label();
 
     @FXML
     private Label playerName1;
@@ -227,7 +214,7 @@ public class Game implements Initializable {
 
         ArrayList<Label> playerNames = new ArrayList<>(Arrays.asList(playerName1, playerName2, playerName3, playerName4));
         ArrayList<ImageView> assistantCards = new ArrayList<>(Arrays.asList(assistantCard1, assistantCard2, assistantCard3, assistantCard4));
-        ArrayList<ImageView> characterCardsImages = new ArrayList<>(Arrays.asList(characterCard1, characterCard2, characterCard3, characterCard4, characterCard5, characterCard6, characterCard7, characterCard8, characterCard9, characterCard10, characterCard11, characterCard12));
+        ArrayList<ImageView> characterCardsImages = new ArrayList<>(Arrays.asList(characterCard1, characterCard2, characterCard3));
         ArrayList<GridPane> professorGrids = new ArrayList<>(Arrays.asList(professor1Grid, professor2Grid, professor3Grid, professor4Grid));
         ArrayList<GridPane> entranceGrids = new ArrayList<>(Arrays.asList(entrance1Grid, entrance2Grid, entrance3Grid, entrance4Grid));
         ArrayList<GridPane> schoolGrids = new ArrayList<>(Arrays.asList(school1Grid, school2Grid, school3Grid, school4Grid));
@@ -235,6 +222,7 @@ public class Game implements Initializable {
         ArrayList<ImageView> schools = new ArrayList<>(Arrays.asList(school1, school2, school3, school4));
         ArrayList<ImageView> coins = new ArrayList<>(Arrays.asList(coin1, coin2, coin3, coin4));
         ArrayList<Label> coinLabels = new ArrayList<>(Arrays.asList(coin1Label, coin2Label, coin3Label, coin4Label));
+        ArrayList<Label> costs = new ArrayList<>(Arrays.asList(cost1, cost2, cost3));
 
         // OK! ISOLE
         islandGrid.setAlignment(Pos.CENTER);
@@ -433,6 +421,7 @@ public class Game implements Initializable {
             characterCardsImages.forEach(card -> card.setVisible(false));
             coins.forEach(coin -> coin.setVisible(false));
             coinLabels.forEach(coinLabel -> coinLabel.setVisible(false));
+            costs.forEach(cost -> cost.setVisible(false));
         } else {
             ArrayList<CharacterCard> characterCards = this.gui.getClientModel().getServermodel().getTable().getCharacters();
             toImageCharacters(characterCards, characterCardsImages);
@@ -440,44 +429,49 @@ public class Game implements Initializable {
                 Label coinLabel = coinLabels.get(players.indexOf(player));
                 coinLabel.setText("" + player.getCoins());
             });
-            ArrayList<GridPane> characterGrids = new ArrayList<>(Arrays.asList(character1Grid, character2Grid, character3Grid, character4Grid));
+            ArrayList<GridPane> characterGrids = new ArrayList<>(Arrays.asList(character1Grid, character2Grid, character3Grid));
+            costs.forEach(cost -> cost.setText("Cost: " + characterCards.get(costs.indexOf(cost)).getCost()));
             characterGrids.forEach(grid -> {
                 grid.setAlignment(Pos.CENTER);
                 StudentSet studentSet = null;
-                switch (characterGrids.indexOf(grid)) {
-                    case 0:
+                switch (characterCards.get(characterGrids.indexOf(grid)).getName()) {
+                    case "MONK":
                         studentSet = gui.getClientModel().getServermodel().getTable().getMonkSet();
                         break;
-                    case 1:
+                    case "PRINCESS":
                         studentSet = gui.getClientModel().getServermodel().getTable().getPrincessSet();
                         break;
-                    case 2:
+                    case "JESTER":
                         studentSet = gui.getClientModel().getServermodel().getTable().getJesterSet();
                         break;
-                    case 3:
-                        studentSet = new StudentSet();
-                        break;
-                }
-                assert studentSet != null;
-                populateGrid(grid, 0, 2, studentSet);
-            });
-
-            characterCards.forEach(card -> characterCardsImages.get(characterCards.indexOf(card)).setOnMouseClicked(event -> {
-                System.out.println("ho premuto " + card.getName());
-                int cost = card.getCost();
-                if (currentPlayer.getCoins() >= cost) {
-                    currentCharacter = card;
-                    try {
-                        if (currentCharacter.getName().equals("MINSTRELL") || currentCharacter.getName().equals("JESTER")){
-                            gui.openNewWindow("JesterAndMinstrell");
-                        } else {
-                            gui.openNewWindow("Character");
+                    case "GRANNY":
+                        for (int i = 0; i < this.gui.getClientModel().getServermodel().getTable().getNumDivieti(); i++) {
+                            ImageView block = new ImageView("/graphics/pieces/islands/deny_island_icon.png");
+                            this.imageResize(block, 30);
+                            grid.add(block, i % 2, i / 2);
                         }
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                }
+                if (studentSet != null) {
+                    populateGrid(grid, 0, 2, studentSet);
+                }
+            });
+            characterCards.forEach(card -> characterCardsImages.get(characterCards.indexOf(card)).setOnMouseClicked(event -> {
+                if (!this.gui.getClientModel().getTypeOfRequest().equals("CHOOSEASSISTANTCARD")) {
+                    int cost = card.getCost();
+                    if (currentPlayer.getCoins() >= cost) {
+                        currentCharacter = card;
+                        try {
+                            if (currentCharacter.getName().equals("MINSTRELL") || currentCharacter.getName().equals("JESTER")) {
+                                gui.openNewWindow("JesterAndMinstrell");
+                            } else {
+                                gui.openNewWindow("Character");
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        System.out.println("non puoi!");
                     }
-                } else {
-                    System.out.println("non puoi!");
                 }
             }));
         }
@@ -579,21 +573,32 @@ public class Game implements Initializable {
         image.setFitHeight(size);
         image.setFitWidth(size);
     }
+
     public int getColorPlace(String color) {
         int n = -1;
         switch (color) {
-            case "green": n = 0; break;
-            case "red": n = 1; break;
-            case "yellow": n = 2; break;
-            case "pink": n = 3; break;
-            case "blue": n = 4; break;
+            case "green":
+                n = 0;
+                break;
+            case "red":
+                n = 1;
+                break;
+            case "yellow":
+                n = 2;
+                break;
+            case "pink":
+                n = 3;
+                break;
+            case "blue":
+                n = 4;
+                break;
 
         }
         return n;
     }
 
     public void toImageCharacters(ArrayList<CharacterCard> characterCard, List<ImageView> images) {
-        for (int i = 0; i < 12; i++) { //todo debug
+        for (int i = 0; i < 3; i++) {
             Image character = null;
             switch (characterCard.get(i).getName()) {
                 case "MONK":

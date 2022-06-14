@@ -18,6 +18,7 @@ public class MoveMotherNature implements Initializable {
     private final GUI gui = new GUI();
     public GridPane islandGrid;
     public Label notice = new Label();
+    private int distance;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -25,18 +26,35 @@ public class MoveMotherNature implements Initializable {
         ArrayList<Island> islands = this.gui.getClientModel().getServermodel().getTable().getIslands();
         int motherNaturePos = this.gui.getClientModel().getServermodel().getTable().getMotherNaturePosition();
         int moves = this.gui.getClientModel().getServermodel().getcurrentPlayer().getChoosedCard().getMoves();
-
+        distance = 0;
         islands.forEach(island -> {
+            distance = islands.indexOf(island) - motherNaturePos;
+            while (distance <= 0) {
+                distance += 12;
+            }
             ImageView islandImage = new ImageView();
+            boolean canMove = distance <= moves;
             switch (islands.indexOf(island) % 3) {
                 case 0:
-                    islandImage = new ImageView("/graphics/pieces/islands/island1.png");
+                    if (canMove) {
+                        islandImage = new ImageView("/graphics/pieces/islands/island1.png");
+                    } else {
+                        islandImage = new ImageView("/graphics/pieces/islands/island1_bw.png");
+                    }
                     break;
                 case 1:
-                    islandImage = new ImageView("/graphics/pieces/islands/island2.png");
+                    if (canMove) {
+                        islandImage = new ImageView("/graphics/pieces/islands/island2.png");
+                    } else {
+                        islandImage = new ImageView("/graphics/pieces/islands/island2_bw.png");
+                    }
                     break;
                 case 2:
-                    islandImage = new ImageView("/graphics/pieces/islands/island3.png");
+                    if (canMove) {
+                        islandImage = new ImageView("/graphics/pieces/islands/island3.png");
+                    } else {
+                        islandImage = new ImageView("/graphics/pieces/islands/island3_bw.png");
+                    }
                     break;
             }
             islandImage.setFitHeight(60);
@@ -44,7 +62,7 @@ public class MoveMotherNature implements Initializable {
             islandGrid.add(islandImage, Position.islandX(islands.indexOf(island)), Position.islandY(islands.indexOf(island)));
 
             islandImage.setOnMouseClicked((event) -> {
-                int distance = islands.indexOf(island) - motherNaturePos;
+                distance = islands.indexOf(island) - motherNaturePos;
                 while (distance <= 0) {
                     distance += 12;
                 }
