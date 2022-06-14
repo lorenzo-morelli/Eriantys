@@ -55,21 +55,25 @@ public class Character implements Initializable {
         switch (currentCharacter.getName()) {
             case "KNIGHT":
                 explaination.setText("During the influence calculation this turn, you count as having 2 more influence");
+                students.forEach(student -> student.setVisible(false));
                 flagIsland = true;
                 flagColor = true;
                 break;
             case "CENTAUR":
                 explaination.setText("When resolving a conquering on an island, towers do not count towards influence");
+                students.forEach(student -> student.setVisible(false));
                 flagIsland = true;
                 flagColor = true;
                 break;
             case "FARMER":
                 explaination.setText("During this turn, you take control of any number of professors even if you have the same number of student as the player who currently controls them");
+                students.forEach(student -> student.setVisible(false));
                 flagIsland = true;
                 flagColor = true;
                 break;
             case "POSTMAN":
                 explaination.setText("You can move mother nature up to 2 additional islands that is indicated by the assistant card you've played");
+                students.forEach(student -> student.setVisible(false));
                 flagIsland = true;
                 flagColor = true;
                 break;
@@ -90,13 +94,15 @@ public class Character implements Initializable {
                 break;
             case "HERALD":
                 explaination.setText("Choose an island and resolve the island as if mother nature had ended her movement there. Mother nature will still move and the island where she ends her movement will also be resolved");
+                students.forEach(student -> student.setVisible(false));
                 this.selectIsland(islands);
                 flagColor = true;
                 break;
             case "GRANNY":
                 explaination.setText("Place a No Entry tile on an island of your choice. The first time mother nature ends her movement there, the influence won't be calculated");
+                students.forEach(student -> student.setVisible(false));
                 this.selectIsland(islands);
-                //todo mettere isBlocked
+                flagColor = true;
                 break;
             case "THIEF":
                 explaination.setText("Choose a type of student: every player (including yourself) must return 3 students of that type from their dining room to the bag. If any player has fewer than 3 students of that type, return as many students as they have");
@@ -209,9 +215,6 @@ public class Character implements Initializable {
 
     public void okay(MouseEvent mouseEvent) throws InterruptedException {
         if (flagColor && flagIsland) {
-            System.out.println("cardddddd: " + currentCharacter.getName());
-            System.out.println("colorrrrr: " + chosenColor.name());
-            System.out.println("islandddd: " + chosenIsland);
             this.gui.getClientModel().setTypeOfRequest(currentCharacter.getName());
             this.gui.getClientModel().setResponse(true); //lo flaggo come messaggio di risposta
             this.gui.getClientModel().setPingMessage(false);
@@ -221,7 +224,6 @@ public class Character implements Initializable {
             if (chosenIsland != -1) {
                 this.gui.getClientModel().setChoosedIsland(chosenIsland);
             }
-//            if (currentCharacter.getName().equals("MINSTRELL")) this.gui.getClientModel()
             Gson gson = new Gson();
             Network.send(gson.toJson(this.gui.getClientModel()));
             this.gui.closeWindow(mouseEvent);

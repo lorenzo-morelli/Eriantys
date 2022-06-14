@@ -6,6 +6,7 @@ import it.polimi.ingsw.server.model.characters.CharacterCard;
 import it.polimi.ingsw.server.model.enums.GameMode;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -261,6 +262,18 @@ public class Game implements Initializable {
             StudentSet islandSet = island.getInhabitants();
             populateGrid(students, 0, 3, islandSet);
             tile.getChildren().add(students);
+
+            //INITIALIZE BLOCKS
+            if (island.isBlocked()) {
+                GridPane blocks = new GridPane();
+                blocks.setPadding(new Insets(20));
+                blocks.setAlignment(Pos.BOTTOM_LEFT);
+                ImageView block = new ImageView("/graphics/pieces/islands/deny_island_icon.png");
+                block.setFitHeight(50);
+                block.setFitWidth(50);
+                blocks.addRow(1, block);
+                tile.getChildren().add(blocks);
+            }
 
             //INIZIALIZZO LE TORRI NELLE ISOLE
             GridPane towers = new GridPane();
