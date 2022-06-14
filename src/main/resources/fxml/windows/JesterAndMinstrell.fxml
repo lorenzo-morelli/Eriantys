@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.gui.windows.JesterAndMinstrell">
+   <children>
+      <ImageView fx:id="student11a" fitHeight="42.0" fitWidth="36.0" layoutX="43.0" layoutY="146.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../graphics/pieces/students/student_blue.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="student21a" fitHeight="42.0" fitWidth="36.0" layoutX="88.0" layoutY="146.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../graphics/pieces/students/student_green.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="student31a" fitHeight="42.0" fitWidth="36.0" layoutX="134.0" layoutY="146.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../graphics/pieces/students/student_pink.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="student41a" fitHeight="42.0" fitWidth="36.0" layoutX="180.0" layoutY="146.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../graphics/pieces/students/student_red.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="student51a" fitHeight="42.0" fitWidth="36.0" layoutX="226.0" layoutY="146.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../graphics/pieces/students/student_yellow.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="student11b" fitHeight="42.0" fitWidth="36.0" layoutX="341.0" layoutY="146.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../graphics/pieces/students/student_blue.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="student21b" fitHeight="42.0" fitWidth="36.0" layoutX="386.0" layoutY="146.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../graphics/pieces/students/student_green.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="student31b" fitHeight="42.0" fitWidth="36.0" layoutX="432.0" layoutY="146.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../graphics/pieces/students/student_pink.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="student41b" fitHeight="42.0" fitWidth="36.0" layoutX="478.0" layoutY="146.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../graphics/pieces/students/student_red.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="student51b" fitHeight="42.0" fitWidth="36.0" layoutX="524.0" layoutY="146.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../graphics/pieces/students/student_yellow.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="student12a" fitHeight="42.0" fitWidth="36.0" layoutX="42.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../graphics/pieces/students/student_blue.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="student22a" fitHeight="42.0" fitWidth="36.0" layoutX="87.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../graphics/pieces/students/student_green.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="student32a" fitHeight="42.0" fitWidth="36.0" layoutX="133.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../graphics/pieces/students/student_pink.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="student42a" fitHeight="42.0" fitWidth="36.0" layoutX="179.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../graphics/pieces/students/student_red.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="student52a" fitHeight="42.0" fitWidth="36.0" layoutX="225.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../graphics/pieces/students/student_yellow.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="student12b" fitHeight="42.0" fitWidth="36.0" layoutX="340.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../graphics/pieces/students/student_blue.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="student22b" fitHeight="42.0" fitWidth="36.0" layoutX="385.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../graphics/pieces/students/student_green.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="student32b" fitHeight="42.0" fitWidth="36.0" layoutX="431.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../graphics/pieces/students/student_pink.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="student42b" fitHeight="42.0" fitWidth="36.0" layoutX="477.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../graphics/pieces/students/student_red.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="student52b" fitHeight="42.0" fitWidth="36.0" layoutX="523.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../graphics/pieces/students/student_yellow.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="student13a" fitHeight="42.0" fitWidth="36.0" layoutX="42.0" layoutY="253.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../graphics/pieces/students/student_blue.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="student23a" fitHeight="42.0" fitWidth="36.0" layoutX="87.0" layoutY="253.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../graphics/pieces/students/student_green.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="student33a" fitHeight="42.0" fitWidth="36.0" layoutX="133.0" layoutY="253.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../graphics/pieces/students/student_pink.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="student43a" fitHeight="42.0" fitWidth="36.0" layoutX="179.0" layoutY="253.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../graphics/pieces/students/student_red.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="student53a" fitHeight="42.0" fitWidth="36.0" layoutX="225.0" layoutY="253.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../graphics/pieces/students/student_yellow.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="student13b" fitHeight="42.0" fitWidth="36.0" layoutX="340.0" layoutY="253.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../graphics/pieces/students/student_blue.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="student23b" fitHeight="42.0" fitWidth="36.0" layoutX="385.0" layoutY="253.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../graphics/pieces/students/student_green.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="student33b" fitHeight="42.0" fitWidth="36.0" layoutX="431.0" layoutY="253.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../graphics/pieces/students/student_pink.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="student43b" fitHeight="42.0" fitWidth="36.0" layoutX="477.0" layoutY="253.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../graphics/pieces/students/student_red.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="student53b" fitHeight="42.0" fitWidth="36.0" layoutX="523.0" layoutY="253.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../graphics/pieces/students/student_yellow.png" />
+         </image>
+      </ImageView>
+      <Button layoutX="279.0" layoutY="340.0" mnemonicParsing="false" onMouseClicked="#okay" text="Okay" />
+      <Label fx:id="explaination" alignment="CENTER" layoutX="141.0" layoutY="54.0" prefHeight="47.0" prefWidth="320.0" text="explaination" wrapText="true" AnchorPane.bottomAnchor="299.0" AnchorPane.leftAnchor="141.0" AnchorPane.rightAnchor="139.0" AnchorPane.topAnchor="54.0" />
+      <Label fx:id="start" layoutX="123.0" layoutY="103.0" text="Jester's set" />
+      <Label fx:id="finish" layoutX="413.0" layoutY="111.0" text="Your entrance" />
+      <Label fx:id="name" alignment="CENTER" layoutX="-1.0" layoutY="18.0" prefHeight="36.0" prefWidth="600.0" text="name" AnchorPane.bottomAnchor="346.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="18.0">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="notice" alignment="CENTER" layoutX="286.0" layoutY="304.0" prefHeight="36.0" prefWidth="600.0" text="Label" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="304.0" />
+   </children>
+</AnchorPane>

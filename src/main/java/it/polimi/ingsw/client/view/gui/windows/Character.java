@@ -8,6 +8,7 @@ import it.polimi.ingsw.server.model.enums.PeopleColor;
 import it.polimi.ingsw.utils.network.Network;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -34,13 +35,19 @@ public class Character implements Initializable {
     public ImageView student4;
     public ImageView student5;
 
-    private int chosenIsland = -1;
+    private int chosenIsland;
     private PeopleColor chosenColor;
+    private ArrayList<PeopleColor> chosenColors;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ArrayList<Island> islands = this.gui.getClientModel().getServermodel().getTable().getIslands();
         ArrayList<ImageView> students = new ArrayList<>(Arrays.asList(student1, student2, student3, student4, student5));
+
+        chosenColor = null;
+        chosenIsland = -1;
+        flagColor = false;
+        flagIsland = false;
 
         switch (currentCharacter.getName()) {
             case "KNIGHT":
@@ -74,24 +81,22 @@ public class Character implements Initializable {
                 flagIsland = true;
                 break;
             case "MUSHROOMHUNTER":
+                explaination.setText("Choose a color of a student: during the influence calculation this turn, that color adds no influence");
                 this.selectStudent(students, null);
                 flagIsland = true;
                 break;
             case "HERALD":
+                explaination.setText("Choose an island and resolve the island as if mother nature had ended her movement there. Mother nature will still move and the island where she ends her movement will also be resolved");
                 this.selectIsland(islands);
                 flagColor = true;
                 break;
             case "GRANNY":
+                explaination.setText("Place a No Entry tile on an island of your choice. The first time mother nature ends her movement there, the influence won't be calculated");
                 this.selectIsland(islands);
                 //todo mettere isBlocked
                 break;
-            case "JESTER":
-                //todo 3 studenti
-                break;
-            case "MINSTRELL":
-                //todo 2 studenti
-                break;
             case "THIEF":
+                explaination.setText("Choose a type of student: every player (including yourself) must return 3 students of that type from their dining room to the bag. If any player has fewer than 3 students of that type, return as many students as they have");
                 this.selectStudent(students, null);
                 flagIsland = true;
                 break;
@@ -99,6 +104,7 @@ public class Character implements Initializable {
     }
 
     public void selectStudent(ArrayList<ImageView> students, StudentSet studentSet) {
+        setToBlackAndWhite(students, studentSet, 0);
         students.forEach(student -> student.setOnMouseClicked(event -> {
             switch (students.indexOf(student)) {
                 case 0:
@@ -132,6 +138,7 @@ public class Character implements Initializable {
                     }
                     break;
             }
+            System.out.println("scelto: " + chosenColor.name());
             if (chosenColor == null) {
                 notice.setText("ERROR: Color unavailable!");
             } else {
@@ -165,6 +172,38 @@ public class Character implements Initializable {
         });
     }
 
+    public void setToBlackAndWhite(ArrayList<ImageView> images, StudentSet studentSet, int remaining) {
+        images.forEach(student -> {
+            switch (images.indexOf(student)) {
+                case 0:
+                    if (studentSet != null && studentSet.getNumOfBlueStudents() <= remaining) {
+                        student.setImage(new Image("/graphics/pieces/students/student_blue_bw.png"));
+                    }
+                    break;
+                case 1:
+                    if (studentSet != null && studentSet.getNumOfGreenStudents() <= remaining) {
+                        student.setImage(new Image("/graphics/pieces/students/student_green_bw.png"));
+                    }
+                    break;
+                case 2:
+                    if (studentSet != null && studentSet.getNumOfPinkStudents() <= remaining) {
+                        student.setImage(new Image("/graphics/pieces/students/student_pink_bw.png"));
+                    }
+                    break;
+                case 3:
+                    if (studentSet != null && studentSet.getNumOfRedStudents() <= remaining) {
+                        student.setImage(new Image("/graphics/pieces/students/student_red_bw.png"));
+                    }
+                    break;
+                case 4:
+                    if (studentSet != null && studentSet.getNumOfYellowStudents() <= remaining) {
+                        student.setImage(new Image("/graphics/pieces/students/student_yellow_bw.png"));
+                    }
+                    break;
+            }
+        });
+    }
+
     public void okay(MouseEvent mouseEvent) throws InterruptedException {
         if (flagColor && flagIsland) {
             System.out.println("cardddddd: " + currentCharacter.getName());
@@ -173,8 +212,13 @@ public class Character implements Initializable {
             this.gui.getClientModel().setTypeOfRequest(currentCharacter.getName());
             this.gui.getClientModel().setResponse(true); //lo flaggo come messaggio di risposta
             this.gui.getClientModel().setPingMessage(false);
-            if (chosenColor != null) this.gui.getClientModel().setChoosedColor(chosenColor);
-            if (chosenIsland != -1) this.gui.getClientModel().setChoosedIsland(chosenIsland);
+            if (chosenColor != null) {
+                this.gui.getClientModel().setChoosedColor(chosenColor);
+            }
+            if (chosenIsland != -1) {
+                this.gui.getClientModel().setChoosedIsland(chosenIsland);
+            }
+//            if (currentCharacter.getName().equals("MINSTRELL")) this.gui.getClientModel()
             Gson gson = new Gson();
             Network.send(gson.toJson(this.gui.getClientModel()));
             this.gui.closeWindow(mouseEvent);

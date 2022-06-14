@@ -455,7 +455,11 @@ public class Game implements Initializable {
                 if (currentPlayer.getCoins() >= cost) {
                     currentCharacter = card;
                     try {
-                        gui.openNewWindow("Character");
+                        if (currentCharacter.getName().equals("MINSTRELL") || currentCharacter.getName().equals("JESTER")){
+                            gui.openNewWindow("JesterAndMinstrell");
+                        } else {
+                            gui.openNewWindow("Character");
+                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
