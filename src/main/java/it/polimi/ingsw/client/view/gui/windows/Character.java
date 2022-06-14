@@ -26,6 +26,7 @@ public class Character implements Initializable {
     private final GUI gui = new GUI();
     public Label explaination = new Label();
     public Label notice = new Label();
+    public Label name = new Label();
     private boolean flagIsland = false;
     private boolean flagColor = false;
     public GridPane islandGrid;
@@ -41,6 +42,8 @@ public class Character implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        notice.setText("");
+        name.setText(currentCharacter.getName());
         ArrayList<Island> islands = this.gui.getClientModel().getServermodel().getTable().getIslands();
         ArrayList<ImageView> students = new ArrayList<>(Arrays.asList(student1, student2, student3, student4, student5));
 
@@ -71,7 +74,7 @@ public class Character implements Initializable {
                 flagColor = true;
                 break;
             case "MONK":
-                explaination.setText(" of your choice");
+                explaination.setText("Take 1 student from this card and place it on an island of your choice");
                 this.selectStudent(students, this.gui.getClientModel().getServermodel().getTable().getMonkSet());
                 this.selectIsland(islands);
                 break;

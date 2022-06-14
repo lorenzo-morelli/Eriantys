@@ -14,6 +14,7 @@ import javafx.scene.layout.GridPane;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
 import static it.polimi.ingsw.client.view.gui.Position.islandX;
@@ -26,12 +27,21 @@ public class MoveStudents implements Initializable {
     private PeopleColor studentColor;
     private Player currentPlayer;
 
+    public ImageView blue;
+    public ImageView green;
+    public ImageView pink;
+    public ImageView red;
+    public ImageView yellow;
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         notice.setText("");
         ArrayList<Island> islands = this.gui.getClientModel().getServermodel().getTable().getIslands();
+        ArrayList<ImageView> students = new ArrayList<>(Arrays.asList(blue, green, pink, red, yellow));
         currentPlayer = this.gui.getClientModel().getServermodel().getcurrentPlayer();
-
+        Character character = new Character();
+        character.setToBlackAndWhite(students, currentPlayer.getSchoolBoard().getEntranceSpace(), 0);
         if (islandGrid != null) {
             islands.forEach(island -> {
                 ImageView islandImage = new ImageView();
@@ -49,7 +59,6 @@ public class MoveStudents implements Initializable {
                 islandImage.setFitHeight(60);
                 islandImage.setFitWidth(60);
                 islandGrid.add(islandImage, islandX(islands.indexOf(island)), islandY(islands.indexOf(island)));
-
                 islandImage.setOnMouseClicked((event) -> {
                     if (studentColor == null) {
                         notice.setText("ERROR: Please select the student you want to move");
