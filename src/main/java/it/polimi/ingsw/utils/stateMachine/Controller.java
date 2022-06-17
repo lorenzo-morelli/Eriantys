@@ -4,12 +4,12 @@ import java.io.IOException;
 import java.util.Hashtable;
 import java.util.LinkedList;
 
-/*
- * Questa classe mette a disposizione un meccanismo per la creazione di transizioni tra stati
- * che creano una macchina a stati finiti, che sara' memorizzata in una hashMap internamente
+/**
+ * This class provides a mechanism for creating transitions between states
+ * which create a finite state machine, which will be stored in a hashMap internally
  *
- * Per esempio, se volessimo utilizzare la tastiera per governare una macchina a stati finiti
- * che accetti solamente di scrivere la parola "lode", la tabella degli stati sarebbe cosi':
+ * For example, if we wanted to use the keyboard to govern a finite state machine
+ * if you only agree to write the word "lode", the table of states would be like this:
  *
  *                          Stati:
  *             starting   l    lo   lod   lode (ending state)
@@ -23,47 +23,47 @@ import java.util.LinkedList;
  *     e     |    x       x    x     >lode  |
  *           |------------------------------|
  *
- * Per memorizzare questa tabella sono necessarie 4 chiamate:
+ * 4 calls are required to store this table:
  *
  * addTransaction(state_starting, event_l, state_l)
  * addTransaction(state_l,        event_o, state_lo)
  * addTransaction(state_lo,       event_d, state_lod)
  * addTransaction(state_lod,      event_e, state_lode)
  *
- * Dopo tale configurazione, il controllore verrà azionato da solo, gestendo le notifiche
- * dai suoi eventi e inviando azioni ai suoi stati.
+ * After this configuration, the controller will be operated by itself, managing notifications
+ * from its events and by sending actions to its states.
  *
- * L'accodamento degli eventi è consentito, anche durante un evento. Gli eventi verranno elaborati in ordine.
+ * Event queuing is allowed, even during an event. The events will be processed in order.
  *
- * Se viene raggiunto uno stato "X", il controllore lo ignorerà o lancerà un'eccezione all'evento che ha causato l'errore.
-
+ * If an "X" state is reached, the controller will either ignore it or throw an exception to the event that caused the error.
+ * @author Fernando Morea
  */
 
 public class Controller {
     private boolean hideDebugMessages = true;
     public final static Object STATE_DO_NOTHING=null;
 
-    /** Memorizza tutte le possibili transazioni */
+    /** Stores all the transitions */
     private final StateTableWithNestedHashtables states = new StateTableWithNestedHashtables();
     /** Lo stato corrente del controllore,non puo'essere null */
     private IState currentState;
-    /** il nome del controllore per motivi di log */
+    /** the name of the controller for debug purpose only*/
     private final String name;
-    /** Coda di eventi */
+    /** The event queue */
     private final LinkedList<IEvent> events = new LinkedList<IEvent>();
     /**
-     * Lancia eccezione se non ci sono eventi disponibili
+     * Flag to throws exception if the event was not expected for the current state
      */
     private boolean exceptOnIllegal = true;
 
     /**
-     * L'entryAction del primo stato non sara' chiamata, siccome non c'e' nessun evento che l'ha triggerata
-     * L' exitAction sara' chiamata.
+     *  The entryAction of the first state will not be called, because no event triggered it
+     * The exitAction will be called.
      *
      * @param firstState
-     *            Stato iniziale della macchina.
+     *            Initial state of the machine.
      * @param name
-     *            nome dello stato utilizzato per il logging
+     *            name of the machine used only for debug and log purpose
      */
     public Controller(String name, IState firstState) {
         this.name = name;
@@ -73,8 +73,8 @@ public class Controller {
         currentState = firstState;
     }
     /*
-     * @param name
-     * @param stateTable
+     * @param name The name of the controller
+     * @param stateTable Alternative to store transitions between states
      */
     public Controller(String name, Object[] stateTable) {
         this.name = name;
@@ -133,18 +133,17 @@ public class Controller {
     }
 
     /**
-     * Programma il controllore con le transizioni consentite.
+     Program the controller with allowed transitions.
      *
-     * Il controllore sara' sempre in uno stato, quando un evento termina,
-     * questa tabella e' interrogata per vedere se l'evento e' valido nel contesto
-     * dello stato corrente, se si avviene la transizione.
-     *
+     * The controller will always be in a state, when an event ends,
+     * this table is queried to see if the event is valid in the context
+     * of the current state, if the transition occurs.
      * @param startingState
-     *            se il controllore si trova in questo stato
+     *            If the controller is in this state
      * @param ev
-     *            e viene scatenato questo evento
+     *            And this event is triggered
      * @param nextState
-     *            allora transisci in ques'altro stato
+     *            then transition to this state
      */
     public void addTransition(IState startingState, IEvent ev, IState nextState) {
         ev.setStateEventListener(this);
@@ -155,35 +154,35 @@ public class Controller {
     }
 
     /**
-     * Vero di default, se viene settato a false e accade un evento non tra quelli consentiti esso sara'
-     * semplicemente ignorato.
+     * True by default, if it is set to false and an event not among those allowed occurs it will be
+     * simply ignored.
      *
      * @param except
-     *            false per stoppare le eccezioni.
+     *            false to stop all the exceptions.
      */
     public void setExceptionOnIllegalTransiction(boolean except) {
         this.exceptOnIllegal = except;
     }
 
     /**
-     * Cio' che attiva le transizioni.
-     * Mette in coda gli eventi, prende il primo evento, si assicura che sia valido, chiama l'
-     * exitAction dello stato corrente, cambia stato e chiama l'entryAction dello stato successivo
+     * What activates the transitions.
+     * Queue events, take first event, make sure it's valid, call
+     * exitAction of the current state, change state and call the entryAction of the next state
      *
-     * Se un cambio di stato non è valido, genera una "IllegalStateException"
-     * contenente i nomi dello stato iniziale, dello stato finale e dell'evento.
+     * If a status change is invalid, it throws an "IllegalStateException"
+     * containing the names of the initial state, final state and event.
      *
-     * Dovrebbe gestire bene più eventi e situazioni di threading.
-     * Gli eventi sono gestiti nell'ordine in cui vengono ricevuti.
+     * It should handle more threading events and situations well.
+     * Events are handled in the order they are received.
      * @param ev
-     *            L'evento azionato.
+     *            The triggered event
      */
 
 
     public void fireStateEvent(IEvent ev) throws Exception {
         synchronized (events) {
-            // aggiunge in coda l'evento arrivato
-            // il primo evento che arriva dovrebbe essere il primo eseguito
+            // add the arrived event to the queue
+            // the first event that arrives should be the first one executed
             events.addLast(ev);
             // If there are more events, they will be executed after the current
             // one is done, so just return the thread to whoever sent it.
@@ -244,7 +243,7 @@ public class Controller {
     }
 
     /**
-     * Reimplementazione di toString per motivi di logging. FSM=Finite State Machine
+     * ReimplementationtoString for logging. FSM=Finite State Machine
      *
      * @return
      */
@@ -258,7 +257,7 @@ public class Controller {
     }
 
     /**
-     * Mostra i log delle transizioni tra gli stati
+     * Show the log informations
      */
     public void showDebugMessages(){
         hideDebugMessages = false;
@@ -268,16 +267,16 @@ public class Controller {
 
 
 /**
- *  Ciascuna riga della tabella ha l'associazione (evento, (stato di partenza , stato prossimo))
- *
- * If "startingState" is the string "Default", it means to use this event for all startingStates
- * If nextState is "EMPTY" it means to block a default event from this startingState
- *
- * This can be implemented in a few ways.  If we were to gaurentee that Events and States
- * had unique .toStrings() then we could use a lookup like Event.toString()+"+"+State.toString()
- *
- * That's why this module is extracted -- it's replaceable.
- */
+        * Each row of the table has the association (event, (starting state, next state))
+        *
+        * If "startingState" is the string "Default", it means to use this event for all startingStates
+        * If nextState is "EMPTY" it means to block a default event from this startingState
+        *
+        * This can be implemented in a few ways. If we were to gaurentee that Events and States
+        * had unique .toStrings () then we could use a lookup like Event.toString () + "+" + State.toString ()
+        *
+        * That's why this module is extracted - it's replaceable.
+ * */
 class StateTableWithNestedHashtables {
 
     private final Hashtable states = new Hashtable();
