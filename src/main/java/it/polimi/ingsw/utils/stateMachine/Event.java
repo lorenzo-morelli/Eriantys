@@ -3,8 +3,8 @@ package it.polimi.ingsw.utils.stateMachine;
 import java.io.IOException;
 
 /**
- *  Una classe di default per implementare l'interfaccia IEvent.
- *  Quello che fa e' prendersi cura del listener e del metodo toString.
+ * A default class to implement the IEvent interface.
+ * What it does is take care of the listener and the toString method.
  */
 public class Event implements IEvent {
 
