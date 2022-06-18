@@ -5,6 +5,7 @@ import it.polimi.ingsw.client.GUI;
 import it.polimi.ingsw.server.model.StudentSet;
 import it.polimi.ingsw.server.model.enums.PeopleColor;
 import it.polimi.ingsw.utils.network.Network;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -21,54 +22,87 @@ import static it.polimi.ingsw.client.GUI.currentCharacter;
 public class JesterAndMinstrell implements Initializable {
     private final GUI gui = new GUI();
 
-    public Label start = new Label();
-    public Label finish = new Label();
-    public Label name = new Label();
-    public Label explaination = new Label();
-    public Label notice = new Label();
+    @FXML
+    private Label start = new Label();
+    @FXML
+    private Label name = new Label();
+    @FXML
+    private Label explaination = new Label();
+    @FXML
+    private Label notice = new Label();
 
-    public ImageView student11a;
-    public ImageView student21a;
-    public ImageView student31a;
-    public ImageView student41a;
-    public ImageView student51a;
+    @FXML
+    private ImageView student11a;
+    @FXML
+    private ImageView student21a;
+    @FXML
+    private ImageView student31a;
+    @FXML
+    private ImageView student41a;
+    @FXML
+    private ImageView student51a;
 
-    public ImageView student12a;
-    public ImageView student22a;
-    public ImageView student32a;
-    public ImageView student42a;
-    public ImageView student52a;
+    @FXML
+    private ImageView student12a;
+    @FXML
+    private ImageView student22a;
+    @FXML
+    private ImageView student32a;
+    @FXML
+    private ImageView student42a;
+    @FXML
+    private ImageView student52a;
 
-    public ImageView student13a;
-    public ImageView student23a;
-    public ImageView student33a;
-    public ImageView student43a;
-    public ImageView student53a;
+    @FXML
+    private ImageView student13a;
+    @FXML
+    private ImageView student23a;
+    @FXML
+    private ImageView student33a;
+    @FXML
+    private ImageView student43a;
+    @FXML
+    private ImageView student53a;
 
 
-    public ImageView student11b;
-    public ImageView student21b;
-    public ImageView student31b;
-    public ImageView student41b;
-    public ImageView student51b;
+    @FXML
+    private ImageView student11b;
+    @FXML
+    private ImageView student21b;
+    @FXML
+    private ImageView student31b;
+    @FXML
+    private ImageView student41b;
+    @FXML
+    private ImageView student51b;
 
-    public ImageView student12b;
-    public ImageView student22b;
-    public ImageView student32b;
-    public ImageView student42b;
-    public ImageView student52b;
+    @FXML
+    private ImageView student12b;
+    @FXML
+    private ImageView student22b;
+    @FXML
+    private ImageView student32b;
+    @FXML
+    private ImageView student42b;
+    @FXML
+    private ImageView student52b;
 
-    public ImageView student13b;
-    public ImageView student23b;
-    public ImageView student33b;
-    public ImageView student43b;
-    public ImageView student53b;
+    @FXML
+    private ImageView student13b;
+    @FXML
+    private ImageView student23b;
+    @FXML
+    private ImageView student33b;
+    @FXML
+    private ImageView student43b;
+    @FXML
+    private ImageView student53b;
 
     private PeopleColor tempColor;
-    ArrayList<PeopleColor> entranceJester = new ArrayList<>();
-    ArrayList<PeopleColor> jester = new ArrayList<>();
-    ArrayList<PeopleColor> entranceMinstrell = new ArrayList<>();
-    ArrayList<PeopleColor> diningMinstrell = new ArrayList<>();
+    private ArrayList<PeopleColor> entranceJester;
+    private ArrayList<PeopleColor> jester;
+    private ArrayList<PeopleColor> entranceMinstrell;
+    private ArrayList<PeopleColor> diningMinstrell;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -83,7 +117,6 @@ public class JesterAndMinstrell implements Initializable {
         StudentSet entranceSet = this.gui.getClientModel().getServermodel().getcurrentPlayer().getSchoolBoard().getEntranceSpace();
         StudentSet dinnerSet = this.gui.getClientModel().getServermodel().getcurrentPlayer().getSchoolBoard().getDinnerTable();
         tempColor = null;
-
         entranceMinstrell = new ArrayList<>(Arrays.asList(null, null));
         diningMinstrell = new ArrayList<>(Arrays.asList(null, null));
         jester = new ArrayList<>(Arrays.asList(null, null, null));
@@ -104,7 +137,6 @@ public class JesterAndMinstrell implements Initializable {
             this.populateList(students2a, dinnerSet, diningMinstrell, 1);
             this.populateList(students1b, entranceSet, entranceMinstrell, 0);
             this.populateList(students2b, entranceSet, entranceMinstrell, 1);
-
         } else {
             start.setText("Jester's set");
             explaination.setText("You may take up to 3 students from this card and replace them with the same number of students from your entrance");
@@ -124,8 +156,14 @@ public class JesterAndMinstrell implements Initializable {
         }
     }
 
-    public void populateList(ArrayList<ImageView> students, StudentSet studentSet, ArrayList<PeopleColor> colors, int index) {
-        students.forEach(student -> System.out.println(student.getImage().toString()));
+    /**
+     * This method is used to populate with the choosen color
+     * @param students the student images to get the click event from.
+     * @param studentSet the student set with all the available students.
+     * @param colors the list to update.
+     * @param index the index of the list to update.
+     */
+    private void populateList(ArrayList<ImageView> students, StudentSet studentSet, ArrayList<PeopleColor> colors, int index) {
         students.forEach(student -> student.setOnMouseClicked(event -> {
             System.out.println("cliccateddd");
             switch (students.indexOf(student)) {
@@ -155,22 +193,22 @@ public class JesterAndMinstrell implements Initializable {
                     }
                     break;
             }
-
             if (tempColor == null) {
                 notice.setText("ERROR: Color unavailable!");
             } else {
                 colors.set(index, tempColor);
                 notice.setText("");
-                System.out.println("jester set:");
-                jester.forEach(el -> System.out.println(el != null ? el.name() : "null"));
-                System.out.println("jester entrance:");
-                entranceJester.forEach(el -> System.out.println(el != null ? el.name() : "null"));
             }
         }));
 
     }
 
-    public void okay(MouseEvent mouseEvent) throws InterruptedException {
+    /**
+     * This event is used to activate the effect of the card, after filling in the specifications.
+     * @param mouseEvent the event to close the window.
+     */
+    @FXML
+    private void okay(MouseEvent mouseEvent) throws InterruptedException {
         this.gui.getClientModel().setTypeOfRequest(currentCharacter.getName());
         this.gui.getClientModel().setResponse(true); //lo flaggo come messaggio di risposta
         this.gui.getClientModel().setPingMessage(false);

@@ -44,6 +44,10 @@ public class GUI extends Application {
         this.stage.show();
     }
 
+    /**
+     * This method is used to switch between FXML files in order to change the scene
+     * @param newScene the name of the FXML file, without the extension.
+     */
     public synchronized void changeScene(String newScene) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/" + newScene + ".fxml"));
         if(currNode.getScene() !=null){
@@ -58,6 +62,11 @@ public class GUI extends Application {
         this.stage.show();
     }
 
+    /**
+     * As the previous method, this one also is used to switch from a FXML to another,
+     * but instead of changing the current scene, it opens a new window with the selected scene.
+     * @param newWindow the name of the FXML file, without the extension.
+     */
     public synchronized void openNewWindow(String newWindow) throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/windows/" + newWindow + ".fxml")));
         Stage stage = new Stage();
@@ -65,13 +74,10 @@ public class GUI extends Application {
         stage.show();
     }
 
-//    public synchronized void openCharacterWindow(String character) throws IOException {
-//        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/windows/characters" + character + ".fxml")));
-//        Stage stage = new Stage();
-//        stage.setScene(new Scene(root));
-//        stage.show();
-//    }
-
+    /**
+     * This method is used to close the current window.
+     * @param mouseEvent the event necessary to close the window.
+     */
     public synchronized void closeWindow(MouseEvent mouseEvent) {
         final Node source = (Node) mouseEvent.getSource();
         final Stage stage = (Stage) source.getScene().getWindow();
@@ -86,6 +92,9 @@ public class GUI extends Application {
         GUI.clientModel = clientModel;
     }
 
+    /**
+     * This method is called whenever it's this player's turn
+     */
     public synchronized void requestToMe() throws InterruptedException, IOException {
         myTurn = true;
         Network.setClientModel(GUI.clientModel);

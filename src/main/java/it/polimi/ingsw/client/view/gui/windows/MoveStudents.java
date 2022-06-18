@@ -6,6 +6,7 @@ import it.polimi.ingsw.server.model.Island;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.enums.PeopleColor;
 import it.polimi.ingsw.utils.network.Network;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -80,28 +81,38 @@ public class MoveStudents implements Initializable {
             });
         }
     }
-
-    public void setBlue(MouseEvent mouseEvent) throws InterruptedException {
+    @FXML
+    private void setBlue(MouseEvent mouseEvent) throws InterruptedException {
         setColor("blue", mouseEvent);
     }
 
-    public void setGreen(MouseEvent mouseEvent) throws InterruptedException {
+    @FXML
+    private void setGreen(MouseEvent mouseEvent) throws InterruptedException {
         setColor("green", mouseEvent);
     }
 
-    public void setPink(MouseEvent mouseEvent) throws InterruptedException {
+    @FXML
+    private void setPink(MouseEvent mouseEvent) throws InterruptedException {
         setColor("pink", mouseEvent);
     }
 
-    public void setRed(MouseEvent mouseEvent) throws InterruptedException {
+    @FXML
+    private void setRed(MouseEvent mouseEvent) throws InterruptedException {
         setColor("red", mouseEvent);
     }
 
-    public void setYellow(MouseEvent mouseEvent) throws InterruptedException {
+    @FXML
+    private void setYellow(MouseEvent mouseEvent) throws InterruptedException {
         setColor("yellow", mouseEvent);
     }
 
-    public void setColor(String color, MouseEvent mouseEvent) throws InterruptedException {
+    /**
+     * This method is used to set color based on what button has been pressed.
+     * @param color the chosen color.
+     * @param mouseEvent the event necessary to close the window.
+     * @throws InterruptedException
+     */
+    private void setColor(String color, MouseEvent mouseEvent) throws InterruptedException {
         int red = currentPlayer.getSchoolBoard().getEntranceSpace().getNumOfRedStudents();
         int blue = currentPlayer.getSchoolBoard().getEntranceSpace().getNumOfBlueStudents();
         int green = currentPlayer.getSchoolBoard().getEntranceSpace().getNumOfGreenStudents();

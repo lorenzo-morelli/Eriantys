@@ -20,12 +20,13 @@ import java.util.ResourceBundle;
 public class ChooseCloud implements Initializable {
     private final GUI gui = new GUI();
     @FXML
-    private Label notice = new Label();
+    public Label notice;
     @FXML
     private GridPane cloudGrid;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        this.notice.setText("");
         ArrayList<Cloud> clouds = this.gui.getClientModel().getServermodel().getTable().getClouds();
         if (clouds.size() == 2) {
             cloudGrid.setLayoutX(150);

@@ -196,7 +196,6 @@ public class Game implements Initializable {
             cloudBtn.setVisible(false);
         }
 
-        // OK! valori partita
         GameMode gameMode = this.gui.getClientModel().getServermodel().getGameMode();
         int motherNaturePos = this.gui.getClientModel().getServermodel().getTable().getMotherNaturePosition();
         ArrayList<Island> islands = this.gui.getClientModel().getServermodel().getTable().getIslands();
@@ -389,7 +388,6 @@ public class Game implements Initializable {
                     imageResize(profImage, 30);
                     professorGrids.get(players.indexOf(choosenPlayer)).add(profImage, 0, getColorPlace(color));
                 }
-
             }
         });
 
@@ -505,31 +503,62 @@ public class Game implements Initializable {
 
     }
 
-    public void quit() throws IOException {
+    /**
+     * This event is called if the user wants to quit the game.
+     * It will open a new window where a confirmation is asked.
+     */
+    @FXML
+    private void quit() throws IOException {
         this.gui.openNewWindow("Quit");
     }
 
-    public void assistant() throws IOException {
-        System.out.println("apro la finestra");
+    /**
+     * This event will open the "Choose assistant card" window, to choose an assistant card.
+     */
+    @FXML
+    private void assistant() throws IOException {
         this.gui.openNewWindow("ChooseAssistantCard");
     }
 
-    public void setOnSchool() throws IOException {
+    /**
+     * This event will open the "Move to school" window, to move a student in the player's school.
+     */
+    @FXML
+    private void setOnSchool() throws IOException {
         this.gui.openNewWindow("MoveToSchool");
     }
 
-    public void setOnIsland() throws IOException {
+    /**
+     * This event will open the "Move to island" window, to move a student in an island.
+     */
+    @FXML
+    private void setOnIsland() throws IOException {
         this.gui.openNewWindow("MoveToIsland");
     }
 
-    public void cloud() throws IOException {
-        this.gui.openNewWindow("ChooseCloud");
-    }
-
-    public void move() throws IOException {
+    /**
+     * This event will open the "Move mother nature" window, to move mother nature on the islands.
+     */
+    @FXML
+    private void move() throws IOException {
         this.gui.openNewWindow("MoveMotherNature");
     }
 
+    /**
+     * This event will open the "Choose cloud" window, to choose a cloud from the center table.
+     */
+    @FXML
+    private void cloud() throws IOException {
+        this.gui.openNewWindow("ChooseCloud");
+    }
+
+    /**
+     * This method helps to populate a grid with students.
+     * @param grid the grid to populate.
+     * @param init the first position to start from.
+     * @param cols the numbers of columns to fill.
+     * @param studentSet the set of student to fill the grid with.
+     */
     public void populateGrid(GridPane grid, int init, int cols, StudentSet studentSet) {
         int green = studentSet.getNumOfGreenStudents();
         int blue = studentSet.getNumOfBlueStudents();
@@ -569,12 +598,23 @@ public class Game implements Initializable {
         }
     }
 
-    public void imageResize(ImageView image, int size) {
+    /**
+     * This method is used to resize an ImageView
+     * @param image the image to resize.
+     * @param size the size of the image.
+     */
+    private void imageResize(ImageView image, int size) {
         image.setFitHeight(size);
         image.setFitWidth(size);
     }
 
-    public int getColorPlace(String color) {
+    /**
+     * This method helps to map the elements visually in the correct place with a given color, for example
+     * green should be in the position 0, while yellow in the position 2.
+     * @param color the chosen color
+     * @return the index corresponding to the chosen color
+     */
+    private int getColorPlace(String color) {
         int n = -1;
         switch (color) {
             case "green":
@@ -597,7 +637,12 @@ public class Game implements Initializable {
         return n;
     }
 
-    public void toImageCharacters(ArrayList<CharacterCard> characterCard, List<ImageView> images) {
+    /**
+     * This method is used to convert the character cards into images.
+     * @param characterCard the list of the character cards provided by the client model.
+     * @param images the list of images to change based of the right character cards.
+     */
+    private void toImageCharacters(ArrayList<CharacterCard> characterCard, List<ImageView> images) {
         for (int i = 0; i < 3; i++) {
             Image character = null;
             switch (characterCard.get(i).getName()) {
