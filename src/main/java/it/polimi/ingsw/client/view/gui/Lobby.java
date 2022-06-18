@@ -22,7 +22,7 @@ import static it.polimi.ingsw.client.GUI.currNode;
 public class Lobby implements Initializable {
     private final GUI gui = new GUI();
     private final Gson gson = new Gson();
-    ParametersFromNetwork message;
+    private ParametersFromNetwork message;
     private ClientModel receivedClientModel;
     private boolean isToReset, waitForFirst = true;
     private int myID;

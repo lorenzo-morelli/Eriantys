@@ -4,24 +4,24 @@ import java.io.IOException;
 
 /**
 
- * Questa Interfaccia astratta serve a implementare i metodi ("Azioni" di uno stato sul modello)
- * entryAction viene eseguito quando lo stato viene acceduto,
- * exitAction quando si sta per uscire dallo stato e andare nel successivo
- *
- * Se si usa quest'interfaccia bisognerebbe fare l'override di toString,
- * (per il logging della partita)
+        * This abstract interface is used to implement the methods ("Actions" of a state on the model)
+        * entryAction is executed when the state is accessed,
+        * exitAction when you are about to exit the state and go to the next one
+        *
+        * If you use this interface you should override toString,
+         * (for match logging)
 
- **/
+          **/
 
 public interface IState {
     /**
-     * @param cause L'evento che ha causato la transizione in questo stato
-     * @return null a meno che tu non voglia forzare la transizione verso un nuovo stato
+     * @param cause The event that caused the transition in this state
+     * @return null unless you want to return an event
      */
     public IEvent entryAction(IEvent cause) throws Exception;
 
     /**
-     * Come entryaction, a differenza che questo metodo viene chiamato quando il controllore "sta uscendo" dallo stato
+     *  As an entryaction, unlike this method is called when the controller is "exiting" the state
      */
     public void exitAction(IEvent cause) throws IOException;
 }

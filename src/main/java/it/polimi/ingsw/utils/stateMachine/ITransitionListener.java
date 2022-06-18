@@ -1,7 +1,7 @@
 package it.polimi.ingsw.utils.stateMachine;
 
 /**
- * Notifica il cambiamento di stato (finalita' di logging)
+ * Status change notification (logging purpose)
  */
 public interface ITransitionListener  {
 

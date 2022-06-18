@@ -10,7 +10,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.net.URL;
@@ -44,7 +43,7 @@ public class Menu implements Initializable {
         currNode = playButton;
     }
 
-    public void play(MouseEvent mouseEvent) throws IOException {
+    public void play() throws IOException {
         this.gui.changeScene("SetupConnection");
     }
 
@@ -52,7 +51,7 @@ public class Menu implements Initializable {
         System.exit(0);
     }
 
-    public void connect(MouseEvent mouseEvent) throws IOException, InterruptedException {
+    public void connect() throws IOException, InterruptedException {
         String nickname = this.nicknameField.getText();
         String ip = this.ipField.getText();
         String port = this.portField.getText();
@@ -85,7 +84,6 @@ public class Menu implements Initializable {
                 }
                 currNode = notice;
                 if (this.gui.getClientModel().getAmIfirst() == null) {
-                    // il nickname inserito è già esistente
                     this.notice.setText("FAILURE: Nickname already taken"); //todo: bugfix
                 } else if (this.gui.getClientModel().getAmIfirst()) {
                     System.out.println("primooo");
@@ -98,50 +96,4 @@ public class Menu implements Initializable {
             }
         }
     }
-
-
-//    public void reinsertNickname(MouseEvent mouseEvent) throws InterruptedException {
-//        String nickname = this.nicknameField.getText();
-//        if (nickname.equals("") ) {
-//            this.notice.setText("FAILURE: porcodio inserisci tutti i campi testa di minchiAAAAAAAAA");
-//        } else if (this.nicknameField.getText().length() > 13) {
-//            this.notice.setText("FAILURE: nickname must be less than 13 characters!");
-//        }
-//        else {
-//            this.gui.getClientModel().setNickname(nickname);
-//            Network.send(gson.toJson(this.gui.getClientModel()));
-//            try {
-//                // Attendi la ricezione dell'ack
-//                checkAck(mouseEvent);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            } catch (Exception e) {
-//                throw new RuntimeException(e);
-//            }
-//        }
-//    }
-
-//    public void checkAck(MouseEvent mouseEvent) throws Exception {
-//
-//        ack = new ParametersFromNetwork(1);
-//        ack.enable();
-//        //System.out.println("[Conferma del nickname non ancora ricevuta]");
-//        while (!ack.parametersReceived()){
-//            // non ho ancora ricevuto l'ack
-//        }
-//
-//        //System.out.println("[Conferma del nickname ricevuta]");
-//        ClientModel fromNetwork = gson.fromJson(ack.getParameter(0),ClientModel.class);
-//        System.out.println(ack.getParameter(0));
-//
-//        if(fromNetwork.getAmIfirst() == null){
-//            // ancora una volta l'utente ha inserito un nickname già esistente
-//            this.gui.changeScene("ReinsertNickname",mouseEvent);
-//        }
-//        else {
-//            // l'utente ha finalmente inserito un nickname valido
-//            this.gui.changeScene("Lobby", mouseEvent);
-//        }
-//
-//    }
 }

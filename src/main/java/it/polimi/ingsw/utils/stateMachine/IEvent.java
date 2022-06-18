@@ -3,10 +3,10 @@ package it.polimi.ingsw.utils.stateMachine;
 import java.io.IOException;
 
 /**
- * Per fare l'override si puo' usare setStateEventListener (set invece di add
- * perche' non c'e' bisogno di piu' di un listener)
- *
- * Si dovrebbe reimplementare toString per ritornare qualche informazione utile.
+        * To override you can use setStateEventListener (set instead of add
+        * because you don't need more than one listener)
+        *
+        * You should re-implement toString to return some useful information.
 
  */
 public interface IEvent {

@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.Random;
 
 public class CenterTable {
-    private boolean debug = true; // todo: change to unlock all the character cards
+    private boolean debug = false; // todo: change to unlock all the character cards
     private final ArrayList<Cloud> clouds;
     private final ArrayList<Island> islands;
     private int motherNaturePosition;

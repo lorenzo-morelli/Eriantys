@@ -5,6 +5,7 @@ import it.polimi.ingsw.client.GUI;
 import it.polimi.ingsw.client.view.gui.Game;
 import it.polimi.ingsw.server.model.Cloud;
 import it.polimi.ingsw.utils.network.Network;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -18,12 +19,13 @@ import java.util.ResourceBundle;
 
 public class ChooseCloud implements Initializable {
     private final GUI gui = new GUI();
-    public Label notice = new Label();
-    public GridPane cloudGrid;
+    @FXML
+    private Label notice = new Label();
+    @FXML
+    private GridPane cloudGrid;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //currNode = cloudGrid;
         ArrayList<Cloud> clouds = this.gui.getClientModel().getServermodel().getTable().getClouds();
         if (clouds.size() == 2) {
             cloudGrid.setLayoutX(150);
@@ -38,12 +40,13 @@ public class ChooseCloud implements Initializable {
             studentsCloudGrid.setAlignment(Pos.CENTER);
             studentsCloudGrid.setHgap(10);
 
-            Game.populateGrid(studentsCloudGrid, 0, 2, cloud.getStudentsAccumulator());
+            Game game = new Game();
+            game.populateGrid(studentsCloudGrid, 0, 2, cloud.getStudentsAccumulator());
             tile.getChildren().add(studentsCloudGrid);
             cloudGrid.add(tile, clouds.indexOf(cloud), 0);
             tile.setOnMouseClicked(event -> {
                 if (cloud.getStudentsAccumulator().size() == 0) {
-                    notice.setText("ERROR: Cloud already chosen!");
+                    this.notice.setText("ERROR: Cloud already chosen!");
                 } else {
                     this.gui.getClientModel().setCloudChoosed(cloud);
                     this.gui.getClientModel().setResponse(true); //lo flaggo come messaggio di risposta
