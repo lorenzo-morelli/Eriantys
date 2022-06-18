@@ -17,6 +17,8 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
+import static it.polimi.ingsw.client.GUI.currNode;
+
 public class SetupGame implements Initializable {
     private final GUI gui = new GUI();
     private final Gson gson = new Gson();
@@ -44,48 +46,46 @@ public class SetupGame implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        currNode = otherPlayersLabel;
         this.connectedOnIp.setText("Connected on IP: " + this.gui.getClientModel().getIp());
         this.connectedOnPort.setText("Connected on Port: " + this.gui.getClientModel().getPort());
         this.connectedPlayers = 0;
-        this.gui.currNode = otherPlayersLabel;
         isToReset = false;
     }
 
-    public void set2Players(MouseEvent mouseEvent) {
+    public void set2Players() {
         this.gui.getClientModel().setNumofplayer(2);
         numberOfPlayersLabel.setText("Number of players: " + this.gui.getClientModel().getNumofplayer());
     }
 
-    public void set3Players(MouseEvent mouseEvent) {
+    public void set3Players() {
         this.gui.getClientModel().setNumofplayer(3);
         numberOfPlayersLabel.setText("Number of players: " + this.gui.getClientModel().getNumofplayer());
     }
 
-    public void set4Players(MouseEvent mouseEvent) {
+    public void set4Players() {
         this.gui.getClientModel().setNumofplayer(4);
         numberOfPlayersLabel.setText("Number of players: " + this.gui.getClientModel().getNumofplayer());
     }
 
-    public void setPrincipiant(MouseEvent mouseEvent) {
+    public void setPrincipiant() {
         this.gui.getClientModel().setGameMode("PRINCIPIANT");
         this.gameModeLabel.setText("Game mode: principiant");
     }
 
-    public void setExpert(MouseEvent mouseEvent) {
+    public void setExpert() {
         this.gui.getClientModel().setGameMode("EXPERT");
         this.gameModeLabel.setText("Game mode: expert");
     }
 
-    public void start(MouseEvent mouseEvent) throws InterruptedException, IOException { //todo : questo è lo start da primo client, c'è da fare anche quello da non primo client
+    public void start() throws InterruptedException, IOException { //todo : questo è lo start da primo client, c'è da fare anche quello da non primo client
         if (this.gui.getClientModel().getNumofplayer() != 2 && this.gui.getClientModel().getNumofplayer() != 3 && this.gui.getClientModel().getNumofplayer() != 4) {
             this.otherPlayersLabel.setText("ERROR: Please select a number of players!");
         } else if (this.gui.getClientModel().getGameMode() == null) {
             this.otherPlayersLabel.setText("ERROR: Please select a game mode!");
         } else {
-            this.gui.currNode = otherPlayersLabel;
             boolean responseReceived = false;
             Network.send(gson.toJson(this.gui.getClientModel()));
-
             while (!responseReceived) {
                 System.out.println("invio al server in attesa di ack...");
                 ParametersFromNetwork ack = new ParametersFromNetwork(1);
@@ -96,7 +96,6 @@ public class SetupGame implements Initializable {
                 if (check || System.currentTimeMillis() >= end) {
                     System.out.println("\n\nServer non ha dato risposta");
                     Network.disconnect();
-                    gui.currNode = otherPlayersLabel;
                     this.otherPlayersLabel.setText("...Server non ha dato alcuna risposta, mi disconnetto...");
                     TimeUnit.SECONDS.sleep(5);
                     System.exit(0);
@@ -107,6 +106,7 @@ public class SetupGame implements Initializable {
                 }
             }
             System.out.println("[Conferma ricevuta]");
-            gui.changeScene("Lobby");        }
+            this.gui.changeScene("Lobby");
+        }
     }
 }

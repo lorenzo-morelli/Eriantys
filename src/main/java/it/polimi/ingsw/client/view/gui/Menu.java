@@ -66,10 +66,10 @@ public class Menu implements Initializable {
      */
     @FXML
     private void connect() throws IOException, InterruptedException {
+        currNode = notice;
         String nickname = this.nicknameField.getText();
         String ip = this.ipField.getText();
         String port = this.portField.getText();
-        currNode = notice;
 
         if (nickname.equals("") || ip.equals("") || port.equals("")) {
             this.notice.setText("FAILURE: make sure to fill all the fields!");

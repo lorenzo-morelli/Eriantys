@@ -105,7 +105,6 @@ public class GUI extends Application {
                 break;
             case "DISCONNECTION":
                 label.setText("Partita terminata per disconnessione");
-                changeScene("EndGame");
                 break;
             case "CHOOSEASSISTANTCARD":
                 System.out.println("assistent!");
@@ -118,7 +117,9 @@ public class GUI extends Application {
                 changeScene("Game");
                 break;
             case "TEAMMATE":
-                //todo
+                System.out.println("teammateee");
+                gameState = "Team mate";
+                changeScene("TeamMate");
                 break;
             case "CHOOSEWHERETOMOVEMOTHER":
                 gameState = "Moving mother nature";
@@ -129,12 +130,6 @@ public class GUI extends Application {
                 changeScene("Game");
                 break;
             case "GAMEEND":
-                if(GUI.clientModel.getServermodel().getNumberOfPlayers()==4){
-                    label.setText("Partita terminata: i vincitori sono:" + GUI.clientModel.getGameWinner());
-                }
-                else {
-                    label.setText("Partita terminata: il vincitore è:" + GUI.clientModel.getGameWinner());
-                }
                 changeScene("EndGame");
                 break;
 

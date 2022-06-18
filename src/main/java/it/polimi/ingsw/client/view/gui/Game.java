@@ -351,6 +351,7 @@ public class Game implements Initializable {
         });
 
         //PROFESSORI
+        professorGrids.forEach(prof -> prof.getChildren().clear());
         professors.forEach(prof -> {
             if (prof.getHeldBy() != null) {
                 Player choosenPlayer = null;
