@@ -24,17 +24,17 @@ public class TeamMate implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ArrayList<Player> players = this.gui.getClientModel().getServermodel().getPlayers();
-        players.remove(this.gui.getClientModel().getServermodel().getcurrentPlayer());
+        ArrayList<String> players = this.gui.getClientModel().getNicknames();
+        players.remove(this.gui.getClientModel().getNickname());
         ArrayList<Button> buttons = new ArrayList<>(Arrays.asList(player1, player2, player3));
         buttons.forEach(button -> {
-            button.setText(players.get(buttons.indexOf(button)).getNickname());
+            button.setText(players.get(buttons.indexOf(button)));
             button.setOnMouseClicked(event -> {
-                String teamMate = players.get(buttons.indexOf(button)).getNickname();
+                String teamMate = players.get(buttons.indexOf(button));
                 this.gui.getClientModel().getNicknames().remove(teamMate);
                 this.gui.getClientModel().getNicknames().add(teamMate);
                 this.gui.getClientModel().getNicknames().add(this.gui.getClientModel().getNickname());
-                this.gui.getClientModel().setResponse(true); //lo flaggo come messaggio di risposta
+                this.gui.getClientModel().setResponse(true);
                 this.gui.getClientModel().setPingMessage(false);
                 Gson gson = new Gson();
                 try {

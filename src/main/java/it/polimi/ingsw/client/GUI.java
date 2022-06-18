@@ -37,6 +37,7 @@ public class GUI extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        gameState = "";
         this.stage = stage;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainMenu.fxml"));
         this.scene = new Scene(loader.load());
@@ -117,7 +118,6 @@ public class GUI extends Application {
                 changeScene("Game");
                 break;
             case "TEAMMATE":
-                System.out.println("teammateee");
                 gameState = "Team mate";
                 changeScene("TeamMate");
                 break;
@@ -141,21 +141,25 @@ public class GUI extends Application {
         Network.setClientModel(GUI.clientModel);
         switch (GUI.clientModel.getTypeOfRequest()) {
             case "CHOOSEASSISTANTCARD":
+                gameState = "Assistant Card phase";
                 messageToOthers = "L'utente " + GUI.clientModel.getNickname() + " sta scegliendo la carta assistente";
                 System.out.println("wait choose assistant card");
                 changeScene("Game");
                 break;
             case "CHOOSEWHERETOMOVESTUDENTS":
+                gameState = "Moving students";
                 messageToOthers = "L'utente " + GUI.clientModel.getNickname() + " sta scegliendo dove muovere lo studente";
                 System.out.println("wait choose where to move students");
                 changeScene("Game");
                 break;
             case "TEAMMATE":
+                gameState = "Team mate";
                 messageToOthers = "L'utente " + GUI.clientModel.getNickname() + " sta scegliendo il suo compagno di squadra";
                 System.out.println("wait team mate");
                 changeScene("Game");
                 break;
             case "CHOOSEWHERETOMOVEMOTHER":
+                gameState = "Moving mother nature";
                 messageToOthers = "L'utente " + GUI.clientModel.getNickname() + " sta scegliendo il numero di mosse di cui far spostare madre natura";
                 System.out.println("wait choose where to move mother");
                 changeScene("Game");
@@ -165,9 +169,6 @@ public class GUI extends Application {
                 System.out.println("wait choose clouds");
                 changeScene("Game");
                 break;
-        }
-        if (!GUI.clientModel.getTypeOfRequest().equals("TEAMMATE") && GUI.clientModel.getServermodel() != null) {
-            //todo: what?  -> just ignore
         }
         notifyAll();
     }
