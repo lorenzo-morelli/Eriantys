@@ -11,6 +11,10 @@ import it.polimi.ingsw.utils.stateMachine.Event;
 import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
 
+/**
+ * State in which the server is waiting for the remaining n - 1 players, where n is the number
+ * of players chosen by the first player when selecting game modes.
+ */
 
 public class WaitOtherClients extends State {
     private final ConnectionModel connectionModel;

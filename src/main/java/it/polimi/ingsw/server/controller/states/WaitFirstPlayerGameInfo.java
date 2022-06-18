@@ -12,6 +12,10 @@ import it.polimi.ingsw.utils.stateMachine.Event;
 import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
 
+/**
+ * State in which the server is waiting for the game modes and the number
+ * of players from the first player connected to the server.
+ */
 public class WaitFirstPlayerGameInfo extends State {
     private final Gson json;
     private Controller controller;

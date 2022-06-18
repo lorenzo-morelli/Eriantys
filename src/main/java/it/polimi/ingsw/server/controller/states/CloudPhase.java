@@ -16,7 +16,10 @@ import it.polimi.ingsw.utils.stateMachine.State;
 
 import java.util.concurrent.TimeUnit;
 
-
+/**
+ * This class handles the cloud phase of the game, on witch the user can choose one
+ * of the clouds in the board (that had not already been chosen by another player)
+ */
 public class CloudPhase extends State {
     private final Event goToEndTurn, gameEnd;
     private final Event goToStudentPhase;
@@ -43,6 +46,10 @@ public class CloudPhase extends State {
         return goToStudentPhase;
     }
 
+    /**
+     * The main constructor of the cloud phase
+     * @param serverController the main server controller
+     */
     public CloudPhase(ServerController serverController) {
         super("[Choose Cloud]");
         this.serverController = serverController;
@@ -63,6 +70,16 @@ public class CloudPhase extends State {
         return reset;
     }
 
+    /**
+     * Sends a request to the view of the current player to choose one of the availables clouds
+     * and waits a response from the view.
+     * Also handle special case as well as sanity checks (for example is not possible to choose
+     * a cloud which had already been chosen from another player).
+     * Special code to handle disconnection was added.
+     * @param cause the event that caused the controller transition in this state
+     * @return null event
+     * @throws Exception input output or network related exceptions
+     */
     @Override
     public IEvent entryAction(IEvent cause) throws Exception {
         Model model = serverController.getModel();

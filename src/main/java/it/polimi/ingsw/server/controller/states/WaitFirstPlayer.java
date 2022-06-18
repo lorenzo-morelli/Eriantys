@@ -15,6 +15,11 @@ import it.polimi.ingsw.utils.stateMachine.State;
 
 import java.util.ArrayList;
 
+/**
+ * State in which the server is waiting for the first client, which we can define as the initializer client,
+ * that is the one that will decide the type of game (gamemode) and the number of players.
+ * It therefore plays a fundamental role in the business logic of the game.
+ */
 public class WaitFirstPlayer extends State {
     private final Gson json;
     private Controller controller;

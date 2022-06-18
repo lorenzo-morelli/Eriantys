@@ -21,13 +21,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * This server state implements the logic necessary to correctly handle
+ * the Assistant card phase of the game.
+ */
 public class AssistantCardPhase extends State {
     private final Event cardsChoosen ,gameEnd;
     private final ConnectionModel connectionModel;
 
     private final Gson json;
     private final ServerController serverController;
-
     private ParametersFromNetwork message;
     private final Event reset = new ClientDisconnection();
     private boolean disconnected,fromPing;
@@ -37,6 +40,11 @@ public class AssistantCardPhase extends State {
     public Event cardsChoosen() {
         return cardsChoosen;
     }
+
+    /**
+     * The main constructor of the Assistant Card Phase
+     * @param serverController the main server controller
+     */
     public AssistantCardPhase(ServerController serverController) {
         super("[Choose Assistant Card]");
         this.serverController = serverController;
@@ -54,6 +62,16 @@ public class AssistantCardPhase extends State {
         return reset;
     }
 
+    /**
+     * For each player among those correctly connected to the game, in turn,
+     * send a request to their view asking him to choose the assistant card
+     * and wait for the answer.
+     * Some sanity checks are made (in case of malicious client), as well as
+     * special code to handle the advanced disconnection feature.
+     * @param cause what caused the server controller to enter in this method
+     * @return null event
+     * @throws Exception IO errors and network related problems.
+     */
     @Override
     public IEvent entryAction(IEvent cause) throws Exception {
         Model model = serverController.getModel();
