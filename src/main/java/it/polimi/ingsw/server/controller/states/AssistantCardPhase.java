@@ -213,7 +213,8 @@ public class AssistantCardPhase extends State {
                                 Data.setPingMessage(false);
 
                                 Network.send(json.toJson(Data));
-                            };
+                                System.out.println("send to"+p.getNickname());
+                            }
                         }
 
                         model.setDisconnection(true);

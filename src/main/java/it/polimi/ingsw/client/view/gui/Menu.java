@@ -89,7 +89,6 @@ public class Menu implements Initializable {
                     this.notice.setText("FAILURE: Nickname already taken"); //todo: bugfix
                 } else if (this.gui.getClientModel().getAmIfirst()) {
                     System.out.println("primooo");
-                    //
                     this.gui.changeScene("SetupGame");
                 } else {
                     this.gui.changeScene("Lobby");

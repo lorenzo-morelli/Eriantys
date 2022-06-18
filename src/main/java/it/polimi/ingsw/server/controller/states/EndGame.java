@@ -11,6 +11,8 @@ import it.polimi.ingsw.utils.stateMachine.Event;
 import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
 
+import java.util.concurrent.TimeUnit;
+
 public class EndGame extends State {
     private final Event restart;
     private final ConnectionModel connectionModel;
@@ -46,6 +48,7 @@ public class EndGame extends State {
                 Network.send(json.toJson(currentPlayerData));
                 Network.setDisconnectedClient(true);
             }
+            TimeUnit.SECONDS.sleep(5);
             restart.fireStateEvent();
             connectionModel.close();
             return super.entryAction(cause);
@@ -74,6 +77,7 @@ public class EndGame extends State {
             Network.setDisconnectedClient(true);
 
         }
+        TimeUnit.SECONDS.sleep(5);
         getRestart().fireStateEvent();
         connectionModel.close();
         return super.entryAction(cause);

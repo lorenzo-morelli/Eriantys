@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
@@ -32,47 +33,10 @@ public class Lobby implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        currNode = otherPlayersLabel;
-        boolean responseReceived = false;
-        try {
-            Network.send(gson.toJson(this.gui.getClientModel()));
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
-        while (!responseReceived) {
-            System.out.println("invio al server in attesa di ack...");
-            ParametersFromNetwork ack = new ParametersFromNetwork(1);
-            ack.enable();
-            long start = System.currentTimeMillis();
-            long end = start + 15 * 1000L;
-            boolean check = false;
-            try {
-                check = ack.waitParametersReceived(5);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            if (check || System.currentTimeMillis() >= end) {
-                System.out.println("\n\nServer non ha dato risposta");
-                Network.disconnect();
-                currNode = otherPlayersLabel;
-                this.otherPlayersLabel.setText("...Server non ha dato alcuna risposta, mi disconnetto...");
-                try {
-                    TimeUnit.SECONDS.sleep(5);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                System.exit(0);
-            }
-
-            if (gson.fromJson(ack.getParameter(0), ClientModel.class).getClientIdentity() == this.gui.getClientModel().getClientIdentity()) {
-                responseReceived = true;
-            }
-        }
-        System.out.println("[Conferma ricevuta]");
         System.out.println("In attesa che gli altri giocatori si colleghino...");
-        currNode = otherPlayersLabel;
         this.otherPlayersLabel.setText("...Waiting for other players to join the game...");
+        this.gui.currNode = otherPlayersLabel;
 
         myID = gui.getClientModel().getClientIdentity();
         try {
@@ -88,7 +52,7 @@ public class Lobby implements Initializable {
                 message = new ParametersFromNetwork(1);
                 message.enable();
                 long start = System.currentTimeMillis();
-                long end = start + 15 * 1000L;
+                long end = start + 40 * 1000L;
                 if (waitForFirst) {
                     message.waitParametersReceived();
                 } else {
@@ -171,7 +135,7 @@ public class Lobby implements Initializable {
             message = new ParametersFromNetwork(1);
             message.enable();
             long start = System.currentTimeMillis();
-            long end = start + 15 * 1000L;
+            long end = start + 40 * 1000L;
             boolean check = message.waitParametersReceivedMax(end);
             if (check) {
                 System.out.println("\n\nServer non ha dato risposta");
@@ -184,7 +148,7 @@ public class Lobby implements Initializable {
 
             tryreceivedClientModel = gson.fromJson(message.getParameter(0), ClientModel.class);
 
-            if (!Objects.equals(tryreceivedClientModel.getTypeOfRequest(), "CONNECTTOEXISTINGGAME")) { //todo received.gettype.equals("connect")
+            if (!Objects.equals(tryreceivedClientModel.getTypeOfRequest(), "CONNECTTOEXISTINGGAME")) {
 
                 receivedClientModel = tryreceivedClientModel;
 

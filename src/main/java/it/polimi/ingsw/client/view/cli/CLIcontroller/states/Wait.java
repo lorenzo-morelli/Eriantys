@@ -51,7 +51,7 @@ public class Wait extends State {
         message.enable();
 
         long start = System.currentTimeMillis();
-        long end = start + 15 * 1000L;
+        long end = start + 40 * 1000L;
         boolean check=true;
 
         while (check || System.currentTimeMillis()>=end){

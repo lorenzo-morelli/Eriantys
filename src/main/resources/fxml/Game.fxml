@@ -14,6 +14,11 @@
    <Button layoutX="1768.0" layoutY="972.0" mnemonicParsing="false" onMouseClicked="#quit" prefHeight="44.0" prefWidth="81.0" text="Quit" />
    <Button fx:id="setOnSchoolBtn" layoutX="1631.0" layoutY="589.0" mnemonicParsing="false" onMouseClicked="#setOnSchool" prefHeight="38.0" prefWidth="135.0" text="Set student on school" />
    <Button fx:id="setOnIslandBtn" layoutX="1631.0" layoutY="667.0" mnemonicParsing="false" onMouseClicked="#setOnIsland" prefHeight="42.0" prefWidth="135.0" text="Set student on island" />
+   <Label fx:id="label" layoutX="1600.0" layoutY="761.0" text="">
+      <font>
+         <Font name="System Bold" size="19.0" />
+      </font>
+   </Label>
    <ImageView fx:id="school1" fitHeight="263.0" fitWidth="593.0" layoutY="766.0" pickOnBounds="true" preserveRatio="true">
       <Image url="@../graphics/PLANCIA_GIOCO_2.jpeg" />
    </ImageView>

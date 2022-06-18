@@ -216,6 +216,7 @@ public class CloudPhase extends State {
                             Data.setServermodel(model);
                             Data.setResponse(false);
                             Data.setPingMessage(false);
+                            System.out.println("send to"+p.getNickname());
 
                             Network.send(json.toJson(Data));
                         }

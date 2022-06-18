@@ -5,6 +5,7 @@ import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.server.model.characters.CharacterCard;
 import it.polimi.ingsw.utils.network.Network;
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -12,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -25,6 +27,8 @@ public class GUI extends Application {
     public static Node currNode = null;
     public static boolean myTurn = false;
     public static CharacterCard currentCharacter = null;
+    @FXML
+    Label label=new Label();
 
     public static void main(String[] args) {
         launch(args);
@@ -42,7 +46,12 @@ public class GUI extends Application {
 
     public synchronized void changeScene(String newScene) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/" + newScene + ".fxml"));
-        this.stage = (Stage) currNode.getScene().getWindow();
+        if(currNode.getScene() !=null){
+            this.stage = (Stage) currNode.getScene().getWindow();
+        }
+        else{
+            this.stage= new Stage();
+        }
         this.scene = new Scene(loader.load());
         this.stage.setScene(scene);
         this.stage.setMaximized(newScene.equals("Game"));
@@ -82,12 +91,12 @@ public class GUI extends Application {
         Network.setClientModel(GUI.clientModel);
         switch (GUI.clientModel.getTypeOfRequest()) {
             case "TRYTORECONNECT":
-                //todo
-                System.out.println("boh");
+                label.setText("Numero minimo di giocatori non disponibile... attendo");
+                changeScene("EndGame");
                 break;
             case "DISCONNECTION":
-                //todo
-                System.out.println("boh2");
+                label.setText("Partita terminata per disconnessione");
+                changeScene("EndGame");
                 break;
             case "CHOOSEASSISTANTCARD":
                 System.out.println("assistent!");
@@ -111,12 +120,16 @@ public class GUI extends Application {
                 changeScene("Game");
                 break;
             case "GAMEEND":
+                if(GUI.clientModel.getServermodel().getNumberOfPlayers()==4){
+                    label.setText("Partita terminata: i vincitori sono:" + GUI.clientModel.getGameWinner());
+                }
+                else {
+                    label.setText("Partita terminata: il vincitore è:" + GUI.clientModel.getGameWinner());
+                }
                 changeScene("EndGame");
-                Network.disconnect();
                 break;
 
         }
-        notifyAll();
     }
 
     public synchronized void requestToOthers() throws IOException {
@@ -168,3 +181,5 @@ public class GUI extends Application {
         }
     }
 }
+
+
