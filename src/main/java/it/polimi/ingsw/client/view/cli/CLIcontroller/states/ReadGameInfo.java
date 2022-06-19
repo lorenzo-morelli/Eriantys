@@ -7,6 +7,10 @@ import it.polimi.ingsw.utils.stateMachine.IEvent;
 
 import java.io.IOException;
 
+/**
+ * Read the game modes chosen by the user, to facilitate debugging a
+ * preset choice is provided by pressing the simple enter without writing any parameters.
+ */
 public class ReadGameInfo extends ReadFromTerminal {
     public ReadGameInfo(View view, ClientModel clientModel, Controller controller) throws IOException {
         super(view, clientModel, controller, 2, "GAMEINFO");

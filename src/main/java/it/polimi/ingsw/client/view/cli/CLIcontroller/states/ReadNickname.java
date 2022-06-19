@@ -7,6 +7,9 @@ import it.polimi.ingsw.utils.stateMachine.IEvent;
 
 import java.io.IOException;
 
+/**
+ * Read the nickname chosen by the user.
+ */
 public class ReadNickname extends ReadFromTerminal{
     public ReadNickname(View view, ClientModel clientModel, Controller controller) throws IOException {
         super(view, clientModel, controller, 1, "NICKNAMEEXISTENT");

@@ -13,6 +13,13 @@ import it.polimi.ingsw.utils.stateMachine.State;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * The wait state should be interpreted as a "command waiting" state from the server.
+ * The client is therefore at rest and only 3 types of messages will be delivered from server:
+ * requestToMe, a request for direct client interaction (for example: insert the assistant card),
+ * requestToOthers, i.e. the server is requesting interaction with another client ,
+ * and response, that is, another client is responding to the server.
+ */
 public class Wait extends State {
     private final Gson json;
     private final ClientModel myClientModel;

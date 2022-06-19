@@ -12,6 +12,14 @@ import it.polimi.ingsw.utils.stateMachine.State;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * This client state makes a request to the server to find out if it is actually the
+ * first client to connect. The server can respond in three ways: you are the first,
+ * you are not the first, or you have entered an invalid nickname and please enter
+ * a new one. So this state does nothing more than read the server response and
+ * forward to the client view. It also handles various disconnection situations.
+ */
+
 public class AmIFirst extends State {
     private ClientModel clientModel;
     private final Gson json;
