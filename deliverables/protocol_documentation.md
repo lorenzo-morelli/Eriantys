@@ -24,7 +24,7 @@ interacting with the terminal
 
 The following IFML diagram describes the client architecture as an event-driven finite state machine.
 
-<img src="ClientController.jpg">
+<img src="ClientController.jpg" alt="client controller">
 
 
 
