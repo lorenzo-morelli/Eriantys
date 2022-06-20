@@ -14,6 +14,7 @@ import it.polimi.ingsw.server.model.enums.PeopleColor;
 import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.stateMachine.State;
 
+import javax.sound.sampled.FloatControl;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
@@ -29,7 +30,6 @@ public class CliView implements View {
 
     // La vista matiene una reference allo stato chiamante (schermata video/command line) ed al precedente.
     private State callingState;
-
     // parsedString ci serve per parsare l'input e verificare la correttezza dei dati inseriti
     private ArrayList<String> parsedStrings;
 
@@ -168,11 +168,11 @@ public class CliView implements View {
 
     public synchronized void requestPing() {
         try {
-            TimeUnit.SECONDS.sleep(1);
-            Network.setClientModel(networkClientModel);
-            Gson json = new Gson();
-            networkClientModel.setPingMessage(true);
-            Network.send(json.toJson(networkClientModel));
+                TimeUnit.SECONDS.sleep(1);
+                Network.setClientModel(networkClientModel);
+                Gson json = new Gson();
+                networkClientModel.setPingMessage(true);
+                Network.send(json.toJson(networkClientModel));
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

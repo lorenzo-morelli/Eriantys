@@ -18,6 +18,8 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
+import static java.lang.Thread.sleep;
+
 public class GUI extends Application {
     public Stage stage;
     public Scene scene;
@@ -26,6 +28,8 @@ public class GUI extends Application {
     public static String messageToOthers = "aa";
     public static Node currNode = null;
     public static boolean myTurn = false;
+
+    public boolean ping=true;
     public static CharacterCard currentCharacter = null;
     @FXML
     Label label=new Label();
@@ -128,7 +132,6 @@ public class GUI extends Application {
                 }
                 changeScene("EndGame");
                 break;
-
         }
     }
 
@@ -168,17 +171,16 @@ public class GUI extends Application {
         notifyAll();
     }
 
-    public synchronized void requestPing() {
-        try {
-            System.out.println(("risposta ping"));
-            TimeUnit.SECONDS.sleep(1);
-            Network.setClientModel(GUI.clientModel);
-            Gson gson = new Gson();
-            GUI.clientModel.setPingMessage(true);
-            Network.send(gson.toJson(GUI.clientModel));
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+    public synchronized void requestPing() throws InterruptedException {
+            try {
+                System.out.println(("risposta ping"));
+                Network.setClientModel(GUI.clientModel);
+                Gson gson = new Gson();
+                GUI.clientModel.setPingMessage(true);
+                Network.send(gson.toJson(GUI.clientModel));
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
     }
 }
 

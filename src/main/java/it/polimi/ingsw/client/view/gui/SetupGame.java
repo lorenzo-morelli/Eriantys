@@ -103,26 +103,30 @@ public class SetupGame implements Initializable {
     }
 
         public void waitings(long end) throws InterruptedException {
-            do{
+            do {
+                System.out.println("primo loop");
                 if (!notread) {
                     message = new ParametersFromNetwork(1);
                     message.enable();
 
                     long finalEnd = end;
-                    Thread t = new Thread(() -> {
+                    Thread thread = new Thread(() -> {
                         try {
                             message.waitParametersReceivedGUI(finalEnd);
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
                         }
                     });
-                    t.start();
+                    thread.start();
 
-                    DoubleObject responce= ((DoubleObject) Platform.enterNestedEventLoop(PAUSE_KEY));
-                    check= responce.isRespo();
-                    message= responce.getParame();
+                    DoubleObject responce = ((DoubleObject) Platform.enterNestedEventLoop(PAUSE_KEY));
+                    check = responce.isRespo();
+                    message = responce.getParame();
 
-
+                    if(check && waitForFirst){
+                        waitings(System.currentTimeMillis()+40000L);
+                        return;
+                    }
 
                     if (check) {
                         System.out.println("\n\nServer non ha dato risposta");
@@ -158,65 +162,13 @@ public class SetupGame implements Initializable {
                                 // il messaggio è rivolto a me
                                 try {
                                     System.out.println("request to me");
-                                    gui.setClientModel(receivedClientModel);
-                                    gui.requestToMe();
-
-                                    do {
-
-                                        message = new ParametersFromNetwork(1);
-                                        message.enable();
-
-                                        long finalEnd1 = end;
-                                        Thread t = new Thread(() -> {
-                                            try {
-                                                message.waitParametersReceivedGUI(finalEnd1);
-                                            } catch (InterruptedException e) {
-                                                throw new RuntimeException(e);
-                                            }
-                                        });
-                                        t.start();
-
-                                        DoubleObject responce= ((DoubleObject) Platform.enterNestedEventLoop(PAUSE_KEY));
-                                        check= responce.isRespo();
-                                        message= responce.getParame();
-
-                                        if (check) {
-                                            System.out.println("\n\nServer non ha dato risposta");
-                                            Network.disconnect();
-                                            currNode = otherPlayersLabel;
-                                            this.otherPlayersLabel.setText("...Server si è disconnesso, mi disconnetto...");
-                                            TimeUnit.SECONDS.sleep(5);
-                                            System.exit(0);
-                                        }
-
-                                        tryreceivedClientModel = gson.fromJson(message.getParameter(0), ClientModel.class);
-
-                                        if (!Objects.equals(tryreceivedClientModel.getTypeOfRequest(), "CONNECTTOEXISTINGGAME")) {
-
-                                            receivedClientModel = tryreceivedClientModel;
-
-                                            if (receivedClientModel.isGameStarted() && receivedClientModel.NotisKicked()) {
-                                                // Il messaggio è o una richiesta o una risposta
-
-                                                // se il messaggio non è una risposta di un client al server vuol dire che
-                                                if (receivedClientModel.isResponse().equals(false) && receivedClientModel.getTypeOfRequest() != null) {
-                                                    // il messaggio è una richiesta del server alla view di un client
-
-                                                    // se il messaggio è rivolto a me devo essere io a compiere l'azione
-                                                    if (receivedClientModel.getClientIdentity() == myID) {
-                                                        // il messaggio è rivolto a me
-                                                        if (receivedClientModel.isPingMessage()) {
-                                                            gui.requestPing();
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
+                                    if (receivedClientModel.isPingMessage()) {
+                                        gui.requestPing();
+                                    } else {
+                                        gui.setClientModel(receivedClientModel);
+                                        gui.requestToMe();
                                     }
-                                    while (!Objects.equals(tryreceivedClientModel.getTypeOfRequest(), "CONNECTTOEXISTINGGAME") && receivedClientModel.isGameStarted() && receivedClientModel.NotisKicked() && receivedClientModel.isResponse().equals(false) && receivedClientModel.getTypeOfRequest() != null && receivedClientModel.getClientIdentity() == myID && receivedClientModel.isPingMessage());
-
-
-                                } catch (InterruptedException | IOException e) {
+                                } catch (IOException e) {
                                     throw new RuntimeException(e);
                                 }
                             }
@@ -226,6 +178,7 @@ public class SetupGame implements Initializable {
                                     !receivedClientModel.getTypeOfRequest().equals("TRYTORECONNECT") &&
                                     !receivedClientModel.getTypeOfRequest().equals("DISCONNECTION")) {
                                 try {
+
                                     System.out.println("request to other");
                                     gui.setClientModel(receivedClientModel);
                                     gui.requestToOthers();
@@ -235,10 +188,12 @@ public class SetupGame implements Initializable {
                             }
                         }
                     }
-
                 }
-                end=System.currentTimeMillis()+ 40000L;
-            }while (!isToReset && !notdone);
 
+                end = System.currentTimeMillis() + 40000L;
+            }
+            while (!isToReset && !notdone) ;
         }
-}
+
+
+    }
