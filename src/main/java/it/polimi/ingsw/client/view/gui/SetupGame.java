@@ -10,7 +10,6 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.net.URL;
@@ -24,14 +23,11 @@ import static it.polimi.ingsw.client.view.gui.Lobby.PAUSE_KEY;
 public class SetupGame implements Initializable {
     private final GUI gui = new GUI();
     private final Gson gson = new Gson();
-    private int connectedPlayers;
-    private ClientModel receivedClientModel;
-    private boolean isToReset, waitForFirst = true, check, notdone=false;
+    private boolean isToReset;
+    private boolean waitForFirst = true;
     private int myID;
-
-    ParametersFromNetwork message;
-
-    private boolean notread = false;
+    private ParametersFromNetwork message;
+    private boolean notRead = false;
 
     @FXML
     private Label connectedOnIp = new Label();
@@ -50,43 +46,41 @@ public class SetupGame implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.connectedOnIp.setText("Connected on IP: " + this.gui.getClientModel().getIp());
         this.connectedOnPort.setText("Connected on Port: " + this.gui.getClientModel().getPort());
-        this.connectedPlayers = 0;
-        this.gui.currNode = otherPlayersLabel;
+        currNode = otherPlayersLabel;
         isToReset = false;
     }
 
-    public void set2Players(MouseEvent mouseEvent) {
+    public void set2Players() {
         this.gui.getClientModel().setNumofplayer(2);
         numberOfPlayersLabel.setText("Number of players: " + this.gui.getClientModel().getNumofplayer());
     }
 
-    public void set3Players(MouseEvent mouseEvent) {
+    public void set3Players() {
         this.gui.getClientModel().setNumofplayer(3);
         numberOfPlayersLabel.setText("Number of players: " + this.gui.getClientModel().getNumofplayer());
     }
 
-    public void set4Players(MouseEvent mouseEvent) {
+    public void set4Players() {
         this.gui.getClientModel().setNumofplayer(4);
         numberOfPlayersLabel.setText("Number of players: " + this.gui.getClientModel().getNumofplayer());
     }
 
-    public void setPrincipiant(MouseEvent mouseEvent) {
+    public void setPrincipiant() {
         this.gui.getClientModel().setGameMode("PRINCIPIANT");
         this.gameModeLabel.setText("Game mode: principiant");
     }
 
-    public void setExpert(MouseEvent mouseEvent) {
+    public void setExpert() {
         this.gui.getClientModel().setGameMode("EXPERT");
         this.gameModeLabel.setText("Game mode: expert");
     }
 
-    public void start(MouseEvent mouseEvent) throws InterruptedException, IOException { //todo : questo è lo start da primo client, c'è da fare anche quello da non primo client
+    public void start() throws InterruptedException, IOException {
         if (this.gui.getClientModel().getNumofplayer() != 2 && this.gui.getClientModel().getNumofplayer() != 3 && this.gui.getClientModel().getNumofplayer() != 4) {
             this.otherPlayersLabel.setText("ERROR: Please select a number of players!");
         } else if (this.gui.getClientModel().getGameMode() == null) {
             this.otherPlayersLabel.setText("ERROR: Please select a game mode!");
         } else {
-            this.gui.currNode = otherPlayersLabel;
             Network.send(gson.toJson(this.gui.getClientModel()));
             System.out.println("In attesa che gli altri giocatori si colleghino...");
             this.otherPlayersLabel.setText("...Waiting for other players to join the game...");
@@ -102,98 +96,82 @@ public class SetupGame implements Initializable {
         }
     }
 
-        public void waitings(long end) throws InterruptedException {
-            do {
-                System.out.println("primo loop");
-                if (!notread) {
-                    message = new ParametersFromNetwork(1);
-                    message.enable();
-
-                    long finalEnd = end;
-                    Thread thread = new Thread(() -> {
-                        try {
-                            message.waitParametersReceivedGUI(finalEnd);
-                        } catch (InterruptedException e) {
-                            throw new RuntimeException(e);
-                        }
-                    });
-                    thread.start();
-
-                    DoubleObject responce = ((DoubleObject) Platform.enterNestedEventLoop(PAUSE_KEY));
-                    check = responce.isRespo();
-                    message = responce.getParame();
-
-                    if(check && waitForFirst){
-                        waitings(System.currentTimeMillis()+40000L);
-                        return;
+    public void waitings(long end) throws InterruptedException {
+        boolean notDone = false;
+        do {
+            System.out.println("primo loop");
+            if (!notRead) {
+                message = new ParametersFromNetwork(1);
+                message.enable();
+                long finalEnd = end;
+                Thread thread = new Thread(() -> {
+                    try {
+                        message.waitParametersReceivedGUI(finalEnd);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
                     }
-
-                    if (check) {
-                        System.out.println("\n\nServer non ha dato risposta");
-                        Network.disconnect();
-                        currNode = otherPlayersLabel;
-                        this.otherPlayersLabel.setText("...Server si è disconnesso, mi disconnetto...");
-                        TimeUnit.SECONDS.sleep(5);
-                        System.exit(0);
-                    }
+                });
+                thread.start();
+                DoubleObject responce = ((DoubleObject) Platform.enterNestedEventLoop(PAUSE_KEY));
+                boolean check = responce.isRespo();
+                message = responce.getParame();
+                if (check && waitForFirst) {
+                    waitings(System.currentTimeMillis() + 40000L);
+                    return;
                 }
-                notread = false;
-                //System.out.println(message.getParameter(0));
-                ClientModel tryreceivedClientModel = gson.fromJson(message.getParameter(0), ClientModel.class);
-                if (!Objects.equals(tryreceivedClientModel.getTypeOfRequest(), "CONNECTTOEXISTINGGAME")) {
-                    receivedClientModel = tryreceivedClientModel;
-                    if (Network.disconnectedClient()) {
-                        Network.disconnect();
-                        System.out.println("Il gioco è terminato a causa della disconnessione di un client");
-                        isToReset = true;
-                    }
-
-                    if (receivedClientModel.isGameStarted() && receivedClientModel.NotisKicked()) {
-                        waitForFirst = false;
-
-                        // Il messaggio è o una richiesta o una risposta
-
-                        // se il messaggio non è una risposta di un client al server vuol dire che
-                        if (!receivedClientModel.isResponse() && receivedClientModel.getTypeOfRequest() != null) {
-                            // il messaggio è una richiesta del server alla view di un client
-
-                            // se il messaggio è rivolto a me devo essere io a compiere l'azione
-                            if (receivedClientModel.getClientIdentity() == myID) {
-                                // il messaggio è rivolto a me
-                                try {
-                                    System.out.println("request to me");
-                                    if (receivedClientModel.isPingMessage()) {
-                                        gui.requestPing();
-                                    } else {
-                                        gui.setClientModel(receivedClientModel);
-                                        gui.requestToMe();
-                                    }
-                                } catch (IOException e) {
-                                    throw new RuntimeException(e);
-                                }
-                            }
-
-                            if (!notdone && receivedClientModel.getClientIdentity() != myID && receivedClientModel.getTypeOfRequest() != null &&
-                                    !receivedClientModel.isPingMessage() &&
-                                    !receivedClientModel.getTypeOfRequest().equals("TRYTORECONNECT") &&
-                                    !receivedClientModel.getTypeOfRequest().equals("DISCONNECTION")) {
-                                try {
-
-                                    System.out.println("request to other");
-                                    gui.setClientModel(receivedClientModel);
-                                    gui.requestToOthers();
-                                } catch (IOException e) {
-                                    throw new RuntimeException(e);
-                                }
-                            }
-                        }
-                    }
+                if (check) {
+                    System.out.println("\n\nServer non ha dato risposta");
+                    Network.disconnect();
+                    currNode = otherPlayersLabel;
+                    this.otherPlayersLabel.setText("...Server si è disconnesso, mi disconnetto...");
+                    TimeUnit.SECONDS.sleep(5);
+                    System.exit(0);
                 }
-
-                end = System.currentTimeMillis() + 40000L;
             }
-            while (!isToReset && !notdone) ;
+            notRead = false;
+            ClientModel tryreceivedClientModel = gson.fromJson(message.getParameter(0), ClientModel.class);
+            if (!Objects.equals(tryreceivedClientModel.getTypeOfRequest(), "CONNECTTOEXISTINGGAME")) {
+                if (Network.disconnectedClient()) {
+                    Network.disconnect();
+                    System.out.println("Il gioco è terminato a causa della disconnessione di un client");
+                    isToReset = true;
+                }
+                if (tryreceivedClientModel.isGameStarted() && tryreceivedClientModel.NotisKicked()) {
+                    waitForFirst = false;
+                    if (!tryreceivedClientModel.isResponse() && tryreceivedClientModel.getTypeOfRequest() != null) {
+                        if (tryreceivedClientModel.getClientIdentity() == myID) {
+                            try {
+                                System.out.println("request to me");
+                                if (tryreceivedClientModel.isPingMessage()) {
+                                    gui.requestPing();
+                                } else {
+                                    gui.setClientModel(tryreceivedClientModel);
+                                    gui.requestToMe();
+                                }
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                        if (!notDone && tryreceivedClientModel.getClientIdentity() != myID && tryreceivedClientModel.getTypeOfRequest() != null &&
+                                !tryreceivedClientModel.isPingMessage() &&
+                                !tryreceivedClientModel.getTypeOfRequest().equals("TRYTORECONNECT") &&
+                                !tryreceivedClientModel.getTypeOfRequest().equals("DISCONNECTION")) {
+                            try {
+
+                                System.out.println("request to other");
+                                gui.setClientModel(tryreceivedClientModel);
+                                gui.requestToOthers();
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    }
+                }
+            }
+            end = System.currentTimeMillis() + 40000L;
         }
-
-
+        while (!isToReset && !notDone);
     }
+
+
+}

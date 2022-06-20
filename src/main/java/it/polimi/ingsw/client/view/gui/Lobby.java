@@ -11,7 +11,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
@@ -25,21 +24,18 @@ public class Lobby implements Initializable {
     private final GUI gui = new GUI();
     private final Gson gson = new Gson();
     private ParametersFromNetwork message;
-    private ClientModel receivedClientModel;
-    private boolean isToReset, waitForFirst = true;
+    private boolean isToReset;
     private int myID;
-    private boolean notdone = false, notread = false ,check;
+    private boolean notRead = false;
 
     @FXML
     private Label otherPlayersLabel = new Label();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        currNode = otherPlayersLabel;
         System.out.println("In attesa che gli altri giocatori si colleghino...");
         this.otherPlayersLabel.setText("...Waiting for other players to join the game...");
-        this.gui.currNode = otherPlayersLabel;
-
         myID = gui.getClientModel().getClientIdentity();
         long start = System.currentTimeMillis();
         long end = start + 40 * 1000L;
@@ -51,93 +47,88 @@ public class Lobby implements Initializable {
     }
 
     public void waitings(long end) throws InterruptedException {
-    do {
-        System.out.println("primo loop");
-        Thread t = null;
-        if (!notread) {
-            message = new ParametersFromNetwork(1);
-            message.enable();
+        boolean notdone = false;
+        do {
+            System.out.println("primo loop");
+            if (!notRead) {
+                message = new ParametersFromNetwork(1);
+                message.enable();
 
-            long finalEnd = end;
-            Thread thread = new Thread(() -> {
-                try {
-                    message.waitParametersReceivedGUI(finalEnd);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
+                long finalEnd = end;
+                Thread thread = new Thread(() -> {
+                    try {
+                        message.waitParametersReceivedGUI(finalEnd);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+                thread.start();
+
+                DoubleObject responce = ((DoubleObject) Platform.enterNestedEventLoop(PAUSE_KEY));
+                boolean check = responce.isRespo();
+                message = responce.getParame();
+
+
+                if (check) {
+                    System.out.println("\n\nServer non ha dato risposta");
+                    Network.disconnect();
+                    currNode = otherPlayersLabel;
+                    this.otherPlayersLabel.setText("...Server si è disconnesso, mi disconnetto...");
+                    TimeUnit.SECONDS.sleep(5);
+                    System.exit(0);
                 }
-            });
-            thread.start();
-
-            DoubleObject responce = ((DoubleObject) Platform.enterNestedEventLoop(PAUSE_KEY));
-            check = responce.isRespo();
-            message = responce.getParame();
-
-
-            if (check) {
-                System.out.println("\n\nServer non ha dato risposta");
-                Network.disconnect();
-                currNode = otherPlayersLabel;
-                this.otherPlayersLabel.setText("...Server si è disconnesso, mi disconnetto...");
-                TimeUnit.SECONDS.sleep(5);
-                System.exit(0);
             }
-        }
-        notread = false;
-        //System.out.println(message.getParameter(0));
-        ClientModel tryreceivedClientModel = gson.fromJson(message.getParameter(0), ClientModel.class);
-        if (!Objects.equals(tryreceivedClientModel.getTypeOfRequest(), "CONNECTTOEXISTINGGAME")) {
-            receivedClientModel = tryreceivedClientModel;
-            if (Network.disconnectedClient()) {
-                Network.disconnect();
-                System.out.println("Il gioco è terminato a causa della disconnessione di un client");
-                isToReset = true;
-            }
+            notRead = false;
+            ClientModel tryreceivedClientModel = gson.fromJson(message.getParameter(0), ClientModel.class);
+            if (!Objects.equals(tryreceivedClientModel.getTypeOfRequest(), "CONNECTTOEXISTINGGAME")) {
+                if (Network.disconnectedClient()) {
+                    Network.disconnect();
+                    System.out.println("Il gioco è terminato a causa della disconnessione di un client");
+                    isToReset = true;
+                }
 
-            if (receivedClientModel.isGameStarted() && receivedClientModel.NotisKicked()) {
-                waitForFirst = false;
+                if (tryreceivedClientModel.isGameStarted() && tryreceivedClientModel.NotisKicked()) {
 
-                // Il messaggio è o una richiesta o una risposta
+                    // Il messaggio è o una richiesta o una risposta
 
-                // se il messaggio non è una risposta di un client al server vuol dire che
-                if (!receivedClientModel.isResponse() && receivedClientModel.getTypeOfRequest() != null) {
-                    // il messaggio è una richiesta del server alla view di un client
+                    // se il messaggio non è una risposta di un client al server vuol dire che
+                    if (!tryreceivedClientModel.isResponse() && tryreceivedClientModel.getTypeOfRequest() != null) {
+                        // il messaggio è una richiesta del server alla view di un client
 
-                    // se il messaggio è rivolto a me devo essere io a compiere l'azione
-                    if (receivedClientModel.getClientIdentity() == myID) {
-                        // il messaggio è rivolto a me
-                        try {
-                            System.out.println("request to me");
-                            if (receivedClientModel.isPingMessage()) {
-                                gui.requestPing();
-                            } else {
-                                gui.setClientModel(receivedClientModel);
-                                gui.requestToMe();
+                        // se il messaggio è rivolto a me devo essere io a compiere l'azione
+                        if (tryreceivedClientModel.getClientIdentity() == myID) {
+                            // il messaggio è rivolto a me
+                            try {
+                                System.out.println("request to me");
+                                if (tryreceivedClientModel.isPingMessage()) {
+                                    gui.requestPing();
+                                } else {
+                                    gui.setClientModel(tryreceivedClientModel);
+                                    gui.requestToMe();
+                                }
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
                             }
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
                         }
-                    }
 
-                    if (!notdone && receivedClientModel.getClientIdentity() != myID && receivedClientModel.getTypeOfRequest() != null &&
-                            !receivedClientModel.isPingMessage() &&
-                            !receivedClientModel.getTypeOfRequest().equals("TRYTORECONNECT") &&
-                            !receivedClientModel.getTypeOfRequest().equals("DISCONNECTION")) {
-                        try {
-
-                            System.out.println("request to other");
-                            gui.setClientModel(receivedClientModel);
-                            gui.requestToOthers();
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
+                        if (!notdone && tryreceivedClientModel.getClientIdentity() != myID && tryreceivedClientModel.getTypeOfRequest() != null &&
+                                !tryreceivedClientModel.isPingMessage() &&
+                                !tryreceivedClientModel.getTypeOfRequest().equals("TRYTORECONNECT") &&
+                                !tryreceivedClientModel.getTypeOfRequest().equals("DISCONNECTION")) {
+                            try {
+                                System.out.println("request to other");
+                                gui.setClientModel(tryreceivedClientModel);
+                                gui.requestToOthers();
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
                         }
                     }
                 }
             }
-        }
-
             end = System.currentTimeMillis() + 40000L;
         }
-        while (!isToReset && !notdone) ;
+        while (!isToReset && !notdone);
     }
 
 
