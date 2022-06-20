@@ -1,13 +1,17 @@
 package it.polimi.ingsw.utils.network.events;
 
 import it.polimi.ingsw.utils.network.Network;
+import it.polimi.ingsw.utils.other.DoubleObject;
 import it.polimi.ingsw.utils.stateMachine.Event;
+import javafx.application.Platform;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import static it.polimi.ingsw.client.view.gui.Lobby.PAUSE_KEY;
 
 public class ParametersFromNetwork extends Event implements DocumentListener {
     private static JTextArea ta;
@@ -79,14 +83,18 @@ public class ParametersFromNetwork extends Event implements DocumentListener {
         return System.currentTimeMillis() >= end;
     }
 
-    public synchronized boolean waitParametersReceivedMax(long time) throws InterruptedException {
-        while (!parametersReceived) {
-            if(System.currentTimeMillis()>=time){
-                return true;
-            }
-            wait(5000);
+    public synchronized void waitParametersReceivedGUI(long time) throws InterruptedException {
+
+while (!parametersReceived){
+        if (System.currentTimeMillis() >= time) {
+            Platform.runLater(()-> Platform.exitNestedEventLoop(PAUSE_KEY,new DoubleObject(this,true)));
+            return;
         }
-        return false;
+        wait(5000);
+
+    }
+
+        Platform.runLater(()-> Platform.exitNestedEventLoop(PAUSE_KEY,new DoubleObject(this,false)));
     }
 
     public synchronized void enable(){

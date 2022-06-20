@@ -1,12 +1,18 @@
 package it.polimi.ingsw.client.view.gui.common;
 
 import com.google.gson.Gson;
-import it.polimi.ingsw.client.GUI;
 import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
+import it.polimi.ingsw.utils.other.DoubleObject;
+import javafx.application.Platform;
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+import static it.polimi.ingsw.client.view.gui.Lobby.PAUSE_KEY;
 
 public class SendModelAndGetResponse {
 
@@ -28,7 +34,20 @@ public class SendModelAndGetResponse {
             response = new ParametersFromNetwork(1);
             response.enable();
 
-            boolean check= response.waitParametersReceivedMax(end);
+
+            ParametersFromNetwork finalResponse = response;
+
+            Thread t = new Thread(() -> {
+                try {
+                    finalResponse.waitParametersReceivedGUI(end);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+            t.start();
+
+            boolean check= ((DoubleObject) Platform.enterNestedEventLoop(PAUSE_KEY)).isRespo();
+
             if(check){
                 return null;
             }

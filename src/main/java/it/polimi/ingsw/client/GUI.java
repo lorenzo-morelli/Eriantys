@@ -50,7 +50,7 @@ public class GUI extends Application {
             this.stage = (Stage) currNode.getScene().getWindow();
         }
         else{
-            this.stage= new Stage();
+            this.stage = new Stage();
         }
         this.scene = new Scene(loader.load());
         this.stage.setScene(scene);
