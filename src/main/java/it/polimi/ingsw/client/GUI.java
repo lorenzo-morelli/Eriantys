@@ -30,6 +30,9 @@ public class GUI extends Application {
     @FXML
     Label label=new Label();
 
+    /**
+     * This is the entry point for the GUI application
+     */
     public static void main(String[] args) {
         launch(args);
         GUI.clientModel = new ClientModel();
@@ -136,6 +139,9 @@ public class GUI extends Application {
         }
     }
 
+    /**
+     * This method is called whenever it's someone else's turn (not mine)
+     */
     public synchronized void requestToOthers() throws IOException {
         myTurn = false;
         Network.setClientModel(GUI.clientModel);
@@ -173,6 +179,9 @@ public class GUI extends Application {
         notifyAll();
     }
 
+    /**
+     * This method, which runs on another thread, accepts and responds to the pings sent from the server
+     */
     public synchronized void requestPing() {
         try {
             System.out.println(("risposta ping"));

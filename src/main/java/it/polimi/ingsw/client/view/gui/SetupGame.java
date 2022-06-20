@@ -5,15 +5,12 @@ import it.polimi.ingsw.client.GUI;
 import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
@@ -22,63 +19,60 @@ import static it.polimi.ingsw.client.GUI.currNode;
 public class SetupGame implements Initializable {
     private final GUI gui = new GUI();
     private final Gson gson = new Gson();
-    private int connectedPlayers;
-    private ClientModel receivedClientModel;
-    private boolean isToReset, waitForFirst = true;
-    private int myID;
-
-    ParametersFromNetwork message;
-
-    private boolean notread = false;
-
     @FXML
     private Label connectedOnIp = new Label();
     @FXML
     private Label connectedOnPort = new Label();
-
-
     @FXML
     private Label otherPlayersLabel = new Label();
     @FXML
-    public Label numberOfPlayersLabel;
+    private Label numberOfPlayersLabel;
     @FXML
-    public Label gameModeLabel;
+    private Label gameModeLabel;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         currNode = otherPlayersLabel;
         this.connectedOnIp.setText("Connected on IP: " + this.gui.getClientModel().getIp());
         this.connectedOnPort.setText("Connected on Port: " + this.gui.getClientModel().getPort());
-        this.connectedPlayers = 0;
-        isToReset = false;
     }
 
-    public void set2Players() {
+    @FXML
+    private void set2Players() {
         this.gui.getClientModel().setNumofplayer(2);
         numberOfPlayersLabel.setText("Number of players: " + this.gui.getClientModel().getNumofplayer());
     }
 
-    public void set3Players() {
+    @FXML
+    private void set3Players() {
         this.gui.getClientModel().setNumofplayer(3);
         numberOfPlayersLabel.setText("Number of players: " + this.gui.getClientModel().getNumofplayer());
     }
 
-    public void set4Players() {
+    @FXML
+    private void set4Players() {
         this.gui.getClientModel().setNumofplayer(4);
         numberOfPlayersLabel.setText("Number of players: " + this.gui.getClientModel().getNumofplayer());
     }
 
-    public void setPrincipiant() {
+    @FXML
+    private void setPrincipiant() {
         this.gui.getClientModel().setGameMode("PRINCIPIANT");
         this.gameModeLabel.setText("Game mode: principiant");
     }
 
-    public void setExpert() {
+    @FXML
+    private void setExpert() {
         this.gui.getClientModel().setGameMode("EXPERT");
         this.gameModeLabel.setText("Game mode: expert");
     }
 
-    public void start() throws InterruptedException, IOException { //todo : questo è lo start da primo client, c'è da fare anche quello da non primo client
+    /**
+     * This event is used by the client host to create a new game with the chosen parameters
+     * and to send the model to the server.
+     */
+    @FXML
+    private void start() throws InterruptedException, IOException {
         if (this.gui.getClientModel().getNumofplayer() != 2 && this.gui.getClientModel().getNumofplayer() != 3 && this.gui.getClientModel().getNumofplayer() != 4) {
             this.otherPlayersLabel.setText("ERROR: Please select a number of players!");
         } else if (this.gui.getClientModel().getGameMode() == null) {

@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import static it.polimi.ingsw.client.GUI.*;
-import static it.polimi.ingsw.client.view.gui.Position.*;
 
 public class Game implements Initializable {
     private final GUI gui = new GUI();
@@ -154,6 +153,7 @@ public class Game implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         currNode = phaseLabel;
+        Position pos = new Position();
         phaseLabel.setText(gameState);
         turnLabel.setText("è il turno di: " + this.gui.getClientModel().getServermodel().getcurrentPlayer().getNickname());
         if (myTurn) {
@@ -223,7 +223,7 @@ public class Game implements Initializable {
         ArrayList<Label> coinLabels = new ArrayList<>(Arrays.asList(coin1Label, coin2Label, coin3Label, coin4Label));
         ArrayList<Label> costs = new ArrayList<>(Arrays.asList(cost1, cost2, cost3));
 
-        // OK! ISOLE
+        // INITIALIZE ISLANDS
         islandGrid.setAlignment(Pos.CENTER);
         islands.forEach(island -> {
             StackPane tile = new StackPane();
@@ -243,7 +243,7 @@ public class Game implements Initializable {
             islandImage.setFitWidth(180);
             tile.getChildren().add(islandImage);
 
-            //INIZIALIZZO GLI INHABITANTS
+            // INITIALIZE STUDENTS INHABITANTS
             GridPane students = new GridPane();
             students.setAlignment(Pos.CENTER);
             StudentSet islandSet = island.getInhabitants();
@@ -262,7 +262,7 @@ public class Game implements Initializable {
                 tile.getChildren().add(blocks);
             }
 
-            //INIZIALIZZO LE TORRI NELLE ISOLE
+            // INITIALIZE TOWERS IN ISLANDS
             GridPane towers = new GridPane();
             towers.setAlignment(Pos.BOTTOM_CENTER);
             towers.setHgap(-15);
@@ -285,16 +285,16 @@ public class Game implements Initializable {
             }
             tile.getChildren().add(towers);
 
-            //INIZIALIZZO MADRE NATURA
+            // INITIALIZE MOTHER NATURE
             if (islands.indexOf(island) == motherNaturePos) {
                 tile.getChildren().add(motherNature);
                 StackPane.setAlignment(motherNature, Pos.TOP_CENTER);
             }
-            islandGrid.add(tile, islandX(islands.indexOf(island)), islandY(islands.indexOf(island)));
+            islandGrid.add(tile, pos.islandX(islands.indexOf(island)), pos.islandY(islands.indexOf(island)));
 
         });
 
-        //NUVOLE
+        // INITIALIZE CLOUDS
         clouds.forEach(cloud -> {
             StackPane tile = new StackPane();
             ImageView cloudImage = new ImageView("/graphics/pieces/clouds/cloud_card.png");
@@ -307,17 +307,17 @@ public class Game implements Initializable {
 
             populateGrid(studentsCloudGrid, 0, 2, cloudSet);
             tile.getChildren().add(studentsCloudGrid);
-            islandGrid.add(tile, cloudX(clouds.indexOf(cloud)), cloudY(clouds.indexOf(cloud)));
+            islandGrid.add(tile, pos.cloudX(clouds.indexOf(cloud)), pos.cloudY(clouds.indexOf(cloud)));
         });
 
-        // OK! STUDENT IN ENTRANCE
+        // INITIALIZE STUDENTS IN ENTRANCE
         entranceGrids.forEach(entrance -> entrance.setAlignment(Pos.CENTER));
         players.forEach(player -> {
             StudentSet entranceSet = player.getSchoolBoard().getEntranceSpace();
             populateGrid(entranceGrids.get(players.indexOf(player)), 1, 2, entranceSet);
         });
 
-        // STUDENT IN SCHOOL
+        // INITIALIZE STUDENTS IN SCHOOL
         players.forEach(player -> {
             GridPane school = schoolGrids.get(players.indexOf(player));
             if (school != null) {
@@ -350,7 +350,7 @@ public class Game implements Initializable {
             }
         });
 
-        //PROFESSORI
+        // INITIALIZE PROFESSORS
         professorGrids.forEach(prof -> prof.getChildren().clear());
         professors.forEach(prof -> {
             if (prof.getHeldBy() != null) {
@@ -392,7 +392,7 @@ public class Game implements Initializable {
             }
         });
 
-        // OK! TORRI
+        // INITIALIZE TOWERS
         players.forEach(player -> {
             GridPane tower = towerGrids.get(players.indexOf(player));
             tower.setAlignment(Pos.CENTER);
@@ -415,7 +415,7 @@ public class Game implements Initializable {
             }
         });
 
-        // OK! GAMEMODE
+        // INITIALIZE GAMEMODE
         if (gameMode.equals(GameMode.PRINCIPIANT)) {
             characterCardsImages.forEach(card -> card.setVisible(false));
             coins.forEach(coin -> coin.setVisible(false));
@@ -475,7 +475,7 @@ public class Game implements Initializable {
             }));
         }
 
-        // OK! NOMI E NUMERO GIOCATORI
+        // INITIALIZE PLAYERS AND NUMBER OF PLAYERS
         players.forEach(player -> playerNames.get(players.indexOf(player)).setText(player.getNickname()));
         if (players.size() < 4) {
             playerNames.get(3).setVisible(false);
@@ -492,7 +492,7 @@ public class Game implements Initializable {
             coinLabels.get(2).setVisible(false);
         }
 
-        // OK! ASSISTANT CARDS
+        // INITIALIZE ASSISTANT CARDS
         assistantCardsValues.forEach(value -> {
             if (value == 0) {
                 assistantCards.get(assistantCardsValues.indexOf(value)).setVisible(false);
@@ -600,7 +600,7 @@ public class Game implements Initializable {
     }
 
     /**
-     * This method is used to resize an ImageView
+     * This method is used to resize an ImageView.
      * @param image the image to resize.
      * @param size the size of the image.
      */
@@ -612,8 +612,8 @@ public class Game implements Initializable {
     /**
      * This method helps to map the elements visually in the correct place with a given color, for example
      * green should be in the position 0, while yellow in the position 2.
-     * @param color the chosen color
-     * @return the index corresponding to the chosen color
+     * @param color the chosen color.
+     * @return the index corresponding to the chosen color.
      */
     private int getColorPlace(String color) {
         int n = -1;

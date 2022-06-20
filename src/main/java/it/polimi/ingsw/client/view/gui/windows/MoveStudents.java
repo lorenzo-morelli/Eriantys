@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.view.gui.windows;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.client.GUI;
+import it.polimi.ingsw.client.view.gui.Position;
 import it.polimi.ingsw.server.model.Island;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.enums.PeopleColor;
@@ -17,9 +18,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
-
-import static it.polimi.ingsw.client.view.gui.Position.islandX;
-import static it.polimi.ingsw.client.view.gui.Position.islandY;
 
 public class MoveStudents implements Initializable {
     private final GUI gui = new GUI();
@@ -38,6 +36,7 @@ public class MoveStudents implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         notice.setText("");
+        Position pos = new Position();
         ArrayList<Island> islands = this.gui.getClientModel().getServermodel().getTable().getIslands();
         ArrayList<ImageView> students = new ArrayList<>(Arrays.asList(blue, green, pink, red, yellow));
         currentPlayer = this.gui.getClientModel().getServermodel().getcurrentPlayer();
@@ -59,7 +58,7 @@ public class MoveStudents implements Initializable {
                 }
                 islandImage.setFitHeight(60);
                 islandImage.setFitWidth(60);
-                islandGrid.add(islandImage, islandX(islands.indexOf(island)), islandY(islands.indexOf(island)));
+                islandGrid.add(islandImage, pos.islandX(islands.indexOf(island)), pos.islandY(islands.indexOf(island)));
                 islandImage.setOnMouseClicked((event) -> {
                     if (studentColor == null) {
                         notice.setText("ERROR: Please select the student you want to move");
@@ -110,7 +109,6 @@ public class MoveStudents implements Initializable {
      * This method is used to set color based on what button has been pressed.
      * @param color the chosen color.
      * @param mouseEvent the event necessary to close the window.
-     * @throws InterruptedException
      */
     private void setColor(String color, MouseEvent mouseEvent) throws InterruptedException {
         int red = currentPlayer.getSchoolBoard().getEntranceSpace().getNumOfRedStudents();

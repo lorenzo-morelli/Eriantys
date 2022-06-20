@@ -15,9 +15,11 @@ import java.util.stream.Collectors;
 import static it.polimi.ingsw.client.GUI.currNode;
 
 public class EndGame implements Initializable {
-    public Label winLabel;
-    public Label winnerName;
     private final GUI gui = new GUI();
+    @FXML
+    private Label winLabel;
+    @FXML
+    private Label winnerName;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
