@@ -4,7 +4,13 @@ public class Position {
     private static int x;
     private static int y;
 
-    public static int islandX(int n) {
+    /**
+     * This method returns the x position for a specific index from 0 to 11, to convert
+     * a linear array into the borders of a 4x4 matrix.
+     * @param n the position of the linear array, from 0 to 11.
+     * @return the x position of the 4x4 matrix.
+     */
+    public int islandX(int n) {
         switch (n) {
             case 0:
             case 9:
@@ -30,7 +36,13 @@ public class Position {
         return x;
     }
 
-    public static int islandY(int n) {
+    /**
+     * This method returns the y position for a specific index from 0 to 11, to convert
+     * a linear array into the borders of a 4x4 matrix.
+     * @param n the position of the linear array, from 0 to 11.
+     * @return the y position of the 4x4 matrix.
+     */
+    public int islandY(int n) {
         switch (n) {
             case 0:
             case 1:
@@ -56,7 +68,13 @@ public class Position {
         return y;
     }
 
-    public static int cloudX(int n) {
+    /**
+     * This method returns the x position for a specific index from 0 to 3, to convert
+     * a linear array into a 2x2 matrix.
+     * @param n the position of the linear array, from 0 to 11.
+     * @return the x position of the 2x2 matrix.
+     */
+    public int cloudX(int n) {
         switch (n) {
             case 0: case 2: x = 1; break;
             case 1: case 3: x = 2; break;
@@ -64,7 +82,13 @@ public class Position {
         return x;
     }
 
-    public static int cloudY(int n) {
+    /**
+     * This method returns the y position for a specific index from 0 to 3, to convert
+     * a linear array into a 2x2 matrix.
+     * @param n the position of the linear array, from 0 to 11.
+     * @return the y position of the 2x2 matrix.
+     */
+    public int cloudY(int n) {
         switch (n) {
             case 0: case 1: y = 1; break;
             case 2: case 3: y = 2; break;

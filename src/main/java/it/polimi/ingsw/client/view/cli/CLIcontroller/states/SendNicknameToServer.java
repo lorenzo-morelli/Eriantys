@@ -11,6 +11,10 @@ import it.polimi.ingsw.utils.stateMachine.State;
 
 import java.io.IOException;
 
+/**
+ * Send the client nickname to the server, and handle the case in which the server reports the existence of another
+ * client with the same nickname, by forwarding to the client view asking to choose another nickname.
+ */
 public class SendNicknameToServer extends State {
     private final Gson json;
     private final ClientModel clientModel;

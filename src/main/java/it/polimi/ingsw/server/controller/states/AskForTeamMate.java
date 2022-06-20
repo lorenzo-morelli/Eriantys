@@ -18,6 +18,11 @@ import it.polimi.ingsw.utils.stateMachine.State;
 
 import java.io.IOException;
 
+/**
+ * This class implements the state of the server where the user has to choose his
+ * team mate, to correctly create the 4 players game
+ */
+
 public class AskForTeamMate extends State {
     private final Event teamMateChoosen;
     private Model model;
@@ -33,6 +38,10 @@ public class AskForTeamMate extends State {
         return teamMateChoosen;
     }
 
+    /**
+     * Constructor of the Ask Team Mate server state
+     * @param serverController the main server controller
+     */
     public AskForTeamMate(ServerController serverController) {
         super("[Ask for team mate]");
         this.serverController = serverController;
@@ -43,10 +52,23 @@ public class AskForTeamMate extends State {
         teamMateChoosen.setStateEventListener(controller);
         json = new Gson();
     }
+
+    /**
+     * getter of the event
+     * @return the reset event (just in case)
+     */
     public Event getReset() {
         return reset;
     }
 
+    /**
+     * Overrides the entry action of the state abstract class,
+     * This method make a request to the client view to ask the client to
+     * choose his team mate, afther that creates the 4 players game mode
+     * @param cause the cause that generated the transition in this state
+     * @return null event
+     * @throws Exception caused by threads/network/IO errors
+     */
     @Override
     public IEvent entryAction(IEvent cause) throws Exception {
 
@@ -185,6 +207,11 @@ public class AskForTeamMate extends State {
         return model;
     }
 
+    /**
+     * Stores the updated model in the main controller model
+     * @param cause the event that caused us to exit this state
+     * @throws IOException
+     */
     @Override
     public void exitAction(IEvent cause) throws IOException {
         serverController.setModel(model);

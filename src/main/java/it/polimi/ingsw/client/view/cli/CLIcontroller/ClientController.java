@@ -5,7 +5,16 @@ import it.polimi.ingsw.client.view.*;
 import it.polimi.ingsw.client.view.cli.CLIcontroller.states.*;
 import it.polimi.ingsw.server.controller.states.Idle;
 import it.polimi.ingsw.utils.stateMachine.*;
-
+/**
+ * The formalism adopted for the finite state machine of the client is that of an event based fsm,
+ * very similar to those used in literature in automatic manufacturing systems, where some events trigger actions.
+ * In our use case, a state represents a particular possible screen of the user interface, and it is the state
+ * itself that contains the actions that must be performed when an event occurs (they will be "entry actions" and
+ * "exit actions" ).
+ * In this way the server only keeps track of the table that determines the transition
+ * (current state x event) -> target state.
+ * This table is created with the "addTransition" method.
+ */
 public class ClientController {
 
     public ClientController(View view) throws Exception {

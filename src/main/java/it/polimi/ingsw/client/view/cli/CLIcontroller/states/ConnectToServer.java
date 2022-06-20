@@ -8,6 +8,11 @@ import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.stateMachine.*;
 import java.io.IOException;
 
+/**
+ * This state manages the actual connection phase with the server, by calling the utility class Network on
+ * the server's ip-port specified by the user. If this connection fails the client view will again prompt
+ * the user to enter a valid ip-port.
+ */
 public class ConnectToServer extends State{
     ClientModel clientModel;
     View view;

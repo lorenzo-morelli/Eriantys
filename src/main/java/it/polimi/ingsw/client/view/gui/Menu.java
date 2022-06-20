@@ -43,15 +43,30 @@ public class Menu implements Initializable {
         currNode = playButton;
     }
 
-    public void play() throws IOException {
+    /**
+     * This event goes to the next FXML page with the setup connection.
+     */
+    @FXML
+    private void play() throws IOException {
         this.gui.changeScene("SetupConnection");
     }
 
-    public void exit() {
+    /**
+     * This event terminates the program.
+     */
+    @FXML
+    private void exit() {
         System.exit(0);
     }
 
-    public void connect() throws IOException, InterruptedException {
+    /**
+     * This event is used to setup the connection and to connect to the server.
+     * The fields which must be filled are the nickname, the ip and the port for the connection.
+     * Some checks about the validity of this fields are done with some conditions at the beginning.
+     */
+    @FXML
+    private void connect() throws IOException, InterruptedException {
+        currNode = notice;
         String nickname = this.nicknameField.getText();
         String ip = this.ipField.getText();
         String port = this.portField.getText();
@@ -67,14 +82,12 @@ public class Menu implements Initializable {
         } else {
             SetConnection.setConnection(nickname, ip, port, this.gui.getClientModel());
             if (Network.isConnected()) {
-                currNode = notice;
                 this.notice.setText("In attesa che il server dia una risposta...");
-                ClientModel model=SendModelAndGetResponse.sendAndGetModel(this.gui.getClientModel());
+                ClientModel model = SendModelAndGetResponse.sendAndGetModel(this.gui.getClientModel());
 
-                if(model!=null) {
+                if (model != null) {
                     this.gui.setClientModel(model);
-                }
-                else {
+                } else {
                     System.out.println("\n\nServer non ha dato risposta");
                     Network.disconnect();
                     currNode = notice;
@@ -82,7 +95,6 @@ public class Menu implements Initializable {
                     TimeUnit.SECONDS.sleep(5);
                     System.exit(0);
                 }
-                currNode = notice;
                 if (this.gui.getClientModel().getAmIfirst() == null) {
                     this.notice.setText("FAILURE: Nickname already taken"); //todo: bugfix
                 } else if (this.gui.getClientModel().getAmIfirst()) {

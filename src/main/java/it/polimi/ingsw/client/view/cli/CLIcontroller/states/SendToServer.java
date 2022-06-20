@@ -8,8 +8,8 @@ import it.polimi.ingsw.utils.stateMachine.*;
 
 
 /**
- * Generico stato di invio dati al server
- * Attende la ricezione di un generico ack dal server
+ * Generic status of data sending to the server
+ * Waits for a generic ack to be received from the server
  */
 public class SendToServer extends State{
     private final Gson json;

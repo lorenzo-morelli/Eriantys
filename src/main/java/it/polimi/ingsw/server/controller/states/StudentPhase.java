@@ -23,6 +23,11 @@ import java.util.concurrent.TimeUnit;
 
 import static java.util.Collections.shuffle;
 
+/**
+ * This state handle the  phase of the game in which the user has to choose where to move the student
+ * (in his school or on an island). Formal correctness checks have been carried out in the event of
+ * malicious input from the user.
+ */
 public class StudentPhase extends State {
     private final Event studentPhaseEnded, gameEnd;
 

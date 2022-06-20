@@ -7,6 +7,12 @@ import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.utils.stateMachine.*;
 import java.io.IOException;
 
+/**
+ * This state manages the generic reading of information from stdin by the controller
+ * (therefore it should be understood as: the controller is reading what the user is writing).
+ * The user is expected to type a specified number of parameters (strings) separated by a space
+ * and then hit enter when he thinks he's done.
+ */
 public class ReadFromTerminal extends State {
     ClientModel clientModel;
     View view;

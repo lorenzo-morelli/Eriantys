@@ -3,9 +3,9 @@ package it.polimi.ingsw.client.view.gui;
 import it.polimi.ingsw.client.GUI;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.utils.network.Network;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.net.URL;
@@ -15,9 +15,11 @@ import java.util.stream.Collectors;
 import static it.polimi.ingsw.client.GUI.currNode;
 
 public class EndGame implements Initializable {
-    public Label winLabel;
-    public Label winnerName;
     private final GUI gui = new GUI();
+    @FXML
+    private Label winLabel;
+    @FXML
+    private Label winnerName;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -48,7 +50,11 @@ public class EndGame implements Initializable {
         }
     }
 
-    public void toMainMenu() throws IOException {
+    /**
+     * This event redirects to the main menu of the game.
+     */
+    @FXML
+    private void toMainMenu() throws IOException {
         this.gui.changeScene("MainMenu");
     }
 

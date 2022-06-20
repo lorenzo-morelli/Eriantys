@@ -2,10 +2,12 @@ package it.polimi.ingsw.client.view.gui.windows;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.client.GUI;
+import it.polimi.ingsw.client.view.gui.Position;
 import it.polimi.ingsw.server.model.Island;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.server.model.enums.PeopleColor;
 import it.polimi.ingsw.utils.network.Network;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -16,9 +18,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
-
-import static it.polimi.ingsw.client.view.gui.Position.islandX;
-import static it.polimi.ingsw.client.view.gui.Position.islandY;
 
 public class MoveStudents implements Initializable {
     private final GUI gui = new GUI();
@@ -37,6 +36,7 @@ public class MoveStudents implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         notice.setText("");
+        Position pos = new Position();
         ArrayList<Island> islands = this.gui.getClientModel().getServermodel().getTable().getIslands();
         ArrayList<ImageView> students = new ArrayList<>(Arrays.asList(blue, green, pink, red, yellow));
         currentPlayer = this.gui.getClientModel().getServermodel().getcurrentPlayer();
@@ -58,7 +58,7 @@ public class MoveStudents implements Initializable {
                 }
                 islandImage.setFitHeight(60);
                 islandImage.setFitWidth(60);
-                islandGrid.add(islandImage, islandX(islands.indexOf(island)), islandY(islands.indexOf(island)));
+                islandGrid.add(islandImage, pos.islandX(islands.indexOf(island)), pos.islandY(islands.indexOf(island)));
                 islandImage.setOnMouseClicked((event) -> {
                     if (studentColor == null) {
                         notice.setText("ERROR: Please select the student you want to move");
@@ -80,28 +80,37 @@ public class MoveStudents implements Initializable {
             });
         }
     }
-
-    public void setBlue(MouseEvent mouseEvent) throws InterruptedException {
+    @FXML
+    private void setBlue(MouseEvent mouseEvent) throws InterruptedException {
         setColor("blue", mouseEvent);
     }
 
-    public void setGreen(MouseEvent mouseEvent) throws InterruptedException {
+    @FXML
+    private void setGreen(MouseEvent mouseEvent) throws InterruptedException {
         setColor("green", mouseEvent);
     }
 
-    public void setPink(MouseEvent mouseEvent) throws InterruptedException {
+    @FXML
+    private void setPink(MouseEvent mouseEvent) throws InterruptedException {
         setColor("pink", mouseEvent);
     }
 
-    public void setRed(MouseEvent mouseEvent) throws InterruptedException {
+    @FXML
+    private void setRed(MouseEvent mouseEvent) throws InterruptedException {
         setColor("red", mouseEvent);
     }
 
-    public void setYellow(MouseEvent mouseEvent) throws InterruptedException {
+    @FXML
+    private void setYellow(MouseEvent mouseEvent) throws InterruptedException {
         setColor("yellow", mouseEvent);
     }
 
-    public void setColor(String color, MouseEvent mouseEvent) throws InterruptedException {
+    /**
+     * This method is used to set color based on what button has been pressed.
+     * @param color the chosen color.
+     * @param mouseEvent the event necessary to close the window.
+     */
+    private void setColor(String color, MouseEvent mouseEvent) throws InterruptedException {
         int red = currentPlayer.getSchoolBoard().getEntranceSpace().getNumOfRedStudents();
         int blue = currentPlayer.getSchoolBoard().getEntranceSpace().getNumOfBlueStudents();
         int green = currentPlayer.getSchoolBoard().getEntranceSpace().getNumOfGreenStudents();

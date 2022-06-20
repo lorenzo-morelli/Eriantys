@@ -6,6 +6,10 @@ import it.polimi.ingsw.client.view.cli.CLIcontroller.events.RecognizedString;
 import it.polimi.ingsw.utils.stateMachine.*;
 import java.io.IOException;
 
+/**
+ * State that required client interaction in early demo versions of the game,
+ * the user had to enter start. No longer used but left for reference.
+ */
 public class WelcomeScreen extends State{
     View view;
     private final RecognizedString start;

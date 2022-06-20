@@ -15,6 +15,9 @@ import it.polimi.ingsw.utils.stateMachine.Event;
 import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
 
+/**
+ * Handles the creation of a new game (server side setup of the model)
+ */
 public class CreateGame extends State {
     private final Event gameCreated, fourPlayersGameCreated;
     private Model model;

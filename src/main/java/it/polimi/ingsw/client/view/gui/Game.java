@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import static it.polimi.ingsw.client.GUI.*;
-import static it.polimi.ingsw.client.view.gui.Position.*;
 
 public class Game implements Initializable {
     private final GUI gui = new GUI();
@@ -153,61 +152,52 @@ public class Game implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        String imageURL = "/graphics/buttons/button_unavailable.png";
         currNode = phaseLabel;
+        Position pos = new Position();
         phaseLabel.setText(gameState);
         turnLabel.setText("è il turno di: " + this.gui.getClientModel().getServermodel().getcurrentPlayer().getNickname());
         if (myTurn) {
             switch (this.gui.getClientModel().getTypeOfRequest()) {
                 case "CHOOSEASSISTANTCARD":
                     System.out.println("si sceglie la carta assistente");
-                    assistantCardBtn.setVisible(true);
-                    setOnSchoolBtn.setVisible(false);
-                    setOnIslandBtn.setVisible(false);
-                    moveBtn.setVisible(false);
-                    cloudBtn.setVisible(false);
+                    setOnSchoolBtn.setStyle("-fx-background-image: url(" + imageURL + ");");
+                    setOnIslandBtn.setStyle("-fx-background-image: url(" + imageURL + ");");
+                    moveBtn.setStyle("-fx-background-image: url(" + imageURL + ");");
+                    cloudBtn.setStyle("-fx-background-image: url(" + imageURL + ");");
                     break;
                 case "CHOOSEWHERETOMOVESTUDENTS":
-                    assistantCardBtn.setVisible(false);
-                    setOnSchoolBtn.setVisible(true);
-                    setOnIslandBtn.setVisible(true);
-                    moveBtn.setVisible(false);
-                    cloudBtn.setVisible(false);
+                    assistantCardBtn.setStyle("-fx-background-image: url(" + imageURL + ");");
+                    moveBtn.setStyle("-fx-background-image: url(" + imageURL + ");");
+                    cloudBtn.setStyle("-fx-background-image: url(" + imageURL + ");");
                     break;
                 case "CHOOSEWHERETOMOVEMOTHER":
-                    assistantCardBtn.setVisible(false);
-                    setOnSchoolBtn.setVisible(false);
-                    setOnIslandBtn.setVisible(false);
-                    moveBtn.setVisible(true);
-                    cloudBtn.setVisible(false);
+                    assistantCardBtn.setStyle("-fx-background-image: url(" + imageURL + ");");
+                    setOnSchoolBtn.setStyle("-fx-background-image: url(" + imageURL + ");");
+                    setOnIslandBtn.setStyle("-fx-background-image: url(" + imageURL + ");");
+                    cloudBtn.setStyle("-fx-background-image: url(" + imageURL + ");");
                     break;
                 case "CHOOSECLOUDS":
-                    assistantCardBtn.setVisible(false);
-                    setOnSchoolBtn.setVisible(false);
-                    setOnIslandBtn.setVisible(false);
-                    moveBtn.setVisible(false);
-                    cloudBtn.setVisible(true);
+                    assistantCardBtn.setStyle("-fx-background-image: url(" + imageURL + ");");
+                    setOnSchoolBtn.setStyle("-fx-background-image: url(" + imageURL + ");");
+                    setOnIslandBtn.setStyle("-fx-background-image: url(" + imageURL + ");");
+                    moveBtn.setStyle("-fx-background-image: url(" + imageURL + ");");
                     break;
             }
         } else {
-            assistantCardBtn.setVisible(false);
-            setOnSchoolBtn.setVisible(false);
-            setOnIslandBtn.setVisible(false);
-            moveBtn.setVisible(false);
-            cloudBtn.setVisible(false);
+            assistantCardBtn.setStyle("-fx-background-image: url(" + imageURL + ");");
+            setOnSchoolBtn.setStyle("-fx-background-image: url(" + imageURL + ");");
+            setOnIslandBtn.setStyle("-fx-background-image: url(" + imageURL + ");");
+            moveBtn.setStyle("-fx-background-image: url(" + imageURL + ");");
+            cloudBtn.setStyle("-fx-background-image: url(" + imageURL + ");");
         }
 
-        // OK! valori partita
         GameMode gameMode = this.gui.getClientModel().getServermodel().getGameMode();
         int motherNaturePos = this.gui.getClientModel().getServermodel().getTable().getMotherNaturePosition();
         ArrayList<Island> islands = this.gui.getClientModel().getServermodel().getTable().getIslands();
         ArrayList<Player> players = this.gui.getClientModel().getServermodel().getPlayers();
-        ArrayList<Integer> assistantCardsValues = new ArrayList<>();
-        players.forEach(player -> assistantCardsValues.add(0));
-        players.forEach(player -> {
-            if (player.getChoosedCard() != null) {
-                assistantCardsValues.set(players.indexOf(player), (int) player.getChoosedCard().getValues());
-            }
-        });
+        players.forEach(player -> System.out.println(player.getChoosedCard() != null ? player.getChoosedCard().getValues() : "non scelta"));
+
         ArrayList<Professor> professors = this.gui.getClientModel().getServermodel().getTable().getProfessors();
         ArrayList<Cloud> clouds = this.gui.getClientModel().getServermodel().getTable().getClouds();
         Player currentPlayer = this.gui.getClientModel().getServermodel().getcurrentPlayer();
@@ -224,7 +214,7 @@ public class Game implements Initializable {
         ArrayList<Label> coinLabels = new ArrayList<>(Arrays.asList(coin1Label, coin2Label, coin3Label, coin4Label));
         ArrayList<Label> costs = new ArrayList<>(Arrays.asList(cost1, cost2, cost3));
 
-        // OK! ISOLE
+        // INITIALIZE ISLANDS
         islandGrid.setAlignment(Pos.CENTER);
         islands.forEach(island -> {
             StackPane tile = new StackPane();
@@ -244,7 +234,7 @@ public class Game implements Initializable {
             islandImage.setFitWidth(180);
             tile.getChildren().add(islandImage);
 
-            //INIZIALIZZO GLI INHABITANTS
+            // INITIALIZE STUDENTS INHABITANTS
             GridPane students = new GridPane();
             students.setAlignment(Pos.CENTER);
             StudentSet islandSet = island.getInhabitants();
@@ -263,7 +253,7 @@ public class Game implements Initializable {
                 tile.getChildren().add(blocks);
             }
 
-            //INIZIALIZZO LE TORRI NELLE ISOLE
+            // INITIALIZE TOWERS IN ISLANDS
             GridPane towers = new GridPane();
             towers.setAlignment(Pos.BOTTOM_CENTER);
             towers.setHgap(-15);
@@ -286,16 +276,16 @@ public class Game implements Initializable {
             }
             tile.getChildren().add(towers);
 
-            //INIZIALIZZO MADRE NATURA
+            // INITIALIZE MOTHER NATURE
             if (islands.indexOf(island) == motherNaturePos) {
                 tile.getChildren().add(motherNature);
                 StackPane.setAlignment(motherNature, Pos.TOP_CENTER);
             }
-            islandGrid.add(tile, islandX(islands.indexOf(island)), islandY(islands.indexOf(island)));
+            islandGrid.add(tile, pos.islandX(islands.indexOf(island)), pos.islandY(islands.indexOf(island)));
 
         });
 
-        //NUVOLE
+        // INITIALIZE CLOUDS
         clouds.forEach(cloud -> {
             StackPane tile = new StackPane();
             ImageView cloudImage = new ImageView("/graphics/pieces/clouds/cloud_card.png");
@@ -308,17 +298,17 @@ public class Game implements Initializable {
 
             populateGrid(studentsCloudGrid, 0, 2, cloudSet);
             tile.getChildren().add(studentsCloudGrid);
-            islandGrid.add(tile, cloudX(clouds.indexOf(cloud)), cloudY(clouds.indexOf(cloud)));
+            islandGrid.add(tile, pos.cloudX(clouds.indexOf(cloud)), pos.cloudY(clouds.indexOf(cloud)));
         });
 
-        // OK! STUDENT IN ENTRANCE
+        // INITIALIZE STUDENTS IN ENTRANCE
         entranceGrids.forEach(entrance -> entrance.setAlignment(Pos.CENTER));
         players.forEach(player -> {
             StudentSet entranceSet = player.getSchoolBoard().getEntranceSpace();
             populateGrid(entranceGrids.get(players.indexOf(player)), 1, 2, entranceSet);
         });
 
-        // STUDENT IN SCHOOL
+        // INITIALIZE STUDENTS IN SCHOOL
         players.forEach(player -> {
             GridPane school = schoolGrids.get(players.indexOf(player));
             if (school != null) {
@@ -351,7 +341,8 @@ public class Game implements Initializable {
             }
         });
 
-        //PROFESSORI
+        // INITIALIZE PROFESSORS
+        professorGrids.forEach(prof -> prof.getChildren().clear());
         professors.forEach(prof -> {
             if (prof.getHeldBy() != null) {
                 Player choosenPlayer = null;
@@ -389,11 +380,10 @@ public class Game implements Initializable {
                     imageResize(profImage, 30);
                     professorGrids.get(players.indexOf(choosenPlayer)).add(profImage, 0, getColorPlace(color));
                 }
-
             }
         });
 
-        // OK! TORRI
+        // INITIALIZE TOWERS
         players.forEach(player -> {
             GridPane tower = towerGrids.get(players.indexOf(player));
             tower.setAlignment(Pos.CENTER);
@@ -416,7 +406,7 @@ public class Game implements Initializable {
             }
         });
 
-        // OK! GAMEMODE
+        // INITIALIZE GAMEMODE
         if (gameMode.equals(GameMode.PRINCIPIANT)) {
             characterCardsImages.forEach(card -> card.setVisible(false));
             coins.forEach(coin -> coin.setVisible(false));
@@ -476,7 +466,7 @@ public class Game implements Initializable {
             }));
         }
 
-        // OK! NOMI E NUMERO GIOCATORI
+        // INITIALIZE PLAYERS AND NUMBER OF PLAYERS
         players.forEach(player -> playerNames.get(players.indexOf(player)).setText(player.getNickname()));
         if (players.size() < 4) {
             playerNames.get(3).setVisible(false);
@@ -493,43 +483,86 @@ public class Game implements Initializable {
             coinLabels.get(2).setVisible(false);
         }
 
-        // OK! ASSISTANT CARDS
-        assistantCardsValues.forEach(value -> {
-            if (value == 0) {
-                assistantCards.get(assistantCardsValues.indexOf(value)).setVisible(false);
+        // INITIALIZE ASSISTANT CARDS
+        players.forEach(player -> {
+            if (player.getChoosedCard() != null) {
+                System.out.println("il player " + player.getNickname() + " ha la carta " + player.getChoosedCard().getValues());
+                Image assistantImage = new Image("/graphics/assistants/assistantCard" + (int) player.getChoosedCard().getValues() + ".png");
+                assistantCards.get(players.indexOf(player)).setImage(assistantImage);
+                assistantCards.get(players.indexOf(player)).setVisible(true);
             } else {
-                Image assistantImage = new Image("graphics/assistants/assistantCard" + assistantCardsValues.get(assistantCardsValues.indexOf(value)) + ".png");
-                assistantCards.get(assistantCardsValues.indexOf(value)).setImage(assistantImage);
+                assistantCards.get(players.indexOf(player)).setVisible(false);
             }
         });
 
     }
 
-    public void quit() throws IOException {
+    /**
+     * This event is called if the user wants to quit the game.
+     * It will open a new window where a confirmation is asked.
+     */
+    @FXML
+    private void quit() throws IOException {
         this.gui.openNewWindow("Quit");
     }
 
-    public void assistant() throws IOException {
-        System.out.println("apro la finestra");
-        this.gui.openNewWindow("ChooseAssistantCard");
+    /**
+     * This event will open the "Choose assistant card" window, to choose an assistant card.
+     */
+    @FXML
+    private void assistant() throws IOException {
+        if (this.gui.getClientModel().getTypeOfRequest().equals("CHOOSEASSISTANTCARD")) {
+            this.gui.openNewWindow("ChooseAssistantCard");
+        }
     }
 
-    public void setOnSchool() throws IOException {
-        this.gui.openNewWindow("MoveToSchool");
+    /**
+     * This event will open the "Move to school" window, to move a student in the player's school.
+     */
+    @FXML
+    private void setOnSchool() throws IOException {
+        if (this.gui.getClientModel().getTypeOfRequest().equals("CHOOSEWHERETOMOVESTUDENTS")) {
+            this.gui.openNewWindow("MoveToSchool");
+        }
     }
 
-    public void setOnIsland() throws IOException {
-        this.gui.openNewWindow("MoveToIsland");
+    /**
+     * This event will open the "Move to island" window, to move a student in an island.
+     */
+    @FXML
+    private void setOnIsland() throws IOException {
+        if (this.gui.getClientModel().getTypeOfRequest().equals("CHOOSEWHERETOMOVESTUDENTS")) {
+            this.gui.openNewWindow("MoveToIsland");
+        }
     }
 
-    public void cloud() throws IOException {
-        this.gui.openNewWindow("ChooseCloud");
+    /**
+     * This event will open the "Move mother nature" window, to move mother nature on the islands.
+     */
+    @FXML
+    private void move() throws IOException {
+        if (this.gui.getClientModel().getTypeOfRequest().equals("CHOOSEWHERETOMOVEMOTHER")) {
+            this.gui.openNewWindow("MoveMotherNature");
+        }
     }
 
-    public void move() throws IOException {
-        this.gui.openNewWindow("MoveMotherNature");
+    /**
+     * This event will open the "Choose cloud" window, to choose a cloud from the center table.
+     */
+    @FXML
+    private void cloud() throws IOException {
+        if (this.gui.getClientModel().getTypeOfRequest().equals("CHOOSECLOUDS")) {
+            this.gui.openNewWindow("ChooseCloud");
+        }
     }
 
+    /**
+     * This method helps to populate a grid with students.
+     * @param grid the grid to populate.
+     * @param init the first position to start from.
+     * @param cols the numbers of columns to fill.
+     * @param studentSet the set of student to fill the grid with.
+     */
     public void populateGrid(GridPane grid, int init, int cols, StudentSet studentSet) {
         int green = studentSet.getNumOfGreenStudents();
         int blue = studentSet.getNumOfBlueStudents();
@@ -569,12 +602,23 @@ public class Game implements Initializable {
         }
     }
 
-    public void imageResize(ImageView image, int size) {
+    /**
+     * This method is used to resize an ImageView.
+     * @param image the image to resize.
+     * @param size the size of the image.
+     */
+    private void imageResize(ImageView image, int size) {
         image.setFitHeight(size);
         image.setFitWidth(size);
     }
 
-    public int getColorPlace(String color) {
+    /**
+     * This method helps to map the elements visually in the correct place with a given color, for example
+     * green should be in the position 0, while yellow in the position 2.
+     * @param color the chosen color.
+     * @return the index corresponding to the chosen color.
+     */
+    private int getColorPlace(String color) {
         int n = -1;
         switch (color) {
             case "green":
@@ -597,7 +641,12 @@ public class Game implements Initializable {
         return n;
     }
 
-    public void toImageCharacters(ArrayList<CharacterCard> characterCard, List<ImageView> images) {
+    /**
+     * This method is used to convert the character cards into images.
+     * @param characterCard the list of the character cards provided by the client model.
+     * @param images the list of images to change based of the right character cards.
+     */
+    private void toImageCharacters(ArrayList<CharacterCard> characterCard, List<ImageView> images) {
         for (int i = 0; i < 3; i++) {
             Image character = null;
             switch (characterCard.get(i).getName()) {

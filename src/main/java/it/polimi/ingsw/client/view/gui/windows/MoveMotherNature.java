@@ -5,6 +5,7 @@ import it.polimi.ingsw.client.GUI;
 import it.polimi.ingsw.client.view.gui.Position;
 import it.polimi.ingsw.server.model.Island;
 import it.polimi.ingsw.utils.network.Network;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -16,12 +17,15 @@ import java.util.ResourceBundle;
 
 public class MoveMotherNature implements Initializable {
     private final GUI gui = new GUI();
-    public GridPane islandGrid;
-    public Label notice = new Label();
     private int distance;
+    @FXML
+    private GridPane islandGrid;
+    @FXML
+    private Label notice = new Label();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Position pos = new Position();
         notice.setText("");
         ArrayList<Island> islands = this.gui.getClientModel().getServermodel().getTable().getIslands();
         int motherNaturePos = this.gui.getClientModel().getServermodel().getTable().getMotherNaturePosition();
@@ -59,7 +63,7 @@ public class MoveMotherNature implements Initializable {
             }
             islandImage.setFitHeight(60);
             islandImage.setFitWidth(60);
-            islandGrid.add(islandImage, Position.islandX(islands.indexOf(island)), Position.islandY(islands.indexOf(island)));
+            islandGrid.add(islandImage, pos.islandX(islands.indexOf(island)), pos.islandY(islands.indexOf(island)));
 
             islandImage.setOnMouseClicked((event) -> {
                 distance = islands.indexOf(island) - motherNaturePos;

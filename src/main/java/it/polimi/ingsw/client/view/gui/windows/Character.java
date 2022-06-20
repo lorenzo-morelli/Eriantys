@@ -2,10 +2,12 @@ package it.polimi.ingsw.client.view.gui.windows;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.client.GUI;
+import it.polimi.ingsw.client.view.gui.Position;
 import it.polimi.ingsw.server.model.Island;
 import it.polimi.ingsw.server.model.StudentSet;
 import it.polimi.ingsw.server.model.enums.PeopleColor;
 import it.polimi.ingsw.utils.network.Network;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -19,26 +21,33 @@ import java.util.Arrays;
 import java.util.ResourceBundle;
 
 import static it.polimi.ingsw.client.GUI.currentCharacter;
-import static it.polimi.ingsw.client.view.gui.Position.islandX;
-import static it.polimi.ingsw.client.view.gui.Position.islandY;
 
 public class Character implements Initializable {
     private final GUI gui = new GUI();
-    public Label explaination = new Label();
-    public Label notice = new Label();
-    public Label name = new Label();
     private boolean flagIsland = false;
     private boolean flagColor = false;
-    public GridPane islandGrid;
-    public ImageView student1;
-    public ImageView student2;
-    public ImageView student3;
-    public ImageView student4;
-    public ImageView student5;
-
     private int chosenIsland;
     private PeopleColor chosenColor;
-    private ArrayList<PeopleColor> chosenColors;
+
+    @FXML
+    private Label explaination = new Label();
+    @FXML
+    private Label notice = new Label();
+    @FXML
+    private Label name = new Label();
+
+    @FXML
+    private GridPane islandGrid;
+    @FXML
+    private ImageView student1;
+    @FXML
+    private ImageView student2;
+    @FXML
+    private ImageView student3;
+    @FXML
+    private ImageView student4;
+    @FXML
+    private ImageView student5;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -157,6 +166,7 @@ public class Character implements Initializable {
     }
 
     public void selectIsland(ArrayList<Island> islands) {
+        Position pos = new Position();
         islands.forEach(island -> {
             ImageView islandImage = new ImageView();
             switch (islands.indexOf(island) % 3) {
@@ -172,7 +182,7 @@ public class Character implements Initializable {
             }
             islandImage.setFitHeight(60);
             islandImage.setFitWidth(60);
-            islandGrid.add(islandImage, islandX(islands.indexOf(island)), islandY(islands.indexOf(island)));
+            islandGrid.add(islandImage, pos.islandX(islands.indexOf(island)), pos.islandY(islands.indexOf(island)));
             islandImage.setOnMouseClicked(event -> {
                 chosenIsland = islands.indexOf(island);
                 flagIsland = true;

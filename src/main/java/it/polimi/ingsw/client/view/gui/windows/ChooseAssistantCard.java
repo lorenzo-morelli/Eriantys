@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import it.polimi.ingsw.client.GUI;
 import it.polimi.ingsw.server.model.AssistantCard;
 import it.polimi.ingsw.utils.network.Network;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -14,17 +15,27 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class ChooseAssistantCard implements Initializable {
-    public ImageView assistantCard1 = new ImageView();
-    public ImageView assistantCard2 = new ImageView();
-    public ImageView assistantCard3;
-    public ImageView assistantCard4;
-    public ImageView assistantCard5;
-    public ImageView assistantCard6;
-    public ImageView assistantCard7;
-    public ImageView assistantCard8;
-    public ImageView assistantCard9;
-    public ImageView assistantCard10;
     private final GUI gui = new GUI();
+    @FXML
+    private ImageView assistantCard1;
+    @FXML
+    private ImageView assistantCard2;
+    @FXML
+    private ImageView assistantCard3;
+    @FXML
+    private ImageView assistantCard4;
+    @FXML
+    private ImageView assistantCard5;
+    @FXML
+    private ImageView assistantCard6;
+    @FXML
+    private ImageView assistantCard7;
+    @FXML
+    private ImageView assistantCard8;
+    @FXML
+    private ImageView assistantCard9;
+    @FXML
+    private ImageView assistantCard10;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

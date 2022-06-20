@@ -7,7 +7,6 @@
     <!-- Change the artifactId depending on your group number
              (example: group 99 will have artifactId PSP99 -->
     <artifactId>PSP28</artifactId>
-
     <version>1.0-SNAPSHOT</version>
     <name>Eriantys</name>
 
@@ -16,6 +15,7 @@
     </properties>
 
     <dependencies>
+
         <!-- JUnit provides unit testing for Java applications -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -45,8 +45,6 @@
                 <artifactId>javafx-fxml</artifactId>
                 <version>18.0.1</version>
             </dependency>
-
-
 
 
     </dependencies>

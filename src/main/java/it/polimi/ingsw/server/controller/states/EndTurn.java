@@ -7,6 +7,10 @@ import it.polimi.ingsw.utils.stateMachine.Event;
 import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
 
+/**
+ * This state handles the things that the server has to do
+ * at the end of the shift (for example reload the cloud cards)
+ */
 public class EndTurn extends State {
     private final Event goToAssistentCardPhase;
 
@@ -25,6 +29,13 @@ public class EndTurn extends State {
         goToAssistentCardPhase.setStateEventListener(controller);
     }
 
+    /**
+     * Refills the clouds, check if the game is ended because the bag is empty,
+     * else fire the event to go to the assistant card phase
+     * @param cause the event that caused the transition in this state
+     * @return null event
+     * @throws Exception input output errors or network related ones
+     */
     @Override
     public IEvent entryAction(IEvent cause) throws Exception {
         Model model = serverController.getModel();

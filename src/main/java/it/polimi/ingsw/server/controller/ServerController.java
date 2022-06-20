@@ -5,6 +5,16 @@ import it.polimi.ingsw.server.model.Model;
 import it.polimi.ingsw.utils.stateMachine.Controller;
 import it.polimi.ingsw.utils.stateMachine.Event;
 
+/**
+ * The formalism adopted for the finite state machine of the server is that of an event based fsm,
+ * very similar to those used in literature in automatic manufacturing systems, where some events trigger actions.
+ * In our use case, a state represents a particular possible screen of the user interface, and it is the state
+ * itself that contains the actions that must be performed when an event occurs (they will be "entry actions" and
+ * "exit actions" ).
+ * In this way the server only keeps track of the table that determines the transition
+ * (current state x event) -> target state.
+ * This table is created with the "addTransition" method.
+ */
 public class ServerController {
     private Model model;
     private final ConnectionModel connectionModel = new ConnectionModel();
@@ -12,9 +22,8 @@ public class ServerController {
     private static final Controller fsm = new Controller("Controllore del Server", idle);
 
     public ServerController() throws Exception {
-        fsm.showDebugMessages();
+        fsm.showDebugMessages(); // Todo comment when not needed
 
-        //Costruzione degli stati necessari
         SpecifyPortScreen specifyPortScreen = new SpecifyPortScreen();
         WaitFirstPlayer waitFirstPlayer = new WaitFirstPlayer(this);
         WaitFirstPlayerGameInfo waitFirstPlayerGameInfo = new WaitFirstPlayerGameInfo(this);
@@ -28,7 +37,7 @@ public class ServerController {
         EndTurn endTurn = new EndTurn(this);
         EndGame endGame = new EndGame(this);
 
-        // Dichiarazione delle transizioni tra gli stati
+
         Event start = new Event("[Controller Started]");
         fsm.addTransition(idle, start, specifyPortScreen);
         fsm.addTransition(specifyPortScreen, specifyPortScreen.portSpecified(), waitFirstPlayer);
@@ -52,12 +61,10 @@ public class ServerController {
         fsm.addTransition(cloudPhase, cloudPhase.gameEnd(), endGame);
         fsm.addTransition(endTurn, endTurn.goToAssistentCardPhase(), assistantCardPhase);
         fsm.addTransition(endGame, endGame.getRestart(), waitFirstPlayer);
-
-        // gestione disconnessione di un client durante il setup
         fsm.addTransition(waitFirstPlayerGameInfo, waitFirstPlayerGameInfo.getReset(), waitFirstPlayer);
 
 
-        // L'evento di start è l'unico che deve essere fatto partire manualmente
+        // Start event is the only one that has to be triggered manually.
         start.fireStateEvent();
     }
 

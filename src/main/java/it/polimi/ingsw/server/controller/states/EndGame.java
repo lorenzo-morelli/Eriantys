@@ -13,6 +13,10 @@ import it.polimi.ingsw.utils.stateMachine.State;
 
 import java.util.concurrent.TimeUnit;
 
+/**
+ * This state handles the things to do in the event of a natural end of the game
+ * caused by termination events (in compliance with the rules of the game).
+ */
 public class EndGame extends State {
     private final Event restart;
     private final ConnectionModel connectionModel;
