@@ -27,8 +27,6 @@ public class GUI extends Application {
     public static Node currNode = null;
     public static boolean myTurn = false;
     public static CharacterCard currentCharacter = null;
-    @FXML
-    Label label=new Label();
 
     /**
      * This is the entry point for the GUI application
@@ -104,11 +102,10 @@ public class GUI extends Application {
         Network.setClientModel(GUI.clientModel);
         switch (GUI.clientModel.getTypeOfRequest()) {
             case "TRYTORECONNECT":
-                label.setText("Numero minimo di giocatori non disponibile... attendo");
-                changeScene("EndGame");
+                //TODO
                 break;
             case "DISCONNECTION":
-                label.setText("Partita terminata per disconnessione");
+                //TODO
                 break;
             case "CHOOSEASSISTANTCARD":
                 System.out.println("assistent!");
@@ -135,7 +132,6 @@ public class GUI extends Application {
             case "GAMEEND":
                 changeScene("EndGame");
                 break;
-
         }
     }
 
@@ -143,6 +139,7 @@ public class GUI extends Application {
      * This method is called whenever it's someone else's turn (not mine)
      */
     public synchronized void requestToOthers() throws IOException {
+        //todo rimuovere tutti i print
         myTurn = false;
         Network.setClientModel(GUI.clientModel);
         switch (GUI.clientModel.getTypeOfRequest()) {

@@ -1,0 +1,17 @@
+.actionButton {
+    -fx-background-image: url("../graphics/buttons/button.png");
+    -fx-background-size: stretch;
+    -fx-background-color: transparent;
+    -fx-font-family: "Dalek Pinpoint";
+    -fx-font-size: 20px;
+    -fx-text-fill: white;
+    -fx-alignment: center;
+}
+
+.actionButton:pressed {
+    -fx-background-image: url("../graphics/buttons/button_pressed.png");
+}
+
+.actionButton:hover {
+    -fx-opacity: 0.9;
+}

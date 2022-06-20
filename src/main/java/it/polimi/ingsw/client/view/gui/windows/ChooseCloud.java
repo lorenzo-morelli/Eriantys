@@ -20,7 +20,7 @@ import java.util.ResourceBundle;
 public class ChooseCloud implements Initializable {
     private final GUI gui = new GUI();
     @FXML
-    public Label notice;
+    private Label notice;
     @FXML
     private GridPane cloudGrid;
 

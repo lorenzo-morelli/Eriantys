@@ -152,6 +152,7 @@ public class Game implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        String imageURL = "/graphics/buttons/button_unavailable.png";
         currNode = phaseLabel;
         Position pos = new Position();
         phaseLabel.setText(gameState);
@@ -160,53 +161,43 @@ public class Game implements Initializable {
             switch (this.gui.getClientModel().getTypeOfRequest()) {
                 case "CHOOSEASSISTANTCARD":
                     System.out.println("si sceglie la carta assistente");
-                    assistantCardBtn.setVisible(true);
-                    setOnSchoolBtn.setVisible(false);
-                    setOnIslandBtn.setVisible(false);
-                    moveBtn.setVisible(false);
-                    cloudBtn.setVisible(false);
+                    setOnSchoolBtn.setStyle("-fx-background-image: url(" + imageURL + ");");
+                    setOnIslandBtn.setStyle("-fx-background-image: url(" + imageURL + ");");
+                    moveBtn.setStyle("-fx-background-image: url(" + imageURL + ");");
+                    cloudBtn.setStyle("-fx-background-image: url(" + imageURL + ");");
                     break;
                 case "CHOOSEWHERETOMOVESTUDENTS":
-                    assistantCardBtn.setVisible(false);
-                    setOnSchoolBtn.setVisible(true);
-                    setOnIslandBtn.setVisible(true);
-                    moveBtn.setVisible(false);
-                    cloudBtn.setVisible(false);
+                    assistantCardBtn.setStyle("-fx-background-image: url(" + imageURL + ");");
+                    moveBtn.setStyle("-fx-background-image: url(" + imageURL + ");");
+                    cloudBtn.setStyle("-fx-background-image: url(" + imageURL + ");");
                     break;
                 case "CHOOSEWHERETOMOVEMOTHER":
-                    assistantCardBtn.setVisible(false);
-                    setOnSchoolBtn.setVisible(false);
-                    setOnIslandBtn.setVisible(false);
-                    moveBtn.setVisible(true);
-                    cloudBtn.setVisible(false);
+                    assistantCardBtn.setStyle("-fx-background-image: url(" + imageURL + ");");
+                    setOnSchoolBtn.setStyle("-fx-background-image: url(" + imageURL + ");");
+                    setOnIslandBtn.setStyle("-fx-background-image: url(" + imageURL + ");");
+                    cloudBtn.setStyle("-fx-background-image: url(" + imageURL + ");");
                     break;
                 case "CHOOSECLOUDS":
-                    assistantCardBtn.setVisible(false);
-                    setOnSchoolBtn.setVisible(false);
-                    setOnIslandBtn.setVisible(false);
-                    moveBtn.setVisible(false);
-                    cloudBtn.setVisible(true);
+                    assistantCardBtn.setStyle("-fx-background-image: url(" + imageURL + ");");
+                    setOnSchoolBtn.setStyle("-fx-background-image: url(" + imageURL + ");");
+                    setOnIslandBtn.setStyle("-fx-background-image: url(" + imageURL + ");");
+                    moveBtn.setStyle("-fx-background-image: url(" + imageURL + ");");
                     break;
             }
         } else {
-            assistantCardBtn.setVisible(false);
-            setOnSchoolBtn.setVisible(false);
-            setOnIslandBtn.setVisible(false);
-            moveBtn.setVisible(false);
-            cloudBtn.setVisible(false);
+            assistantCardBtn.setStyle("-fx-background-image: url(" + imageURL + ");");
+            setOnSchoolBtn.setStyle("-fx-background-image: url(" + imageURL + ");");
+            setOnIslandBtn.setStyle("-fx-background-image: url(" + imageURL + ");");
+            moveBtn.setStyle("-fx-background-image: url(" + imageURL + ");");
+            cloudBtn.setStyle("-fx-background-image: url(" + imageURL + ");");
         }
 
         GameMode gameMode = this.gui.getClientModel().getServermodel().getGameMode();
         int motherNaturePos = this.gui.getClientModel().getServermodel().getTable().getMotherNaturePosition();
         ArrayList<Island> islands = this.gui.getClientModel().getServermodel().getTable().getIslands();
         ArrayList<Player> players = this.gui.getClientModel().getServermodel().getPlayers();
-        ArrayList<Integer> assistantCardsValues = new ArrayList<>();
-        players.forEach(player -> assistantCardsValues.add(0));
-        players.forEach(player -> {
-            if (player.getChoosedCard() != null) {
-                assistantCardsValues.set(players.indexOf(player), (int) player.getChoosedCard().getValues());
-            }
-        });
+        players.forEach(player -> System.out.println(player.getChoosedCard() != null ? player.getChoosedCard().getValues() : "non scelta"));
+
         ArrayList<Professor> professors = this.gui.getClientModel().getServermodel().getTable().getProfessors();
         ArrayList<Cloud> clouds = this.gui.getClientModel().getServermodel().getTable().getClouds();
         Player currentPlayer = this.gui.getClientModel().getServermodel().getcurrentPlayer();
@@ -493,12 +484,14 @@ public class Game implements Initializable {
         }
 
         // INITIALIZE ASSISTANT CARDS
-        assistantCardsValues.forEach(value -> {
-            if (value == 0) {
-                assistantCards.get(assistantCardsValues.indexOf(value)).setVisible(false);
+        players.forEach(player -> {
+            if (player.getChoosedCard() != null) {
+                System.out.println("il player " + player.getNickname() + " ha la carta " + player.getChoosedCard().getValues());
+                Image assistantImage = new Image("/graphics/assistants/assistantCard" + (int) player.getChoosedCard().getValues() + ".png");
+                assistantCards.get(players.indexOf(player)).setImage(assistantImage);
+                assistantCards.get(players.indexOf(player)).setVisible(true);
             } else {
-                Image assistantImage = new Image("graphics/assistants/assistantCard" + assistantCardsValues.get(assistantCardsValues.indexOf(value)) + ".png");
-                assistantCards.get(assistantCardsValues.indexOf(value)).setImage(assistantImage);
+                assistantCards.get(players.indexOf(player)).setVisible(false);
             }
         });
 
@@ -518,7 +511,9 @@ public class Game implements Initializable {
      */
     @FXML
     private void assistant() throws IOException {
-        this.gui.openNewWindow("ChooseAssistantCard");
+        if (this.gui.getClientModel().getTypeOfRequest().equals("CHOOSEASSISTANTCARD")) {
+            this.gui.openNewWindow("ChooseAssistantCard");
+        }
     }
 
     /**
@@ -526,7 +521,9 @@ public class Game implements Initializable {
      */
     @FXML
     private void setOnSchool() throws IOException {
-        this.gui.openNewWindow("MoveToSchool");
+        if (this.gui.getClientModel().getTypeOfRequest().equals("CHOOSEWHERETOMOVESTUDENTS")) {
+            this.gui.openNewWindow("MoveToSchool");
+        }
     }
 
     /**
@@ -534,7 +531,9 @@ public class Game implements Initializable {
      */
     @FXML
     private void setOnIsland() throws IOException {
-        this.gui.openNewWindow("MoveToIsland");
+        if (this.gui.getClientModel().getTypeOfRequest().equals("CHOOSEWHERETOMOVESTUDENTS")) {
+            this.gui.openNewWindow("MoveToIsland");
+        }
     }
 
     /**
@@ -542,7 +541,9 @@ public class Game implements Initializable {
      */
     @FXML
     private void move() throws IOException {
-        this.gui.openNewWindow("MoveMotherNature");
+        if (this.gui.getClientModel().getTypeOfRequest().equals("CHOOSEWHERETOMOVEMOTHER")) {
+            this.gui.openNewWindow("MoveMotherNature");
+        }
     }
 
     /**
@@ -550,7 +551,9 @@ public class Game implements Initializable {
      */
     @FXML
     private void cloud() throws IOException {
-        this.gui.openNewWindow("ChooseCloud");
+        if (this.gui.getClientModel().getTypeOfRequest().equals("CHOOSECLOUDS")) {
+            this.gui.openNewWindow("ChooseCloud");
+        }
     }
 
     /**
