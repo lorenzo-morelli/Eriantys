@@ -38,9 +38,9 @@ public class SetupGame implements Initializable {
     @FXML
     private Label otherPlayersLabel = new Label();
     @FXML
-    public Label numberOfPlayersLabel;
+    private Label numberOfPlayersLabel;
     @FXML
-    public Label gameModeLabel;
+    private Label gameModeLabel;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -129,37 +129,37 @@ public class SetupGame implements Initializable {
                 }
             }
             notRead = false;
-            ClientModel tryreceivedClientModel = gson.fromJson(message.getParameter(0), ClientModel.class);
-            if (!Objects.equals(tryreceivedClientModel.getTypeOfRequest(), "CONNECTTOEXISTINGGAME")) {
+            ClientModel clientModel = gson.fromJson(message.getParameter(0), ClientModel.class);
+            if (!Objects.equals(clientModel.getTypeOfRequest(), "CONNECTTOEXISTINGGAME")) {
                 if (Network.disconnectedClient()) {
                     Network.disconnect();
                     System.out.println("Il gioco è terminato a causa della disconnessione di un client");
                     isToReset = true;
                 }
-                if (tryreceivedClientModel.isGameStarted() && tryreceivedClientModel.NotisKicked()) {
+                if (clientModel.isGameStarted() && clientModel.NotisKicked()) {
                     waitForFirst = false;
-                    if (!tryreceivedClientModel.isResponse() && tryreceivedClientModel.getTypeOfRequest() != null) {
-                        if (tryreceivedClientModel.getClientIdentity() == myID) {
+                    if (!clientModel.isResponse() && clientModel.getTypeOfRequest() != null) {
+                        if (clientModel.getClientIdentity() == myID) {
                             try {
                                 System.out.println("request to me");
-                                if (tryreceivedClientModel.isPingMessage()) {
+                                if (clientModel.isPingMessage()) {
                                     gui.requestPing();
                                 } else {
-                                    gui.setClientModel(tryreceivedClientModel);
+                                    gui.setClientModel(clientModel);
                                     gui.requestToMe();
                                 }
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
                         }
-                        if (!notDone && tryreceivedClientModel.getClientIdentity() != myID && tryreceivedClientModel.getTypeOfRequest() != null &&
-                                !tryreceivedClientModel.isPingMessage() &&
-                                !tryreceivedClientModel.getTypeOfRequest().equals("TRYTORECONNECT") &&
-                                !tryreceivedClientModel.getTypeOfRequest().equals("DISCONNECTION")) {
+                        if (!notDone && clientModel.getClientIdentity() != myID && clientModel.getTypeOfRequest() != null &&
+                                !clientModel.isPingMessage() &&
+                                !clientModel.getTypeOfRequest().equals("TRYTORECONNECT") &&
+                                !clientModel.getTypeOfRequest().equals("DISCONNECTION")) {
                             try {
 
                                 System.out.println("request to other");
-                                gui.setClientModel(tryreceivedClientModel);
+                                gui.setClientModel(clientModel);
                                 gui.requestToOthers();
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
@@ -172,6 +172,4 @@ public class SetupGame implements Initializable {
         }
         while (!isToReset && !notDone);
     }
-
-
 }

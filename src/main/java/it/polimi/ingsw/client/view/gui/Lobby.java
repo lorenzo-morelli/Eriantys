@@ -79,31 +79,31 @@ public class Lobby implements Initializable {
                 }
             }
             notRead = false;
-            ClientModel tryreceivedClientModel = gson.fromJson(message.getParameter(0), ClientModel.class);
-            if (!Objects.equals(tryreceivedClientModel.getTypeOfRequest(), "CONNECTTOEXISTINGGAME")) {
+            ClientModel clientModel = gson.fromJson(message.getParameter(0), ClientModel.class);
+            if (!Objects.equals(clientModel.getTypeOfRequest(), "CONNECTTOEXISTINGGAME")) {
                 if (Network.disconnectedClient()) {
                     Network.disconnect();
                     System.out.println("Il gioco è terminato a causa della disconnessione di un client");
                     isToReset = true;
                 }
 
-                if (tryreceivedClientModel.isGameStarted() && tryreceivedClientModel.NotisKicked()) {
+                if (clientModel.isGameStarted() && clientModel.NotisKicked()) {
 
                     // Il messaggio è o una richiesta o una risposta
 
                     // se il messaggio non è una risposta di un client al server vuol dire che
-                    if (!tryreceivedClientModel.isResponse() && tryreceivedClientModel.getTypeOfRequest() != null) {
+                    if (!clientModel.isResponse() && clientModel.getTypeOfRequest() != null) {
                         // il messaggio è una richiesta del server alla view di un client
 
                         // se il messaggio è rivolto a me devo essere io a compiere l'azione
-                        if (tryreceivedClientModel.getClientIdentity() == myID) {
+                        if (clientModel.getClientIdentity() == myID) {
                             // il messaggio è rivolto a me
                             try {
                                 System.out.println("request to me");
-                                if (tryreceivedClientModel.isPingMessage()) {
+                                if (clientModel.isPingMessage()) {
                                     gui.requestPing();
                                 } else {
-                                    gui.setClientModel(tryreceivedClientModel);
+                                    gui.setClientModel(clientModel);
                                     gui.requestToMe();
                                 }
                             } catch (IOException e) {
@@ -111,13 +111,13 @@ public class Lobby implements Initializable {
                             }
                         }
 
-                        if (!notdone && tryreceivedClientModel.getClientIdentity() != myID && tryreceivedClientModel.getTypeOfRequest() != null &&
-                                !tryreceivedClientModel.isPingMessage() &&
-                                !tryreceivedClientModel.getTypeOfRequest().equals("TRYTORECONNECT") &&
-                                !tryreceivedClientModel.getTypeOfRequest().equals("DISCONNECTION")) {
+                        if (!notdone && clientModel.getClientIdentity() != myID && clientModel.getTypeOfRequest() != null &&
+                                !clientModel.isPingMessage() &&
+                                !clientModel.getTypeOfRequest().equals("TRYTORECONNECT") &&
+                                !clientModel.getTypeOfRequest().equals("DISCONNECTION")) {
                             try {
                                 System.out.println("request to other");
-                                gui.setClientModel(tryreceivedClientModel);
+                                gui.setClientModel(clientModel);
                                 gui.requestToOthers();
                             } catch (IOException e) {
                                 throw new RuntimeException(e);

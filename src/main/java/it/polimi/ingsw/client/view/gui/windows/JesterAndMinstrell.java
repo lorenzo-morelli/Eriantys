@@ -18,6 +18,7 @@ import java.util.Collections;
 import java.util.ResourceBundle;
 
 import static it.polimi.ingsw.client.GUI.currentCharacter;
+import static it.polimi.ingsw.client.GUI.isCardUsed;
 
 public class JesterAndMinstrell implements Initializable {
     private final GUI gui = new GUI();
@@ -158,10 +159,11 @@ public class JesterAndMinstrell implements Initializable {
 
     /**
      * This method is used to populate with the choosen color
-     * @param students the student images to get the click event from.
+     *
+     * @param students   the student images to get the click event from.
      * @param studentSet the student set with all the available students.
-     * @param colors the list to update.
-     * @param index the index of the list to update.
+     * @param colors     the list to update.
+     * @param index      the index of the list to update.
      */
     private void populateList(ArrayList<ImageView> students, StudentSet studentSet, ArrayList<PeopleColor> colors, int index) {
         students.forEach(student -> student.setOnMouseClicked(event -> {
@@ -205,26 +207,41 @@ public class JesterAndMinstrell implements Initializable {
 
     /**
      * This event is used to activate the effect of the card, after filling in the specifications.
+     *
      * @param mouseEvent the event to close the window.
      */
     @FXML
     private void okay(MouseEvent mouseEvent) throws InterruptedException {
-        this.gui.getClientModel().setTypeOfRequest(currentCharacter.getName());
-        this.gui.getClientModel().setResponse(true); //lo flaggo come messaggio di risposta
-        this.gui.getClientModel().setPingMessage(false);
-        if (currentCharacter.getName().equals("MINSTRELL")) {
-            entranceMinstrell.removeAll(Collections.singletonList(null));
-            diningMinstrell.removeAll(Collections.singletonList(null));
-            this.gui.getClientModel().setColors1(entranceMinstrell);
-            this.gui.getClientModel().setColors2(diningMinstrell);
+        entranceMinstrell.removeAll(Collections.singletonList(null));
+        diningMinstrell.removeAll(Collections.singletonList(null));
+        jester.removeAll(Collections.singletonList(null));
+        entranceJester.removeAll(Collections.singletonList(null));
+        if (isCardUsed) {
+            notice.setText("You can use only one card at a time!");
+        } else if (this.gui.getClientModel().getServermodel().getcurrentPlayer().getCoins() < currentCharacter.getCost()) {
+            notice.setText("You don't have enough coins! :(");
+        } else if (entranceMinstrell.size() != diningMinstrell.size() || jester.size() != entranceJester.size()) {
+            notice.setText("You must select the same quantity of students! Please try again.");
+            entranceMinstrell = new ArrayList<>(Arrays.asList(null, null));
+            diningMinstrell = new ArrayList<>(Arrays.asList(null, null));
+            jester = new ArrayList<>(Arrays.asList(null, null, null));
+            entranceJester = new ArrayList<>(Arrays.asList(null, null, null));
         } else {
-            jester.removeAll(Collections.singletonList(null));
-            entranceJester.removeAll(Collections.singletonList(null));
-            this.gui.getClientModel().setColors1(entranceJester);
-            this.gui.getClientModel().setColors2(jester);
+            this.gui.getClientModel().setTypeOfRequest(currentCharacter.getName());
+            this.gui.getClientModel().setResponse(true); //lo flaggo come messaggio di risposta
+            this.gui.getClientModel().setPingMessage(false);
+            if (currentCharacter.getName().equals("MINSTRELL")) {
+                this.gui.getClientModel().setColors1(entranceMinstrell);
+                this.gui.getClientModel().setColors2(diningMinstrell);
+            } else {
+                this.gui.getClientModel().setColors1(entranceJester);
+                this.gui.getClientModel().setColors2(jester);
+            }
+            Gson gson = new Gson();
+            Network.send(gson.toJson(this.gui.getClientModel()));
+            isCardUsed = true;
+            this.gui.closeWindow(mouseEvent);
         }
-        Gson gson = new Gson();
-        Network.send(gson.toJson(this.gui.getClientModel()));
-        this.gui.closeWindow(mouseEvent);
+
     }
 }

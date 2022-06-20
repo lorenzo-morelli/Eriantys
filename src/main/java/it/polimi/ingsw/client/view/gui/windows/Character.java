@@ -21,6 +21,7 @@ import java.util.Arrays;
 import java.util.ResourceBundle;
 
 import static it.polimi.ingsw.client.GUI.currentCharacter;
+import static it.polimi.ingsw.client.GUI.isCardUsed;
 
 public class Character implements Initializable {
     private final GUI gui = new GUI();
@@ -224,7 +225,13 @@ public class Character implements Initializable {
     }
 
     public void okay(MouseEvent mouseEvent) throws InterruptedException {
-        if (flagColor && flagIsland) {
+        if (isCardUsed) {
+            notice.setText("You can use only one card at a time!");
+        } else if (this.gui.getClientModel().getServermodel().getcurrentPlayer().getCoins() < currentCharacter.getCost()) {
+            notice.setText("You don't have enough coins! :(");
+        } else if (!flagColor || !flagIsland) {
+            notice.setText("Information missing!");
+        } else {
             this.gui.getClientModel().setTypeOfRequest(currentCharacter.getName());
             this.gui.getClientModel().setResponse(true); //lo flaggo come messaggio di risposta
             this.gui.getClientModel().setPingMessage(false);
@@ -236,9 +243,8 @@ public class Character implements Initializable {
             }
             Gson gson = new Gson();
             Network.send(gson.toJson(this.gui.getClientModel()));
+            isCardUsed = true;
             this.gui.closeWindow(mouseEvent);
-        } else {
-            notice.setText("Information missing!");
         }
     }
 }

@@ -448,19 +448,15 @@ public class Game implements Initializable {
             characterCards.forEach(card -> characterCardsImages.get(characterCards.indexOf(card)).setOnMouseClicked(event -> {
                 if (!this.gui.getClientModel().getTypeOfRequest().equals("CHOOSEASSISTANTCARD")) {
                     int cost = card.getCost();
-                    if (currentPlayer.getCoins() >= cost) {
-                        currentCharacter = card;
-                        try {
-                            if (currentCharacter.getName().equals("MINSTRELL") || currentCharacter.getName().equals("JESTER")) {
-                                gui.openNewWindow("JesterAndMinstrell");
-                            } else {
-                                gui.openNewWindow("Character");
-                            }
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                    currentCharacter = card;
+                    try {
+                        if (currentCharacter.getName().equals("MINSTRELL") || currentCharacter.getName().equals("JESTER")) {
+                            gui.openNewWindow("JesterAndMinstrell");
+                        } else {
+                            gui.openNewWindow("Character");
                         }
-                    } else {
-                        System.out.println("non puoi!");
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
                 }
             }));
@@ -558,9 +554,10 @@ public class Game implements Initializable {
 
     /**
      * This method helps to populate a grid with students.
-     * @param grid the grid to populate.
-     * @param init the first position to start from.
-     * @param cols the numbers of columns to fill.
+     *
+     * @param grid       the grid to populate.
+     * @param init       the first position to start from.
+     * @param cols       the numbers of columns to fill.
      * @param studentSet the set of student to fill the grid with.
      */
     public void populateGrid(GridPane grid, int init, int cols, StudentSet studentSet) {
@@ -604,8 +601,9 @@ public class Game implements Initializable {
 
     /**
      * This method is used to resize an ImageView.
+     *
      * @param image the image to resize.
-     * @param size the size of the image.
+     * @param size  the size of the image.
      */
     private void imageResize(ImageView image, int size) {
         image.setFitHeight(size);
@@ -615,6 +613,7 @@ public class Game implements Initializable {
     /**
      * This method helps to map the elements visually in the correct place with a given color, for example
      * green should be in the position 0, while yellow in the position 2.
+     *
      * @param color the chosen color.
      * @return the index corresponding to the chosen color.
      */
@@ -643,8 +642,9 @@ public class Game implements Initializable {
 
     /**
      * This method is used to convert the character cards into images.
+     *
      * @param characterCard the list of the character cards provided by the client model.
-     * @param images the list of images to change based of the right character cards.
+     * @param images        the list of images to change based of the right character cards.
      */
     private void toImageCharacters(ArrayList<CharacterCard> characterCard, List<ImageView> images) {
         for (int i = 0; i < 3; i++) {

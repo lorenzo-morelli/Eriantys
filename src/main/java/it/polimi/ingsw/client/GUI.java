@@ -24,6 +24,7 @@ public class GUI extends Application {
     public static String messageToOthers = "aa";
     public static Node currNode = null;
     public static boolean myTurn = false;
+    public static boolean isCardUsed = false;
     public static CharacterCard currentCharacter = null;
 
     /**
@@ -137,6 +138,7 @@ public class GUI extends Application {
     public synchronized void requestToOthers() throws IOException {
         //todo rimuovere tutti i print
         myTurn = false;
+        isCardUsed = false;
         Network.setClientModel(GUI.clientModel);
         switch (GUI.clientModel.getTypeOfRequest()) {
             case "CHOOSEASSISTANTCARD":
