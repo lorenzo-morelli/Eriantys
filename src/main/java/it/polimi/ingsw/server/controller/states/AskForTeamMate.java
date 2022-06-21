@@ -91,11 +91,11 @@ public class AskForTeamMate extends State {
 
         ClientModel received = json.fromJson(message.getParameter(0), ClientModel.class);
 
-        model = new Model(connectionModel.getNumOfPlayers(), connectionModel.getGameMode());
-        model.getPlayers().add(new Player(received.getNicknames().get(3), connectionModel.findPlayer(received.getNicknames().get(3)).getMyIp(),1, model));
-        model.getPlayers().add(new Player(received.getNicknames().get(2), connectionModel.findPlayer(received.getNicknames().get(2)).getMyIp(),1, model));
-        model.getPlayers().add(new Player(received.getNicknames().get(1), connectionModel.findPlayer(received.getNicknames().get(1)).getMyIp(),2, model));
-        model.getPlayers().add(new Player(received.getNicknames().get(0), connectionModel.findPlayer(received.getNicknames().get(0)).getMyIp(),2, model));
+        model = new Model(connectionModel.getNumOfPlayers(), connectionModel.getGameMode(),false);
+        model.getPlayers().add(new Player(received.getNicknames().get(3), connectionModel.findPlayer(received.getNicknames().get(3)).getMyIp(),1, model,false));
+        model.getPlayers().add(new Player(received.getNicknames().get(2), connectionModel.findPlayer(received.getNicknames().get(2)).getMyIp(),1, model,false));
+        model.getPlayers().add(new Player(received.getNicknames().get(1), connectionModel.findPlayer(received.getNicknames().get(1)).getMyIp(),2, model,false));
+        model.getPlayers().add(new Player(received.getNicknames().get(0), connectionModel.findPlayer(received.getNicknames().get(0)).getMyIp(),2, model,false));
         model.randomschedulePlayers();
 
 

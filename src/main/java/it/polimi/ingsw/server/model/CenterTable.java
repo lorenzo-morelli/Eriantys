@@ -9,7 +9,6 @@ import java.util.Collections;
 import java.util.Random;
 
 public class CenterTable {
-    private boolean debug=false; //non cancellare, serve per il test, solo mettere a false
     private final ArrayList<Cloud> clouds;
     private final ArrayList<Island> islands;
     private int motherNaturePosition;
@@ -27,7 +26,7 @@ public class CenterTable {
     public static final String ANSI_CYAN = "\033[0;36m";
     public static final String ANSI_RESET = "\u001B[0m";
 
-    public CenterTable(int numOfPlayers, GameMode gamemode) {
+    public CenterTable(int numOfPlayers, GameMode gamemode, boolean debug) {
 
         islands = new ArrayList<>();
         StudentSet island_bag = new StudentSet(2, 2, 2, 2, 2);
@@ -72,51 +71,33 @@ public class CenterTable {
             };
 
             if (debug){
-                for (int i = 0; i < Character.values().length ; i++) {
-                    picks.add(i);
-                    switch (Character.values()[i]) {
-                        case MONK:
                             characterCards.add(new Monk(bag));
-                            monkSet = ((Monk) characterCards.get(i)).getSet();
-                            break;
-                        case THIEF:
+                            monkSet = ((Monk) characterCards.get(0)).getSet();
+
                             characterCards.add(new Thief());
-                            break;
-                        case FARMER:
+
                             characterCards.add(new Farmer());
-                            break;
-                        case GRANNY:
+
                             characterCards.add(new Granny());
-                            numDivieti = ((Granny) characterCards.get(i)).getNumDivieti();
-                            break;
-                        case HERALD:
+                            numDivieti = ((Granny) characterCards.get(3)).getNumDivieti();
+
                             characterCards.add(new Herald());
-                            break;
-                        case JESTER:
+
                             characterCards.add(new Jester(bag));
-                            jesterSet = ((Jester) characterCards.get(i)).getSet();
-                            break;
-                        case KNIGHT:
+                            jesterSet = ((Jester) characterCards.get(5)).getSet();
+
                             characterCards.add(new Knight());
-                            break;
-                        case CENTAUR:
+
                             characterCards.add(new Centaur());
-                            break;
-                        case POSTMAN:
+
                             characterCards.add(new Postman());
-                            break;
-                        case PRINCESS:
+
                             characterCards.add(new Princess(bag));
-                            princessSet = ((Princess) characterCards.get(i)).getSet();
-                            break;
-                        case MINSTRELL:
+                            princessSet = ((Princess) characterCards.get(9)).getSet();
+
                             characterCards.add(new Minstrel());
-                            break;
-                        case MUSHROOM_HUNTER:
+
                             characterCards.add(new MushroomHunter());
-                            break;
-                    }
-                }
             }
             else {
                 for (int i = 0; i < 3; i++) {
@@ -385,10 +366,6 @@ public class CenterTable {
 
     public int getNumDivieti() {
         return numDivieti;
-    }
-
-    public void setDebug(boolean debug) {
-        this.debug = debug;
     }
 
 }

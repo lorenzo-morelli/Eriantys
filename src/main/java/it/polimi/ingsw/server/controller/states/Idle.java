@@ -8,6 +8,6 @@ public class Idle extends State {
      * are done in this state, is just a label for "do no operation".
      */
     public Idle() {
-        super("[STATO di IDLE]");
+        super("[Idle State]");
     }
 }

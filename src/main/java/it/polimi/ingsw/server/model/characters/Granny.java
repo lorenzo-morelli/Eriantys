@@ -17,6 +17,7 @@ public class Granny extends CharacterCard{
     public void useEffect(Player player,int index_island,CenterTable table) {
         player.reduceCoin(getCost());
         improveCost();
+        numDivieti--;
         table.getIslands().get(index_island).setBlocked(true);
     }
 

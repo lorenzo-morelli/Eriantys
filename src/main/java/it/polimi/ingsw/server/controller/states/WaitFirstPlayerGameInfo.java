@@ -22,7 +22,8 @@ public class WaitFirstPlayerGameInfo extends State {
     private final ConnectionModel connectionModel;
 
     private final ParametersFromNetwork message;
-    private final Event reset = new ClientDisconnection();
+    private final Event reset;
+
 
     /**
      * Main constructor
@@ -34,6 +35,7 @@ public class WaitFirstPlayerGameInfo extends State {
         message = new ParametersFromNetwork(1);
         message.setStateEventListener(controller);
         this.controller = ServerController.getFsm();
+        reset = new Event("Network issues, server goes to WaitForPlayerConnection");
         reset.setStateEventListener(controller);
         this.connectionModel = serverController.getConnectionModel();
     }

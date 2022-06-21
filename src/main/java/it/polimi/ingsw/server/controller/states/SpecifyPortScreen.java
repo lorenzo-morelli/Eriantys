@@ -54,7 +54,7 @@ public class SpecifyPortScreen extends State {
     public IEvent entryAction(IEvent cause) throws Exception {
         if (!Network.isServerListening()) {
             CommandPrompt.ask(
-                    "Enter the port for Client Connection [ENTER with empty string: default port 1234]",
+                    "Enter the port for Clients Connection [ENTER with empty string: default port 1234]",
                     "Port >");
         }
         // empty string --> default port

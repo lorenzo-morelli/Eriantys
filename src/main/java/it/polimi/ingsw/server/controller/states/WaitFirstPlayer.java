@@ -1,11 +1,10 @@
 package it.polimi.ingsw.server.controller.states;
 
 import com.google.gson.Gson;
-import it.polimi.ingsw.client.view.cli.CLIcontroller.events.ClientDisconnection;
 import it.polimi.ingsw.client.model.ClientModel;
+import it.polimi.ingsw.client.view.cli.CommandPrompt;
 import it.polimi.ingsw.server.controller.ConnectionModel;
 import it.polimi.ingsw.server.controller.ServerController;
-import it.polimi.ingsw.client.view.cli.CommandPrompt;
 import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
 import it.polimi.ingsw.utils.stateMachine.Controller;
@@ -25,7 +24,7 @@ public class WaitFirstPlayer extends State {
     private Controller controller;
     private final ConnectionModel connectionModel;
     private final ParametersFromNetwork firstMessage;
-    private final Event reset = new ClientDisconnection();
+    private final Event reset;
 
     /**
      * Main constructor
@@ -37,6 +36,7 @@ public class WaitFirstPlayer extends State {
         firstMessage = new ParametersFromNetwork(1);
         firstMessage.setStateEventListener(controller);
         this.controller = ServerController.getFsm();
+        reset = new Event("Network issues, server goes to WaitForPlayerConnection");
         reset.setStateEventListener(controller);
         this.connectionModel = serverController.getConnectionModel();
     }

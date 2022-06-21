@@ -22,8 +22,9 @@ public class Model {
     public static final String ANSI_BLACK = "\u001B[30m";
     public static final String ANSI_WHITE="\033[1;97m";
     public static final String ANSI_GRAY="\033[1;90m";
-    public Model(int numofplayer, String gamemode) {
+    public Model(int numofplayer, String gamemode, boolean debug) {
 
+    //    debug=true; //TODO: DELETE AFTER TESTING
         this.islastturn = false;
         this.currentplayer = 0;
         this.players = new ArrayList<>();
@@ -37,7 +38,7 @@ public class Model {
                 break;
         }
         this.turnNumber = 0;
-        this.table = new CenterTable(numofplayer, this.gameMode);
+        this.table = new CenterTable(numofplayer, this.gameMode, debug);
         if (numofplayer == 4) {
             teams = new ArrayList<>();
             teams.add(new Team(1));

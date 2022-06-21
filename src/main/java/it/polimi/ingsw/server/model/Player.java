@@ -4,7 +4,6 @@ import it.polimi.ingsw.server.model.enums.GameMode;
 import java.util.Objects;
 
 public class Player implements Comparable<Player>{
-    private boolean debug=false; //non cancellare, serve per il test, solo mettere a false
     private String nickname;
     private final Deck availableCards;
     private AssistantCard choosedCard;
@@ -17,8 +16,9 @@ public class Player implements Comparable<Player>{
     public static final String ANSI_GRAY="\033[1;90m";
     private boolean isDisconnected;
 
-    public Player(String nickname,String Ip,Model model) {
+    public Player(String nickname,String Ip,Model model,boolean debug) {
         // crea e assegna valori di default
+     //   debug=true; //TODO: DELETE AFTER TESTING
         this.nickname = nickname;
         this.Ip = Ip;
         this.availableCards = new Deck();
@@ -35,7 +35,7 @@ public class Player implements Comparable<Player>{
         isDisconnected=false;
     }
     //requies teamnumber== "1 or 2" e un controllo che fa riscegliere il team se team è gia pieno :team.isFull())
-    public Player(String nickname,String Ip,int teamnumber,Model model) {
+    public Player(String nickname,String Ip,int teamnumber,Model model,boolean debug) {
         if(teamnumber<3 && teamnumber>0) {
             this.nickname = nickname;
             this.Ip = Ip;
@@ -150,7 +150,4 @@ public class Player implements Comparable<Player>{
         this.nickname = nickname;
     }
 
-    public void setDebug(boolean debug) {
-        this.debug = debug;
-    }
 }
