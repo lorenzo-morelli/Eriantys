@@ -16,7 +16,4 @@ public class Main {
         Gson gson = new Gson();
         String json = gson.toJson(user);
     }
-    private static void deserializeUserSimple(){
-        String userJson = "";
-    }
 }

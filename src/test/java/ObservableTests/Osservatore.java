@@ -6,7 +6,7 @@ public class Osservatore implements Observer {
 
     private final Subject subject;
     private String desc;   // risorsa che voglio che sia sincronizzata col soggetto
-    private String userInfo;
+    private final String userInfo;
 
     public Osservatore(Subject subject, String userInfo) {
         if (subject==null){
@@ -22,7 +22,6 @@ public class Osservatore implements Observer {
 
     /**
      * metodo che verrà chiamato dal Soggetto per sincronizzarlo con il suo
-     * @param desc
      */
     public void update(Object desc) {
         this.desc = (String)desc;

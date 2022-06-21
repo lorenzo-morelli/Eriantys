@@ -267,7 +267,7 @@ public class NetworkHandler {
                     } catch (IOException ignored) {
                     }
                 }
-                System.out.println("[Il server sta chiudendo]");
+                System.out.println("[Server is Closing]");
                 closeConnection();
             }
         }

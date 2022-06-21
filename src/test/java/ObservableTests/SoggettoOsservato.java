@@ -8,11 +8,9 @@ import java.util.List;
 public class SoggettoOsservato implements Subject {
     private final List<Observer> observers;
     private String desc;
-    private final String subjectDetails;
 
     public SoggettoOsservato(List<Observer> observers, String subjectDetails) {
         this.observers = observers;
-        this.subjectDetails = subjectDetails;
     }
 
     public void subscribeObserver(Observer observer) {
@@ -25,18 +23,15 @@ public class SoggettoOsservato implements Subject {
     }
 
     public void unsubscribeObserver(Observer observer) {
-        int index = observers.indexOf(observer);
-        observers.remove(index);
+        observers.remove(observer);
     }
 
     public void notifyObservers() {
         System.out.println();
-        observers.stream().forEach(observer -> {
+        observers.forEach(observer -> {
             try {
                 observer.update(desc);
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
+            } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
             } catch (Exception e) {
                 throw new RuntimeException(e);
@@ -45,7 +40,4 @@ public class SoggettoOsservato implements Subject {
 
     }
 
-    public String subjectDetails() {
-        return subjectDetails;
-    }
 }

@@ -1,8 +1,8 @@
 package it.polimi.ingsw.utils.stateMachine;
 
-import java.io.IOException;
 import java.util.Hashtable;
 import java.util.LinkedList;
+import java.util.Objects;
 
 /**
  * This class provides a mechanism for creating transitions between states
@@ -11,7 +11,7 @@ import java.util.LinkedList;
  * For example, if we wanted to use the keyboard to govern a finite state machine
  * if you only agree to write the word "lode", the table of states would be like this:
  *
- *                          Stati:
+ *                          States:
  *             starting   l    lo   lod   lode (ending state)
  * eventi    |------------------------------|
  *     l     |    >l      x    x      x     |
@@ -41,20 +41,15 @@ import java.util.LinkedList;
 
 public class Controller {
     private boolean hideDebugMessages = true;
-    public final static Object STATE_DO_NOTHING=null;
 
     /** Stores all the transitions */
-    private final StateTableWithNestedHashtables states = new StateTableWithNestedHashtables();
-    /** Lo stato corrente del controllore,non puo'essere null */
+    private final StateTableWithNestedHashtable states = new StateTableWithNestedHashtable();
+    /** Current state of the controller*/
     private IState currentState;
     /** the name of the controller for debug purpose only*/
     private final String name;
     /** The event queue */
-    private final LinkedList<IEvent> events = new LinkedList<IEvent>();
-    /**
-     * Flag to throws exception if the event was not expected for the current state
-     */
-    private boolean exceptOnIllegal = true;
+    private final LinkedList<IEvent> events = new LinkedList<>();
 
     /**
      *  The entryAction of the first state will not be called, because no event triggered it
@@ -106,7 +101,7 @@ public class Controller {
                 colNo = -1;
                 continue;
             }
-            // Keep a running count of what column of the row we are on so we
+            // Keep a running count of what column of the row we are on, so we
             // can find a source event
             // (index into the top row of the table.) A nice check to add here
             // would be to make sure
@@ -120,7 +115,7 @@ public class Controller {
 
             // Just an easy sanity check
             if (!(cell instanceof IState)) {
-                throw new IllegalArgumentException("Item found in table not IState, IStateEvent or null, itemno:" + i);
+                throw new IllegalArgumentException("Item found in table not IState, IStateEvent or null, item:" + i);
             }
 
             // We have identified a "next state" in the node, a "starting state"
@@ -128,6 +123,7 @@ public class Controller {
             // header at the top of this column, and a transition (the last
             // event we hit)
             // Add the transition.
+            assert readingEvent != null;
             addTransition((IState) stateTable[colNo], readingEvent, (IState) cell);
         }
     }
@@ -148,20 +144,9 @@ public class Controller {
     public void addTransition(IState startingState, IEvent ev, IState nextState) {
         ev.setStateEventListener(this);
         if (!hideDebugMessages) {
-            System.out.println(this + " Transizione (" + startingState + "," + ev + ") --> " + nextState + " aggiunta");
+            System.out.println(this + " Transition (" + startingState + "," + ev + ") --> " + nextState + " added");
         }
         states.addTransition(startingState, ev, nextState);
-    }
-
-    /**
-     * True by default, if it is set to false and an event not among those allowed occurs it will be
-     * simply ignored.
-     *
-     * @param except
-     *            false to stop all the exceptions.
-     */
-    public void setExceptionOnIllegalTransiction(boolean except) {
-        this.exceptOnIllegal = except;
     }
 
     /**
@@ -205,9 +190,10 @@ public class Controller {
             if (tmp == null && events.size() == 1) {
                 // Default Route
 
-                if (exceptOnIllegal) {
-                    throw new IllegalStateException(this + " can not accept event \"" + ev + "\" when in state \"" + currentState + "\"");
-                }
+                /*
+                 * Flag to throw exception if the event was not expected for the current state
+                 */
+                throw new IllegalStateException(this + " can not accept event \"" + ev + "\" when in state \"" + currentState + "\"");
 
             } else if (tmp != null ){
                 if (!hideDebugMessages) {
@@ -243,21 +229,16 @@ public class Controller {
     }
 
     /**
-     * ReimplementationtoString for logging. FSM=Finite State Machine
+     * Reimplementation of String for logging. FSM=Finite State Machine
      *
-     * @return
      */
     public String toString() {
         return "[FSM " + name + "]";
     }
     private ITransitionListener setListener;
 
-    public void addStateEngineTransactionListener(ITransitionListener testEventsMatrix) {
-        this.setListener = testEventsMatrix;
-    }
-
     /**
-     * Show the log informations
+     * Show the log information
      */
     public void showDebugMessages(){
         hideDebugMessages = false;
@@ -272,12 +253,12 @@ public class Controller {
         * If "startingState" is the string "Default", it means to use this event for all startingStates
         * If nextState is "EMPTY" it means to block a default event from this startingState
         *
-        * This can be implemented in a few ways. If we were to gaurentee that Events and States
+        * This can be implemented in a few ways. If we were to guarantee that Events and States
         * had unique .toStrings () then we could use a lookup like Event.toString () + "+" + State.toString ()
         *
         * That's why this module is extracted - it's replaceable.
  * */
-class StateTableWithNestedHashtables {
+class StateTableWithNestedHashtable {
 
     private final Hashtable states = new Hashtable();
 
@@ -289,17 +270,9 @@ class StateTableWithNestedHashtables {
         }
 
         Object next;
-        if (nextState != null) {
-            next = nextState;
-        } else {
-            next = "EMPTY";
-        }
+        next = Objects.requireNonNullElse(nextState, "EMPTY");
 
-        if (startingState == null) {
-            h.put("Default", next);
-        } else {
-            h.put(startingState, next);
-        }
+        h.put(Objects.requireNonNullElse(startingState, "Default"), next);
     }
 
     public IState findTransition(IState currentState, IEvent ev) {

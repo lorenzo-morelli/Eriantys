@@ -1,22 +1,20 @@
 package it.polimi.ingsw.utils.observerPattern;
 
 
-import java.io.IOException;
-
 public interface Observer {
     /**
-     * se vieni notificato cosa vuoi fare?
+     * update
      */
-    public  void update(Object message) throws Exception;
+    void update(Object message) throws Exception;
 
     /**
-     * iscriviti
+     * subscribe
      */
-    public void subscribe();
+    void subscribe();
 
     /**
-     * disiscriviti
+     * unsubscribe
      */
-    public void unSubscribe();
+    void unSubscribe();
 
 }

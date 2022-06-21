@@ -1,17 +1,13 @@
 package it.polimi.ingsw.utils.stateMachine;
 
-import java.io.IOException;
-
 /**
  * A default class to implement the IEvent interface.
  * What it does is take care of the listener and the toString method.
  */
 public class Event implements IEvent {
 
-    private String name;
+    private final String name;
     private Controller listener;
-
-    private boolean enabled = false;
 
     /**
      * Constructor to force naming of each event.
@@ -52,10 +48,8 @@ public class Event implements IEvent {
     }
 
     public void enable(){
-        enabled = true;
     }
 
     public void disable(){
-        enabled = false;
     }
 }

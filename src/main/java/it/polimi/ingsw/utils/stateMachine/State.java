@@ -22,8 +22,6 @@ public class State implements IState {
      * If a value is returned, this status + the returned event MUST
      * be in the transaction table (to ensure that the transaction table is complete)
      *
-     *
-     * @param cause
      * @return any event but NULL causes the system to go straight to that state.
      */
     public IEvent entryAction(IEvent cause) throws Exception {

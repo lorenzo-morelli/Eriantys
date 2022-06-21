@@ -113,8 +113,8 @@ public class SetupGame implements Initializable {
                 });
                 thread.start();
                 DoubleObject response = ((DoubleObject) Platform.enterNestedEventLoop(PAUSE_KEY));
-                boolean check = response.isRespo();
-                message = response.getParame();
+                boolean check = response.isResp();
+                message = response.getParam();
                 if (check && waitForFirst) {
                     waiting(System.currentTimeMillis() + 40000L);
                     return;

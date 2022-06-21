@@ -5,5 +5,5 @@ package it.polimi.ingsw.utils.stateMachine;
  */
 public interface ITransitionListener  {
 
-    public void newState(IState state, IEvent cause);
+    void newState(IState state, IEvent cause);
 }

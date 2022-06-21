@@ -2,20 +2,20 @@ package it.polimi.ingsw.utils.observerPattern;
 
 public interface Subject {
     /**
-     * permette ad un osservatore di iscriversi all'elenco degli osservatori
-     * che saranno poi notificati in caso di cambiamento di stato
+     * allows an observer to subscribe to the list of observers
+     * which will then be notified in the event of a change of status
      */
-    public void subscribeObserver(Observer observer);
+    void subscribeObserver(Observer observer);
 
     /**
-     * permette ad un osservatore di disiscriversi all'elenco degli osservatori
-     * che saranno poi notificati in caso di cambiamento di stato
+     * allows an observer to unsubscribe from the observer list
+     * which will then be notified in the event of a change of status
      */
-    public void unsubscribeObserver(Observer observer);
+    void unsubscribeObserver(Observer observer);
 
     /**
-     * notifica tutti gli osservatori
+     * notify all the observers
      */
-    public void notifyObservers();
+    void notifyObservers();
 
 }

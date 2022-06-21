@@ -65,8 +65,8 @@ public class Lobby implements Initializable {
                 thread.start();
 
                 DoubleObject responce = ((DoubleObject) Platform.enterNestedEventLoop(PAUSE_KEY));
-                boolean check = responce.isRespo();
-                message = responce.getParame();
+                boolean check = responce.isResp();
+                message = responce.getParam();
 
 
                 if (check) {
