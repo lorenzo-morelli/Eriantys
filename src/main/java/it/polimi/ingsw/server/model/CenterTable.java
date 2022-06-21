@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.Random;
 
 public class CenterTable {
+    private boolean debug=false; //non cancellare, serve per il test, solo mettere a false
     private final ArrayList<Cloud> clouds;
     private final ArrayList<Island> islands;
     private int motherNaturePosition;
@@ -70,8 +71,6 @@ public class CenterTable {
                 int pick;
             };
 
-            // todo: change to unlock all the character cards
-            boolean debug = false;
             if (debug){
                 for (int i = 0; i < Character.values().length ; i++) {
                     picks.add(i);
@@ -387,4 +386,9 @@ public class CenterTable {
     public int getNumDivieti() {
         return numDivieti;
     }
+
+    public void setDebug(boolean debug) {
+        this.debug = debug;
+    }
+
 }

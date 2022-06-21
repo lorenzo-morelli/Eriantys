@@ -16,6 +16,9 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Launcher for GUI View
+ */
 public class GUI extends Application {
     public Stage stage;
     public Scene scene;

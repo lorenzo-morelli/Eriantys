@@ -1,5 +1,6 @@
 package it.polimi.ingsw.server.model;
 
+import it.polimi.ingsw.server.model.characters.Postman;
 import it.polimi.ingsw.server.model.enums.GameMode;
 import it.polimi.ingsw.server.model.enums.PeopleColor;
 import it.polimi.ingsw.server.model.enums.TowerColor;
@@ -266,6 +267,7 @@ class ModelTest {
             assertNull(model.getTable().getProfessors().get(i).getHeldBy());
         }
     }
+
     @Test
     void testDeck() {
         Deck deck=new Deck();
@@ -345,6 +347,11 @@ class ModelTest {
         assertEquals(30,set.numStudentsbycolor(PeopleColor.BLUE));
         assertEquals(4,set.numStudentsbycolor(PeopleColor.PINK));
         assertEquals(35,set.size());
+        StudentSet set2=new StudentSet(1,1,1,1,1);
+        set2.setAllStudentTozero();
+        set2.addstudents(2,PeopleColor.RED);
+        StudentSet set3=new StudentSet(2,0,0,0,0);
+        assertEquals(set2, set3);
     }
 
     @Test
@@ -361,5 +368,216 @@ class ModelTest {
         assertEquals(0,bag.size());
         assertEquals(10,set.size());
         assertThrows(IllegalArgumentException.class,()-> set.setStudentsRandomly(1,bag));
+    }
+    @Test
+    void SimulateGame2Player(){
+        Model model=new Model(2,"PRINCIPIANT");
+        model.getPlayers().add(new Player("paperino","192.168.0.2", model));
+        model.getPlayers().add(new Player("pippo","192.168.0.1", model));
+
+        model.getTable().setDebug(true);
+        model.getPlayers().get(0).setDebug(true);
+        model.getPlayers().get(1).setDebug(true);
+
+        model.getPlayers().get(1).setChoosedCard(model.getPlayers().get(0).getAvailableCards().getCardsList().get(0));
+        model.getPlayers().get(0).setChoosedCard(model.getPlayers().get(0).getAvailableCards().getCardsList().get(1));
+
+        assertEquals("pippo",model.getPlayers().get(1).getNickname());
+        model.schedulePlayers();
+        assertEquals("pippo",model.getPlayers().get(0).getNickname());
+
+        model.getPlayers().get(0).getSchoolBoard().getEntranceSpace().addstudents(2,PeopleColor.RED);
+        model.getPlayers().get(0).getSchoolBoard().getEntranceSpace().addstudents(2,PeopleColor.YELLOW);
+        model.getPlayers().get(0).getSchoolBoard().load_dinner(PeopleColor.RED);
+        model.getPlayers().get(0).getSchoolBoard().load_dinner(PeopleColor.RED);
+        model.getTable().checkProfessor(PeopleColor.RED, model.getPlayers());
+        for(int i=0;i<model.getTable().getProfessors().size();i++){
+            if(model.getTable().getProfessors().get(i).getColor().equals(PeopleColor.RED)){
+                assertEquals(model.getTable().getProfessors().get(i).getHeldBy().getNickname(),"pippo");
+            }
+        }
+        model.getPlayers().get(0).getSchoolBoard().load_dinner(PeopleColor.YELLOW);
+        model.getTable().loadIsland(model.getPlayers().get(0),PeopleColor.YELLOW,2);
+        model.getTable().checkProfessor(PeopleColor.YELLOW, model.getPlayers());
+        for(int i=0;i<model.getTable().getProfessors().size();i++){
+            if(model.getTable().getProfessors().get(i).getColor().equals(PeopleColor.YELLOW)){
+                assertEquals(model.getTable().getProfessors().get(i).getHeldBy().getNickname(),"pippo");
+            }
+        }
+        assertEquals(2,model.getTable().getIslands().get(2).getInhabitants().size());
+
+        model.getPlayers().get(1).getSchoolBoard().getEntranceSpace().addstudents(2,PeopleColor.RED);
+        model.getPlayers().get(1).getSchoolBoard().getEntranceSpace().addstudents(3,PeopleColor.YELLOW);
+        model.getTable().loadIsland(model.getPlayers().get(1),PeopleColor.YELLOW,2);
+        model.getPlayers().get(1).getSchoolBoard().load_dinner(PeopleColor.RED);
+        model.getPlayers().get(1).getSchoolBoard().load_dinner(PeopleColor.RED);
+        model.getTable().checkProfessor(PeopleColor.RED, model.getPlayers());
+        for(int i=0;i<model.getTable().getProfessors().size();i++){
+            if(model.getTable().getProfessors().get(i).getColor().equals(PeopleColor.RED)){
+                assertEquals(model.getTable().getProfessors().get(i).getHeldBy().getNickname(),"pippo");
+            }
+        }
+        model.getPlayers().get(1).getSchoolBoard().load_dinner(PeopleColor.YELLOW);
+        model.getPlayers().get(1).getSchoolBoard().load_dinner(PeopleColor.YELLOW);
+        model.getTable().checkProfessor(PeopleColor.YELLOW, model.getPlayers());
+        for(int i=0;i<model.getTable().getProfessors().size();i++){
+            if(model.getTable().getProfessors().get(i).getColor().equals(PeopleColor.YELLOW)){
+                assertEquals(model.getTable().getProfessors().get(i).getHeldBy().getNickname(),"paperino");
+            }
+        }
+
+        model.getTable().mother(2);
+
+        assertEquals(model.getTable().getMotherNaturePosition(),2);
+        assertEquals(model.getTable().getIslands().get(model.getTable().getMotherNaturePosition()).getInhabitants().size(),3);
+        assertEquals(model.getTable().getIslands().get(model.getTable().getMotherNaturePosition()).player_influence(model.getPlayers(), model.getTable().getProfessors(), model.getTable().isCentaurEffect(), model.getTable().getMushroomColor(), model.getTable().getKnightEffect()).getNickname(),"paperino");
+
+        model.getTable().getIslands().get(3).getInhabitants().addstudents(2,PeopleColor.YELLOW);
+        model.getTable().getIslands().get(2).controllIsland(model.getPlayers().get(1));
+        model.getTable().getIslands().get(3).controllIsland(model.getPlayers().get(1));
+        model.getTable().getIslands().get(3).placeTower();
+        model.getTable().getIslands().get(2).placeTower();
+
+        assertEquals(6,model.getPlayers().get(1).getSchoolBoard().getNumOfTowers());
+        assertEquals(8,model.getPlayers().get(0).getSchoolBoard().getNumOfTowers());
+        assertEquals(1,model.getTable().getIslands().get(3).getNumberOfTowers());
+        assertEquals(1,model.getTable().getIslands().get(2).getNumberOfTowers());
+        assertEquals(model.getPlayers().get(1).getSchoolBoard().getTowerColor(),model.getTable().getIslands().get(3).getTowerColor());
+        assertEquals(model.getPlayers().get(1).getSchoolBoard().getTowerColor(),model.getTable().getIslands().get(2).getTowerColor());
+
+        model.getTable().mergeIsland(2,3);
+
+        assertEquals(11,model.getTable().getIslands().size());
+        assertEquals(2,model.getTable().getIslands().get(2).getNumberOfTowers());
+        assertEquals(model.getPlayers().get(1).getSchoolBoard().getTowerColor(),model.getTable().getIslands().get(2).getTowerColor());
+        assertEquals(6,model.getTable().getIslands().get(2).getInhabitants().size());
+
+        model.getTable().conquestIsland(2,model.getPlayers(),model.getPlayers().get(0));
+        assertEquals(8,model.getPlayers().get(1).getSchoolBoard().getNumOfTowers());
+        assertEquals(6,model.getPlayers().get(0).getSchoolBoard().getNumOfTowers());
+        assertEquals(model.getPlayers().get(0).getSchoolBoard().getTowerColor(),model.getTable().getIslands().get(2).getTowerColor());
+
+        assertEquals(model.player_winner(),model.getPlayers().get(0).getNickname());
+
+        String view="\n\n\n-----------------------------------------GAME-----------------------------------------------------------------------------------------------------------------------------------------\n\n" +
+                "    TURN = " + 0 + "    " + "" +"\n\n" + model.getTable().toString(false) +
+                "-----------------PLAYER---------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n"+ model.printplayers("pippo") +
+                "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n" + "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n" +"--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n"+ "ciao"+ "\n";
+        assertEquals(model.toString("pippo","ciao"),view);
+
+        view="-----------------------------------------TABLE----------------------------------------------------------------------------------------------------------------------------------------\n" +
+                "\n----------------ISLANDS---------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n" + model.getTable().printIslands() + "------------------BAG-----------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n" +
+                "    SIZE : " + model.getTable().getBag().size() + "    " + model.getTable().getBag().toString() +
+                "\n----------------CLOUDS----------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n" + model.getTable().printClouds() +
+                 "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n" +
+                "---------------PROFESSORS-------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n" +
+                model.getTable().printProfessors() + "\n\n--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n";
+
+        assertEquals(model.getTable().toString(false),view);
+
+    }
+
+    @Test
+    void SimulateGame4Player(){
+        Model model=new Model(4,"PRINCIPIANT");
+        model.getPlayers().add(new Player("paperino","192.168.0.2",1, model));
+        model.getPlayers().add(new Player("pippo","192.168.0.1", 2,model));
+        model.getPlayers().add(new Player("paperino2","192.168.0.2", 1,model));
+        model.getPlayers().add(new Player("pippo2","192.168.0.1",2, model));
+
+        model.getTable().setDebug(true);
+        model.getPlayers().get(0).setDebug(true);
+        model.getPlayers().get(1).setDebug(true);
+
+        model.getPlayers().get(1).setChoosedCard(model.getPlayers().get(0).getAvailableCards().getCardsList().get(0));
+        model.getPlayers().get(0).setChoosedCard(model.getPlayers().get(0).getAvailableCards().getCardsList().get(1));
+        model.getPlayers().get(2).setChoosedCard(model.getPlayers().get(0).getAvailableCards().getCardsList().get(5));
+        model.getPlayers().get(3).setChoosedCard(model.getPlayers().get(0).getAvailableCards().getCardsList().get(6));
+
+        assertEquals("pippo",model.getPlayers().get(1).getNickname());
+        model.schedulePlayers();
+        assertEquals("pippo",model.getPlayers().get(0).getNickname());
+
+        model.getPlayers().get(0).getSchoolBoard().getEntranceSpace().addstudents(2,PeopleColor.RED);
+        model.getPlayers().get(0).getSchoolBoard().getEntranceSpace().addstudents(2,PeopleColor.YELLOW);
+        model.getPlayers().get(0).getSchoolBoard().load_dinner(PeopleColor.RED);
+        model.getPlayers().get(0).getSchoolBoard().load_dinner(PeopleColor.RED);
+        model.getTable().checkProfessor(PeopleColor.RED, model.getPlayers());
+        for(int i=0;i<model.getTable().getProfessors().size();i++){
+            if(model.getTable().getProfessors().get(i).getColor().equals(PeopleColor.RED)){
+                assertEquals(model.getTable().getProfessors().get(i).getHeldBy().getNickname(),"pippo");
+            }
+        }
+        model.getPlayers().get(0).getSchoolBoard().load_dinner(PeopleColor.YELLOW);
+        model.getTable().loadIsland(model.getPlayers().get(0),PeopleColor.YELLOW,2);
+        model.getTable().checkProfessor(PeopleColor.YELLOW, model.getPlayers());
+        for(int i=0;i<model.getTable().getProfessors().size();i++){
+            if(model.getTable().getProfessors().get(i).getColor().equals(PeopleColor.YELLOW)){
+                assertEquals(model.getTable().getProfessors().get(i).getHeldBy().getNickname(),"pippo");
+            }
+        }
+        assertEquals(2,model.getTable().getIslands().get(2).getInhabitants().size());
+
+        model.getPlayers().get(1).getSchoolBoard().getEntranceSpace().addstudents(2,PeopleColor.RED);
+        model.getPlayers().get(1).getSchoolBoard().getEntranceSpace().addstudents(3,PeopleColor.YELLOW);
+        model.getTable().loadIsland(model.getPlayers().get(1),PeopleColor.YELLOW,2);
+        model.getPlayers().get(1).getSchoolBoard().load_dinner(PeopleColor.RED);
+        model.getPlayers().get(1).getSchoolBoard().load_dinner(PeopleColor.RED);
+        model.getTable().checkProfessor(PeopleColor.RED, model.getPlayers());
+        for(int i=0;i<model.getTable().getProfessors().size();i++){
+            if(model.getTable().getProfessors().get(i).getColor().equals(PeopleColor.RED)){
+                assertEquals(model.getTable().getProfessors().get(i).getHeldBy().getNickname(),"pippo");
+            }
+        }
+        model.getPlayers().get(1).getSchoolBoard().load_dinner(PeopleColor.YELLOW);
+        model.getPlayers().get(1).getSchoolBoard().load_dinner(PeopleColor.YELLOW);
+        model.getTable().checkProfessor(PeopleColor.YELLOW, model.getPlayers());
+        for(int i=0;i<model.getTable().getProfessors().size();i++){
+            if(model.getTable().getProfessors().get(i).getColor().equals(PeopleColor.YELLOW)){
+                assertEquals(model.getTable().getProfessors().get(i).getHeldBy().getNickname(),"paperino");
+            }
+        }
+
+        model.getTable().mother(2);
+
+        assertEquals(model.getTable().getMotherNaturePosition(),2);
+        assertEquals(model.getTable().getIslands().get(model.getTable().getMotherNaturePosition()).getInhabitants().size(),3);
+        assertEquals(model.getTable().getIslands().get(model.getTable().getMotherNaturePosition()).team_influence(model.getTeams(), model.getTable().getProfessors(), model.getTable().isCentaurEffect(), model.getTable().getMushroomColor(), model.getTable().getKnightEffect()).getPlayer1().getNickname(),"paperino");
+
+        model.getTable().getIslands().get(3).getInhabitants().addstudents(2,PeopleColor.YELLOW);
+        model.getTable().getIslands().get(2).controllIsland(model.getPlayers().get(1));
+        model.getTable().getIslands().get(3).controllIsland(model.getPlayers().get(1));
+        model.getTable().getIslands().get(3).placeTower();
+        model.getTable().getIslands().get(2).placeTower();
+
+        assertEquals(6,model.getPlayers().get(1).getSchoolBoard().getNumOfTowers());
+        assertEquals(8,model.getPlayers().get(0).getSchoolBoard().getNumOfTowers());
+        assertEquals(1,model.getTable().getIslands().get(3).getNumberOfTowers());
+        assertEquals(1,model.getTable().getIslands().get(2).getNumberOfTowers());
+        assertEquals(model.getPlayers().get(1).getSchoolBoard().getTowerColor(),model.getTable().getIslands().get(3).getTowerColor());
+        assertEquals(model.getPlayers().get(1).getSchoolBoard().getTowerColor(),model.getTable().getIslands().get(2).getTowerColor());
+
+        model.getTable().mergeIsland(2,3);
+
+        assertEquals(11,model.getTable().getIslands().size());
+        assertEquals(2,model.getTable().getIslands().get(2).getNumberOfTowers());
+        assertEquals(model.getPlayers().get(1).getSchoolBoard().getTowerColor(),model.getTable().getIslands().get(2).getTowerColor());
+        assertEquals(6,model.getTable().getIslands().get(2).getInhabitants().size());
+
+        model.getTable().conquestIsland(2,model.getTeams(),model.getTeams().get(0));
+        assertEquals(6,model.getPlayers().get(1).getSchoolBoard().getNumOfTowers());
+        assertEquals(8,model.getPlayers().get(0).getSchoolBoard().getNumOfTowers());
+        assertEquals(model.getPlayers().get(1).getSchoolBoard().getTowerColor(),model.getTable().getIslands().get(2).getTowerColor());
+
+        String winner= model.getTeams().get(0).getPlayer1().getNickname() + "+" + model.getTeams().get(0).getPlayer2().getNickname();
+        assertEquals(model.team_winner(),winner);
+
+        String view="\n\n\n-----------------------------------------GAME-----------------------------------------------------------------------------------------------------------------------------------------\n\n" +
+                "    TURN = " + 0 + "    " +  ""  +"\n\n" +
+                model.getTable().toString(false) +
+                 "-----------------TEAM-----------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n" + model.printteam("pippo") +
+                "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n" + "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n" +"--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n"+ "ciao"+ "\n" ;
+        assertEquals(model.toString("pippo","ciao"),view);
+
     }
 }

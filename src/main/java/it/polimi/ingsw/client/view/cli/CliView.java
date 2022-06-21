@@ -14,7 +14,6 @@ import it.polimi.ingsw.server.model.enums.PeopleColor;
 import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.stateMachine.State;
 
-import javax.sound.sampled.FloatControl;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
@@ -549,7 +548,7 @@ public class CliView implements View {
                                                 break;
                                         }
                                     }
-                                    if (!networkClientModel.getServermodel().getcurrentPlayer().getSchoolBoard().getEntranceSpace().contains(colors1) || !destination.contains(colors2)) {
+                                    if (networkClientModel.getServermodel().getcurrentPlayer().getSchoolBoard().getEntranceSpace().contains(colors1) || destination.contains(colors2)) {
                                         System.out.println("uno o piu colori scelti non sono presenti, scelta carta rifiutata !!!!");
                                         TimeUnit.SECONDS.sleep(2);
                                         requestToMe();
@@ -1017,7 +1016,7 @@ public class CliView implements View {
                                             break;
                                     }
                                 }
-                                if (!networkClientModel.getServermodel().getcurrentPlayer().getSchoolBoard().getEntranceSpace().contains(colors1) || !destination.contains(colors2)) {
+                                if (networkClientModel.getServermodel().getcurrentPlayer().getSchoolBoard().getEntranceSpace().contains(colors1) || destination.contains(colors2)) {
                                     System.out.println("uno o piu colori scelti non sono presenti, scelta carta rifiutata !!!!");
                                     TimeUnit.SECONDS.sleep(2);
                                     requestToMe();

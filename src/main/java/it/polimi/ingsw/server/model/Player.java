@@ -4,7 +4,7 @@ import it.polimi.ingsw.server.model.enums.GameMode;
 import java.util.Objects;
 
 public class Player implements Comparable<Player>{
-    private boolean debug = true; //TODO: to unlock coins set true
+    private boolean debug=false; //non cancellare, serve per il test, solo mettere a false
     private String nickname;
     private final Deck availableCards;
     private AssistantCard choosedCard;
@@ -150,4 +150,7 @@ public class Player implements Comparable<Player>{
         this.nickname = nickname;
     }
 
+    public void setDebug(boolean debug) {
+        this.debug = debug;
+    }
 }

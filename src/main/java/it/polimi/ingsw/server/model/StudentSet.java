@@ -181,11 +181,10 @@ public class StudentSet {
                 break;
             }
         }
-        if(red>numStudentsbycolor(PeopleColor.RED)) return false;
-        if(yellow>numStudentsbycolor(PeopleColor.YELLOW)) return false;
-        if(pink>numStudentsbycolor(PeopleColor.PINK)) return false;
-        if(green>numStudentsbycolor(PeopleColor.GREEN)) return false;
-        if(blue>numStudentsbycolor(PeopleColor.BLUE)) return false;
-        return true;
+        if(red>numStudentsbycolor(PeopleColor.RED)) return true;
+        if(yellow>numStudentsbycolor(PeopleColor.YELLOW)) return true;
+        if(pink>numStudentsbycolor(PeopleColor.PINK)) return true;
+        if(green>numStudentsbycolor(PeopleColor.GREEN)) return true;
+        return blue > numStudentsbycolor(PeopleColor.BLUE);
     }
 }
