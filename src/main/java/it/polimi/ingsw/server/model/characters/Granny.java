@@ -3,6 +3,9 @@ package it.polimi.ingsw.server.model.characters;
 import it.polimi.ingsw.server.model.CenterTable;
 import it.polimi.ingsw.server.model.Player;
 
+/**
+ * This class contain the info and the methods to use the card GRANNY described in the rules
+ */
 public class Granny extends CharacterCard{
 
     private int numDivieti;

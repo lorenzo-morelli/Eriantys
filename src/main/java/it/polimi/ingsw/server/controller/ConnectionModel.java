@@ -14,24 +14,38 @@ import java.util.ArrayList;
 public class ConnectionModel {
     private ArrayList<ClientModel> clientsInfo;
 
-    private boolean closeThred=false;
+    private boolean closeThread =false;
 
     public ConnectionModel() {
         clientsInfo = new ArrayList<>();
     }
 
+    /**
+     * @return the array that contain the Models of the clients
+     */
     public ArrayList<ClientModel> getClientsInfo() {
         return clientsInfo;
     }
 
+    /**
+     * @return Number of Player
+     */
     public int getNumOfPlayers() {
         return clientsInfo.toArray().length;
     }
 
+    /**
+     * @return Game Mode
+     */
     public String getGameMode() {
         return clientsInfo.get(0).getGameMode();
     }
 
+    /**
+     * This method is able to retrive the Model of the player from the ConnectionModel by giving its nickname
+     * @param nickname of the player
+     * @return Model of the client
+     */
     public ClientModel findPlayer(String nickname) {
         for (ClientModel c : clientsInfo) {
             if (c.getNickname().equals(nickname)) {
@@ -41,29 +55,49 @@ public class ConnectionModel {
         return null;
     }
 
+    /**
+     * This method is able to replace old Model with new Model (useful for reconnection)
+     * @param target old Model
+     * @param nuovo new Model
+     */
     public void change(ClientModel target, ClientModel nuovo){
         clientsInfo.removeIf(c -> c.equals(target));
         clientsInfo.add(nuovo);
     }
+
+    /**
+     * Set the array that contain the Models ot the clients
+     */
     public void setClientsInfo(ArrayList<ClientModel> clientsInfo) {
         this.clientsInfo = clientsInfo;
     }
 
+    /**
+     * Reinitialize Connection Model as empty
+     */
     public void empty(){
         clientsInfo.clear();
     }
 
+    /**
+     * Close ConnectionModel and reinitialize it
+     */
     public void close(){
         empty();
-        closeThred=true;
+        closeThread =true;
     }
 
-
-    public boolean isCloseThred() {
-        return closeThred;
+    /**
+     * @return true is Thread for connections during the game is closed (Thread in AskForTeamMate for 4 players or in Create Game for 3/2 players
+     */
+    public boolean isCloseThread() {
+        return closeThread;
     }
 
-    public void setCloseThred(boolean closeThred) {
-        this.closeThred = closeThred;
+    /**
+     * Set the flag to manage Thread for connections during the game (Thread in AskForTeamMate for 4 players or in Create Game for 3/2 players
+     */
+    public void setCloseThread(boolean closeThread) {
+        this.closeThread = closeThread;
     }
 }

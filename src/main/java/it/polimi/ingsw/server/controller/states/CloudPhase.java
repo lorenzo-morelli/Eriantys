@@ -28,11 +28,14 @@ public class CloudPhase extends State {
 
     private final Gson json;
     private final ServerController serverController;
-    private final Event reset = new ClientDisconnection();
 
     private ParametersFromNetwork message;
     private boolean disconnected,fromPing;
 
+    /**
+     * Events callers
+     * @return different events in order to change to different phase
+     */
 
     public Event GoToEndTurn() {
         return goToEndTurn;
@@ -56,6 +59,7 @@ public class CloudPhase extends State {
         Controller controller = ServerController.getFsm();
         this.connectionModel = serverController.getConnectionModel();
         goToEndTurn= new Event("go to end turn");
+        Event reset = new ClientDisconnection();
         reset.setStateEventListener(controller);
         goToEndTurn.setStateEventListener(controller);
         goToStudentPhase= new Event("go to student phase");
@@ -66,12 +70,9 @@ public class CloudPhase extends State {
         json = new Gson();
     }
 
-    public Event getReset() {
-        return reset;
-    }
 
     /**
-     * Sends a request to the view of the current player to choose one of the availables clouds
+     * Sends a request to the view of the current player to choose one of the available clouds
      * and waits a response from the view.
      * Also handle special case as well as sanity checks (for example is not possible to choose
      * a cloud which had already been chosen from another player).
@@ -84,15 +85,11 @@ public class CloudPhase extends State {
     public IEvent entryAction(IEvent cause) throws Exception {
         Model model = serverController.getModel();
 
-        // retrive the current player
-
         Player currentPlayer = model.getcurrentPlayer();
-        disconnected=false; //flag che indica se si disconnette durante questo turno
-        fromPing=false; //risposta non proviene da ping
+        disconnected=false;
+        fromPing=false;
 
-        //salto fase se player se si è disconnesso precedentemente
-
-        if(currentPlayer.isDisconnected()){  //se giocatore è disconnesso lo salto
+        if(currentPlayer.isDisconnected()){
 
             currentPlayer.setDisconnected(true);
             for(Cloud c: model.getTable().getClouds()) {
@@ -111,21 +108,15 @@ public class CloudPhase extends State {
             return super.entryAction(cause);
         }
 
-        // retrive data of the current player
-
         ClientModel currentPlayerData = connectionModel.findPlayer(currentPlayer.getNickname());
         currentPlayerData.setServermodel(model);
         currentPlayerData.setTypeOfRequest("CHOOSECLOUDS");
         currentPlayerData.setPingMessage(false);
-        currentPlayerData.setResponse(false); //non è una risposta, è una richiesta del server al client
+        currentPlayerData.setResponse(false);
 
-        //invio e controllo che invio network sia fatto correttamente
+        boolean checkDisconnection= Network.send(json.toJson(currentPlayerData));
 
-        boolean chekDisco= Network.send(json.toJson(currentPlayerData));
-
-        // se invio non va a buon fine salta il giocatore
-
-        if(!chekDisco){
+        if(!checkDisconnection){
             if (model.getcurrentPlayer().equals(model.getPlayers().get(model.getPlayers().size() - 1))) {
                 GoToEndTurn().fireStateEvent();
             } else {
@@ -135,20 +126,16 @@ public class CloudPhase extends State {
             return super.entryAction(cause);
         }
 
-        //controllo ricezione risposta invio ping e settaggio del giocatore in disconnessione in caso di ricezione ping fallita
-
         Thread ping = new CloudThread(this,currentPlayerData);
         ping.start();
 
         boolean responseReceived = false;
         while (!responseReceived) {
-            //System.out.println("another one");
                 if(!fromPing) {
                     message = new ParametersFromNetwork(1);
                     message.enable();
                 }
             while (!message.parametersReceived()) {
-                //System.out.println("loop");
                 message.waitParametersReceived(5);
                 if (disconnected) {
                     break;
@@ -179,8 +166,6 @@ public class CloudPhase extends State {
                 fromPing=false;
         }
 
-        //codice effettivo della fase se non si è disconnesso
-
         if(!currentPlayer.isDisconnected()) {
 
             currentPlayerData = json.fromJson(message.getParameter(0), ClientModel.class);
@@ -188,8 +173,6 @@ public class CloudPhase extends State {
             currentPlayer.getSchoolBoard().load_entrance(cloud, model.getTable().getClouds());
 
         }
-
-        //codice per disconnessione durante questo turno
 
         else {
             int check=0;
@@ -224,7 +207,7 @@ public class CloudPhase extends State {
                     }
                 }
                 if(check<=1){
-                    System.out.println("numero minimo di giocatori non disponibile, attendo 40 secondi in attesa che un altro giocatore si riconnette");
+                    System.out.println("Minimum number of player not available, wait 40 second in order to make the player able to reconnect");
                     for (Player p : model.getPlayers()) {
                         if(!p.isDisconnected()) {
                             ClientModel Data = connectionModel.findPlayer(p.getNickname());
@@ -233,25 +216,22 @@ public class CloudPhase extends State {
                             Data.setServermodel(model);
                             Data.setResponse(false);
                             Data.setPingMessage(false);
-                            System.out.println("send to"+p.getNickname());
 
                             Network.send(json.toJson(Data));
                         }
                     }
 
                     model.setDisconnection(true);
-                    TimeUnit.MILLISECONDS.sleep(40000); //aspetto 40 secondi nella speranza che qualcuno si riconnetta
+                    TimeUnit.MILLISECONDS.sleep(40000);
 
                     if (model.isDisconnection()) {
                         gameEnd().fireStateEvent();
                         return super.entryAction(cause);
                     }
-                    System.out.println("un giocatore si è riconnesso, la partita può ricominciare");
+                    System.out.println("One player is reconnected, the game will continue...");
                 }
             }
         }
-
-        //gestione scoppio eventi per fase successiva
 
         if (model.getcurrentPlayer().equals(model.getPlayers().get(model.getPlayers().size() - 1))) {
             GoToEndTurn().fireStateEvent();
@@ -262,6 +242,10 @@ public class CloudPhase extends State {
 
         return super.entryAction(cause);
     }
+
+    /**
+     * Utils method for ping and disconnection manage
+     */
 
     public ParametersFromNetwork getMessage() {
         return message;

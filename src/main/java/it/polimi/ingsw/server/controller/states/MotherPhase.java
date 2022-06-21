@@ -34,12 +34,15 @@ public class MotherPhase extends State {
 
     private final Gson json;
     private final ServerController serverController;
-    private final Event reset = new ClientDisconnection();
 
     private ParametersFromNetwork message;
     private boolean disconnected,fromPing;
-    private boolean istorepeat;
+    private boolean storekeeper;
 
+    /**
+     * Events callers
+     * @return different events in order to change to different phase
+     */
     public Event gameEnd() {
         return gameEnd;
     }
@@ -55,11 +58,16 @@ public class MotherPhase extends State {
         return goToEndTurn;
     }
 
+    /**
+     * The main constructor of the Mother phase
+     * @param serverController the main server controller
+     */
     public MotherPhase(ServerController serverController) {
         super("[Move mother]");
         this.serverController = serverController;
         Controller controller = ServerController.getFsm();
         this.connectionModel = serverController.getConnectionModel();
+        Event reset = new ClientDisconnection();
         reset.setStateEventListener(controller);
         gameEnd = new Event("end phase");
         gameEnd.setStateEventListener(controller);
@@ -69,26 +77,28 @@ public class MotherPhase extends State {
         goToStudentPhase.setStateEventListener(controller);goToEndTurn= new Event("go to end turn");
         goToEndTurn.setStateEventListener(controller);
         json = new Gson();
-        istorepeat=true;
-    }
-    public Event getReset() {
-        return reset;
+        storekeeper =true;
     }
 
+    /**
+     * Sends a request to the view of the current player to choose where to move mother nature
+     * and waits a response from the view.
+     * Also handle the usage of card for expert mode.
+     * Special code to handle disconnection was added.
+     * @param cause the event that caused the controller transition in this state
+     * @return null event
+     * @throws Exception input output or network related exceptions
+     */
     @Override
     public IEvent entryAction(IEvent cause) throws Exception {
 
-        while (istorepeat) {
-            istorepeat = false;
+        while (storekeeper) {
+            storekeeper = false;
             model = serverController.getModel();
 
-            // retrive the current player
-
             Player currentPlayer = model.getcurrentPlayer();
-            disconnected=false; //flag che indica se si disconnette durante questo turno
-            fromPing=false; //risposta non proviene da ping
-
-            //salto fase se player se si è disconnesso precedentemente
+            disconnected=false;
+            fromPing=false;
 
             if(currentPlayer.isDisconnected()){
 
@@ -112,20 +122,14 @@ public class MotherPhase extends State {
                 return super.entryAction(cause);
             }
 
-            // retrive data of the current player
             System.out.println(currentPlayer.getNickname());
 
             ClientModel currentPlayerData = connectionModel.findPlayer(currentPlayer.getNickname());
             currentPlayerData.setServermodel(model);
             currentPlayerData.setTypeOfRequest("CHOOSEWHERETOMOVEMOTHER");
             currentPlayerData.setPingMessage(false);
-            currentPlayerData.setResponse(false); //non è una risposta, è una richiesta del server al client
-
-            //invio e controllo che invio network sia fatto correttamente
-
+            currentPlayerData.setResponse(false);
             boolean checkError= Network.send(json.toJson(currentPlayerData));
-
-            // se invio non va a buon fine salta il giocatore
 
             if(!checkError){
                 if (model.getTable().getIslands().size() <= 3) {
@@ -145,20 +149,18 @@ public class MotherPhase extends State {
                 }
             }
 
-            //controllo ricezione risposta invio ping e settaggio del giocatore in disconnessione in caso di ricezione ping fallita
 
             Thread ping = new MotherThread(this, currentPlayerData);
             ping.start();
 
             boolean responseReceived = false;
             while (!responseReceived) {
-                //System.out.println("another one");
+
                     if (!fromPing) {
                         message = new ParametersFromNetwork(1);
                         message.enable();
                 }
                 while (!message.parametersReceived()) {
-                    //System.out.println("loop");
                     message.waitParametersReceived(5);
                     if (disconnected) {
                         break;
@@ -187,17 +189,14 @@ public class MotherPhase extends State {
                     fromPing=false;
             }
 
-            //codice effettivo della fase se non si è disconnesso
 
             if (!currentPlayer.isDisconnected()) {
 
                 currentPlayerData = json.fromJson(message.getParameter(0), ClientModel.class);
                 String type = currentPlayerData.getTypeOfRequest();
-                //System.out.println("HO RICEVUTO " + type);
                 if (type.equals("MOTHER")) {
-                    // Si suppone che il client abblia scelto il numero di mosse (passi da far fare a madre natura)
                     int moves = currentPlayerData.getChoosedMoves();
-                    model.getTable().movemother(moves);
+                    model.getTable().mother(moves);
                     Island target = model.getTable().getIslands().get(model.getTable().getMotherNaturePosition());
                     if (!target.isBlocked()) {
                         if (model.getNumberOfPlayers() == 4) {
@@ -240,13 +239,13 @@ public class MotherPhase extends State {
                                 merging = model.getTable().getIslands().get((model.getTable().getMotherNaturePosition() - 1) % model.getTable().getIslands().size());
                             }
                             if (merging.getTowerColor() != null && merging.getTowerColor().equals(model.getTable().getIslands().get(model.getTable().getMotherNaturePosition()).getTowerColor())) {
-                                int mergingindex;
+                                int merging_index;
                                 if (model.getTable().getMotherNaturePosition() == 0) {
-                                    mergingindex = model.getTable().getIslands().size() - 1;
+                                    merging_index = model.getTable().getIslands().size() - 1;
                                 } else {
-                                    mergingindex = (model.getTable().getMotherNaturePosition() - 1) % model.getTable().getIslands().size();
+                                    merging_index = (model.getTable().getMotherNaturePosition() - 1) % model.getTable().getIslands().size();
                                 }
-                                model.getTable().mergeIsland(model.getTable().getMotherNaturePosition(), mergingindex);
+                                model.getTable().mergeIsland(model.getTable().getMotherNaturePosition(), merging_index);
                             }
                         }
                     } else {
@@ -279,7 +278,7 @@ public class MotherPhase extends State {
                         return super.entryAction(cause);
                     }
                 } else {
-                    istorepeat = true;
+                    storekeeper = true;
                     for (int j = 0; j < model.getTable().getCharacters().size(); j++) {
                         if (model.getTable().getCharacters().get(j).getName().equals(type)) {
                             switch (type) {
@@ -299,7 +298,7 @@ public class MotherPhase extends State {
                                     ((Knight) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, model.getTable());
                                     break;
                                 case "MINSTRELL":
-                                    ((Minstrell) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, currentPlayerData.getColors2(), currentPlayerData.getColors1(),model.getTable(),model.getPlayers());
+                                    ((Minstrel) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, currentPlayerData.getColors2(), currentPlayerData.getColors1(),model.getTable(),model.getPlayers());
                                     break;
                                 case "JESTER":
                                     ((Jester) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, currentPlayerData.getColors2(), currentPlayerData.getColors1());
@@ -331,8 +330,6 @@ public class MotherPhase extends State {
                 }
             }
 
-            //codice per disconnessione durante questo turno
-
             else{
                 int check=0;
                 if(model.getNumberOfPlayers()==4){
@@ -350,7 +347,7 @@ public class MotherPhase extends State {
                     }
                 }
                 if(check<=1){
-                    System.out.println("attendo 40 secondi in attesa di una riconnessione");
+                    System.out.println("Minimum number of player not available, wait 40 second in order to make the player able to reconnect");
                     check=0;
                     if(model.getNumberOfPlayers()==4){
                         for(Team team: model.getTeams()){
@@ -376,20 +373,19 @@ public class MotherPhase extends State {
                                 Data.setServermodel(model);
                                 Data.setResponse(false);
                                 Data.setPingMessage(false);
-                                System.out.println("send to"+p.getNickname());
 
                                 Network.send(json.toJson(Data));
                             }
                         }
 
                         model.setDisconnection(true);
-                        TimeUnit.MILLISECONDS.sleep(40000); //aspetto 40 secondi nella speranza che qualcuno si riconnetta
+                        TimeUnit.MILLISECONDS.sleep(40000);
 
                         if (model.isDisconnection()) {
                             gameEnd().fireStateEvent();
                             return super.entryAction(cause);
                         }
-                        System.out.println("un giocatore si è riconnesso, la partita può ricominciare");
+                        System.out.println("One player is reconnected, the game will continue...");
                     }
                 }
                 if (model.getTable().getIslands().size() <= 3) {
@@ -413,13 +409,20 @@ public class MotherPhase extends State {
     return super.entryAction(cause);
     }
 
+    /**
+     * Reinitialize variables for next uses
+     * @param cause the event that caused us to exit this state
+     */
     @Override
     public void exitAction(IEvent cause) throws IOException {
         model.getTable().setFarmerEffect(null);
-        istorepeat = true;
+        storekeeper = true;
         super.exitAction(cause);
     }
 
+    /**
+     * Utils method for ping and disconnection manage
+     */
     public ParametersFromNetwork getMessage() {
         return message;
     }

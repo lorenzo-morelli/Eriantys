@@ -24,8 +24,12 @@ public class WaitFirstPlayerGameInfo extends State {
     private final ParametersFromNetwork message;
     private final Event reset = new ClientDisconnection();
 
+    /**
+     * Main constructor
+     * @param serverController the main server controller
+     */
     public WaitFirstPlayerGameInfo(ServerController serverController) {
-        super("[Il server è in attesa di gamemode e numero di giocatori]");
+        super("[Server is waiting for the Game Mode and the Number of player]");
         json = new Gson();
         message = new ParametersFromNetwork(1);
         message.setStateEventListener(controller);
@@ -33,59 +37,59 @@ public class WaitFirstPlayerGameInfo extends State {
         reset.setStateEventListener(controller);
         this.connectionModel = serverController.getConnectionModel();
     }
+
+    /**
+     * Events callers
+     * @return different events in order to change to different phase
+     */
     public Event getReset() {
         return reset;
     }
-
-    public ParametersFromNetwork gotNumOfPlayersAndGamemode() {
+    public ParametersFromNetwork gotNumOfPlayersAndGameMode() {
         return message;
     }
 
+    /**
+     * Sends a request to the view of the first player to make it able to choose the game mode and the number of player of the game.
+     * @param cause the event that caused the controller transition in this state
+     * @return null event
+     * @throws Exception input output or network related exceptions
+     */
     @Override
     public IEvent entryAction(IEvent cause) throws Exception {
         boolean messageReceived = false;
-        System.out.println("[Non ho ancora ricevuto niente]");
 
         long start = System.currentTimeMillis();
         long end = start + 15 * 1000L;
 
         while (!messageReceived) {
-            //System.out.println("loop");
             message.enable();
             boolean check =message.waitParametersReceived(20);
 
             if((check || System.currentTimeMillis()>=end) && Network.disconnectedClient()){
-                System.out.println("\n\nGiocatore non ha dato risposta, chiudo il gioco");
+                System.out.println("\n\nPlayer don't give any response, server will be restarted");
                 connectionModel.close();
                 getReset().fireStateEvent();
                 return super.entryAction(cause);
             }
-            // controllo se il messaggio è arrivato proprio dal primo client
             if (json.fromJson(message.getParameter(0), ClientModel.class).getClientIdentity() == connectionModel.getClientsInfo().get(0).getClientIdentity()) {
                 messageReceived = true;
             }
 
         }
-        System.out.println("[Il primo player ha inviato il gameMode e il numOfPlayers]");
+        System.out.println("[First Player sent Game Mode and Number of Player]");
         if (message.parametersReceived()) {
 
-            //converto il messaggio arrivato in un oggetto clientModel
-            //System.out.println(message.getParameter(0));
             ClientModel clientModel = json.fromJson(message.getParameter(0), ClientModel.class);
 
-            // rimemorizzo le info nel mio database locale
             ClientModel target= connectionModel.findPlayer(clientModel.getNickname());
             connectionModel.change(target,clientModel);
 
             connectionModel.getClientsInfo().removeIf(c -> c!=clientModel);
 
-            System.out.println("E sono " + clientModel.getGameMode() + " " + clientModel.getNumofplayer());
+            System.out.println("GAME_MODE: " + clientModel.getGameMode() + "   PLAYERS: " + clientModel.getNumofplayer());
 
-            // Invio il solito ack
             Network.send(json.toJson(clientModel));
-            System.out.println("[Inviato ack]");
-
-            //scateno l'evento ed esco dallo stato
             message.fireStateEvent();
             message.disable();
         }

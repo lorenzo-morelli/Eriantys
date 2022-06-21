@@ -1,6 +1,8 @@
 package it.polimi.ingsw.server.model.characters;
 
-
+/**
+ * All the character extends this Class, that contain basic methods to deal with it
+ */
 public class CharacterCard {
     private final String Name;
     private int cost;

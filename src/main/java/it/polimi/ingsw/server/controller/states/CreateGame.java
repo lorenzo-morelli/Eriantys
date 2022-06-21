@@ -23,7 +23,6 @@ public class CreateGame extends State {
     private Model model;
     private final ConnectionModel connectionModel;
     private final ServerController serverController;
-    private final Event reset = new ClientDisconnection();
 
     public CreateGame(ServerController serverController) {
         super("[Create game]");
@@ -31,14 +30,16 @@ public class CreateGame extends State {
         Controller controller = ServerController.getFsm();
         this.connectionModel = serverController.getConnectionModel();
         gameCreated = new Event("game created");
+        Event reset = new ClientDisconnection();
         reset.setStateEventListener(controller);
         fourPlayersGameCreated = new Event("Four players game created");
         gameCreated.setStateEventListener(controller);
     }
 
-    public Event getReset() {
-        return reset;
-    }
+    /**
+     * Events callers
+     * @return different events in order to change to different phase
+     */
 
     public Event gameCreated() {
         return gameCreated;
@@ -59,20 +60,25 @@ public class CreateGame extends State {
         for (ClientModel c : connectionModel.getClientsInfo()) {
             model.getPlayers().add(new Player(connectionModel.getClientsInfo().get(i).getNickname(), connectionModel.getClientsInfo().get(i).getMyIp(), model));
             c.setGameStarted(true);
-            c.setAmIfirst(false); // adesso i clients sono tutti "uguali", non c'è un primo
+            c.setAmIfirst(false);
             i++;
         }
         model.randomschedulePlayers();
         serverController.setModel(model);
 
         Thread t= new Thread(){
+            /**
+             * This method make the server capable to manage the connection of new player during the game:
+             * If someone was disconnected previously puts the new player into the game (if it has a valid nickname)
+             * If the game is full, ignore the player.
+             */
             public synchronized void run() {
                 while (true) {
-                    if(connectionModel.isCloseThred()){
-                        connectionModel.setCloseThred(false);
+                    if(connectionModel.isCloseThread()){
+                        connectionModel.setCloseThread(false);
                         return;
                     }
-                    //System.out.println("in connection controll loop");
+
                     ParametersFromNetwork message = new ParametersFromNetwork(1);
                     message.enable();
                     try {
@@ -80,11 +86,10 @@ public class CreateGame extends State {
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
-                    //System.out.println("check disconnessione");
                     Gson json = new Gson();
                     ClientModel receivedClientModel = json.fromJson(message.getParameter(0), ClientModel.class);
 
-                        if(receivedClientModel.getAmIfirst()==null && !connectionModel.isCloseThred()) {
+                        if(receivedClientModel.getAmIfirst()==null && !connectionModel.isCloseThread()) {
                             boolean check = false;
 
                             for (Player p : getModel().getPlayers()) {
@@ -123,14 +128,12 @@ public class CreateGame extends State {
                                             model.setDisconnection(false);
                                             model.getTable().getClouds().add(new Cloud(model.getNumberOfPlayers()));
                                             model.getTable().getClouds().get(model.getTable().getClouds().size()-1).charge(model.getTable().getBag());
-                                            //System.out.println("accepted");
                                             break;
                                         }
                                     }
                                 }
                             }
                         }
-                    //System.out.println("exit loop");
                         try {
                             sleep(2000);
                         } catch (InterruptedException e) {

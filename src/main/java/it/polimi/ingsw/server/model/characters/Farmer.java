@@ -6,6 +6,9 @@ import it.polimi.ingsw.server.model.enums.PeopleColor;
 
 import java.util.ArrayList;
 
+/**
+ * This class contain and the methods to use the character FARMER described in the rules
+ */
 public class Farmer extends CharacterCard{
 
     public Farmer(){

@@ -29,11 +29,19 @@ public class EndGame extends State {
         this.serverController = serverController;
         Controller controller = ServerController.getFsm();
         this.connectionModel = serverController.getConnectionModel();
-        restart= new Event("Gioco Terminato, server riportato in WaitForPlayerConnection");
+        restart= new Event("Game ended, server goes to WaitForPlayerConnection");
         restart.setStateEventListener(controller);
 
         json = new Gson();
     }
+
+    /**
+     * Note to clients that the game is ended :
+     * Two possible cases : end for disconnection or caused by the win of one of the player
+     * @param cause the event that caused the controller transition in this state
+     * @return null event
+     * @throws Exception input output or network related exceptions
+     */
 
     @Override
     public IEvent entryAction(IEvent cause) throws Exception {
@@ -41,11 +49,12 @@ public class EndGame extends State {
 
         if (model.isDisconnection()){
 
+            System.out.println("Send disconnection: minimum number of player not available");
+
             for(int h = 0; h< model.getPlayers().size(); h++){
 
                 ClientModel currentPlayerData = connectionModel.findPlayer(model.getPlayers().get(h).getNickname());
                 currentPlayerData.setTypeOfRequest("DISCONNECTION");
-                System.out.println("invio disconnessione: numero di giocatori minimo non disponibile");
                 currentPlayerData.setServermodel(model);
                 currentPlayerData.setResponse(false);
 
@@ -53,7 +62,7 @@ public class EndGame extends State {
                 Network.setDisconnectedClient(true);
             }
             TimeUnit.SECONDS.sleep(5);
-            restart.fireStateEvent();
+            getRestart().fireStateEvent();
             connectionModel.close();
             return super.entryAction(cause);
 
@@ -75,7 +84,7 @@ public class EndGame extends State {
             currentPlayerData.setGameWinner(winner);
             currentPlayerData.setTypeOfRequest("GAMEEND");
             currentPlayerData.setServermodel(model);
-            currentPlayerData.setResponse(false); //non è una risposta, è una richiesta del server al client
+            currentPlayerData.setResponse(false);
 
             Network.send(json.toJson(currentPlayerData));
             Network.setDisconnectedClient(true);
@@ -87,6 +96,10 @@ public class EndGame extends State {
         return super.entryAction(cause);
     }
 
+    /**
+     * Events callers
+     * @return different events in order to change to different phase
+     */
     public Event getRestart() {
         return restart;
     }

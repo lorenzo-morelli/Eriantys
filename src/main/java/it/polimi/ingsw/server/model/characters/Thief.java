@@ -6,6 +6,9 @@ import it.polimi.ingsw.server.model.enums.PeopleColor;
 
 import java.util.ArrayList;
 
+/**
+ * This class contain the methods to use the character THIEF described in the rules
+ */
 public class Thief extends CharacterCard{
     public Thief(){
         super(3,"THIEF");

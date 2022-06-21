@@ -60,9 +60,9 @@ public class Menu implements Initializable {
     }
 
     /**
-     * This event is used to setup the connection and to connect to the server.
+     * This event is used to set up the connection and to connect to the server.
      * The fields which must be filled are the nickname, the ip and the port for the connection.
-     * Some checks about the validity of this fields are done with some conditions at the beginning.
+     * Some checks about the validity of these fields are done with some conditions at the beginning.
      */
     @FXML
     private void connect() throws IOException, InterruptedException {

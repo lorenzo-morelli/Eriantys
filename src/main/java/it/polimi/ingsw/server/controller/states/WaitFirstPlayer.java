@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 /**
  * State in which the server is waiting for the first client, which we can define as the initializer client,
- * that is the one that will decide the type of game (gamemode) and the number of players.
+ * that is the one that will decide the type of game (game mode) and the number of players.
  * It therefore plays a fundamental role in the business logic of the game.
  */
 public class WaitFirstPlayer extends State {
@@ -27,8 +27,12 @@ public class WaitFirstPlayer extends State {
     private final ParametersFromNetwork firstMessage;
     private final Event reset = new ClientDisconnection();
 
+    /**
+     * Main constructor
+     * @param serverController the main server controller
+     */
     public WaitFirstPlayer(ServerController serverController) {
-        super("[Il server è in attesa del primo giocatore]");
+        super("[Server is waiting for the connection of the first player]");
         json = new Gson();
         firstMessage = new ParametersFromNetwork(1);
         firstMessage.setStateEventListener(controller);
@@ -37,14 +41,21 @@ public class WaitFirstPlayer extends State {
         this.connectionModel = serverController.getConnectionModel();
     }
 
-    public Event getReset() {
-        return reset;
-    }
-
+    /**
+     * Events callers
+     * @return different events in order to change to different phase
+     */
     public ParametersFromNetwork gotFirstMessage() {
         return firstMessage;
     }
 
+
+    /**
+     * Wait the connection of the first player and put it into the game. Then sends a request to the view of the first player to make it able to choose the game mode and the number of player of the game.
+     * @param cause the event that caused the controller transition in this state
+     * @return null event
+     * @throws Exception input output or network related exceptions
+     */
     @Override
     public IEvent entryAction(IEvent cause) throws Exception {
         if (Network.disconnectedClient()){
@@ -59,26 +70,22 @@ public class WaitFirstPlayer extends State {
         firstMessage.enable();
 
         while (!firstMessage.parametersReceived() ) {
-            //System.out.println("loop");
             firstMessage.waitParametersReceived(10);
             if(Network.disconnectedClient()){
                 reset.fireStateEvent();
             }
         }
 
-        System.out.println("[Il primo player si è connesso]");
+        System.out.println("[First Player is connected]");
         if (firstMessage.parametersReceived()) {
-            // Converti il messaggio stringa json in un oggetto clientModel
             ClientModel clientModel = json.fromJson(firstMessage.getParameter(0), ClientModel.class);
 
-            System.out.println("Ricevuto " + clientModel.getNickname() + " " + clientModel.getMyIp());
-            // Compila il campo "sei primo" e invia la risposta al client
+            System.out.println("Player: " + clientModel.getNickname() + " " + clientModel.getMyIp());
             connectionModel.getClientsInfo().add(0, clientModel);
             clientModel.setAmIfirst(true);
             Network.send(json.toJson(clientModel));
-            System.out.println("[Inviato ack al primo player]");
+            System.out.println("[Ack sent to the first player]");
 
-            //scateno l'evento ed esco dallo stato
             firstMessage.fireStateEvent();
             firstMessage.disable();
         }

@@ -12,21 +12,24 @@ import it.polimi.ingsw.utils.stateMachine.State;
  * at the end of the shift (for example reload the cloud cards)
  */
 public class EndTurn extends State {
-    private final Event goToAssistentCardPhase;
+    private final Event goToAssistantCardPhase;
 
     private final ServerController serverController;
 
-
-    public Event goToAssistentCardPhase() {
-        return goToAssistentCardPhase;
+    /**
+     * Events callers
+     * @return different events in order to change to different phase
+     */
+    public Event goToAssistantCardPhase() {
+        return goToAssistantCardPhase;
     }
 
     public EndTurn(ServerController serverController) {
         super("[End Turn]");
         this.serverController = serverController;
         Controller controller = ServerController.getFsm();
-        goToAssistentCardPhase= new Event("end turn");
-        goToAssistentCardPhase.setStateEventListener(controller);
+        goToAssistantCardPhase = new Event("end turn");
+        goToAssistantCardPhase.setStateEventListener(controller);
     }
 
     /**
@@ -49,7 +52,7 @@ public class EndTurn extends State {
             }
         }
         model.nextPlayer();
-        goToAssistentCardPhase().fireStateEvent();
+        goToAssistantCardPhase().fireStateEvent();
         return super.entryAction(cause);
     }
 }

@@ -6,6 +6,9 @@ import it.polimi.ingsw.server.model.enums.PeopleColor;
 
 import java.util.ArrayList;
 
+/**
+ * This class contain the methods to use the character JESTER described in the rules
+ */
 public class Jester extends CharacterCard{
     private final StudentSet set;
     public Jester(StudentSet bag){
@@ -13,9 +16,9 @@ public class Jester extends CharacterCard{
         set=new StudentSet();
         set.setStudentsRandomly(6,bag);
     }
-   // hp: colorsOfEntrance contiene lista dei colori da scambiare da entrance, colorsOfJester la lista dei colori da scambiare dalla carta
-    //controllare che abbiano la stessa lunghezza e che gli studenti scelti (sia come colore che come numero) siano realmente presenti nei rispettivi set
-    // inoltre la loro lunghezza deve essere minimo 1 e massimo 3
+    /**
+     *  colorsOfEntrance is the list of color to swap from entrance, colorsOfJester is the list of color to swap from this card
+     */
     public void useEffect(Player player, ArrayList<PeopleColor> colorsOfJester,  ArrayList<PeopleColor> colorsOfEntrance) {
         player.reduceCoin(getCost());
         improveCost();

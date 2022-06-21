@@ -6,13 +6,17 @@ import it.polimi.ingsw.server.model.enums.PeopleColor;
 
 import java.util.ArrayList;
 
-public class Minstrell extends CharacterCard{
-    public Minstrell(){
+/**
+ * This class contain the methods to use the character MINSTREL described in the rules
+ */
+public class Minstrel extends CharacterCard{
+    public Minstrel(){
         super(1,"MINSTRELL");
     }
-    // hp: colorsOfEntrance contiene lista dei colori da scambiare da entrance, colorsOfDinner la lista dei colori da scambiare da dinner
-    //controllare che abbiano la stessa lunghezza e che gli studenti scelti (sia come colore che come numero) siano realmente presenti nei rispettivi set
-    // inoltre la loro lunghezza deve essere minimo 1 e massimo 2
+
+    /**
+     *  colorsOfEntrance is the list of color to swap from entrance, colorsOfDinner is the list of color to swap from dinner
+     */
     public void useEffect(Player player, ArrayList<PeopleColor> colorsOfDinner, ArrayList<PeopleColor> colorsOfEntrance, CenterTable table,ArrayList<Player> players) {
         player.reduceCoin(getCost());
         improveCost();

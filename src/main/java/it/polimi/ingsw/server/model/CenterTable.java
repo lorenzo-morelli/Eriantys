@@ -9,13 +9,12 @@ import java.util.Collections;
 import java.util.Random;
 
 public class CenterTable {
-    private boolean debug = false; // todo: change to unlock all the character cards
     private final ArrayList<Cloud> clouds;
     private final ArrayList<Island> islands;
     private int motherNaturePosition;
     private final StudentSet bag;
     private final ArrayList<Professor> professors;
-    private final ArrayList<TowerColor> avaiableTowerColor;
+    private final ArrayList<TowerColor> availableTowerColor;
     private final ArrayList<CharacterCard> characterCards;
     private boolean centaurEffect;
     private Player farmerEffect;
@@ -27,16 +26,16 @@ public class CenterTable {
     public static final String ANSI_CYAN = "\033[0;36m";
     public static final String ANSI_RESET = "\u001B[0m";
 
-    public CenterTable(int numplayer, GameMode gamemode) {
+    public CenterTable(int numOfPlayers, GameMode gamemode) {
 
         islands = new ArrayList<>();
-        StudentSet islandbag = new StudentSet(2, 2, 2, 2, 2);
+        StudentSet island_bag = new StudentSet(2, 2, 2, 2, 2);
 
         for (int i = 0; i < 12; i++) {
             if (i == 0 || i == 6) {
-                islands.add(new Island(0, islandbag));
+                islands.add(new Island(0, island_bag));
             } else {
-                islands.add(new Island(1, islandbag));
+                islands.add(new Island(1, island_bag));
             }
         }
 
@@ -44,12 +43,12 @@ public class CenterTable {
 
         bag = new StudentSet(24, 24, 24, 24, 24); //24
 
-        avaiableTowerColor = new ArrayList<>();
-        if (numplayer == 3) {
-            Collections.addAll(avaiableTowerColor, TowerColor.values());
+        availableTowerColor = new ArrayList<>();
+        if (numOfPlayers == 3) {
+            Collections.addAll(availableTowerColor, TowerColor.values());
         } else {
-            avaiableTowerColor.add(TowerColor.WHITE);
-            avaiableTowerColor.add(TowerColor.BLACK);
+            availableTowerColor.add(TowerColor.WHITE);
+            availableTowerColor.add(TowerColor.BLACK);
         }
 
         professors = new ArrayList<>();
@@ -58,8 +57,8 @@ public class CenterTable {
         }
 
         clouds = new ArrayList<>();
-        for (int i = 0; i < numplayer; i++) {
-            clouds.add(new Cloud(numplayer));
+        for (int i = 0; i < numOfPlayers; i++) {
+            clouds.add(new Cloud(numOfPlayers));
             clouds.get(i).charge(bag);
         }
 
@@ -71,7 +70,9 @@ public class CenterTable {
                 int pick;
             };
 
-            if (debug == true){
+            // todo: change to unlock all the character cards
+            boolean debug = false;
+            if (debug){
                 for (int i = 0; i < Character.values().length ; i++) {
                     picks.add(i);
                     switch (Character.values()[i]) {
@@ -110,7 +111,7 @@ public class CenterTable {
                             princessSet = ((Princess) characterCards.get(i)).getSet();
                             break;
                         case MINSTRELL:
-                            characterCards.add(new Minstrell());
+                            characterCards.add(new Minstrel());
                             break;
                         case MUSHROOM_HUNTER:
                             characterCards.add(new MushroomHunter());
@@ -160,7 +161,7 @@ public class CenterTable {
                             princessSet = ((Princess) characterCards.get(i)).getSet();
                             break;
                         case MINSTRELL:
-                            characterCards.add(new Minstrell());
+                            characterCards.add(new Minstrel());
                             break;
                         case MUSHROOM_HUNTER:
                             characterCards.add(new MushroomHunter());
@@ -187,8 +188,8 @@ public class CenterTable {
         return bag;
     }
 
-    public ArrayList<TowerColor> getAvaiableTowerColor() {
-        return avaiableTowerColor;
+    public ArrayList<TowerColor> getAvailableTowerColor() {
+        return availableTowerColor;
     }
 
     public void changeProfessor(Player player, PeopleColor color) {
@@ -201,7 +202,7 @@ public class CenterTable {
         return islands;
     }
 
-    public void movemother(int moves) {
+    public void mother(int moves) {
         motherNaturePosition = (motherNaturePosition + moves) % islands.size();
     }
 
@@ -268,13 +269,13 @@ public class CenterTable {
         return clouds;
     }
 
-    public String toString(boolean islastturn) {
+    public String toString(boolean isLastTurn) {
         return "-----------------------------------------TABLE----------------------------------------------------------------------------------------------------------------------------------------\n" +
-                "\n----------------ISLANDS---------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n" + printIslands() + (!islastturn ? "------------------BAG-----------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n" +
+                "\n----------------ISLANDS---------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n" + printIslands() + (!isLastTurn ? "------------------BAG-----------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n" +
                 "    SIZE : " + bag.size() + "    " + bag +
                 "\n----------------CLOUDS----------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n" + printClouds() : "") +
                 (characterCards == null ? "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n" :
-                        "-----------CHARACTER-CARD---------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n" + printCharachter()) +
+                        "-----------CHARACTER-CARD---------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n" + printCharacter()) +
                 "---------------PROFESSORS-------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n" +
                 printProfessors() + "\n\n--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n";
     }
@@ -289,7 +290,7 @@ public class CenterTable {
         return result.toString();
     }
 
-    public String printCharachter() {
+    public String printCharacter() {
         StringBuilder result = new StringBuilder();
         for (CharacterCard c : characterCards) {
             result.append(c.toString());

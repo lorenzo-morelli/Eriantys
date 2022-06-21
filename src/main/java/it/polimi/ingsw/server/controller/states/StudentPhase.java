@@ -39,14 +39,22 @@ public class StudentPhase extends State {
     private ParametersFromNetwork message;
 
     private boolean disconnected,fromPing;
-    private final Event reset = new ClientDisconnection();
 
+    /**
+     * Events callers
+     * @return different events in order to change to different phase
+     */
     public Event studentPhaseEnded() {
         return studentPhaseEnded;
     }
     public Event gameEnd() {
         return gameEnd;
     }
+
+    /**
+     * The main constructor of the Student phase
+     * @param serverController the main server controller
+     */
     public StudentPhase(ServerController serverController) {
         super("[Move students]");
         this.serverController = serverController;
@@ -54,38 +62,37 @@ public class StudentPhase extends State {
         this.connectionModel = serverController.getConnectionModel();
         studentPhaseEnded = new Event("game created");
         studentPhaseEnded.setStateEventListener(controller);
+        Event reset = new ClientDisconnection();
         reset.setStateEventListener(controller);
         gameEnd = new Event("end phase");
         gameEnd.setStateEventListener(controller);
         json = new Gson();
     }
-    public Event getReset() {
-        return reset;
-    }
 
+    /**
+     * Sends a request to the view of the current player to choose where to move students over the table
+     * and waits a response from the view.
+     * Also handle the usage of card for expert mode.
+     * Special code to handle disconnection was added.
+     * @param cause the event that caused the controller transition in this state
+     * @return null event
+     * @throws Exception input output or network related exceptions
+     */
     @Override
     public IEvent entryAction(IEvent cause) throws Exception {
         int moves;
         Model model = serverController.getModel();
 
-        // retrive the current player
-
         Player currentPlayer = model.getcurrentPlayer();
-        disconnected=false; //flag che indica se si disconnette durante questo turno
-        fromPing=false; //risposta non proviene da ping
-
-        //salto fase se player se si è disconnesso precedentemente
+        disconnected=false;
+        fromPing=false;
 
         if(currentPlayer.isDisconnected()){
             studentPhaseEnded.fireStateEvent();
             return super.entryAction(cause);
         }
 
-        // retrive data of the current player
-
         ClientModel currentPlayerData = connectionModel.findPlayer(currentPlayer.getNickname());
-
-        //gestione numero mosse che il player puo fare
 
         if(model.getNumberOfPlayers() == 3){
             moves = 4;
@@ -94,40 +101,30 @@ public class StudentPhase extends State {
             moves = 3;
         }
 
-        //codice looppa per ogni mossa che player puo fare
-
         for(int i=0; i< moves; i++) {
 
             currentPlayerData.setServermodel(model);
             currentPlayerData.setTypeOfRequest("CHOOSEWHERETOMOVESTUDENTS");
             currentPlayerData.setPingMessage(false);
-            currentPlayerData.setResponse(false); //non è una risposta, è una richiesta del server al client
-
-            //invio e controllo che invio network sia fatto correttamente
+            currentPlayerData.setResponse(false);
 
             boolean checkError= Network.send(json.toJson(currentPlayerData));
-
-            // se invio non va a buon fine salta il giocatore
 
             if(!checkError){
                 studentPhaseEnded.fireStateEvent();
                 return super.entryAction(cause);
             }
 
-            //controllo ricezione risposta invio ping e settaggio del giocatore in disconnessione in caso di ricezione ping fallita
-
             Thread ping = new StudentThread(this, currentPlayerData);
             ping.start();
 
             boolean responseReceived = false;
             while (!responseReceived) {
-                //System.out.println("another one");
                     if (!fromPing) {
                         message = new ParametersFromNetwork(1);
                         message.enable();
                     }
                 while (!message.parametersReceived()) {
-                    //System.out.println("loop");
                     message.waitParametersReceived(5);
                     if (disconnected) {
                         break;
@@ -166,21 +163,10 @@ public class StudentPhase extends State {
                     fromPing=false;
             }
 
-            //codice effettivo della fase se non si è disconnesso
-
             if (!currentPlayer.isDisconnected()) {
-                // dati ricevuti da network
                 currentPlayerData = json.fromJson(message.getParameter(0), ClientModel.class);
-            /*
-              type:
-              SCHOOL : il client vuole muovere uno studente dalla entrance space alla SCHOOL
-              ISLAND : il client vuole muovere uno studente dalla entrance space alla ISLAND
 
-              supposizioni: il client ha già scelto il colore tra quelli disponibili, ed il
-              server lo può trovare in currentPlayerData.getChoosedColor()
-             */
                 String type = currentPlayerData.getTypeOfRequest();
-                //System.out.println("HO RICEVUTO " + type + " " + currentPlayerData.getChoosedColor());
                 if (type.equals("SCHOOL")) {
                     currentPlayer.getSchoolBoard().load_dinner(currentPlayerData.getChoosedColor());
                     if (model.getGameMode().equals(GameMode.EXPERT) && currentPlayer.getSchoolBoard().getDinnerTable().numStudentsbycolor(currentPlayerData.getChoosedColor()) % 3 == 0) {
@@ -210,7 +196,7 @@ public class StudentPhase extends State {
                                     ((Knight) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, model.getTable());
                                     break;
                                 case "MINSTRELL":
-                                    ((Minstrell) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, currentPlayerData.getColors2(), currentPlayerData.getColors1(),model.getTable(),model.getPlayers());
+                                    ((Minstrel) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, currentPlayerData.getColors2(), currentPlayerData.getColors1(),model.getTable(),model.getPlayers());
                                     break;
                                 case "JESTER":
                                     ((Jester) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, currentPlayerData.getColors2(), currentPlayerData.getColors1());
@@ -240,8 +226,6 @@ public class StudentPhase extends State {
                     }
                 }
             }
-
-            //codice per disconnessione durante questo turno
 
             else {
                 int check = 0;
@@ -274,41 +258,40 @@ public class StudentPhase extends State {
                         }
                     }
                     if (check <= 1) {
-                        System.out.println("numero minimo di giocatori non disponibile, attendo 40 secondi in attesa che un altro giocatore si riconnette");
+                        System.out.println("Minimum number of player not available, wait 40 second in order to make the player able to reconnect");
                         for (Player p : model.getPlayers()) {
-                            if(!p.isDisconnected()) {
+                            if (!p.isDisconnected()) {
                                 ClientModel Data = connectionModel.findPlayer(p.getNickname());
 
                                 Data.setTypeOfRequest("TRYTORECONNECT");
                                 Data.setServermodel(model);
                                 Data.setResponse(false);
                                 Data.setPingMessage(false);
-                                System.out.println("send to"+p.getNickname());
 
                                 Network.send(json.toJson(Data));
                             }
                         }
-
                         model.setDisconnection(true);
-                        TimeUnit.MILLISECONDS.sleep(40000); //aspetto 40 secondi nella speranza che qualcuno si riconnetta
+                        TimeUnit.MILLISECONDS.sleep(40000);
 
                         if (model.isDisconnection()) {
                             gameEnd().fireStateEvent();
                             return super.entryAction(cause);
                         }
-                        System.out.println("un giocatore si è riconnesso, la partita può ricominciare");
+                        System.out.println("One player is reconnected, the game will continue...");
                     }
                 }
                 break;
             }
         }
 
-        //scoppia evento fine fase
-
         studentPhaseEnded.fireStateEvent();
         return super.entryAction(cause);
     }
 
+    /**
+     * Utils method for ping and disconnection manage
+     */
     public ParametersFromNetwork getMessage() {
         return message;
     }

@@ -1,5 +1,8 @@
 package it.polimi.ingsw.server.model.characters;
 
+/**
+ * Enums differentiate the different Character Card
+ */
 public enum Character {
     KNIGHT,
     HERALD,

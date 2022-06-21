@@ -1,44 +1,36 @@
 package it.polimi.ingsw.utils.network;
 
-import it.polimi.ingsw.server.controller.ServerController;
-import it.polimi.ingsw.utils.stateMachine.Controller;
 
-import java.awt.event.ActionListener;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.AWTEventMulticaster;
-import javax.swing.Timer;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.net.NetworkInterface;
-import java.net.Inet4Address;
-import java.net.SocketException;
-import java.io.IOException;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
-import java.io.PrintWriter;
+import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Vector;
+import java.io.PrintWriter;
+import java.net.*;
 import java.util.Enumeration;
+import java.util.Vector;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * Classe java che astrae i dettagli di basso livello delle socket TCP fornendo al programmatore semplici
- * metodi per connettersi a una socket, inviare e ricevere messaggi, e varie utilita'
-*/
+ * Java class that abstracts the low-level details of TCP sockets providing the programmer with simple
+ *  * methods for connecting to a socket, sending and receiving messages, and various utilities
+ */
 
 public class NetworkHandler {
-    // Properta' della connessione
-    private int port = 1337;
+    private final int port;
     private String serverIP = null;
     private String incomingText = null;
-    private ReentrantLock incomingTextLock = new ReentrantLock();
+    private final ReentrantLock incomingTextLock = new ReentrantLock();
     private SocketConnection connection = null;
     transient ActionListener actionListener = null;
     // Methods
+
     /**
-     * @param text Testo che vuoi inviare tramite socket
-     * @return Ritorna true se e' stato inviato correttamente
+     * @param text Text you want to send via socket
+     * @return Returns true if it was sent successfully
      */
     public boolean sendText(String text){
         if(connection != null){
@@ -46,11 +38,11 @@ public class NetworkHandler {
         }
         return false;
     }
-    /**
-     * Leggi il testo in arrivo dalla socket
-     * Dovrebbe essere chiamato solo dopo che ActionEvent e' stato triggherato
-     *
-     * @return Ritorna il testo ricevuto, in caso contrario una stringa vuota
+
+     /**
+    * Read the incoming text from the socket
+     * Should only be called after ActionEvent has been triggered
+     * @return Return the received text, otherwise an empty string
      */
     public String readText(){
         if(connection != null){
@@ -60,9 +52,9 @@ public class NetworkHandler {
         }
     }
     /**
-     * Disconnetti tutte le socket aperte
-     * Il server scolleghera' tutti i client prima di chiudere la sua socket
-     * I client chiuderanno semplicemente la loro socket
+     * Disconnect all open sockets
+     * The server will disconnect all clients before closing its socket
+     * Clients will simply close their socket
      */
     public void disconnect(){
         if(connection != null){
@@ -70,48 +62,37 @@ public class NetworkHandler {
             connection = null;
         }
     }
-    /**
-     * Ottieni l'indirizzo ip del tuo computer
-     *
-     * @return Returns computer's IP address
-     */
+
+        /**
+        * Get your computer's ip address
+        * @return Returns computer's IP address
+        */
     public String getMyAddress(){
         try {
             Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
             while (networkInterfaces.hasMoreElements()) {
-                NetworkInterface networkInterface = (NetworkInterface) networkInterfaces.nextElement();
+                NetworkInterface networkInterface = networkInterfaces.nextElement();
                 Enumeration<InetAddress> niAddresses = networkInterface.getInetAddresses();
                 while(niAddresses.hasMoreElements()) {
-                    InetAddress inetAddress = (InetAddress) niAddresses.nextElement();
+                    InetAddress inetAddress = niAddresses.nextElement();
                     if (!inetAddress.isLinkLocalAddress() && !inetAddress.isLoopbackAddress() && inetAddress instanceof Inet4Address) {
                         return inetAddress.getHostAddress();
                     }
                 }
             }
-        } catch (SocketException e) {
+        } catch (SocketException ignored) {
 
         }
         return "127.0.0.1";
     }
-    /**
-     * Ottieni il nome di rete (HostName) del tuo computer
+
+     /**
+     * Open a socket connection
+     * Server - Open a socket connection and wait for some client to arrive
+     * Client - Open the socket and connect to the server
+     * Once connected, both will start a thread to listen to incoming clients or incoming messages
      *
-     * @return Returns computer's Hostname
-     */
-    public String getMyHostname(){
-        try{
-            return InetAddress.getLocalHost().getHostName();
-        }catch(UnknownHostException e){
-            return "localhost";
-        }
-    }
-    /**
-     * Apri una connessione socket
-     * Server - Apri una connessione socket e attendi l'arrivo di qualche client
-     * Client - Apri la socket e connettiti al server
-     * Una volta connessi, entrambi starteranno un thread per ascoltare client in arrivo o messaggi in arrivo
-     *
-     * @return Returns true if socket connection was successfull
+     * @return Returns true if socket connection was successfully
      */
     public boolean connect(){
         // First check to see if you can make a socket connection
@@ -126,9 +107,7 @@ public class NetworkHandler {
     private synchronized void addActionListener(ActionListener listener) {
         actionListener = AWTEventMulticaster.add(actionListener, listener);
     }
-    private synchronized void removeActionListener(ActionListener listener) {
-        actionListener = AWTEventMulticaster.remove(actionListener, listener);
-    }
+
     private void postActionEvent() {
         ActionListener listener = actionListener;
         if (listener != null) {
@@ -169,17 +148,15 @@ public class NetworkHandler {
      * *****************************************************************/
 
     private class SocketConnection implements Runnable, ActionListener{
-        NetworkHandler parentSocket = null;
-        int port = 1337;
-        String serverIP = null;
+        NetworkHandler parentSocket;
+        int port;
+        String serverIP;
         String incomingText = "";
         ServerSocket serverSocketObject = null;
         Socket socketObject = null;
         PrintWriter outBuffer = null;
         BufferedReader inBuffer = null;
-        String strMyIP;
-        String strMyHostname;
-        Vector<ClientConnection> clientConnections = new Vector<ClientConnection>();
+        Vector<ClientConnection> clientConnections = new Vector<>();
         boolean blnListenForClients = true;
 
         Timer timer;
@@ -195,9 +172,9 @@ public class NetworkHandler {
                 // Server mode sending text needs to send to all clients
                 // It therefore goes through the vector
                 // and uses each object's sendText method.
-                ////System.out.println("Sending message to all "+portconnections.size()+" clients: "+text);
-                for (int counter = 0; counter < clientConnections.size(); counter++) {
-                    clientConnections.get(counter).sendText(text);
+                ////System.out.println("Sending message to all "+port connections.size()+" clients: "+text);
+                for (ClientConnection clientConnection : clientConnections) {
+                    clientConnection.sendText(text);
                 }
                 // restarting Heartbeat after last message that was sent.
                 // No need to send heartbeat if there are lots of network messages being sent
@@ -206,7 +183,7 @@ public class NetworkHandler {
             } else {
                 // Client mode is much easier.
                 ////System.out.println("Sending message: "+text);
-                // First check if connecion is down
+                // First check if connection is down
                 if(socketObject != null){
                     if(outBuffer.checkError()){
                         closeConnection();
@@ -230,7 +207,7 @@ public class NetworkHandler {
             if(clientConnection.socketObject != null){
                 System.out.println("Trying to close server connection to client");
                 // Since two methods might be running this code simultaneously
-                // Some of the objects might be null
+                // Some objects might be null
                 // So catch the null pointer exception
                 // the first method that accesses this should close everything correctly
                 try{
@@ -245,11 +222,10 @@ public class NetworkHandler {
                     clientConnection.incomingText = null;
                     System.out.println("Done closing server connection to client");
                     clientConnections.remove(clientConnection);
-                    clientConnection = null;
                     System.out.println("Server removed a client connection.  Current Size: " + clientConnections.size());
                     //Network.setDisconnectedClient(true);
 
-                }catch(NullPointerException e){
+                }catch(NullPointerException ignored){
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
@@ -266,9 +242,9 @@ public class NetworkHandler {
                 while (blnListenForClients) {
                     try {
                         socketObject = serverSocketObject.accept();
-                        ClientConnection singleconnection = new ClientConnection(this.parentSocket, this.socketObject, this);
-                        clientConnections.addElement(singleconnection);
-                        Thread t1 = new Thread(singleconnection);
+                        ClientConnection interconnection = new ClientConnection(this.parentSocket, this.socketObject, this);
+                        clientConnections.addElement(interconnection);
+                        Thread t1 = new Thread(interconnection);
                         t1.start();
                         System.out.println("Server accepted a client connection:  Current Size: " + clientConnections.size());
                     } catch (IOException e) {
@@ -288,7 +264,7 @@ public class NetworkHandler {
                             this.parentSocket.postActionEvent();
                             this.parentSocket.incomingTextLock.unlock();
                         }
-                    } catch (IOException e) {
+                    } catch (IOException ignored) {
                     }
                 }
                 System.out.println("[Il server sta chiudendo]");
@@ -296,7 +272,7 @@ public class NetworkHandler {
             }
         }
         public void closeConnection(){
-            // If server, kill all client sockets then close the serversocket
+            // If server, kill all client sockets then close the server-socket
             if(serverIP == null || serverIP.equals("")){
                 blnListenForClients = false;
                 while(clientConnections.size() > 0){
@@ -305,7 +281,7 @@ public class NetworkHandler {
                 }
                 try{
                     serverSocketObject.close();
-                }catch(IOException e){
+                }catch(IOException ignored){
                 }
                 serverSocketObject = null;
                 clientConnections = null;
@@ -316,10 +292,10 @@ public class NetworkHandler {
                 // Might be called by the disconnecting while loop in the run method
                 // Might be called by the disconnect method.
                 if(socketObject != null){
-                    System.out.println("Trying to close the client conneccion");
+                    System.out.println("Trying to close the client connection");
                     try{
                         // Since two methods might be running this code simultaneously
-                        // Some of the objects might be null
+                        // Some objects might be null
                         // So catch the null pointer exception
                         // the first method that accesses this should close everything correctly
                         try{
@@ -333,9 +309,9 @@ public class NetworkHandler {
                             outBuffer = null;
                             incomingText = null;
                             System.out.println("Done closing client connection");
-                        }catch(NullPointerException e){
+                        }catch(NullPointerException ignored){
                         }
-                    }catch(IOException e){
+                    }catch(IOException ignored){
                     }
                 }
                 timer.stop();
@@ -345,7 +321,7 @@ public class NetworkHandler {
             if(serverIP == null || serverIP.equals("")){
                 // Server style connection.
                 // Open Port
-                // Create a serversocket object
+                // Create a server-socket object
                 try {
                     serverSocketObject = new ServerSocket(port);
                 } catch (IOException e) {
@@ -355,8 +331,6 @@ public class NetworkHandler {
                 t1.start();
                 System.out.println("Server port opened.  Listening to incoming client connections");
                 // Heartbeat start
-                timer.start();
-                return true;
             }else{
                 // Client style connection.
                 // Open port
@@ -372,16 +346,16 @@ public class NetworkHandler {
                 t1.start();
                 System.out.println("Client connected to server.  Listening for incoming data");
                 // Heartbeat start
-                timer.start();
-                return true;
             }
+            timer.start();
+            return true;
         }
         public SocketConnection(String serverIP, int port, NetworkHandler parentSocket){
             this.serverIP = serverIP;
             this.port = port;
             this.parentSocket = parentSocket;
             // Heartbeat to verify if socket is connected
-            // Shouldn't be real time heartbeat check/keepalive
+            // Shouldn't be real time heartbeat check/keep-alive
             // Therefore will beat every 10 seconds
             // Anyone wanting to real time disconnect should use the disconnect method
             timer = new Timer(10000, this);
@@ -389,27 +363,27 @@ public class NetworkHandler {
         }
     }
     private class ClientConnection implements Runnable{
-        NetworkHandler parentSocket = null;
-        SocketConnection socketConnection = null;
+        NetworkHandler parentSocket;
+        SocketConnection socketConnection;
         String incomingText = "";
-        Socket socketObject = null;
+        Socket socketObject;
         PrintWriter outBuffer = null;
         BufferedReader inBuffer = null;
         public void run(){
             try {
                 inBuffer = new BufferedReader(new InputStreamReader(socketObject.getInputStream()));
                 outBuffer = new PrintWriter(socketObject.getOutputStream(), true);
-            } catch (IOException e) {
+            } catch (IOException ignored) {
             }
             while (incomingText != null) {
                 try {
                     incomingText = inBuffer.readLine();
                     if(incomingText != null && !incomingText.equals("Heartbeat")){
-                        // Send to all other clients except for this recieving one
+                        // Send to all other clients except for this receiving one
                         for (int counter = 0; counter < socketConnection.clientConnections.size(); counter++) {
                             if(socketConnection.clientConnections.get(counter) != this){
-                                /**
-                                 * Se mi arriva l'heartbit lato client, reinoltra l'heartbit al server
+                                /*
+                                  If heartbeat arrive from clients, send it to the server
                                  */
                                 socketConnection.clientConnections.get(counter).sendText(incomingText);
                             }
@@ -420,19 +394,17 @@ public class NetworkHandler {
                         this.parentSocket.postActionEvent();
                         this.parentSocket.incomingTextLock.unlock();
                     }
-                } catch (IOException e) {
+                } catch (IOException ignored) {
                 }
             }
             System.out.println("reading while loop done");
             socketConnection.removeClient(this);
         }
-        public boolean sendText(String text) {
+        public void sendText(String text) {
             if(outBuffer.checkError()){
                 socketConnection.removeClient(this);
-                return false;
             }else{
                 outBuffer.println(text);
-                return true;
             }
         }
         public ClientConnection(NetworkHandler parentSocket, Socket socketObject, SocketConnection socketConnection){

@@ -6,7 +6,9 @@ import it.polimi.ingsw.server.controller.states.StudentPhase;
 import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
 
-
+/**
+ * Thread for Student Phase pings
+ */
 public class StudentThread extends Thread {
     private final StudentPhase phase;
     private final ClientModel CurrentPlayerData;
@@ -18,6 +20,9 @@ public class StudentThread extends Thread {
         json=new Gson();
     }
 
+    /** This method is used to send and receive ping during the Student Phase in order to
+     * manage the clients disconnection
+     */
     public synchronized void run() {
         while (!phase.getMessage().parametersReceived() || json.fromJson(phase.getMessage().getParameter(0), ClientModel.class).isPingMessage()) {
             try {
@@ -25,7 +30,7 @@ public class StudentThread extends Thread {
             } catch (InterruptedException e) {
                 return;
             }
-            System.out.println("ping sended");
+            System.out.println("ping sent");
             CurrentPlayerData.setResponse(false); // è una richiesta non una risposta// lato client avrà una nella CliView un metodo per gestire questa richiesta
             CurrentPlayerData.setPingMessage(true);
             try {
@@ -34,21 +39,21 @@ public class StudentThread extends Thread {
                 return;
             }
 
-            ParametersFromNetwork pingmessage = new ParametersFromNetwork(1);
-            pingmessage.enable();
+            ParametersFromNetwork ping_message = new ParametersFromNetwork(1);
+            ping_message.enable();
 
             try {
-                pingmessage.waitParametersReceived(5);
+                ping_message.waitParametersReceived(5);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
             synchronized (phase) {
-                if (!pingmessage.parametersReceived()) {
+                if (!ping_message.parametersReceived()) {
                     phase.setDisconnected(true);
                     return;
                 }
-                if (!json.fromJson(pingmessage.getParameter(0), ClientModel.class).isPingMessage()) {
-                    phase.setMessage(pingmessage);
+                if (!json.fromJson(ping_message.getParameter(0), ClientModel.class).isPingMessage()) {
+                    phase.setMessage(ping_message);
                     phase.setFromPing(true);
                     return;
                 }

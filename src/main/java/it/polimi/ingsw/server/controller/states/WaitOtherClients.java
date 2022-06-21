@@ -26,18 +26,22 @@ public class WaitOtherClients extends State {
     private final Event fourClientsConnected;
 
     public WaitOtherClients(ServerController serverController) {
-        super("[Aspettando gli altri giocatori]");
+        super("[Waiting other players]");
         this.connectionModel = serverController.getConnectionModel();
         Controller controller = ServerController.getFsm();
         json = new Gson();
         message = new ParametersFromNetwork(1);
         message.setStateEventListener(controller);
-        fourClientsConnected= new Event("4 clients sono collegati e pronti a giocare");
+        fourClientsConnected= new Event("4 clients connected and ready to play");
         fourClientsConnected.setStateEventListener(controller);
-        twoOrThreeClientsConnected= new Event("2 o 3 clients sono collegati e pronti a giocare");
+        twoOrThreeClientsConnected= new Event("2 or 3 clients connected and ready to play");
         twoOrThreeClientsConnected.setStateEventListener(controller);
     }
 
+    /**
+     * Events callers
+     * @return different events in order to change to different phase
+     */
     public Event twoOrThreeClientsConnected() {
         return twoOrThreeClientsConnected;
     }
@@ -46,40 +50,34 @@ public class WaitOtherClients extends State {
         return fourClientsConnected;
     }
 
+    /**
+     * Wait the connection of the other player and put it into the game. Then sends an ack to them.
+     * @param cause the event that caused the controller transition in this state
+     * @return null event
+     * @throws Exception input output or network related exceptions
+     */
     @Override
     public IEvent entryAction(IEvent cause) throws Exception {
-        // Quanti clients devo ancora aspettare?
         int numOfPlayersToWait = connectionModel.getClientsInfo().get(0).getNumofplayer() - 1;
 
-        // Bene, aspettiamoli
         while (numOfPlayersToWait > 0) {
-            System.out.println("[aspettando altri " + numOfPlayersToWait + " clients]");
+            System.out.println("[Waiting for " + numOfPlayersToWait + " clients]");
 
             message=new ParametersFromNetwork(1);
             message.enable();
             while (!message.parametersReceived()) {
-                //System.out.println("loop");
                 message.waitParametersReceived(10);
             }
-            // Converti il messaggio stringa json in un oggetto clientModel
             clientModel = json.fromJson(message.getParameter(0), ClientModel.class);
 
-            // Ma se il nickname è già esistente? Gestiscimi questa casistic
             isNicknameAlreadyExistent();
 
-            System.out.println("Ricevuto " + clientModel.getNickname() + " " + clientModel.getMyIp());
+            System.out.println("PLAYER: " + clientModel.getNickname() + " " + clientModel.getMyIp());
 
-            // Adesso ho la garanzia di avere un nickname unico
-            System.out.println("[Nickname unico]");
-            // Compila il campo "non sei primo" e invia la risposta al client
             clientModel.setAmIfirst(false);
             Network.send(json.toJson(clientModel));
-            System.out.println("[Client notificato per aver inserito nickname valido]");
-
-            // Appendi alla lista di ClientModel il modello appena ricevuto così da salvarlo per usi futuri
             connectionModel.getClientsInfo().add(clientModel);
 
-            //scateno l'evento ed esco dallo stato
             numOfPlayersToWait--;
 
         }
@@ -92,21 +90,21 @@ public class WaitOtherClients extends State {
         return super.entryAction(cause);
     }
 
+    /**
+     * This method check if the nickname chose by the Client is valid. If it is not, send another request to change the nickname.
+     */
     public void isNicknameAlreadyExistent() throws InterruptedException {
         for (ClientModel c : connectionModel.getClientsInfo()) {
             if (clientModel.getNickname().equals(c.getNickname())) {
-                // ahia, il nickname esiste già
-                // notifico il client di questo fatto
-                Network.send(json.toJson(clientModel));
-                System.out.println("[Client notificato per aver inserito nickname già presente]");
 
-                // attendo un nickname unico
+                Network.send(json.toJson(clientModel));
+                System.out.println("[Invalid Nickname]");
+
                 ParametersFromNetwork nickname = new ParametersFromNetwork(1);
 
 
                 boolean messageReceived = false;
                 while (!messageReceived) {
-                    //System.out.println("waitining clients");
                     nickname = new ParametersFromNetwork(1);
                     nickname.enable();
                     nickname.waitParametersReceived();

@@ -26,19 +26,23 @@ import java.util.concurrent.TimeUnit;
  * the Assistant card phase of the game.
  */
 public class AssistantCardPhase extends State {
-    private final Event cardsChoosen ,gameEnd;
+    private final Event cardsChosen,gameEnd;
     private final ConnectionModel connectionModel;
 
     private final Gson json;
     private final ServerController serverController;
     private ParametersFromNetwork message;
-    private final Event reset = new ClientDisconnection();
     private boolean disconnected,fromPing;
+
+    /**
+     * Events callers
+     * @return different events in order to change to different phase
+     */
     public Event gameEnd() {
         return gameEnd;
     }
-    public Event cardsChoosen() {
-        return cardsChoosen;
+    public Event cardsChosen() {
+        return cardsChosen;
     }
 
     /**
@@ -50,16 +54,13 @@ public class AssistantCardPhase extends State {
         this.serverController = serverController;
         Controller controller = ServerController.getFsm();
         this.connectionModel = serverController.getConnectionModel();
-        cardsChoosen= new Event("game created");
-        cardsChoosen.setStateEventListener(controller);
+        cardsChosen = new Event("game created");
+        cardsChosen.setStateEventListener(controller);
         gameEnd = new Event("end phase");
         gameEnd.setStateEventListener(controller);
+        Event reset = new ClientDisconnection();
         reset.setStateEventListener(controller);
         json = new Gson();
-    }
-
-    public Event getReset() {
-        return reset;
     }
 
     /**
@@ -68,79 +69,60 @@ public class AssistantCardPhase extends State {
      * and wait for the answer.
      * Some sanity checks are made (in case of malicious client), as well as
      * special code to handle the advanced disconnection feature.
-     * @param cause what caused the server controller to enter in this method
+     * @param cause what caused the server controller to enter this method
      * @return null event
      * @throws Exception IO errors and network related problems.
      */
     @Override
     public IEvent entryAction(IEvent cause) throws Exception {
         Model model = serverController.getModel();
-        ArrayList<AssistantCard> alreadyChooseds=new ArrayList<>();
+        ArrayList<AssistantCard> alreadyChooses=new ArrayList<>();
         model.nextTurn();
-
-        // For each player
 
         for(int i = 0; i< model.getNumberOfPlayers(); i++){
 
-            // retrive the current player
-
             Player currentPlayer = model.getcurrentPlayer();
-            disconnected=false; //flag che indica se si disconnette durante questo turno
-            fromPing=false; //risposta non proviene da ping
+            disconnected=false;
+            fromPing=false;
 
-            //salto player se si è disconnesso precedentemente
 
             if(!currentPlayer.isDisconnected()) {
-
-                //se non è disconnesso allora:
 
                 ClientModel currentPlayerData;
                 boolean lowpriority = false;
                 fromPing = false;
 
-                // retrive data of the current player
-
                 currentPlayerData = connectionModel.findPlayer(currentPlayer.getNickname());
 
-                //gestione delle carte che puo scegliere
 
-                List<AssistantCard> canbBeChooesed = new ArrayList<>(currentPlayer.getAvailableCards().getCardsList());
-                if (alreadyChooseds.containsAll(canbBeChooesed)) {
+                List<AssistantCard> canBeChoose = new ArrayList<>(currentPlayer.getAvailableCards().getCardsList());
+                if (alreadyChooses.containsAll(canBeChoose)) {
                     lowpriority = true;
                 } else {
-                    canbBeChooesed.removeAll(alreadyChooseds);
+                    canBeChoose.removeAll(alreadyChooses);
                 }
 
-                // put the deck in the data and send it over the network
-
-                currentPlayerData.setDeck(canbBeChooesed);
-                currentPlayerData.setResponse(false); // è una richiesta non una risposta
-                currentPlayerData.setTypeOfRequest("CHOOSEASSISTANTCARD");  // lato client avrà una nella CliView un metodo per gestire questa richiesta
+                currentPlayerData.setDeck(canBeChoose);
+                currentPlayerData.setResponse(false);
+                currentPlayerData.setTypeOfRequest("CHOOSEASSISTANTCARD");
                 currentPlayerData.setPingMessage(false);
                 currentPlayerData.setServermodel(model);
 
-                //invio e controllo che invio network sia fatto correttamente
+                boolean checkDisconnection = Network.send(json.toJson(currentPlayerData));
 
-                boolean checkDisc = Network.send(json.toJson(currentPlayerData));
-
-                // se invio va a buon fine continua sennò salta il player
-
-                if (checkDisc) {
-
-                    //controllo ricezione risposta invio ping e settaggio del giocatore in disconnessione in caso di ricezione ping fallita
+                if (checkDisconnection) {
 
                     Thread ping = new AssistantCardThread(this, currentPlayerData);
                     ping.start();
 
                     boolean responseReceived = false;
                     while (!responseReceived) {
-                        //System.out.println("another one");
+
                             if (!fromPing) {
                                 message = new ParametersFromNetwork(1);
                                 message.enable();
                             }
                         while (!message.parametersReceived()) {
-                            //System.out.println("loop");
                             message.waitParametersReceived(5);
                             if (disconnected) {
                                 break;
@@ -150,8 +132,8 @@ public class AssistantCardPhase extends State {
                                 responseReceived = true;
                                 if (disconnected) {
                                     currentPlayer.setDisconnected(true);
-                                    alreadyChooseds.add(currentPlayer.getAvailableCards().getCardsList().get(currentPlayer.getAvailableCards().getCardsList().size() - 1));
-                                    currentPlayer.setChoosedCard(canbBeChooesed.get(canbBeChooesed.size()-1));
+                                    alreadyChooses.add(currentPlayer.getAvailableCards().getCardsList().get(currentPlayer.getAvailableCards().getCardsList().size() - 1));
+                                    currentPlayer.setChoosedCard(canBeChoose.get(canBeChoose.size()-1));
                                     boolean check=true;
                                     for(int j=0;j<model.getTable().getClouds().size();j++) {
                                         if(model.getTable().getClouds().get(j).getStudentsAccumulator().size()==0)
@@ -173,28 +155,26 @@ public class AssistantCardPhase extends State {
 
                 }
 
-                //codice effettivo della fase se non si è disconnesso
 
                 if (!currentPlayer.isDisconnected()) {
 
-                    AssistantCard choosen = null;
+                    AssistantCard chosen = null;
                     currentPlayerData = json.fromJson(message.getParameter(0), ClientModel.class);
-                    // ricevo un campo json e lo converto in AssistantCard
+
                     for (int j = 0; j < currentPlayer.getAvailableCards().getCardsList().size(); j++) {
                         if (currentPlayerData.getCardChoosedValue() == currentPlayer.getAvailableCards().getCardsList().get(j).getValues()) {
-                            choosen = currentPlayer.getAvailableCards().getCardsList().get(j);
+                            chosen = currentPlayer.getAvailableCards().getCardsList().get(j);
                         }
                     }
 
-                    // il controllo sul fatto che l'utente scelga una carta appartenente a quelle presenti in availableCars
-                    // viene svolto direttamente dal client in CliView
+
                     if (lowpriority) {
-                        assert choosen != null;
-                        choosen.lowPriority();
+                        assert chosen != null;
+                        chosen.lowPriority();
                     }
 
-                    alreadyChooseds.add(choosen);
-                    boolean checkEndCondition = currentPlayer.setChoosedCard(choosen);
+                    alreadyChooses.add(chosen);
+                    boolean checkEndCondition = currentPlayer.setChoosedCard(chosen);
 
                     if (checkEndCondition) {
                         model.setlastturn();
@@ -202,7 +182,6 @@ public class AssistantCardPhase extends State {
 
                 }
 
-                //codice per disconnessione di questo player durante questo turno
 
                 else {
                     int check = 0;
@@ -220,7 +199,7 @@ public class AssistantCardPhase extends State {
                         }
                     }
                     if (check <= 1) {
-                        System.out.println("numero minimo di giocatori non disponibile, attendo 40 secondi in attesa che un altro giocatore si riconnette");
+                        System.out.println("Minimum number of player not available, wait 40 second in order to make the player able to reconnect");
                         for (Player p : model.getPlayers()) {
                             if(!p.isDisconnected()) {
                                 ClientModel Data = connectionModel.findPlayer(p.getNickname());
@@ -231,31 +210,34 @@ public class AssistantCardPhase extends State {
                                 Data.setPingMessage(false);
 
                                 Network.send(json.toJson(Data));
-                                System.out.println("send to"+p.getNickname());
                             }
                         }
 
                         model.setDisconnection(true);
-                        TimeUnit.MILLISECONDS.sleep(40000); //aspetto 40 secondi nella speranza che qualcuno si riconnetta
+                        TimeUnit.MILLISECONDS.sleep(40000);
 
 
                         if (model.isDisconnection()) {
                             gameEnd().fireStateEvent();
                             return super.entryAction(cause);
                         }
-                        System.out.println("un giocatore si è riconnesso, la partita può ricominciare");
+                        System.out.println("One player is reconnected, the game will continue...");
                     }
                 }
             }
 
-            //prossimo player
 
             model.nextPlayer();
         }
-        cardsChoosen.fireStateEvent();
+        cardsChosen.fireStateEvent();
         model.schedulePlayers();
         return super.entryAction(cause);
     }
+
+    /**
+     * Utils method for ping and disconnection manage
+     */
+
     public void setDisconnected(boolean value){
         disconnected=value;
     }

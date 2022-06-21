@@ -6,7 +6,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 /**
- * The network class is an helper class to abstract the low level code
+ * The network class is a helper class to abstract the low level code
  * typical of a TCP socket, making available to the developer a series
  * of methods to initialize the connection in a completely intuitive way.
  *
@@ -16,10 +16,11 @@ public class Network implements ActionListener{
     private static NetworkHandler connection;
     private static boolean gotConnect;
     private static boolean serverListening = false;
-    private static Network instance = null;
     private static ClientModel clientModel;
-    private static JButton serverButton,clientButton, sendButton;
-    private static JTextField IPAddress,port,textToSend;
+    private static JButton serverButton;
+    private static JButton clientButton;
+    private static JTextField IPAddress;
+    private static JTextField port;
     private static JTextArea textReceived;
     private static JButton disconnectButton;
     private static boolean disconnectedClient = false;
@@ -64,7 +65,7 @@ public class Network implements ActionListener{
         serverButton.addActionListener(this);
         clientButton = new JButton();
         clientButton.addActionListener(this);
-        sendButton = new JButton();
+        JButton sendButton = new JButton();
         sendButton.addActionListener(this);
         IPAddress = new JTextField();
         port = new JTextField();
@@ -73,52 +74,52 @@ public class Network implements ActionListener{
         disconnectButton.addActionListener(this);
     }
     /**
-     * This method is used to chech if new messages are arrived from the network
+     * This method is used to check if new messages are arrived from the network
      */
     public static synchronized JTextArea checkNewMessages() {
-        if (instance.textReceived == null){
-            instance.textReceived = new JTextArea();
+        if (textReceived == null){
+            textReceived = new JTextArea();
         }
-        return instance.textReceived;
+        return textReceived;
     }
     /**
-     * This method is used to setup the server side connection
-     * @param port the port on wich the server has to listen
+     * This method is used to set up the server side connection
+     * @param port the port on which the server has to listen
      *
      */
     public static void setupServer(String port){
-            instance = new Network();
-            instance.port.setText(port);
-            instance.serverButton.doClick();
+        new Network();
+            Network.port.setText(port);
+            serverButton.doClick();
             serverListening = true;
 
 
-    };
+    }
     /**
-     * This method is used to setup the client side connection
-     * @param port the port on wich the server has to listen
+     * This method is used to set up the client side connection
+     * @param port the port on which the server has to listen
      * @param ip the ip of the server
      *
      */
     public static void setupClient(String ip,String port){
-        instance = new Network();
+        new Network();
         Network.IPAddress.setText(ip);
         Network.port.setText(port);
         Network.clientButton.doClick();
-    };
+    }
     /**
      * Used to disconnect from the socket
      *
      */
     public synchronized static void disconnect(){
-        instance.disconnectButton.doClick();
+        disconnectButton.doClick();
     }
     /**
      * Used to check whether we are connected or not
      *
      */
     public synchronized static boolean isConnected() {
-        return instance.gotConnect;
+        return gotConnect;
     }
 
     /**
@@ -135,7 +136,7 @@ public class Network implements ActionListener{
      *
      */
     public synchronized static String getMyIp(){
-        return instance.connection.getMyAddress();
+        return connection.getMyAddress();
     }
 
     /**

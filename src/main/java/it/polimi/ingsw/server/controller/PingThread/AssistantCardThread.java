@@ -6,6 +6,9 @@ import it.polimi.ingsw.server.controller.states.AssistantCardPhase;
 import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
 
+/**
+ * Thread for Assistant Card Phase pings
+ */
 public class AssistantCardThread extends Thread {
     private final AssistantCardPhase phase;
     private final ClientModel CurrentPlayerData;
@@ -17,6 +20,9 @@ public class AssistantCardThread extends Thread {
         json=new Gson();
     }
 
+    /** This method is used to send and receive ping during the Assistant Card Phase in order to
+     * manage the clients disconnection
+     */
     public synchronized void run() {
         while (phase.getMessage() == null || !phase.getMessage().parametersReceived() || json.fromJson(phase.getMessage().getParameter(0), ClientModel.class).isPingMessage()) {
             try {
@@ -24,8 +30,8 @@ public class AssistantCardThread extends Thread {
             } catch (InterruptedException e) {
                 return;
             }
-            System.out.println("ping sended");
-            CurrentPlayerData.setResponse(false); // è una richiesta non una risposta// lato client avrà una nella CliView un metodo per gestire questa richiesta
+            System.out.println("ping sent");
+            CurrentPlayerData.setResponse(false);
             CurrentPlayerData.setPingMessage(true);
             try {
                 Network.send(json.toJson(CurrentPlayerData));
@@ -33,21 +39,21 @@ public class AssistantCardThread extends Thread {
                 return;
             }
 
-            ParametersFromNetwork pingmessage = new ParametersFromNetwork(1);
-            pingmessage.enable();
+            ParametersFromNetwork ping_message = new ParametersFromNetwork(1);
+            ping_message.enable();
 
             try {
-                pingmessage.waitParametersReceived(5);
+                ping_message.waitParametersReceived(5);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
             synchronized (phase) {
-                if (!pingmessage.parametersReceived()) {
+                if (!ping_message.parametersReceived()) {
                     phase.setDisconnected(true);
                     return;
                 }
-                if (!json.fromJson(pingmessage.getParameter(0), ClientModel.class).isPingMessage()) {
-                    phase.setMessage(pingmessage);
+                if (!json.fromJson(ping_message.getParameter(0), ClientModel.class).isPingMessage()) {
+                    phase.setMessage(ping_message);
                     phase.setFromPing(true);
                     return;
                 }

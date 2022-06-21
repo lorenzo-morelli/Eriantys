@@ -4,7 +4,6 @@ import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.other.DoubleObject;
 import it.polimi.ingsw.utils.stateMachine.Event;
 import javafx.application.Platform;
-import javafx.concurrent.Task;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;

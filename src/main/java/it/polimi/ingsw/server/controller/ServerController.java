@@ -19,8 +19,11 @@ public class ServerController {
     private Model model;
     private final ConnectionModel connectionModel = new ConnectionModel();
     private static final Idle idle = new Idle();
-    private static final Controller fsm = new Controller("Controllore del Server", idle);
+    private static final Controller fsm = new Controller("Server Controller", idle);
 
+    /**
+     * Main constructor of the Server controller. Controller is FSM machine, created by using pattern State
+     */
     public ServerController() throws Exception {
         fsm.showDebugMessages(); // Todo comment when not needed
 
@@ -42,13 +45,13 @@ public class ServerController {
         fsm.addTransition(idle, start, specifyPortScreen);
         fsm.addTransition(specifyPortScreen, specifyPortScreen.portSpecified(), waitFirstPlayer);
         fsm.addTransition(waitFirstPlayer, waitFirstPlayer.gotFirstMessage(), waitFirstPlayerGameInfo);
-        fsm.addTransition(waitFirstPlayerGameInfo, waitFirstPlayerGameInfo.gotNumOfPlayersAndGamemode(),waitOtherClients);
+        fsm.addTransition(waitFirstPlayerGameInfo, waitFirstPlayerGameInfo.gotNumOfPlayersAndGameMode(),waitOtherClients);
         fsm.addTransition(waitOtherClients, waitOtherClients.twoOrThreeClientsConnected(), createGame);
         fsm.addTransition(waitOtherClients, waitOtherClients.fourClientsConnected(), askForTeamMate);
         fsm.addTransition(createGame, createGame.gameCreated(), assistantCardPhase);
         fsm.addTransition(createGame, createGame.fourPlayersGameCreated(), askForTeamMate);
-        fsm.addTransition(askForTeamMate, askForTeamMate.teamMateChoosen(), assistantCardPhase);
-        fsm.addTransition(assistantCardPhase, assistantCardPhase.cardsChoosen(), studentPhase);
+        fsm.addTransition(askForTeamMate, askForTeamMate.teamMateChosen(), assistantCardPhase);
+        fsm.addTransition(assistantCardPhase, assistantCardPhase.cardsChosen(), studentPhase);
         fsm.addTransition(assistantCardPhase, assistantCardPhase.gameEnd(), endGame);
         fsm.addTransition(studentPhase, studentPhase.studentPhaseEnded(), motherPhase);
         fsm.addTransition(studentPhase, studentPhase.gameEnd(), endGame);
@@ -59,15 +62,15 @@ public class ServerController {
         fsm.addTransition(cloudPhase, cloudPhase.GoToStudentPhase(), studentPhase);
         fsm.addTransition(cloudPhase, cloudPhase.GoToEndTurn(), endTurn);
         fsm.addTransition(cloudPhase, cloudPhase.gameEnd(), endGame);
-        fsm.addTransition(endTurn, endTurn.goToAssistentCardPhase(), assistantCardPhase);
+        fsm.addTransition(endTurn, endTurn.goToAssistantCardPhase(), assistantCardPhase);
         fsm.addTransition(endGame, endGame.getRestart(), waitFirstPlayer);
         fsm.addTransition(waitFirstPlayerGameInfo, waitFirstPlayerGameInfo.getReset(), waitFirstPlayer);
-
-
-        // Start event is the only one that has to be triggered manually.
         start.fireStateEvent();
     }
 
+    /**
+     * Utils methods to deal with this class
+     */
     public Model getModel() {
         return model;
     }

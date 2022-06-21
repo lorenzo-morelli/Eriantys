@@ -89,14 +89,14 @@ public class SetupGame implements Initializable {
             long start = System.currentTimeMillis();
             long end = start + 40 * 1000L;
             try {
-                waitings(end);
+                waiting(end);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    public void waitings(long end) throws InterruptedException {
+    public void waiting(long end) throws InterruptedException {
         boolean notDone = false;
         do {
             System.out.println("primo loop");
@@ -112,11 +112,11 @@ public class SetupGame implements Initializable {
                     }
                 });
                 thread.start();
-                DoubleObject responce = ((DoubleObject) Platform.enterNestedEventLoop(PAUSE_KEY));
-                boolean check = responce.isRespo();
-                message = responce.getParame();
+                DoubleObject response = ((DoubleObject) Platform.enterNestedEventLoop(PAUSE_KEY));
+                boolean check = response.isRespo();
+                message = response.getParame();
                 if (check && waitForFirst) {
-                    waitings(System.currentTimeMillis() + 40000L);
+                    waiting(System.currentTimeMillis() + 40000L);
                     return;
                 }
                 if (check) {

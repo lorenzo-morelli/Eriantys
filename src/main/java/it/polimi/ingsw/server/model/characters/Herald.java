@@ -2,13 +2,16 @@ package it.polimi.ingsw.server.model.characters;
 
 import it.polimi.ingsw.server.model.*;
 
+/**
+ * This class contain the info and the methods to use the card HERALD described in the rules
+ */
 public class Herald extends CharacterCard{
 
     public Herald(){
         super(3,"HERALD");
     }
 
-    public boolean useEffect(Player player, int index_island, Model model) { //ritorna true se gioco è da terminare
+    public boolean useEffect(Player player, int index_island, Model model) {
         player.reduceCoin(getCost());
         improveCost();
         Island target= model.getTable().getIslands().get(index_island);
@@ -51,14 +54,14 @@ public class Herald extends CharacterCard{
                 merging=model.getTable().getIslands().get((index_island - 1)% model.getTable().getIslands().size());
             }
             if (merging.getTowerColor() != null && merging.getTowerColor().equals(model.getTable().getIslands().get(index_island).getTowerColor())) {
-                int mergingindex;
+                int merging_index;
                 if(index_island==0){
-                    mergingindex=model.getTable().getIslands().size()-1;
+                    merging_index=model.getTable().getIslands().size()-1;
                 }
                 else{
-                    mergingindex=(index_island - 1)% model.getTable().getIslands().size();
+                    merging_index=(index_island - 1)% model.getTable().getIslands().size();
                 }
-                model.getTable().mergeIsland(index_island, mergingindex);
+                model.getTable().mergeIsland(index_island, merging_index);
             }
         }
         return model.getTable().getIslands().size() == 3;

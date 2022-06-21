@@ -1,6 +1,9 @@
 package it.polimi.ingsw.server.model.characters;
 import it.polimi.ingsw.server.model.Player;
 
+/**
+ * This class contain the methods to use the character POSTMAN described in the rules
+ */
 public class Postman extends CharacterCard{
 
     public Postman(){

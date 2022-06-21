@@ -20,11 +20,11 @@ import java.io.IOException;
 
 /**
  * This class implements the state of the server where the user has to choose his
- * team mate, to correctly create the 4 players game
+ * teammate, to correctly create the 4 players game
  */
 
 public class AskForTeamMate extends State {
-    private final Event teamMateChoosen;
+    private final Event teamMateChosen;
     private Model model;
     private final ConnectionModel connectionModel;
 
@@ -32,14 +32,17 @@ public class AskForTeamMate extends State {
     private final ServerController serverController;
 
     private ParametersFromNetwork message;
-    private final Event reset = new ClientDisconnection();
 
-    public Event teamMateChoosen() {
-        return teamMateChoosen;
+    /**
+     * Events callers
+     * @return different events in order to change to different phase
+     */
+    public Event teamMateChosen() {
+        return teamMateChosen;
     }
 
     /**
-     * Constructor of the Ask Team Mate server state
+     * Constructor of the Ask teammate server state
      * @param serverController the main server controller
      */
     public AskForTeamMate(ServerController serverController) {
@@ -47,24 +50,17 @@ public class AskForTeamMate extends State {
         this.serverController = serverController;
         Controller controller = ServerController.getFsm();
         this.connectionModel = serverController.getConnectionModel();
-        teamMateChoosen = new Event("game created");
+        teamMateChosen = new Event("game created");
+        Event reset = new ClientDisconnection();
         reset.setStateEventListener(controller);
-        teamMateChoosen.setStateEventListener(controller);
+        teamMateChosen.setStateEventListener(controller);
         json = new Gson();
-    }
-
-    /**
-     * getter of the event
-     * @return the reset event (just in case)
-     */
-    public Event getReset() {
-        return reset;
     }
 
     /**
      * Overrides the entry action of the state abstract class,
      * This method make a request to the client view to ask the client to
-     * choose his team mate, afther that creates the 4 players game mode
+     * choose his teammate, after that creates the 4 players game mode
      * @param cause the cause that generated the transition in this state
      * @return null event
      * @throws Exception caused by threads/network/IO errors
@@ -78,8 +74,8 @@ public class AskForTeamMate extends State {
             c.setGameStarted(true);
         }
         currentPlayerData.getNicknames().remove(currentPlayerData.getNickname());
-        currentPlayerData.setResponse(false); // è una richiesta non una risposta
-        currentPlayerData.setTypeOfRequest("TEAMMATE");  // lato client avrà una nella CliView un metodo per gestire questa richiesta
+        currentPlayerData.setResponse(false);
+        currentPlayerData.setTypeOfRequest("TEAMMATE");
         Network.send(json.toJson(currentPlayerData));
 
         boolean responseReceived = false;
@@ -92,10 +88,9 @@ public class AskForTeamMate extends State {
                 responseReceived = true;
             }
         }
-        // Ho ricevuto la risposta, ora devo creare la partita
+
         ClientModel received = json.fromJson(message.getParameter(0), ClientModel.class);
 
-        //model = new Model(4, "PRINCIPIANT"); // per il momento hardcodato PRINCIPIANT
         model = new Model(connectionModel.getNumOfPlayers(), connectionModel.getGameMode());
         model.getPlayers().add(new Player(received.getNicknames().get(3), connectionModel.findPlayer(received.getNicknames().get(3)).getMyIp(),1, model));
         model.getPlayers().add(new Player(received.getNicknames().get(2), connectionModel.findPlayer(received.getNicknames().get(2)).getMyIp(),1, model));
@@ -105,13 +100,19 @@ public class AskForTeamMate extends State {
 
 
         Thread t= new Thread(){
+
+            /**
+             * This method make the server capable to manage the connection of new player during the game:
+             * If someone was disconnected previously puts the new player into the game (if it has a valid nickname)
+             * If the game is full, ignore the player.
+             */
             public synchronized void run() {
                 while (true) {
-                    if(connectionModel.isCloseThred()){
-                        connectionModel.setCloseThred(false);
+                    if(connectionModel.isCloseThread()){
+                        connectionModel.setCloseThread(false);
                         return;
                     }
-                    //System.out.println("in connection controll loop");
+
                     ParametersFromNetwork message = new ParametersFromNetwork(1);
                     message.enable();
                     try {
@@ -119,11 +120,11 @@ public class AskForTeamMate extends State {
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
-                    //System.out.println("check disconnessione");
+
                     Gson json = new Gson();
                     ClientModel receivedClientModel = json.fromJson(message.getParameter(0), ClientModel.class);
 
-                    if(receivedClientModel.getAmIfirst()==null && !connectionModel.isCloseThred()) {
+                    if(receivedClientModel.getAmIfirst()==null && !connectionModel.isCloseThread()) {
                         boolean check = false;
 
                         for (Player p : getModel().getPlayers()) {
@@ -162,7 +163,6 @@ public class AskForTeamMate extends State {
                                         model.setDisconnection(false);
                                         model.getTable().getClouds().add(new Cloud(model.getNumberOfPlayers()));
                                         model.getTable().getClouds().get(model.getTable().getClouds().size()-1).charge(model.getTable().getBag());
-                                        //System.out.println("accepted");
                                         break;
                                     }
                                     if (team.getPlayer2().isDisconnected()) {
@@ -182,23 +182,22 @@ public class AskForTeamMate extends State {
                                         model.setDisconnection(false);
                                         model.getTable().getClouds().add(new Cloud(model.getNumberOfPlayers()));
                                         model.getTable().getClouds().get(model.getTable().getClouds().size()-1).charge(model.getTable().getBag());
-                                        //System.out.println("accepted");
                                         break;
                                     }
                                 }
                             }
                         }
                     }
-                    //try {
-                        //sleep(5000);
-                    //} catch (InterruptedException e) {
-                    //    throw new RuntimeException(e);
-                    //}
+                    try {
+                        sleep(2000);
+                    } catch (InterruptedException e) {
+                      throw new RuntimeException(e);
+                    }
                 }
             }
         };
         t.start();
-        teamMateChoosen.fireStateEvent();
+        teamMateChosen.fireStateEvent();
 
         return super.entryAction(cause);
     }
@@ -210,7 +209,6 @@ public class AskForTeamMate extends State {
     /**
      * Stores the updated model in the main controller model
      * @param cause the event that caused us to exit this state
-     * @throws IOException
      */
     @Override
     public void exitAction(IEvent cause) throws IOException {
