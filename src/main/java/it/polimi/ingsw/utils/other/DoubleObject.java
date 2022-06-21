@@ -7,15 +7,15 @@ import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
  */
 public class DoubleObject{
     public ParametersFromNetwork getParam() {
-        return parame;
+        return param;
     }
     public boolean isResp() {
         return resp;
     }
-    private final ParametersFromNetwork parame;
+    private final ParametersFromNetwork param;
     boolean resp;
     public DoubleObject(ParametersFromNetwork param, boolean resp){
-        parame= param;
+        this.param = param;
         this.resp = resp;
     }
-};
+}
