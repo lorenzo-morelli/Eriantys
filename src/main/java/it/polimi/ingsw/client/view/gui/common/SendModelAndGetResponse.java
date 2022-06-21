@@ -46,7 +46,7 @@ Thread t = new Thread(() -> {
             t.start();
 
 
-            boolean check = ((DoubleObject)Platform.enterNestedEventLoop(PAUSE_KEY)).isRespo();
+            boolean check = ((DoubleObject)Platform.enterNestedEventLoop(PAUSE_KEY)).isResp();
 
             if(check){
                 return null;
