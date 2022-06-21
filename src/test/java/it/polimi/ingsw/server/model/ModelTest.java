@@ -536,32 +536,45 @@ class ModelTest {
         assertEquals(model.getTable().getIslands().get(model.getTable().getMotherNaturePosition()).getInhabitants().size(), 3);
         assertEquals(model.getTable().getIslands().get(model.getTable().getMotherNaturePosition()).team_influence(model.getTeams(), model.getTable().getProfessors(), model.getTable().isCentaurEffect(), model.getTable().getMushroomColor(), model.getTable().getKnightEffect()).getPlayer1().getNickname(), "paperino");
 
+        assertEquals(model.getTeams().get(1).getPlayer1().getNickname(),"pippo");
+        assertEquals(model.getPlayers().get(1).getNickname(),"paperino");
         model.getTable().getIslands().get(3).getInhabitants().addstudents(2, PeopleColor.YELLOW);
-        model.getTable().getIslands().get(2).controllIsland(model.getPlayers().get(1));
-        model.getTable().getIslands().get(3).controllIsland(model.getPlayers().get(1));
+        model.getTable().getIslands().get(2).controllIsland((model.getTeams().get(0)));
+
+        model.getTable().getIslands().get(3).controllIsland((model.getTeams().get(0)));
         model.getTable().getIslands().get(3).placeTower();
         model.getTable().getIslands().get(2).placeTower();
 
         assertEquals(6, model.getPlayers().get(1).getSchoolBoard().getNumOfTowers());
         assertEquals(8, model.getPlayers().get(0).getSchoolBoard().getNumOfTowers());
+        assertEquals(6, model.getTeams().get(0).getPlayer1().getSchoolBoard().getNumOfTowers());
+        assertEquals(6, model.getTeams().get(0).getPlayer2().getSchoolBoard().getNumOfTowers());
+        assertEquals(8, model.getTeams().get(1).getPlayer1().getSchoolBoard().getNumOfTowers());
         assertEquals(1, model.getTable().getIslands().get(3).getNumberOfTowers());
         assertEquals(1, model.getTable().getIslands().get(2).getNumberOfTowers());
         assertEquals(model.getPlayers().get(1).getSchoolBoard().getTowerColor(), model.getTable().getIslands().get(3).getTowerColor());
         assertEquals(model.getPlayers().get(1).getSchoolBoard().getTowerColor(), model.getTable().getIslands().get(2).getTowerColor());
+        assertEquals(model.getTeams().get(0).getPlayer1().getSchoolBoard().getTowerColor(), model.getTable().getIslands().get(2).getTowerColor());
+        assertEquals(model.getTeams().get(0).getPlayer2().getSchoolBoard().getTowerColor(), model.getTable().getIslands().get(2).getTowerColor());
+
 
         model.getTable().mergeIsland(2, 3);
 
         assertEquals(11, model.getTable().getIslands().size());
         assertEquals(2, model.getTable().getIslands().get(2).getNumberOfTowers());
         assertEquals(model.getPlayers().get(1).getSchoolBoard().getTowerColor(), model.getTable().getIslands().get(2).getTowerColor());
+        assertEquals(model.getTeams().get(0).getPlayer2().getSchoolBoard().getTowerColor(), model.getTable().getIslands().get(2).getTowerColor());
         assertEquals(6, model.getTable().getIslands().get(2).getInhabitants().size());
 
-        model.getTable().conquestIsland(2, model.getTeams(), model.getTeams().get(0));
-        assertEquals(6, model.getPlayers().get(1).getSchoolBoard().getNumOfTowers());
-        assertEquals(8, model.getPlayers().get(0).getSchoolBoard().getNumOfTowers());
-        assertEquals(model.getPlayers().get(1).getSchoolBoard().getTowerColor(), model.getTable().getIslands().get(2).getTowerColor());
+        model.getTable().conquestIsland(2, model.getTeams(), model.getTeams().get(1));
+        assertEquals(6, model.getPlayers().get(0).getSchoolBoard().getNumOfTowers());
+        assertEquals(6, model.getTeams().get(1).getPlayer2().getSchoolBoard().getNumOfTowers());
+        assertEquals(8, model.getPlayers().get(1).getSchoolBoard().getNumOfTowers());
+        assertEquals(8, model.getTeams().get(0).getPlayer2().getSchoolBoard().getNumOfTowers());
+        assertEquals(model.getPlayers().get(0).getSchoolBoard().getTowerColor(), model.getTable().getIslands().get(2).getTowerColor());
+        assertEquals(model.getTeams().get(1).getPlayer1().getSchoolBoard().getTowerColor(), model.getTable().getIslands().get(2).getTowerColor());
 
-        String winner = model.getTeams().get(0).getPlayer1().getNickname() + "+" + model.getTeams().get(0).getPlayer2().getNickname();
+        String winner = model.getPlayers().get(0).getNickname() + "+" + model.getTeams().get(1).getPlayer2().getNickname();
 
         model.getPlayers().get(0).getSchoolBoard().load_entrance(model.getTable().getClouds().get(0), model.getTable().getClouds());
         assertEquals(model.getTable().getClouds().get(0).getStudentsAccumulator().size(), 0);
