@@ -16,7 +16,7 @@ public class ParametersFromNetwork extends Event implements DocumentListener {
     private final int numberOfStrings;
     private ArrayList<String> parsedStrings;
     private boolean parametersReceived = false;
-    public static final Object object = new Object();
+    public static final Object PAUSE_KEY = new Object();
 
     private boolean enabled = false;
 
@@ -86,13 +86,13 @@ public class ParametersFromNetwork extends Event implements DocumentListener {
 
         while (!parametersReceived) {
             if (System.currentTimeMillis() >= time) {
-                Platform.runLater(() -> Platform.exitNestedEventLoop(object, new DoubleObject(this, true)));
+                Platform.runLater(() -> Platform.exitNestedEventLoop(PAUSE_KEY, new DoubleObject(this, true)));
                 return;
             }
             wait(5000);
 
         }
-        Platform.runLater(() -> Platform.exitNestedEventLoop(object, new DoubleObject(this, false)));
+        Platform.runLater(() -> Platform.exitNestedEventLoop(PAUSE_KEY, new DoubleObject(this, false)));
     }
 
     public synchronized void enable() {

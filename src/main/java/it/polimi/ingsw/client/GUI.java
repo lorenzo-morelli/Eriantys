@@ -20,7 +20,6 @@ import java.util.concurrent.TimeUnit;
  * Launcher for GUI View
  */
 public class GUI extends Application {
-    public static final Object object = new Object();
     private Stage stage;
     private Scene scene;
     private static ClientModel clientModel = new ClientModel();

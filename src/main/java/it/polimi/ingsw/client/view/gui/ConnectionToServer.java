@@ -12,8 +12,9 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
+import static it.polimi.ingsw.utils.network.events.ParametersFromNetwork.PAUSE_KEY;
+
 public class ConnectionToServer {
-    public static final Object object = new Object();
     private final GUI gui = new GUI();
     private final Gson gson = new Gson();
     private boolean isToReset = false;
@@ -52,7 +53,7 @@ public class ConnectionToServer {
                     }
                 });
                 thread.start();
-                DoubleObject response = ((DoubleObject) Platform.enterNestedEventLoop(object));
+                DoubleObject response = ((DoubleObject) Platform.enterNestedEventLoop(PAUSE_KEY));
                 boolean check = response.isResp();
                 message = response.getParam();
                 if (check && waitForFirst) {

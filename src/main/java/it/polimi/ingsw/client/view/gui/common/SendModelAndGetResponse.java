@@ -9,8 +9,9 @@ import javafx.application.Platform;
 
 import java.util.concurrent.TimeUnit;
 
+import static it.polimi.ingsw.utils.network.events.ParametersFromNetwork.PAUSE_KEY;
+
 public class SendModelAndGetResponse {
-    public static final Object object = new Object();
 
     public static ClientModel sendAndGetModel(ClientModel clientModel) throws InterruptedException {
         ParametersFromNetwork response = new ParametersFromNetwork(1);
@@ -43,7 +44,7 @@ public class SendModelAndGetResponse {
             t.start();
 
 
-            boolean check = ((DoubleObject) Platform.enterNestedEventLoop(object)).isResp();
+            boolean check = ((DoubleObject) Platform.enterNestedEventLoop(PAUSE_KEY)).isResp();
 
             if (check) {
                 return null;
