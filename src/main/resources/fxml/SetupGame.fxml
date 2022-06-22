@@ -15,7 +15,7 @@
       <Button fx:id="principiantButton" layoutX="171.0" layoutY="226.0" mnemonicParsing="false" onMouseClicked="#setPrincipiant" text="Principiant" />
       <Button fx:id="expertButton" layoutX="359.0" layoutY="226.0" mnemonicParsing="false" onMouseClicked="#setExpert" text="Expert" />
       <Button fx:id="startButton" layoutX="276.0" layoutY="314.0" mnemonicParsing="false" onMouseClicked="#start" text="START!" />
-      <Label fx:id="otherPlayersLabel" layoutX="220.0" layoutY="356.0" text="" />
+      <Label fx:id="otherPlayersLabel" alignment="CENTER" layoutX="3.0" layoutY="353.0" prefHeight="25.0" prefWidth="600.0" text="prova" />
       <Label fx:id="numberOfPlayersLabel" layoutX="237.0" layoutY="268.0" text="" />
       <Label fx:id="gameModeLabel" layoutX="237.0" layoutY="285.0" text="" />
    </children>

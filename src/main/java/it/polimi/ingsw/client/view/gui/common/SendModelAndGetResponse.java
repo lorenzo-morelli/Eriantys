@@ -7,13 +7,10 @@ import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
 import it.polimi.ingsw.utils.other.DoubleObject;
 import javafx.application.Platform;
 
-import java.awt.*;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
-
-import static it.polimi.ingsw.client.view.gui.Lobby.PAUSE_KEY;
 
 public class SendModelAndGetResponse {
+    public static final Object object = new Object();
 
     public static ClientModel sendAndGetModel(ClientModel clientModel) throws InterruptedException {
         ParametersFromNetwork response = new ParametersFromNetwork(1);
@@ -36,7 +33,7 @@ public class SendModelAndGetResponse {
 
             ParametersFromNetwork finalResponse = response;
 
-Thread t = new Thread(() -> {
+            Thread t = new Thread(() -> {
                 try {
                     finalResponse.waitParametersReceivedGUI(end);
                 } catch (InterruptedException e) {
@@ -46,9 +43,9 @@ Thread t = new Thread(() -> {
             t.start();
 
 
-            boolean check = ((DoubleObject)Platform.enterNestedEventLoop(PAUSE_KEY)).isResp();
+            boolean check = ((DoubleObject) Platform.enterNestedEventLoop(object)).isResp();
 
-            if(check){
+            if (check) {
                 return null;
             }
 

@@ -13,22 +13,12 @@ import javafx.scene.control.Label;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.concurrent.TimeUnit;
 
 import static it.polimi.ingsw.client.GUI.currNode;
-import static it.polimi.ingsw.client.view.gui.Lobby.PAUSE_KEY;
 
 public class SetupGame implements Initializable {
     private final GUI gui = new GUI();
-    private final Gson gson = new Gson();
-    private boolean isToReset;
-    private boolean waitForFirst = true;
-    private int myID;
-    private ParametersFromNetwork message;
-    private boolean notRead = false;
-
     @FXML
     private Label connectedOnIp = new Label();
     @FXML
@@ -47,7 +37,7 @@ public class SetupGame implements Initializable {
         currNode = otherPlayersLabel;
         this.connectedOnIp.setText("Connected on IP: " + this.gui.getClientModel().getIp());
         this.connectedOnPort.setText("Connected on Port: " + this.gui.getClientModel().getPort());
-        isToReset = false;
+        otherPlayersLabel.setText("");
     }
 
     public void set2Players() {
@@ -81,93 +71,9 @@ public class SetupGame implements Initializable {
         } else if (this.gui.getClientModel().getGameMode() == null) {
             this.otherPlayersLabel.setText("ERROR: Please select a game mode!");
         } else {
-            Network.send(gson.toJson(this.gui.getClientModel()));
-            System.out.println("In attesa che gli altri giocatori si colleghino...");
             this.otherPlayersLabel.setText("...Waiting for other players to join the game...");
-
-            myID = gui.getClientModel().getClientIdentity();
-            long start = System.currentTimeMillis();
-            long end = start + 40 * 1000L;
-            try {
-                waiting(end);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            ConnectionToServer connection = new ConnectionToServer();
+            connection.connect(true);
         }
-    }
-
-    public void waiting(long end) throws InterruptedException {
-        boolean notDone = false;
-        do {
-            System.out.println("primo loop");
-            if (!notRead) {
-                message = new ParametersFromNetwork(1);
-                message.enable();
-                long finalEnd = end;
-                Thread thread = new Thread(() -> {
-                    try {
-                        message.waitParametersReceivedGUI(finalEnd);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
-                thread.start();
-                DoubleObject response = ((DoubleObject) Platform.enterNestedEventLoop(PAUSE_KEY));
-                boolean check = response.isResp();
-                message = response.getParam();
-                if (check && waitForFirst) {
-                    waiting(System.currentTimeMillis() + 40000L);
-                    return;
-                }
-                if (check) {
-                    System.out.println("\n\nServer non ha dato risposta");
-                    Network.disconnect();
-                    this.otherPlayersLabel.setText("...Server si è disconnesso, mi disconnetto...");
-                    TimeUnit.SECONDS.sleep(5);
-                    System.exit(0);
-                }
-            }
-            notRead = false;
-            ClientModel clientModel = gson.fromJson(message.getParameter(0), ClientModel.class);
-            if (!Objects.equals(clientModel.getTypeOfRequest(), "CONNECTTOEXISTINGGAME")) {
-                if (Network.disconnectedClient()) {
-                    Network.disconnect();
-                    System.out.println("Il gioco è terminato a causa della disconnessione di un client");
-                    isToReset = true;
-                }
-                if (clientModel.isGameStarted() && clientModel.NotisKicked()) {
-                    waitForFirst = false;
-                    if (!clientModel.isResponse() && clientModel.getTypeOfRequest() != null) {
-                        if (clientModel.getClientIdentity() == myID) {
-                            try {
-                                System.out.println("request to me");
-                                if (clientModel.isPingMessage()) {
-                                    gui.requestPing();
-                                } else {
-                                    gui.setClientModel(clientModel);
-                                    gui.requestToMe();
-                                }
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
-                        }
-                        if (!notDone && clientModel.getClientIdentity() != myID && clientModel.getTypeOfRequest() != null &&
-                                !clientModel.isPingMessage() &&
-                                !clientModel.getTypeOfRequest().equals("TRYTORECONNECT") &&
-                                !clientModel.getTypeOfRequest().equals("DISCONNECTION")) {
-                            try {
-                                System.out.println("request to other");
-                                gui.setClientModel(clientModel);
-                                gui.requestToOthers();
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
-                        }
-                    }
-                }
-            }
-            end = System.currentTimeMillis() + 40000L;
-        }
-        while (!isToReset && !notDone);
     }
 }

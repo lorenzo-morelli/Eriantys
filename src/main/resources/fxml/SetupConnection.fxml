@@ -5,13 +5,14 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.gui.Menu">
     <children>
-        <Button layoutX="274.0" layoutY="322.0" mnemonicParsing="false" onMouseClicked="#connect" text="Connect" />
-        <Label layoutX="134.0" layoutY="134.0" text="Nickname:" />
-        <Label layoutX="140.0" layoutY="174.0" text="IP:" />
-        <Label layoutX="133.0" layoutY="215.0" text="Port:" />
-        <TextField fx:id="nicknameField" layoutX="203.0" layoutY="130.0" />
-        <TextField fx:id="ipField" layoutX="203.0" layoutY="170.0" />
-        <TextField fx:id="portField" layoutX="203.0" layoutY="211.0" />
-      <Label fx:id="notice" layoutX="286.0" layoutY="273.0" text="..." />
+        <Button layoutX="270.0" layoutY="351.0" mnemonicParsing="false" onMouseClicked="#connect" text="Connect" />
+        <Label layoutX="151.0" layoutY="134.0" text="Nickname:" />
+        <Label layoutX="194.0" layoutY="175.0" text="IP:" />
+        <Label layoutX="182.0" layoutY="216.0" text="Port:" />
+        <TextField fx:id="nicknameField" layoutX="226.0" layoutY="130.0" />
+        <TextField fx:id="ipField" layoutX="226.0" layoutY="171.0" />
+        <TextField fx:id="portField" layoutX="226.0" layoutY="212.0" />
+      <Label fx:id="notice" alignment="CENTER" layoutX="280.0" layoutY="309.0" prefHeight="25.0" prefWidth="600.0" text="error" textAlignment="CENTER" AnchorPane.bottomAnchor="66.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="309.0" />
+      <Label fx:id="connected" layoutX="264.0" layoutY="293.0" text="CONNECTED!" />
     </children>
 </AnchorPane>

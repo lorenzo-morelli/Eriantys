@@ -11,19 +11,18 @@ import javax.swing.event.DocumentListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static it.polimi.ingsw.client.view.gui.Lobby.PAUSE_KEY;
-
 public class ParametersFromNetwork extends Event implements DocumentListener {
     private static JTextArea ta;
     private final int numberOfStrings;
     private ArrayList<String> parsedStrings;
     private boolean parametersReceived = false;
+    public static final Object object = new Object();
 
     private boolean enabled = false;
 
     public ParametersFromNetwork(int numberOfStrings) {
 
-        super("[Ricezione di "+numberOfStrings+" parametri da network]");
+        super("[Ricezione di " + numberOfStrings + " parametri da network]");
         ta = Network.checkNewMessages();
         this.numberOfStrings = numberOfStrings;
         ta.getDocument().addDocumentListener(this);
@@ -49,7 +48,7 @@ public class ParametersFromNetwork extends Event implements DocumentListener {
     private synchronized void checkLastMessage() {
         try {
             parsedStrings = new ArrayList<>(Arrays.asList(ta.getText().split(" ")));
-            if (parsedStrings.size() == numberOfStrings){
+            if (parsedStrings.size() == numberOfStrings) {
                 this.parametersReceived = true;
                 notifyAll();
                 enabled = false;
@@ -60,7 +59,7 @@ public class ParametersFromNetwork extends Event implements DocumentListener {
         }
     }
 
-    public synchronized String getParameter(int i){
+    public synchronized String getParameter(int i) {
         return parsedStrings.get(i);
     }
 
@@ -77,7 +76,7 @@ public class ParametersFromNetwork extends Event implements DocumentListener {
     public synchronized boolean waitParametersReceived(int sec) throws InterruptedException {
         long start = System.currentTimeMillis();
         long end = start + sec * 1000L;
-        while (!parametersReceived && System.currentTimeMillis()<end) {
+        while (!parametersReceived && System.currentTimeMillis() < end) {
             wait(sec * 1000L);
         }
         return System.currentTimeMillis() >= end;
@@ -85,22 +84,22 @@ public class ParametersFromNetwork extends Event implements DocumentListener {
 
     public synchronized void waitParametersReceivedGUI(long time) throws InterruptedException {
 
-while (!parametersReceived){
-        if (System.currentTimeMillis() >= time) {
-            Platform.runLater(()-> Platform.exitNestedEventLoop(PAUSE_KEY,new DoubleObject(this,true)));
-            return;
+        while (!parametersReceived) {
+            if (System.currentTimeMillis() >= time) {
+                Platform.runLater(() -> Platform.exitNestedEventLoop(object, new DoubleObject(this, true)));
+                return;
+            }
+            wait(5000);
+
         }
-        wait(5000);
-
-    }
-        Platform.runLater(()-> Platform.exitNestedEventLoop(PAUSE_KEY,new DoubleObject(this,false)));
+        Platform.runLater(() -> Platform.exitNestedEventLoop(object, new DoubleObject(this, false)));
     }
 
-    public synchronized void enable(){
+    public synchronized void enable() {
         enabled = true;
     }
 
-    public synchronized void disable(){
+    public synchronized void disable() {
         enabled = false;
         parametersReceived = false;
     }
