@@ -57,6 +57,7 @@ public class EndGame extends State {
                 currentPlayerData.setTypeOfRequest("DISCONNECTION");
                 currentPlayerData.setServermodel(model);
                 currentPlayerData.setResponse(false);
+                currentPlayerData.setPingMessage(false);
 
                 Network.send(json.toJson(currentPlayerData));
                 Network.setDisconnectedClient(true);
@@ -85,6 +86,7 @@ public class EndGame extends State {
             currentPlayerData.setTypeOfRequest("GAMEEND");
             currentPlayerData.setServermodel(model);
             currentPlayerData.setResponse(false);
+            currentPlayerData.setPingMessage(false);
 
             Network.send(json.toJson(currentPlayerData));
             Network.setDisconnectedClient(true);
