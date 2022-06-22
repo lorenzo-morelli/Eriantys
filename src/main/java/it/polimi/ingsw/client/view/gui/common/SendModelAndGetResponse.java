@@ -16,24 +16,15 @@ public class SendModelAndGetResponse {
     public static ClientModel sendAndGetModel(ClientModel clientModel) throws InterruptedException {
         ParametersFromNetwork response = new ParametersFromNetwork(1);
         Gson gson = new Gson();
-
         long start = System.currentTimeMillis();
         long end = start + 15 * 1000L;
-
         TimeUnit.MILLISECONDS.sleep(500);
-
         Network.send(gson.toJson(clientModel));
-
         boolean responseReceived = false;
-
         while (!responseReceived) {
-
             response = new ParametersFromNetwork(1);
             response.enable();
-
-
             ParametersFromNetwork finalResponse = response;
-
             Thread t = new Thread(() -> {
                 try {
                     finalResponse.waitParametersReceivedGUI(end);
@@ -42,14 +33,10 @@ public class SendModelAndGetResponse {
                 }
             });
             t.start();
-
-
             boolean check = ((DoubleObject) Platform.enterNestedEventLoop(PAUSE_KEY)).isResp();
-
             if (check) {
                 return null;
             }
-
             if (gson.fromJson(response.getParameter(0), ClientModel.class).getClientIdentity() == clientModel.getClientIdentity()) {
                 responseReceived = true;
             }

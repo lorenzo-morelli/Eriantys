@@ -293,7 +293,8 @@ public class Game implements Initializable {
             tile.getChildren().add(cloudImage);
             GridPane studentsCloudGrid = new GridPane();
             studentsCloudGrid.setAlignment(Pos.CENTER);
-            studentsCloudGrid.setHgap(10);
+            studentsCloudGrid.setHgap(7);
+            studentsCloudGrid.setVgap(7);
             StudentSet cloudSet = cloud.getStudentsAccumulator();
 
             populateGrid(studentsCloudGrid, 0, 2, cloudSet);
@@ -315,27 +316,27 @@ public class Game implements Initializable {
                 school.setAlignment(Pos.CENTER);
                 for (int i = 0; i < player.getSchoolBoard().getDinnerTable().getNumOfBlueStudents(); i++) {
                     ImageView studentBlue = new ImageView("/graphics/pieces/students/student_blue.png");
-                    imageResize(studentBlue, 30);
+                    imageResize(studentBlue, 27);
                     school.add(studentBlue, i, this.getColorPlace("blue"));
                 }
                 for (int i = 0; i < player.getSchoolBoard().getDinnerTable().getNumOfRedStudents(); i++) {
                     ImageView studentRed = new ImageView("/graphics/pieces/students/student_red.png");
-                    imageResize(studentRed, 30);
+                    imageResize(studentRed, 27);
                     school.add(studentRed, i, this.getColorPlace("red"));
                 }
                 for (int i = 0; i < player.getSchoolBoard().getDinnerTable().getNumOfGreenStudents(); i++) {
                     ImageView studentGreen = new ImageView("/graphics/pieces/students/student_green.png");
-                    imageResize(studentGreen, 30);
+                    imageResize(studentGreen, 27);
                     school.add(studentGreen, i, this.getColorPlace("green"));
                 }
                 for (int i = 0; i < player.getSchoolBoard().getDinnerTable().getNumOfPinkStudents(); i++) {
                     ImageView studentPink = new ImageView("/graphics/pieces/students/student_pink.png");
-                    imageResize(studentPink, 30);
+                    imageResize(studentPink, 27);
                     school.add(studentPink, i, this.getColorPlace("pink"));
                 }
                 for (int i = 0; i < player.getSchoolBoard().getDinnerTable().getNumOfYellowStudents(); i++) {
                     ImageView studentYellow = new ImageView("/graphics/pieces/students/student_yellow.png");
-                    imageResize(studentYellow, 30);
+                    imageResize(studentYellow, 27);
                     school.add(studentYellow, i, this.getColorPlace("yellow"));
                 }
             }

@@ -53,7 +53,6 @@ public class GUI extends Application {
      * @param newScene the name of the FXML file, without the extension.
      */
     public synchronized void changeScene(String newScene) throws IOException {
-        System.out.println("cambio scena " + newScene + ", currNode = " + currNode);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/" + newScene + ".fxml"));
         if (currNode.getScene() != null) {
             this.stage = (Stage) currNode.getScene().getWindow();

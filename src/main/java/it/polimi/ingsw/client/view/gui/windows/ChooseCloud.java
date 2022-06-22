@@ -39,7 +39,8 @@ public class ChooseCloud implements Initializable {
             tile.getChildren().add(cloudImage);
             GridPane studentsCloudGrid = new GridPane();
             studentsCloudGrid.setAlignment(Pos.CENTER);
-            studentsCloudGrid.setHgap(10);
+            studentsCloudGrid.setHgap(7);
+            studentsCloudGrid.setVgap(7);
 
             Game game = new Game();
             game.populateGrid(studentsCloudGrid, 0, 2, cloud.getStudentsAccumulator());

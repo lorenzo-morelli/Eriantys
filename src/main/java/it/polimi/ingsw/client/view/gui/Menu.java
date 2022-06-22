@@ -103,7 +103,7 @@ public class Menu implements Initializable {
                     System.exit(0);
                 }
                 if (this.gui.getClientModel().getAmIfirst() == null) {
-                    this.notice.setText("FAILURE: Nickname already taken"); //todo: bugfix
+                    this.notice.setText("FAILURE: Nickname already taken");
                 } else if (this.gui.getClientModel().getAmIfirst()) {
                     this.gui.changeScene("SetupGame");
                 } else {
