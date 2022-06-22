@@ -111,12 +111,10 @@ public class GUI extends Application {
                 changeScene("Disconnection");
                 break;
             case "CHOOSEASSISTANTCARD":
-                System.out.println("assistent!");
                 gameState = "Assistant Card phase";
                 changeScene("Game");
                 break;
             case "CHOOSEWHERETOMOVESTUDENTS":
-                System.out.println("student");
                 gameState = "Moving students";
                 changeScene("Game");
                 break;
@@ -142,32 +140,26 @@ public class GUI extends Application {
      * This method is called whenever it's someone else's turn
      */
     public synchronized void requestToOthers() throws IOException {
-        //todo rimuovere tutti i print
         myTurn = false;
         isCardUsed = false;
         Network.setClientModel(GUI.clientModel);
         switch (GUI.clientModel.getTypeOfRequest()) {
             case "CHOOSEASSISTANTCARD":
                 gameState = "Assistant Card phase";
-                System.out.println("wait choose assistant card");
                 changeScene("Game");
                 break;
             case "CHOOSEWHERETOMOVESTUDENTS":
                 gameState = "Moving students";
-                System.out.println("wait choose where to move students");
                 changeScene("Game");
                 break;
             case "TEAMMATE":
                 gameState = "Team mate";
-                System.out.println("wait team mate");
                 break;
             case "CHOOSEWHERETOMOVEMOTHER":
                 gameState = "Moving mother nature";
-                System.out.println("wait choose where to move mother");
                 changeScene("Game");
                 break;
             case "CHOOSECLOUDS":
-                System.out.println("wait choose clouds");
                 changeScene("Game");
                 break;
         }
