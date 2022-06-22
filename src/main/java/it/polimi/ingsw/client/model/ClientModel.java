@@ -18,7 +18,7 @@ public class ClientModel {
     // Questo perché in fase di setup i client potrebbero proporre al server dei nickname identici
     // e potrebbero avere lo stesso indirizzo IP in fase di testing sullo stesso computer
     // si rende necessario un metodo di riconoscimento del client
-    private final int clientIdentity;
+    private int clientIdentity;
     // Am I the first client connected to server?
     // amIfirst: true = Identificato come primo,
     // false = identificato come non primo,
@@ -35,7 +35,7 @@ public class ClientModel {
     private boolean isPingMessage; //differenzia request di ping da request di gioco
 
     private Boolean gameStarted = false;
-    public boolean kicked = false;
+    public boolean kicked = false,reply=true;
     private String typeOfRequest;
 
     private PeopleColor choosedColor;
@@ -165,6 +165,8 @@ public class ClientModel {
         return clientIdentity;
     }
 
+
+
     public List<AssistantCard> getDeck() {
         return deck;
     }
@@ -264,6 +266,12 @@ public class ClientModel {
     public void setPingMessage(boolean pingMessage) {
         isPingMessage = pingMessage;
     }
+    public void setReply(boolean p){
+        reply=p;
+    }
+    public boolean Reply(){
+        return reply;
+    }
 
 
     public String getNickname() {
@@ -272,5 +280,9 @@ public class ClientModel {
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+    public void setClientIdentity(int clientIdentity) {
+        this.clientIdentity = clientIdentity;
     }
 }

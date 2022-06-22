@@ -180,11 +180,13 @@ public class GUI extends Application {
     public synchronized void requestPing() {
         try {
             System.out.println(("risposta ping"));
-            TimeUnit.SECONDS.sleep(1);
-            Network.setClientModel(GUI.clientModel);
+            ClientModel model= new ClientModel();
+            model.setClientIdentity(GUI.clientModel.getClientIdentity());
+            Network.setClientModel(model);
             Gson gson = new Gson();
-            GUI.clientModel.setPingMessage(true);
-            Network.send(gson.toJson(GUI.clientModel));
+            model.setPingMessage(true);
+            model.setReply(false);
+            Network.send(gson.toJson(model));
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

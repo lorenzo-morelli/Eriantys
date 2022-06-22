@@ -77,6 +77,7 @@ public class AskForTeamMate extends State {
         currentPlayerData.setResponse(false);
         currentPlayerData.setTypeOfRequest("TEAMMATE");
         Network.send(json.toJson(currentPlayerData));
+        System.out.println("sent team request");
 
         boolean responseReceived = false;
 
