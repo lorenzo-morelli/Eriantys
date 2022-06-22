@@ -18,6 +18,7 @@ import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
 
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -108,7 +109,13 @@ public class AssistantCardPhase extends State {
                 currentPlayerData.setPingMessage(false);
                 currentPlayerData.setServermodel(model);
 
-                boolean checkDisconnection = Network.send(json.toJson(currentPlayerData));
+                boolean checkDisconnection;
+
+                try {
+                    checkDisconnection = Network.send(json.toJson(currentPlayerData));
+                }catch (ConcurrentModificationException e){
+                    checkDisconnection = Network.send(json.toJson(currentPlayerData));
+                }
 
                 if (checkDisconnection) {
 

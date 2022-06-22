@@ -14,6 +14,7 @@ import it.polimi.ingsw.utils.stateMachine.Event;
 import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
 
+import java.util.ConcurrentModificationException;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -114,7 +115,12 @@ public class CloudPhase extends State {
         currentPlayerData.setPingMessage(false);
         currentPlayerData.setResponse(false);
 
-        boolean checkDisconnection= Network.send(json.toJson(currentPlayerData));
+        boolean checkDisconnection;
+        try {
+            checkDisconnection = Network.send(json.toJson(currentPlayerData));
+        }catch (ConcurrentModificationException e){
+            checkDisconnection = Network.send(json.toJson(currentPlayerData));
+        }
 
         if(!checkDisconnection){
             if (model.getcurrentPlayer().equals(model.getPlayers().get(model.getPlayers().size() - 1))) {
