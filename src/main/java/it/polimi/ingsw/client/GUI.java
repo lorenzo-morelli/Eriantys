@@ -133,7 +133,7 @@ public class GUI extends Application {
                 changeScene("Game");
                 break;
             case "GAMEEND":
-                changeScene("EndGame");
+                changeScene("Game");
                 break;
         }
     }
@@ -160,7 +160,6 @@ public class GUI extends Application {
             case "TEAMMATE":
                 gameState = "Team mate";
                 System.out.println("wait team mate");
-                changeScene("Game");
                 break;
             case "CHOOSEWHERETOMOVEMOTHER":
                 gameState = "Moving mother nature";

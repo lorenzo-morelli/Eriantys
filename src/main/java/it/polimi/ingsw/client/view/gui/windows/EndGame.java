@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client.view.gui;
+package it.polimi.ingsw.client.view.gui.windows;
 
 import it.polimi.ingsw.client.GUI;
 import it.polimi.ingsw.server.model.Player;
@@ -57,7 +57,5 @@ public class EndGame implements Initializable {
     private void toMainMenu() throws IOException {
         this.gui.changeScene("MainMenu");
     }
-
-
 }
 

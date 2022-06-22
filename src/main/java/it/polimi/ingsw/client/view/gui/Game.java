@@ -157,6 +157,13 @@ public class Game implements Initializable {
         Position pos = new Position();
         phaseLabel.setText(gameState);
         turnLabel.setText("è il turno di: " + this.gui.getClientModel().getServermodel().getcurrentPlayer().getNickname());
+        if (this.gui.getClientModel().getTypeOfRequest().equals("GAMEEND")) {
+            try {
+                this.gui.openNewWindow("EndGame");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         if (myTurn) {
             switch (this.gui.getClientModel().getTypeOfRequest()) {
                 case "CHOOSEASSISTANTCARD":
@@ -201,7 +208,10 @@ public class Game implements Initializable {
         ArrayList<Professor> professors = this.gui.getClientModel().getServermodel().getTable().getProfessors();
         ArrayList<Cloud> clouds = this.gui.getClientModel().getServermodel().getTable().getClouds();
         Player currentPlayer = this.gui.getClientModel().getServermodel().getcurrentPlayer();
-
+        ArrayList<Team> teams = null;
+        if (players.size() == 4) {
+            teams = this.gui.getClientModel().getServermodel().getTeams();
+        }
         ArrayList<Label> playerNames = new ArrayList<>(Arrays.asList(playerName1, playerName2, playerName3, playerName4));
         ArrayList<ImageView> assistantCards = new ArrayList<>(Arrays.asList(assistantCard1, assistantCard2, assistantCard3, assistantCard4));
         ArrayList<ImageView> characterCardsImages = new ArrayList<>(Arrays.asList(characterCard1, characterCard2, characterCard3));
@@ -213,6 +223,7 @@ public class Game implements Initializable {
         ArrayList<ImageView> coins = new ArrayList<>(Arrays.asList(coin1, coin2, coin3, coin4));
         ArrayList<Label> coinLabels = new ArrayList<>(Arrays.asList(coin1Label, coin2Label, coin3Label, coin4Label));
         ArrayList<Label> costs = new ArrayList<>(Arrays.asList(cost1, cost2, cost3));
+
 
         // INITIALIZE ISLANDS
         islandGrid.setAlignment(Pos.CENTER);
@@ -388,27 +399,29 @@ public class Game implements Initializable {
         });
 
         // INITIALIZE TOWERS
-        players.forEach(player -> {
-            GridPane tower = towerGrids.get(players.indexOf(player));
-            tower.setAlignment(Pos.CENTER);
-            for (int i = 0; i < player.getSchoolBoard().getNumOfTowers(); i++) {
-                ImageView towerImage = null;
-                switch (player.getSchoolBoard().getTowerColor()) {
-                    case BLACK:
-                        towerImage = new ImageView("graphics/pieces/towers/black_tower.png");
-                        break;
-                    case WHITE:
-                        towerImage = new ImageView("graphics/pieces/towers/white_tower.png");
-                        break;
-                    case GREY:
-                        towerImage = new ImageView("graphics/pieces/towers/grey_tower.png");
-                        break;
+        for (Player player : players) {
+            if (teams == null || teams.get(0).getPlayer1().getNickname().equals(player.getNickname()) || teams.get(1).getPlayer1().getNickname().equals(player.getNickname())) {
+                GridPane tower = towerGrids.get(players.indexOf(player));
+                tower.setAlignment(Pos.CENTER);
+                for (int i = 0; i < player.getSchoolBoard().getNumOfTowers(); i++) {
+                    ImageView towerImage = null;
+                    switch (player.getSchoolBoard().getTowerColor()) {
+                        case BLACK:
+                            towerImage = new ImageView("graphics/pieces/towers/black_tower.png");
+                            break;
+                        case WHITE:
+                            towerImage = new ImageView("graphics/pieces/towers/white_tower.png");
+                            break;
+                        case GREY:
+                            towerImage = new ImageView("graphics/pieces/towers/grey_tower.png");
+                            break;
+                    }
+                    imageResize(towerImage, 50);
+                    tower.setHgap(-15);
+                    tower.add(towerImage, i % 2, i / 2);
                 }
-                imageResize(towerImage, 50);
-                tower.setHgap(-15);
-                tower.add(towerImage, i % 2, i / 2);
             }
-        });
+        }
 
         // INITIALIZE GAMEMODE
         if (gameMode.equals(GameMode.PRINCIPIANT)) {
@@ -451,7 +464,6 @@ public class Game implements Initializable {
             });
             characterCards.forEach(card -> characterCardsImages.get(characterCards.indexOf(card)).setOnMouseClicked(event -> {
                 if (!this.gui.getClientModel().getTypeOfRequest().equals("CHOOSEASSISTANTCARD")) {
-                    int cost = card.getCost();
                     currentCharacter = card;
                     try {
                         if (currentCharacter.getName().equals("MINSTRELL") || currentCharacter.getName().equals("JESTER")) {
@@ -467,8 +479,21 @@ public class Game implements Initializable {
         }
 
         // INITIALIZE PLAYERS AND NUMBER OF PLAYERS
-        players.forEach(player -> playerNames.get(players.indexOf(player))
-                .setText(player.isDisconnected() ? player.getNickname() + " - DISCONNECTED" : player.getNickname()));
+        for (Player player: players) {
+            String name;
+            name = player.getNickname();
+            if (teams != null) {
+                String team = "";
+                if (player.getNickname().equals(teams.get(0).getPlayer1().getNickname()) || player.getNickname().equals(teams.get(0).getPlayer2().getNickname())) {
+                    team = "1";
+                } else {
+                    team = "2";
+                }
+                name = "TEAM " + team + " - " + name;
+            }
+            name = player.isDisconnected() ? name + " (disconnected)" : name;
+            playerNames.get(players.indexOf(player)).setText(name);
+        }
         if (players.size() < 4) {
             playerNames.get(3).setVisible(false);
             assistantCards.get(3).setVisible(false);
@@ -528,7 +553,7 @@ public class Game implements Initializable {
     }
 
     /**
-     * This event will open the "Move to island" window, to move a student in an island.
+     * This event will open the "Move to island" window, to move a student on an island.
      */
     @FXML
     private void setOnIsland() throws IOException {
