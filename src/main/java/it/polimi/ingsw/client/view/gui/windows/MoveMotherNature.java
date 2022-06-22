@@ -34,7 +34,7 @@ public class MoveMotherNature implements Initializable {
         islands.forEach(island -> {
             distance = islands.indexOf(island) - motherNaturePos;
             while (distance <= 0) {
-                distance += 12;
+                distance += islands.size();
             }
             ImageView islandImage = new ImageView();
             boolean canMove = distance <= moves;

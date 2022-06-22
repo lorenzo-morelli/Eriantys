@@ -19,6 +19,7 @@ import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
 
 import java.io.IOException;
+import java.util.ConcurrentModificationException;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -129,9 +130,14 @@ public class MotherPhase extends State {
             currentPlayerData.setTypeOfRequest("CHOOSEWHERETOMOVEMOTHER");
             currentPlayerData.setPingMessage(false);
             currentPlayerData.setResponse(false);
-            boolean checkError= Network.send(json.toJson(currentPlayerData));
+            boolean checkDisconnection;
+            try {
+                checkDisconnection = Network.send(json.toJson(currentPlayerData));
+            }catch (ConcurrentModificationException e){
+                checkDisconnection = Network.send(json.toJson(currentPlayerData));
+            }
 
-            if(!checkError){
+            if(!checkDisconnection){
                 if (model.getTable().getIslands().size() <= 3) {
                     gameEnd().fireStateEvent();
                     return super.entryAction(cause);

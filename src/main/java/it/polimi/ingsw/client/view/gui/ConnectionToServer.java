@@ -29,7 +29,7 @@ public class ConnectionToServer {
         }
         myID = gui.getClientModel().getClientIdentity();
         long start = System.currentTimeMillis();
-        long end = start + 40 * 1000L;
+        long end = start + 70 * 1000L;
         try {
             waiting(end);
         } catch (InterruptedException e) {
@@ -69,7 +69,7 @@ public class ConnectionToServer {
             }
             notRead = false;
             ClientModel clientModel = gson.fromJson(message.getParameter(0), ClientModel.class);
-            if (!Objects.equals(clientModel.getTypeOfRequest(), "CONNECTTOEXISTINGGAME")) {
+            if (!Objects.equals(clientModel.getTypeOfRequest(), "CONNECTTOEXISTINGGAME") && !clientModel.isDoNotResponce()) {
                 if (Network.disconnectedClient()) {
                     Network.disconnect();
                     System.out.println("Il gioco è terminato a causa della disconnessione di un client");
@@ -82,10 +82,12 @@ public class ConnectionToServer {
                             try {
                                 System.out.println("request to me");
                                 if (clientModel.isPingMessage()) {
-                                    gui.requestPing();
+                                    //gui.requestPing();
                                 } else {
                                     gui.setClientModel(clientModel);
                                     gui.requestToMe();
+                                    Thread t = new Thread(gui::requestPing);
+                                    t.start();
                                 }
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
@@ -99,6 +101,7 @@ public class ConnectionToServer {
                                 System.out.println("request to other");
                                 gui.setClientModel(clientModel);
                                 gui.requestToOthers();
+                                gui.stopPing();
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
