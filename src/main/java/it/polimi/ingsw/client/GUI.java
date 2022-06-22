@@ -55,7 +55,11 @@ public class GUI extends Application {
     public synchronized void changeScene(String newScene) throws IOException {
         System.out.println("cambio scena " + newScene + ", currNode = " + currNode);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/" + newScene + ".fxml"));
-        this.stage = (Stage) currNode.getScene().getWindow();
+        if (currNode.getScene() != null) {
+            this.stage = (Stage) currNode.getScene().getWindow();
+        } else {
+            this.stage = new Stage();
+        }
         this.scene = new Scene(loader.load());
         this.stage.setScene(scene);
         this.stage.setMaximized(newScene.equals("Game"));
