@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author Fernando
  */
-public class CommandPrompt implements Subject{
+public class CommandPrompt implements Subject {
     private static String fromTerminal = null;
     private static ConsoleReader console;
     private static List<Observer> observers = null;
@@ -31,7 +31,7 @@ public class CommandPrompt implements Subject{
     }
 
     public static CommandPrompt getInstance() throws IOException {
-        if (instance == null){
+        if (instance == null) {
             instance = new CommandPrompt();
         }
         return instance;
@@ -45,7 +45,7 @@ public class CommandPrompt implements Subject{
     }
 
     public static void read() throws IOException {
-        fromTerminal=console.readLine();
+        fromTerminal = console.readLine();
         instance.notifyObservers();
     }
 
@@ -53,7 +53,7 @@ public class CommandPrompt implements Subject{
         return fromTerminal;
     }
 
-    public static void forceInput(String input){
+    public static void forceInput(String input) {
         CommandPrompt.fromTerminal = input;
     }
 
@@ -61,8 +61,8 @@ public class CommandPrompt implements Subject{
         if (instance == null) {
             instance = new CommandPrompt();
         }
-        if(!debug) {
-            // clear screen works only on windows
+        if (!debug) {
+            // clear screen works only on Windows
             CommandPrompt.clearScreen();
             // ascii code for clear screen shoud work on unix
             System.out.print("\033[H\033[2J");
@@ -90,15 +90,15 @@ public class CommandPrompt implements Subject{
     public static void ask(String suggestion, String console) throws InterruptedException {
 
         // Interrompere la lettura dell'input se si disconnette un client
-        Thread t= new Thread(() -> {
+        Thread t = new Thread(() -> {
             try {
-                if(!debug) {
+                if (!debug) {
                     CommandPrompt.clearScreen();
                 }
                 CommandPrompt.println(suggestion);
                 CommandPrompt.setPrompt(console);
                 CommandPrompt.read();
-                if (Network.disconnectedClient()){
+                if (Network.disconnectedClient()) {
                     System.out.println("Bene, questo input verrà ignorato");
                     return;
                 }
@@ -109,11 +109,11 @@ public class CommandPrompt implements Subject{
         });
         t.start();
 
-        while(!inputLetto() && !Network.disconnectedClient()){
+        while (!inputLetto() && !Network.disconnectedClient()) {
 
             TimeUnit.MILLISECONDS.sleep(250);
         }
-        if (Network.disconnectedClient()){
+        if (Network.disconnectedClient()) {
             t.interrupt();
         }
         setInputLetto(false);
@@ -144,7 +144,7 @@ public class CommandPrompt implements Subject{
         CommandPrompt.observers.forEach(observer -> {
             try {
                 observer.update(fromTerminal);
-            }catch (Exception e) {
+            } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         });

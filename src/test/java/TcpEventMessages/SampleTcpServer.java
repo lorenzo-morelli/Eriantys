@@ -2,7 +2,7 @@ package TcpEventMessages;
 
 public class SampleTcpServer{
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         TcpServer server = new TcpServer(5000);
 
         // add event handler, response to client

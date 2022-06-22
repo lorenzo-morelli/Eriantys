@@ -7,58 +7,65 @@ import java.util.Objects;
 /**
  * This class provides a mechanism for creating transitions between states
  * which create a finite state machine, which will be stored in a hashMap internally
- *
+ * <p>
  * For example, if we wanted to use the keyboard to govern a finite state machine
  * if you only agree to write the word "lode", the table of states would be like this:
- *
- *                          States:
- *             starting   l    lo   lod   lode (ending state)
+ * <p>
+ * States:
+ * starting   l    lo   lod   lode (ending state)
  * eventi    |------------------------------|
- *     l     |    >l      x    x      x     |
- *           |------------------------------|
- *     o     |    x      >lo   x      x     |
- *           |------------------------------|
- *     d     |    x       x  >lod     x     |
- *           |------------------------------|
- *     e     |    x       x    x     >lode  |
- *           |------------------------------|
- *
+ * l     |    >l      x    x      x     |
+ * |------------------------------|
+ * o     |    x      >lo   x      x     |
+ * |------------------------------|
+ * d     |    x       x  >lod     x     |
+ * |------------------------------|
+ * e     |    x       x    x     >lode  |
+ * |------------------------------|
+ * <p>
  * 4 calls are required to store this table:
- *
+ * <p>
  * addTransaction(state_starting, event_l, state_l)
  * addTransaction(state_l,        event_o, state_lo)
  * addTransaction(state_lo,       event_d, state_lod)
  * addTransaction(state_lod,      event_e, state_lode)
- *
+ * <p>
  * After this configuration, the controller will be operated by itself, managing notifications
  * from its events and by sending actions to its states.
- *
+ * <p>
  * Event queuing is allowed, even during an event. The events will be processed in order.
- *
+ * <p>
  * If an "X" state is reached, the controller will either ignore it or throw an exception to the event that caused the error.
+ *
  * @author Fernando Morea
  */
 
 public class Controller {
     private boolean hideDebugMessages = true;
 
-    /** Stores all the transitions */
+    /**
+     * Stores all the transitions
+     */
     private final StateTableWithNestedHashtable states = new StateTableWithNestedHashtable();
-    /** Current state of the controller*/
+    /**
+     * Current state of the controller
+     */
     private IState currentState;
-    /** the name of the controller for debug purpose only*/
+    /**
+     * the name of the controller for debug purpose only
+     */
     private final String name;
-    /** The event queue */
+    /**
+     * The event queue
+     */
     private final LinkedList<IEvent> events = new LinkedList<>();
 
     /**
-     *  The entryAction of the first state will not be called, because no event triggered it
+     * The entryAction of the first state will not be called, because no event triggered it
      * The exitAction will be called.
      *
-     * @param firstState
-     *            Initial state of the machine.
-     * @param name
-     *            name of the machine used only for debug and log purpose
+     * @param firstState Initial state of the machine.
+     * @param name       name of the machine used only for debug and log purpose
      */
     public Controller(String name, IState firstState) {
         this.name = name;
@@ -67,8 +74,9 @@ public class Controller {
         }
         currentState = firstState;
     }
-    /*
-     * @param name The name of the controller
+
+    /**
+     * @param name       The name of the controller
      * @param stateTable Alternative to store transitions between states
      */
     public Controller(String name, Object[] stateTable) {
@@ -129,17 +137,15 @@ public class Controller {
     }
 
     /**
-     Program the controller with allowed transitions.
-     *
+     * Program the controller with allowed transitions.
+     * <p>
      * The controller will always be in a state, when an event ends,
      * this table is queried to see if the event is valid in the context
      * of the current state, if the transition occurs.
-     * @param startingState
-     *            If the controller is in this state
-     * @param ev
-     *            And this event is triggered
-     * @param nextState
-     *            then transition to this state
+     *
+     * @param startingState If the controller is in this state
+     * @param ev            And this event is triggered
+     * @param nextState     then transition to this state
      */
     public void addTransition(IState startingState, IEvent ev, IState nextState) {
         ev.setStateEventListener(this);
@@ -153,14 +159,14 @@ public class Controller {
      * What activates the transitions.
      * Queue events, take first event, make sure it's valid, call
      * exitAction of the current state, change state and call the entryAction of the next state
-     *
+     * <p>
      * If a status change is invalid, it throws an "IllegalStateException"
      * containing the names of the initial state, final state and event.
-     *
+     * <p>
      * It should handle more threading events and situations well.
      * Events are handled in the order they are received.
-     * @param ev
-     *            The triggered event
+     *
+     * @param ev The triggered event
      */
 
 
@@ -195,7 +201,7 @@ public class Controller {
                  */
                 throw new IllegalStateException(this + " can not accept event \"" + ev + "\" when in state \"" + currentState + "\"");
 
-            } else if (tmp != null ){
+            } else if (tmp != null) {
                 if (!hideDebugMessages) {
                     System.out.println(this + " transition from state \"" + currentState + "\" to state \"" + tmp + "\" because of event \"" + ev + "\"");
                 }
@@ -230,37 +236,36 @@ public class Controller {
 
     /**
      * Reimplementation of String for logging. FSM=Finite State Machine
-     *
      */
     public String toString() {
         return "[FSM " + name + "]";
     }
+
     private ITransitionListener setListener;
 
     /**
      * Show the log information
      */
-    public void showDebugMessages(){
+    public void showDebugMessages() {
         hideDebugMessages = false;
     }
 }
 
 
-
 /**
-        * Each row of the table has the association (event, (starting state, next state))
-        *
-        * If "startingState" is the string "Default", it means to use this event for all startingStates
-        * If nextState is "EMPTY" it means to block a default event from this startingState
-        *
-        * This can be implemented in a few ways. If we were to guarantee that Events and States
-        * had unique .toStrings () then we could use a lookup like Event.toString () + "+" + State.toString ()
-        *
-        * That's why this module is extracted - it's replaceable.
- * */
+ * Each row of the table has the association (event, (starting state, next state))
+ * <p>
+ * If "startingState" is the string "Default", it means to use this event for all startingStates
+ * If nextState is "EMPTY" it means to block a default event from this startingState
+ * <p>
+ * This can be implemented in a few ways. If we were to guarantee that Events and States
+ * had unique .toStrings () then we could use a lookup like Event.toString () + "+" + State.toString ()
+ * <p>
+ * That's why this module is extracted - it's replaceable.
+ */
 class StateTableWithNestedHashtable {
 
-    private final Hashtable states = new Hashtable();
+    private final Hashtable states = new Hashtable(); //todo risolvere warning
 
     public void addTransition(IState startingState, IEvent ev, IState nextState) {
         Hashtable h = (Hashtable) states.get(ev);

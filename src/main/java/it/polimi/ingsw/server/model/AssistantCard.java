@@ -6,10 +6,11 @@ public class AssistantCard {
     private int moves;
 
 
-    public AssistantCard(int values,int moves){
+    public AssistantCard(int values, int moves) {
         this.values = values;
         this.moves = moves;
     }
+
     public int getMoves() {
         return moves;
     }
@@ -18,16 +19,16 @@ public class AssistantCard {
         return values;
     }
 
-    /* nessun bisogno di cambiare il contenuto delle carte
+    /* nessun bisogno di cambiare il contenuto delle carte //todo eng
     una volta che sono state costruite (vedere classe Deck)
      */
-    public void lowPriority(){
-        values+=0.5;
+    public void lowPriority() {
+        values += 0.5;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if(obj instanceof AssistantCard) {
+        if (obj instanceof AssistantCard) {
             if (this.getMoves() != ((AssistantCard) obj).getMoves()) return false;
             return this.getValues() == ((AssistantCard) obj).getValues();
         }
@@ -40,7 +41,7 @@ public class AssistantCard {
 
     @Override
     public String toString() {
-        return   (int)values +
+        return (int) values +
                 "/" + moves;
     }
 }

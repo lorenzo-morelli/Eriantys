@@ -1,12 +1,6 @@
 package it.polimi.ingsw.client.view.gui;
 
-import com.google.gson.Gson;
 import it.polimi.ingsw.client.GUI;
-import it.polimi.ingsw.client.model.ClientModel;
-import it.polimi.ingsw.utils.network.Network;
-import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
-import it.polimi.ingsw.utils.other.DoubleObject;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;

@@ -87,7 +87,7 @@ public class Wait extends State {
                     isToReset = true;
                 }
 
-                if (receivedClientModel.isGameStarted().equals(true) && receivedClientModel.NotisKicked()) {
+                if (receivedClientModel.isGameStarted().equals(true) && receivedClientModel.isNotKicked()) {
 
 
                     // Il messaggio è o una richiesta o una risposta

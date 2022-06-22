@@ -25,7 +25,7 @@ public class ClientModel {
     // null = non ancora identificato
     private Boolean amIfirst = null;
     // Gestione dei possibili messaggi, si veda CliView
-    // Un messaggio o è una richiesta (del server ad un client di avere degli input)
+    // Un messaggio o è una richiesta (del server a un client di avere degli inputs)
     // o è una risposta di un client al server
 
     // isResponse --> è una risposta di un client al server
@@ -35,7 +35,7 @@ public class ClientModel {
     private boolean isPingMessage; //differenzia request di ping da request di gioco
 
     private Boolean gameStarted = false;
-    public boolean kicked = false,reply=true;
+    public boolean kicked = false, reply = true;
     private String typeOfRequest;
 
     private PeopleColor choosedColor;
@@ -73,7 +73,7 @@ public class ClientModel {
     private ArrayList<PeopleColor> colors2;
 
 
-    public ClientModel(){
+    public ClientModel() {
         fromTerminal = new ArrayList<>();
         nicknames = new ArrayList<>();
         clientIdentity = rand.nextInt(2147483647);
@@ -97,6 +97,7 @@ public class ClientModel {
     public void setNumofplayer(int numOfPlayer) {
         this.numOfPlayer = numOfPlayer;
     }
+
     public void setIp(String ip) {
         this.ip = ip;
     }
@@ -164,7 +165,6 @@ public class ClientModel {
     public int getClientIdentity() {
         return clientIdentity;
     }
-
 
 
     public List<AssistantCard> getDeck() {
@@ -251,7 +251,7 @@ public class ClientModel {
         this.colors2 = colors2;
     }
 
-    public boolean NotisKicked() {
+    public boolean isNotKicked() {
         return !kicked;
     }
 
@@ -266,13 +266,14 @@ public class ClientModel {
     public void setPingMessage(boolean pingMessage) {
         isPingMessage = pingMessage;
     }
-    public void setReply(boolean p){
-        reply=p;
-    }
-    public boolean Reply(){
-        return reply;
+
+    public void setReply(boolean p) {
+        reply = p;
     }
 
+    public boolean getReply() {
+        return reply;
+    }
 
     public String getNickname() {
         return nickname;

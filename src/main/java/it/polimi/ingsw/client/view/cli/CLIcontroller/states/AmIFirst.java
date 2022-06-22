@@ -64,9 +64,9 @@ public class AmIFirst extends State {
             //System.out.println("another one");
             response = new ParametersFromNetwork(1);
             response.enable();
-            boolean check =response.waitParametersReceived(5);
+            boolean check = response.waitParametersReceived(5);
 
-            if(check || System.currentTimeMillis()>=end){
+            if (check || System.currentTimeMillis() >= end) {
                 System.out.println("\n\nServer non ha dato risposta, si vede che il gioco era già pieno oppure la partita non è stata ancora creata oppure che il nickname non è valido... si prega di riprovare");
                 Network.disconnect();
                 System.exit(0);
@@ -83,13 +83,13 @@ public class AmIFirst extends State {
         //System.out.println("[Ho ricevuto la risposta: ");
         clientModel = json.fromJson(response.getParameter(0), ClientModel.class);
 
-        if(clientModel.getClientIdentity() == Network.getClientModel().getClientIdentity() && clientModel.NotisKicked() && clientModel.getTypeOfRequest() != null && clientModel.getTypeOfRequest().equals("CONNECTTOEXISTINGGAME")) {
+        if (clientModel.getClientIdentity() == Network.getClientModel().getClientIdentity() && clientModel.isNotKicked() && clientModel.getTypeOfRequest() != null && clientModel.getTypeOfRequest().equals("CONNECTTOEXISTINGGAME")) {
             System.out.println("\n Sei stato connesso a una partita già esistente.");
             no.fireStateEvent();
             return super.entryAction(cause);
         }
 
-        if (clientModel.getAmIfirst() == null ) {
+        if (clientModel.getAmIfirst() == null) {
             nicknameAlreadyPresent.fireStateEvent();
             //System.out.println("   il nickname era già presente !!!]");
         } else if (clientModel.getAmIfirst().equals(true)) {
@@ -102,11 +102,6 @@ public class AmIFirst extends State {
             //System.out.println("   non sono primo !!!]");
         }
         return super.entryAction(cause);
-    }
-
-    @Override
-    public void exitAction(IEvent cause) throws IOException {
-
     }
 
     public Event nicknameAlreadyPresent() {

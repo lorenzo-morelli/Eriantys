@@ -18,11 +18,12 @@ public class CloudThread extends Thread {
 
     public CloudThread(CloudPhase phase, ClientModel CurrentPlayerData) {
         this.phase = phase;
-        this.CurrentPlayerData=CurrentPlayerData;
-        json=new Gson();
+        this.CurrentPlayerData = CurrentPlayerData;
+        json = new Gson();
     }
 
-    /** This method is used to send and receive ping during the Cloud Phase in order to
+    /**
+     * This method is used to send and receive ping during the Cloud Phase in order to
      * manage the clients disconnection
      */
     public synchronized void run() {
@@ -41,14 +42,13 @@ public class CloudThread extends Thread {
                 } catch (InterruptedException e) {
                     return;
                 }
-            }catch (ConcurrentModificationException e){
+            } catch (ConcurrentModificationException e) {
                 try {
                     Network.send(json.toJson(CurrentPlayerData));
                 } catch (InterruptedException ex) {
                     throw new RuntimeException(ex);
                 }
             }
-
 
 
             ParametersFromNetwork ping_message = new ParametersFromNetwork(1);

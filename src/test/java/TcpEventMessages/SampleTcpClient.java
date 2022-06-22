@@ -1,24 +1,25 @@
 package TcpEventMessages;
 
-public class SampleTcpClient{
+public class SampleTcpClient {
 
-    public static void main(String args[]) throws InterruptedException {
+    public static void main(String[] args) {
         TcpClient sock = new TcpClient("localhost", 5000);
 
         // add handler
-        final TcpClient that_sock = sock;
-        sock.addEventHandler(new TcpClientEventHandler(){
-            public void onMessage(String line){
-                System.out.println(" > "+line);
+        sock.addEventHandler(new TcpClientEventHandler() {
+            public void onMessage(String line) {
+                System.out.println(" > " + line);
             }
-            public void onOpen(){
+
+            public void onOpen() {
                 System.out.println("* socket connected");
             }
-            public void onClose(){
+
+            public void onClose() {
                 System.out.println("* socket closed");
             }
         });
-        while(true){
+        while (true) {
             sock.send("hello!!");
         }
     }

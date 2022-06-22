@@ -31,7 +31,7 @@ public class Character implements Initializable {
     private PeopleColor chosenColor;
 
     @FXML
-    private Label explaination = new Label();
+    private Label explanation = new Label();
     @FXML
     private Label notice = new Label();
     @FXML
@@ -64,58 +64,58 @@ public class Character implements Initializable {
 
         switch (currentCharacter.getName()) {
             case "KNIGHT":
-                explaination.setText("During the influence calculation this turn, you count as having 2 more influence");
+                explanation.setText("During the influence calculation this turn, you count as having 2 more influence");
                 students.forEach(student -> student.setVisible(false));
                 flagIsland = true;
                 flagColor = true;
                 break;
             case "CENTAUR":
-                explaination.setText("When resolving a conquering on an island, towers do not count towards influence");
+                explanation.setText("When resolving a conquering on an island, towers do not count towards influence");
                 students.forEach(student -> student.setVisible(false));
                 flagIsland = true;
                 flagColor = true;
                 break;
             case "FARMER":
-                explaination.setText("During this turn, you take control of any number of professors even if you have the same number of student as the player who currently controls them");
+                explanation.setText("During this turn, you take control of any number of professors even if you have the same number of student as the player who currently controls them");
                 students.forEach(student -> student.setVisible(false));
                 flagIsland = true;
                 flagColor = true;
                 break;
             case "POSTMAN":
-                explaination.setText("You can move mother nature up to 2 additional islands that is indicated by the assistant card you've played");
+                explanation.setText("You can move mother nature up to 2 additional islands that is indicated by the assistant card you've played");
                 students.forEach(student -> student.setVisible(false));
                 flagIsland = true;
                 flagColor = true;
                 break;
             case "MONK":
-                explaination.setText("Take 1 student from this card and place it on an island of your choice");
+                explanation.setText("Take 1 student from this card and place it on an island of your choice");
                 this.selectStudent(students, this.gui.getClientModel().getServermodel().getTable().getMonkSet());
                 this.selectIsland(islands);
                 break;
             case "PRINCESS":
-                explaination.setText("You can select 1 student from this card and place it in your dinner table");
+                explanation.setText("You can select 1 student from this card and place it in your dinner table");
                 this.selectStudent(students, this.gui.getClientModel().getServermodel().getTable().getPrincessSet());
                 flagIsland = true;
                 break;
             case "MUSHROOMHUNTER":
-                explaination.setText("Choose a color of a student: during the influence calculation this turn, that color adds no influence");
+                explanation.setText("Choose a color of a student: during the influence calculation this turn, that color adds no influence");
                 this.selectStudent(students, null);
                 flagIsland = true;
                 break;
             case "HERALD":
-                explaination.setText("Choose an island and resolve the island as if mother nature had ended her movement there. Mother nature will still move and the island where she ends her movement will also be resolved");
+                explanation.setText("Choose an island and resolve the island as if mother nature had ended her movement there. Mother nature will still move and the island where she ends her movement will also be resolved");
                 students.forEach(student -> student.setVisible(false));
                 this.selectIsland(islands);
                 flagColor = true;
                 break;
             case "GRANNY":
-                explaination.setText("Place a No Entry tile on an island of your choice. The first time mother nature ends her movement there, the influence won't be calculated");
+                explanation.setText("Place a No Entry tile on an island of your choice. The first time mother nature ends her movement there, the influence won't be calculated");
                 students.forEach(student -> student.setVisible(false));
                 this.selectIsland(islands);
                 flagColor = true;
                 break;
             case "THIEF":
-                explaination.setText("Choose a type of student: every player (including yourself) must return 3 students of that type from their dining room to the bag. If any player has fewer than 3 students of that type, return as many students as they have");
+                explanation.setText("Choose a type of student: every player (including yourself) must return 3 students of that type from their dining room to the bag. If any player has fewer than 3 students of that type, return as many students as they have");
                 this.selectStudent(students, null);
                 flagIsland = true;
                 break;
@@ -166,7 +166,7 @@ public class Character implements Initializable {
         }));
     }
 
-    public void selectIsland(ArrayList<Island> islands) {
+    private void selectIsland(ArrayList<Island> islands) {
         Position pos = new Position();
         islands.forEach(island -> {
             ImageView islandImage = new ImageView();
@@ -224,7 +224,8 @@ public class Character implements Initializable {
         });
     }
 
-    public void okay(MouseEvent mouseEvent) throws InterruptedException {
+    @FXML
+    private void okay(MouseEvent mouseEvent) throws InterruptedException {
         if (isCardUsed) {
             notice.setText("You can use only one card at a time!");
         } else if (this.gui.getClientModel().getServermodel().getcurrentPlayer().getCoins() < currentCharacter.getCost()) {

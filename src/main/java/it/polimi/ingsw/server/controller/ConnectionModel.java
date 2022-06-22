@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class ConnectionModel {
     private ArrayList<ClientModel> clientsInfo;
 
-    private boolean closeThread =false;
+    private boolean closeThread = false;
 
     public ConnectionModel() {
         clientsInfo = new ArrayList<>();
@@ -43,6 +43,7 @@ public class ConnectionModel {
 
     /**
      * This method is able to retrive the Model of the player from the ConnectionModel by giving its nickname
+     *
      * @param nickname of the player
      * @return Model of the client
      */
@@ -57,12 +58,13 @@ public class ConnectionModel {
 
     /**
      * This method is able to replace old Model with new Model (useful for reconnection)
+     *
      * @param target old Model
-     * @param nuovo new Model
+     * @param newModel  new Model
      */
-    public void change(ClientModel target, ClientModel nuovo){
+    public void change(ClientModel target, ClientModel newModel) {
         clientsInfo.removeIf(c -> c.equals(target));
-        clientsInfo.add(nuovo);
+        clientsInfo.add(newModel);
     }
 
     /**
@@ -75,16 +77,16 @@ public class ConnectionModel {
     /**
      * Reinitialize Connection Model as empty
      */
-    public void empty(){
+    public void empty() {
         clientsInfo.clear();
     }
 
     /**
      * Close ConnectionModel and reinitialize it
      */
-    public void close(){
+    public void close() {
         empty();
-        closeThread =true;
+        closeThread = true;
     }
 
     /**

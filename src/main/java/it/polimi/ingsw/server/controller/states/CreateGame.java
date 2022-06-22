@@ -38,6 +38,7 @@ public class CreateGame extends State {
 
     /**
      * Events callers
+     *
      * @return different events in order to change to different phase
      */
 
@@ -55,10 +56,10 @@ public class CreateGame extends State {
 
     @Override
     public IEvent entryAction(IEvent cause) throws Exception {
-        model = new Model(connectionModel.getNumOfPlayers(), connectionModel.getGameMode(),false);
+        model = new Model(connectionModel.getNumOfPlayers(), connectionModel.getGameMode(), false);
         int i = 0;
         for (ClientModel c : connectionModel.getClientsInfo()) {
-            model.getPlayers().add(new Player(connectionModel.getClientsInfo().get(i).getNickname(), connectionModel.getClientsInfo().get(i).getMyIp(), model,false));
+            model.getPlayers().add(new Player(connectionModel.getClientsInfo().get(i).getNickname(), connectionModel.getClientsInfo().get(i).getMyIp(), model));
             c.setGameStarted(true);
             c.setAmIfirst(false);
             i++;
@@ -66,7 +67,7 @@ public class CreateGame extends State {
         model.randomschedulePlayers();
         serverController.setModel(model);
 
-        Thread t= new Thread(){
+        Thread t = new Thread() {
             /**
              * This method make the server capable to manage the connection of new player during the game:
              * If someone was disconnected previously puts the new player into the game (if it has a valid nickname)
@@ -74,7 +75,7 @@ public class CreateGame extends State {
              */
             public synchronized void run() {
                 while (true) {
-                    if(connectionModel.isCloseThread()){
+                    if (connectionModel.isCloseThread()) { //todo rimuovere duplicati
                         connectionModel.setCloseThread(false);
                         return;
                     }
@@ -89,58 +90,58 @@ public class CreateGame extends State {
                     Gson json = new Gson();
                     ClientModel receivedClientModel = json.fromJson(message.getParameter(0), ClientModel.class);
 
-                        if(receivedClientModel.getAmIfirst()==null && !connectionModel.isCloseThread()) {
-                            boolean check = false;
+                    if (receivedClientModel.getAmIfirst() == null && !connectionModel.isCloseThread()) {
+                        boolean check = false;
+
+                        for (Player p : getModel().getPlayers()) {
+                            if (p.isDisconnected()) {
+                                check = true;
+                                break;
+                            }
+                        }
+
+                        if (check) {
+                            boolean check2 = true;
 
                             for (Player p : getModel().getPlayers()) {
-                                if (p.isDisconnected()) {
-                                    check = true;
+                                if (!p.isDisconnected() && p.getNickname().equals(receivedClientModel.getNickname())) {
+                                    check2 = false;
                                     break;
                                 }
                             }
 
-                            if (check) {
-                                boolean check2 = true;
-
+                            if (check2) {
                                 for (Player p : getModel().getPlayers()) {
-                                    if (!p.isDisconnected() && p.getNickname().equals(receivedClientModel.getNickname())) {
-                                        check2 = false;
-                                        break;
-                                    }
-                                }
-
-                                if (check2) {
-                                    for (Player p : getModel().getPlayers()) {
-                                        if (p.isDisconnected()) {
-                                            ClientModel target = connectionModel.findPlayer(p.getNickname());
-                                            p.setNickname(receivedClientModel.getNickname());
-                                            p.setDisconnected(false);
-                                            receivedClientModel.setAmIfirst(false);
-                                            receivedClientModel.setKicked(false);
-                                            receivedClientModel.setGameStarted(true);
-                                            receivedClientModel.setTypeOfRequest("CONNECTTOEXISTINGGAME");
-                                            connectionModel.change(target, receivedClientModel);
-                                            try {
-                                                Network.send(json.toJson(receivedClientModel));
-                                            } catch (InterruptedException e) {
-                                                throw new RuntimeException(e);
-                                            }
-                                            model.setDisconnection(false);
-                                            model.getTable().getClouds().add(new Cloud(model.getNumberOfPlayers()));
-                                            model.getTable().getClouds().get(model.getTable().getClouds().size()-1).charge(model.getTable().getBag());
-                                            break;
+                                    if (p.isDisconnected()) {
+                                        ClientModel target = connectionModel.findPlayer(p.getNickname());
+                                        p.setNickname(receivedClientModel.getNickname());
+                                        p.setDisconnected(false);
+                                        receivedClientModel.setAmIfirst(false);
+                                        receivedClientModel.setKicked(false);
+                                        receivedClientModel.setGameStarted(true);
+                                        receivedClientModel.setTypeOfRequest("CONNECTTOEXISTINGGAME");
+                                        connectionModel.change(target, receivedClientModel);
+                                        try {
+                                            Network.send(json.toJson(receivedClientModel));
+                                        } catch (InterruptedException e) {
+                                            throw new RuntimeException(e);
                                         }
+                                        model.setDisconnection(false);
+                                        model.getTable().getClouds().add(new Cloud(model.getNumberOfPlayers()));
+                                        model.getTable().getClouds().get(model.getTable().getClouds().size() - 1).charge(model.getTable().getBag());
+                                        break;
                                     }
                                 }
                             }
                         }
-                        try {
-                            sleep(2000);
-                        } catch (InterruptedException e) {
-                            throw new RuntimeException(e);
-                        }
+                    }
+                    try {
+                        sleep(2000);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
                     }
                 }
+            }
         };
         t.start();
         gameCreated.fireStateEvent();

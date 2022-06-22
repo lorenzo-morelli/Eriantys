@@ -31,9 +31,6 @@ public class WelcomeScreen extends State{
     }
 
     public IEvent entryAction(IEvent cause) throws Exception {
-
-        //view.setCallingState(this);
-        //view.askToStart();
         start.fireStateEvent();
         return null;
     }

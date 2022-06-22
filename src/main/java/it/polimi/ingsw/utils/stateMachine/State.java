@@ -8,6 +8,7 @@ public class State implements IState {
 
     /**
      * Constructor to force the user to name the state
+     *
      * @param name name used for logging purposes
      */
     public State(String name) {
@@ -18,7 +19,7 @@ public class State implements IState {
      * This event will be called when going to this state. If this
      * state is the Initial state (passed to the ControllerServer constructor)
      * will not be called.
-     *
+     * <p>
      * If a value is returned, this status + the returned event MUST
      * be in the transaction table (to ensure that the transaction table is complete)
      *
@@ -28,17 +29,14 @@ public class State implements IState {
         return null;
     }
 
-    /**
-            * Like entryActon, but called while exiting this state.
-      * This cannot cause a change of state by returning an event
-      * @param cause the event that caused us to exit this state
-      */
+    @Override
     public void exitAction(IEvent cause) throws IOException {
 
     }
 
     /**
      * for logging purposes
+     *
      * @return the name passed into the constructor.
      */
     public String toString() {

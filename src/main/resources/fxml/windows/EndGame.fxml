@@ -6,18 +6,11 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.gui.windows.EndGame">
-   <children>
-      <Button layoutX="236.0" layoutY="299.0" mnemonicParsing="false" onMouseClicked="#toMainMenu" text="Return to main menu" />
-      <Label fx:id="label" layoutX="1600.0" layoutY="761.0" text="">
-         <font>
-            <Font name="System Bold" size="19.0" />
-         </font>
-      </Label>
-      <Label fx:id="winnerName" alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="181.0" prefHeight="39.0" prefWidth="600.0" text="Try again" textAlignment="CENTER" AnchorPane.bottomAnchor="180.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="181.0" />
-      <Label fx:id="winLabel" alignment="CENTER" contentDisplay="CENTER" layoutY="142.0" prefHeight="39.0" prefWidth="600.0" text="You won/lost??" textAlignment="CENTER" AnchorPane.bottomAnchor="219.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="142.0">
-         <font>
-            <Font size="23.0" />
-         </font>
-      </Label>
-   </children>
+   <Button layoutX="236.0" layoutY="299.0" mnemonicParsing="false" onMouseClicked="#toMainMenu" text="Return to main menu" />
+   <Label fx:id="winnerName" alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="181.0" prefHeight="39.0" prefWidth="600.0" text="Try again" textAlignment="CENTER" AnchorPane.bottomAnchor="180.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="181.0" />
+   <Label fx:id="winLabel" alignment="CENTER" contentDisplay="CENTER" layoutY="142.0" prefHeight="39.0" prefWidth="600.0" text="You won/lost??" textAlignment="CENTER" AnchorPane.bottomAnchor="219.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="142.0">
+      <font>
+         <Font size="23.0" />
+      </font>
+   </Label>
 </AnchorPane>

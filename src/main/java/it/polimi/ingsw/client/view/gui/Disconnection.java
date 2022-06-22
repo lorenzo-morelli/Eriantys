@@ -25,7 +25,8 @@ public class Disconnection implements Initializable {
     /**
      * This event is used to navigate to the Main Menu.
      */
-    public void go() throws IOException {
+    @FXML
+    private void go() throws IOException {
         this.gui.changeScene("MainMenu");
     }
 }

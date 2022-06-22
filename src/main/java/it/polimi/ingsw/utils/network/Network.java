@@ -12,7 +12,7 @@ import javax.swing.*;
  *
  * @author fernandomorea
  */
-public class Network implements ActionListener{
+public class Network implements ActionListener {
     private static NetworkHandler connection;
     private static boolean gotConnect;
     private static boolean serverListening = false;
@@ -26,41 +26,40 @@ public class Network implements ActionListener{
     private static boolean disconnectedClient = false;
 
 
-
     /**
-     *
      * This is the main network controller that is called when a network action is
      * listened
-     * @param event
-     *            the event that caused the network response
+     *
+     * @param event the event that caused the network response
      */
-    public synchronized void actionPerformed(ActionEvent event){
-        if(event.getSource() == clientButton){
+    public synchronized void actionPerformed(ActionEvent event) {
+        if (event.getSource() == clientButton) {
             connection = new NetworkHandler(IPAddress.getText(), Integer.parseInt(port.getText()), this);
             gotConnect = connection.connect();
-            if(gotConnect){
+            if (gotConnect) {
                 System.out.println("[Connected to server]");
             }
 
-        }else if(event.getSource() == serverButton){
+        } else if (event.getSource() == serverButton) {
             connection = new NetworkHandler(Integer.parseInt(port.getText()), this);
             gotConnect = connection.connect();
-            if(gotConnect){
+            if (gotConnect) {
                 System.out.println("[Listening for Clients]");
             }
-        }else if(event.getSource() == connection){
+        } else if (event.getSource() == connection) {
             textReceived.setText(connection.readText());
 
-        }else if(event.getSource() == disconnectButton){
+        } else if (event.getSource() == disconnectButton) {
             connection.disconnect();
         }
 
     }
+
     /**
      * This is the main network class and is an abstraction of
      * the underlying NetworkHandler (much deeper level of TCP socket)
      */
-    private Network(){
+    private Network() {
         serverButton = new JButton();
         serverButton.addActionListener(this);
         clientButton = new JButton();
@@ -73,50 +72,53 @@ public class Network implements ActionListener{
         disconnectButton = new JButton();
         disconnectButton.addActionListener(this);
     }
+
     /**
      * This method is used to check if new messages are arrived from the network
      */
     public static synchronized JTextArea checkNewMessages() {
-        if (textReceived == null){
+        if (textReceived == null) {
             textReceived = new JTextArea();
         }
         return textReceived;
     }
+
     /**
      * This method is used to set up the server side connection
-     * @param port the port on which the server has to listen
      *
+     * @param port the port on which the server has to listen
      */
-    public static void setupServer(String port){
+    public static void setupServer(String port) {
         new Network();
-            Network.port.setText(port);
-            serverButton.doClick();
-            serverListening = true;
+        Network.port.setText(port);
+        serverButton.doClick();
+        serverListening = true;
 
 
     }
+
     /**
      * This method is used to set up the client side connection
-     * @param port the port on which the server has to listen
-     * @param ip the ip of the server
      *
+     * @param port the port on which the server has to listen
+     * @param ip   the ip of the server
      */
-    public static void setupClient(String ip,String port){
+    public static void setupClient(String ip, String port) {
         new Network();
         Network.IPAddress.setText(ip);
         Network.port.setText(port);
         Network.clientButton.doClick();
     }
+
     /**
      * Used to disconnect from the socket
-     *
      */
-    public synchronized static void disconnect(){
+    public synchronized static void disconnect() {
         disconnectButton.doClick();
     }
+
     /**
      * Used to check whether we are connected or not
-     *
      */
     public synchronized static boolean isConnected() {
         return gotConnect;
@@ -124,24 +126,23 @@ public class Network implements ActionListener{
 
     /**
      * Used to send messages over the network
-     * @param message the message to be sent
      *
+     * @param message the message to be sent
      */
 
     public synchronized static boolean send(String message) throws InterruptedException {
         return connection.sendText(message);
     }
+
     /**
      * Used to get your ip address
-     *
      */
-    public synchronized static String getMyIp(){
+    public synchronized static String getMyIp() {
         return connection.getMyAddress();
     }
 
     /**
      * Used to check whether the server is listening or not
-     *
      */
     public synchronized static boolean isServerListening() {
         return serverListening;
@@ -149,10 +150,9 @@ public class Network implements ActionListener{
 
     /**
      * Used to check whether the client is disconnected or not
-     *
      */
-    public synchronized static  boolean disconnectedClient() {
-        synchronized ((Object) disconnectedClient){
+    public synchronized static boolean disconnectedClient() {
+        synchronized ((Object) disconnectedClient) {
             return disconnectedClient;
         }
 
@@ -160,17 +160,17 @@ public class Network implements ActionListener{
 
     /**
      * Used to set the disconnected status
-     * @param disconnectedClient true or false
      *
+     * @param disconnectedClient true or false
      */
     public synchronized static void setDisconnectedClient(boolean disconnectedClient) {
-        synchronized ((Object) disconnectedClient){
+        synchronized ((Object) disconnectedClient) {
             Network.disconnectedClient = disconnectedClient;
         }
     }
+
     /**
      * Used to store the clientModel just in case
-     *
      */
     public static void setClientModel(ClientModel clientModel) {
         Network.clientModel = clientModel;
@@ -178,8 +178,8 @@ public class Network implements ActionListener{
 
     /**
      * Used get the clientModel
-     * @return  the clientModel stored
      *
+     * @return the clientModel stored
      */
     public static ClientModel getClientModel() {
         return clientModel;

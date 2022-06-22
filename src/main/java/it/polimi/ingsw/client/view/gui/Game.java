@@ -207,7 +207,6 @@ public class Game implements Initializable {
 
         ArrayList<Professor> professors = this.gui.getClientModel().getServermodel().getTable().getProfessors();
         ArrayList<Cloud> clouds = this.gui.getClientModel().getServermodel().getTable().getClouds();
-        Player currentPlayer = this.gui.getClientModel().getServermodel().getcurrentPlayer();
         ArrayList<Team> teams = null;
         if (players.size() == 4) {
             teams = this.gui.getClientModel().getServermodel().getTeams();
@@ -483,7 +482,7 @@ public class Game implements Initializable {
             String name;
             name = player.getNickname();
             if (teams != null) {
-                String team = "";
+                String team;
                 if (player.getNickname().equals(teams.get(0).getPlayer1().getNickname()) || player.getNickname().equals(teams.get(0).getPlayer2().getNickname())) {
                     team = "1";
                 } else {

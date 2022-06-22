@@ -18,11 +18,12 @@ public class StudentThread extends Thread {
 
     public StudentThread(StudentPhase phase, ClientModel CurrentPlayerData) {
         this.phase = phase;
-        this.CurrentPlayerData=CurrentPlayerData;
-        json=new Gson();
+        this.CurrentPlayerData = CurrentPlayerData;
+        json = new Gson();
     }
 
-    /** This method is used to send and receive ping during the Student Phase in order to
+    /**
+     * This method is used to send and receive ping during the Student Phase in order to
      * manage the clients disconnection
      */
     public synchronized void run() {
@@ -41,7 +42,7 @@ public class StudentThread extends Thread {
                 } catch (InterruptedException e) {
                     return;
                 }
-            }catch (ConcurrentModificationException e){
+            } catch (ConcurrentModificationException e) {
                 try {
                     Network.send(json.toJson(CurrentPlayerData));
                 } catch (InterruptedException ex) {

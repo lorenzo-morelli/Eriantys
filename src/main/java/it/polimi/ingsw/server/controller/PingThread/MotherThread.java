@@ -19,11 +19,12 @@ public class MotherThread extends Thread {
 
     public MotherThread(MotherPhase phase, ClientModel CurrentPlayerData) {
         this.phase = phase;
-        this.CurrentPlayerData=CurrentPlayerData;
-        json=new Gson();
+        this.CurrentPlayerData = CurrentPlayerData;
+        json = new Gson();
     }
 
-    /** This method is used to send and receive ping during the Mother Phase in order to
+    /**
+     * This method is used to send and receive ping during the Mother Phase in order to
      * manage the clients disconnection
      */
     public synchronized void run() {
@@ -42,7 +43,7 @@ public class MotherThread extends Thread {
                 } catch (InterruptedException e) {
                     return;
                 }
-            }catch (ConcurrentModificationException e){
+            } catch (ConcurrentModificationException e) {
                 try {
                     Network.send(json.toJson(CurrentPlayerData));
                 } catch (InterruptedException ex) {

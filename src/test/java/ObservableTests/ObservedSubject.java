@@ -5,11 +5,11 @@ import it.polimi.ingsw.utils.observerPattern.*;
 import java.io.IOException;
 import java.util.List;
 
-public class SoggettoOsservato implements Subject {
+public class ObservedSubject implements Subject {
     private final List<Observer> observers;
     private String desc;
 
-    public SoggettoOsservato(List<Observer> observers, String subjectDetails) {
+    public ObservedSubject(List<Observer> observers, String subjectDetails) {
         this.observers = observers;
     }
 

@@ -6,7 +6,7 @@
 <?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.gui.windows.Character">
-   <Label fx:id="explaination" alignment="CENTER" layoutX="118.0" layoutY="41.0" prefHeight="60.0" prefWidth="365.0" text="explaination..." textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="299.0" AnchorPane.leftAnchor="118.0" AnchorPane.rightAnchor="117.0" AnchorPane.topAnchor="41.0" />
+   <Label fx:id="explanation" alignment="CENTER" layoutX="118.0" layoutY="41.0" prefHeight="60.0" prefWidth="365.0" text="explaination..." textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="299.0" AnchorPane.leftAnchor="118.0" AnchorPane.rightAnchor="117.0" AnchorPane.topAnchor="41.0" />
    <Button layoutX="264.0" layoutY="361.0" mnemonicParsing="false" onMouseClicked="#okay" text="Use effect!" />
    <Label fx:id="notice" alignment="CENTER" layoutY="336.0" prefHeight="25.0" prefWidth="600.0" text="blabla" AnchorPane.bottomAnchor="39.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="336.0" />
    <GridPane fx:id="islandGrid" alignment="CENTER" layoutX="165.0" layoutY="165.0" prefHeight="165.0" prefWidth="245.0">
@@ -23,31 +23,26 @@
        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
      </rowConstraints>
    </GridPane>
-   <ImageView fx:id="student1" fitHeight="61.0" fitWidth="51.0" layoutX="140.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true">
-      <image>
-         <Image url="@../../graphics/pieces/students/student_blue.png" />
-      </image>
-   </ImageView>
-   <ImageView fx:id="student2" fitHeight="61.0" fitWidth="51.0" layoutX="208.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true">
-      <image>
-         <Image url="@../../graphics/pieces/students/student_green.png" />
-      </image>
-   </ImageView>
-   <ImageView fx:id="student3" fitHeight="61.0" fitWidth="51.0" layoutX="275.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true">
-      <image>
-         <Image url="@../../graphics/pieces/students/student_pink.png" />
-      </image>
-   </ImageView>
-   <ImageView fx:id="student4" fitHeight="61.0" fitWidth="51.0" layoutX="342.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true">
-      <image>
-         <Image url="@../../graphics/pieces/students/student_red.png" />
-      </image>
-   </ImageView>
-   <ImageView fx:id="student5" fitHeight="61.0" fitWidth="51.0" layoutX="409.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true">
-      <image>
-         <Image url="@../../graphics/pieces/students/student_yellow.png" />
-      </image>
-   </ImageView>
+    <ImageView fx:id="student1" fitHeight="61.0" fitWidth="51.0" layoutX="140.0" layoutY="105.0" pickOnBounds="true"
+               preserveRatio="true">
+        <Image url="@../../graphics/pieces/students/student_blue.png"/>
+    </ImageView>
+    <ImageView fx:id="student2" fitHeight="61.0" fitWidth="51.0" layoutX="208.0" layoutY="105.0" pickOnBounds="true"
+               preserveRatio="true">
+        <Image url="@../../graphics/pieces/students/student_green.png"/>
+    </ImageView>
+    <ImageView fx:id="student3" fitHeight="61.0" fitWidth="51.0" layoutX="275.0" layoutY="105.0" pickOnBounds="true"
+               preserveRatio="true">
+        <Image url="@../../graphics/pieces/students/student_pink.png"/>
+    </ImageView>
+    <ImageView fx:id="student4" fitHeight="61.0" fitWidth="51.0" layoutX="342.0" layoutY="105.0" pickOnBounds="true"
+               preserveRatio="true">
+        <Image url="@../../graphics/pieces/students/student_red.png"/>
+    </ImageView>
+    <ImageView fx:id="student5" fitHeight="61.0" fitWidth="51.0" layoutX="409.0" layoutY="105.0" pickOnBounds="true"
+               preserveRatio="true">
+        <Image url="@../../graphics/pieces/students/student_yellow.png"/>
+    </ImageView>
    <Label fx:id="name" alignment="CENTER" contentDisplay="CENTER" layoutY="7.0" prefHeight="42.0" prefWidth="600.0" text="name" textAlignment="CENTER" AnchorPane.bottomAnchor="351.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="7.0">
       <font>
          <Font name="System Bold" size="12.0" />

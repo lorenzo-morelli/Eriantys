@@ -28,7 +28,7 @@ public class JesterAndMinstrell implements Initializable {
     @FXML
     private Label name = new Label();
     @FXML
-    private Label explaination = new Label();
+    private Label explanation = new Label();
     @FXML
     private Label notice = new Label();
 
@@ -118,16 +118,13 @@ public class JesterAndMinstrell implements Initializable {
         StudentSet entranceSet = this.gui.getClientModel().getServermodel().getcurrentPlayer().getSchoolBoard().getEntranceSpace();
         StudentSet dinnerSet = this.gui.getClientModel().getServermodel().getcurrentPlayer().getSchoolBoard().getDinnerTable();
         tempColor = null;
-        entranceMinstrell = new ArrayList<>(Arrays.asList(null, null));
-        diningMinstrell = new ArrayList<>(Arrays.asList(null, null));
-        jester = new ArrayList<>(Arrays.asList(null, null, null));
-        entranceJester = new ArrayList<>(Arrays.asList(null, null, null));
+        initializeArrays();
 
         Character character = new Character();
         name.setText(currentCharacter.getName());
         if (currentCharacter.getName().equals("MINSTRELL")) {
             start.setText("Your dining room"); //DINING ROOM + ENTRANCE ROOM
-            explaination.setText("You can change up to 2 students between your entrance and your dining room");
+            explanation.setText("You can change up to 2 students between your entrance and your dining room");
             character.setToBlackAndWhite(students1a, dinnerSet, 0);
             character.setToBlackAndWhite(students2a, dinnerSet, 1);
             character.setToBlackAndWhite(students1b, entranceSet, 0);
@@ -140,7 +137,7 @@ public class JesterAndMinstrell implements Initializable {
             this.populateList(students2b, entranceSet, entranceMinstrell, 1);
         } else {
             start.setText("Jester's set");
-            explaination.setText("You may take up to 3 students from this card and replace them with the same number of students from your entrance");
+            explanation.setText("You may take up to 3 students from this card and replace them with the same number of students from your entrance");
             StudentSet jesterSet = this.gui.getClientModel().getServermodel().getTable().getJesterSet();
             character.setToBlackAndWhite(students1a, jesterSet, 0); // JESTER SET + ENTRANCE
             character.setToBlackAndWhite(students2a, jesterSet, 1);
@@ -222,10 +219,7 @@ public class JesterAndMinstrell implements Initializable {
             notice.setText("You don't have enough coins! :(");
         } else if (entranceMinstrell.size() != diningMinstrell.size() || jester.size() != entranceJester.size()) {
             notice.setText("You must select the same quantity of students! Please try again.");
-            entranceMinstrell = new ArrayList<>(Arrays.asList(null, null));
-            diningMinstrell = new ArrayList<>(Arrays.asList(null, null));
-            jester = new ArrayList<>(Arrays.asList(null, null, null));
-            entranceJester = new ArrayList<>(Arrays.asList(null, null, null));
+            initializeArrays();
         } else {
             this.gui.getClientModel().setTypeOfRequest(currentCharacter.getName());
             this.gui.getClientModel().setResponse(true); //lo flaggo come messaggio di risposta
@@ -243,5 +237,12 @@ public class JesterAndMinstrell implements Initializable {
             this.gui.closeWindow(mouseEvent);
         }
 
+    }
+
+    public void initializeArrays() {
+        entranceMinstrell = new ArrayList<>(Arrays.asList(null, null));
+        diningMinstrell = new ArrayList<>(Arrays.asList(null, null));
+        jester = new ArrayList<>(Arrays.asList(null, null, null));
+        entranceJester = new ArrayList<>(Arrays.asList(null, null, null));
     }
 }

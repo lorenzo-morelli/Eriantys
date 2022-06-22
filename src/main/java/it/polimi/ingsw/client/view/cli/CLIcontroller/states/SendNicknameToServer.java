@@ -52,18 +52,14 @@ public class SendNicknameToServer extends State {
         try {
             // Attendi la ricezione dell'ack
             checkAck();
-        }catch (InterruptedException e){e.printStackTrace();}
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return super.entryAction(cause);
-    }
-
-    @Override
-    public void exitAction(IEvent cause) throws IOException{
-
     }
 
 
     public void checkAck() throws Exception {
-
         ack = new ParametersFromNetwork(1);
         ack.setStateEventListener(controller);
         ack.enable();
@@ -71,14 +67,13 @@ public class SendNicknameToServer extends State {
         ack.waitParametersReceived();
 
         //System.out.println("[Conferma del nickname ricevuta]");
-        ClientModel fromNetwork = json.fromJson(ack.getParameter(0),ClientModel.class);
+        ClientModel fromNetwork = json.fromJson(ack.getParameter(0), ClientModel.class);
         System.out.println(ack.getParameter(0));
 
-        if(fromNetwork.getAmIfirst() == null){
+        if (fromNetwork.getAmIfirst() == null) {
             // ancora una volta l'utente ha inserito un nickname già esistente
             nickAlreadyExistent.fireStateEvent();
-        }
-        else {
+        } else {
             // l'utente ha finalmente inserito un nickname valido
 
 

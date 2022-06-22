@@ -28,6 +28,7 @@ public class WaitFirstPlayer extends State {
 
     /**
      * Main constructor
+     *
      * @param serverController the main server controller
      */
     public WaitFirstPlayer(ServerController serverController) {
@@ -43,6 +44,7 @@ public class WaitFirstPlayer extends State {
 
     /**
      * Events callers
+     *
      * @return different events in order to change to different phase
      */
     public ParametersFromNetwork gotFirstMessage() {
@@ -52,16 +54,17 @@ public class WaitFirstPlayer extends State {
 
     /**
      * Wait the connection of the first player and put it into the game. Then sends a request to the view of the first player to make it able to choose the game mode and the number of player of the game.
+     *
      * @param cause the event that caused the controller transition in this state
      * @return null event
      * @throws Exception input output or network related exceptions
      */
     @Override
     public IEvent entryAction(IEvent cause) throws Exception {
-        if (Network.disconnectedClient()){
+        if (Network.disconnectedClient()) {
             Network.disconnect();
         }
-        System.out.println("[Listening on port " + CommandPrompt.gotFromTerminal()+ " ]");
+        System.out.println("[Listening on port " + CommandPrompt.gotFromTerminal() + " ]");
         Network.setupServer(CommandPrompt.gotFromTerminal());
         Network.setDisconnectedClient(false);
         connectionModel.setClientsInfo(new ArrayList<>());
@@ -69,9 +72,9 @@ public class WaitFirstPlayer extends State {
 
         firstMessage.enable();
 
-        while (!firstMessage.parametersReceived() ) {
+        while (!firstMessage.parametersReceived()) {
             firstMessage.waitParametersReceived(10);
-            if(Network.disconnectedClient()){
+            if (Network.disconnectedClient()) {
                 reset.fireStateEvent();
             }
         }

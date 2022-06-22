@@ -18,17 +18,18 @@ public class AssistantCardThread extends Thread {
 
     public AssistantCardThread(AssistantCardPhase phase, ClientModel CurrentPlayerData) {
         this.phase = phase;
-        this.CurrentPlayerData=CurrentPlayerData;
-        json=new Gson();
+        this.CurrentPlayerData = CurrentPlayerData;
+        json = new Gson();
     }
 
-    /** This method is used to send and receive ping during the Assistant Card Phase in order to
+    /**
+     * This method is used to send and receive ping during the Assistant Card Phase in order to
      * manage the clients disconnection
      */
     public synchronized void run() {
         while (phase.getMessage() == null || !phase.getMessage().parametersReceived() || json.fromJson(phase.getMessage().getParameter(0), ClientModel.class).isPingMessage()) {
             try {
-               sleep(10000);
+                sleep(10000);
             } catch (InterruptedException e) {
                 return;
             }
@@ -41,7 +42,7 @@ public class AssistantCardThread extends Thread {
                 } catch (InterruptedException e) {
                     return;
                 }
-            }catch (ConcurrentModificationException e){
+            } catch (ConcurrentModificationException e) {
                 try {
                     Network.send(json.toJson(CurrentPlayerData));
                 } catch (InterruptedException ex) {

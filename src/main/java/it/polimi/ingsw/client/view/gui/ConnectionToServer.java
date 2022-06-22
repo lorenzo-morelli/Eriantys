@@ -9,7 +9,6 @@ import it.polimi.ingsw.utils.other.DoubleObject;
 import javafx.application.Platform;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -74,14 +73,14 @@ public class ConnectionToServer {
             notRead = false;
             ClientModel clientModel = gson.fromJson(message.getParameter(0), ClientModel.class);
 
-            if(clientModel.Reply()) {
+            if(clientModel.getReply()) {
                 if (!Objects.equals(clientModel.getTypeOfRequest(), "CONNECTTOEXISTINGGAME")) {
                     if (Network.disconnectedClient()) {
                         Network.disconnect();
                         System.out.println("Il gioco è terminato a causa della disconnessione di un client");
                         isToReset = true;
                     }
-                    if (clientModel.isGameStarted() && clientModel.NotisKicked()) {
+                    if (clientModel.isGameStarted() && clientModel.isNotKicked()) {
                         waitForFirst = false;
                         if (!clientModel.isResponse() && clientModel.getTypeOfRequest() != null) {
                             if (clientModel.getClientIdentity() == myID) {

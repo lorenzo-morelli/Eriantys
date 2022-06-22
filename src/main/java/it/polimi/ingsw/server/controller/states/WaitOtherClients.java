@@ -32,14 +32,15 @@ public class WaitOtherClients extends State {
         json = new Gson();
         message = new ParametersFromNetwork(1);
         message.setStateEventListener(controller);
-        fourClientsConnected= new Event("4 clients connected and ready to play");
+        fourClientsConnected = new Event("4 clients connected and ready to play");
         fourClientsConnected.setStateEventListener(controller);
-        twoOrThreeClientsConnected= new Event("2 or 3 clients connected and ready to play");
+        twoOrThreeClientsConnected = new Event("2 or 3 clients connected and ready to play");
         twoOrThreeClientsConnected.setStateEventListener(controller);
     }
 
     /**
      * Events callers
+     *
      * @return different events in order to change to different phase
      */
     public Event twoOrThreeClientsConnected() {
@@ -52,6 +53,7 @@ public class WaitOtherClients extends State {
 
     /**
      * Wait the connection of the other player and put it into the game. Then sends an ack to them.
+     *
      * @param cause the event that caused the controller transition in this state
      * @return null event
      * @throws Exception input output or network related exceptions
@@ -63,7 +65,7 @@ public class WaitOtherClients extends State {
         while (numOfPlayersToWait > 0) {
             System.out.println("[Waiting for " + numOfPlayersToWait + " clients]");
 
-            message=new ParametersFromNetwork(1);
+            message = new ParametersFromNetwork(1);
             message.enable();
             while (!message.parametersReceived()) {
                 message.waitParametersReceived(10);
@@ -81,10 +83,9 @@ public class WaitOtherClients extends State {
             numOfPlayersToWait--;
 
         }
-        if (connectionModel.getClientsInfo().size() == 4){
+        if (connectionModel.getClientsInfo().size() == 4) {
             fourClientsConnected.fireStateEvent();
-        }
-        else if(connectionModel.getClientsInfo().size() == 3 || connectionModel.getClientsInfo().size()==2){
+        } else if (connectionModel.getClientsInfo().size() == 3 || connectionModel.getClientsInfo().size() == 2) {
             twoOrThreeClientsConnected.fireStateEvent();
         }
         return super.entryAction(cause);
