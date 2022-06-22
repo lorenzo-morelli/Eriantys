@@ -6,6 +6,8 @@ import it.polimi.ingsw.server.controller.states.MotherPhase;
 import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
 
+import java.util.ConcurrentModificationException;
+
 
 /**
  * Thread for Mother Phase pings
@@ -35,10 +37,19 @@ public class MotherThread extends Thread {
             CurrentPlayerData.setResponse(false); // è una richiesta non una risposta// lato client avrà una nella CliView un metodo per gestire questa richiesta
             CurrentPlayerData.setPingMessage(true);
             try {
-                Network.send(json.toJson(CurrentPlayerData));
-            } catch (InterruptedException e) {
-                return;
+                try {
+                    Network.send(json.toJson(CurrentPlayerData));
+                } catch (InterruptedException e) {
+                    return;
+                }
+            }catch (ConcurrentModificationException e){
+                try {
+                    Network.send(json.toJson(CurrentPlayerData));
+                } catch (InterruptedException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
+
 
             ParametersFromNetwork ping_message = new ParametersFromNetwork(1);
             ping_message.enable();

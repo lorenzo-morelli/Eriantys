@@ -6,6 +6,8 @@ import it.polimi.ingsw.server.controller.states.AssistantCardPhase;
 import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
 
+import java.util.ConcurrentModificationException;
+
 /**
  * Thread for Assistant Card Phase pings
  */
@@ -34,9 +36,17 @@ public class AssistantCardThread extends Thread {
             CurrentPlayerData.setResponse(false);
             CurrentPlayerData.setPingMessage(true);
             try {
-                Network.send(json.toJson(CurrentPlayerData));
-            } catch (InterruptedException e) {
-                return;
+                try {
+                    Network.send(json.toJson(CurrentPlayerData));
+                } catch (InterruptedException e) {
+                    return;
+                }
+            }catch (ConcurrentModificationException e){
+                try {
+                    Network.send(json.toJson(CurrentPlayerData));
+                } catch (InterruptedException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
 
             ParametersFromNetwork ping_message = new ParametersFromNetwork(1);

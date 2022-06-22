@@ -18,6 +18,7 @@ import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
 
 import java.util.Arrays;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -108,9 +109,14 @@ public class StudentPhase extends State {
             currentPlayerData.setPingMessage(false);
             currentPlayerData.setResponse(false);
 
-            boolean checkError= Network.send(json.toJson(currentPlayerData));
+            boolean checkDisconnection;
+            try {
+                checkDisconnection = Network.send(json.toJson(currentPlayerData));
+            }catch (ConcurrentModificationException e){
+                checkDisconnection = Network.send(json.toJson(currentPlayerData));
+            }
 
-            if(!checkError){
+            if(!checkDisconnection){
                 studentPhaseEnded.fireStateEvent();
                 return super.entryAction(cause);
             }
