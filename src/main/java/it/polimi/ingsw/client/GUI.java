@@ -20,11 +20,10 @@ import java.util.concurrent.TimeUnit;
  * Launcher for GUI View
  */
 public class GUI extends Application {
-    public Stage stage;
-    public Scene scene;
+    private Stage stage;
+    private Scene scene;
     private static ClientModel clientModel = new ClientModel();
     public static String gameState;
-    public static String messageToOthers = "aa";
     public static Node currNode = null;
     public static boolean myTurn = false;
     public static boolean isCardUsed = false;
@@ -54,6 +53,7 @@ public class GUI extends Application {
      * @param newScene the name of the FXML file, without the extension.
      */
     public synchronized void changeScene(String newScene) throws IOException {
+        System.out.println("cambio scena " + newScene + ", currNode = " + currNode);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/" + newScene + ".fxml"));
         this.stage = (Stage) currNode.getScene().getWindow();
         this.scene = new Scene(loader.load());
@@ -102,10 +102,10 @@ public class GUI extends Application {
         Network.setClientModel(GUI.clientModel);
         switch (GUI.clientModel.getTypeOfRequest()) {
             case "TRYTORECONNECT":
-                //TODO
+                changeScene("TryToReconnect");
                 break;
             case "DISCONNECTION":
-                //TODO
+                changeScene("Disconnection");
                 break;
             case "CHOOSEASSISTANTCARD":
                 System.out.println("assistent!");
@@ -136,7 +136,7 @@ public class GUI extends Application {
     }
 
     /**
-     * This method is called whenever it's someone else's turn (not mine)
+     * This method is called whenever it's someone else's turn
      */
     public synchronized void requestToOthers() throws IOException {
         //todo rimuovere tutti i print
@@ -146,30 +146,25 @@ public class GUI extends Application {
         switch (GUI.clientModel.getTypeOfRequest()) {
             case "CHOOSEASSISTANTCARD":
                 gameState = "Assistant Card phase";
-                messageToOthers = "L'utente " + GUI.clientModel.getNickname() + " sta scegliendo la carta assistente";
                 System.out.println("wait choose assistant card");
                 changeScene("Game");
                 break;
             case "CHOOSEWHERETOMOVESTUDENTS":
                 gameState = "Moving students";
-                messageToOthers = "L'utente " + GUI.clientModel.getNickname() + " sta scegliendo dove muovere lo studente";
                 System.out.println("wait choose where to move students");
                 changeScene("Game");
                 break;
             case "TEAMMATE":
                 gameState = "Team mate";
-                messageToOthers = "L'utente " + GUI.clientModel.getNickname() + " sta scegliendo il suo compagno di squadra";
                 System.out.println("wait team mate");
                 changeScene("Game");
                 break;
             case "CHOOSEWHERETOMOVEMOTHER":
                 gameState = "Moving mother nature";
-                messageToOthers = "L'utente " + GUI.clientModel.getNickname() + " sta scegliendo il numero di mosse di cui far spostare madre natura";
                 System.out.println("wait choose where to move mother");
                 changeScene("Game");
                 break;
             case "CHOOSECLOUDS":
-                messageToOthers = "L'utente " + GUI.clientModel.getNickname() + " sta scegliendo la nuvola dalla quale ricaricare gli studenti";
                 System.out.println("wait choose clouds");
                 changeScene("Game");
                 break;

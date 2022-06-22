@@ -90,7 +90,6 @@ public class Menu implements Initializable {
                 } else {
                     System.out.println("\n\nServer non ha dato risposta");
                     Network.disconnect();
-                    currNode = notice;
                     this.notice.setText("Server non ha dato alcuna risposta, mi disconnetto...");
                     TimeUnit.SECONDS.sleep(5);
                     System.exit(0);

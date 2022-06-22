@@ -72,7 +72,6 @@ public class Lobby implements Initializable {
                 if (check) {
                     System.out.println("\n\nServer non ha dato risposta");
                     Network.disconnect();
-                    currNode = otherPlayersLabel;
                     this.otherPlayersLabel.setText("...Server si è disconnesso, mi disconnetto...");
                     TimeUnit.SECONDS.sleep(5);
                     System.exit(0);
@@ -86,18 +85,9 @@ public class Lobby implements Initializable {
                     System.out.println("Il gioco è terminato a causa della disconnessione di un client");
                     isToReset = true;
                 }
-
                 if (clientModel.isGameStarted() && clientModel.NotisKicked()) {
-
-                    // Il messaggio è o una richiesta o una risposta
-
-                    // se il messaggio non è una risposta di un client al server vuol dire che
                     if (!clientModel.isResponse() && clientModel.getTypeOfRequest() != null) {
-                        // il messaggio è una richiesta del server alla view di un client
-
-                        // se il messaggio è rivolto a me devo essere io a compiere l'azione
                         if (clientModel.getClientIdentity() == myID) {
-                            // il messaggio è rivolto a me
                             try {
                                 System.out.println("request to me");
                                 if (clientModel.isPingMessage()) {

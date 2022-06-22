@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 
+import static it.polimi.ingsw.client.GUI.currNode;
+
 public class TeamMate implements Initializable {
     private final GUI gui = new GUI();
     @FXML
@@ -24,6 +26,7 @@ public class TeamMate implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        currNode = player1;
         ArrayList<String> players = this.gui.getClientModel().getNicknames();
         players.remove(this.gui.getClientModel().getNickname());
         ArrayList<Button> buttons = new ArrayList<>(Arrays.asList(player1, player2, player3));

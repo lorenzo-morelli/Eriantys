@@ -342,7 +342,10 @@ public class Game implements Initializable {
         });
 
         // INITIALIZE PROFESSORS
-        professorGrids.forEach(prof -> prof.getChildren().clear());
+        professorGrids.forEach(prof -> {
+            prof.getChildren().clear();
+            prof.setAlignment(Pos.CENTER);
+        });
         professors.forEach(prof -> {
             if (prof.getHeldBy() != null) {
                 Player choosenPlayer = null;
@@ -463,7 +466,8 @@ public class Game implements Initializable {
         }
 
         // INITIALIZE PLAYERS AND NUMBER OF PLAYERS
-        players.forEach(player -> playerNames.get(players.indexOf(player)).setText(player.getNickname()));
+        players.forEach(player -> playerNames.get(players.indexOf(player))
+                .setText(player.isDisconnected() ? player.getNickname() + " - DISCONNECTED" : player.getNickname()));
         if (players.size() < 4) {
             playerNames.get(3).setVisible(false);
             assistantCards.get(3).setVisible(false);

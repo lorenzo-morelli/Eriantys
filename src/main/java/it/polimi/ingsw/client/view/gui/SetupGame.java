@@ -44,9 +44,9 @@ public class SetupGame implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        currNode = otherPlayersLabel;
         this.connectedOnIp.setText("Connected on IP: " + this.gui.getClientModel().getIp());
         this.connectedOnPort.setText("Connected on Port: " + this.gui.getClientModel().getPort());
-        currNode = otherPlayersLabel;
         isToReset = false;
     }
 
@@ -122,7 +122,6 @@ public class SetupGame implements Initializable {
                 if (check) {
                     System.out.println("\n\nServer non ha dato risposta");
                     Network.disconnect();
-                    currNode = otherPlayersLabel;
                     this.otherPlayersLabel.setText("...Server si è disconnesso, mi disconnetto...");
                     TimeUnit.SECONDS.sleep(5);
                     System.exit(0);
@@ -157,7 +156,6 @@ public class SetupGame implements Initializable {
                                 !clientModel.getTypeOfRequest().equals("TRYTORECONNECT") &&
                                 !clientModel.getTypeOfRequest().equals("DISCONNECTION")) {
                             try {
-
                                 System.out.println("request to other");
                                 gui.setClientModel(clientModel);
                                 gui.requestToOthers();
