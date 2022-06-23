@@ -265,12 +265,12 @@ public class Controller {
  */
 class StateTableWithNestedHashtable {
 
-    private final Hashtable states = new Hashtable(); //todo risolvere warning
+    private final Hashtable<Object,Object> states = new Hashtable<>(); //todo risolvere warning
 
     public void addTransition(IState startingState, IEvent ev, IState nextState) {
-        Hashtable h = (Hashtable) states.get(ev);
+        Hashtable<Object,Object> h = (Hashtable<Object, Object>) states.get(ev);
         if (h == null) {
-            h = new Hashtable(3);
+            h = new Hashtable<>(3);
             states.put(ev, h);
         }
 
@@ -281,7 +281,7 @@ class StateTableWithNestedHashtable {
     }
 
     public IState findTransition(IState currentState, IEvent ev) {
-        Hashtable h = (Hashtable) states.get(ev);
+        Hashtable<Object,Object> h = (Hashtable<Object,Object>) states.get(ev);
         // Never seen this state.  So how did we even get the event?
         if (h == null) {
             return null;
