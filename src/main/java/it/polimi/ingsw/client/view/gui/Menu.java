@@ -38,9 +38,6 @@ public class Menu implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        this.nicknameField.setText("morel");
-        this.ipField.setText("127.0.0.1");
-        this.portField.setText("1234");
         this.notice.setText("");
         this.connected.setText("");
         currNode = playButton;

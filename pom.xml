@@ -77,7 +77,7 @@
                             <transformers>
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>it.polimi.ingsw.client.GUI</mainClass>
+                                    <mainClass>it.polimi.ingsw.server.SERVER</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>

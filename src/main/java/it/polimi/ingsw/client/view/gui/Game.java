@@ -156,7 +156,7 @@ public class Game implements Initializable {
         currNode = phaseLabel;
         Position pos = new Position();
         phaseLabel.setText(gameState);
-        turnLabel.setText("è il turno di: " + this.gui.getClientModel().getServermodel().getcurrentPlayer().getNickname());
+        turnLabel.setText("This is " + this.gui.getClientModel().getServermodel().getcurrentPlayer().getNickname() + "'s turn");
         if (this.gui.getClientModel().getTypeOfRequest().equals("GAMEEND")) {
             try {
                 this.gui.openNewWindow("EndGame");
@@ -167,7 +167,6 @@ public class Game implements Initializable {
         if (myTurn) {
             switch (this.gui.getClientModel().getTypeOfRequest()) {
                 case "CHOOSEASSISTANTCARD":
-                    System.out.println("si sceglie la carta assistente");
                     setOnSchoolBtn.setStyle("-fx-background-image: url(" + imageURL + ");");
                     setOnIslandBtn.setStyle("-fx-background-image: url(" + imageURL + ");");
                     moveBtn.setStyle("-fx-background-image: url(" + imageURL + ");");
@@ -366,7 +365,6 @@ public class Game implements Initializable {
                     }
                 }
                 if (choosenPlayer != null) {
-                    System.out.println("il player " + choosenPlayer.getNickname() + " si piglia il prof " + prof.getColor().name());
                     ImageView profImage = null;
                     String color = "";
                     switch (prof.getColor()) {
@@ -511,7 +509,6 @@ public class Game implements Initializable {
         // INITIALIZE ASSISTANT CARDS
         players.forEach(player -> {
             if (player.getChoosedCard() != null) {
-                System.out.println("il player " + player.getNickname() + " ha la carta " + player.getChoosedCard().getValues());
                 Image assistantImage = new Image("/graphics/assistants/assistantCard" + (int) player.getChoosedCard().getValues() + ".png");
                 assistantCards.get(players.indexOf(player)).setImage(assistantImage);
                 assistantCards.get(players.indexOf(player)).setVisible(true);
