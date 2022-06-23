@@ -14,8 +14,8 @@ class ModelTest {
     @Test
     void testCreateModel2playerPrincipiante() {
         Model model = new Model(2, "PRINCIPIANT",false);
-        model.getPlayers().add(new Player("pippo", "192.168.0.1", model,false));
-        model.getPlayers().add(new Player("paperino", "192.168.0.2", model,false));
+        model.getPlayers().add(new Player("pippo", "192.168.0.1", model));
+        model.getPlayers().add(new Player("paperino", "192.168.0.2", model));
 
         //assert Model
         assertEquals(2, model.getPlayers().size());
@@ -82,9 +82,9 @@ class ModelTest {
     @Test
     void testCreateModel3playerPrincipiante() {
         Model model = new Model(3, "PRINCIPIANT",false);
-        model.getPlayers().add(new Player("pippo", "192.168.0.1", model,false));
-        model.getPlayers().add(new Player("paperino", "192.168.0.2", model,false));
-        model.getPlayers().add(new Player("pluto", "192.168.0.3", model,false));
+        model.getPlayers().add(new Player("pippo", "192.168.0.1", model));
+        model.getPlayers().add(new Player("paperino", "192.168.0.2", model));
+        model.getPlayers().add(new Player("pluto", "192.168.0.3", model));
 
         //assert Model
         assertEquals(3, model.getPlayers().size());
@@ -164,10 +164,10 @@ class ModelTest {
     @Test
     void testCreateModel4playerPrincipiante() {
         Model model = new Model(4, "PRINCIPIANT",false);
-        model.getPlayers().add(new Player("pippo", "192.168.0.1", 1, model,false));
-        model.getPlayers().add(new Player("paperino", "192.168.0.2", 2, model,false));
-        model.getPlayers().add(new Player("pluto", "192.168.0.3", 1, model,false));
-        model.getPlayers().add(new Player("minnie", "192.168.0.4", 2, model,false));
+        model.getPlayers().add(new Player("pippo", "192.168.0.1", 1, model));
+        model.getPlayers().add(new Player("paperino", "192.168.0.2", 2, model));
+        model.getPlayers().add(new Player("pluto", "192.168.0.3", 1, model));
+        model.getPlayers().add(new Player("minnie", "192.168.0.4", 2, model));
 
         //assert Model
         assertEquals(4, model.getPlayers().size());
@@ -366,8 +366,8 @@ class ModelTest {
     @Test
     void SimulateGame2Player() {
         Model model = new Model(2, "PRINCIPIANT",false);
-        model.getPlayers().add(new Player("paperino", "192.168.0.2", model,false));
-        model.getPlayers().add(new Player("pippo", "192.168.0.1", model,false));
+        model.getPlayers().add(new Player("paperino", "192.168.0.2", model));
+        model.getPlayers().add(new Player("pippo", "192.168.0.1", model));
 
         assertEquals(model.player_winner(), "PAREGGIO");
 
@@ -474,10 +474,10 @@ class ModelTest {
     @Test
     void SimulateGame4Player() {
         Model model = new Model(4, "PRINCIPIANT",false);
-        model.getPlayers().add(new Player("paperino", "192.168.0.2", 1, model,false));
-        model.getPlayers().add(new Player("pippo", "192.168.0.1", 2, model,false));
-        model.getPlayers().add(new Player("paperino2", "192.168.0.2", 1, model,false));
-        model.getPlayers().add(new Player("pippo2", "192.168.0.1", 2, model,false));
+        model.getPlayers().add(new Player("paperino", "192.168.0.2", 1, model));
+        model.getPlayers().add(new Player("pippo", "192.168.0.1", 2, model));
+        model.getPlayers().add(new Player("paperino2", "192.168.0.2", 1, model));
+        model.getPlayers().add(new Player("pippo2", "192.168.0.1", 2, model));
 
         assertEquals(model.team_winner(), "PAREGGIO");
 
@@ -592,8 +592,8 @@ class ModelTest {
     @Test
     void SimulateExpertCreation(){
         Model model = new Model(2, "EXPERT",false);
-        model.getPlayers().add(new Player("paperino", "192.168.0.2",  model,false));
-        model.getPlayers().add(new Player("pippo", "192.168.0.1",  model,false));
+        model.getPlayers().add(new Player("paperino", "192.168.0.2",  model));
+        model.getPlayers().add(new Player("pippo", "192.168.0.1",  model));
 
         assertEquals(model.getTable().getCharacters().size(),3);
         assertNotEquals(model.getTable().getCharacters().get(0).getName(),model.getTable().getCharacters().get(1).getName());
@@ -604,8 +604,8 @@ class ModelTest {
     @Test
     void SimulateGRANNY() {
         Model model = new Model(2, "EXPERT",true);
-        model.getPlayers().add(new Player("paperino", "192.168.0.2", model,true));
-        model.getPlayers().add(new Player("pippo", "192.168.0.1", model,true));
+        model.getPlayers().add(new Player("paperino", "192.168.0.2", model));
+        model.getPlayers().add(new Player("pippo", "192.168.0.1", model));
 
         Player player = model.getPlayers().get(0);
         int coins = player.getCoins();
@@ -625,8 +625,8 @@ class ModelTest {
     @Test
     void SimulateCENTAUR() {
         Model model = new Model(2, "EXPERT",true);
-        model.getPlayers().add(new Player("paperino", "192.168.0.2", model,true));
-        model.getPlayers().add(new Player("pippo", "192.168.0.1", model,true));
+        model.getPlayers().add(new Player("paperino", "192.168.0.2", model));
+        model.getPlayers().add(new Player("pippo", "192.168.0.1", model));
 
         Player player = model.getPlayers().get(0);
         Player otherPlayer = model.getPlayers().get(1);
@@ -651,8 +651,8 @@ class ModelTest {
     @Test
     void SimulateFARMER() {
         Model model = new Model(2, "EXPERT",true);
-        model.getPlayers().add(new Player("paperino", "192.168.0.2", model,true));
-        model.getPlayers().add(new Player("pippo", "192.168.0.1", model,true));
+        model.getPlayers().add(new Player("paperino", "192.168.0.2", model));
+        model.getPlayers().add(new Player("pippo", "192.168.0.1", model));
 
         Player player = model.getPlayers().get(0);
         Player otherPlayer = model.getPlayers().get(1);
@@ -687,8 +687,8 @@ class ModelTest {
     @Test
     void SimulateHERALD() {
         Model model = new Model(2, "EXPERT",true);
-        model.getPlayers().add(new Player("paperino", "192.168.0.2", model,true));
-        model.getPlayers().add(new Player("pippo", "192.168.0.1", model,true));
+        model.getPlayers().add(new Player("paperino", "192.168.0.2", model));
+        model.getPlayers().add(new Player("pippo", "192.168.0.1", model));
 
         Player player = model.getPlayers().get(0);
         Player otherPlayer = model.getPlayers().get(1);
@@ -739,8 +739,8 @@ class ModelTest {
     @Test
     void SimulateKNIGHT() {
         Model model = new Model(2, "EXPERT",true);
-        model.getPlayers().add(new Player("paperino", "192.168.0.2", model,true));
-        model.getPlayers().add(new Player("pippo", "192.168.0.1", model,true));
+        model.getPlayers().add(new Player("paperino", "192.168.0.2", model));
+        model.getPlayers().add(new Player("pippo", "192.168.0.1", model));
 
         Player player = model.getPlayers().get(0);
         int coins = player.getCoins();
@@ -759,8 +759,8 @@ class ModelTest {
     @Test
     void SimulateMONK() {
         Model model = new Model(2, "EXPERT",true);
-        model.getPlayers().add(new Player("paperino", "192.168.0.2", model,true));
-        model.getPlayers().add(new Player("pippo", "192.168.0.1", model,true));
+        model.getPlayers().add(new Player("paperino", "192.168.0.2", model));
+        model.getPlayers().add(new Player("pippo", "192.168.0.1", model));
 
         Player player = model.getPlayers().get(0);
         int coins = player.getCoins();
@@ -781,8 +781,8 @@ class ModelTest {
     @Test
     void SimulateMUSHHUNTER() {
         Model model = new Model(2, "EXPERT",true);
-        model.getPlayers().add(new Player("paperino", "192.168.0.2", model,true));
-        model.getPlayers().add(new Player("pippo", "192.168.0.1", model,true));
+        model.getPlayers().add(new Player("paperino", "192.168.0.2", model));
+        model.getPlayers().add(new Player("pippo", "192.168.0.1", model));
 
         Player player = model.getPlayers().get(0);
         Player otherPlayer = model.getPlayers().get(1);
@@ -829,8 +829,8 @@ class ModelTest {
     @Test
     void SimulatePOSTMAN() {
         Model model = new Model(2, "EXPERT",true);
-        model.getPlayers().add(new Player("paperino", "192.168.0.2", model,true));
-        model.getPlayers().add(new Player("pippo", "192.168.0.1", model,true));
+        model.getPlayers().add(new Player("paperino", "192.168.0.2", model));
+        model.getPlayers().add(new Player("pippo", "192.168.0.1", model));
 
         Player player = model.getPlayers().get(0);
         player.setChoosedCard(player.getAvailableCards().getCardsList().get(0));
@@ -851,8 +851,8 @@ class ModelTest {
     @Test
     void SimulatePrincess() {
         Model model = new Model(2, "EXPERT",true);
-        model.getPlayers().add(new Player("paperino", "192.168.0.2", model,true));
-        model.getPlayers().add(new Player("pippo", "192.168.0.1", model,true));
+        model.getPlayers().add(new Player("paperino", "192.168.0.2", model));
+        model.getPlayers().add(new Player("pippo", "192.168.0.1", model));
 
         Player player = model.getPlayers().get(0);
         player.setChoosedCard(player.getAvailableCards().getCardsList().get(0));
@@ -878,8 +878,8 @@ class ModelTest {
     @Test
     void SimulateTHIEF() {
         Model model = new Model(2, "EXPERT",true);
-        model.getPlayers().add(new Player("paperino", "192.168.0.2", model,true));
-        model.getPlayers().add(new Player("pippo", "192.168.0.1", model,true));
+        model.getPlayers().add(new Player("paperino", "192.168.0.2", model));
+        model.getPlayers().add(new Player("pippo", "192.168.0.1", model));
 
         Player player = model.getPlayers().get(0);
         Player otherPlayer = model.getPlayers().get(1);
@@ -904,8 +904,8 @@ class ModelTest {
     @Test
     void SimulateJESTER() {
         Model model = new Model(2, "EXPERT",true);
-        model.getPlayers().add(new Player("paperino", "192.168.0.2", model,true));
-        model.getPlayers().add(new Player("pippo", "192.168.0.1", model,true));
+        model.getPlayers().add(new Player("paperino", "192.168.0.2", model));
+        model.getPlayers().add(new Player("pippo", "192.168.0.1", model));
 
         Player player = model.getPlayers().get(0);
         int coins = player.getCoins();
@@ -940,8 +940,8 @@ class ModelTest {
     @Test
     void SimulateMINSTREL() {
         Model model = new Model(2, "EXPERT",true);
-        model.getPlayers().add(new Player("paperino", "192.168.0.2", model,true));
-        model.getPlayers().add(new Player("pippo", "192.168.0.1", model,true));
+        model.getPlayers().add(new Player("paperino", "192.168.0.2", model));
+        model.getPlayers().add(new Player("pippo", "192.168.0.1", model));
 
         Player player = model.getPlayers().get(0);
         int coins = player.getCoins();
