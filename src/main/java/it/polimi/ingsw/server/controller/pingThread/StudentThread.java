@@ -65,6 +65,6 @@ public class StudentThread extends Thread {
         }
     }
     private void sleeping() throws InterruptedException {
-        sleep(2000);
+        sleep(10000);
     }
 }
