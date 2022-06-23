@@ -13,9 +13,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class ModelTest {
     @Test
     void testCreateModel2playerPrincipiante() {
-        Model model = new Model(2, "PRINCIPIANT",false);
-        model.getPlayers().add(new Player("pippo", "192.168.0.1", model,false));
-        model.getPlayers().add(new Player("paperino", "192.168.0.2", model,false));
+        Model model = new Model(2, "PRINCIPIANT", false);
+        model.getPlayers().add(new Player("pippo", "192.168.0.1", model, false));
+        model.getPlayers().add(new Player("paperino", "192.168.0.2", model, false));
 
         //assert Model
         assertEquals(2, model.getPlayers().size());
@@ -81,10 +81,10 @@ class ModelTest {
 
     @Test
     void testCreateModel3playerPrincipiante() {
-        Model model = new Model(3, "PRINCIPIANT",false);
-        model.getPlayers().add(new Player("pippo", "192.168.0.1", model,false));
-        model.getPlayers().add(new Player("paperino", "192.168.0.2", model,false));
-        model.getPlayers().add(new Player("pluto", "192.168.0.3", model,false));
+        Model model = new Model(3, "PRINCIPIANT", false);
+        model.getPlayers().add(new Player("pippo", "192.168.0.1", model, false));
+        model.getPlayers().add(new Player("paperino", "192.168.0.2", model, false));
+        model.getPlayers().add(new Player("pluto", "192.168.0.3", model, false));
 
         //assert Model
         assertEquals(3, model.getPlayers().size());
@@ -163,11 +163,11 @@ class ModelTest {
 
     @Test
     void testCreateModel4playerPrincipiante() {
-        Model model = new Model(4, "PRINCIPIANT",false);
-        model.getPlayers().add(new Player("pippo", "192.168.0.1", 1, model,false));
-        model.getPlayers().add(new Player("paperino", "192.168.0.2", 2, model,false));
-        model.getPlayers().add(new Player("pluto", "192.168.0.3", 1, model,false));
-        model.getPlayers().add(new Player("minnie", "192.168.0.4", 2, model,false));
+        Model model = new Model(4, "PRINCIPIANT", false);
+        model.getPlayers().add(new Player("pippo", "192.168.0.1", 1, model, false));
+        model.getPlayers().add(new Player("paperino", "192.168.0.2", 2, model, false));
+        model.getPlayers().add(new Player("pluto", "192.168.0.3", 1, model, false));
+        model.getPlayers().add(new Player("minnie", "192.168.0.4", 2, model, false));
 
         //assert Model
         assertEquals(4, model.getPlayers().size());
@@ -365,9 +365,9 @@ class ModelTest {
 
     @Test
     void SimulateGame2Player() {
-        Model model = new Model(2, "PRINCIPIANT",false);
-        model.getPlayers().add(new Player("paperino", "192.168.0.2", model,false));
-        model.getPlayers().add(new Player("pippo", "192.168.0.1", model,false));
+        Model model = new Model(2, "PRINCIPIANT", false);
+        model.getPlayers().add(new Player("paperino", "192.168.0.2", model, false));
+        model.getPlayers().add(new Player("pippo", "192.168.0.1", model, false));
 
         assertEquals(model.player_winner(), "PAREGGIO");
 
@@ -473,11 +473,11 @@ class ModelTest {
 
     @Test
     void SimulateGame4Player() {
-        Model model = new Model(4, "PRINCIPIANT",false);
-        model.getPlayers().add(new Player("paperino", "192.168.0.2", 1, model,false));
-        model.getPlayers().add(new Player("pippo", "192.168.0.1", 2, model,false));
-        model.getPlayers().add(new Player("paperino2", "192.168.0.2", 1, model,false));
-        model.getPlayers().add(new Player("pippo2", "192.168.0.1", 2, model,false));
+        Model model = new Model(4, "PRINCIPIANT", false);
+        model.getPlayers().add(new Player("paperino", "192.168.0.2", 1, model, false));
+        model.getPlayers().add(new Player("pippo", "192.168.0.1", 2, model, false));
+        model.getPlayers().add(new Player("paperino2", "192.168.0.2", 1, model, false));
+        model.getPlayers().add(new Player("pippo2", "192.168.0.1", 2, model, false));
 
         assertEquals(model.team_winner(), "PAREGGIO");
 
@@ -536,8 +536,8 @@ class ModelTest {
         assertEquals(model.getTable().getIslands().get(model.getTable().getMotherNaturePosition()).getInhabitants().size(), 3);
         assertEquals(model.getTable().getIslands().get(model.getTable().getMotherNaturePosition()).team_influence(model.getTeams(), model.getTable().getProfessors(), model.getTable().isCentaurEffect(), model.getTable().getMushroomColor(), model.getTable().getKnightEffect()).getPlayer1().getNickname(), "paperino");
 
-        assertEquals(model.getTeams().get(1).getPlayer1().getNickname(),"pippo");
-        assertEquals(model.getPlayers().get(1).getNickname(),"paperino");
+        assertEquals(model.getTeams().get(1).getPlayer1().getNickname(), "pippo");
+        assertEquals(model.getPlayers().get(1).getNickname(), "paperino");
         model.getTable().getIslands().get(3).getInhabitants().addstudents(2, PeopleColor.YELLOW);
         model.getTable().getIslands().get(2).controllIsland((model.getTeams().get(0)));
 
@@ -590,22 +590,22 @@ class ModelTest {
     }
 
     @Test
-    void SimulateExpertCreation(){
-        Model model = new Model(2, "EXPERT",false);
-        model.getPlayers().add(new Player("paperino", "192.168.0.2",  model,false));
-        model.getPlayers().add(new Player("pippo", "192.168.0.1",  model,false));
+    void SimulateExpertCreation() {
+        Model model = new Model(2, "EXPERT", false);
+        model.getPlayers().add(new Player("paperino", "192.168.0.2", model, false));
+        model.getPlayers().add(new Player("pippo", "192.168.0.1", model, false));
 
-        assertEquals(model.getTable().getCharacters().size(),3);
-        assertNotEquals(model.getTable().getCharacters().get(0).getName(),model.getTable().getCharacters().get(1).getName());
-        assertNotEquals(model.getTable().getCharacters().get(0).getName(),model.getTable().getCharacters().get(2).getName());
-        assertNotEquals(model.getTable().getCharacters().get(2).getName(),model.getTable().getCharacters().get(1).getName());
+        assertEquals(model.getTable().getCharacters().size(), 3);
+        assertNotEquals(model.getTable().getCharacters().get(0).getName(), model.getTable().getCharacters().get(1).getName());
+        assertNotEquals(model.getTable().getCharacters().get(0).getName(), model.getTable().getCharacters().get(2).getName());
+        assertNotEquals(model.getTable().getCharacters().get(2).getName(), model.getTable().getCharacters().get(1).getName());
     }
 
     @Test
     void SimulateGRANNY() {
-        Model model = new Model(2, "EXPERT",true);
-        model.getPlayers().add(new Player("paperino", "192.168.0.2", model,true));
-        model.getPlayers().add(new Player("pippo", "192.168.0.1", model,true));
+        Model model = new Model(2, "EXPERT", true);
+        model.getPlayers().add(new Player("paperino", "192.168.0.2", model, true));
+        model.getPlayers().add(new Player("pippo", "192.168.0.1", model, true));
 
         Player player = model.getPlayers().get(0);
         int coins = player.getCoins();
@@ -624,9 +624,9 @@ class ModelTest {
 
     @Test
     void SimulateCENTAUR() {
-        Model model = new Model(2, "EXPERT",true);
-        model.getPlayers().add(new Player("paperino", "192.168.0.2", model,true));
-        model.getPlayers().add(new Player("pippo", "192.168.0.1", model,true));
+        Model model = new Model(2, "EXPERT", true);
+        model.getPlayers().add(new Player("paperino", "192.168.0.2", model, true));
+        model.getPlayers().add(new Player("pippo", "192.168.0.1", model, true));
 
         Player player = model.getPlayers().get(0);
         Player otherPlayer = model.getPlayers().get(1);
@@ -637,9 +637,9 @@ class ModelTest {
                 assertEquals(player.getCoins(), coins);
                 ((Centaur) model.getTable().getCharacters().get(i)).useEffect(model.getPlayers().get(0), model.getTable());
                 assertEquals(player.getCoins(), coins - 3);
-                player.getSchoolBoard().getDinnerTable().addstudents(1,PeopleColor.RED);
-                model.getTable().checkProfessor(PeopleColor.RED,model.getPlayers());
-                model.getTable().getIslands().get(0).getInhabitants().addstudents(1,PeopleColor.RED);
+                player.getSchoolBoard().getDinnerTable().addstudents(1, PeopleColor.RED);
+                model.getTable().checkProfessor(PeopleColor.RED, model.getPlayers());
+                model.getTable().getIslands().get(0).getInhabitants().addstudents(1, PeopleColor.RED);
                 model.getTable().getIslands().get(0).placeTower();
                 model.getTable().getIslands().get(0).placeTower();
                 model.getTable().getIslands().get(0).setTowerColor(otherPlayer.getSchoolBoard().getTowerColor());
@@ -650,9 +650,9 @@ class ModelTest {
 
     @Test
     void SimulateFARMER() {
-        Model model = new Model(2, "EXPERT",true);
-        model.getPlayers().add(new Player("paperino", "192.168.0.2", model,true));
-        model.getPlayers().add(new Player("pippo", "192.168.0.1", model,true));
+        Model model = new Model(2, "EXPERT", true);
+        model.getPlayers().add(new Player("paperino", "192.168.0.2", model, true));
+        model.getPlayers().add(new Player("pippo", "192.168.0.1", model, true));
 
         Player player = model.getPlayers().get(0);
         Player otherPlayer = model.getPlayers().get(1);
@@ -686,9 +686,9 @@ class ModelTest {
 
     @Test
     void SimulateHERALD() {
-        Model model = new Model(2, "EXPERT",true);
-        model.getPlayers().add(new Player("paperino", "192.168.0.2", model,true));
-        model.getPlayers().add(new Player("pippo", "192.168.0.1", model,true));
+        Model model = new Model(2, "EXPERT", true);
+        model.getPlayers().add(new Player("paperino", "192.168.0.2", model, true));
+        model.getPlayers().add(new Player("pippo", "192.168.0.1", model, true));
 
         Player player = model.getPlayers().get(0);
         Player otherPlayer = model.getPlayers().get(1);
@@ -708,7 +708,7 @@ class ModelTest {
                 player.getSchoolBoard().load_dinner(PeopleColor.BLUE);
                 player.getSchoolBoard().load_dinner(PeopleColor.BLUE);
                 player.getSchoolBoard().load_dinner(PeopleColor.BLUE);
-                model.getTable().checkProfessor(PeopleColor.BLUE,model.getPlayers());
+                model.getTable().checkProfessor(PeopleColor.BLUE, model.getPlayers());
                 ((Herald) model.getTable().getCharacters().get(i)).useEffect(model.getPlayers().get(0), 0, model);
                 assertEquals(player.getSchoolBoard().getTowerColor(), model.getTable().getIslands().get(0).getTowerColor());
                 assertEquals(player.getCoins(), coins - 3);
@@ -725,7 +725,7 @@ class ModelTest {
                 otherPlayer.getSchoolBoard().load_dinner(PeopleColor.BLUE);
                 otherPlayer.getSchoolBoard().load_dinner(PeopleColor.BLUE);
                 otherPlayer.getSchoolBoard().load_dinner(PeopleColor.BLUE);
-                model.getTable().checkProfessor(PeopleColor.BLUE,model.getPlayers());
+                model.getTable().checkProfessor(PeopleColor.BLUE, model.getPlayers());
                 ((Herald) model.getTable().getCharacters().get(i)).useEffect(model.getPlayers().get(0), 0, model);
                 assertNotEquals(otherPlayer.getSchoolBoard().getTowerColor(), model.getTable().getIslands().get(0).getTowerColor());
                 model.getTable().getIslands().get(0).getInhabitants().addstudents(2, PeopleColor.BLUE);
@@ -738,9 +738,9 @@ class ModelTest {
 
     @Test
     void SimulateKNIGHT() {
-        Model model = new Model(2, "EXPERT",true);
-        model.getPlayers().add(new Player("paperino", "192.168.0.2", model,true));
-        model.getPlayers().add(new Player("pippo", "192.168.0.1", model,true));
+        Model model = new Model(2, "EXPERT", true);
+        model.getPlayers().add(new Player("paperino", "192.168.0.2", model, true));
+        model.getPlayers().add(new Player("pippo", "192.168.0.1", model, true));
 
         Player player = model.getPlayers().get(0);
         int coins = player.getCoins();
@@ -758,9 +758,9 @@ class ModelTest {
 
     @Test
     void SimulateMONK() {
-        Model model = new Model(2, "EXPERT",true);
-        model.getPlayers().add(new Player("paperino", "192.168.0.2", model,true));
-        model.getPlayers().add(new Player("pippo", "192.168.0.1", model,true));
+        Model model = new Model(2, "EXPERT", true);
+        model.getPlayers().add(new Player("paperino", "192.168.0.2", model, true));
+        model.getPlayers().add(new Player("pippo", "192.168.0.1", model, true));
 
         Player player = model.getPlayers().get(0);
         int coins = player.getCoins();
@@ -780,9 +780,9 @@ class ModelTest {
 
     @Test
     void SimulateMUSHHUNTER() {
-        Model model = new Model(2, "EXPERT",true);
-        model.getPlayers().add(new Player("paperino", "192.168.0.2", model,true));
-        model.getPlayers().add(new Player("pippo", "192.168.0.1", model,true));
+        Model model = new Model(2, "EXPERT", true);
+        model.getPlayers().add(new Player("paperino", "192.168.0.2", model, true));
+        model.getPlayers().add(new Player("pippo", "192.168.0.1", model, true));
 
         Player player = model.getPlayers().get(0);
         Player otherPlayer = model.getPlayers().get(1);
@@ -828,9 +828,9 @@ class ModelTest {
 
     @Test
     void SimulatePOSTMAN() {
-        Model model = new Model(2, "EXPERT",true);
-        model.getPlayers().add(new Player("paperino", "192.168.0.2", model,true));
-        model.getPlayers().add(new Player("pippo", "192.168.0.1", model,true));
+        Model model = new Model(2, "EXPERT", true);
+        model.getPlayers().add(new Player("paperino", "192.168.0.2", model, true));
+        model.getPlayers().add(new Player("pippo", "192.168.0.1", model, true));
 
         Player player = model.getPlayers().get(0);
         player.setChoosedCard(player.getAvailableCards().getCardsList().get(0));
@@ -850,9 +850,9 @@ class ModelTest {
 
     @Test
     void SimulatePrincess() {
-        Model model = new Model(2, "EXPERT",true);
-        model.getPlayers().add(new Player("paperino", "192.168.0.2", model,true));
-        model.getPlayers().add(new Player("pippo", "192.168.0.1", model,true));
+        Model model = new Model(2, "EXPERT", true);
+        model.getPlayers().add(new Player("paperino", "192.168.0.2", model, true));
+        model.getPlayers().add(new Player("pippo", "192.168.0.1", model, true));
 
         Player player = model.getPlayers().get(0);
         player.setChoosedCard(player.getAvailableCards().getCardsList().get(0));
@@ -861,14 +861,14 @@ class ModelTest {
         for (int i = 0; i < model.getTable().getCharacters().size(); i++) {
             if (model.getTable().getCharacters().get(i) instanceof Princess) {
                 assertEquals(player.getCoins(), coins);
-                int numColor=player.getSchoolBoard().getDinnerTable().numStudentsbycolor(PeopleColor.RED);
-                ((Princess) model.getTable().getCharacters().get(i)).useEffect(model.getPlayers().get(0),PeopleColor.RED,model.getTable(),model.getPlayers());
+                int numColor = player.getSchoolBoard().getDinnerTable().numStudentsbycolor(PeopleColor.RED);
+                ((Princess) model.getTable().getCharacters().get(i)).useEffect(model.getPlayers().get(0), PeopleColor.RED, model.getTable(), model.getPlayers());
                 for (int j = 0; j < model.getTable().getProfessors().size(); j++) {
                     if (model.getTable().getProfessors().get(j).getColor().equals(PeopleColor.RED)) {
                         assertEquals(model.getTable().getProfessors().get(j).getHeldBy().getNickname(), "paperino");
                     }
                 }
-                assertEquals(numColor+1, player.getSchoolBoard().getDinnerTable().numStudentsbycolor(PeopleColor.RED));
+                assertEquals(numColor + 1, player.getSchoolBoard().getDinnerTable().numStudentsbycolor(PeopleColor.RED));
                 assertEquals(player.getCoins(), coins - 2);
                 coins = player.getCoins();
             }
@@ -877,9 +877,9 @@ class ModelTest {
 
     @Test
     void SimulateTHIEF() {
-        Model model = new Model(2, "EXPERT",true);
-        model.getPlayers().add(new Player("paperino", "192.168.0.2", model,true));
-        model.getPlayers().add(new Player("pippo", "192.168.0.1", model,true));
+        Model model = new Model(2, "EXPERT", true);
+        model.getPlayers().add(new Player("paperino", "192.168.0.2", model, true));
+        model.getPlayers().add(new Player("pippo", "192.168.0.1", model, true));
 
         Player player = model.getPlayers().get(0);
         Player otherPlayer = model.getPlayers().get(1);
@@ -888,12 +888,12 @@ class ModelTest {
         for (int i = 0; i < model.getTable().getCharacters().size(); i++) {
             if (model.getTable().getCharacters().get(i) instanceof Thief) {
                 assertEquals(player.getCoins(), coins);
-                player.getSchoolBoard().getDinnerTable().addstudents(4,PeopleColor.YELLOW);
-                otherPlayer.getSchoolBoard().getDinnerTable().addstudents(1,PeopleColor.YELLOW);
-                ((Thief) model.getTable().getCharacters().get(i)).useEffect(player,model.getPlayers(),PeopleColor.YELLOW,model.getTable());
+                player.getSchoolBoard().getDinnerTable().addstudents(4, PeopleColor.YELLOW);
+                otherPlayer.getSchoolBoard().getDinnerTable().addstudents(1, PeopleColor.YELLOW);
+                ((Thief) model.getTable().getCharacters().get(i)).useEffect(player, model.getPlayers(), PeopleColor.YELLOW, model.getTable());
 
-                assertEquals(1,player.getSchoolBoard().getDinnerTable().numStudentsbycolor(PeopleColor.YELLOW));
-                assertEquals(0,otherPlayer.getSchoolBoard().getDinnerTable().numStudentsbycolor(PeopleColor.YELLOW));
+                assertEquals(1, player.getSchoolBoard().getDinnerTable().numStudentsbycolor(PeopleColor.YELLOW));
+                assertEquals(0, otherPlayer.getSchoolBoard().getDinnerTable().numStudentsbycolor(PeopleColor.YELLOW));
 
                 assertEquals(player.getCoins(), coins - 3);
                 coins = player.getCoins();
@@ -903,9 +903,9 @@ class ModelTest {
 
     @Test
     void SimulateJESTER() {
-        Model model = new Model(2, "EXPERT",true);
-        model.getPlayers().add(new Player("paperino", "192.168.0.2", model,true));
-        model.getPlayers().add(new Player("pippo", "192.168.0.1", model,true));
+        Model model = new Model(2, "EXPERT", true);
+        model.getPlayers().add(new Player("paperino", "192.168.0.2", model, true));
+        model.getPlayers().add(new Player("pippo", "192.168.0.1", model, true));
 
         Player player = model.getPlayers().get(0);
         int coins = player.getCoins();
@@ -914,22 +914,22 @@ class ModelTest {
             if (model.getTable().getCharacters().get(i) instanceof Jester) {
                 assertEquals(player.getCoins(), coins);
                 ((Jester) model.getTable().getCharacters().get(i)).getSet().addstudents(1, PeopleColor.PINK);
-                int numColor1A=((Jester) model.getTable().getCharacters().get(i)).getSet().numStudentsbycolor(PeopleColor.PINK);
-                int numColor1B=((Jester) model.getTable().getCharacters().get(i)).getSet().numStudentsbycolor(PeopleColor.RED);
-                ArrayList<PeopleColor> colors1= new ArrayList<>();
+                int numColor1A = ((Jester) model.getTable().getCharacters().get(i)).getSet().numStudentsbycolor(PeopleColor.PINK);
+                int numColor1B = ((Jester) model.getTable().getCharacters().get(i)).getSet().numStudentsbycolor(PeopleColor.RED);
+                ArrayList<PeopleColor> colors1 = new ArrayList<>();
                 colors1.add(PeopleColor.PINK);
-                player.getSchoolBoard().getEntranceSpace().addstudents(1,PeopleColor.RED);
-                int numColor2A=player.getSchoolBoard().getEntranceSpace().numStudentsbycolor(PeopleColor.RED);
-                int numColor2B=player.getSchoolBoard().getEntranceSpace().numStudentsbycolor(PeopleColor.PINK);
-                ArrayList<PeopleColor> colors2= new ArrayList<>();
+                player.getSchoolBoard().getEntranceSpace().addstudents(1, PeopleColor.RED);
+                int numColor2A = player.getSchoolBoard().getEntranceSpace().numStudentsbycolor(PeopleColor.RED);
+                int numColor2B = player.getSchoolBoard().getEntranceSpace().numStudentsbycolor(PeopleColor.PINK);
+                ArrayList<PeopleColor> colors2 = new ArrayList<>();
                 colors2.add(PeopleColor.RED);
-                ((Jester) model.getTable().getCharacters().get(i)).useEffect(player,colors1,colors2);
+                ((Jester) model.getTable().getCharacters().get(i)).useEffect(player, colors1, colors2);
 
-                assertEquals(numColor1A,((Jester) model.getTable().getCharacters().get(i)).getSet().numStudentsbycolor(PeopleColor.PINK)+1);
-                assertEquals(numColor1B,((Jester) model.getTable().getCharacters().get(i)).getSet().numStudentsbycolor(PeopleColor.RED)-1);
+                assertEquals(numColor1A, ((Jester) model.getTable().getCharacters().get(i)).getSet().numStudentsbycolor(PeopleColor.PINK) + 1);
+                assertEquals(numColor1B, ((Jester) model.getTable().getCharacters().get(i)).getSet().numStudentsbycolor(PeopleColor.RED) - 1);
 
-                assertEquals(numColor2A,player.getSchoolBoard().getEntranceSpace().numStudentsbycolor(PeopleColor.RED)+1);
-                assertEquals(numColor2B,player.getSchoolBoard().getEntranceSpace().numStudentsbycolor(PeopleColor.PINK)-1);
+                assertEquals(numColor2A, player.getSchoolBoard().getEntranceSpace().numStudentsbycolor(PeopleColor.RED) + 1);
+                assertEquals(numColor2B, player.getSchoolBoard().getEntranceSpace().numStudentsbycolor(PeopleColor.PINK) - 1);
 
                 assertEquals(player.getCoins(), coins - 1);
                 coins = player.getCoins();
@@ -939,9 +939,9 @@ class ModelTest {
 
     @Test
     void SimulateMINSTREL() {
-        Model model = new Model(2, "EXPERT",true);
-        model.getPlayers().add(new Player("paperino", "192.168.0.2", model,true));
-        model.getPlayers().add(new Player("pippo", "192.168.0.1", model,true));
+        Model model = new Model(2, "EXPERT", true);
+        model.getPlayers().add(new Player("paperino", "192.168.0.2", model, true));
+        model.getPlayers().add(new Player("pippo", "192.168.0.1", model, true));
 
         Player player = model.getPlayers().get(0);
         int coins = player.getCoins();
@@ -950,7 +950,7 @@ class ModelTest {
             if (model.getTable().getCharacters().get(i) instanceof Minstrel) {
                 assertEquals(player.getCoins(), coins);
                 player.getSchoolBoard().getDinnerTable().addstudents(1, PeopleColor.PINK);
-                model.getTable().checkProfessor(PeopleColor.PINK,model.getPlayers());
+                model.getTable().checkProfessor(PeopleColor.PINK, model.getPlayers());
                 for (int j = 0; j < model.getTable().getProfessors().size(); j++) {
                     if (model.getTable().getProfessors().get(j).getColor().equals(PeopleColor.PINK)) {
                         assertEquals(model.getTable().getProfessors().get(j).getHeldBy().getNickname(), "paperino");
@@ -962,16 +962,16 @@ class ModelTest {
                     }
                 }
 
-                int numColor1A=player.getSchoolBoard().getDinnerTable().numStudentsbycolor(PeopleColor.PINK);
-                int numColor1B=player.getSchoolBoard().getDinnerTable().numStudentsbycolor(PeopleColor.RED);
-                ArrayList<PeopleColor> colors1= new ArrayList<>();
+                int numColor1A = player.getSchoolBoard().getDinnerTable().numStudentsbycolor(PeopleColor.PINK);
+                int numColor1B = player.getSchoolBoard().getDinnerTable().numStudentsbycolor(PeopleColor.RED);
+                ArrayList<PeopleColor> colors1 = new ArrayList<>();
                 colors1.add(PeopleColor.PINK);
-                player.getSchoolBoard().getEntranceSpace().addstudents(1,PeopleColor.RED);
-                int numColor2A=player.getSchoolBoard().getEntranceSpace().numStudentsbycolor(PeopleColor.RED);
-                int numColor2B=player.getSchoolBoard().getEntranceSpace().numStudentsbycolor(PeopleColor.PINK);
-                ArrayList<PeopleColor> colors2= new ArrayList<>();
+                player.getSchoolBoard().getEntranceSpace().addstudents(1, PeopleColor.RED);
+                int numColor2A = player.getSchoolBoard().getEntranceSpace().numStudentsbycolor(PeopleColor.RED);
+                int numColor2B = player.getSchoolBoard().getEntranceSpace().numStudentsbycolor(PeopleColor.PINK);
+                ArrayList<PeopleColor> colors2 = new ArrayList<>();
                 colors2.add(PeopleColor.RED);
-                ((Minstrel) model.getTable().getCharacters().get(i)).useEffect(player,colors1,colors2,model.getTable(),model.getPlayers());
+                ((Minstrel) model.getTable().getCharacters().get(i)).useEffect(player, colors1, colors2, model.getTable(), model.getPlayers());
 
                 for (int j = 0; j < model.getTable().getProfessors().size(); j++) {
                     if (model.getTable().getProfessors().get(j).getColor().equals(PeopleColor.PINK)) {
@@ -984,11 +984,11 @@ class ModelTest {
                     }
                 }
 
-                assertEquals(numColor1A,player.getSchoolBoard().getDinnerTable().numStudentsbycolor(PeopleColor.PINK)+1);
-                assertEquals(numColor1B,player.getSchoolBoard().getDinnerTable().numStudentsbycolor(PeopleColor.RED)-1);
+                assertEquals(numColor1A, player.getSchoolBoard().getDinnerTable().numStudentsbycolor(PeopleColor.PINK) + 1);
+                assertEquals(numColor1B, player.getSchoolBoard().getDinnerTable().numStudentsbycolor(PeopleColor.RED) - 1);
 
-                assertEquals(numColor2A,player.getSchoolBoard().getEntranceSpace().numStudentsbycolor(PeopleColor.RED)+1);
-                assertEquals(numColor2B,player.getSchoolBoard().getEntranceSpace().numStudentsbycolor(PeopleColor.PINK)-1);
+                assertEquals(numColor2A, player.getSchoolBoard().getEntranceSpace().numStudentsbycolor(PeopleColor.RED) + 1);
+                assertEquals(numColor2B, player.getSchoolBoard().getEntranceSpace().numStudentsbycolor(PeopleColor.PINK) - 1);
 
                 assertEquals(player.getCoins(), coins - 1);
                 coins = player.getCoins();

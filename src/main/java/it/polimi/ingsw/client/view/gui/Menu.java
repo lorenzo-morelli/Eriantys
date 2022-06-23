@@ -1,14 +1,10 @@
 package it.polimi.ingsw.client.view.gui;
 
-import com.google.gson.Gson;
 import it.polimi.ingsw.client.GUI;
 import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.client.view.gui.common.SendModelAndGetResponse;
 import it.polimi.ingsw.client.view.gui.common.SetConnection;
 import it.polimi.ingsw.utils.network.Network;
-import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
-import it.polimi.ingsw.utils.other.DoubleObject;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -84,7 +80,7 @@ public class Menu implements Initializable {
             this.notice.setText("FAILURE: nickname must be less than 13 characters!");
         } else if (ip.contains(" ") || port.contains(" ")) {
             this.notice.setText("FAILURE: ip and port can't contain any spaces!");
-        } else if (!isValidIp(ip) || !isValidPort(port)) {
+        } else if (isValidIp(ip) || isValidPort(port)) {
             this.notice.setText("FAILURE: ip or port format not valid!");
         } else {
             SetConnection.setConnection(nickname, ip, port, this.gui.getClientModel());

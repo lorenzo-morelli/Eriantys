@@ -1,5 +1,7 @@
 package it.polimi.ingsw.server.model;
 
+import it.polimi.ingsw.server.model.enums.GameMode;
+
 import java.util.Objects;
 
 public class Player implements Comparable<Player> {
@@ -15,18 +17,28 @@ public class Player implements Comparable<Player> {
     public static final String ANSI_GRAY = "\033[1;90m";
     private boolean isDisconnected;
 
-    public Player(String nickname, String Ip, Model model) {
-        // crea e assegna valori di default
+    public Player(String nickname, String Ip, Model model, boolean debug) {
         this.nickname = nickname;
         this.Ip = Ip;
         this.availableCards = new Deck();
         this.choosedCard = null;
         this.schoolBoard = new SchoolBoard(model.getNumberOfPlayers(), model.getTable().getBag(), model.getTable().getAvailableTowerColor());
+        if (debug) {
+            if (model.getGameMode().equals(GameMode.EXPERT)) this.coins = 100;
+            else {
+                coins = -1;
+            }
+        } else {
+            if (model.getGameMode().equals(GameMode.EXPERT)) this.coins = 1;
+            else {
+                coins = -1;
+            }
+        }
         isDisconnected = false;
     }
 
-    //requies teamnumber== "1 or 2" e un controllo che fa riscegliere il team se team è gia pieno :team.isFull())
-    public Player(String nickname, String Ip, int teamnumber, Model model) {
+    //requies teamnumber== "1 or 2" e un controllo che fa riscegliere il team se team Ã¨ gia pieno :team.isFull())
+    public Player(String nickname, String Ip, int teamnumber, Model model, boolean debug) {
         if (teamnumber < 3 && teamnumber > 0) {
             this.nickname = nickname;
             this.Ip = Ip;
@@ -48,6 +60,17 @@ public class Player implements Comparable<Player> {
             }
             team.setPlayer(this);
             this.schoolBoard = new SchoolBoard(team, model.getTable().getBag(), model.getTable().getAvailableTowerColor());
+            if (debug) {
+                if (model.getGameMode().equals(GameMode.EXPERT)) this.coins = 100;
+                else {
+                    coins = -1;
+                }
+            } else {
+                if (model.getGameMode().equals(GameMode.EXPERT)) this.coins = 1;
+                else {
+                    coins = -1;
+                }
+            }
 
 
         } else {
