@@ -109,7 +109,6 @@ public class CliView implements View {
                         System.out.print("ALERT: dati inseriti non validi, riprovare\n");
                         askParameters();
                     }
-
                     setNickname(parsedStrings.get(0));
                 } else {
                     setNickname("Default");
