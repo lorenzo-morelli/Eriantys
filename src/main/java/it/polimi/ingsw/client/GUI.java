@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
@@ -45,6 +46,7 @@ public class GUI extends Application {
         this.scene = new Scene(loader.load());
         this.stage.setScene(scene);
         this.stage.setResizable(false);
+        this.stage.getIcons().add(new Image("/graphics/pieces/mother_nature.png"));
         this.stage.show();
     }
 
@@ -77,6 +79,7 @@ public class GUI extends Application {
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
         stage.setResizable(false);
+        stage.getIcons().add(new Image("/graphics/pieces/islands/island1.png"));
         stage.setOnCloseRequest(event -> canOpenWindow = true);
         stage.show();
     }
