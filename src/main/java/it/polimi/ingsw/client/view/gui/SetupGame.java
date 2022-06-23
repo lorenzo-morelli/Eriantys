@@ -30,6 +30,8 @@ public class SetupGame implements Initializable {
         currNode = otherPlayersLabel;
         this.connectedOnIp.setText("Connected on IP: " + this.gui.getClientModel().getIp());
         this.connectedOnPort.setText("Connected on Port: " + this.gui.getClientModel().getPort());
+        this.gameModeLabel.setText("");
+        this.numberOfPlayersLabel.setText("");
         otherPlayersLabel.setText("");
     }
 

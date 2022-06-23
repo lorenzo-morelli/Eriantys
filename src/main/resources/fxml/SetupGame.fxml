@@ -5,7 +5,7 @@
 <?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.gui.SetupGame">
-   <Label fx:id="connectedOnIp" alignment="CENTER" layoutX="-1.0" layoutY="39.0" prefHeight="17.0" prefWidth="603.0" text="Connected on ip: ..." />
+   <Label fx:id="connectedOnIp" alignment="CENTER" layoutX="-1.0" layoutY="39.0" prefHeight="17.0" prefWidth="606.0" text="Connected on ip: ..." />
    <Label fx:id="connectedOnPort" alignment="CENTER" layoutY="56.0" prefHeight="17.0" prefWidth="604.0" text="Connected on port: ..." />
    <Label alignment="CENTER" layoutY="96.0" prefHeight="17.0" prefWidth="603.0" text="SELECT NUMBER OF PLAYERS:">
       <font>
@@ -21,7 +21,7 @@
    <Button layoutX="171.0" layoutY="226.0" mnemonicParsing="false" onMouseClicked="#setPrincipiant" text="Principiant" />
    <Button layoutX="350.0" layoutY="226.0" mnemonicParsing="false" onMouseClicked="#setExpert" prefHeight="25.0" prefWidth="72.0" text="Expert" />
    <Button layoutX="209.0" layoutY="317.0" mnemonicParsing="false" onMouseClicked="#start" prefHeight="44.0" prefWidth="189.0" styleClass="actionButton" stylesheets="@../css/graphics.css" text="Create game!" />
-   <Label fx:id="otherPlayersLabel" alignment="CENTER" layoutX="1.0" layoutY="361.0" prefHeight="25.0" prefWidth="604.0" text="prova" />
-   <Label fx:id="numberOfPlayersLabel" layoutX="237.0" layoutY="268.0" />
-   <Label fx:id="gameModeLabel" layoutX="237.0" layoutY="285.0" />
+   <Label fx:id="otherPlayersLabel" alignment="CENTER" layoutY="369.0" prefHeight="25.0" prefWidth="606.0" text="prova" />
+   <Label fx:id="numberOfPlayersLabel" alignment="CENTER" layoutY="273.0" prefHeight="17.0" prefWidth="606.0" text="prov" AnchorPane.bottomAnchor="110.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="273.0" />
+   <Label fx:id="gameModeLabel" alignment="CENTER" layoutY="290.0" prefHeight="17.0" prefWidth="606.0" text="prov" AnchorPane.bottomAnchor="93.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="290.0" />
 </AnchorPane>
