@@ -30,9 +30,8 @@ public class ClientController {
 
         // La welcomeScreen richiede all'utente una interazione scrivendo (o cliccando il bottone) start
         WelcomeScreen waitStart = new WelcomeScreen(view);
-        // Stato di connessione al server
+        // State of connection to the server
         ConnectToServer connectionToServer = new ConnectToServer(view, clientModel);
-        // Chiede al server se è il primo client ad essersi collegato
         AmIFirst amIFirst = new AmIFirst(clientModel, fsm);
         // Reading stuffs from terminal
         ReadUserInfo askUserinfo = new ReadUserInfo(view, clientModel, fsm);
