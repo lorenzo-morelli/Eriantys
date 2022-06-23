@@ -105,7 +105,7 @@ public class CliView implements View {
                 parsedStrings =
                         new ArrayList<>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
                 if (!CommandPrompt.gotFromTerminal().equals("")) {
-                    if (parsedStrings.size() != 3 || isValidIp(parsedStrings.get(1)) || isValidPort(parsedStrings.get(2))) {
+                    if (parsedStrings.size() != 3 || !isValidIp(parsedStrings.get(1)) || !isValidPort(parsedStrings.get(2))) {
                         System.out.print("ALERT: dati inseriti non validi, riprovare\n");
                         askParameters();
                     }

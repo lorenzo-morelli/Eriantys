@@ -80,7 +80,7 @@ public class Menu implements Initializable {
             this.notice.setText("FAILURE: nickname must be less than 13 characters!");
         } else if (ip.contains(" ") || port.contains(" ")) {
             this.notice.setText("FAILURE: ip and port can't contain any spaces!");
-        } else if (isValidIp(ip) || isValidPort(port)) {
+        } else if (!isValidIp(ip) || !isValidPort(port)) {
             this.notice.setText("FAILURE: ip or port format not valid!");
         } else {
             SetConnection.setConnection(nickname, ip, port, this.gui.getClientModel());

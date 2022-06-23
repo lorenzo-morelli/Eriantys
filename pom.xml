@@ -46,19 +46,15 @@
 
     <build>
         <plugins>
-            <!-- Compiler plugin, sets the Java version -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.10.1</version>
                 <configuration>
-                    <!-- Version of the Java language to use -->
                     <source>11</source>
-                    <!-- Minimum JRE version the JAR will be compatible with -->
                     <target>11</target>
                 </configuration>
             </plugin>
-            <!-- Surefire plugin, responsible for running tests -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -81,7 +77,7 @@
                             <transformers>
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>it.polimi.ingsw.PSP28.client.GUI</mainClass>
+                                    <mainClass>it.polimi.ingsw.client.GUI</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
