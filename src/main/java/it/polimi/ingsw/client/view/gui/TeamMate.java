@@ -39,11 +39,7 @@ public class TeamMate implements Initializable {
                 this.gui.getClientModel().setResponse(true);
                 this.gui.getClientModel().setPingMessage(false);
                 Gson gson = new Gson();
-                try {
-                    Network.send(gson.toJson(this.gui.getClientModel()));
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                Network.send(gson.toJson(this.gui.getClientModel()));
             });
         });
     }

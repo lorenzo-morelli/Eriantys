@@ -1,55 +1,46 @@
-package it.polimi.ingsw.server.controller.PingThread;
+package it.polimi.ingsw.server.controller.pingThread;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.client.model.ClientModel;
-import it.polimi.ingsw.server.controller.states.CloudPhase;
+import it.polimi.ingsw.server.controller.states.AssistantCardPhase;
 import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
 
 import java.util.ConcurrentModificationException;
 
 /**
- * Thread for Cloud Phase pings
+ * Thread for Assistant Card Phase pings
  */
-public class CloudThread extends Thread {
-    private final CloudPhase phase;
+public class AssistantCardThread extends Thread {
+    private final AssistantCardPhase phase;
     private final ClientModel CurrentPlayerData;
     private final Gson json;
 
-    public CloudThread(CloudPhase phase, ClientModel CurrentPlayerData) {
+    public AssistantCardThread(AssistantCardPhase phase, ClientModel CurrentPlayerData) {
         this.phase = phase;
         this.CurrentPlayerData = CurrentPlayerData;
         json = new Gson();
     }
 
     /**
-     * This method is used to send and receive ping during the Cloud Phase in order to
+     * This method is used to send and receive ping during the Assistant Card Phase in order to
      * manage the clients disconnection
      */
     public synchronized void run() {
-        while (!phase.getMessage().parametersReceived() || json.fromJson(phase.getMessage().getParameter(0), ClientModel.class).isPingMessage()) {
+        while (phase.getMessage() == null || !phase.getMessage().parametersReceived() || json.fromJson(phase.getMessage().getParameter(0), ClientModel.class).isPingMessage()) {
             try {
-                sleep(10000);
+                sleeping();
             } catch (InterruptedException e) {
                 return;
             }
             System.out.println("ping sent");
-            CurrentPlayerData.setResponse(false); // è una richiesta non una risposta// lato client avrà una nella CliView un metodo per gestire questa richiesta
+            CurrentPlayerData.setResponse(false);
             CurrentPlayerData.setPingMessage(true);
             try {
-                try {
-                    Network.send(json.toJson(CurrentPlayerData));
-                } catch (InterruptedException e) {
-                    return;
-                }
+                Network.send(json.toJson(CurrentPlayerData));
             } catch (ConcurrentModificationException e) {
-                try {
-                    Network.send(json.toJson(CurrentPlayerData));
-                } catch (InterruptedException ex) {
-                    throw new RuntimeException(ex);
-                }
+                Network.send(json.toJson(CurrentPlayerData));
             }
-
 
             ParametersFromNetwork ping_message = new ParametersFromNetwork(1);
             ping_message.enable();
@@ -59,7 +50,6 @@ public class CloudThread extends Thread {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-
             synchronized (phase) {
                 if (!ping_message.parametersReceived()) {
                     phase.setDisconnected(true);
@@ -72,5 +62,8 @@ public class CloudThread extends Thread {
                 }
             }
         }
+    }
+    private void sleeping() throws InterruptedException {
+        sleep(10000);
     }
 }

@@ -208,7 +208,7 @@ public class JesterAndMinstrell implements Initializable {
      * @param mouseEvent the event to close the window.
      */
     @FXML
-    private void okay(MouseEvent mouseEvent) throws InterruptedException {
+    private void okay(MouseEvent mouseEvent) {
         entranceMinstrell.removeAll(Collections.singletonList(null));
         diningMinstrell.removeAll(Collections.singletonList(null));
         jester.removeAll(Collections.singletonList(null));

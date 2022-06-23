@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
 public class MoveStudents implements Initializable {
     private final GUI gui = new GUI();
     public GridPane islandGrid;
-    public Label notice = new Label();
+    public final Label notice = new Label();
     private PeopleColor studentColor;
     private Player currentPlayer;
 
@@ -69,11 +69,7 @@ public class MoveStudents implements Initializable {
                         this.gui.getClientModel().setPingMessage(false);
                         this.gui.getClientModel().setChoosedColor(studentColor);
                         Gson gson = new Gson();
-                        try {
-                            Network.send(gson.toJson(this.gui.getClientModel()));
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                        Network.send(gson.toJson(this.gui.getClientModel()));
                         this.gui.closeWindow(event);
                     }
                 });
@@ -81,27 +77,27 @@ public class MoveStudents implements Initializable {
         }
     }
     @FXML
-    private void setBlue(MouseEvent mouseEvent) throws InterruptedException {
+    private void setBlue(MouseEvent mouseEvent) {
         setColor("blue", mouseEvent);
     }
 
     @FXML
-    private void setGreen(MouseEvent mouseEvent) throws InterruptedException {
+    private void setGreen(MouseEvent mouseEvent) {
         setColor("green", mouseEvent);
     }
 
     @FXML
-    private void setPink(MouseEvent mouseEvent) throws InterruptedException {
+    private void setPink(MouseEvent mouseEvent) {
         setColor("pink", mouseEvent);
     }
 
     @FXML
-    private void setRed(MouseEvent mouseEvent) throws InterruptedException {
+    private void setRed(MouseEvent mouseEvent) {
         setColor("red", mouseEvent);
     }
 
     @FXML
-    private void setYellow(MouseEvent mouseEvent) throws InterruptedException {
+    private void setYellow(MouseEvent mouseEvent) {
         setColor("yellow", mouseEvent);
     }
 
@@ -110,7 +106,7 @@ public class MoveStudents implements Initializable {
      * @param color the chosen color.
      * @param mouseEvent the event necessary to close the window.
      */
-    private void setColor(String color, MouseEvent mouseEvent) throws InterruptedException {
+    private void setColor(String color, MouseEvent mouseEvent) {
         int red = currentPlayer.getSchoolBoard().getEntranceSpace().getNumOfRedStudents();
         int blue = currentPlayer.getSchoolBoard().getEntranceSpace().getNumOfBlueStudents();
         int green = currentPlayer.getSchoolBoard().getEntranceSpace().getNumOfGreenStudents();

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client.view.cli.CLIcontroller.events;
+package it.polimi.ingsw.client.view.cli.cliController.events;
 
 import it.polimi.ingsw.client.view.cli.CommandPrompt;
 import it.polimi.ingsw.utils.observerPattern.Observer;
@@ -14,7 +14,7 @@ import java.io.IOException;
  * @author Fernando
  */
 public class NotRecognizedString extends Event implements Observer {
-    public String toListen;
+    public final String toListen;
     private final CommandPrompt commandPrompt;
     private boolean enabled = false;
 

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client.view.cli.CLIcontroller.events;
+package it.polimi.ingsw.client.view.cli.cliController.events;
 
 import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.client.view.cli.CommandPrompt;
@@ -31,7 +31,7 @@ public class ParametersFromTerminal extends Event implements Observer {
     }
 
     @Override
-    public void update(Object message) throws IOException, InterruptedException {
+    public void update(Object message) {
         ArrayList<String> parsedStrings = new ArrayList<>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
             if (parsedStrings.size() == numberOfStrings){
                 clientModel.setFromTerminal(parsedStrings);

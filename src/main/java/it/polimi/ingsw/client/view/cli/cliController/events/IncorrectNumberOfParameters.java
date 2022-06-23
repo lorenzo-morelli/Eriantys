@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client.view.cli.CLIcontroller.events;
+package it.polimi.ingsw.client.view.cli.cliController.events;
 
 import it.polimi.ingsw.client.view.cli.CommandPrompt;
 import it.polimi.ingsw.utils.observerPattern.Observer;
@@ -23,7 +23,7 @@ public class IncorrectNumberOfParameters extends Event implements Observer {
     }
 
     @Override
-    public void update(Object message) throws Exception {
+    public void update(Object message) {
     }
 
     @Override

@@ -1,8 +1,8 @@
-package it.polimi.ingsw.client.view.cli.CLIcontroller;
+package it.polimi.ingsw.client.view.cli.cliController;
 
 import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.client.view.*;
-import it.polimi.ingsw.client.view.cli.CLIcontroller.states.*;
+import it.polimi.ingsw.client.view.cli.cliController.states.*;
 import it.polimi.ingsw.server.controller.states.Idle;
 import it.polimi.ingsw.utils.stateMachine.*;
 /**

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client.view.cli.CLIcontroller.states;
+package it.polimi.ingsw.client.view.cli.cliController.states;
 
 import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.client.view.View;
@@ -19,7 +19,7 @@ public class ReadUserInfo extends ReadFromTerminal {
     }
 
     @Override
-    public void exitAction(IEvent cause) throws IOException {
+    public void exitAction(IEvent cause) {
         if (clientModel.getFromTerminal().get(0).equals("")){
             Random rand = new Random();
             String generatedUsername = Integer.toString(rand.nextInt(10000));

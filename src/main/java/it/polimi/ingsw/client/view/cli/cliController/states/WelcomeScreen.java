@@ -1,9 +1,11 @@
-package it.polimi.ingsw.client.view.cli.CLIcontroller.states;
+package it.polimi.ingsw.client.view.cli.cliController.states;
 
 import it.polimi.ingsw.client.view.View;
-import it.polimi.ingsw.client.view.cli.CLIcontroller.events.NotRecognizedString;
-import it.polimi.ingsw.client.view.cli.CLIcontroller.events.RecognizedString;
-import it.polimi.ingsw.utils.stateMachine.*;
+import it.polimi.ingsw.client.view.cli.cliController.events.NotRecognizedString;
+import it.polimi.ingsw.client.view.cli.cliController.events.RecognizedString;
+import it.polimi.ingsw.utils.stateMachine.IEvent;
+import it.polimi.ingsw.utils.stateMachine.State;
+
 import java.io.IOException;
 
 /**
@@ -11,7 +13,7 @@ import java.io.IOException;
  * the user had to enter start. No longer used but left for reference.
  */
 public class WelcomeScreen extends State{
-    View view;
+    final View view;
     private final RecognizedString start;
     private final NotRecognizedString notStart;
 

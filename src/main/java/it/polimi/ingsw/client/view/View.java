@@ -3,8 +3,6 @@ package it.polimi.ingsw.client.view;
 import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.utils.stateMachine.State;
 
-import java.io.IOException;
-
 public interface View {
     /**
      * Il metodo serve alla Vista per memorizzare una reference allo stato
@@ -25,12 +23,12 @@ public interface View {
     /**
      * Come reagisco io client se un altro client riceve una richiesta di interazione da terminale
      */
-    void requestToOthers() throws IOException;
+    void requestToOthers();
 
     /**
      * Come reagisco io client in caso di risposta di un altro client al server
      */
-    void response() throws IOException;
+    void response();
 
     void requestPing();
 }

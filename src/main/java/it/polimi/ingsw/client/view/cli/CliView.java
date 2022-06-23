@@ -2,9 +2,9 @@ package it.polimi.ingsw.client.view.cli;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.client.model.ClientModel;
-import it.polimi.ingsw.client.view.cli.CLIcontroller.states.Decision;
-import it.polimi.ingsw.client.view.cli.CLIcontroller.states.ReadFromTerminal;
-import it.polimi.ingsw.client.view.cli.CLIcontroller.states.WelcomeScreen;
+import it.polimi.ingsw.client.view.cli.cliController.states.Decision;
+import it.polimi.ingsw.client.view.cli.cliController.states.ReadFromTerminal;
+import it.polimi.ingsw.client.view.cli.cliController.states.WelcomeScreen;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.server.model.AssistantCard;
 import it.polimi.ingsw.server.model.StudentSet;

@@ -54,11 +54,7 @@ public class ChooseCloud implements Initializable {
                     this.gui.getClientModel().setResponse(true); //lo flaggo come messaggio di risposta
                     this.gui.getClientModel().setPingMessage(false);
                     Gson gson = new Gson();
-                    try {
-                        Network.send(gson.toJson(this.gui.getClientModel()));
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    Network.send(gson.toJson(this.gui.getClientModel()));
                     this.gui.closeWindow(event);
                 }
             });

@@ -64,18 +64,12 @@ public class ChooseAssistantCard implements Initializable {
                 card.setVisible(true);
             }
         });
-        cards.forEach((card) -> card.setOnMouseClicked((event) -> {
-                    try {
-                        setCard(cards.indexOf(card) + 1, event);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                })
+        cards.forEach((card) -> card.setOnMouseClicked((event) -> setCard(cards.indexOf(card) + 1, event))
         );
     }
 
 
-    public void setCard(int value, MouseEvent mouseEvent) throws InterruptedException {
+    public void setCard(int value, MouseEvent mouseEvent) {
         this.gui.getClientModel().setCardChoosedValue(value);
         this.gui.getClientModel().setResponse(true); //lo flaggo come messaggio di risposta
         this.gui.getClientModel().setPingMessage(false);

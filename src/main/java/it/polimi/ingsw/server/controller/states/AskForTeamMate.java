@@ -1,7 +1,7 @@
 package it.polimi.ingsw.server.controller.states;
 
 import com.google.gson.Gson;
-import it.polimi.ingsw.client.view.cli.CLIcontroller.events.ClientDisconnection;
+import it.polimi.ingsw.client.view.cli.cliController.events.ClientDisconnection;
 import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.server.controller.ConnectionModel;
 import it.polimi.ingsw.server.controller.ServerController;
@@ -17,6 +17,8 @@ import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
 
 import java.io.IOException;
+
+import static java.lang.Thread.sleep;
 
 /**
  * This class implements the state of the server where the user has to choose his
@@ -156,11 +158,7 @@ public class AskForTeamMate extends State {
                                         receivedClientModel.setGameStarted(true);
                                         receivedClientModel.setTypeOfRequest("CONNECTTOEXISTINGGAME");
                                         connectionModel.change(target, receivedClientModel);
-                                        try {
-                                            Network.send(json.toJson(receivedClientModel));
-                                        } catch (InterruptedException e) {
-                                            throw new RuntimeException(e);
-                                        }
+                                        Network.send(json.toJson(receivedClientModel));
                                         model.setDisconnection(false);
                                         model.getTable().getClouds().add(new Cloud(model.getNumberOfPlayers()));
                                         model.getTable().getClouds().get(model.getTable().getClouds().size()-1).charge(model.getTable().getBag());
@@ -175,11 +173,7 @@ public class AskForTeamMate extends State {
                                         receivedClientModel.setGameStarted(true);
                                         receivedClientModel.setTypeOfRequest("CONNECTTOEXISTINGGAME");
                                         connectionModel.change(target, receivedClientModel);
-                                        try {
-                                            Network.send(json.toJson(receivedClientModel));
-                                        } catch (InterruptedException e) {
-                                            throw new RuntimeException(e);
-                                        }
+                                        Network.send(json.toJson(receivedClientModel));
                                         model.setDisconnection(false);
                                         model.getTable().getClouds().add(new Cloud(model.getNumberOfPlayers()));
                                         model.getTable().getClouds().get(model.getTable().getClouds().size()-1).charge(model.getTable().getBag());
@@ -190,7 +184,7 @@ public class AskForTeamMate extends State {
                         }
                     }
                     try {
-                        sleep(2000);
+                        sleeping();
                     } catch (InterruptedException e) {
                       throw new RuntimeException(e);
                     }
@@ -201,6 +195,10 @@ public class AskForTeamMate extends State {
         teamMateChosen.fireStateEvent();
 
         return super.entryAction(cause);
+    }
+
+    private void sleeping() throws InterruptedException {
+        sleep(2000);
     }
 
     private Model getModel() {

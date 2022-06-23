@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client.view.cli.CLIcontroller.states;
+package it.polimi.ingsw.client.view.cli.cliController.states;
 
 import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.client.view.View;
@@ -15,7 +15,7 @@ public class ReadNickname extends ReadFromTerminal{
         super(view, clientModel, controller, 1, "NICKNAMEEXISTENT");
     }
     @Override
-    public void exitAction(IEvent cause) throws IOException {
+    public void exitAction(IEvent cause) {
         //NICKNAME
         clientModel.setNickname(clientModel.getFromTerminal().get(0));
     }

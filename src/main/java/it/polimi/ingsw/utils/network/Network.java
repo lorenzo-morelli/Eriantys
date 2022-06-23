@@ -130,7 +130,7 @@ public class Network implements ActionListener {
      * @param message the message to be sent
      */
 
-    public synchronized static boolean send(String message) throws InterruptedException {
+    public synchronized static boolean send(String message) {
         return connection.sendText(message);
     }
 

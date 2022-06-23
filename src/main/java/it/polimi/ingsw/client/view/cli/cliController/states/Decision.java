@@ -1,8 +1,8 @@
-package it.polimi.ingsw.client.view.cli.CLIcontroller.states;
+package it.polimi.ingsw.client.view.cli.cliController.states;
 
 import it.polimi.ingsw.client.model.ClientModel;
-import it.polimi.ingsw.client.view.cli.CLIcontroller.events.NotRecognizedSetOfStrings;
-import it.polimi.ingsw.client.view.cli.CLIcontroller.events.RecognizedString;
+import it.polimi.ingsw.client.view.cli.cliController.events.NotRecognizedSetOfStrings;
+import it.polimi.ingsw.client.view.cli.cliController.events.RecognizedString;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
@@ -19,12 +19,13 @@ import java.util.Arrays;
  */
 public class Decision extends State {
 
-        View view;
-        ClientModel clientModel;
-        RecognizedString scelta1Riconosciuta, scelta2Riconosciuta;
+        final View view;
+        final ClientModel clientModel;
+        final RecognizedString scelta1Riconosciuta;
+    final RecognizedString scelta2Riconosciuta;
         NotRecognizedSetOfStrings nessunaDellePrecedenti;
-        String scelta1;
-        String scelta2;
+        final String scelta1;
+        final String scelta2;
 
 
         public Decision(View view, ClientModel clientModel, String scelta1, String scelta2) throws IOException {
@@ -46,7 +47,7 @@ public class Decision extends State {
             return scelta2Riconosciuta;
         }
 
-    public IEvent entryAction(IEvent cause) throws IOException, InterruptedException {
+    public IEvent entryAction(IEvent cause) throws InterruptedException {
             view.setCallingState(this);
             view.askDecision(scelta1,scelta2);
             return null;

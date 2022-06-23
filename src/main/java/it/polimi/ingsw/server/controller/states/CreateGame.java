@@ -1,7 +1,7 @@
 package it.polimi.ingsw.server.controller.states;
 
 import com.google.gson.Gson;
-import it.polimi.ingsw.client.view.cli.CLIcontroller.events.ClientDisconnection;
+import it.polimi.ingsw.client.view.cli.cliController.events.ClientDisconnection;
 import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.server.controller.ConnectionModel;
 import it.polimi.ingsw.server.controller.ServerController;
@@ -14,6 +14,8 @@ import it.polimi.ingsw.utils.stateMachine.Controller;
 import it.polimi.ingsw.utils.stateMachine.Event;
 import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
+
+import static java.lang.Thread.sleep;
 
 /**
  * Handles the creation of a new game (server side setup of the model)
@@ -121,11 +123,7 @@ public class CreateGame extends State {
                                         receivedClientModel.setGameStarted(true);
                                         receivedClientModel.setTypeOfRequest("CONNECTTOEXISTINGGAME");
                                         connectionModel.change(target, receivedClientModel);
-                                        try {
-                                            Network.send(json.toJson(receivedClientModel));
-                                        } catch (InterruptedException e) {
-                                            throw new RuntimeException(e);
-                                        }
+                                        Network.send(json.toJson(receivedClientModel));
                                         model.setDisconnection(false);
                                         model.getTable().getClouds().add(new Cloud(model.getNumberOfPlayers()));
                                         model.getTable().getClouds().get(model.getTable().getClouds().size() - 1).charge(model.getTable().getBag());
@@ -136,7 +134,7 @@ public class CreateGame extends State {
                         }
                     }
                     try {
-                        sleep(2000);
+                        sleeping();
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
@@ -146,6 +144,9 @@ public class CreateGame extends State {
         t.start();
         gameCreated.fireStateEvent();
         return super.entryAction(cause);
+    }
+    private void sleeping() throws InterruptedException {
+        sleep(2000);
     }
 
 }

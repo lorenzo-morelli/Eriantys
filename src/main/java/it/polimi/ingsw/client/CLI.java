@@ -1,6 +1,6 @@
 package it.polimi.ingsw.client;
 
-import it.polimi.ingsw.client.view.cli.CLIcontroller.ClientController;
+import it.polimi.ingsw.client.view.cli.cliController.ClientController;
 import it.polimi.ingsw.client.view.cli.CliView;
 
 /**

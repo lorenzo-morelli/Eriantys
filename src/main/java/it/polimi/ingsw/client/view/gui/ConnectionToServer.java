@@ -23,7 +23,7 @@ public class ConnectionToServer {
     private ParametersFromNetwork message;
     private boolean notRead = false;
 
-    public void connect(boolean first) throws InterruptedException {
+    public void connect(boolean first) {
         if (first) {
             Network.send(gson.toJson(this.gui.getClientModel()));
         }

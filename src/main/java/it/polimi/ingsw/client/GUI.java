@@ -169,18 +169,14 @@ public class GUI extends Application {
      * This method, which runs on another thread, accepts and responds to the pings sent from the server
      */
     public synchronized void requestPing() {
-        try {
-            System.out.println(("risposta ping"));
-            ClientModel model= new ClientModel();
-            model.setClientIdentity(GUI.clientModel.getClientIdentity());
-            Network.setClientModel(model);
-            Gson gson = new Gson();
-            model.setPingMessage(true);
-            model.setReply(false);
-            Network.send(gson.toJson(model));
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        System.out.println(("risposta ping"));
+        ClientModel model= new ClientModel();
+        model.setClientIdentity(GUI.clientModel.getClientIdentity());
+        Network.setClientModel(model);
+        Gson gson = new Gson();
+        model.setPingMessage(true);
+        model.setReply(false);
+        Network.send(gson.toJson(model));
     }
 }
 

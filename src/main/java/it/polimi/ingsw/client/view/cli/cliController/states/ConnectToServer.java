@@ -1,8 +1,8 @@
-package it.polimi.ingsw.client.view.cli.CLIcontroller.states;
+package it.polimi.ingsw.client.view.cli.cliController.states;
 
 import it.polimi.ingsw.client.model.ClientModel;
-import it.polimi.ingsw.client.view.cli.CLIcontroller.events.ConnectedToServer;
-import it.polimi.ingsw.client.view.cli.CLIcontroller.events.NotConnectedToServer;
+import it.polimi.ingsw.client.view.cli.cliController.events.ConnectedToServer;
+import it.polimi.ingsw.client.view.cli.cliController.events.NotConnectedToServer;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.stateMachine.*;
@@ -14,10 +14,10 @@ import java.io.IOException;
  * the user to enter a valid ip-port.
  */
 public class ConnectToServer extends State{
-    ClientModel clientModel;
-    View view;
-    ConnectedToServer connected ;
-    NotConnectedToServer notConnected;
+    final ClientModel clientModel;
+    final View view;
+    final ConnectedToServer connected ;
+    final NotConnectedToServer notConnected;
 
     public ConnectToServer(View view, ClientModel clientModel){
         super("[STATO Tentativo di connessione al server (ConnectToServer.java)]");

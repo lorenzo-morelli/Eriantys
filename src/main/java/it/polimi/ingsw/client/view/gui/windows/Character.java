@@ -225,7 +225,7 @@ public class Character implements Initializable {
     }
 
     @FXML
-    private void okay(MouseEvent mouseEvent) throws InterruptedException {
+    private void okay(MouseEvent mouseEvent) {
         if (isCardUsed) {
             notice.setText("You can use only one card at a time!");
         } else if (this.gui.getClientModel().getServermodel().getcurrentPlayer().getCoins() < currentCharacter.getCost()) {

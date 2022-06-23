@@ -1,8 +1,8 @@
-package it.polimi.ingsw.client.view.cli.CLIcontroller.states;
+package it.polimi.ingsw.client.view.cli.cliController.states;
 
 import it.polimi.ingsw.client.model.ClientModel;
-import it.polimi.ingsw.client.view.cli.CLIcontroller.events.IncorrectNumberOfParameters;
-import it.polimi.ingsw.client.view.cli.CLIcontroller.events.ParametersFromTerminal;
+import it.polimi.ingsw.client.view.cli.cliController.events.IncorrectNumberOfParameters;
+import it.polimi.ingsw.client.view.cli.cliController.events.ParametersFromTerminal;
 import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.utils.stateMachine.*;
 import java.io.IOException;
@@ -14,12 +14,12 @@ import java.io.IOException;
  * and then hit enter when he thinks he's done.
  */
 public class ReadFromTerminal extends State {
-    ClientModel clientModel;
-    View view;
-    String type;
+    final ClientModel clientModel;
+    final View view;
+    final String type;
     ParametersFromTerminal fromTerminal;
-    IncorrectNumberOfParameters numberOfParametersIncorrect;
-    Event insertedParameters;
+    final IncorrectNumberOfParameters numberOfParametersIncorrect;
+    final Event insertedParameters;
 
     public ReadFromTerminal(View view, ClientModel clientModel, Controller controller, int numofparameters, String type) throws IOException {
         super("[STATO di lettura di " + numofparameters + " parametri da terminale interpretati come :"+ type+ "]");

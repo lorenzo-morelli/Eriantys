@@ -1,36 +1,35 @@
-package it.polimi.ingsw.server.controller.PingThread;
+package it.polimi.ingsw.server.controller.pingThread;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.client.model.ClientModel;
-import it.polimi.ingsw.server.controller.states.MotherPhase;
+import it.polimi.ingsw.server.controller.states.CloudPhase;
 import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
 
 import java.util.ConcurrentModificationException;
 
-
 /**
- * Thread for Mother Phase pings
+ * Thread for Cloud Phase pings
  */
-public class MotherThread extends Thread {
-    private final MotherPhase phase;
+public class CloudThread extends Thread {
+    private final CloudPhase phase;
     private final ClientModel CurrentPlayerData;
     private final Gson json;
 
-    public MotherThread(MotherPhase phase, ClientModel CurrentPlayerData) {
+    public CloudThread(CloudPhase phase, ClientModel CurrentPlayerData) {
         this.phase = phase;
         this.CurrentPlayerData = CurrentPlayerData;
         json = new Gson();
     }
 
     /**
-     * This method is used to send and receive ping during the Mother Phase in order to
+     * This method is used to send and receive ping during the Cloud Phase in order to
      * manage the clients disconnection
      */
     public synchronized void run() {
         while (!phase.getMessage().parametersReceived() || json.fromJson(phase.getMessage().getParameter(0), ClientModel.class).isPingMessage()) {
             try {
-                sleep(10000);
+                sleeping();
             } catch (InterruptedException e) {
                 return;
             }
@@ -38,17 +37,9 @@ public class MotherThread extends Thread {
             CurrentPlayerData.setResponse(false); // è una richiesta non una risposta// lato client avrà una nella CliView un metodo per gestire questa richiesta
             CurrentPlayerData.setPingMessage(true);
             try {
-                try {
-                    Network.send(json.toJson(CurrentPlayerData));
-                } catch (InterruptedException e) {
-                    return;
-                }
+                Network.send(json.toJson(CurrentPlayerData));
             } catch (ConcurrentModificationException e) {
-                try {
-                    Network.send(json.toJson(CurrentPlayerData));
-                } catch (InterruptedException ex) {
-                    throw new RuntimeException(ex);
-                }
+                Network.send(json.toJson(CurrentPlayerData));
             }
 
 
@@ -60,6 +51,7 @@ public class MotherThread extends Thread {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
+
             synchronized (phase) {
                 if (!ping_message.parametersReceived()) {
                     phase.setDisconnected(true);
@@ -72,5 +64,8 @@ public class MotherThread extends Thread {
                 }
             }
         }
+    }
+    private void sleeping() throws InterruptedException {
+        sleep(10000);
     }
 }

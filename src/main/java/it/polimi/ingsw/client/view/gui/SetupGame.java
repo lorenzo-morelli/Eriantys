@@ -5,7 +5,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -59,7 +58,7 @@ public class SetupGame implements Initializable {
         this.gameModeLabel.setText("Game mode: expert");
     }
 
-    public void start() throws InterruptedException, IOException {
+    public void start() {
         if (this.gui.getClientModel().getNumofplayer() != 2 && this.gui.getClientModel().getNumofplayer() != 3 && this.gui.getClientModel().getNumofplayer() != 4) {
             this.otherPlayersLabel.setText("ERROR: Please select a number of players!");
         } else if (this.gui.getClientModel().getGameMode() == null) {

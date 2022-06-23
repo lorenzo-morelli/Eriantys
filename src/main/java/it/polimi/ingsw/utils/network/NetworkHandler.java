@@ -153,9 +153,9 @@ public class NetworkHandler {
      * *****************************************************************/
 
     private class SocketConnection implements Runnable, ActionListener {
-        NetworkHandler parentSocket;
-        int port;
-        String serverIP;
+        final NetworkHandler parentSocket;
+        final int port;
+        final String serverIP;
         String incomingText = "";
         ServerSocket serverSocketObject = null;
         Socket socketObject = null;
@@ -164,7 +164,7 @@ public class NetworkHandler {
         Vector<ClientConnection> clientConnections = new Vector<>();
         boolean blnListenForClients = true;
 
-        Timer timer;
+        final Timer timer;
 
         public void actionPerformed(ActionEvent event) {
             if (event.getSource() == timer) {
@@ -375,8 +375,8 @@ public class NetworkHandler {
     }
 
     private class ClientConnection implements Runnable {
-        NetworkHandler parentSocket;
-        SocketConnection socketConnection;
+        final NetworkHandler parentSocket;
+        final SocketConnection socketConnection;
         String incomingText = "";
         Socket socketObject;
         PrintWriter outBuffer = null;

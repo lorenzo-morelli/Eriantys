@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client.view.cli.CLIcontroller.states;
+package it.polimi.ingsw.client.view.cli.cliController.states;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.client.model.ClientModel;
@@ -10,7 +10,6 @@ import it.polimi.ingsw.utils.stateMachine.Event;
 import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
 
-import java.io.IOException;
 import java.util.Objects;
 
 /**
@@ -115,23 +114,15 @@ public class Wait extends State {
                                     !receivedClientModel.isPingMessage()                                                           &&
                                     !receivedClientModel.getTypeOfRequest().equals( "TRYTORECONNECT")                              &&
                                     !receivedClientModel.getTypeOfRequest().equals("DISCONNECTION")                                   ) {
-                                try {
-                                    view.setClientModel(receivedClientModel);
-                                    view.requestToOthers();
-                                } catch (IOException e) {
-                                    throw new RuntimeException(e);
-                                }
+                                view.setClientModel(receivedClientModel);
+                                view.requestToOthers();
                             }
                         }
                     }
                     // altrimenti il messaggio è una risposta di un altro client ad un server
                     else if (receivedClientModel.isResponse().equals(true) && receivedClientModel.getTypeOfRequest() != null) {
-                        try {
-                            view.setClientModel(receivedClientModel);
-                            view.response();
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
+                        view.setClientModel(receivedClientModel);
+                        view.response();
                     }
                 }
             }

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.server.controller.PingThread;
+package it.polimi.ingsw.server.controller.pingThread;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.client.model.ClientModel;
@@ -29,7 +29,7 @@ public class StudentThread extends Thread {
     public synchronized void run() {
         while (!phase.getMessage().parametersReceived() || json.fromJson(phase.getMessage().getParameter(0), ClientModel.class).isPingMessage()) {
             try {
-                sleep(10000);
+                sleeping();
             } catch (InterruptedException e) {
                 return;
             }
@@ -37,17 +37,9 @@ public class StudentThread extends Thread {
             CurrentPlayerData.setResponse(false); // è una richiesta non una risposta// lato client avrà una nella CliView un metodo per gestire questa richiesta
             CurrentPlayerData.setPingMessage(true);
             try {
-                try {
-                    Network.send(json.toJson(CurrentPlayerData));
-                } catch (InterruptedException e) {
-                    return;
-                }
+                Network.send(json.toJson(CurrentPlayerData));
             } catch (ConcurrentModificationException e) {
-                try {
-                    Network.send(json.toJson(CurrentPlayerData));
-                } catch (InterruptedException ex) {
-                    throw new RuntimeException(ex);
-                }
+                Network.send(json.toJson(CurrentPlayerData));
             }
 
 
@@ -71,5 +63,8 @@ public class StudentThread extends Thread {
                 }
             }
         }
+    }
+    private void sleeping() throws InterruptedException {
+        sleep(2000);
     }
 }

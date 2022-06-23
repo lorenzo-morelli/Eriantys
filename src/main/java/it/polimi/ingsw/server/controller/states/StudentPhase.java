@@ -1,10 +1,10 @@
 package it.polimi.ingsw.server.controller.states;
 
 import com.google.gson.Gson;
-import it.polimi.ingsw.client.view.cli.CLIcontroller.events.ClientDisconnection;
+import it.polimi.ingsw.client.view.cli.cliController.events.ClientDisconnection;
 import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.server.controller.ConnectionModel;
-import it.polimi.ingsw.server.controller.PingThread.StudentThread;
+import it.polimi.ingsw.server.controller.pingThread.StudentThread;
 import it.polimi.ingsw.server.controller.ServerController;
 import it.polimi.ingsw.server.model.*;
 import it.polimi.ingsw.server.model.characters.*;

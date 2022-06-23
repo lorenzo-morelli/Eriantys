@@ -12,7 +12,7 @@ import java.util.Random;
  */
 
 public class ClientModel {
-    transient Random rand = new Random();
+    final transient Random rand = new Random();
 
     // Numero univoco che rappresenta l'identità del client
     // Questo perché in fase di setup i client potrebbero proporre al server dei nickname identici
