@@ -26,10 +26,7 @@ import static it.polimi.ingsw.client.view.gui.common.Check.isValidIp;
 import static it.polimi.ingsw.client.view.gui.common.Check.isValidPort;
 
 public class CliView implements View {
-
-    // La vista matiene una reference allo stato chiamante (schermata video/command line) ed al precedente.
     private State callingState;
-    // parsedString ci serve per parsare l'input e verificare la correttezza dei dati inseriti
     private ArrayList<String> parsedStrings;
 
     private ClientModel networkClientModel;
@@ -87,12 +84,12 @@ public class CliView implements View {
     }
 
     /**
-     * Metodo di richiesta all'utente di inserimento di un certo numero di parole separate da uno spazio,
-     * lo stato chiamante sarà uno stato di Read (lettura da terminale), lo stato si occupa solo del dichiarare
-     * il numero di parole da leggere e di recuperare poi le informazioni mettendole nel ClientModel, oggetto che
-     * verrà poi spedito al server.
-     * E' possibile implementare anche controlli client side di correttezza dei parametri inseriti, ad esempio se un
-     * indirizzo IP è valido o meno.
+      * Method of requesting the user to enter a certain number of words separated by a space,
+      * the calling state will be a Read state (read from the terminal), the state only takes care of declaring
+      * the number of words to read and then retrieve the information by placing it in the ClientModel object which
+      * will then be sent to the server.
+      * It is also possible to implement client side checks for the correctness of the parameters entered, for example if the
+      * IP address is valid or not.
      */
     @Override
     public void askParameters() throws InterruptedException {
@@ -147,9 +144,6 @@ public class CliView implements View {
                     askParameters();
                     return;
                 }
-                // Se siamo arrivati quì l'utente ha inserito numero di giocatori e gamemode nel formato richiesto
-                // ovvero 2, 3, o 4 per numOfPlayers e PRINCIPIANT o EXPERT per la modalità di gioco
-                // non occorre fare ulteriori controlli.
                 break;
 
             case "NICKNAMEEXISTENT":
@@ -162,8 +156,6 @@ public class CliView implements View {
         ((ReadFromTerminal) callingState).numberOfParametersIncorrect().disable();
         ((ReadFromTerminal) callingState).insertedParameters().disable();
     }
-
-    // Il server mi invia una richiesta di interazione: devo digitare roba da terminale
 
     public synchronized void requestPing() {
         try {
@@ -179,7 +171,6 @@ public class CliView implements View {
 
     public void requestToMe() throws InterruptedException {
         Network.setClientModel(networkClientModel);
-        // Quando il client ha una richiesta di interazione deve inviare messaggi di ping per informare il server che è vivo
 
         switch (networkClientModel.getTypeOfRequest()) {
             case "TRYTORECONNECT":
@@ -1112,7 +1103,6 @@ public class CliView implements View {
                     requestToMe();
                     return;
                 }
-                // la nuvola scelta deve avere una size > 0
                 if (networkClientModel.getServermodel().getTable().getClouds().get(Integer.parseInt(CommandPrompt.gotFromTerminal()) - 1).getStudentsAccumulator().size() == 0) {
                     System.out.println("Hai scelta una nuvola che è stata già scelta da un altro giocatore");
                     TimeUnit.SECONDS.sleep(2);
