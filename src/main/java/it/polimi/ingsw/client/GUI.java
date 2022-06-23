@@ -88,7 +88,7 @@ public class GUI extends Application {
         stage.close();
     }
 
-    public ClientModel getClientModel() {
+    public synchronized ClientModel getClientModel() {
         return clientModel;
     }
 
@@ -114,6 +114,7 @@ public class GUI extends Application {
                 changeScene("Game");
                 break;
             case "CHOOSEWHERETOMOVESTUDENTS":
+                System.out.println("carico gli studenti");
                 gameState = "Moving students";
                 changeScene("Game");
                 break;
@@ -170,7 +171,7 @@ public class GUI extends Application {
      */
     public synchronized void requestPing() {
         System.out.println(("risposta ping"));
-        ClientModel model= new ClientModel();
+        ClientModel model = new ClientModel();
         model.setClientIdentity(GUI.clientModel.getClientIdentity());
         Network.setClientModel(model);
         Gson gson = new Gson();

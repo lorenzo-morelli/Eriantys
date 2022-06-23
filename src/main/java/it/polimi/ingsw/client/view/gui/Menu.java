@@ -69,7 +69,6 @@ public class Menu implements Initializable {
      */
     @FXML
     private void connect() throws IOException, InterruptedException {
-        System.out.println("okk");
         currNode = notice;
         String nickname = this.nicknameField.getText();
         String ip = this.ipField.getText();
@@ -83,7 +82,6 @@ public class Menu implements Initializable {
             this.notice.setText("FAILURE: ip and port can't contain any spaces!");
         } else if (!isValidIp(ip) || !isValidPort(port)) {
             this.notice.setText("FAILURE: ip or port format not valid!");
-            System.out.println("diahane");
         } else {
             SetConnection.setConnection(nickname, ip, port, this.gui.getClientModel());
             if (Network.isConnected()) {
