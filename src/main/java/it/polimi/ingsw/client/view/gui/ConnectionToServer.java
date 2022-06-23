@@ -39,8 +39,8 @@ public class ConnectionToServer {
 
     public void waiting(long end) throws InterruptedException {
         boolean notDone = false;
-        boolean isfirst= true;
-        String previousRequest=null;
+        boolean isFirst = true;
+        String previousRequest = null;
 
         do {
             System.out.println("primo loop");
@@ -73,7 +73,7 @@ public class ConnectionToServer {
             notRead = false;
             ClientModel clientModel = gson.fromJson(message.getParameter(0), ClientModel.class);
 
-            if(clientModel.getReply()) {
+            if (clientModel.getReply()) {
                 if (!Objects.equals(clientModel.getTypeOfRequest(), "CONNECTTOEXISTINGGAME")) {
                     if (Network.disconnectedClient()) {
                         Network.disconnect();
@@ -85,31 +85,29 @@ public class ConnectionToServer {
                         if (!clientModel.isResponse() && clientModel.getTypeOfRequest() != null) {
                             if (clientModel.getClientIdentity() == myID) {
                                 try {
-                                    if (!isfirst && Objects.equals(previousRequest, clientModel.getTypeOfRequest())) {
-                                        if(Objects.equals("CHOOSEWHERETOMOVESTUDENTS", clientModel.getTypeOfRequest()) || Objects.equals("CHOOSEWHERETOMOVEMOTHER", clientModel.getTypeOfRequest())){
+                                    if (!isFirst && Objects.equals(previousRequest, clientModel.getTypeOfRequest())) {
+                                        if (Objects.equals("CHOOSEWHERETOMOVESTUDENTS", clientModel.getTypeOfRequest()) || Objects.equals("CHOOSEWHERETOMOVEMOTHER", clientModel.getTypeOfRequest())) {
                                             gui.setClientModel(clientModel);
                                             System.out.println("request to me done with pings");
                                             gui.requestPing();
                                             gui.requestToMe();
-                                        }
-                                        else {
+                                        } else {
                                             System.out.println("ping");
                                             gui.requestPing();
                                         }
-                                    } else if(clientModel.isPingMessage()) {
+                                    } else if (clientModel.isPingMessage()) {
                                         gui.setClientModel(clientModel);
                                         System.out.println("request to me done with pings");
                                         gui.requestPing();
                                         gui.requestToMe();
-                                        isfirst=false;
-                                        previousRequest=gui.getClientModel().getTypeOfRequest();
-                                    }
-                                    else {
+                                        isFirst = false;
+                                        previousRequest = gui.getClientModel().getTypeOfRequest();
+                                    } else {
                                         gui.setClientModel(clientModel);
                                         System.out.println("request to me");
                                         gui.requestToMe();
-                                        isfirst=false;
-                                        previousRequest=gui.getClientModel().getTypeOfRequest();
+                                        isFirst = false;
+                                        previousRequest = gui.getClientModel().getTypeOfRequest();
                                     }
                                 } catch (IOException e) {
                                     throw new RuntimeException(e);
@@ -121,7 +119,7 @@ public class ConnectionToServer {
                                     !clientModel.getTypeOfRequest().equals("DISCONNECTION")) {
                                 try {
                                     System.out.println("request to other");
-                                    isfirst=true;
+                                    isFirst = true;
                                     gui.setClientModel(clientModel);
                                     gui.requestToOthers();
                                 } catch (IOException e) {
