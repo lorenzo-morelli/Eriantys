@@ -149,9 +149,9 @@ public class Game implements Initializable {
     private Label playerName3;
     @FXML
     private Label playerName4;
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         String imageURL = "/graphics/buttons/button_unavailable.png";
         currNode = phaseLabel;
         Position pos = new Position();
@@ -462,7 +462,7 @@ public class Game implements Initializable {
                 }
             });
             characterCards.forEach(card -> characterCardsImages.get(characterCards.indexOf(card)).setOnMouseClicked(event -> {
-                if (!this.gui.getClientModel().getTypeOfRequest().equals("CHOOSEASSISTANTCARD")) {
+                if (!this.gui.getClientModel().getTypeOfRequest().equals("CHOOSEASSISTANTCARD") && canOpenWindow) {
                     currentCharacter = card;
                     try {
                         if (currentCharacter.getName().equals("MINSTRELL") || currentCharacter.getName().equals("JESTER")) {
@@ -536,8 +536,9 @@ public class Game implements Initializable {
      */
     @FXML
     private void assistant() throws IOException {
-        if (this.gui.getClientModel().getTypeOfRequest().equals("CHOOSEASSISTANTCARD")) {
+        if (this.gui.getClientModel().getTypeOfRequest().equals("CHOOSEASSISTANTCARD") && canOpenWindow) {
             this.gui.openNewWindow("ChooseAssistantCard");
+            canOpenWindow = false;
         }
     }
 
@@ -546,8 +547,9 @@ public class Game implements Initializable {
      */
     @FXML
     private void setOnSchool() throws IOException {
-        if (this.gui.getClientModel().getTypeOfRequest().equals("CHOOSEWHERETOMOVESTUDENTS")) {
+        if (this.gui.getClientModel().getTypeOfRequest().equals("CHOOSEWHERETOMOVESTUDENTS") && canOpenWindow) {
             this.gui.openNewWindow("MoveToSchool");
+            canOpenWindow = false;
         }
     }
 
@@ -556,8 +558,9 @@ public class Game implements Initializable {
      */
     @FXML
     private void setOnIsland() throws IOException {
-        if (this.gui.getClientModel().getTypeOfRequest().equals("CHOOSEWHERETOMOVESTUDENTS")) {
+        if (this.gui.getClientModel().getTypeOfRequest().equals("CHOOSEWHERETOMOVESTUDENTS") && canOpenWindow) {
             this.gui.openNewWindow("MoveToIsland");
+            canOpenWindow = false;
         }
     }
 
@@ -568,6 +571,7 @@ public class Game implements Initializable {
     private void move() throws IOException {
         if (this.gui.getClientModel().getTypeOfRequest().equals("CHOOSEWHERETOMOVEMOTHER")) {
             this.gui.openNewWindow("MoveMotherNature");
+            canOpenWindow = false;
         }
     }
 
@@ -578,6 +582,7 @@ public class Game implements Initializable {
     private void cloud() throws IOException {
         if (this.gui.getClientModel().getTypeOfRequest().equals("CHOOSECLOUDS")) {
             this.gui.openNewWindow("ChooseCloud");
+            canOpenWindow = false;
         }
     }
 

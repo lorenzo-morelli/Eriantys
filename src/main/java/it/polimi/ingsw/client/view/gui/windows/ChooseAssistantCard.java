@@ -14,6 +14,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import static it.polimi.ingsw.client.GUI.canOpenWindow;
+
 public class ChooseAssistantCard implements Initializable {
     private final GUI gui = new GUI();
     @FXML

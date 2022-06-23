@@ -27,6 +27,7 @@ public class GUI extends Application {
     public static boolean myTurn = false;
     public static boolean isCardUsed = false;
     public static CharacterCard currentCharacter = null;
+    public static boolean canOpenWindow = true;
 
     /**
      * This is the entry point for the GUI application
@@ -43,6 +44,7 @@ public class GUI extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainMenu.fxml"));
         this.scene = new Scene(loader.load());
         this.stage.setScene(scene);
+        this.stage.setResizable(false);
         this.stage.show();
     }
 
@@ -74,6 +76,8 @@ public class GUI extends Application {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/windows/" + newWindow + ".fxml")));
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
+        stage.setResizable(false);
+        stage.setOnCloseRequest(event -> canOpenWindow = true);
         stage.show();
     }
 
@@ -85,6 +89,7 @@ public class GUI extends Application {
     public synchronized void closeWindow(MouseEvent mouseEvent) {
         final Node source = (Node) mouseEvent.getSource();
         final Stage stage = (Stage) source.getScene().getWindow();
+        canOpenWindow = true;
         stage.close();
     }
 

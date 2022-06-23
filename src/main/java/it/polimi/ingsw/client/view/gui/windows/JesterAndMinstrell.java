@@ -17,8 +17,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.ResourceBundle;
 
-import static it.polimi.ingsw.client.GUI.currentCharacter;
-import static it.polimi.ingsw.client.GUI.isCardUsed;
+import static it.polimi.ingsw.client.GUI.*;
 
 public class JesterAndMinstrell implements Initializable {
     private final GUI gui = new GUI();

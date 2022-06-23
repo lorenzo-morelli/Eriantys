@@ -20,8 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 
-import static it.polimi.ingsw.client.GUI.currentCharacter;
-import static it.polimi.ingsw.client.GUI.isCardUsed;
+import static it.polimi.ingsw.client.GUI.*;
 
 public class Character implements Initializable {
     private final GUI gui = new GUI();

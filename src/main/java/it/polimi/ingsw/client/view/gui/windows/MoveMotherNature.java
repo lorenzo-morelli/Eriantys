@@ -15,6 +15,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import static it.polimi.ingsw.client.GUI.canOpenWindow;
+
 public class MoveMotherNature implements Initializable {
     private final GUI gui = new GUI();
     private int distance;

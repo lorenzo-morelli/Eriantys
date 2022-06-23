@@ -19,23 +19,32 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 
+import static it.polimi.ingsw.client.GUI.canOpenWindow;
+
 public class MoveStudents implements Initializable {
     private final GUI gui = new GUI();
-    public GridPane islandGrid;
-    public final Label notice = new Label();
+    @FXML
+    private GridPane islandGrid;
+    @FXML
+    private Label notice = new Label();
     private PeopleColor studentColor;
     private Player currentPlayer;
 
-    public ImageView blue;
-    public ImageView green;
-    public ImageView pink;
-    public ImageView red;
-    public ImageView yellow;
+    @FXML
+    private ImageView blue;
+    @FXML
+    private ImageView green;
+    @FXML
+    private ImageView pink;
+    @FXML
+    private ImageView red;
+    @FXML
+    private ImageView yellow;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        notice.setText("");
+        this.notice.setText("");
         Position pos = new Position();
         ArrayList<Island> islands = this.gui.getClientModel().getServermodel().getTable().getIslands();
         ArrayList<ImageView> students = new ArrayList<>(Arrays.asList(blue, green, pink, red, yellow));
@@ -70,6 +79,7 @@ public class MoveStudents implements Initializable {
                         this.gui.getClientModel().setChoosedColor(studentColor);
                         Gson gson = new Gson();
                         Network.send(gson.toJson(this.gui.getClientModel()));
+                        canOpenWindow = true;
                         this.gui.closeWindow(event);
                     }
                 });
