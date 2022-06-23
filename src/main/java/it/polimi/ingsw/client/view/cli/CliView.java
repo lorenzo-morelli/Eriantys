@@ -30,12 +30,12 @@ public class CliView implements View {
     private ArrayList<String> parsedStrings;
 
     private ClientModel networkClientModel;
-    private String mynickname;
-    private String responce;
+    private String nickname;
+    private String response;
     private boolean isUsed;
 
     public CliView() {
-        responce = "\n";
+        response = "\n";
         isUsed = false;
         networkClientModel = new ClientModel();
     }
@@ -110,9 +110,9 @@ public class CliView implements View {
                         askParameters();
                     }
 
-                    setMynickname(parsedStrings.get(0));
+                    setNickname(parsedStrings.get(0));
                 } else {
-                    setMynickname("Default");
+                    setNickname("Default");
                 }
                 break;
 
@@ -138,7 +138,7 @@ public class CliView implements View {
                     askParameters();
                     return;
                 }
-                // controllo che il gamemode sia tra PRINCIPIANT ed EXPERT
+                // controllo che il game mode sia tra PRINCIPIANT ed EXPERT
                 if (!parsedStrings.get(1).equals("PRINCIPIANT") && !parsedStrings.get(1).equals("EXPERT")) {
                     System.out.print("ALERT: il gameMode scelto deve essere 'PRINCIPIANT' oppure 'EXPERT', riprovare\n");
                     askParameters();
@@ -149,7 +149,7 @@ public class CliView implements View {
             case "NICKNAMEEXISTENT":
                 CommandPrompt.ask("Il nickname scelto è già esistente, si prega di reinserirne uno nuovo",
                         "nickname>");
-                setMynickname(CommandPrompt.gotFromTerminal());
+                setNickname(CommandPrompt.gotFromTerminal());
                 break;
         }
 
@@ -174,13 +174,13 @@ public class CliView implements View {
 
         switch (networkClientModel.getTypeOfRequest()) {
             case "TRYTORECONNECT":
-                System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO: \n" + "IL SERVER STA TENTANDO DI RICONNETTERSI A MINIMO UN GIOCATORE PER PERMETTERE CHE LA PARTITA CONTINUI" + "\n\nMOSSE ALTRI GIOCATORI: " + getResponce()));
+                System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO: \n" + "IL SERVER STA TENTANDO DI RICONNETTERSI A MINIMO UN GIOCATORE PER PERMETTERE CHE LA PARTITA CONTINUI" + "\n\nMOSSE ALTRI GIOCATORI: " + getResponse()));
                 break;
             case "DISCONNECTION":
-                System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO: \n" + "LA PARTITA E' TERMINATA CAUSA DISCONNESSIONE, NESSUN GIOCATORE SI E' RICONNESSO..." + "\n\nMOSSE ALTRI GIOCATORI: " + getResponce()));
+                System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO: \n" + "LA PARTITA E' TERMINATA CAUSA DISCONNESSIONE, NESSUN GIOCATORE SI E' RICONNESSO..." + "\n\nMOSSE ALTRI GIOCATORI: " + getResponse()));
                 break;
             case "CHOOSEASSISTANTCARD":
-                System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO: \n" + "E' IL TUO TURNO - ASSISTENT CARD PHASE" + "\n\nMOSSE ALTRI GIOCATORI: " + getResponce()));
+                System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO: \n" + "E' IL TUO TURNO - ASSISTENT CARD PHASE" + "\n\nMOSSE ALTRI GIOCATORI: " + getResponse()));
                 System.out.println("Scegli una Carta Assistente");
                 for (AssistantCard a : networkClientModel.getDeck()) {
                     System.out.println("valore: " + (int) a.getValues() + "  mosse: " + a.getMoves());
@@ -214,7 +214,7 @@ public class CliView implements View {
                 break;
             case "CHOOSEWHERETOMOVESTUDENTS":
                 if (networkClientModel.getServermodel().getGameMode().equals(GameMode.EXPERT) && networkClientModel.getServermodel().getTable().getCharacters().stream().anyMatch(j -> j.getCost() <= networkClientModel.getServermodel().getcurrentPlayer().getCoins() && !isUsed)) {
-                    System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO: \n" + "E' IL TUO TURNO - STUDENT PHASE" + "\n\nMOSSE ALTRI GIOCATORI: " + getResponce()));
+                    System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO: \n" + "E' IL TUO TURNO - STUDENT PHASE" + "\n\nMOSSE ALTRI GIOCATORI: " + getResponse()));
 
                     CommandPrompt.ask("Scegli il colore dello studente che desideri muovere OPPURE inserisci CARD per usare una carta personaggio", "RED or GREEN or BLUE or YELLOW or PINK    or CARD> ");
 
@@ -608,7 +608,7 @@ public class CliView implements View {
                         Network.send(json.toJson(networkClientModel));
                     }
                 } else {
-                    System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO: \n" + "E' IL TUO TURNO - STUDENT PHASE" + "\n\nMOSSE ALTRI GIOCATORI: " + getResponce()));
+                    System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO: \n" + "E' IL TUO TURNO - STUDENT PHASE" + "\n\nMOSSE ALTRI GIOCATORI: " + getResponse()));
 
                     CommandPrompt.ask("Scegli il colore dello studente che desideri muovere ", "RED or GREEN or BLUE or YELLOW or PINK> ");
                     if (!CommandPrompt.gotFromTerminal().equals("RED") &&
@@ -714,7 +714,7 @@ public class CliView implements View {
 
             case "CHOOSEWHERETOMOVEMOTHER":
                 if (networkClientModel.getServermodel().getGameMode().equals(GameMode.EXPERT) && networkClientModel.getServermodel().getTable().getCharacters().stream().anyMatch(j -> j.getCost() <= networkClientModel.getServermodel().getcurrentPlayer().getCoins() && !isUsed)) {
-                    System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO:\n " + "E' IL TUO TURNO - MOTHER PHASE" + "\n\nMOSSE ALTRI GIOCATORI: " + getResponce()));
+                    System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO:\n " + "E' IL TUO TURNO - MOTHER PHASE" + "\n\nMOSSE ALTRI GIOCATORI: " + getResponse()));
                     CommandPrompt.ask("Scegliere il numero di mosse di cui far spostare madre natura  OPPURE inserisci CARD per usare una carta personaggio", "mosse> ");
                     if (CommandPrompt.gotFromTerminal().equals("CARD")) {
                         System.out.println("\n\n\n\nScegli la carta che vorresti utilizzare: \n");
@@ -1053,7 +1053,7 @@ public class CliView implements View {
                         Network.send(json.toJson(networkClientModel));
                     }
                 } else {
-                    System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO:\n " + "E' IL TUO TURNO - MOTHER PHASE" + "\n\nMOSSE ALTRI GIOCATORI: " + getResponce()));
+                    System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO:\n " + "E' IL TUO TURNO - MOTHER PHASE" + "\n\nMOSSE ALTRI GIOCATORI: " + getResponse()));
                     CommandPrompt.ask("Scegliere il numero di mosse di cui far spostare madre natura  ", "mosse> ");
 
 
@@ -1087,7 +1087,7 @@ public class CliView implements View {
                 break;
 
             case "CHOOSECLOUDS":
-                System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO: \n" + "E' IL TUO TURNO - CLOUD PHASE" + "\n\nMOSSE ALTRI GIOCATORI: " + getResponce()));
+                System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO: \n" + "E' IL TUO TURNO - CLOUD PHASE" + "\n\nMOSSE ALTRI GIOCATORI: " + getResponse()));
                 CommandPrompt.ask("Scegliere il numero della tessera nuvola da cui si desidera ricaricarsi di studenti", "tessera nuvola> ");
 
                 if (isValidNumber(CommandPrompt.gotFromTerminal())) {
@@ -1156,7 +1156,7 @@ public class CliView implements View {
         }
         System.out.println(message);
         if (!networkClientModel.getTypeOfRequest().equals("TEAMMATE") && networkClientModel.getServermodel() != null) {
-            System.out.println(networkClientModel.getServermodel().toString(getMynickname(), "STATO DEL GIOCO: " + message + "\n\nMOSSE ALTRI GIOCATORI: " + getResponce()));
+            System.out.println(networkClientModel.getServermodel().toString(getNickname(), "STATO DEL GIOCO: " + message + "\n\nMOSSE ALTRI GIOCATORI: " + getResponse()));
         }
     }
 
@@ -1165,63 +1165,63 @@ public class CliView implements View {
     public synchronized void response() {
         switch (networkClientModel.getTypeOfRequest()) {
             case "CHOOSEASSISTANTCARD":
-                setResponce("Il giocatore " + networkClientModel.getNickname() + " ha scelto " +
+                setResponse("Il giocatore " + networkClientModel.getNickname() + " ha scelto " +
                         "la carta col valore = " + networkClientModel.getCardChoosedValue());
                 break;
             case "TEAMMATE":
-                setResponce("Il giocatore " + networkClientModel.getNickname() + " ha formato i teams:\n" +
+                setResponse("Il giocatore " + networkClientModel.getNickname() + " ha formato i teams:\n" +
                         "TEAM 1: " + networkClientModel.getNicknames().get(3) + " " + networkClientModel.getNicknames().get(2) + "\n" +
                         "TEAM 2: " + networkClientModel.getNicknames().get(1) + " " + networkClientModel.getNicknames().get(0) + "\n");
                 break;
             case "SCHOOL":
-                setResponce("L'utente " + networkClientModel.getNickname() + " ha scelto di muovere 1 studente di colore " +
+                setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di muovere 1 studente di colore " +
                         networkClientModel.getChoosedColor().toString() + " sulla sua scuola");
                 break;
             case "ISLAND":
-                setResponce("L'utente " + networkClientModel.getNickname() + " ha scelto di muovere 1 studente di colore " +
+                setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di muovere 1 studente di colore " +
                         networkClientModel.getChoosedColor().toString() + " sull' isola numero " + (networkClientModel.getChoosedIsland() + 1));
                 break;
             case "CHOOSEWHERETOMOVEMOTHER":
-                setResponce("L'utente " + networkClientModel.getNickname() + " ha scelto di spostare madre natura di " + networkClientModel.getChoosedMoves() + " mosse");
+                setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di spostare madre natura di " + networkClientModel.getChoosedMoves() + " mosse");
                 break;
             case "CHOOSECLOUDS":
-                setResponce("L'utente " + networkClientModel.getNickname() + " ha scelto di ricaricare gli studenti dalla nuvola: " + networkClientModel.getCloudChoosed());
+                setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di ricaricare gli studenti dalla nuvola: " + networkClientModel.getCloudChoosed());
                 break;
             case "MONK":
-                setResponce("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio MONK, scegliendo come colore: " + networkClientModel.getChoosedColor() + " e scegliendo come isola: " + networkClientModel.getChoosedIsland() + "  (EFFETTO: Prendi uno studente da questa carta e piazzalo su un isola a tua scelta).");
+                setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio MONK, scegliendo come colore: " + networkClientModel.getChoosedColor() + " e scegliendo come isola: " + networkClientModel.getChoosedIsland() + "  (EFFETTO: Prendi uno studente da questa carta e piazzalo su un isola a tua scelta).");
                 break;
             case "HERALD":
-                setResponce("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio HERALD, scegliendo come isola: " + networkClientModel.getChoosedIsland() + "  (EFFETTO: Scegli un isola e calcola la maggioranza come se madre natura avesse terminato il suo movimento li. In questo turno madre natura si muovera come di consueto e nell'isola dove terminerà il suo movimento la maggioranza verrà normalmente calcolata).");
+                setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio HERALD, scegliendo come isola: " + networkClientModel.getChoosedIsland() + "  (EFFETTO: Scegli un isola e calcola la maggioranza come se madre natura avesse terminato il suo movimento li. In questo turno madre natura si muovera come di consueto e nell'isola dove terminerà il suo movimento la maggioranza verrà normalmente calcolata).");
                 break;
             case "PRINCESS":
-                setResponce("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio PRINCESS, scegliendo come colore: " + networkClientModel.getChoosedIsland() + "  (EFFETTO: Prendi uno studente da questa carta e piazzalo nella tua Sala).");
+                setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio PRINCESS, scegliendo come colore: " + networkClientModel.getChoosedIsland() + "  (EFFETTO: Prendi uno studente da questa carta e piazzalo nella tua Sala).");
                 break;
             case "THIEF":
-                setResponce("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio THIEF, scegliendo come colore: " + networkClientModel.getChoosedIsland() + "  (EFFETTO: Scegli un colore di studente; ogni giocatore (incluso te) deve rimettere nel sacchetto tre studenti di quel colore presenti nella Sala (o tutti quelli che ha se ne avesse meno di tre) ).");
+                setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio THIEF, scegliendo come colore: " + networkClientModel.getChoosedIsland() + "  (EFFETTO: Scegli un colore di studente; ogni giocatore (incluso te) deve rimettere nel sacchetto tre studenti di quel colore presenti nella Sala (o tutti quelli che ha se ne avesse meno di tre) ).");
                 break;
             case "MUSHROOMHUNTER":
-                setResponce("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio MUSHROOMHUNTER, scegliendo come colore: " + networkClientModel.getChoosedIsland() + "  (EFFETTO: Scelgi un colore di studente; in questo turno, durante il calcolo dell'influenza, quel colore non fornisce influenza).");
+                setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio MUSHROOMHUNTER, scegliendo come colore: " + networkClientModel.getChoosedIsland() + "  (EFFETTO: Scelgi un colore di studente; in questo turno, durante il calcolo dell'influenza, quel colore non fornisce influenza).");
                 break;
             case "KNIGHT":
-                setResponce("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio KNIGHT" + "  (EFFETTO: In questo turno, durante il calcolo dell'influenza, hai due punti di influenza addizionali).");
+                setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio KNIGHT" + "  (EFFETTO: In questo turno, durante il calcolo dell'influenza, hai due punti di influenza addizionali).");
                 break;
             case "CENTAUR":
-                setResponce("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio CENTAUR" + "  (EFFETTO: Durante il conteggio di un influenza dell'isola le torri presenti non vengono calcolate).");
+                setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio CENTAUR" + "  (EFFETTO: Durante il conteggio di un influenza dell'isola le torri presenti non vengono calcolate).");
                 break;
             case "FARMER":
-                setResponce("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio FARMER" + "  (EFFETTO: Durante questo turno, prendi il controllo dei professori anche se nella tua sala hai lo stesso numero di studenti del giocatore che li controlla in quel momento).");
+                setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio FARMER" + "  (EFFETTO: Durante questo turno, prendi il controllo dei professori anche se nella tua sala hai lo stesso numero di studenti del giocatore che li controlla in quel momento).");
                 break;
             case "POSTMAN":
-                setResponce("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio POSTMAN" + "  (EFFETTO: Puoi muovere madre natura fino a due isole addizionali rispetto a quanto indicato sulla carta assistente che hai giocato).");
+                setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio POSTMAN" + "  (EFFETTO: Puoi muovere madre natura fino a due isole addizionali rispetto a quanto indicato sulla carta assistente che hai giocato).");
                 break;
             case "GRANNY":
-                setResponce("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio GRANNY, scegliendo come isola: " + networkClientModel.getChoosedIsland() + "  (EFFETTO: Piazza un divieto su un isola a tua scelta. La prima volta che madre natura termina il suo movimento li l'influenza non verrà calcolata e il divieto verrà reinserito in quetsa carta).");
+                setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio GRANNY, scegliendo come isola: " + networkClientModel.getChoosedIsland() + "  (EFFETTO: Piazza un divieto su un isola a tua scelta. La prima volta che madre natura termina il suo movimento li l'influenza non verrà calcolata e il divieto verrà reinserito in quetsa carta).");
                 break;
             case "JESTER":
-                setResponce("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio JESTER, scegliendo di scambiare i colori: " + networkClientModel.getColors1() + " dal suo Ingresso con i colori: " + networkClientModel.getColors2() + " da questa carta" + "  (EFFETTO: Puoi prendere fino a 3 studenti da questa carta e scambiarli con altrettanti studenti presenti nel tuo Ingresso).");
+                setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio JESTER, scegliendo di scambiare i colori: " + networkClientModel.getColors1() + " dal suo Ingresso con i colori: " + networkClientModel.getColors2() + " da questa carta" + "  (EFFETTO: Puoi prendere fino a 3 studenti da questa carta e scambiarli con altrettanti studenti presenti nel tuo Ingresso).");
                 break;
             case "MINSTRELL":
-                setResponce("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio MINSTRELL, scegliendo di scambiare i colori: " + networkClientModel.getColors1() + " dal suo Ingresso con i colori: " + networkClientModel.getColors2() + " dalla sua Sala" + "  (EFFETTO: Puoi scambiare fra loro fino a due studenti presenti nella tua Sala e nel tuo Ingresso).");
+                setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio MINSTRELL, scegliendo di scambiare i colori: " + networkClientModel.getColors1() + " dal suo Ingresso con i colori: " + networkClientModel.getColors2() + " dalla sua Sala" + "  (EFFETTO: Puoi scambiare fra loro fino a due studenti presenti nella tua Sala e nel tuo Ingresso).");
                 break;
         }
 
@@ -1264,23 +1264,23 @@ public class CliView implements View {
         return !matcher.matches();
     }
 
-    public String getMynickname() {
-        return mynickname;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setMynickname(String mynickname) {
-        this.mynickname = mynickname;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
-    public String getResponce() {
-        return responce;
+    public String getResponse() {
+        return response;
     }
 
-    public void setResponce(String responce) {
-        this.responce = this.responce + "\n" + responce;
+    public void setResponse(String response) {
+        this.response = this.response + "\n" + response;
     }
 
     public void clearResponce() {
-        this.responce = "\n";
+        this.response = "\n";
     }
 }
