@@ -59,7 +59,7 @@ public class CreateGame extends State {
         model = new Model(connectionModel.getNumOfPlayers(), connectionModel.getGameMode(), false);
         int i = 0;
         for (ClientModel c : connectionModel.getClientsInfo()) {
-            model.getPlayers().add(new Player(connectionModel.getClientsInfo().get(i).getNickname(), connectionModel.getClientsInfo().get(i).getMyIp(), model));
+            model.getPlayers().add(new Player(connectionModel.getClientsInfo().get(i).getNickname(), connectionModel.getClientsInfo().get(i).getMyIp(), model, false));
             c.setGameStarted(true);
             c.setAmIfirst(false);
             i++;
