@@ -24,7 +24,7 @@ public class Network implements ActionListener {
     private static JTextArea textReceived;
     private static JButton disconnectButton;
     private static boolean disconnectedClient = false;
-
+    private static Network instance = null;
 
     /**
      * This is the main network controller that is called when a network action is
@@ -83,18 +83,20 @@ public class Network implements ActionListener {
         return textReceived;
     }
 
+
     /**
      * This method is used to set up the server side connection
      *
      * @param port the port on which the server has to listen
      */
-    public static void setupServer(String port) {
-        new Network();
+
+    public static void setupServer(String port){
+        instance = new Network();
+        // una volta avviato il server in ascolto su una porta
+        // non posso rifare il setup (instance non è null)
         Network.port.setText(port);
         serverButton.doClick();
         serverListening = true;
-
-
     }
 
     /**
@@ -103,8 +105,9 @@ public class Network implements ActionListener {
      * @param port the port on which the server has to listen
      * @param ip   the ip of the server
      */
-    public static void setupClient(String ip, String port) {
-        new Network();
+
+    public static void setupClient(String ip,String port){
+        instance = new Network();
         Network.IPAddress.setText(ip);
         Network.port.setText(port);
         Network.clientButton.doClick();
@@ -113,7 +116,8 @@ public class Network implements ActionListener {
     /**
      * Used to disconnect from the socket
      */
-    public synchronized static void disconnect() {
+
+    public synchronized static void disconnect(){
         disconnectButton.doClick();
     }
 
@@ -185,4 +189,5 @@ public class Network implements ActionListener {
         return clientModel;
     }
 }
+
 
