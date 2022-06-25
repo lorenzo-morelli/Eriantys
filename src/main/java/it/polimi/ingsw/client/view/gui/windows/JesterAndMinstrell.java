@@ -213,7 +213,9 @@ public class JesterAndMinstrell implements Initializable {
         diningMinstrell.removeAll(Collections.singletonList(null));
         jester.removeAll(Collections.singletonList(null));
         entranceJester.removeAll(Collections.singletonList(null));
-        if (isCardUsed) {
+        if (!myTurn) {
+            notice.setText("It's not your turn!");
+        } else if (isCardUsed) {
             notice.setText("You can use only one card at a time!");
         } else if (this.guiView.getClientModel().getServermodel().getcurrentPlayer().getCoins() < currentCharacter.getCost()) {
             notice.setText("You don't have enough coins! :(");
