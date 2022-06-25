@@ -40,6 +40,7 @@ public class GuiView extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        System.setProperty("prism.allowhidpi", "false");
         GuiView.clientModel = new ClientModel();
         gameState = "";
         this.stage = stage;
