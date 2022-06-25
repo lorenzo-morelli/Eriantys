@@ -1,7 +1,7 @@
 package it.polimi.ingsw.client.view.gui.windows;
 
 import com.google.gson.Gson;
-import it.polimi.ingsw.client.GUI;
+import it.polimi.ingsw.client.view.gui.GuiView;
 import it.polimi.ingsw.server.model.AssistantCard;
 import it.polimi.ingsw.utils.network.Network;
 import javafx.fxml.FXML;
@@ -14,10 +14,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import static it.polimi.ingsw.client.GUI.canOpenWindow;
+import static it.polimi.ingsw.client.view.gui.GuiView.windowNode;
 
 public class ChooseAssistantCard implements Initializable {
-    private final GUI gui = new GUI();
+    private final GuiView guiView = new GuiView();
     @FXML
     private ImageView assistantCard1;
     @FXML
@@ -41,6 +41,7 @@ public class ChooseAssistantCard implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        windowNode = assistantCard1;
         List<ImageView> cards = Arrays.asList(
                 assistantCard1,
                 assistantCard2,
@@ -53,7 +54,7 @@ public class ChooseAssistantCard implements Initializable {
                 assistantCard9,
                 assistantCard10
         );
-        List<AssistantCard> deck = this.gui.getClientModel().getDeck();
+        List<AssistantCard> deck = this.guiView.getClientModel().getDeck();
         cards.forEach((card) -> card.setVisible(false));
         cards.forEach((card) -> {
             boolean show = false;
@@ -72,11 +73,11 @@ public class ChooseAssistantCard implements Initializable {
 
 
     public void setCard(int value, MouseEvent mouseEvent) {
-        this.gui.getClientModel().setCardChoosedValue(value);
-        this.gui.getClientModel().setResponse(true); //lo flaggo come messaggio di risposta
-        this.gui.getClientModel().setPingMessage(false);
+        this.guiView.getClientModel().setCardChoosedValue(value);
+        this.guiView.getClientModel().setResponse(true); //lo flaggo come messaggio di risposta
+        this.guiView.getClientModel().setPingMessage(false);
         Gson json = new Gson();
-        Network.send(json.toJson(this.gui.getClientModel()));
-        this.gui.closeWindow(mouseEvent);
+        Network.send(json.toJson(this.guiView.getClientModel()));
+        this.guiView.closeWindow(mouseEvent);
     }
 }

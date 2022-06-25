@@ -1,7 +1,7 @@
 package it.polimi.ingsw.client.view.gui.windows;
 
 import com.google.gson.Gson;
-import it.polimi.ingsw.client.GUI;
+import it.polimi.ingsw.client.view.gui.GuiView;
 import it.polimi.ingsw.client.view.gui.Position;
 import it.polimi.ingsw.server.model.Island;
 import it.polimi.ingsw.server.model.StudentSet;
@@ -20,10 +20,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 
-import static it.polimi.ingsw.client.GUI.*;
+import static it.polimi.ingsw.client.view.gui.GuiView.*;
 
 public class Character implements Initializable {
-    private final GUI gui = new GUI();
+    private final GuiView guiView = new GuiView();
     private boolean flagIsland = false;
     private boolean flagColor = false;
     private int chosenIsland;
@@ -53,7 +53,7 @@ public class Character implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         notice.setText("");
         name.setText(currentCharacter.getName());
-        ArrayList<Island> islands = this.gui.getClientModel().getServermodel().getTable().getIslands();
+        ArrayList<Island> islands = this.guiView.getClientModel().getServermodel().getTable().getIslands();
         ArrayList<ImageView> students = new ArrayList<>(Arrays.asList(student1, student2, student3, student4, student5));
 
         chosenColor = null;
@@ -88,12 +88,12 @@ public class Character implements Initializable {
                 break;
             case "MONK":
                 explanation.setText("Take 1 student from this card and place it on an island of your choice");
-                this.selectStudent(students, this.gui.getClientModel().getServermodel().getTable().getMonkSet());
+                this.selectStudent(students, this.guiView.getClientModel().getServermodel().getTable().getMonkSet());
                 this.selectIsland(islands);
                 break;
             case "PRINCESS":
                 explanation.setText("You can select 1 student from this card and place it in your dinner table");
-                this.selectStudent(students, this.gui.getClientModel().getServermodel().getTable().getPrincessSet());
+                this.selectStudent(students, this.guiView.getClientModel().getServermodel().getTable().getPrincessSet());
                 flagIsland = true;
                 break;
             case "MUSHROOMHUNTER":
@@ -225,26 +225,28 @@ public class Character implements Initializable {
 
     @FXML
     private void okay(MouseEvent mouseEvent) {
-        if (isCardUsed) {
+        if (!myTurn) {
+            notice.setText("It's not your turn!");
+        } else if (isCardUsed) {
             notice.setText("You can use only one card at a time!");
-        } else if (this.gui.getClientModel().getServermodel().getcurrentPlayer().getCoins() < currentCharacter.getCost()) {
+        } else if (this.guiView.getClientModel().getServermodel().getcurrentPlayer().getCoins() < currentCharacter.getCost()) {
             notice.setText("You don't have enough coins! :(");
         } else if (!flagColor || !flagIsland) {
             notice.setText("Information missing!");
         } else {
-            this.gui.getClientModel().setTypeOfRequest(currentCharacter.getName());
-            this.gui.getClientModel().setResponse(true); //lo flaggo come messaggio di risposta
-            this.gui.getClientModel().setPingMessage(false);
+            this.guiView.getClientModel().setTypeOfRequest(currentCharacter.getName());
+            this.guiView.getClientModel().setResponse(true); //lo flaggo come messaggio di risposta
+            this.guiView.getClientModel().setPingMessage(false);
             if (chosenColor != null) {
-                this.gui.getClientModel().setChoosedColor(chosenColor);
+                this.guiView.getClientModel().setChoosedColor(chosenColor);
             }
             if (chosenIsland != -1) {
-                this.gui.getClientModel().setChoosedIsland(chosenIsland);
+                this.guiView.getClientModel().setChoosedIsland(chosenIsland);
             }
             Gson gson = new Gson();
-            Network.send(gson.toJson(this.gui.getClientModel()));
+            Network.send(gson.toJson(this.guiView.getClientModel()));
             isCardUsed = true;
-            this.gui.closeWindow(mouseEvent);
+            this.guiView.closeWindow(mouseEvent);
         }
     }
 }

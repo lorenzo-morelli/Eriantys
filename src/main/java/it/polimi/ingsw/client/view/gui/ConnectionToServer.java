@@ -1,7 +1,6 @@
 package it.polimi.ingsw.client.view.gui;
 
 import com.google.gson.Gson;
-import it.polimi.ingsw.client.GUI;
 import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
@@ -15,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 import static it.polimi.ingsw.utils.network.events.ParametersFromNetwork.PAUSE_KEY;
 
 public class ConnectionToServer {
-    private final GUI gui = new GUI();
+    private final GuiView guiView = new GuiView();
     private final Gson gson = new Gson();
     private boolean isToReset = false;
     private boolean waitForFirst = true;
@@ -25,9 +24,9 @@ public class ConnectionToServer {
 
     public void connect(boolean first) {
         if (first) {
-            Network.send(gson.toJson(this.gui.getClientModel()));
+            Network.send(gson.toJson(this.guiView.getClientModel()));
         }
-        myID = gui.getClientModel().getClientIdentity();
+        myID = guiView.getClientModel().getClientIdentity();
         long start = System.currentTimeMillis();
         long end = start + 70 * 1000L;
         try {
@@ -87,27 +86,27 @@ public class ConnectionToServer {
                                 try {
                                     if (!isFirst && Objects.equals(previousRequest, clientModel.getTypeOfRequest())) {
                                         if (Objects.equals("CHOOSEWHERETOMOVESTUDENTS", clientModel.getTypeOfRequest()) || Objects.equals("CHOOSEWHERETOMOVEMOTHER", clientModel.getTypeOfRequest())) {
-                                            gui.setClientModel(clientModel);
+                                            guiView.setClientModel(clientModel);
                                             System.out.println("request to me done with pings");
-                                            gui.requestPing();
-                                            gui.requestToMe();
+                                            guiView.requestPing();
+                                            guiView.requestToMe();
                                         } else {
                                             System.out.println("ping");
-                                            gui.requestPing();
+                                            guiView.requestPing();
                                         }
                                     } else if (clientModel.isPingMessage()) {
-                                        gui.setClientModel(clientModel);
+                                        guiView.setClientModel(clientModel);
                                         System.out.println("request to me done with pings");
-                                        gui.requestPing();
-                                        gui.requestToMe();
+                                        guiView.requestPing();
+                                        guiView.requestToMe();
                                         isFirst = false;
-                                        previousRequest = gui.getClientModel().getTypeOfRequest();
+                                        previousRequest = guiView.getClientModel().getTypeOfRequest();
                                     } else {
-                                        gui.setClientModel(clientModel);
+                                        guiView.setClientModel(clientModel);
                                         System.out.println("request to me");
-                                        gui.requestToMe();
+                                        guiView.requestToMe();
                                         isFirst = false;
-                                        previousRequest = gui.getClientModel().getTypeOfRequest();
+                                        previousRequest = guiView.getClientModel().getTypeOfRequest();
                                     }
                                 } catch (IOException e) {
                                     throw new RuntimeException(e);
@@ -120,8 +119,8 @@ public class ConnectionToServer {
                                 try {
                                     System.out.println("request to other");
                                     isFirst = true;
-                                    gui.setClientModel(clientModel);
-                                    gui.requestToOthers();
+                                    guiView.setClientModel(clientModel);
+                                    guiView.requestToOthers();
                                 } catch (IOException e) {
                                     throw new RuntimeException(e);
                                 }

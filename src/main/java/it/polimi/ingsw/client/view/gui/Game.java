@@ -1,6 +1,5 @@
 package it.polimi.ingsw.client.view.gui;
 
-import it.polimi.ingsw.client.GUI;
 import it.polimi.ingsw.server.model.*;
 import it.polimi.ingsw.server.model.characters.CharacterCard;
 import it.polimi.ingsw.server.model.enums.GameMode;
@@ -22,10 +21,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import static it.polimi.ingsw.client.GUI.*;
+import static it.polimi.ingsw.client.view.gui.GuiView.*;
 
 public class Game implements Initializable {
-    private final GUI gui = new GUI();
+    private final GuiView guiView = new GuiView();
     @FXML
     private Label phaseLabel;
     @FXML
@@ -151,21 +150,20 @@ public class Game implements Initializable {
     private Label playerName4;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         String imageURL = "/graphics/buttons/button_unavailable.png";
         currNode = phaseLabel;
         Position pos = new Position();
         phaseLabel.setText(gameState);
-        turnLabel.setText("This is " + this.gui.getClientModel().getServermodel().getcurrentPlayer().getNickname() + "'s turn");
-        if (this.gui.getClientModel().getTypeOfRequest().equals("GAMEEND")) {
+        turnLabel.setText("This is " + this.guiView.getClientModel().getServermodel().getcurrentPlayer().getNickname() + "'s turn");
+        if (this.guiView.getClientModel().getTypeOfRequest().equals("GAMEEND")) {
             try {
-                this.gui.openNewWindow("EndGame");
+                this.guiView.openNewWindow("EndGame");
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
         if (myTurn) {
-            switch (this.gui.getClientModel().getTypeOfRequest()) {
+            switch (this.guiView.getClientModel().getTypeOfRequest()) {
                 case "CHOOSEASSISTANTCARD":
                     setOnSchoolBtn.setStyle("-fx-background-image: url(" + imageURL + ");");
                     setOnIslandBtn.setStyle("-fx-background-image: url(" + imageURL + ");");
@@ -198,17 +196,17 @@ public class Game implements Initializable {
             cloudBtn.setStyle("-fx-background-image: url(" + imageURL + ");");
         }
 
-        GameMode gameMode = this.gui.getClientModel().getServermodel().getGameMode();
-        int motherNaturePos = this.gui.getClientModel().getServermodel().getTable().getMotherNaturePosition();
-        ArrayList<Island> islands = this.gui.getClientModel().getServermodel().getTable().getIslands();
-        ArrayList<Player> players = this.gui.getClientModel().getServermodel().getPlayers();
+        GameMode gameMode = this.guiView.getClientModel().getServermodel().getGameMode();
+        int motherNaturePos = this.guiView.getClientModel().getServermodel().getTable().getMotherNaturePosition();
+        ArrayList<Island> islands = this.guiView.getClientModel().getServermodel().getTable().getIslands();
+        ArrayList<Player> players = this.guiView.getClientModel().getServermodel().getPlayers();
         players.forEach(player -> System.out.println(player.getChoosedCard() != null ? player.getChoosedCard().getValues() : "non scelta"));
 
-        ArrayList<Professor> professors = this.gui.getClientModel().getServermodel().getTable().getProfessors();
-        ArrayList<Cloud> clouds = this.gui.getClientModel().getServermodel().getTable().getClouds();
+        ArrayList<Professor> professors = this.guiView.getClientModel().getServermodel().getTable().getProfessors();
+        ArrayList<Cloud> clouds = this.guiView.getClientModel().getServermodel().getTable().getClouds();
         ArrayList<Team> teams = null;
         if (players.size() == 4) {
-            teams = this.gui.getClientModel().getServermodel().getTeams();
+            teams = this.guiView.getClientModel().getServermodel().getTeams();
         }
         ArrayList<Label> playerNames = new ArrayList<>(Arrays.asList(playerName1, playerName2, playerName3, playerName4));
         ArrayList<ImageView> assistantCards = new ArrayList<>(Arrays.asList(assistantCard1, assistantCard2, assistantCard3, assistantCard4));
@@ -427,7 +425,7 @@ public class Game implements Initializable {
             coinLabels.forEach(coinLabel -> coinLabel.setVisible(false));
             costs.forEach(cost -> cost.setVisible(false));
         } else {
-            ArrayList<CharacterCard> characterCards = this.gui.getClientModel().getServermodel().getTable().getCharacters();
+            ArrayList<CharacterCard> characterCards = this.guiView.getClientModel().getServermodel().getTable().getCharacters();
             toImageCharacters(characterCards, characterCardsImages);
             players.forEach(player -> {
                 Label coinLabel = coinLabels.get(players.indexOf(player));
@@ -440,16 +438,16 @@ public class Game implements Initializable {
                 StudentSet studentSet = null;
                 switch (characterCards.get(characterGrids.indexOf(grid)).getName()) {
                     case "MONK":
-                        studentSet = gui.getClientModel().getServermodel().getTable().getMonkSet();
+                        studentSet = guiView.getClientModel().getServermodel().getTable().getMonkSet();
                         break;
                     case "PRINCESS":
-                        studentSet = gui.getClientModel().getServermodel().getTable().getPrincessSet();
+                        studentSet = guiView.getClientModel().getServermodel().getTable().getPrincessSet();
                         break;
                     case "JESTER":
-                        studentSet = gui.getClientModel().getServermodel().getTable().getJesterSet();
+                        studentSet = guiView.getClientModel().getServermodel().getTable().getJesterSet();
                         break;
                     case "GRANNY":
-                        for (int i = 0; i < this.gui.getClientModel().getServermodel().getTable().getNumDivieti(); i++) {
+                        for (int i = 0; i < this.guiView.getClientModel().getServermodel().getTable().getNumDivieti(); i++) {
                             ImageView block = new ImageView("/graphics/pieces/islands/deny_island_icon.png");
                             this.imageResize(block, 30);
                             grid.add(block, i % 2, i / 2);
@@ -460,14 +458,15 @@ public class Game implements Initializable {
                 }
             });
             characterCards.forEach(card -> characterCardsImages.get(characterCards.indexOf(card)).setOnMouseClicked(event -> {
-                if (!this.gui.getClientModel().getTypeOfRequest().equals("CHOOSEASSISTANTCARD") && canOpenWindow) {
+                if (!this.guiView.getClientModel().getTypeOfRequest().equals("CHOOSEASSISTANTCARD") && canOpenWindow) {
                     currentCharacter = card;
                     try {
                         if (currentCharacter.getName().equals("MINSTRELL") || currentCharacter.getName().equals("JESTER")) {
-                            gui.openNewWindow("JesterAndMinstrell");
+                            guiView.openNewWindow("JesterAndMinstrell");
                         } else {
-                            gui.openNewWindow("Character");
+                            guiView.openNewWindow("Character");
                         }
+                        canOpenWindow = false;
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -525,7 +524,7 @@ public class Game implements Initializable {
      */
     @FXML
     private void quit() throws IOException {
-        this.gui.openNewWindow("Quit");
+        this.guiView.openNewWindow("Quit");
     }
 
     /**
@@ -533,8 +532,8 @@ public class Game implements Initializable {
      */
     @FXML
     private void assistant() throws IOException {
-        if (this.gui.getClientModel().getTypeOfRequest().equals("CHOOSEASSISTANTCARD") && canOpenWindow) {
-            this.gui.openNewWindow("ChooseAssistantCard");
+        if (this.guiView.getClientModel().getTypeOfRequest().equals("CHOOSEASSISTANTCARD") && canOpenWindow && myTurn) {
+            this.guiView.openNewWindow("ChooseAssistantCard");
             canOpenWindow = false;
         }
     }
@@ -544,8 +543,8 @@ public class Game implements Initializable {
      */
     @FXML
     private void setOnSchool() throws IOException {
-        if (this.gui.getClientModel().getTypeOfRequest().equals("CHOOSEWHERETOMOVESTUDENTS") && canOpenWindow) {
-            this.gui.openNewWindow("MoveToSchool");
+        if (this.guiView.getClientModel().getTypeOfRequest().equals("CHOOSEWHERETOMOVESTUDENTS") && canOpenWindow && myTurn) {
+            this.guiView.openNewWindow("MoveToSchool");
             canOpenWindow = false;
         }
     }
@@ -555,8 +554,8 @@ public class Game implements Initializable {
      */
     @FXML
     private void setOnIsland() throws IOException {
-        if (this.gui.getClientModel().getTypeOfRequest().equals("CHOOSEWHERETOMOVESTUDENTS") && canOpenWindow) {
-            this.gui.openNewWindow("MoveToIsland");
+        if (this.guiView.getClientModel().getTypeOfRequest().equals("CHOOSEWHERETOMOVESTUDENTS") && canOpenWindow && myTurn) {
+            this.guiView.openNewWindow("MoveToIsland");
             canOpenWindow = false;
         }
     }
@@ -566,8 +565,8 @@ public class Game implements Initializable {
      */
     @FXML
     private void move() throws IOException {
-        if (this.gui.getClientModel().getTypeOfRequest().equals("CHOOSEWHERETOMOVEMOTHER")) {
-            this.gui.openNewWindow("MoveMotherNature");
+        if (this.guiView.getClientModel().getTypeOfRequest().equals("CHOOSEWHERETOMOVEMOTHER") && canOpenWindow && myTurn) {
+            this.guiView.openNewWindow("MoveMotherNature");
             canOpenWindow = false;
         }
     }
@@ -577,8 +576,8 @@ public class Game implements Initializable {
      */
     @FXML
     private void cloud() throws IOException {
-        if (this.gui.getClientModel().getTypeOfRequest().equals("CHOOSECLOUDS")) {
-            this.gui.openNewWindow("ChooseCloud");
+        if (this.guiView.getClientModel().getTypeOfRequest().equals("CHOOSECLOUDS") && myTurn) {
+            this.guiView.openNewWindow("ChooseCloud");
             canOpenWindow = false;
         }
     }

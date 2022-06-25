@@ -1,7 +1,7 @@
 package it.polimi.ingsw.client.view.gui.windows;
 
 import com.google.gson.Gson;
-import it.polimi.ingsw.client.GUI;
+import it.polimi.ingsw.client.view.gui.GuiView;
 import it.polimi.ingsw.client.view.gui.Game;
 import it.polimi.ingsw.server.model.Cloud;
 import it.polimi.ingsw.utils.network.Network;
@@ -17,10 +17,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import static it.polimi.ingsw.client.GUI.canOpenWindow;
+import static it.polimi.ingsw.client.view.gui.GuiView.windowNode;
 
 public class ChooseCloud implements Initializable {
-    private final GUI gui = new GUI();
+    private final GuiView guiView = new GuiView();
     @FXML
     private Label notice;
     @FXML
@@ -28,8 +28,9 @@ public class ChooseCloud implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        windowNode = notice;
         this.notice.setText("");
-        ArrayList<Cloud> clouds = this.gui.getClientModel().getServermodel().getTable().getClouds();
+        ArrayList<Cloud> clouds = this.guiView.getClientModel().getServermodel().getTable().getClouds();
         if (clouds.size() == 2) {
             cloudGrid.setLayoutX(150);
         }
@@ -52,12 +53,12 @@ public class ChooseCloud implements Initializable {
                 if (cloud.getStudentsAccumulator().size() == 0) {
                     this.notice.setText("ERROR: Cloud already chosen!");
                 } else {
-                    this.gui.getClientModel().setCloudChoosed(cloud);
-                    this.gui.getClientModel().setResponse(true); //lo flaggo come messaggio di risposta
-                    this.gui.getClientModel().setPingMessage(false);
+                    this.guiView.getClientModel().setCloudChoosed(cloud);
+                    this.guiView.getClientModel().setResponse(true); //lo flaggo come messaggio di risposta
+                    this.guiView.getClientModel().setPingMessage(false);
                     Gson gson = new Gson();
-                    Network.send(gson.toJson(this.gui.getClientModel()));
-                    this.gui.closeWindow(event);
+                    Network.send(gson.toJson(this.guiView.getClientModel()));
+                    this.guiView.closeWindow(event);
                 }
             });
         });

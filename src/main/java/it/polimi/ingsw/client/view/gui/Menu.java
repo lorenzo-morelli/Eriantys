@@ -1,6 +1,5 @@
 package it.polimi.ingsw.client.view.gui;
 
-import it.polimi.ingsw.client.GUI;
 import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.client.view.gui.common.SendModelAndGetResponse;
 import it.polimi.ingsw.client.view.gui.common.SetConnection;
@@ -16,12 +15,12 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
-import static it.polimi.ingsw.client.GUI.currNode;
+import static it.polimi.ingsw.client.view.gui.GuiView.currNode;
 import static it.polimi.ingsw.client.view.gui.common.Check.isValidIp;
 import static it.polimi.ingsw.client.view.gui.common.Check.isValidPort;
 
 public class Menu implements Initializable {
-    private final GUI gui = new GUI();
+    private final GuiView guiView = new GuiView();
 
     @FXML
     private Button playButton = new Button();
@@ -48,7 +47,7 @@ public class Menu implements Initializable {
      */
     @FXML
     private void play() throws IOException {
-        this.gui.changeScene("SetupConnection");
+        this.guiView.changeScene("SetupConnection");
     }
 
     /**
@@ -80,14 +79,14 @@ public class Menu implements Initializable {
         } else if (!isValidIp(ip) || !isValidPort(port)) {
             this.notice.setText("FAILURE: ip or port format not valid!");
         } else {
-            SetConnection.setConnection(nickname, ip, port, this.gui.getClientModel());
+            SetConnection.setConnection(nickname, ip, port, this.guiView.getClientModel());
             if (Network.isConnected()) {
                 this.connected.setText("CONNECTED!");
                 this.notice.setText("In attesa che il server dia una risposta...");
-                ClientModel model = SendModelAndGetResponse.sendAndGetModel(this.gui.getClientModel());
+                ClientModel model = SendModelAndGetResponse.sendAndGetModel(this.guiView.getClientModel());
 
                 if (model != null) {
-                    this.gui.setClientModel(model);
+                    this.guiView.setClientModel(model);
                 } else {
                     System.out.println("\n\nServer non ha dato risposta");
                     Network.disconnect();
@@ -95,10 +94,10 @@ public class Menu implements Initializable {
                     TimeUnit.SECONDS.sleep(5);
                     System.exit(0);
                 }
-                if (this.gui.getClientModel().getAmIfirst() == null) {
+                if (this.guiView.getClientModel().getAmIfirst() == null) {
                     this.notice.setText("FAILURE: Nickname already taken");
-                } else if (this.gui.getClientModel().getAmIfirst()) {
-                    this.gui.changeScene("SetupGame");
+                } else if (this.guiView.getClientModel().getAmIfirst()) {
+                    this.guiView.changeScene("SetupGame");
                 } else {
                     ConnectionToServer connection = new ConnectionToServer();
                     connection.connect(false);

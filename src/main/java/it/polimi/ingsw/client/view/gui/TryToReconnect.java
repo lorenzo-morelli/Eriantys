@@ -7,7 +7,7 @@ import javafx.scene.control.Label;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static it.polimi.ingsw.client.GUI.currNode;
+import static it.polimi.ingsw.client.view.gui.GuiView.currNode;
 
 public class TryToReconnect implements Initializable {
     @FXML

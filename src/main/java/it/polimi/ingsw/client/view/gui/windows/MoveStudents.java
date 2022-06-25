@@ -1,7 +1,7 @@
 package it.polimi.ingsw.client.view.gui.windows;
 
 import com.google.gson.Gson;
-import it.polimi.ingsw.client.GUI;
+import it.polimi.ingsw.client.view.gui.GuiView;
 import it.polimi.ingsw.client.view.gui.Position;
 import it.polimi.ingsw.server.model.Island;
 import it.polimi.ingsw.server.model.Player;
@@ -19,10 +19,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 
-import static it.polimi.ingsw.client.GUI.canOpenWindow;
+import static it.polimi.ingsw.client.view.gui.GuiView.canOpenWindow;
+import static it.polimi.ingsw.client.view.gui.GuiView.windowNode;
 
 public class MoveStudents implements Initializable {
-    private final GUI gui = new GUI();
+    private final GuiView guiView = new GuiView();
     @FXML
     private GridPane islandGrid;
     @FXML
@@ -44,11 +45,12 @@ public class MoveStudents implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        windowNode = blue;
         this.notice.setText("");
         Position pos = new Position();
-        ArrayList<Island> islands = this.gui.getClientModel().getServermodel().getTable().getIslands();
+        ArrayList<Island> islands = this.guiView.getClientModel().getServermodel().getTable().getIslands();
         ArrayList<ImageView> students = new ArrayList<>(Arrays.asList(blue, green, pink, red, yellow));
-        currentPlayer = this.gui.getClientModel().getServermodel().getcurrentPlayer();
+        currentPlayer = this.guiView.getClientModel().getServermodel().getcurrentPlayer();
         Character character = new Character();
         character.setToBlackAndWhite(students, currentPlayer.getSchoolBoard().getEntranceSpace(), 0);
         if (islandGrid != null) {
@@ -72,15 +74,15 @@ public class MoveStudents implements Initializable {
                     if (studentColor == null) {
                         notice.setText("ERROR: Please select the student you want to move");
                     } else {
-                        this.gui.getClientModel().setTypeOfRequest("ISLAND");
-                        this.gui.getClientModel().setChoosedIsland(islands.indexOf(island));
-                        this.gui.getClientModel().setResponse(true);
-                        this.gui.getClientModel().setPingMessage(false);
-                        this.gui.getClientModel().setChoosedColor(studentColor);
+                        this.guiView.getClientModel().setTypeOfRequest("ISLAND");
+                        this.guiView.getClientModel().setChoosedIsland(islands.indexOf(island));
+                        this.guiView.getClientModel().setResponse(true);
+                        this.guiView.getClientModel().setPingMessage(false);
+                        this.guiView.getClientModel().setChoosedColor(studentColor);
                         Gson gson = new Gson();
-                        Network.send(gson.toJson(this.gui.getClientModel()));
+                        Network.send(gson.toJson(this.guiView.getClientModel()));
                         canOpenWindow = true;
-                        this.gui.closeWindow(event);
+                        this.guiView.closeWindow(event);
                     }
                 });
             });
@@ -145,14 +147,14 @@ public class MoveStudents implements Initializable {
                 break;
         }
         if (islandGrid == null && studentColor != null) {
-            this.gui.getClientModel().setTypeOfRequest("SCHOOL");
-            this.gui.getClientModel().setResponse(true);
-            this.gui.getClientModel().setPingMessage(false);
-            this.gui.getClientModel().setChoosedColor(studentColor);
+            this.guiView.getClientModel().setTypeOfRequest("SCHOOL");
+            this.guiView.getClientModel().setResponse(true);
+            this.guiView.getClientModel().setPingMessage(false);
+            this.guiView.getClientModel().setChoosedColor(studentColor);
             Gson gson = new Gson();
-            Network.send(gson.toJson(this.gui.getClientModel()));
+            Network.send(gson.toJson(this.guiView.getClientModel()));
             studentColor = null;
-            this.gui.closeWindow(mouseEvent);
+            this.guiView.closeWindow(mouseEvent);
         }
     }
 }

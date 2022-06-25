@@ -1,7 +1,7 @@
 package it.polimi.ingsw.client.view.gui.windows;
 
 import com.google.gson.Gson;
-import it.polimi.ingsw.client.GUI;
+import it.polimi.ingsw.client.view.gui.GuiView;
 import it.polimi.ingsw.server.model.StudentSet;
 import it.polimi.ingsw.server.model.enums.PeopleColor;
 import it.polimi.ingsw.utils.network.Network;
@@ -17,10 +17,10 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.ResourceBundle;
 
-import static it.polimi.ingsw.client.GUI.*;
+import static it.polimi.ingsw.client.view.gui.GuiView.*;
 
 public class JesterAndMinstrell implements Initializable {
-    private final GUI gui = new GUI();
+    private final GuiView guiView = new GuiView();
 
     @FXML
     private Label start = new Label();
@@ -106,6 +106,7 @@ public class JesterAndMinstrell implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        windowNode = student11a;
         notice.setText("");
         ArrayList<ImageView> students1a = new ArrayList<>(Arrays.asList(student11a, student21a, student31a, student41a, student51a));
         ArrayList<ImageView> students2a = new ArrayList<>(Arrays.asList(student12a, student22a, student32a, student42a, student52a));
@@ -114,8 +115,8 @@ public class JesterAndMinstrell implements Initializable {
         ArrayList<ImageView> students2b = new ArrayList<>(Arrays.asList(student12b, student22b, student32b, student42b, student52b));
         ArrayList<ImageView> students3b = new ArrayList<>(Arrays.asList(student13b, student23b, student33b, student43b, student53b));
 
-        StudentSet entranceSet = this.gui.getClientModel().getServermodel().getcurrentPlayer().getSchoolBoard().getEntranceSpace();
-        StudentSet dinnerSet = this.gui.getClientModel().getServermodel().getcurrentPlayer().getSchoolBoard().getDinnerTable();
+        StudentSet entranceSet = this.guiView.getClientModel().getServermodel().getcurrentPlayer().getSchoolBoard().getEntranceSpace();
+        StudentSet dinnerSet = this.guiView.getClientModel().getServermodel().getcurrentPlayer().getSchoolBoard().getDinnerTable();
         tempColor = null;
         initializeArrays();
 
@@ -137,7 +138,7 @@ public class JesterAndMinstrell implements Initializable {
         } else {
             start.setText("Jester's set");
             explanation.setText("You may take up to 3 students from this card and replace them with the same number of students from your entrance");
-            StudentSet jesterSet = this.gui.getClientModel().getServermodel().getTable().getJesterSet();
+            StudentSet jesterSet = this.guiView.getClientModel().getServermodel().getTable().getJesterSet();
             character.setToBlackAndWhite(students1a, jesterSet, 0); // JESTER SET + ENTRANCE
             character.setToBlackAndWhite(students2a, jesterSet, 1);
             character.setToBlackAndWhite(students3a, jesterSet, 2);
@@ -214,26 +215,26 @@ public class JesterAndMinstrell implements Initializable {
         entranceJester.removeAll(Collections.singletonList(null));
         if (isCardUsed) {
             notice.setText("You can use only one card at a time!");
-        } else if (this.gui.getClientModel().getServermodel().getcurrentPlayer().getCoins() < currentCharacter.getCost()) {
+        } else if (this.guiView.getClientModel().getServermodel().getcurrentPlayer().getCoins() < currentCharacter.getCost()) {
             notice.setText("You don't have enough coins! :(");
         } else if (entranceMinstrell.size() != diningMinstrell.size() || jester.size() != entranceJester.size()) {
             notice.setText("You must select the same quantity of students! Please try again.");
             initializeArrays();
         } else {
-            this.gui.getClientModel().setTypeOfRequest(currentCharacter.getName());
-            this.gui.getClientModel().setResponse(true); //lo flaggo come messaggio di risposta
-            this.gui.getClientModel().setPingMessage(false);
+            this.guiView.getClientModel().setTypeOfRequest(currentCharacter.getName());
+            this.guiView.getClientModel().setResponse(true); //lo flaggo come messaggio di risposta
+            this.guiView.getClientModel().setPingMessage(false);
             if (currentCharacter.getName().equals("MINSTRELL")) {
-                this.gui.getClientModel().setColors1(entranceMinstrell);
-                this.gui.getClientModel().setColors2(diningMinstrell);
+                this.guiView.getClientModel().setColors1(entranceMinstrell);
+                this.guiView.getClientModel().setColors2(diningMinstrell);
             } else {
-                this.gui.getClientModel().setColors1(entranceJester);
-                this.gui.getClientModel().setColors2(jester);
+                this.guiView.getClientModel().setColors1(entranceJester);
+                this.guiView.getClientModel().setColors2(jester);
             }
             Gson gson = new Gson();
-            Network.send(gson.toJson(this.gui.getClientModel()));
+            Network.send(gson.toJson(this.guiView.getClientModel()));
             isCardUsed = true;
-            this.gui.closeWindow(mouseEvent);
+            this.guiView.closeWindow(mouseEvent);
         }
 
     }

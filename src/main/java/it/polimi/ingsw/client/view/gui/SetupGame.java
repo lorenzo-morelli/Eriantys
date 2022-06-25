@@ -1,6 +1,5 @@
 package it.polimi.ingsw.client.view.gui;
 
-import it.polimi.ingsw.client.GUI;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -8,10 +7,10 @@ import javafx.scene.control.Label;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static it.polimi.ingsw.client.GUI.currNode;
+import static it.polimi.ingsw.client.view.gui.GuiView.currNode;
 
 public class SetupGame implements Initializable {
-    private final GUI gui = new GUI();
+    private final GuiView guiView = new GuiView();
     @FXML
     private Label connectedOnIp = new Label();
     @FXML
@@ -28,42 +27,42 @@ public class SetupGame implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         currNode = otherPlayersLabel;
-        this.connectedOnIp.setText("Connected on IP: " + this.gui.getClientModel().getIp());
-        this.connectedOnPort.setText("Connected on Port: " + this.gui.getClientModel().getPort());
+        this.connectedOnIp.setText("Connected on IP: " + this.guiView.getClientModel().getIp());
+        this.connectedOnPort.setText("Connected on Port: " + this.guiView.getClientModel().getPort());
         this.gameModeLabel.setText("");
         this.numberOfPlayersLabel.setText("");
         otherPlayersLabel.setText("");
     }
 
     public void set2Players() {
-        this.gui.getClientModel().setNumofplayer(2);
-        numberOfPlayersLabel.setText("Number of players: " + this.gui.getClientModel().getNumofplayer());
+        this.guiView.getClientModel().setNumofplayer(2);
+        numberOfPlayersLabel.setText("Number of players: " + this.guiView.getClientModel().getNumofplayer());
     }
 
     public void set3Players() {
-        this.gui.getClientModel().setNumofplayer(3);
-        numberOfPlayersLabel.setText("Number of players: " + this.gui.getClientModel().getNumofplayer());
+        this.guiView.getClientModel().setNumofplayer(3);
+        numberOfPlayersLabel.setText("Number of players: " + this.guiView.getClientModel().getNumofplayer());
     }
 
     public void set4Players() {
-        this.gui.getClientModel().setNumofplayer(4);
-        numberOfPlayersLabel.setText("Number of players: " + this.gui.getClientModel().getNumofplayer());
+        this.guiView.getClientModel().setNumofplayer(4);
+        numberOfPlayersLabel.setText("Number of players: " + this.guiView.getClientModel().getNumofplayer());
     }
 
     public void setPrincipiant() {
-        this.gui.getClientModel().setGameMode("PRINCIPIANT");
+        this.guiView.getClientModel().setGameMode("PRINCIPIANT");
         this.gameModeLabel.setText("Game mode: principiant");
     }
 
     public void setExpert() {
-        this.gui.getClientModel().setGameMode("EXPERT");
+        this.guiView.getClientModel().setGameMode("EXPERT");
         this.gameModeLabel.setText("Game mode: expert");
     }
 
     public void start() {
-        if (this.gui.getClientModel().getNumofplayer() != 2 && this.gui.getClientModel().getNumofplayer() != 3 && this.gui.getClientModel().getNumofplayer() != 4) {
+        if (this.guiView.getClientModel().getNumofplayer() != 2 && this.guiView.getClientModel().getNumofplayer() != 3 && this.guiView.getClientModel().getNumofplayer() != 4) {
             this.otherPlayersLabel.setText("ERROR: Please select a number of players!");
-        } else if (this.gui.getClientModel().getGameMode() == null) {
+        } else if (this.guiView.getClientModel().getGameMode() == null) {
             this.otherPlayersLabel.setText("ERROR: Please select a game mode!");
         } else {
             this.otherPlayersLabel.setText("...Waiting for other players to join the game...");

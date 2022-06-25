@@ -1,6 +1,6 @@
 package it.polimi.ingsw.client.view.gui.windows;
 
-import it.polimi.ingsw.client.GUI;
+import it.polimi.ingsw.client.view.gui.GuiView;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.utils.network.Network;
 import javafx.fxml.FXML;
@@ -12,10 +12,10 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
-import static it.polimi.ingsw.client.GUI.currNode;
+import static it.polimi.ingsw.client.view.gui.GuiView.currNode;
 
 public class EndGame implements Initializable {
-    private final GUI gui = new GUI();
+    private final GuiView guiView = new GuiView();
     @FXML
     private Label winLabel;
     @FXML
@@ -24,10 +24,10 @@ public class EndGame implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         currNode = winLabel;
-        Player me = this.gui.getClientModel().getServermodel().getPlayers().stream()
+        Player me = this.guiView.getClientModel().getServermodel().getPlayers().stream()
                 .filter(player -> player.getIp().equals(Network.getMyIp())).collect(Collectors.toList()).get(0);
-        String result = this.gui.getClientModel().getGameWinner();
-        int numOfPlayers = this.gui.getClientModel().getServermodel().getNumberOfPlayers();
+        String result = this.guiView.getClientModel().getGameWinner();
+        int numOfPlayers = this.guiView.getClientModel().getServermodel().getNumberOfPlayers();
         if (result.equals("PAREGGIO")) {
             winLabel.setText("TIE!");
             winnerName.setText("It's a tie and everybody won! ;)");
@@ -55,7 +55,7 @@ public class EndGame implements Initializable {
      */
     @FXML
     private void toMainMenu() throws IOException {
-        this.gui.changeScene("MainMenu");
+        this.guiView.changeScene("MainMenu");
     }
 }
 
