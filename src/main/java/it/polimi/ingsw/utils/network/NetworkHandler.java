@@ -179,8 +179,12 @@ public class NetworkHandler {
                 // It therefore goes through the vector
                 // and uses each object's sendText method.
                 ////System.out.println("Sending message to all "+port connections.size()+" clients: "+text);
-                for (ClientConnection clientConnection : clientConnections) {
-                    clientConnection.sendText(text);
+                int i;
+                for (i = 0; i < clientConnections.size(); i++) {
+                    clientConnections.get(i).sendText(text);
+                }
+                if (i == 0) {
+                    System.out.println("No one connected");
                 }
                 // restarting Heartbeat after last message that was sent.
                 // No need to send heartbeat if there are lots of network messages being sent

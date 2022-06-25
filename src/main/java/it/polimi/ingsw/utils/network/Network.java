@@ -97,6 +97,9 @@ public class Network implements ActionListener {
         Network.port.setText(port);
         serverButton.doClick();
         serverListening = true;
+        if(instance!=null){
+            System.out.println("Network ready!");
+        }
     }
 
     /**
