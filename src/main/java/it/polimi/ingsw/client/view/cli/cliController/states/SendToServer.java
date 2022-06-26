@@ -53,8 +53,6 @@ public class SendToServer extends State{
                 System.exit(0);
             }
 
-
-            // se il messaggio è rivolto a me allora ho ricevuto l'ack, altrimenti reinvio e riattendo
             if (json.fromJson(ack.getParameter(0), ClientModel.class).getClientIdentity() == clientModel.getClientIdentity()) {
                 responseReceived = true;
             }

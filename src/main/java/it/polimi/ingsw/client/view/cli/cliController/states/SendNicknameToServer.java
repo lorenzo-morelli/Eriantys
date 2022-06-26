@@ -48,7 +48,6 @@ public class SendNicknameToServer extends State {
         //System.out.println(json.toJson(clientModel));
         Network.send(json.toJson(clientModel));
         try {
-            // Attendi la ricezione dell'ack
             checkAck();
         } catch (InterruptedException e) {
             e.printStackTrace();

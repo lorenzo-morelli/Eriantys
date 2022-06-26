@@ -21,15 +21,15 @@ public class ReadFromTerminal extends State {
     final IncorrectNumberOfParameters numberOfParametersIncorrect;
     final Event insertedParameters;
 
-    public ReadFromTerminal(View view, ClientModel clientModel, Controller controller, int numofparameters, String type) throws IOException {
-        super("[STATO di lettura di " + numofparameters + " parametri da terminale interpretati come :"+ type+ "]");
+    public ReadFromTerminal(View view, ClientModel clientModel, Controller controller, int numOfParameters, String type) throws IOException {
+        super("[STATO di lettura di " + numOfParameters + " parametri da terminale interpretati come :"+ type+ "]");
         this.view = view;
         this.clientModel = clientModel;
         this.type = type;
 
         insertedParameters = new Event("Inserimento da terminale di tipo " +type );
-        numberOfParametersIncorrect = new IncorrectNumberOfParameters(numofparameters);
-        fromTerminal = new ParametersFromTerminal(clientModel, numofparameters);
+        numberOfParametersIncorrect = new IncorrectNumberOfParameters(numOfParameters);
+        fromTerminal = new ParametersFromTerminal(clientModel, numOfParameters);
         insertedParameters.setStateEventListener(controller);
     }
 

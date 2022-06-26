@@ -8,8 +8,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * L'evento scatta quando l'utente NON inserisce una delle parole
- * indicate nell'ArrayList toListen
+ * The event is triggered when the user DOES NOT enter one of the words
+ * indicated in the ArrayList toListen
  * @author Fernando
  */
 public class NotRecognizedSetOfStrings extends Event implements Observer {

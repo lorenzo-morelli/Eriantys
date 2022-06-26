@@ -66,7 +66,7 @@ public class CreateGame extends State {
             c.setAmIfirst(false);
             i++;
         }
-        model.randomschedulePlayers();
+        model.randomSchedulePlayers();
         serverController.setModel(model);
 
         Thread t = new Thread() {

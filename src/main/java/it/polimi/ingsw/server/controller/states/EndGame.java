@@ -55,7 +55,7 @@ public class EndGame extends State {
 
                 ClientModel currentPlayerData = connectionModel.findPlayer(model.getPlayers().get(h).getNickname());
                 currentPlayerData.setTypeOfRequest("DISCONNECTION");
-                currentPlayerData.setServermodel(model);
+                currentPlayerData.setServerModel(model);
                 currentPlayerData.setResponse(false);
 
                 Network.send(json.toJson(currentPlayerData));
@@ -74,7 +74,7 @@ public class EndGame extends State {
             winner= model.team_winner();
         }
         else {
-            winner= model.player_winner();
+            winner= model.playerWinner();
         }
 
         for(int i = 0; i< model.getPlayers().size(); i++){
@@ -83,7 +83,7 @@ public class EndGame extends State {
 
             currentPlayerData.setGameWinner(winner);
             currentPlayerData.setTypeOfRequest("GAMEEND");
-            currentPlayerData.setServermodel(model);
+            currentPlayerData.setServerModel(model);
             currentPlayerData.setResponse(false);
 
             Network.send(json.toJson(currentPlayerData));

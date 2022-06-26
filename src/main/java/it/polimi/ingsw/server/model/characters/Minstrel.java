@@ -21,10 +21,10 @@ public class Minstrel extends CharacterCard{
         player.reduceCoin(getCost());
         improveCost();
         for(int i=0; i<colorsOfDinner.size();i++) {
-            player.getSchoolBoard().getEntranceSpace().removestudent(1, colorsOfEntrance.get(i));
-            player.getSchoolBoard().getEntranceSpace().addstudents(1, colorsOfDinner.get(i));
-            player.getSchoolBoard().getDinnerTable().removestudent(1,colorsOfDinner.get(i));
-            player.getSchoolBoard().getDinnerTable().addstudents(1,colorsOfEntrance.get(i));
+            player.getSchoolBoard().getEntranceSpace().removeStudent(1, colorsOfEntrance.get(i));
+            player.getSchoolBoard().getEntranceSpace().addStudents(1, colorsOfDinner.get(i));
+            player.getSchoolBoard().getDinnerTable().removeStudent(1,colorsOfDinner.get(i));
+            player.getSchoolBoard().getDinnerTable().addStudents(1,colorsOfEntrance.get(i));
         }
         for(PeopleColor color: PeopleColor.values()){
             table.checkProfessor(color,players);

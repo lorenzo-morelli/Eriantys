@@ -86,7 +86,7 @@ public class CloudPhase extends State {
     public IEvent entryAction(IEvent cause) throws Exception {
         Model model = serverController.getModel();
 
-        Player currentPlayer = model.getcurrentPlayer();
+        Player currentPlayer = model.getCurrentPlayer();
         disconnected=false;
         fromPing=false;
 
@@ -100,7 +100,7 @@ public class CloudPhase extends State {
                 }
             }
 
-            if (model.getcurrentPlayer().equals(model.getPlayers().get(model.getPlayers().size() - 1))) {
+            if (model.getCurrentPlayer().equals(model.getPlayers().get(model.getPlayers().size() - 1))) {
                 GoToEndTurn().fireStateEvent();
             } else {
                 model.nextPlayer();
@@ -110,7 +110,7 @@ public class CloudPhase extends State {
         }
 
         ClientModel currentPlayerData = connectionModel.findPlayer(currentPlayer.getNickname());
-        currentPlayerData.setServermodel(model);
+        currentPlayerData.setServerModel(model);
         currentPlayerData.setTypeOfRequest("CHOOSECLOUDS");
         currentPlayerData.setPingMessage(false);
         currentPlayerData.setResponse(false);
@@ -123,7 +123,7 @@ public class CloudPhase extends State {
         }
 
         if(!checkDisconnection){
-            if (model.getcurrentPlayer().equals(model.getPlayers().get(model.getPlayers().size() - 1))) {
+            if (model.getCurrentPlayer().equals(model.getPlayers().get(model.getPlayers().size() - 1))) {
                 GoToEndTurn().fireStateEvent();
             } else {
                 model.nextPlayer();
@@ -219,7 +219,7 @@ public class CloudPhase extends State {
                             ClientModel Data = connectionModel.findPlayer(p.getNickname());
 
                             Data.setTypeOfRequest("TRYTORECONNECT");
-                            Data.setServermodel(model);
+                            Data.setServerModel(model);
                             Data.setResponse(false);
                             Data.setPingMessage(false);
 
@@ -239,7 +239,7 @@ public class CloudPhase extends State {
             }
         }
 
-        if (model.getcurrentPlayer().equals(model.getPlayers().get(model.getPlayers().size() - 1))) {
+        if (model.getCurrentPlayer().equals(model.getPlayers().get(model.getPlayers().size() - 1))) {
             GoToEndTurn().fireStateEvent();
         } else {
             model.nextPlayer();

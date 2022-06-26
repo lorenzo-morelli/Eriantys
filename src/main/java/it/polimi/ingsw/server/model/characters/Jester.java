@@ -23,10 +23,10 @@ public class Jester extends CharacterCard{
         player.reduceCoin(getCost());
         improveCost();
         for(int i=0; i<colorsOfJester.size();i++) {
-            player.getSchoolBoard().getEntranceSpace().removestudent(1, colorsOfEntrance.get(i));
-            player.getSchoolBoard().getEntranceSpace().addstudents(1, colorsOfJester.get(i));
-            set.removestudent(1,colorsOfJester.get(i));
-            set.addstudents(1,colorsOfEntrance.get(i));
+            player.getSchoolBoard().getEntranceSpace().removeStudent(1, colorsOfEntrance.get(i));
+            player.getSchoolBoard().getEntranceSpace().addStudents(1, colorsOfJester.get(i));
+            set.removeStudent(1,colorsOfJester.get(i));
+            set.addStudents(1,colorsOfEntrance.get(i));
         }
     }
 

@@ -25,6 +25,7 @@ import static java.lang.Thread.sleep;
  * teammate, to correctly create the 4 players game
  */
 
+@SuppressWarnings("ALL")
 public class AskForTeamMate extends State {
     private final Event teamMateChosen;
     private Model model;
@@ -99,7 +100,7 @@ public class AskForTeamMate extends State {
         model.getPlayers().add(new Player(received.getNicknames().get(2), connectionModel.findPlayer(received.getNicknames().get(2)).getMyIp(),1, model,false));
         model.getPlayers().add(new Player(received.getNicknames().get(1), connectionModel.findPlayer(received.getNicknames().get(1)).getMyIp(),2, model,false));
         model.getPlayers().add(new Player(received.getNicknames().get(0), connectionModel.findPlayer(received.getNicknames().get(0)).getMyIp(),2, model,false));
-        model.randomschedulePlayers();
+        model.randomSchedulePlayers();
 
 
         Thread t= new Thread(){

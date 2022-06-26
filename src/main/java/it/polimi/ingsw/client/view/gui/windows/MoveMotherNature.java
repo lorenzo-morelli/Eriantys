@@ -30,9 +30,9 @@ public class MoveMotherNature implements Initializable {
         windowNode = islandGrid;
         Position pos = new Position();
         notice.setText("");
-        ArrayList<Island> islands = this.guiView.getClientModel().getServermodel().getTable().getIslands();
-        int motherNaturePos = this.guiView.getClientModel().getServermodel().getTable().getMotherNaturePosition();
-        int moves = this.guiView.getClientModel().getServermodel().getcurrentPlayer().getChoosedCard().getMoves();
+        ArrayList<Island> islands = this.guiView.getClientModel().getServerModel().getTable().getIslands();
+        int motherNaturePos = this.guiView.getClientModel().getServerModel().getTable().getMotherNaturePosition();
+        int moves = this.guiView.getClientModel().getServerModel().getCurrentPlayer().getChoosedCard().getMoves();
         distance = 0;
         islands.forEach(island -> {
             distance = islands.indexOf(island) - motherNaturePos;
@@ -78,7 +78,7 @@ public class MoveMotherNature implements Initializable {
                 } else {
                     this.guiView.getClientModel().setTypeOfRequest("MOTHER");
                     this.guiView.getClientModel().setChoosedMoves(distance);
-                    this.guiView.getClientModel().setResponse(true); //lo flaggo come messaggio di risposta
+                    this.guiView.getClientModel().setResponse(true);
                     this.guiView.getClientModel().setPingMessage(false);
                     Gson gson = new Gson();
                     Network.send(gson.toJson(this.guiView.getClientModel()));

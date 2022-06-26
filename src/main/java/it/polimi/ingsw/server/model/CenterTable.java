@@ -191,22 +191,22 @@ public class CenterTable {
     }
 
     public void loadIsland(Player player, PeopleColor color, int index_island) {
-        player.getSchoolBoard().getEntranceSpace().removestudent(1, color);
-        islands.get(index_island).getInhabitants().addstudents(1, color);
+        player.getSchoolBoard().getEntranceSpace().removeStudent(1, color);
+        islands.get(index_island).getInhabitants().addStudents(1, color);
     }
 
     public void checkProfessor(PeopleColor color, ArrayList<Player> players) {
         int max = 0;
         Player moreInfluenced = null;
         for (Player player : players) {
-            if (player.getSchoolBoard().getDinnerTable().numStudentsbycolor(color) > max) {
-                max = player.getSchoolBoard().getDinnerTable().numStudentsbycolor(color);
+            if (player.getSchoolBoard().getDinnerTable().numStudentsByColor(color) > max) {
+                max = player.getSchoolBoard().getDinnerTable().numStudentsByColor(color);
                 moreInfluenced = player;
-            } else if (player.getSchoolBoard().getDinnerTable().numStudentsbycolor(color) == max) {
+            } else if (player.getSchoolBoard().getDinnerTable().numStudentsByColor(color) == max) {
                 moreInfluenced = null;
             }
         }
-        if (farmerEffect != null && farmerEffect.getSchoolBoard().getDinnerTable().numStudentsbycolor(color) == max)
+        if (farmerEffect != null && farmerEffect.getSchoolBoard().getDinnerTable().numStudentsByColor(color) == max)
             moreInfluenced = farmerEffect;
         if (moreInfluenced != null) changeProfessor(moreInfluenced, color);
     }
@@ -219,7 +219,7 @@ public class CenterTable {
                 }
             }
         }
-        islands.get(index_island).controllIsland(influence_player);
+        islands.get(index_island).controlIsland(influence_player);
     }
 
     public void conquestIsland(int index_island, ArrayList<Team> teams, Team influence_team) {
@@ -231,13 +231,13 @@ public class CenterTable {
                 }
             }
         }
-        islands.get(index_island).controllIsland(influence_team);
+        islands.get(index_island).controlIsland(influence_team);
     }
 
     public void mergeIsland(int index_1, int index_2) {
         islands.get(index_1).setNumberOfTowers(islands.get(index_1).getNumberOfTowers() + islands.get(index_2).getNumberOfTowers());
         for (PeopleColor Color : PeopleColor.values()) {
-            islands.get(index_1).getInhabitants().addstudents(islands.get(index_2).getInhabitants().numStudentsbycolor(Color), Color);
+            islands.get(index_1).getInhabitants().addStudents(islands.get(index_2).getInhabitants().numStudentsByColor(Color), Color);
         }
         islands.get(index_1).setBlocked(islands.get(index_1).isBlocked());
         islands.remove(index_2);

@@ -173,13 +173,13 @@ public class CliView implements View {
 
         switch (networkClientModel.getTypeOfRequest()) {
             case "TRYTORECONNECT":
-                System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO: \n" + "IL SERVER STA TENTANDO DI RICONNETTERSI A MINIMO UN GIOCATORE PER PERMETTERE CHE LA PARTITA CONTINUI" + "\n\nMOSSE ALTRI GIOCATORI: " + getResponse()));
+                System.out.println(networkClientModel.getServerModel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO: \n" + "IL SERVER STA TENTANDO DI RICONNETTERSI A MINIMO UN GIOCATORE PER PERMETTERE CHE LA PARTITA CONTINUI" + "\n\nMOSSE ALTRI GIOCATORI: " + getResponse()));
                 break;
             case "DISCONNECTION":
-                System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO: \n" + "LA PARTITA E' TERMINATA CAUSA DISCONNESSIONE, NESSUN GIOCATORE SI E' RICONNESSO..." + "\n\nMOSSE ALTRI GIOCATORI: " + getResponse()));
+                System.out.println(networkClientModel.getServerModel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO: \n" + "LA PARTITA E' TERMINATA CAUSA DISCONNESSIONE, NESSUN GIOCATORE SI E' RICONNESSO..." + "\n\nMOSSE ALTRI GIOCATORI: " + getResponse()));
                 break;
             case "CHOOSEASSISTANTCARD":
-                System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO: \n" + "E' IL TUO TURNO - ASSISTENT CARD PHASE" + "\n\nMOSSE ALTRI GIOCATORI: " + getResponse()));
+                System.out.println(networkClientModel.getServerModel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO: \n" + "E' IL TUO TURNO - ASSISTENT CARD PHASE" + "\n\nMOSSE ALTRI GIOCATORI: " + getResponse()));
                 System.out.println("Scegli una Carta Assistente");
                 for (AssistantCard a : networkClientModel.getDeck()) {
                     System.out.println("valore: " + (int) a.getValues() + "  mosse: " + a.getMoves());
@@ -204,7 +204,7 @@ public class CliView implements View {
                     return;
                 }
                 networkClientModel.setCardChoosedValue(Float.parseFloat(CommandPrompt.gotFromTerminal()));
-                networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                networkClientModel.setResponse(true);
                 networkClientModel.setPingMessage(false);
                 networkClientModel.setFromTerminal(parsedStrings);
                 Gson json = new Gson();
@@ -212,8 +212,8 @@ public class CliView implements View {
 
                 break;
             case "CHOOSEWHERETOMOVESTUDENTS":
-                if (networkClientModel.getServermodel().getGameMode().equals(GameMode.EXPERT) && networkClientModel.getServermodel().getTable().getCharacters().stream().anyMatch(j -> j.getCost() <= networkClientModel.getServermodel().getcurrentPlayer().getCoins() && !isUsed)) {
-                    System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO: \n" + "E' IL TUO TURNO - STUDENT PHASE" + "\n\nMOSSE ALTRI GIOCATORI: " + getResponse()));
+                if (networkClientModel.getServerModel().getGameMode().equals(GameMode.EXPERT) && networkClientModel.getServerModel().getTable().getCharacters().stream().anyMatch(j -> j.getCost() <= networkClientModel.getServerModel().getCurrentPlayer().getCoins() && !isUsed)) {
+                    System.out.println(networkClientModel.getServerModel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO: \n" + "E' IL TUO TURNO - STUDENT PHASE" + "\n\nMOSSE ALTRI GIOCATORI: " + getResponse()));
 
                     CommandPrompt.ask("Scegli il colore dello studente che desideri muovere OPPURE inserisci CARD per usare una carta personaggio", "RED or GREEN or BLUE or YELLOW or PINK    or CARD> ");
 
@@ -230,8 +230,8 @@ public class CliView implements View {
                     }
 
                     PeopleColor choosedColor = null;
-                    String terminalinput = CommandPrompt.gotFromTerminal();
-                    switch (terminalinput) {
+                    String terminalInput = CommandPrompt.gotFromTerminal();
+                    switch (terminalInput) {
                         case "RED":
                             choosedColor = PeopleColor.RED;
                             break;
@@ -249,70 +249,70 @@ public class CliView implements View {
                             break;
                         default:
                             System.out.println("\n\n\n\nScegli la carta che vorresti utilizzare: \n");
-                            ArrayList<String> avaiable = new ArrayList<>();
-                            for (int i = 0; i < networkClientModel.getServermodel().getTable().getCharacters().size(); i++) {
-                                if (networkClientModel.getServermodel().getTable().getCharacters().get(i).getCost() <= networkClientModel.getServermodel().getcurrentPlayer().getCoins()) {
-                                    if (networkClientModel.getServermodel().getTable().getCharacters().get(i).getName().equals("MONK")) {
+                            ArrayList<String> available = new ArrayList<>();
+                            for (int i = 0; i < networkClientModel.getServerModel().getTable().getCharacters().size(); i++) {
+                                if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getCost() <= networkClientModel.getServerModel().getCurrentPlayer().getCoins()) {
+                                    if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("MONK")) {
                                         System.out.println("MONK - EFFETTO: Prendi uno studente da questa carta e piazzalo su un isola a tua scelta.\n COMMAND: Inserisci MONK , colore scelto e numero dell'isola separati da uno spazio.\n\n");
-                                        avaiable.add("MONK");
+                                        available.add("MONK");
                                     }
-                                    if (networkClientModel.getServermodel().getTable().getCharacters().get(i).getName().equals("PRINCESS")) {
+                                    if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("PRINCESS")) {
                                         System.out.println("PRINCESS - EFFETTO: Prendi uno studente da questa carta e piazzalo nella tua Sala.\nCOMMAND: Inserisci PRINCESS e colore scelto separati da uno spazio.\n\n");
-                                        avaiable.add("PRINCESS");
+                                        available.add("PRINCESS");
                                     }
-                                    if (networkClientModel.getServermodel().getTable().getCharacters().get(i).getName().equals("MUSHROOMHUNTER")) {
-                                        System.out.println("MUSHROOMHUNTER - EFFETTO: Scelgi un colore di studente; in questo turno, durante il calcolo dell'influenza, quel colore non fornisce influenza.\n COMMAND: Inserisci MUSHROOMHUNTER e colore scelto separati da uno spazio.\n\n");
-                                        avaiable.add("MUSHROOMHUNTER");
+                                    if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("MUSHROOMHUNTER")) {
+                                        System.out.println("MUSHROOMHUNTER - EFFETTO: Scegli un colore di studente; in questo turno, durante il calcolo dell'influenza, quel colore non fornisce influenza.\n COMMAND: Inserisci MUSHROOMHUNTER e colore scelto separati da uno spazio.\n\n");
+                                        available.add("MUSHROOMHUNTER");
                                     }
-                                    if (networkClientModel.getServermodel().getTable().getCharacters().get(i).getName().equals("THIEF")) {
+                                    if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("THIEF")) {
                                         System.out.println("THIEF - EFFETTO: Scegli un colore di studente; ogni giocatore (incluso te) deve rimettere nel sacchetto tre studenti di quel colore presenti nella Sala (o tutti quelli che ha se ne avesse meno di tre).\nCOMMAND: Inserisci THIEF e colore scelto separati da uno spazio\n\n");
-                                        avaiable.add("THIEF");
+                                        available.add("THIEF");
                                     }
-                                    if (networkClientModel.getServermodel().getTable().getCharacters().get(i).getName().equals("FARMER")) {
+                                    if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("FARMER")) {
                                         System.out.println("FARMER - EFFETTO: Durante questo turno, prendi il controllo dei professori anche se nella tua sala hai lo stesso numero di studenti del giocatore che li controlla in quel momento.\nCOMMAND: inserisci FARMER.\n\n");
-                                        avaiable.add("FARMER");
+                                        available.add("FARMER");
                                     }
-                                    if (networkClientModel.getServermodel().getTable().getCharacters().get(i).getName().equals("CENTAUR")) {
+                                    if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("CENTAUR")) {
                                         System.out.println("CENTAUR - EFFETTO: Durante il conteggio di un influenza dell'isola le torri presenti non vengono calcolate.\nCOMMAND: inserisci CENTAUR.\n\n");
-                                        avaiable.add("CENTAUR");
+                                        available.add("CENTAUR");
                                     }
-                                    if (networkClientModel.getServermodel().getTable().getCharacters().get(i).getName().equals("KNIGHT")) {
+                                    if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("KNIGHT")) {
                                         System.out.println("KNIGHT - EFFETTO: In questo turno, durante il calcolo dell'influenza, hai due punti di influenza addizionali.\nCOMMAND: inserisci KNIGHT.\n\n");
-                                        avaiable.add("KNIGHT");
+                                        available.add("KNIGHT");
                                     }
-                                    if (networkClientModel.getServermodel().getTable().getCharacters().get(i).getName().equals("POSTMAN")) {
+                                    if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("POSTMAN")) {
                                         System.out.println("POSTMAN - EFFETTO: Puoi muovere madre natura fino a due isole addizionali rispetto a quanto indicato sulla carta assistente che hai giocato.\nCOMMAND: inserisci POSTMAN.\n\n");
-                                        avaiable.add("POSTMAN");
+                                        available.add("POSTMAN");
                                     }
-                                    if (networkClientModel.getServermodel().getTable().getCharacters().get(i).getName().equals("GRANNY")) {
-                                        System.out.println("GRANNY - EFFETTO: Piazza un divieto su un isola a tua scelta. La prima volta che madre natura termina il suo movimento li l'influenza non verrà calcolata e il divieto verrà reinserito in quetsa carta.\nCOMMAND: inserisci GRANNY e numero dell'isola separati da uno spazio.\n\n");
-                                        avaiable.add("GRANNY");
+                                    if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("GRANNY")) {
+                                        System.out.println("GRANNY - EFFETTO: Piazza un divieto su un isola a tua scelta. La prima volta che madre natura termina il suo movimento li l'influenza non verrà calcolata e il divieto verrà reinserito in questa carta.\nCOMMAND: inserisci GRANNY e numero dell'isola separati da uno spazio.\n\n");
+                                        available.add("GRANNY");
                                     }
-                                    if (networkClientModel.getServermodel().getTable().getCharacters().get(i).getName().equals("HERALD")) {
-                                        System.out.println("HERALD - EFFETTO: Scegli un isola e calcola la maggioranza come se madre natura avesse terminato il suo movimento li. In questo turno madre natura si muovera come di consueto e nell'isola dove terminerà il suo movimento la maggioranza verrà normalmente calcolata.\nCOMMAND: inserisci HERALD e numero dell'isola separati da uno spazio.\n\n");
-                                        avaiable.add("HERALD");
+                                    if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("HERALD")) {
+                                        System.out.println("HERALD - EFFETTO: Scegli un isola e calcola la maggioranza come se madre natura avesse terminato il suo movimento li. In questo turno madre natura si muoverà come di consueto e nell'isola dove terminerà il suo movimento la maggioranza verrà normalmente calcolata.\nCOMMAND: inserisci HERALD e numero dell'isola separati da uno spazio.\n\n");
+                                        available.add("HERALD");
                                     }
-                                    if (networkClientModel.getServermodel().getTable().getCharacters().get(i).getName().equals("JESTER")) {
+                                    if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("JESTER")) {
                                         System.out.println("JESTER - EFFETTO: Puoi prendere fino a 3 studenti da questa carta e scambiarli con altrettanti studenti presenti nel tuo Ingresso.\nCOMMAND: inserisci JESTER ,di seguito i colori da scambiare da Ingresso e poi i colori da scambiare da questa Carta, tutti separati da uno spazio (il numero di colori di uno e dell'altro deve essere lo stesso).\n\n");
-                                        avaiable.add("JESTER");
+                                        available.add("JESTER");
                                     }
-                                    if (networkClientModel.getServermodel().getTable().getCharacters().get(i).getName().equals("MINSTRELL")) {
+                                    if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("MINSTRELL")) {
                                         System.out.println("MINSTRELL - EFFETTO: Puoi scambiare fra loro fino a due studenti presenti nella tua Sala e nel tuo Ingresso.\nCOMMAND: Inserisci MINSTRELL ,di seguito i colori da scambiare da Ingresso e poi i colori da scambiare da Sala tutti separati da uno spazio (il numero di colori di uno e dell'altro deve essere lo stesso).\n\n");
-                                        avaiable.add("MINSTRELL");
+                                        available.add("MINSTRELL");
                                     }
                                 }
                             }
                             CommandPrompt.ask("Scegliere la carta personaggio seguendo le indicazioni, un qualsiasi altra riga se si vuole tornare indietro", "CHARACTER>");
                             parsedStrings =
                                     new ArrayList<>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
-                            if (!avaiable.contains(parsedStrings.get(0))) {
+                            if (!available.contains(parsedStrings.get(0))) {
                                 requestToMe();
                                 return;
                             }
                             CharacterCard modelCard = null;
-                            for (int i = 0; i < networkClientModel.getServermodel().getTable().getCharacters().size(); i++) {
-                                if (networkClientModel.getServermodel().getTable().getCharacters().get(i).getName().equals(parsedStrings.get(0))) {
-                                    modelCard = networkClientModel.getServermodel().getTable().getCharacters().get(i);
+                            for (int i = 0; i < networkClientModel.getServerModel().getTable().getCharacters().size(); i++) {
+                                if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals(parsedStrings.get(0))) {
+                                    modelCard = networkClientModel.getServerModel().getTable().getCharacters().get(i);
                                 }
                             }
                             switch (parsedStrings.get(0)) {
@@ -343,7 +343,7 @@ public class CliView implements View {
                                             break;
                                     }
                                     networkClientModel.setTypeOfRequest(parsedStrings.get(0));
-                                    networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                                    networkClientModel.setResponse(true);
                                     networkClientModel.setPingMessage(false);
                                     networkClientModel.setChoosedColor(color);
                                     json = new Gson();
@@ -351,7 +351,7 @@ public class CliView implements View {
                                     Network.send(json.toJson(networkClientModel));
                                     break;
                                 case "MONK":
-                                    if (!(parsedStrings.size() == 3) || !(Objects.equals(parsedStrings.get(1), "RED") || Objects.equals(parsedStrings.get(1), "PINK") || Objects.equals(parsedStrings.get(1), "GREEN") || Objects.equals(parsedStrings.get(1), "YELLOW") || Objects.equals(parsedStrings.get(1), "BLUE")) || (Integer.parseInt(parsedStrings.get(2)) < 1 || Integer.parseInt(parsedStrings.get(2)) > networkClientModel.getServermodel().getTable().getIslands().size())) {
+                                    if (!(parsedStrings.size() == 3) || !(Objects.equals(parsedStrings.get(1), "RED") || Objects.equals(parsedStrings.get(1), "PINK") || Objects.equals(parsedStrings.get(1), "GREEN") || Objects.equals(parsedStrings.get(1), "YELLOW") || Objects.equals(parsedStrings.get(1), "BLUE")) || (Integer.parseInt(parsedStrings.get(2)) < 1 || Integer.parseInt(parsedStrings.get(2)) > networkClientModel.getServerModel().getTable().getIslands().size())) {
                                         System.out.println("formato non valido, scelta carta rifiutata !!!!");
                                         TimeUnit.SECONDS.sleep(2);
                                         requestToMe();
@@ -378,7 +378,7 @@ public class CliView implements View {
                                     assert modelCard != null;
                                     if (modelCard.getName().equals("MONK")) {
                                         assert color != null;
-                                        if (networkClientModel.getServermodel().getTable().getMonkSet().numStudentsbycolor(color) == 0) {
+                                        if (networkClientModel.getServerModel().getTable().getMonkSet().numStudentsByColor(color) == 0) {
                                             System.out.println("La carta non possiede il colore che hai scelto, scelta carta rifiutata !!!!");
                                             TimeUnit.SECONDS.sleep(2);
                                             requestToMe();
@@ -386,7 +386,7 @@ public class CliView implements View {
                                         }
                                     }
                                     networkClientModel.setTypeOfRequest(parsedStrings.get(0));
-                                    networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                                    networkClientModel.setResponse(true);
                                     networkClientModel.setPingMessage(false);
                                     networkClientModel.setChoosedColor(color);
                                     networkClientModel.setChoosedIsland(Integer.parseInt(parsedStrings.get(2)) - 1);
@@ -422,7 +422,7 @@ public class CliView implements View {
                                     assert modelCard != null;
                                     if (modelCard.getName().equals("PRINCESS")) {
                                         assert color != null;
-                                        if (networkClientModel.getServermodel().getTable().getPrincessSet().numStudentsbycolor(color) == 0) {
+                                        if (networkClientModel.getServerModel().getTable().getPrincessSet().numStudentsByColor(color) == 0) {
                                             System.out.println("La carta non possiede il colore che hai scelto, scelta carta rifiutata !!!!");
                                             TimeUnit.SECONDS.sleep(2);
                                             requestToMe();
@@ -430,7 +430,7 @@ public class CliView implements View {
                                         }
                                     }
                                     networkClientModel.setTypeOfRequest(parsedStrings.get(0));
-                                    networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                                    networkClientModel.setResponse(true);
                                     networkClientModel.setPingMessage(false);
                                     networkClientModel.setChoosedColor(color);
                                     json = new Gson();
@@ -448,7 +448,7 @@ public class CliView implements View {
                                         return;
                                     }
                                     networkClientModel.setTypeOfRequest(parsedStrings.get(0));
-                                    networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                                    networkClientModel.setResponse(true);
                                     networkClientModel.setPingMessage(false);
                                     json = new Gson();
                                     isUsed = true;
@@ -456,27 +456,27 @@ public class CliView implements View {
                                     break;
                                 case "GRANNY":
                                 case "HERALD":
-                                    if (!(parsedStrings.size() == 2) || (Integer.parseInt(parsedStrings.get(1)) < 1 || Integer.parseInt(parsedStrings.get(1)) > networkClientModel.getServermodel().getTable().getIslands().size())) {
+                                    if (!(parsedStrings.size() == 2) || (Integer.parseInt(parsedStrings.get(1)) < 1 || Integer.parseInt(parsedStrings.get(1)) > networkClientModel.getServerModel().getTable().getIslands().size())) {
                                         System.out.println("formato non valido, scelta carta rifiutata !!!!");
                                         TimeUnit.SECONDS.sleep(2);
                                         requestToMe();
                                         return;
                                     }
                                     assert modelCard != null;
-                                    if (modelCard.getName().equals("GRANNY") && networkClientModel.getServermodel().getTable().getIslands().get(Integer.parseInt(parsedStrings.get(1)) - 1).isBlocked()) {
+                                    if (modelCard.getName().equals("GRANNY") && networkClientModel.getServerModel().getTable().getIslands().get(Integer.parseInt(parsedStrings.get(1)) - 1).isBlocked()) {
                                         System.out.println("isola già bloccata, scelta carta rifiutata !!!!");
                                         TimeUnit.SECONDS.sleep(2);
                                         requestToMe();
                                         return;
                                     }
-                                    if (modelCard.getName().equals("GRANNY") && networkClientModel.getServermodel().getTable().getNumDivieti() == 0) {
+                                    if (modelCard.getName().equals("GRANNY") && networkClientModel.getServerModel().getTable().getNumDivieti() == 0) {
                                         System.out.println("non ci sono divieti posizionabili, scelta carta rifiutata !!!!");
                                         TimeUnit.SECONDS.sleep(2);
                                         requestToMe();
                                         return;
                                     }
                                     networkClientModel.setTypeOfRequest(parsedStrings.get(0));
-                                    networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                                    networkClientModel.setResponse(true);
                                     networkClientModel.setPingMessage(false);
                                     networkClientModel.setChoosedIsland(Integer.parseInt(parsedStrings.get(1)) - 1);
                                     json = new Gson();
@@ -486,12 +486,12 @@ public class CliView implements View {
                                 case "MINSTRELL":
                                 case "JESTER":
                                     int max = 2;
-                                    StudentSet destination = networkClientModel.getServermodel().getcurrentPlayer().getSchoolBoard().getDinnerTable();
+                                    StudentSet destination = networkClientModel.getServerModel().getCurrentPlayer().getSchoolBoard().getDinnerTable();
                                     ArrayList<PeopleColor> colors1 = new ArrayList<>();
                                     ArrayList<PeopleColor> colors2 = new ArrayList<>();
                                     if (parsedStrings.get(0).equals("JESTER")) {
                                         max = 3;
-                                        destination = networkClientModel.getServermodel().getTable().getJesterSet();
+                                        destination = networkClientModel.getServerModel().getTable().getJesterSet();
                                     }
                                     if (parsedStrings.size() < 3 || parsedStrings.size() > (1 + 2 * max) || parsedStrings.size() % 2 == 0) {
                                         System.out.println("formato non valido, scelta carta rifiutata !!!!");
@@ -538,14 +538,14 @@ public class CliView implements View {
                                                 break;
                                         }
                                     }
-                                    if (networkClientModel.getServermodel().getcurrentPlayer().getSchoolBoard().getEntranceSpace().contains(colors1) || destination.contains(colors2)) {
+                                    if (networkClientModel.getServerModel().getCurrentPlayer().getSchoolBoard().getEntranceSpace().contains(colors1) || destination.contains(colors2)) {
                                         System.out.println("uno o piu colori scelti non sono presenti, scelta carta rifiutata !!!!");
                                         TimeUnit.SECONDS.sleep(2);
                                         requestToMe();
                                         return;
                                     }
                                     networkClientModel.setTypeOfRequest(parsedStrings.get(0));
-                                    networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                                    networkClientModel.setResponse(true);
                                     networkClientModel.setPingMessage(false);
                                     networkClientModel.setColors1(colors1);
                                     networkClientModel.setColors2(colors2);
@@ -556,9 +556,9 @@ public class CliView implements View {
                             }
                             break;
                     }
-                    //lo flaggo come messaggio di risposta
-                    if (!terminalinput.equals("CARD")) {
-                        if (networkClientModel.getServermodel().getcurrentPlayer().getSchoolBoard().getEntranceSpace().numStudentsbycolor(choosedColor) == 0) {
+
+                    if (!terminalInput.equals("CARD")) {
+                        if (networkClientModel.getServerModel().getCurrentPlayer().getSchoolBoard().getEntranceSpace().numStudentsByColor(choosedColor) == 0) {
                             System.out.println("Si è inserito un colore non presente tra quelli disponibili, reinserire i dati con più attenzione !!!!");
                             TimeUnit.SECONDS.sleep(2);
                             requestToMe();
@@ -574,7 +574,7 @@ public class CliView implements View {
                             requestToMe();
                             return;
                         } else if (command.equals("SCHOOL")) {
-                            if (networkClientModel.getServermodel().getcurrentPlayer().getSchoolBoard().getDinnerTable().numStudentsbycolor(choosedColor) == 10) {
+                            if (networkClientModel.getServerModel().getCurrentPlayer().getSchoolBoard().getDinnerTable().numStudentsByColor(choosedColor) == 10) {
                                 System.out.println("La sala da pranzo di quel colore è piena.");
                                 TimeUnit.SECONDS.sleep(2);
                                 requestToMe();
@@ -589,7 +589,7 @@ public class CliView implements View {
                                 requestToMe();
                                 return;
                             }
-                            if (Integer.parseInt(CommandPrompt.gotFromTerminal()) > networkClientModel.getServermodel().getTable().getIslands().size() ||
+                            if (Integer.parseInt(CommandPrompt.gotFromTerminal()) > networkClientModel.getServerModel().getTable().getIslands().size() ||
                                     Integer.parseInt(CommandPrompt.gotFromTerminal()) < 0) {
                                 System.out.println("L'isola scelta non è valida.");
                                 TimeUnit.SECONDS.sleep(2);
@@ -600,14 +600,14 @@ public class CliView implements View {
                             networkClientModel.setChoosedIsland(Integer.parseInt(CommandPrompt.gotFromTerminal()) - 1);
                         }
                         networkClientModel.setTypeOfRequest(command);
-                        networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                        networkClientModel.setResponse(true);
                         networkClientModel.setPingMessage(false);
                         networkClientModel.setChoosedColor(choosedColor);
                         json = new Gson();
                         Network.send(json.toJson(networkClientModel));
                     }
                 } else {
-                    System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO: \n" + "E' IL TUO TURNO - STUDENT PHASE" + "\n\nMOSSE ALTRI GIOCATORI: " + getResponse()));
+                    System.out.println(networkClientModel.getServerModel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO: \n" + "E' IL TUO TURNO - STUDENT PHASE" + "\n\nMOSSE ALTRI GIOCATORI: " + getResponse()));
 
                     CommandPrompt.ask("Scegli il colore dello studente che desideri muovere ", "RED or GREEN or BLUE or YELLOW or PINK> ");
                     if (!CommandPrompt.gotFromTerminal().equals("RED") &&
@@ -641,7 +641,7 @@ public class CliView implements View {
                             throw new IllegalStateException("Unexpected value: " + CommandPrompt.gotFromTerminal());
                     }
 
-                    if (networkClientModel.getServermodel().getcurrentPlayer().getSchoolBoard().getEntranceSpace().numStudentsbycolor(choosedColor) == 0) {
+                    if (networkClientModel.getServerModel().getCurrentPlayer().getSchoolBoard().getEntranceSpace().numStudentsByColor(choosedColor) == 0) {
                         System.out.println("Si è inserito un colore non presente tra quelli disponibili, reinserire i dati con più attenzione !!!!");
                         TimeUnit.SECONDS.sleep(2);
                         requestToMe();
@@ -656,7 +656,7 @@ public class CliView implements View {
                         requestToMe();
                         return;
                     } else if (command.equals("SCHOOL")) {
-                        if (networkClientModel.getServermodel().getcurrentPlayer().getSchoolBoard().getDinnerTable().numStudentsbycolor(choosedColor) == 10) {
+                        if (networkClientModel.getServerModel().getCurrentPlayer().getSchoolBoard().getDinnerTable().numStudentsByColor(choosedColor) == 10) {
                             System.out.println("La sala da pranzo di quel colore è piena.");
                             TimeUnit.SECONDS.sleep(2);
                             requestToMe();
@@ -671,7 +671,7 @@ public class CliView implements View {
                             requestToMe();
                             return;
                         }
-                        if (Integer.parseInt(CommandPrompt.gotFromTerminal()) > networkClientModel.getServermodel().getTable().getIslands().size() ||
+                        if (Integer.parseInt(CommandPrompt.gotFromTerminal()) > networkClientModel.getServerModel().getTable().getIslands().size() ||
                                 Integer.parseInt(CommandPrompt.gotFromTerminal()) < 0) {
                             System.out.println("L'isola scelta non è valida.");
                             TimeUnit.SECONDS.sleep(2);
@@ -682,7 +682,7 @@ public class CliView implements View {
                         networkClientModel.setChoosedIsland(Integer.parseInt(CommandPrompt.gotFromTerminal()) - 1);
                     }
                     networkClientModel.setTypeOfRequest(command);
-                    networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                    networkClientModel.setResponse(true);
                     networkClientModel.setPingMessage(false);
                     networkClientModel.setChoosedColor(choosedColor);
                     json = new Gson();
@@ -704,7 +704,7 @@ public class CliView implements View {
                 networkClientModel.getNicknames().remove(teamMate);
                 networkClientModel.getNicknames().add(teamMate);
                 networkClientModel.getNicknames().add(networkClientModel.getNickname());
-                networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                networkClientModel.setResponse(true);
                 networkClientModel.setPingMessage(false);
                 networkClientModel.setFromTerminal(parsedStrings);
                 json = new Gson();
@@ -712,75 +712,75 @@ public class CliView implements View {
                 break;
 
             case "CHOOSEWHERETOMOVEMOTHER":
-                if (networkClientModel.getServermodel().getGameMode().equals(GameMode.EXPERT) && networkClientModel.getServermodel().getTable().getCharacters().stream().anyMatch(j -> j.getCost() <= networkClientModel.getServermodel().getcurrentPlayer().getCoins() && !isUsed)) {
-                    System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO:\n " + "E' IL TUO TURNO - MOTHER PHASE" + "\n\nMOSSE ALTRI GIOCATORI: " + getResponse()));
+                if (networkClientModel.getServerModel().getGameMode().equals(GameMode.EXPERT) && networkClientModel.getServerModel().getTable().getCharacters().stream().anyMatch(j -> j.getCost() <= networkClientModel.getServerModel().getCurrentPlayer().getCoins() && !isUsed)) {
+                    System.out.println(networkClientModel.getServerModel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO:\n " + "E' IL TUO TURNO - MOTHER PHASE" + "\n\nMOSSE ALTRI GIOCATORI: " + getResponse()));
                     CommandPrompt.ask("Scegliere il numero di mosse di cui far spostare madre natura  OPPURE inserisci CARD per usare una carta personaggio", "mosse> ");
                     if (CommandPrompt.gotFromTerminal().equals("CARD")) {
                         System.out.println("\n\n\n\nScegli la carta che vorresti utilizzare: \n");
-                        ArrayList<String> avaiable = new ArrayList<>();
-                        for (int i = 0; i < networkClientModel.getServermodel().getTable().getCharacters().size(); i++) {
-                            if (networkClientModel.getServermodel().getTable().getCharacters().get(i).getCost() <= networkClientModel.getServermodel().getcurrentPlayer().getCoins()) {
-                                if (networkClientModel.getServermodel().getTable().getCharacters().get(i).getName().equals("MONK")) {
+                        ArrayList<String> available = new ArrayList<>();
+                        for (int i = 0; i < networkClientModel.getServerModel().getTable().getCharacters().size(); i++) {
+                            if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getCost() <= networkClientModel.getServerModel().getCurrentPlayer().getCoins()) {
+                                if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("MONK")) {
                                     System.out.println("MONK - EFFETTO: Prendi uno studente da questa carta e piazzalo su un isola a tua scelta.\n COMMAND: Inserisci MONK , colore scelto e numero dell'isola separati da uno spazio.\n\n");
-                                    avaiable.add("MONK");
+                                    available.add("MONK");
                                 }
-                                if (networkClientModel.getServermodel().getTable().getCharacters().get(i).getName().equals("PRINCESS")) {
+                                if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("PRINCESS")) {
                                     System.out.println("PRINCESS - EFFETTO: Prendi uno studente da questa carta e piazzalo nella tua Sala.\nCOMMAND: Inserisci PRINCESS e colore scelto separati da uno spazio.\n\n");
-                                    avaiable.add("PRINCESS");
+                                    available.add("PRINCESS");
                                 }
-                                if (networkClientModel.getServermodel().getTable().getCharacters().get(i).getName().equals("MUSHROOMHUNTER")) {
-                                    System.out.println("MUSHROOMHUNTER - EFFETTO: Scelgi un colore di studente; in questo turno, durante il calcolo dell'influenza, quel colore non fornisce influenza.\n COMMAND: Inserisci MUSHROOMHUNTER e colore scelto separati da uno spazio.\n\n");
-                                    avaiable.add("MUSHROOMHUNTER");
+                                if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("MUSHROOMHUNTER")) {
+                                    System.out.println("MUSHROOMHUNTER - EFFETTO: Scegli un colore di studente; in questo turno, durante il calcolo dell'influenza, quel colore non fornisce influenza.\n COMMAND: Inserisci MUSHROOMHUNTER e colore scelto separati da uno spazio.\n\n");
+                                    available.add("MUSHROOMHUNTER");
                                 }
-                                if (networkClientModel.getServermodel().getTable().getCharacters().get(i).getName().equals("THIEF")) {
+                                if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("THIEF")) {
                                     System.out.println("THIEF - EFFETTO: Scegli un colore di studente; ogni giocatore (incluso te) deve rimettere nel sacchetto tre studenti di quel colore presenti nella Sala (o tutti quelli che ha se ne avesse meno di tre).\nCOMMAND: Inserisci THIEF e colore scelto separati da uno spazio\n\n");
-                                    avaiable.add("THIEF");
+                                    available.add("THIEF");
                                 }
-                                if (networkClientModel.getServermodel().getTable().getCharacters().get(i).getName().equals("FARMER")) {
+                                if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("FARMER")) {
                                     System.out.println("FARMER - EFFETTO: Durante questo turno, prendi il controllo dei professori anche se nella tua sala hai lo stesso numero di studenti del giocatore che li controlla in quel momento.\nCOMMAND: inserisci FARMER.\n\n");
-                                    avaiable.add("FARMER");
+                                    available.add("FARMER");
                                 }
-                                if (networkClientModel.getServermodel().getTable().getCharacters().get(i).getName().equals("CENTAUR")) {
+                                if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("CENTAUR")) {
                                     System.out.println("CENTAUR - EFFETTO: Durante il conteggio di un influenza dell'isola le torri presenti non vengono calcolate.\nCOMMAND: inserisci CENTAUR.\n\n");
-                                    avaiable.add("CENTAUR");
+                                    available.add("CENTAUR");
                                 }
-                                if (networkClientModel.getServermodel().getTable().getCharacters().get(i).getName().equals("KNIGHT")) {
+                                if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("KNIGHT")) {
                                     System.out.println("KNIGHT - EFFETTO: In questo turno, durante il calcolo dell'influenza, hai due punti di influenza addizionali.\nCOMMAND: inserisci KNIGHT.\n\n");
-                                    avaiable.add("KNIGHT");
+                                    available.add("KNIGHT");
                                 }
-                                if (networkClientModel.getServermodel().getTable().getCharacters().get(i).getName().equals("POSTMAN")) {
+                                if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("POSTMAN")) {
                                     System.out.println("POSTMAN - EFFETTO: Puoi muovere madre natura fino a due isole addizionali rispetto a quanto indicato sulla carta assistente che hai giocato.\nCOMMAND: inserisci POSTMAN.\n\n");
-                                    avaiable.add("POSTMAN");
+                                    available.add("POSTMAN");
                                 }
-                                if (networkClientModel.getServermodel().getTable().getCharacters().get(i).getName().equals("GRANNY")) {
-                                    System.out.println("GRANNY - EFFETTO: Piazza un divieto su un isola a tua scelta. La prima volta che madre natura termina il suo movimento li l'influenza non verrà calcolata e il divieto verrà reinserito in quetsa carta.\nCOMMAND: inserisci GRANNY e numero dell'isola separati da uno spazio.\n\n");
-                                    avaiable.add("GRANNY");
+                                if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("GRANNY")) {
+                                    System.out.println("GRANNY - EFFETTO: Piazza un divieto su un isola a tua scelta. La prima volta che madre natura termina il suo movimento li l'influenza non verrà calcolata e il divieto verrà reinserito in questa carta.\nCOMMAND: inserisci GRANNY e numero dell'isola separati da uno spazio.\n\n");
+                                    available.add("GRANNY");
                                 }
-                                if (networkClientModel.getServermodel().getTable().getCharacters().get(i).getName().equals("HERALD")) {
-                                    System.out.println("HERALD - EFFETTO: Scegli un isola e calcola la maggioranza come se madre natura avesse terminato il suo movimento li. In questo turno madre natura si muovera come di consueto e nell'isola dove terminerà il suo movimento la maggioranza verrà normalmente calcolata.\nCOMMAND: inserisci HERALD e numero dell'isola separati da uno spazio.\n\n");
-                                    avaiable.add("HERALD");
+                                if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("HERALD")) {
+                                    System.out.println("HERALD - EFFETTO: Scegli un isola e calcola la maggioranza come se madre natura avesse terminato il suo movimento li. In questo turno madre natura si muoverà come di consueto e nell'isola dove terminerà il suo movimento la maggioranza verrà normalmente calcolata.\nCOMMAND: inserisci HERALD e numero dell'isola separati da uno spazio.\n\n");
+                                    available.add("HERALD");
                                 }
-                                if (networkClientModel.getServermodel().getTable().getCharacters().get(i).getName().equals("JESTER")) {
+                                if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("JESTER")) {
                                     System.out.println("JESTER - EFFETTO: Puoi prendere fino a 3 studenti da questa carta e scambiarli con altrettanti studenti presenti nel tuo Ingresso.\nCOMMAND: inserisci JESTER ,di seguito i colori da scambiare da Ingresso e poi i colori da scambiare da questa Carta, tutti separati da uno spazio (il numero di colori di uno e dell'altro deve essere lo stesso).\n\n");
-                                    avaiable.add("JESTER");
+                                    available.add("JESTER");
                                 }
-                                if (networkClientModel.getServermodel().getTable().getCharacters().get(i).getName().equals("MINSTRELL")) {
+                                if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("MINSTRELL")) {
                                     System.out.println("MINSTRELL - EFFETTO: Puoi scambiare fra loro fino a due studenti presenti nella tua Sala e nel tuo Ingresso.\nCOMMAND: Inserisci MINSTRELL ,di seguito i colori da scambiare da Ingresso e poi i colori da scambiare da Sala tutti separati da uno spazio (il numero di colori di uno e dell'altro deve essere lo stesso).\n\n");
-                                    avaiable.add("MINSTRELL");
+                                    available.add("MINSTRELL");
                                 }
                             }
                         }
                         CommandPrompt.ask("Scegliere la carta personaggio seguendo le indicazioni, un qualsiasi altra riga se si vuole tornare indietro", "CHARACTER>");
                         parsedStrings =
                                 new ArrayList<>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
-                        if (!avaiable.contains(parsedStrings.get(0))) {
+                        if (!available.contains(parsedStrings.get(0))) {
                             requestToMe();
                             return;
                         }
                         CharacterCard modelCard = null;
-                        for (int i = 0; i < networkClientModel.getServermodel().getTable().getCharacters().size(); i++) {
-                            if (networkClientModel.getServermodel().getTable().getCharacters().get(i).getName().equals(parsedStrings.get(0))) {
-                                modelCard = networkClientModel.getServermodel().getTable().getCharacters().get(i);
+                        for (int i = 0; i < networkClientModel.getServerModel().getTable().getCharacters().size(); i++) {
+                            if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals(parsedStrings.get(0))) {
+                                modelCard = networkClientModel.getServerModel().getTable().getCharacters().get(i);
                             }
                         }
                         switch (parsedStrings.get(0)) {
@@ -811,7 +811,7 @@ public class CliView implements View {
                                         break;
                                 }
                                 networkClientModel.setTypeOfRequest(parsedStrings.get(0));
-                                networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                                networkClientModel.setResponse(true);
                                 networkClientModel.setPingMessage(false);
                                 networkClientModel.setChoosedColor(Color);
                                 json = new Gson();
@@ -819,7 +819,7 @@ public class CliView implements View {
                                 Network.send(json.toJson(networkClientModel));
                                 break;
                             case "MONK":
-                                if (!(parsedStrings.size() == 3) || !(Objects.equals(parsedStrings.get(1), "RED") || Objects.equals(parsedStrings.get(1), "PINK") || Objects.equals(parsedStrings.get(1), "GREEN") || Objects.equals(parsedStrings.get(1), "YELLOW") || Objects.equals(parsedStrings.get(1), "BLUE")) || (Integer.parseInt(parsedStrings.get(2)) < 1 || Integer.parseInt(parsedStrings.get(2)) > networkClientModel.getServermodel().getTable().getIslands().size())) {
+                                if (!(parsedStrings.size() == 3) || !(Objects.equals(parsedStrings.get(1), "RED") || Objects.equals(parsedStrings.get(1), "PINK") || Objects.equals(parsedStrings.get(1), "GREEN") || Objects.equals(parsedStrings.get(1), "YELLOW") || Objects.equals(parsedStrings.get(1), "BLUE")) || (Integer.parseInt(parsedStrings.get(2)) < 1 || Integer.parseInt(parsedStrings.get(2)) > networkClientModel.getServerModel().getTable().getIslands().size())) {
                                     System.out.println("formato non valido, scelta carta rifiutata !!!!");
                                     TimeUnit.SECONDS.sleep(2);
                                     requestToMe();
@@ -846,7 +846,7 @@ public class CliView implements View {
                                 assert modelCard != null;
                                 if (modelCard.getName().equals("MONK")) {
                                     assert Color != null;
-                                    if (networkClientModel.getServermodel().getTable().getMonkSet().numStudentsbycolor(Color) == 0) {
+                                    if (networkClientModel.getServerModel().getTable().getMonkSet().numStudentsByColor(Color) == 0) {
                                         System.out.println("La carta non possiede il colore che hai scelto, scelta carta rifiutata !!!!");
                                         TimeUnit.SECONDS.sleep(2);
                                         requestToMe();
@@ -854,7 +854,7 @@ public class CliView implements View {
                                     }
                                 }
                                 networkClientModel.setTypeOfRequest(parsedStrings.get(0));
-                                networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                                networkClientModel.setResponse(true);
                                 networkClientModel.setPingMessage(false);
                                 networkClientModel.setChoosedColor(Color);
                                 networkClientModel.setChoosedIsland(Integer.parseInt(parsedStrings.get(2)) - 1);
@@ -890,7 +890,7 @@ public class CliView implements View {
                                 assert modelCard != null;
                                 if (modelCard.getName().equals("PRINCESS")) {
                                     assert Color != null;
-                                    if (networkClientModel.getServermodel().getTable().getPrincessSet().numStudentsbycolor(Color) == 0) {
+                                    if (networkClientModel.getServerModel().getTable().getPrincessSet().numStudentsByColor(Color) == 0) {
                                         System.out.println("La carta non possiede il colore che hai scelto, scelta carta rifiutata !!!!");
                                         TimeUnit.SECONDS.sleep(2);
                                         requestToMe();
@@ -898,7 +898,7 @@ public class CliView implements View {
                                     }
                                 }
                                 networkClientModel.setTypeOfRequest(parsedStrings.get(0));
-                                networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                                networkClientModel.setResponse(true);
                                 networkClientModel.setPingMessage(false);
                                 networkClientModel.setChoosedColor(Color);
                                 json = new Gson();
@@ -916,7 +916,7 @@ public class CliView implements View {
                                     return;
                                 }
                                 networkClientModel.setTypeOfRequest(parsedStrings.get(0));
-                                networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                                networkClientModel.setResponse(true);
                                 networkClientModel.setPingMessage(false);
                                 json = new Gson();
                                 isUsed = true;
@@ -924,27 +924,27 @@ public class CliView implements View {
                                 break;
                             case "GRANNY":
                             case "HERALD":
-                                if (!(parsedStrings.size() == 2) || (Integer.parseInt(parsedStrings.get(1)) < 1 || Integer.parseInt(parsedStrings.get(1)) > networkClientModel.getServermodel().getTable().getIslands().size())) {
+                                if (!(parsedStrings.size() == 2) || (Integer.parseInt(parsedStrings.get(1)) < 1 || Integer.parseInt(parsedStrings.get(1)) > networkClientModel.getServerModel().getTable().getIslands().size())) {
                                     System.out.println("formato non valido, scelta carta rifiutata !!!!");
                                     TimeUnit.SECONDS.sleep(2);
                                     requestToMe();
                                     return;
                                 }
                                 assert modelCard != null;
-                                if (modelCard.getName().equals("GRANNY") && networkClientModel.getServermodel().getTable().getIslands().get(Integer.parseInt(parsedStrings.get(1)) - 1).isBlocked()) {
+                                if (modelCard.getName().equals("GRANNY") && networkClientModel.getServerModel().getTable().getIslands().get(Integer.parseInt(parsedStrings.get(1)) - 1).isBlocked()) {
                                     System.out.println("isola già bloccata, scelta carta rifiutata !!!!");
                                     TimeUnit.SECONDS.sleep(2);
                                     requestToMe();
                                     return;
                                 }
-                                if (modelCard.getName().equals("GRANNY") && networkClientModel.getServermodel().getTable().getNumDivieti() == 0) {
+                                if (modelCard.getName().equals("GRANNY") && networkClientModel.getServerModel().getTable().getNumDivieti() == 0) {
                                     System.out.println("non ci sono divieti posizionabili, scelta carta rifiutata !!!!");
                                     TimeUnit.SECONDS.sleep(2);
                                     requestToMe();
                                     return;
                                 }
                                 networkClientModel.setTypeOfRequest(parsedStrings.get(0));
-                                networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                                networkClientModel.setResponse(true);
                                 networkClientModel.setPingMessage(false);
                                 networkClientModel.setChoosedIsland(Integer.parseInt(parsedStrings.get(1)) - 1);
                                 json = new Gson();
@@ -954,12 +954,12 @@ public class CliView implements View {
                             case "MINSTRELL":
                             case "JESTER":
                                 int max = 2;
-                                StudentSet destination = networkClientModel.getServermodel().getcurrentPlayer().getSchoolBoard().getDinnerTable();
+                                StudentSet destination = networkClientModel.getServerModel().getCurrentPlayer().getSchoolBoard().getDinnerTable();
                                 ArrayList<PeopleColor> colors1 = new ArrayList<>();
                                 ArrayList<PeopleColor> colors2 = new ArrayList<>();
                                 if (parsedStrings.get(0).equals("JESTER")) {
                                     max = 3;
-                                    destination = networkClientModel.getServermodel().getTable().getJesterSet();
+                                    destination = networkClientModel.getServerModel().getTable().getJesterSet();
                                 }
                                 if (parsedStrings.size() < 3 || parsedStrings.size() > (1 + 2 * max) || parsedStrings.size() % 2 == 0) {
                                     System.out.println("formato non valido, scelta carta rifiutata !!!!");
@@ -1006,14 +1006,14 @@ public class CliView implements View {
                                             break;
                                     }
                                 }
-                                if (networkClientModel.getServermodel().getcurrentPlayer().getSchoolBoard().getEntranceSpace().contains(colors1) || destination.contains(colors2)) {
+                                if (networkClientModel.getServerModel().getCurrentPlayer().getSchoolBoard().getEntranceSpace().contains(colors1) || destination.contains(colors2)) {
                                     System.out.println("uno o piu colori scelti non sono presenti, scelta carta rifiutata !!!!");
                                     TimeUnit.SECONDS.sleep(2);
                                     requestToMe();
                                     return;
                                 }
                                 networkClientModel.setTypeOfRequest(parsedStrings.get(0));
-                                networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                                networkClientModel.setResponse(true);
                                 networkClientModel.setPingMessage(false);
                                 networkClientModel.setColors1(colors1);
                                 networkClientModel.setColors2(colors2);
@@ -1036,23 +1036,23 @@ public class CliView implements View {
                             requestToMe();
                             break;
                         }
-                        if (networkClientModel.getServermodel().getcurrentPlayer().getChoosedCard().getMoves() < Integer.parseInt(CommandPrompt.gotFromTerminal())) {
+                        if (networkClientModel.getServerModel().getCurrentPlayer().getChoosedCard().getMoves() < Integer.parseInt(CommandPrompt.gotFromTerminal())) {
                             System.out.println("Il numero di mosse da te inserito eccede il numero massimo di mosse di cui madre natura può spostarsi," +
-                                    " ovvero " + networkClientModel.getServermodel().getcurrentPlayer().getChoosedCard().getMoves());
+                                    " ovvero " + networkClientModel.getServerModel().getCurrentPlayer().getChoosedCard().getMoves());
                             TimeUnit.SECONDS.sleep(2);
                             requestToMe();
                             return;
                         }
                         networkClientModel.setTypeOfRequest("MOTHER");
                         networkClientModel.setChoosedMoves(Integer.parseInt(CommandPrompt.gotFromTerminal()));
-                        networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                        networkClientModel.setResponse(true);
                         networkClientModel.setPingMessage(false);
                         networkClientModel.setFromTerminal(parsedStrings);
                         json = new Gson();
                         Network.send(json.toJson(networkClientModel));
                     }
                 } else {
-                    System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO:\n " + "E' IL TUO TURNO - MOTHER PHASE" + "\n\nMOSSE ALTRI GIOCATORI: " + getResponse()));
+                    System.out.println(networkClientModel.getServerModel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO:\n " + "E' IL TUO TURNO - MOTHER PHASE" + "\n\nMOSSE ALTRI GIOCATORI: " + getResponse()));
                     CommandPrompt.ask("Scegliere il numero di mosse di cui far spostare madre natura  ", "mosse> ");
 
 
@@ -1068,16 +1068,16 @@ public class CliView implements View {
                         requestToMe();
                         break;
                     }
-                    if (networkClientModel.getServermodel().getcurrentPlayer().getChoosedCard().getMoves() < Integer.parseInt(CommandPrompt.gotFromTerminal())) {
+                    if (networkClientModel.getServerModel().getCurrentPlayer().getChoosedCard().getMoves() < Integer.parseInt(CommandPrompt.gotFromTerminal())) {
                         System.out.println("Il numero di mosse da te inserito eccede il numero massimo di mosse di cui madre natura può spostarsi," +
-                                " ovvero " + networkClientModel.getServermodel().getcurrentPlayer().getChoosedCard().getMoves());
+                                " ovvero " + networkClientModel.getServerModel().getCurrentPlayer().getChoosedCard().getMoves());
                         TimeUnit.SECONDS.sleep(2);
                         requestToMe();
                         return;
                     }
                     networkClientModel.setTypeOfRequest("MOTHER");
                     networkClientModel.setChoosedMoves(Integer.parseInt(CommandPrompt.gotFromTerminal()));
-                    networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                    networkClientModel.setResponse(true);
                     networkClientModel.setPingMessage(false);
                     networkClientModel.setFromTerminal(parsedStrings);
                     json = new Gson();
@@ -1086,7 +1086,7 @@ public class CliView implements View {
                 break;
 
             case "CHOOSECLOUDS":
-                System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO: \n" + "E' IL TUO TURNO - CLOUD PHASE" + "\n\nMOSSE ALTRI GIOCATORI: " + getResponse()));
+                System.out.println(networkClientModel.getServerModel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO: \n" + "E' IL TUO TURNO - CLOUD PHASE" + "\n\nMOSSE ALTRI GIOCATORI: " + getResponse()));
                 CommandPrompt.ask("Scegliere il numero della tessera nuvola da cui si desidera ricaricarsi di studenti", "tessera nuvola> ");
 
                 if (isValidNumber(CommandPrompt.gotFromTerminal())) {
@@ -1095,21 +1095,21 @@ public class CliView implements View {
                     requestToMe();
                     return;
                 }
-                if (networkClientModel.getServermodel().getTable().getClouds().size() < Integer.parseInt(CommandPrompt.gotFromTerminal()) ||
+                if (networkClientModel.getServerModel().getTable().getClouds().size() < Integer.parseInt(CommandPrompt.gotFromTerminal()) ||
                         Integer.parseInt(CommandPrompt.gotFromTerminal()) < 1) {
                     System.out.println("Il numero inserito non rappresenta una tessera nuvola esistente, si prega di fare più attenzione");
                     TimeUnit.SECONDS.sleep(2);
                     requestToMe();
                     return;
                 }
-                if (networkClientModel.getServermodel().getTable().getClouds().get(Integer.parseInt(CommandPrompt.gotFromTerminal()) - 1).getStudentsAccumulator().size() == 0) {
+                if (networkClientModel.getServerModel().getTable().getClouds().get(Integer.parseInt(CommandPrompt.gotFromTerminal()) - 1).getStudentsAccumulator().size() == 0) {
                     System.out.println("Hai scelta una nuvola che è stata già scelta da un altro giocatore");
                     TimeUnit.SECONDS.sleep(2);
                     requestToMe();
                     return;
                 }
-                networkClientModel.setCloudChoosed(networkClientModel.getServermodel().getTable().getClouds().get(Integer.parseInt(CommandPrompt.gotFromTerminal()) - 1));
-                networkClientModel.setResponse(true); //lo flaggo come messaggio di risposta
+                networkClientModel.setCloudChoosed(networkClientModel.getServerModel().getTable().getClouds().get(Integer.parseInt(CommandPrompt.gotFromTerminal()) - 1));
+                networkClientModel.setResponse(true);
                 networkClientModel.setPingMessage(false);
                 networkClientModel.setFromTerminal(parsedStrings);
                 json = new Gson();
@@ -1119,17 +1119,17 @@ public class CliView implements View {
 
             case "GAMEEND":
                 if (networkClientModel.getGameWinner().equals("PAREGGIO")) {
-                    System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO: IL GIOCO E' FINITO IN PARITA', I GIOCATORI SONO TUTTI VINCITORI !!"));
-                } else if (networkClientModel.getServermodel().getNumberOfPlayers() < 4) {
-                    System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO: " + "IL GIOCO E' FINITO! IL VINCITORE E' " + networkClientModel.getGameWinner()));
+                    System.out.println(networkClientModel.getServerModel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO: IL GIOCO E' FINITO IN PARITA', I GIOCATORI SONO TUTTI VINCITORI !!"));
+                } else if (networkClientModel.getServerModel().getNumberOfPlayers() < 4) {
+                    System.out.println(networkClientModel.getServerModel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO: " + "IL GIOCO E' FINITO! IL VINCITORE E' " + networkClientModel.getGameWinner()));
                 } else {
-                    System.out.println(networkClientModel.getServermodel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO: " + "IL GIOCO E' FINITO! I VINCITORI SONO " + networkClientModel.getGameWinner()));
+                    System.out.println(networkClientModel.getServerModel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO: " + "IL GIOCO E' FINITO! I VINCITORI SONO " + networkClientModel.getGameWinner()));
                 }
                 Network.disconnect();
                 break;
 
         }
-        clearResponce();
+        clearResponse();
     }
 
     // Qualcun altro sta interagendo con il terminale: devo gestire il tempo di attesa
@@ -1154,8 +1154,8 @@ public class CliView implements View {
                 break;
         }
         System.out.println(message);
-        if (!networkClientModel.getTypeOfRequest().equals("TEAMMATE") && networkClientModel.getServermodel() != null) {
-            System.out.println(networkClientModel.getServermodel().toString(getNickname(), "STATO DEL GIOCO: " + message + "\n\nMOSSE ALTRI GIOCATORI: " + getResponse()));
+        if (!networkClientModel.getTypeOfRequest().equals("TEAMMATE") && networkClientModel.getServerModel() != null) {
+            System.out.println(networkClientModel.getServerModel().toString(getNickname(), "STATO DEL GIOCO: " + message + "\n\nMOSSE ALTRI GIOCATORI: " + getResponse()));
         }
     }
 
@@ -1190,7 +1190,7 @@ public class CliView implements View {
                 setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio MONK, scegliendo come colore: " + networkClientModel.getChoosedColor() + " e scegliendo come isola: " + networkClientModel.getChoosedIsland() + "  (EFFETTO: Prendi uno studente da questa carta e piazzalo su un isola a tua scelta).");
                 break;
             case "HERALD":
-                setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio HERALD, scegliendo come isola: " + networkClientModel.getChoosedIsland() + "  (EFFETTO: Scegli un isola e calcola la maggioranza come se madre natura avesse terminato il suo movimento li. In questo turno madre natura si muovera come di consueto e nell'isola dove terminerà il suo movimento la maggioranza verrà normalmente calcolata).");
+                setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio HERALD, scegliendo come isola: " + networkClientModel.getChoosedIsland() + "  (EFFETTO: Scegli un isola e calcola la maggioranza come se madre natura avesse terminato il suo movimento li. In questo turno madre natura si muoverà come di consueto e nell'isola dove terminerà il suo movimento la maggioranza verrà normalmente calcolata).");
                 break;
             case "PRINCESS":
                 setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio PRINCESS, scegliendo come colore: " + networkClientModel.getChoosedIsland() + "  (EFFETTO: Prendi uno studente da questa carta e piazzalo nella tua Sala).");
@@ -1199,7 +1199,7 @@ public class CliView implements View {
                 setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio THIEF, scegliendo come colore: " + networkClientModel.getChoosedIsland() + "  (EFFETTO: Scegli un colore di studente; ogni giocatore (incluso te) deve rimettere nel sacchetto tre studenti di quel colore presenti nella Sala (o tutti quelli che ha se ne avesse meno di tre) ).");
                 break;
             case "MUSHROOMHUNTER":
-                setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio MUSHROOMHUNTER, scegliendo come colore: " + networkClientModel.getChoosedIsland() + "  (EFFETTO: Scelgi un colore di studente; in questo turno, durante il calcolo dell'influenza, quel colore non fornisce influenza).");
+                setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio MUSHROOMHUNTER, scegliendo come colore: " + networkClientModel.getChoosedIsland() + "  (EFFETTO: Scegli un colore di studente; in questo turno, durante il calcolo dell'influenza, quel colore non fornisce influenza).");
                 break;
             case "KNIGHT":
                 setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio KNIGHT" + "  (EFFETTO: In questo turno, durante il calcolo dell'influenza, hai due punti di influenza addizionali).");
@@ -1214,7 +1214,7 @@ public class CliView implements View {
                 setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio POSTMAN" + "  (EFFETTO: Puoi muovere madre natura fino a due isole addizionali rispetto a quanto indicato sulla carta assistente che hai giocato).");
                 break;
             case "GRANNY":
-                setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio GRANNY, scegliendo come isola: " + networkClientModel.getChoosedIsland() + "  (EFFETTO: Piazza un divieto su un isola a tua scelta. La prima volta che madre natura termina il suo movimento li l'influenza non verrà calcolata e il divieto verrà reinserito in quetsa carta).");
+                setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio GRANNY, scegliendo come isola: " + networkClientModel.getChoosedIsland() + "  (EFFETTO: Piazza un divieto su un isola a tua scelta. La prima volta che madre natura termina il suo movimento li l'influenza non verrà calcolata e il divieto verrà reinserito in questa carta).");
                 break;
             case "JESTER":
                 setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio JESTER, scegliendo di scambiare i colori: " + networkClientModel.getColors1() + " dal suo Ingresso con i colori: " + networkClientModel.getColors2() + " da questa carta" + "  (EFFETTO: Puoi prendere fino a 3 studenti da questa carta e scambiarli con altrettanti studenti presenti nel tuo Ingresso).");
@@ -1279,7 +1279,7 @@ public class CliView implements View {
         this.response = this.response + "\n" + response;
     }
 
-    public void clearResponce() {
+    public void clearResponse() {
         this.response = "\n";
     }
 }

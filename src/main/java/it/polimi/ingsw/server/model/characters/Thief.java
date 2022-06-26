@@ -18,7 +18,7 @@ public class Thief extends CharacterCard{
         player.reduceCoin(getCost());
         improveCost();
         for (Player value : players) {
-            value.getSchoolBoard().getDinnerTable().removestudentinBag(3, color, table.getBag());
+            value.getSchoolBoard().getDinnerTable().removeStudentInBag(3, color, table.getBag());
         }
         table.checkProfessor(color,players);
     }

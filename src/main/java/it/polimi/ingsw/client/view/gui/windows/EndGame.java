@@ -24,10 +24,10 @@ public class EndGame implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         currNode = winLabel;
-        Player me = this.guiView.getClientModel().getServermodel().getPlayers().stream()
+        Player me = this.guiView.getClientModel().getServerModel().getPlayers().stream()
                 .filter(player -> player.getIp().equals(Network.getMyIp())).collect(Collectors.toList()).get(0);
         String result = this.guiView.getClientModel().getGameWinner();
-        int numOfPlayers = this.guiView.getClientModel().getServermodel().getNumberOfPlayers();
+        int numOfPlayers = this.guiView.getClientModel().getServerModel().getNumberOfPlayers();
         if (result.equals("PAREGGIO")) {
             winLabel.setText("TIE!");
             winnerName.setText("It's a tie and everybody won! ;)");

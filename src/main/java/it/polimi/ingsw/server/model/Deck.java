@@ -20,18 +20,13 @@ public class Deck {
         this.cards.add(new AssistantCard(10, 5));
     }
 
-    // Da un lato vogliamo avere completo accesso all'intera lista di carte affinché
-    // l'utente possa sceglierne una e selezionarla
-    // dall'altro non vogliamo un getter con cui poi si possa modificare per riferimento
-    // l'arraylist (si romperebbe l'incapsulazione dei dati)
-
     public List<AssistantCard> getCardsList() {
         return Collections.unmodifiableList(this.cards);
     }
 
-    public boolean remove(AssistantCard choosen) {
-        if (inDeck(choosen)) {
-            cards.removeIf(assistantCard -> assistantCard.equals(choosen));
+    public boolean remove(AssistantCard choosed) {
+        if (inDeck(choosed)) {
+            cards.removeIf(assistantCard -> assistantCard.equals(choosed));
             return cards.size() == 0;
         }else {
             throw new IllegalArgumentException();

@@ -20,8 +20,8 @@ public class Monk extends CharacterCard{
     public void useEffect(Player player, PeopleColor color, int index_island,CenterTable table) {
         player.reduceCoin(getCost());
         improveCost();
-        table.getIslands().get(index_island).getInhabitants().addstudents(1,color);
-        set.removestudent(1,color);
+        table.getIslands().get(index_island).getInhabitants().addStudents(1,color);
+        set.removeStudent(1,color);
         set.setStudentsRandomly(1,table.getBag());
     }
 

@@ -99,7 +99,7 @@ public class MotherPhase extends State {
             storekeeper = false;
             model = serverController.getModel();
 
-            Player currentPlayer = model.getcurrentPlayer();
+            Player currentPlayer = model.getCurrentPlayer();
             disconnected = false;
             fromPing = false;
 
@@ -108,15 +108,15 @@ public class MotherPhase extends State {
                 if (model.getTable().getIslands().size() <= 3) {
                     gameEnd().fireStateEvent();
                     return super.entryAction(cause);
-                } else if (model.islastturn()) {
-                    if (model.getcurrentPlayer().equals(model.getPlayers().get(model.getPlayers().size() - 1))) {
+                } else if (model.isLastTurn()) {
+                    if (model.getCurrentPlayer().equals(model.getPlayers().get(model.getPlayers().size() - 1))) {
                         gameEnd().fireStateEvent();
                     } else {
                         model.nextPlayer();
                         goToStudentPhase().fireStateEvent();
                     }
                     return super.entryAction(cause);
-                } else if (model.getcurrentPlayer().equals(model.getPlayers().get(model.getPlayers().size() - 1))) {
+                } else if (model.getCurrentPlayer().equals(model.getPlayers().get(model.getPlayers().size() - 1))) {
                     GoToEndTurn().fireStateEvent();
                 } else {
                     model.nextPlayer();
@@ -128,7 +128,7 @@ public class MotherPhase extends State {
             System.out.println(currentPlayer.getNickname());
 
             ClientModel currentPlayerData = connectionModel.findPlayer(currentPlayer.getNickname());
-            currentPlayerData.setServermodel(model);
+            currentPlayerData.setServerModel(model);
             currentPlayerData.setTypeOfRequest("CHOOSEWHERETOMOVEMOTHER");
             currentPlayerData.setPingMessage(false);
             currentPlayerData.setResponse(false);
@@ -143,8 +143,8 @@ public class MotherPhase extends State {
                 if (model.getTable().getIslands().size() <= 3) {
                     gameEnd().fireStateEvent();
                     return super.entryAction(cause);
-                } else if (model.islastturn()) {
-                    if (model.getcurrentPlayer().equals(model.getPlayers().get(model.getPlayers().size() - 1))) {
+                } else if (model.isLastTurn()) {
+                    if (model.getCurrentPlayer().equals(model.getPlayers().get(model.getPlayers().size() - 1))) {
                         gameEnd().fireStateEvent();
                     } else {
                         model.nextPlayer();
@@ -210,7 +210,7 @@ public class MotherPhase extends State {
                             Team influence_team = target.team_influence(model.getTeams(), model.getTable().getProfessors(), model.getTable().isCentaurEffect(), model.getTable().getMushroomColor(), model.getTable().getKnightEffect());
                             if (influence_team != null) {
                                 if (target.getNumberOfTowers() == 0) {
-                                    target.controllIsland(influence_team);
+                                    target.controlIsland(influence_team);
                                     target.placeTower();
                                 } else if (!(target.getTowerColor().equals(influence_team.getPlayer1().getSchoolBoard().getTowerColor()))) {
                                     model.getTable().conquestIsland(model.getTable().getMotherNaturePosition(), model.getTeams(), influence_team);
@@ -224,7 +224,7 @@ public class MotherPhase extends State {
                             Player influence_player = target.player_influence(model.getPlayers(), model.getTable().getProfessors(), model.getTable().isCentaurEffect(), model.getTable().getMushroomColor(), model.getTable().getKnightEffect());
                             if (influence_player != null) {
                                 if (target.getNumberOfTowers() == 0) {
-                                    target.controllIsland(influence_player);
+                                    target.controlIsland(influence_player);
                                     target.placeTower();
                                 } else if (!(target.getTowerColor().equals(influence_player.getSchoolBoard().getTowerColor()))) {
                                     model.getTable().conquestIsland(model.getTable().getMotherNaturePosition(), model.getPlayers(), influence_player);
@@ -272,8 +272,8 @@ public class MotherPhase extends State {
                     if (model.getTable().getIslands().size() <= 3) {
                         gameEnd().fireStateEvent();
                         return super.entryAction(cause);
-                    } else if (model.islastturn()) {
-                        if (model.getcurrentPlayer().equals(model.getPlayers().get(model.getPlayers().size() - 1))) {
+                    } else if (model.isLastTurn()) {
+                        if (model.getCurrentPlayer().equals(model.getPlayers().get(model.getPlayers().size() - 1))) {
                             gameEnd().fireStateEvent();
                         } else {
                             model.nextPlayer();
@@ -373,7 +373,7 @@ public class MotherPhase extends State {
                                 ClientModel Data = connectionModel.findPlayer(p.getNickname());
 
                                 Data.setTypeOfRequest("TRYTORECONNECT");
-                                Data.setServermodel(model);
+                                Data.setServerModel(model);
                                 Data.setResponse(false);
                                 Data.setPingMessage(false);
 
@@ -394,8 +394,8 @@ public class MotherPhase extends State {
                 if (model.getTable().getIslands().size() <= 3) {
                     gameEnd().fireStateEvent();
                     return super.entryAction(cause);
-                } else if (model.islastturn()) {
-                    if (model.getcurrentPlayer().equals(model.getPlayers().get(model.getPlayers().size() - 1))) {
+                } else if (model.isLastTurn()) {
+                    if (model.getCurrentPlayer().equals(model.getPlayers().get(model.getPlayers().size() - 1))) {
                         gameEnd().fireStateEvent();
                     } else {
                         model.nextPlayer();

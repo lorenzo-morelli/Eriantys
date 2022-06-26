@@ -46,7 +46,7 @@ public class EndTurn extends State {
             if(model.getTable().getClouds().get(i).getStudentsAccumulator().size()==0) {
                 boolean check = model.getTable().getClouds().get(i).charge(model.getTable().getBag());
                 if (!check) {
-                    model.setlastturn();
+                    model.setLastTurn();
                     break;
                 }
             }

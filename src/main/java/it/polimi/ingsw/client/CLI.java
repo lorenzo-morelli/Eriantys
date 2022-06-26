@@ -3,12 +3,6 @@ package it.polimi.ingsw.client;
 import it.polimi.ingsw.client.view.cli.cliController.ClientController;
 import it.polimi.ingsw.client.view.cli.CliView;
 
-import java.awt.*;
-import java.io.Console;
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
-
 /**
  * Launcher for CLI View
  */

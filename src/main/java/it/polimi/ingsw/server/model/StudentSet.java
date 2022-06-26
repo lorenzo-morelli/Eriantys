@@ -35,7 +35,7 @@ public class StudentSet {
         this.numOfYellowStudents = numOfYellowStudents;
     }
 
-    public void setAllStudentTozero() {
+    public void setAllStudentToZero() {
         this.numOfRedStudents = 0;
         this.numOfGreenStudents = 0;
         this.numOfBlueStudents = 0;
@@ -43,33 +43,33 @@ public class StudentSet {
         this.numOfYellowStudents = 0;
     }
 
-    public PeopleColor estractRandomStudent() {
+    public PeopleColor extractRandomStudent() {
         if (this.size() > 0) {
             int rnd = new Random().nextInt(this.size());
             if (numOfRedStudents != 0 && rnd < numOfRedStudents) {
-                removestudent(1, PeopleColor.RED);
+                removeStudent(1, PeopleColor.RED);
                 return PeopleColor.RED;
             }
             if (numOfGreenStudents != 0 && rnd < numOfRedStudents + numOfGreenStudents) {
-                removestudent(1, PeopleColor.GREEN);
+                removeStudent(1, PeopleColor.GREEN);
                 return PeopleColor.GREEN;
             }
             if (numOfBlueStudents != 0 && rnd < numOfRedStudents + numOfGreenStudents + numOfBlueStudents) {
-                removestudent(1, PeopleColor.BLUE);
+                removeStudent(1, PeopleColor.BLUE);
                 return PeopleColor.BLUE;
             }
             if (numOfPinkStudents != 0 && rnd < numOfRedStudents + numOfGreenStudents + numOfBlueStudents + numOfPinkStudents) {
-                removestudent(1, PeopleColor.PINK);
+                removeStudent(1, PeopleColor.PINK);
                 return PeopleColor.PINK;
             } else {
-                removestudent(1, PeopleColor.YELLOW);
+                removeStudent(1, PeopleColor.YELLOW);
                 return PeopleColor.YELLOW;
             }
         }
         throw new IllegalArgumentException();
     }
 
-    public int numStudentsbycolor(PeopleColor color) {
+    public int numStudentsByColor(PeopleColor color) {
         switch (color) {
             case BLUE:
                 return numOfBlueStudents;
@@ -86,29 +86,29 @@ public class StudentSet {
     }
 
     public int size() {
-        return numStudentsbycolor(PeopleColor.BLUE) + numStudentsbycolor(PeopleColor.RED) + numStudentsbycolor(PeopleColor.YELLOW) + numStudentsbycolor(PeopleColor.PINK) + numStudentsbycolor(PeopleColor.GREEN);
+        return numStudentsByColor(PeopleColor.BLUE) + numStudentsByColor(PeopleColor.RED) + numStudentsByColor(PeopleColor.YELLOW) + numStudentsByColor(PeopleColor.PINK) + numStudentsByColor(PeopleColor.GREEN);
     }
 
-    public void removestudent(int n, PeopleColor color) {
-        if (numStudentsbycolor(color) < n) {
-            addstudents(-numStudentsbycolor(color), color);
+    public void removeStudent(int n, PeopleColor color) {
+        if (numStudentsByColor(color) < n) {
+            addStudents(-numStudentsByColor(color), color);
             return;
         }
-        addstudents(-n, color);
+        addStudents(-n, color);
     }
 
-    public void removestudentinBag(int n, PeopleColor color, StudentSet bag) {
-        if (numStudentsbycolor(color) < n) {
-            addstudents(-numStudentsbycolor(color), color);
-            bag.addstudents(numStudentsbycolor(color), color);
+    public void removeStudentInBag(int n, PeopleColor color, StudentSet bag) {
+        if (numStudentsByColor(color) < n) {
+            addStudents(-numStudentsByColor(color), color);
+            bag.addStudents(numStudentsByColor(color), color);
             return;
         }
-        addstudents(-n, color);
-        bag.addstudents(n, color);
+        addStudents(-n, color);
+        bag.addStudents(n, color);
     }
 
 
-    public void addstudents(int n, PeopleColor color) {
+    public void addStudents(int n, PeopleColor color) {
         switch (color) {
             case BLUE:
                 numOfBlueStudents += n;
@@ -130,7 +130,7 @@ public class StudentSet {
 
     public void setStudentsRandomly(int n, StudentSet bag) {
         for (int i = 0; i < n; i++) {
-            addstudents(1, bag.estractRandomStudent());
+            addStudents(1, bag.extractRandomStudent());
         }
     }
 
@@ -198,10 +198,10 @@ public class StudentSet {
                     break;
             }
         }
-        if (red > numStudentsbycolor(PeopleColor.RED)) return true;
-        if (yellow > numStudentsbycolor(PeopleColor.YELLOW)) return true;
-        if (pink > numStudentsbycolor(PeopleColor.PINK)) return true;
-        if (green > numStudentsbycolor(PeopleColor.GREEN)) return true;
-        return blue > numStudentsbycolor(PeopleColor.BLUE);
+        if (red > numStudentsByColor(PeopleColor.RED)) return true;
+        if (yellow > numStudentsByColor(PeopleColor.YELLOW)) return true;
+        if (pink > numStudentsByColor(PeopleColor.PINK)) return true;
+        if (green > numStudentsByColor(PeopleColor.GREEN)) return true;
+        return blue > numStudentsByColor(PeopleColor.BLUE);
     }
 }

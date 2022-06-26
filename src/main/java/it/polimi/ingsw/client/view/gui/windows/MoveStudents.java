@@ -48,9 +48,9 @@ public class MoveStudents implements Initializable {
         windowNode = blue;
         this.notice.setText("");
         Position pos = new Position();
-        ArrayList<Island> islands = this.guiView.getClientModel().getServermodel().getTable().getIslands();
+        ArrayList<Island> islands = this.guiView.getClientModel().getServerModel().getTable().getIslands();
         ArrayList<ImageView> students = new ArrayList<>(Arrays.asList(blue, green, pink, red, yellow));
-        currentPlayer = this.guiView.getClientModel().getServermodel().getcurrentPlayer();
+        currentPlayer = this.guiView.getClientModel().getServerModel().getCurrentPlayer();
         Character character = new Character();
         character.setToBlackAndWhite(students, currentPlayer.getSchoolBoard().getEntranceSpace(), 0);
         if (islandGrid != null) {

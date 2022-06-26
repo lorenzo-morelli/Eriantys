@@ -115,8 +115,8 @@ public class JesterAndMinstrell implements Initializable {
         ArrayList<ImageView> students2b = new ArrayList<>(Arrays.asList(student12b, student22b, student32b, student42b, student52b));
         ArrayList<ImageView> students3b = new ArrayList<>(Arrays.asList(student13b, student23b, student33b, student43b, student53b));
 
-        StudentSet entranceSet = this.guiView.getClientModel().getServermodel().getcurrentPlayer().getSchoolBoard().getEntranceSpace();
-        StudentSet dinnerSet = this.guiView.getClientModel().getServermodel().getcurrentPlayer().getSchoolBoard().getDinnerTable();
+        StudentSet entranceSet = this.guiView.getClientModel().getServerModel().getCurrentPlayer().getSchoolBoard().getEntranceSpace();
+        StudentSet dinnerSet = this.guiView.getClientModel().getServerModel().getCurrentPlayer().getSchoolBoard().getDinnerTable();
         tempColor = null;
         initializeArrays();
 
@@ -138,7 +138,7 @@ public class JesterAndMinstrell implements Initializable {
         } else {
             start.setText("Jester's set");
             explanation.setText("You may take up to 3 students from this card and replace them with the same number of students from your entrance");
-            StudentSet jesterSet = this.guiView.getClientModel().getServermodel().getTable().getJesterSet();
+            StudentSet jesterSet = this.guiView.getClientModel().getServerModel().getTable().getJesterSet();
             character.setToBlackAndWhite(students1a, jesterSet, 0); // JESTER SET + ENTRANCE
             character.setToBlackAndWhite(students2a, jesterSet, 1);
             character.setToBlackAndWhite(students3a, jesterSet, 2);
@@ -155,16 +155,17 @@ public class JesterAndMinstrell implements Initializable {
     }
 
     /**
-     * This method is used to populate with the choosen color
+     * This method is used to populate with the choosed color
      *
      * @param students   the student images to get the click event from.
      * @param studentSet the student set with all the available students.
      * @param colors     the list to update.
      * @param index      the index of the list to update.
      */
+    @SuppressWarnings("GrazieInspection")
     private void populateList(ArrayList<ImageView> students, StudentSet studentSet, ArrayList<PeopleColor> colors, int index) {
         students.forEach(student -> student.setOnMouseClicked(event -> {
-            System.out.println("cliccateddd");
+            System.out.println("cliccate");
             switch (students.indexOf(student)) {
                 case 0:
                     if (studentSet.getNumOfBlueStudents() > 0) {
@@ -217,14 +218,14 @@ public class JesterAndMinstrell implements Initializable {
             notice.setText("It's not your turn!");
         } else if (isCardUsed) {
             notice.setText("You can use only one card at a time!");
-        } else if (this.guiView.getClientModel().getServermodel().getcurrentPlayer().getCoins() < currentCharacter.getCost()) {
+        } else if (this.guiView.getClientModel().getServerModel().getCurrentPlayer().getCoins() < currentCharacter.getCost()) {
             notice.setText("You don't have enough coins! :(");
         } else if (entranceMinstrell.size() != diningMinstrell.size() || jester.size() != entranceJester.size()) {
             notice.setText("You must select the same quantity of students! Please try again.");
             initializeArrays();
         } else {
             this.guiView.getClientModel().setTypeOfRequest(currentCharacter.getName());
-            this.guiView.getClientModel().setResponse(true); //lo flaggo come messaggio di risposta
+            this.guiView.getClientModel().setResponse(true);
             this.guiView.getClientModel().setPingMessage(false);
             if (currentCharacter.getName().equals("MINSTRELL")) {
                 this.guiView.getClientModel().setColors1(entranceMinstrell);

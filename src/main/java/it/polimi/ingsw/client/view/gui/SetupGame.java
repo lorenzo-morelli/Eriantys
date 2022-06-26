@@ -35,17 +35,17 @@ public class SetupGame implements Initializable {
     }
 
     public void set2Players() {
-        this.guiView.getClientModel().setNumofplayer(2);
+        this.guiView.getClientModel().setNumOfPlayers(2);
         numberOfPlayersLabel.setText("Number of players: " + this.guiView.getClientModel().getNumOfPlayers());
     }
 
     public void set3Players() {
-        this.guiView.getClientModel().setNumofplayer(3);
+        this.guiView.getClientModel().setNumOfPlayers(3);
         numberOfPlayersLabel.setText("Number of players: " + this.guiView.getClientModel().getNumOfPlayers());
     }
 
     public void set4Players() {
-        this.guiView.getClientModel().setNumofplayer(4);
+        this.guiView.getClientModel().setNumOfPlayers(4);
         numberOfPlayersLabel.setText("Number of players: " + this.guiView.getClientModel().getNumOfPlayers());
     }
 

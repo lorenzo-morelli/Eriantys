@@ -14,9 +14,9 @@ public class Island {
     public static final String WHITE_BOLD_BRIGHT="\033[1;97m";
     public static final String ANSI_GRAY="\033[1;90m";
 
-    public Island(int initialstudent, StudentSet bag) {
+    public Island(int initialStudent, StudentSet bag) {
         this.inhabitants = new StudentSet();
-        this.inhabitants.setStudentsRandomly(initialstudent,bag);
+        this.inhabitants.setStudentsRandomly(initialStudent,bag);
         this.numberOfTowers = 0;
         this.towerColor = null;
         this.isBlocked = false;
@@ -43,75 +43,75 @@ public class Island {
     }
 
     public Player player_influence(ArrayList<Player> Players, ArrayList<Professor> Professors, boolean centaur, PeopleColor mushroom, Player knight) { //ritorna nullo se nessuno ha influenza
-        int max = 0, partial_sum = 0;   //2 or 3 player
-        Player max_influence = null;
+        int max = 0, partialSum = 0;   //2 or 3 player
+        Player maxInfluence = null;
         for (Player player : Players) {
-            if (player.getSchoolBoard().getTowerColor().equals(towerColor) && !centaur) partial_sum+=numberOfTowers;
-            if( player.equals(knight)) partial_sum+=2;
+            if (player.getSchoolBoard().getTowerColor().equals(towerColor) && !centaur) partialSum +=numberOfTowers;
+            if( player.equals(knight)) partialSum +=2;
             for (Professor professor : Professors) {
                 if (player.equals(professor.getHeldBy()) && professor.getColor()!= mushroom) {
-                    partial_sum = partial_sum + inhabitants.numStudentsbycolor(professor.getColor());
+                    partialSum = partialSum + inhabitants.numStudentsByColor(professor.getColor());
                 }
             }
-            if (partial_sum > max) {
-                max = partial_sum;
-                max_influence = player;
-            } else if (partial_sum == max) {
-                max_influence = null;
+            if (partialSum > max) {
+                max = partialSum;
+                maxInfluence = player;
+            } else if (partialSum == max) {
+                maxInfluence = null;
             }
-            partial_sum = 0;
+            partialSum = 0;
         }
-        int partial_sumofNobody=0;
+        int partialSumOfNobody =0;
             for (Professor professor : Professors) {
                 if (professor.getHeldBy() == null && professor.getColor() != mushroom) {
-                    partial_sumofNobody = inhabitants.numStudentsbycolor(professor.getColor());
+                    partialSumOfNobody = inhabitants.numStudentsByColor(professor.getColor());
                 }
-                if (partial_sumofNobody >= max) {
-                    max_influence = null;
+                if (partialSumOfNobody >= max) {
+                    maxInfluence = null;
                     break;
                 }
-                partial_sumofNobody=0;
+                partialSumOfNobody =0;
             }
-        return max_influence; //ritorna player con piu influenza
+        return maxInfluence; //return the player with the maximum influence
     }
 
     public Team team_influence(ArrayList<Team> Teams, ArrayList<Professor> Professors, boolean centaur, PeopleColor mushroom, Player knight){ //ritorna nullo se nessuno ha influenza
-        int max=0, partial_sum=0;   //4 player
-        Team max_influence = null;
+        int max=0, partialSum =0;   //4 player
+        Team maxInfluence = null;
 
         for (Team team : Teams) {
-            if (team.getPlayer1().getSchoolBoard().getTowerColor().equals(towerColor)&& !centaur) partial_sum+=numberOfTowers;
-            if( team.getPlayer1().equals(knight)) partial_sum+=2;
-            if( team.getPlayer2().equals(knight)) partial_sum+=2;
+            if (team.getPlayer1().getSchoolBoard().getTowerColor().equals(towerColor)&& !centaur) partialSum +=numberOfTowers;
+            if( team.getPlayer1().equals(knight)) partialSum +=2;
+            if( team.getPlayer2().equals(knight)) partialSum +=2;
             for (Professor professor : Professors) {
                 if (team.getPlayer1().equals(professor.getHeldBy()) || team.getPlayer2().equals(professor.getHeldBy())&& professor.getColor()!= mushroom) {
-                    partial_sum = partial_sum + inhabitants.numStudentsbycolor(professor.getColor());
+                    partialSum = partialSum + inhabitants.numStudentsByColor(professor.getColor());
                 }
             }
-            if (partial_sum > max) {
-                max = partial_sum;
-                max_influence = team;
-            } else if (partial_sum == max) {
-                max_influence = null;
+            if (partialSum > max) {
+                max = partialSum;
+                maxInfluence = team;
+            } else if (partialSum == max) {
+                maxInfluence = null;
             }
-            partial_sum = 0;
+            partialSum = 0;
         }
-        int partial_sumofNobody=0;
+        int partialSumOfNobody =0;
         for (Professor professor : Professors) {
             if (professor.getHeldBy() == null && professor.getColor() != mushroom) {
-                partial_sumofNobody = inhabitants.numStudentsbycolor(professor.getColor());
+                partialSumOfNobody = inhabitants.numStudentsByColor(professor.getColor());
             }
-            if (partial_sumofNobody >= max) {
-                max_influence = null;
+            if (partialSumOfNobody >= max) {
+                maxInfluence = null;
                 break;
             }
-            partial_sumofNobody=0;
+            partialSumOfNobody =0;
         }
-        return max_influence; //ritorna team con piu influenza
+        return maxInfluence; //returns the team with the max influence
     }
     public void placeTower(){ this.numberOfTowers ++; }
 
-    public void controllIsland(Player influence_player){
+    public void controlIsland(Player influence_player){
         setTowerColor(influence_player.getSchoolBoard().getTowerColor());
         if(numberOfTowers>0){
             for(int i=0;i<numberOfTowers;i++) {
@@ -123,7 +123,7 @@ public class Island {
         }
     }
 
-    public void controllIsland(Team influence_team){
+    public void controlIsland(Team influence_team){
         setTowerColor(influence_team.getPlayer1().getSchoolBoard().getTowerColor());
         if(numberOfTowers>0){
             for(int i=0;i<numberOfTowers;i++) {

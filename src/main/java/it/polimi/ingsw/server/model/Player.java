@@ -37,15 +37,15 @@ public class Player implements Comparable<Player> {
         isDisconnected = false;
     }
 
-    //requies teamnumber== "1 or 2" e un controllo che fa riscegliere il team se team Ã¨ gia pieno :team.isFull())
-    public Player(String nickname, String Ip, int teamnumber, Model model, boolean debug) {
-        if (teamnumber < 3 && teamnumber > 0) {
+    //requires teamNumber == (1 || 2) and a check that causes the team to be re-chosen if team is already full :team.isFull())
+    public Player(String nickname, String Ip, int teamNumber, Model model, boolean debug) {
+        if (teamNumber < 3 && teamNumber > 0) {
             this.nickname = nickname;
             this.Ip = Ip;
             this.availableCards = new Deck();
             this.choosedCard = null;
             Team team;
-            if (model.getTeams().get(0).getTeamNumber() == teamnumber) {
+            if (model.getTeams().get(0).getTeamNumber() == teamNumber) {
                 if (!(model.getTeams().get(0).isFull())) {
                     team = model.getTeams().get(0);
                 } else {

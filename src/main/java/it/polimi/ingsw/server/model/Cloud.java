@@ -2,12 +2,12 @@ package it.polimi.ingsw.server.model;
 
 public class Cloud {
     private final StudentSet studentsAccumulator;  // accumulator for charging and discharging students
-    private final int cloudsize;
-    public Cloud(int numplayer){
-        if(numplayer==3) {
-            this.cloudsize = 4;
+    private final int cloudSize;
+    public Cloud(int numOfPlayers){
+        if(numOfPlayers ==3) {
+            this.cloudSize = 4;
         }else{
-            this.cloudsize=3;
+            this.cloudSize =3;
         }
         this.studentsAccumulator = new StudentSet();
         //initialize the population to 0 (kill all the inhabitants)
@@ -17,8 +17,8 @@ public class Cloud {
         return studentsAccumulator;
     }
     public boolean charge(StudentSet bag) {
-        if(bag.size()>=cloudsize) {
-            this.studentsAccumulator.setStudentsRandomly(cloudsize, bag);
+        if(bag.size()>= cloudSize) {
+            this.studentsAccumulator.setStudentsRandomly(cloudSize, bag);
             return true;
         }
         else{

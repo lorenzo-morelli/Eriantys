@@ -26,6 +26,7 @@ import java.util.concurrent.TimeUnit;
  * This server state implements the logic necessary to correctly handle
  * the Assistant card phase of the game.
  */
+@SuppressWarnings("ALL")
 public class AssistantCardPhase extends State {
     private final Event cardsChosen,gameEnd;
     private final ConnectionModel connectionModel;
@@ -82,7 +83,7 @@ public class AssistantCardPhase extends State {
 
         for(int i = 0; i< model.getNumberOfPlayers(); i++){
 
-            Player currentPlayer = model.getcurrentPlayer();
+            Player currentPlayer = model.getCurrentPlayer();
             disconnected=false;
             fromPing=false;
 
@@ -107,7 +108,7 @@ public class AssistantCardPhase extends State {
                 currentPlayerData.setResponse(false);
                 currentPlayerData.setTypeOfRequest("CHOOSEASSISTANTCARD");
                 currentPlayerData.setPingMessage(false);
-                currentPlayerData.setServermodel(model);
+                currentPlayerData.setServerModel(model);
 
                 boolean checkDisconnection;
 
@@ -184,7 +185,7 @@ public class AssistantCardPhase extends State {
                     boolean checkEndCondition = currentPlayer.setChoosedCard(chosen);
 
                     if (checkEndCondition) {
-                        model.setlastturn();
+                        model.setLastTurn();
                     }
 
                 }
@@ -212,7 +213,7 @@ public class AssistantCardPhase extends State {
                                 ClientModel Data = connectionModel.findPlayer(p.getNickname());
 
                                 Data.setTypeOfRequest("TRYTORECONNECT");
-                                Data.setServermodel(model);
+                                Data.setServerModel(model);
                                 Data.setResponse(false);
                                 Data.setPingMessage(false);
 

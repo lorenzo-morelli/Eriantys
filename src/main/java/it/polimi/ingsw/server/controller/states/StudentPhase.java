@@ -84,7 +84,7 @@ public class StudentPhase extends State {
         int moves;
         Model model = serverController.getModel();
 
-        Player currentPlayer = model.getcurrentPlayer();
+        Player currentPlayer = model.getCurrentPlayer();
         disconnected=false;
         fromPing=false;
 
@@ -104,7 +104,7 @@ public class StudentPhase extends State {
 
         for(int i=0; i< moves; i++) {
 
-            currentPlayerData.setServermodel(model);
+            currentPlayerData.setServerModel(model);
             currentPlayerData.setTypeOfRequest("CHOOSEWHERETOMOVESTUDENTS");
             currentPlayerData.setPingMessage(false);
             currentPlayerData.setResponse(false);
@@ -144,7 +144,7 @@ public class StudentPhase extends State {
                             shuffle(colors);
                             int j=0;
                             for(PeopleColor color: colors) {
-                                if(currentPlayer.getSchoolBoard().getEntranceSpace().numStudentsbycolor(color)!=0) {
+                                if(currentPlayer.getSchoolBoard().getEntranceSpace().numStudentsByColor(color)!=0) {
                                     currentPlayer.getSchoolBoard().load_dinner(color);
                                     model.getTable().checkProfessor(color,model.getPlayers());
                                     j++;
@@ -175,7 +175,7 @@ public class StudentPhase extends State {
                 String type = currentPlayerData.getTypeOfRequest();
                 if (type.equals("SCHOOL")) {
                     currentPlayer.getSchoolBoard().load_dinner(currentPlayerData.getChoosedColor());
-                    if (model.getGameMode().equals(GameMode.EXPERT) && currentPlayer.getSchoolBoard().getDinnerTable().numStudentsbycolor(currentPlayerData.getChoosedColor()) % 3 == 0) {
+                    if (model.getGameMode().equals(GameMode.EXPERT) && currentPlayer.getSchoolBoard().getDinnerTable().numStudentsByColor(currentPlayerData.getChoosedColor()) % 3 == 0) {
                         currentPlayer.improveCoin();
                     }
                     model.getTable().checkProfessor(currentPlayerData.getChoosedColor(), model.getPlayers());
@@ -270,7 +270,7 @@ public class StudentPhase extends State {
                                 ClientModel Data = connectionModel.findPlayer(p.getNickname());
 
                                 Data.setTypeOfRequest("TRYTORECONNECT");
-                                Data.setServermodel(model);
+                                Data.setServerModel(model);
                                 Data.setResponse(false);
                                 Data.setPingMessage(false);
 

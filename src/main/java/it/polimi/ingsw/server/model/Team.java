@@ -39,11 +39,11 @@ public class Team {
         return player1 != null && player2 != null;
     }
 
-    public String toString(String player,String actualplayer) {
+    public String toString(String player,String actualPlayer) {
 
         StringBuilder result = new StringBuilder();
         result.append("  TEAM ").append(teamNumber).append(" \n\n");
-        if (getPlayer1().getNickname().equals(actualplayer)) {
+        if (getPlayer1().getNickname().equals(actualPlayer)) {
             switch (getPlayer1().getSchoolBoard().getTowerColor()) {
                 case BLACK:
                     result.append(ANSI_BLACK + "    (CURRENT PLAYER) " + ANSI_RESET);
@@ -69,12 +69,12 @@ public class Team {
                     break;
             }
         }
-        if(getPlayer1().getNickname().equals(player) || getPlayer1().getNickname().equals(actualplayer)){
+        if(getPlayer1().getNickname().equals(player) || getPlayer1().getNickname().equals(actualPlayer)){
             result.append("\n");
         }
-        result.append(getPlayer1().toString(actualplayer));
+        result.append(getPlayer1().toString(actualPlayer));
 
-        if (getPlayer2().getNickname().equals(actualplayer)) {
+        if (getPlayer2().getNickname().equals(actualPlayer)) {
             switch (getPlayer2().getSchoolBoard().getTowerColor()) {
                 case BLACK:
                     result.append(ANSI_BLACK + "    (CURRENT PLAYER) " + ANSI_RESET);
@@ -100,11 +100,11 @@ public class Team {
                     break;
             }
         }
-        if(getPlayer2().getNickname().equals(player) || getPlayer2().getNickname().equals(actualplayer)){
+        if(getPlayer2().getNickname().equals(player) || getPlayer2().getNickname().equals(actualPlayer)){
             result.append("\n");
         }
         assert player1 != null;
-        result.append(getPlayer2().toString(actualplayer)).append("    TOWERS : ").append(player1.getSchoolBoard().getNumOfTowers()).append("\n").append("    TOWER COLOR : ").append(player1.getSchoolBoard().getTowerColor() == null ? " Null" : (player1.getSchoolBoard().getTowerColor() == TowerColor.GREY ? ANSI_GRAY + player1.getSchoolBoard().getTowerColor() + ANSI_RESET : (player1.getSchoolBoard().getTowerColor() == TowerColor.WHITE ? ANSI_WHITE + player1.getSchoolBoard().getTowerColor() + ANSI_RESET : ANSI_BLACK + player1.getSchoolBoard().getTowerColor() + ANSI_RESET))).append("\n\n\n");
+        result.append(getPlayer2().toString(actualPlayer)).append("    TOWERS : ").append(player1.getSchoolBoard().getNumOfTowers()).append("\n").append("    TOWER COLOR : ").append(player1.getSchoolBoard().getTowerColor() == null ? " Null" : (player1.getSchoolBoard().getTowerColor() == TowerColor.GREY ? ANSI_GRAY + player1.getSchoolBoard().getTowerColor() + ANSI_RESET : (player1.getSchoolBoard().getTowerColor() == TowerColor.WHITE ? ANSI_WHITE + player1.getSchoolBoard().getTowerColor() + ANSI_RESET : ANSI_BLACK + player1.getSchoolBoard().getTowerColor() + ANSI_RESET))).append("\n\n\n");
         return result.toString();
     }
 

@@ -21,8 +21,8 @@ public class Princess extends CharacterCard{
     public void useEffect(Player player, PeopleColor color, CenterTable table, ArrayList<Player> players) {
         player.reduceCoin(getCost());
         improveCost();
-        player.getSchoolBoard().getDinnerTable().addstudents(1,color);
-        set.removestudent(1,color);
+        player.getSchoolBoard().getDinnerTable().addStudents(1,color);
+        set.removeStudent(1,color);
         set.setStudentsRandomly(1,table.getBag());
         table.checkProfessor(color,players);
     }

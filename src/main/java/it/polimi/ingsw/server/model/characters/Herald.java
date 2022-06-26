@@ -19,7 +19,7 @@ public class Herald extends CharacterCard{
                 Team influence_team = target.team_influence(model.getTeams(), model.getTable().getProfessors(),model.getTable().isCentaurEffect(),model.getTable().getMushroomColor(),model.getTable().getKnightEffect());
                 if (influence_team != null) {
                     if (target.getNumberOfTowers() == 0) {
-                        target.controllIsland(influence_team);
+                        target.controlIsland(influence_team);
                         target.placeTower();
                     } else if (!(target.getTowerColor().equals(influence_team.getPlayer1().getSchoolBoard().getTowerColor()))) {
                         model.getTable().conquestIsland(index_island, model.getTeams(), influence_team);
@@ -32,7 +32,7 @@ public class Herald extends CharacterCard{
                 Player influence_player = target.player_influence(model.getPlayers(), model.getTable().getProfessors(),model.getTable().isCentaurEffect(),model.getTable().getMushroomColor(),model.getTable().getKnightEffect());
                 if (influence_player != null) {
                     if (target.getNumberOfTowers() == 0) {
-                        target.controllIsland(influence_player);
+                        target.controlIsland(influence_player);
                         target.placeTower();
                     } else if (!(target.getTowerColor().equals(influence_player.getSchoolBoard().getTowerColor()))) {
                         model.getTable().conquestIsland(index_island, model.getPlayers(), influence_player);

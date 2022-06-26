@@ -154,7 +154,7 @@ public class Game implements Initializable {
         currNode = phaseLabel;
         Position pos = new Position();
         phaseLabel.setText(gameState);
-        turnLabel.setText("This is " + this.guiView.getClientModel().getServermodel().getcurrentPlayer().getNickname() + "'s turn");
+        turnLabel.setText("This is " + this.guiView.getClientModel().getServerModel().getCurrentPlayer().getNickname() + "'s turn");
         if (this.guiView.getClientModel().getTypeOfRequest().equals("GAMEEND")) {
             try {
                 this.guiView.openNewWindow("EndGame");
@@ -196,17 +196,17 @@ public class Game implements Initializable {
             cloudBtn.setStyle("-fx-background-image: url(" + imageURL + ");");
         }
 
-        GameMode gameMode = this.guiView.getClientModel().getServermodel().getGameMode();
-        int motherNaturePos = this.guiView.getClientModel().getServermodel().getTable().getMotherNaturePosition();
-        ArrayList<Island> islands = this.guiView.getClientModel().getServermodel().getTable().getIslands();
-        ArrayList<Player> players = this.guiView.getClientModel().getServermodel().getPlayers();
+        GameMode gameMode = this.guiView.getClientModel().getServerModel().getGameMode();
+        int motherNaturePos = this.guiView.getClientModel().getServerModel().getTable().getMotherNaturePosition();
+        ArrayList<Island> islands = this.guiView.getClientModel().getServerModel().getTable().getIslands();
+        ArrayList<Player> players = this.guiView.getClientModel().getServerModel().getPlayers();
         players.forEach(player -> System.out.println(player.getChoosedCard() != null ? player.getChoosedCard().getValues() : "non scelta"));
 
-        ArrayList<Professor> professors = this.guiView.getClientModel().getServermodel().getTable().getProfessors();
-        ArrayList<Cloud> clouds = this.guiView.getClientModel().getServermodel().getTable().getClouds();
+        ArrayList<Professor> professors = this.guiView.getClientModel().getServerModel().getTable().getProfessors();
+        ArrayList<Cloud> clouds = this.guiView.getClientModel().getServerModel().getTable().getClouds();
         ArrayList<Team> teams = null;
         if (players.size() == 4) {
-            teams = this.guiView.getClientModel().getServermodel().getTeams();
+            teams = this.guiView.getClientModel().getServerModel().getTeams();
         }
         ArrayList<Label> playerNames = new ArrayList<>(Arrays.asList(playerName1, playerName2, playerName3, playerName4));
         ArrayList<ImageView> assistantCards = new ArrayList<>(Arrays.asList(assistantCard1, assistantCard2, assistantCard3, assistantCard4));
@@ -356,13 +356,13 @@ public class Game implements Initializable {
         });
         professors.forEach(prof -> {
             if (prof.getHeldBy() != null) {
-                Player choosenPlayer = null;
+                Player choosedPlayer = null;
                 for (Player player : players) {
                     if (player.getNickname().equals(prof.getHeldBy().getNickname())) {
-                        choosenPlayer = player;
+                        choosedPlayer = player;
                     }
                 }
-                if (choosenPlayer != null) {
+                if (choosedPlayer != null) {
                     ImageView profImage = null;
                     String color = "";
                     switch (prof.getColor()) {
@@ -388,7 +388,7 @@ public class Game implements Initializable {
                             break;
                     }
                     imageResize(profImage, 30);
-                    professorGrids.get(players.indexOf(choosenPlayer)).add(profImage, 0, getColorPlace(color));
+                    professorGrids.get(players.indexOf(choosedPlayer)).add(profImage, 0, getColorPlace(color));
                 }
             }
         });
@@ -425,7 +425,7 @@ public class Game implements Initializable {
             coinLabels.forEach(coinLabel -> coinLabel.setVisible(false));
             costs.forEach(cost -> cost.setVisible(false));
         } else {
-            ArrayList<CharacterCard> characterCards = this.guiView.getClientModel().getServermodel().getTable().getCharacters();
+            ArrayList<CharacterCard> characterCards = this.guiView.getClientModel().getServerModel().getTable().getCharacters();
             toImageCharacters(characterCards, characterCardsImages);
             players.forEach(player -> {
                 Label coinLabel = coinLabels.get(players.indexOf(player));
@@ -438,16 +438,16 @@ public class Game implements Initializable {
                 StudentSet studentSet = null;
                 switch (characterCards.get(characterGrids.indexOf(grid)).getName()) {
                     case "MONK":
-                        studentSet = guiView.getClientModel().getServermodel().getTable().getMonkSet();
+                        studentSet = guiView.getClientModel().getServerModel().getTable().getMonkSet();
                         break;
                     case "PRINCESS":
-                        studentSet = guiView.getClientModel().getServermodel().getTable().getPrincessSet();
+                        studentSet = guiView.getClientModel().getServerModel().getTable().getPrincessSet();
                         break;
                     case "JESTER":
-                        studentSet = guiView.getClientModel().getServermodel().getTable().getJesterSet();
+                        studentSet = guiView.getClientModel().getServerModel().getTable().getJesterSet();
                         break;
                     case "GRANNY":
-                        for (int i = 0; i < this.guiView.getClientModel().getServermodel().getTable().getNumDivieti(); i++) {
+                        for (int i = 0; i < this.guiView.getClientModel().getServerModel().getTable().getNumDivieti(); i++) {
                             ImageView block = new ImageView("/graphics/pieces/islands/deny_island_icon.png");
                             this.imageResize(block, 30);
                             grid.add(block, i % 2, i / 2);

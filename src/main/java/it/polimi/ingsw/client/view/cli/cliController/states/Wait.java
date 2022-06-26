@@ -71,13 +71,13 @@ public class Wait extends State {
         }
         Thread t = new Thread(){
             public synchronized void run() {
-                ClientModel TryreceivedClientModel = json.fromJson(message.getParameter(0), ClientModel.class);
+                ClientModel tryReceivedClientModel = json.fromJson(message.getParameter(0), ClientModel.class);
 
-                if(Objects.equals(TryreceivedClientModel.getTypeOfRequest(), "CONNECTTOEXISTINGGAME")){
+                if(Objects.equals(tryReceivedClientModel.getTypeOfRequest(), "CONNECTTOEXISTINGGAME")){
                     return;
                 }
 
-                receivedClientModel=TryreceivedClientModel;
+                receivedClientModel= tryReceivedClientModel;
 
                 if (Network.disconnectedClient()) {
                     Network.disconnect();

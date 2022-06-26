@@ -94,7 +94,7 @@ public class ClientModel {
         this.gameMode = gameMode;
     }
 
-    public void setNumofplayer(int numOfPlayer) {
+    public void setNumOfPlayers(int numOfPlayer) {
         this.numOfPlayer = numOfPlayer;
     }
 
@@ -191,11 +191,11 @@ public class ClientModel {
         this.choosedIsland = choosedIsland;
     }
 
-    public Model getServermodel() {
+    public Model getServerModel() {
         return serverModel;
     }
 
-    public void setServermodel(Model serverModel) {
+    public void setServerModel(Model serverModel) {
         this.serverModel = serverModel;
     }
 

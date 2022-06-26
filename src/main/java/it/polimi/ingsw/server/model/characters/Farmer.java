@@ -19,7 +19,7 @@ public class Farmer extends CharacterCard{
         improveCost();
         table.setFarmerEffect(player);
         for(PeopleColor color: PeopleColor.values()){
-            if(player.getSchoolBoard().getDinnerTable().numStudentsbycolor(color)>0)
+            if(player.getSchoolBoard().getDinnerTable().numStudentsByColor(color)>0)
             {table.checkProfessor(color,players);}
         }
     }

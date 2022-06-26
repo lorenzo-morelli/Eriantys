@@ -53,7 +53,7 @@ public class Character implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         notice.setText("");
         name.setText(currentCharacter.getName());
-        ArrayList<Island> islands = this.guiView.getClientModel().getServermodel().getTable().getIslands();
+        ArrayList<Island> islands = this.guiView.getClientModel().getServerModel().getTable().getIslands();
         ArrayList<ImageView> students = new ArrayList<>(Arrays.asList(student1, student2, student3, student4, student5));
 
         chosenColor = null;
@@ -88,12 +88,12 @@ public class Character implements Initializable {
                 break;
             case "MONK":
                 explanation.setText("Take 1 student from this card and place it on an island of your choice");
-                this.selectStudent(students, this.guiView.getClientModel().getServermodel().getTable().getMonkSet());
+                this.selectStudent(students, this.guiView.getClientModel().getServerModel().getTable().getMonkSet());
                 this.selectIsland(islands);
                 break;
             case "PRINCESS":
                 explanation.setText("You can select 1 student from this card and place it in your dinner table");
-                this.selectStudent(students, this.guiView.getClientModel().getServermodel().getTable().getPrincessSet());
+                this.selectStudent(students, this.guiView.getClientModel().getServerModel().getTable().getPrincessSet());
                 flagIsland = true;
                 break;
             case "MUSHROOMHUNTER":
@@ -229,7 +229,7 @@ public class Character implements Initializable {
             notice.setText("It's not your turn!");
         } else if (isCardUsed) {
             notice.setText("You can use only one card at a time!");
-        } else if (this.guiView.getClientModel().getServermodel().getcurrentPlayer().getCoins() < currentCharacter.getCost()) {
+        } else if (this.guiView.getClientModel().getServerModel().getCurrentPlayer().getCoins() < currentCharacter.getCost()) {
             notice.setText("You don't have enough coins! :(");
         } else if (!flagColor || !flagIsland) {
             notice.setText("Information missing!");

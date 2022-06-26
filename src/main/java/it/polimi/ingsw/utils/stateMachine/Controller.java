@@ -75,66 +75,68 @@ public class Controller {
         currentState = firstState;
     }
 
-    /**
-     * @param name       The name of the controller
-     * @param stateTable Alternative to store transitions between states
-     */
-    public Controller(String name, Object[] stateTable) {
-        this.name = name;
-        int colNo = 0;
-
-        IEvent readingEvent = null;
-        currentState = (IState) stateTable[0];
-
-        // The current node being read
-        int i = 0;
-
-        // Skip over the state headers at the top
-        while (stateTable[i] instanceof IState) {
-            i++;
-        }
-
-        // Make sure the first thing after loading the table is the event column
-        if (!(stateTable[i] instanceof IEvent)) {
-            throw new IllegalArgumentException();
-        }
-
-        // Now, starting from the first event in the event column, read each row
-        for (; i < stateTable.length; i++) {
-            Object cell = stateTable[i];
-
-            // Switch to next row when we hit an event
-            if (cell instanceof IEvent) {
-                readingEvent = (IEvent) cell;
-                colNo = -1;
-                continue;
-            }
-            // Keep a running count of what column of the row we are on, so we
-            // can find a source event
-            // (index into the top row of the table.) A nice check to add here
-            // would be to make sure
-            // it is never past the first event we saw (always in the top row)
-            colNo++;
-
-            // Ignore nulls, but they still count as columns
-            if (cell == null) {
-                continue;
-            }
-
-            // Just an easy sanity check
-            if (!(cell instanceof IState)) {
-                throw new IllegalArgumentException("Item found in table not IState, IStateEvent or null, item:" + i);
-            }
-
-            // We have identified a "next state" in the node, a "starting state"
-            // in the
-            // header at the top of this column, and a transition (the last
-            // event we hit)
-            // Add the transition.
-            assert readingEvent != null;
-            addTransition((IState) stateTable[colNo], readingEvent, (IState) cell);
-        }
-    }
+// --Commented out by Inspection START (26/06/22, 17:47):
+//    /**
+//     * @param name       The name of the controller
+//     * @param stateTable Alternative to store transitions between states
+//     */
+//    public Controller(String name, Object[] stateTable) {
+//        this.name = name;
+//        int colNo = 0;
+//
+//        IEvent readingEvent = null;
+//        currentState = (IState) stateTable[0];
+//
+//        // The current node being read
+//        int i = 0;
+//
+//        // Skip over the state headers at the top
+//        while (stateTable[i] instanceof IState) {
+//            i++;
+//        }
+//
+//        // Make sure the first thing after loading the table is the event column
+//        if (!(stateTable[i] instanceof IEvent)) {
+//            throw new IllegalArgumentException();
+//        }
+//
+//        // Now, starting from the first event in the event column, read each row
+//        for (; i < stateTable.length; i++) {
+//            Object cell = stateTable[i];
+//
+//            // Switch to next row when we hit an event
+//            if (cell instanceof IEvent) {
+//                readingEvent = (IEvent) cell;
+//                colNo = -1;
+//                continue;
+//            }
+//            // Keep a running count of what column of the row we are on, so we
+//            // can find a source event
+//            // (index into the top row of the table.) A nice check to add here
+//            // would be to make sure
+//            // it is never past the first event we saw (always in the top row)
+//            colNo++;
+//
+//            // Ignore nulls, but they still count as columns
+//            if (cell == null) {
+//                continue;
+//            }
+//
+//            // Just an easy sanity check
+//            if (!(cell instanceof IState)) {
+//                throw new IllegalArgumentException("Item found in table not IState, IStateEvent or null, item:" + i);
+//            }
+//
+//            // We have identified a "next state" in the node, a "starting state"
+//            // in the
+//            // header at the top of this column, and a transition (the last
+//            // event we hit)
+//            // Add the transition.
+//            assert readingEvent != null;
+//            addTransition((IState) stateTable[colNo], readingEvent, (IState) cell);
+//        }
+//    }
+// --Commented out by Inspection STOP (26/06/22, 17:47)
 
     /**
      * Program the controller with allowed transitions.
@@ -263,9 +265,10 @@ public class Controller {
  * <p>
  * That's why this module is extracted - it's replaceable.
  */
+@SuppressWarnings("unchecked")
 class StateTableWithNestedHashtable {
 
-    private final Hashtable<Object,Object> states = new Hashtable<>(); //todo risolvere warning
+    private final Hashtable<Object,Object> states = new Hashtable<>();
 
     public void addTransition(IState startingState, IEvent ev, IState nextState) {
         Hashtable<Object,Object> h = (Hashtable<Object, Object>) states.get(ev);

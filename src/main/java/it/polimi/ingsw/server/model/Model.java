@@ -13,33 +13,33 @@ public class Model {
     private final int numberOfPlayers;
     private int turnNumber;
     private final CenterTable table;
-    private int currentplayer;
+    private int currentPlayer;
     private final ArrayList<Team> teams;
     private final ArrayList<Player> players;
-    boolean islastturn,disconnection=false;
+    boolean isLastTurn,disconnection=false;
 
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_BLACK = "\u001B[30m";
     public static final String ANSI_WHITE="\033[1;97m";
     public static final String ANSI_GRAY="\033[1;90m";
-    public Model(int numofplayer, String gamemode, boolean debug) {
+    public Model(int numOfPlayer, String gameMode, boolean debug) {
 
     //    debug=true; //TODO: DELETE AFTER TESTING
-        this.islastturn = false;
-        this.currentplayer = 0;
+        this.isLastTurn = false;
+        this.currentPlayer = 0;
         this.players = new ArrayList<>();
-        this.numberOfPlayers = numofplayer;
-        switch (gamemode) {
+        this.numberOfPlayers = numOfPlayer;
+        switch (gameMode) {
             case "PRINCIPIANT":
-                gameMode = GameMode.PRINCIPIANT;
+                this.gameMode = GameMode.PRINCIPIANT;
                 break;
             case "EXPERT":
-                gameMode = GameMode.EXPERT;
+                this.gameMode = GameMode.EXPERT;
                 break;
         }
         this.turnNumber = 0;
-        this.table = new CenterTable(numofplayer, this.gameMode, debug);
-        if (numofplayer == 4) {
+        this.table = new CenterTable(numOfPlayer, this.gameMode, debug);
+        if (numOfPlayer == 4) {
             teams = new ArrayList<>();
             teams.add(new Team(1));
             teams.add(new Team(2));
@@ -64,7 +64,7 @@ public class Model {
         return table;
     }
 
-    public void randomschedulePlayers() {
+    public void randomSchedulePlayers() {
         shuffle(players);
     }
 
@@ -72,15 +72,15 @@ public class Model {
         sort(players);
     }
 
-    public Player getcurrentPlayer() {
-        return players.get(currentplayer);
+    public Player getCurrentPlayer() {
+        return players.get(currentPlayer);
     }
 
     public void nextPlayer() {
-        if (currentplayer == (players.size() - 1)) {
-            currentplayer = 0;
+        if (currentPlayer == (players.size() - 1)) {
+            currentPlayer = 0;
         } else {
-            currentplayer++;
+            currentPlayer++;
         }
     }
 
@@ -91,12 +91,12 @@ public class Model {
         turnNumber++;
     }
 
-    public void setlastturn() {
-        this.islastturn = true;
+    public void setLastTurn() {
+        this.isLastTurn = true;
     }
-    public boolean islastturn(){return islastturn;}
+    public boolean isLastTurn(){return isLastTurn;}
 
-    public String player_winner() {
+    public String playerWinner() {
         int min = 8;
         Player winner = null;
         for (Player player : players) {
@@ -164,26 +164,26 @@ public class Model {
 
     public String toString(String nickname,String message) {
         return "\n\n\n-----------------------------------------GAME-----------------------------------------------------------------------------------------------------------------------------------------\n\n" +
-                "    TURN = " + turnNumber + "    " + (islastturn ? " ! LAST TURN OF THE GAME ! ": "" ) +"\n\n" +
-                table.toString(islastturn) +
-                ( numberOfPlayers==4 ? "-----------------TEAM-----------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n" + printteam(nickname) : "-----------------PLAYER---------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n"+ printplayers(nickname) )+
+                "    TURN = " + turnNumber + "    " + (isLastTurn ? " ! LAST TURN OF THE GAME ! ": "" ) +"\n\n" +
+                table.toString(isLastTurn) +
+                ( numberOfPlayers==4 ? "-----------------TEAM-----------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n" + printTeam(nickname) : "-----------------PLAYER---------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n"+ printPlayers(nickname) )+
                 "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n" + "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n" +"--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n"+ message+ "\n" ;
 
 
     }
 
-    public String printteam(String nickname){
+    public String printTeam(String nickname){
         StringBuilder result= new StringBuilder();
         for (Team team : teams) {
-            result.append(team.toString(nickname,getcurrentPlayer().getNickname()));
+            result.append(team.toString(nickname, getCurrentPlayer().getNickname()));
         }
         return result.toString();
     }
 
-    public String printplayers(String nickname){
+    public String printPlayers(String nickname){
         StringBuilder result= new StringBuilder();
         for(Player player: players) {
-            if (player.equals(getcurrentPlayer())) {
+            if (player.equals(getCurrentPlayer())) {
                 switch (player.getSchoolBoard().getTowerColor()) {
                     case BLACK:
                         result.append(ANSI_BLACK + "    (CURRENT PLAYER) " + ANSI_RESET);
@@ -209,7 +209,7 @@ public class Model {
                         break;
                 }
             }
-            if(player.getNickname().equals(nickname) || player.equals(getcurrentPlayer())){
+            if(player.getNickname().equals(nickname) || player.equals(getCurrentPlayer())){
                 result.append("\n");
             }
             result.append(player.toString(nickname)).append("\n");

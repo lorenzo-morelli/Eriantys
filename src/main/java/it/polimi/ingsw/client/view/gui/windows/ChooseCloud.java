@@ -30,7 +30,7 @@ public class ChooseCloud implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         windowNode = notice;
         this.notice.setText("");
-        ArrayList<Cloud> clouds = this.guiView.getClientModel().getServermodel().getTable().getClouds();
+        ArrayList<Cloud> clouds = this.guiView.getClientModel().getServerModel().getTable().getClouds();
         if (clouds.size() == 2) {
             cloudGrid.setLayoutX(150);
         }
