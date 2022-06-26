@@ -11,9 +11,9 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Classe che rappresenta il terminale (o cmd in windows)
- * Ho usato il pattern Singleton per far in modo che ci sia sempre e solo un cmd
- * Il terminale è il soggetto osservato (pattern observer) dagli Eventi
+ * Class representing the terminal (or cmd in windows)
+ * I used the Singleton pattern to make sure that there is only ever one cmd
+ * The terminal is the subject observed (pattern observer) by the Events
  *
  * @author Fernando
  */
@@ -64,7 +64,7 @@ public class CommandPrompt implements Subject {
         if (!debug) {
             // clear screen works only on Windows
             CommandPrompt.clearScreen();
-            // ascii code for clear screen shoud work on unix
+            // ascii code for clear screen should work on unix
             System.out.print("\033[H\033[2J");
             System.out.flush();
         }
@@ -89,7 +89,7 @@ public class CommandPrompt implements Subject {
 
     public static void ask(String suggestion, String console) throws InterruptedException {
 
-        // Interrompere la lettura dell'input se si disconnette un client
+        // Stop reading input if a client disconnects
         Thread t = new Thread(() -> {
             try {
                 if (!debug) {

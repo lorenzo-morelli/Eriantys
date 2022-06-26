@@ -13,7 +13,7 @@ import java.util.Arrays;
 
 /**
  * This state implements a generic decision between two command line options.
- * The user is therefore offered two strings and he can choose only one of these two.
+ * The user is therefore offered two strings, and he can choose only one of these two.
  * If the user writes a string that is not present between the two options, an error event
  * is generated which will be captured by the controller.
  */

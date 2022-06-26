@@ -16,17 +16,17 @@ public interface View {
     void askParameters() throws InterruptedException;
 
     /**
-     * Come reagisco io client se il server mi fa una richiesta di interagire tramite terminale
+     * How I client react if the server makes me a request to interact via the terminal
      */
     void requestToMe() throws InterruptedException;
 
     /**
-     * Come reagisco io client se un altro client riceve una richiesta di interazione da terminale
+     * How do I client react if another client receives an interaction request from the terminal
      */
     void requestToOthers();
 
     /**
-     * Come reagisco io client in caso di risposta di un altro client al server
+     * How do I client react in case of another client's reply to the server
      */
     void response();
 

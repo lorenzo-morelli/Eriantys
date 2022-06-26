@@ -30,7 +30,7 @@ public class ClientModel {
 
     // isResponse --> è una risposta di un client al server
     // !isResponse --> è una richiesta del server al client
-    // isresponse == null, non è ne una richiesta ne una risposta, probabilmente un messaggio di quelli iniziali
+    // isResponse == null, non è ne una richiesta ne una risposta, probabilmente un messaggio di quelli iniziali
     private Boolean isResponse = false;
     private boolean isPingMessage; //differenzia request di ping da request di gioco
 
@@ -82,7 +82,7 @@ public class ClientModel {
 
     // Getters and Setters
 
-    public int getNumofplayer() {
+    public int getNumOfPlayers() {
         return numOfPlayer;
     }
 

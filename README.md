@@ -22,8 +22,4 @@ ing-sw-2022-cognome1-cognome2-cognome3
 
 Vedere sulle slide tizi che devono
 
-compatibilità con Maven
-
-Java IO - vedere slide su webeep
-
 Introduzione a IntelliJ

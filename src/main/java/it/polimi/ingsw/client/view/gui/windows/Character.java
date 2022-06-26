@@ -235,7 +235,7 @@ public class Character implements Initializable {
             notice.setText("Information missing!");
         } else {
             this.guiView.getClientModel().setTypeOfRequest(currentCharacter.getName());
-            this.guiView.getClientModel().setResponse(true); //lo flaggo come messaggio di risposta
+            this.guiView.getClientModel().setResponse(true);
             this.guiView.getClientModel().setPingMessage(false);
             if (chosenColor != null) {
                 this.guiView.getClientModel().setChoosedColor(chosenColor);

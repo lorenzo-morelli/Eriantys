@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * Evento di inserimento di una parola da parte dell'utente,
- * l'utente scrive una parola di suo gradimento e preme invio.
+ * Event of entering a word by the user,
+ * the user writes a word of his liking and presses enter.
  *
  * * @author Fernando
  */

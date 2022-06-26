@@ -60,7 +60,7 @@ public class WaitOtherClients extends State {
      */
     @Override
     public IEvent entryAction(IEvent cause) throws Exception {
-        int numOfPlayersToWait = connectionModel.getClientsInfo().get(0).getNumofplayer() - 1;
+        int numOfPlayersToWait = connectionModel.getClientsInfo().get(0).getNumOfPlayers() - 1;
 
         while (numOfPlayersToWait > 0) {
             System.out.println("[Waiting for " + numOfPlayersToWait + " clients]");

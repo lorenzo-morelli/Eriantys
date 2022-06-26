@@ -74,7 +74,7 @@ public class ChooseAssistantCard implements Initializable {
 
     public void setCard(int value, MouseEvent mouseEvent) {
         this.guiView.getClientModel().setCardChoosedValue(value);
-        this.guiView.getClientModel().setResponse(true); //lo flaggo come messaggio di risposta
+        this.guiView.getClientModel().setResponse(true);
         this.guiView.getClientModel().setPingMessage(false);
         Gson json = new Gson();
         Network.send(json.toJson(this.guiView.getClientModel()));

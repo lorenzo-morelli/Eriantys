@@ -88,7 +88,7 @@ public class WaitFirstPlayerGameInfo extends State {
 
             connectionModel.getClientsInfo().removeIf(c -> c!=clientModel);
 
-            System.out.println("GAME_MODE: " + clientModel.getGameMode() + "   PLAYERS: " + clientModel.getNumofplayer());
+            System.out.println("GAME_MODE: " + clientModel.getGameMode() + "   PLAYERS: " + clientModel.getNumOfPlayers());
 
             Network.send(json.toJson(clientModel));
             message.fireStateEvent();

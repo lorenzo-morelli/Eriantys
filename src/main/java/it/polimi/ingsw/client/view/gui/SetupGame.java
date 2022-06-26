@@ -36,17 +36,17 @@ public class SetupGame implements Initializable {
 
     public void set2Players() {
         this.guiView.getClientModel().setNumofplayer(2);
-        numberOfPlayersLabel.setText("Number of players: " + this.guiView.getClientModel().getNumofplayer());
+        numberOfPlayersLabel.setText("Number of players: " + this.guiView.getClientModel().getNumOfPlayers());
     }
 
     public void set3Players() {
         this.guiView.getClientModel().setNumofplayer(3);
-        numberOfPlayersLabel.setText("Number of players: " + this.guiView.getClientModel().getNumofplayer());
+        numberOfPlayersLabel.setText("Number of players: " + this.guiView.getClientModel().getNumOfPlayers());
     }
 
     public void set4Players() {
         this.guiView.getClientModel().setNumofplayer(4);
-        numberOfPlayersLabel.setText("Number of players: " + this.guiView.getClientModel().getNumofplayer());
+        numberOfPlayersLabel.setText("Number of players: " + this.guiView.getClientModel().getNumOfPlayers());
     }
 
     public void setPrincipiant() {
@@ -60,7 +60,7 @@ public class SetupGame implements Initializable {
     }
 
     public void start() {
-        if (this.guiView.getClientModel().getNumofplayer() != 2 && this.guiView.getClientModel().getNumofplayer() != 3 && this.guiView.getClientModel().getNumofplayer() != 4) {
+        if (this.guiView.getClientModel().getNumOfPlayers() != 2 && this.guiView.getClientModel().getNumOfPlayers() != 3 && this.guiView.getClientModel().getNumOfPlayers() != 4) {
             this.otherPlayersLabel.setText("ERROR: Please select a number of players!");
         } else if (this.guiView.getClientModel().getGameMode() == null) {
             this.otherPlayersLabel.setText("ERROR: Please select a game mode!");

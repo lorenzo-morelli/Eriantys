@@ -1,7 +1,7 @@
 package it.polimi.ingsw.server.model;
 
 public class Cloud {
-    private final StudentSet studentsAccumulator;  // accumulatore per la carica e scarica di studenti
+    private final StudentSet studentsAccumulator;  // accumulator for charging and discharging students
     private final int cloudsize;
     public Cloud(int numplayer){
         if(numplayer==3) {
@@ -10,7 +10,7 @@ public class Cloud {
             this.cloudsize=3;
         }
         this.studentsAccumulator = new StudentSet();
-        //inizializzo a 0 la popolazione (uccido tutti gli abitanti)
+        //initialize the population to 0 (kill all the inhabitants)
     }
 
     public StudentSet getStudentsAccumulator() {

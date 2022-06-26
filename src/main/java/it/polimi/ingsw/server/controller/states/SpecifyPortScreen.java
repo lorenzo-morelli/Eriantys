@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 
 /**
  * This state handles the specification of the port by the server administrator. A default port is provided,
- * carefully chosen so as not to conflict with existing services in unix and windows operating systems)
+ * carefully chosen so as not to conflict with existing services in unix and windows operating systems
  */
 public class SpecifyPortScreen extends State {
     private final Event portSpecified;

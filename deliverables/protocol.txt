@@ -18,7 +18,7 @@ Server:
 // The connection order will be used to determine the first order to choose the assistants cards
 
 Server:
-    clientip YOUR_TURN list_assistantcard (is an ArrayList serialized with Gson)
+    client_ip YOUR_TURN list_assistantcard (is an ArrayList serialized with Gson)
 
 Player:
     myIp CHOOSE_ASSISTANT_CARD assistant_card
@@ -27,12 +27,12 @@ Player:
 // This interaction will be repeated for numOfPlayers time
 // Others players listen to this message and will update their view
 
-4 times [
+4 times:
     Player:
         myIp MOVE_TO_SCHOOL entrancePos or MOVE_TO_ISLAND entrancePos, islandNumber
 
    // Others players listen to this message and will update their view
-]
+
 
 Player:
     myIp MOVE_MOTHERNATURE moves

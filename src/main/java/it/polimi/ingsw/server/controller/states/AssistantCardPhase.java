@@ -90,7 +90,7 @@ public class AssistantCardPhase extends State {
             if(!currentPlayer.isDisconnected()) {
 
                 ClientModel currentPlayerData;
-                boolean lowpriority = false;
+                boolean lowPriority = false;
                 fromPing = false;
 
                 currentPlayerData = connectionModel.findPlayer(currentPlayer.getNickname());
@@ -98,7 +98,7 @@ public class AssistantCardPhase extends State {
 
                 List<AssistantCard> canBeChoose = new ArrayList<>(currentPlayer.getAvailableCards().getCardsList());
                 if (alreadyChooses.containsAll(canBeChoose)) {
-                    lowpriority = true;
+                    lowPriority = true;
                 } else {
                     canBeChoose.removeAll(alreadyChooses);
                 }
@@ -175,7 +175,7 @@ public class AssistantCardPhase extends State {
                     }
 
 
-                    if (lowpriority) {
+                    if (lowPriority) {
                         assert chosen != null;
                         chosen.lowPriority();
                     }

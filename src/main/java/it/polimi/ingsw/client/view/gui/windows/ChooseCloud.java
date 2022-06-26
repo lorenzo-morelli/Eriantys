@@ -54,7 +54,7 @@ public class ChooseCloud implements Initializable {
                     this.notice.setText("ERROR: Cloud already chosen!");
                 } else {
                     this.guiView.getClientModel().setCloudChoosed(cloud);
-                    this.guiView.getClientModel().setResponse(true); //lo flaggo come messaggio di risposta
+                    this.guiView.getClientModel().setResponse(true);
                     this.guiView.getClientModel().setPingMessage(false);
                     Gson gson = new Gson();
                     Network.send(gson.toJson(this.guiView.getClientModel()));

@@ -61,7 +61,6 @@ public class Wait extends State {
         boolean check=true;
 
         while (check || System.currentTimeMillis()>=end){
-            //System.out.println("loop");
             check=message.waitParametersReceived(5);
         }
 
@@ -87,17 +86,8 @@ public class Wait extends State {
                 }
 
                 if (receivedClientModel.isGameStarted().equals(true) && receivedClientModel.isNotKicked()) {
-
-
-                    // Il messaggio è o una richiesta o una risposta
-
-                    // se il messaggio non è una risposta di un client al server vuol dire che
                     if (receivedClientModel.isResponse().equals(false) && receivedClientModel.getTypeOfRequest() != null) {
-                        // il messaggio è una richiesta del server alla view di un client
-
-                        // se il messaggio è rivolto a me devo essere io a compiere l'azione
                         if (receivedClientModel.getClientIdentity() == myClientModel.getClientIdentity()) {
-                            // il messaggio è rivolto a me
                             if (receivedClientModel.isPingMessage()) {
                                 view.requestPing();
                             } else {
@@ -109,7 +99,6 @@ public class Wait extends State {
                                 }
                             }
                         } else {
-                            // altrimenti devo limitarmi a segnalare che l'altro giocatore sta facendo qualcosa
                             if (    receivedClientModel.getTypeOfRequest() != null                                                &&
                                     !receivedClientModel.isPingMessage()                                                           &&
                                     !receivedClientModel.getTypeOfRequest().equals( "TRYTORECONNECT")                              &&
@@ -119,7 +108,6 @@ public class Wait extends State {
                             }
                         }
                     }
-                    // altrimenti il messaggio è una risposta di un altro client ad un server
                     else if (receivedClientModel.isResponse().equals(true) && receivedClientModel.getTypeOfRequest() != null) {
                         view.setClientModel(receivedClientModel);
                         view.response();

@@ -9,10 +9,10 @@ Group 28
 #### A real time thin client protocol
 For the implementation of the communication protocol we chose to use the thin client approach, in the context of a
 real time turn based game.
-First of all, the client has to specify its nickname and ip/port address of the server. If the data provided
+First, the client has to specify its nickname and ip/port address of the server. If the data provided
 by the client is wrong or the connection to the specified ip/port fails, then the client has to specify again
 the connection infos.
-Once the client is connected to the server, it asks to the server if it is the first one, with a .json serialized
+Once the client is connected to the server, it asks the server if it is the first one, with a .json serialized
 message containing a boolean “amIFirst”. If the server responds affirmatively (amIFirst = true),
 then the client has to specify the game mode and the number of players he wants to play with,
 otherwise it goes directly into the “command wait state”.
