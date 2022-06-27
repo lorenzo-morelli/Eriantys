@@ -109,7 +109,7 @@ public class WaitOtherClients extends State {
                     nickname = new ParametersFromNetwork(1);
                     nickname.enable();
                     nickname.waitParametersReceived();
-                    if (json.fromJson(nickname.getParameter(0), ClientModel.class).getClientIdentity() == clientModel.getClientIdentity()) {
+                    if (nickname.getParameter(0)!=null && json.fromJson(nickname.getParameter(0), ClientModel.class).getClientIdentity() == clientModel.getClientIdentity()) {
                         messageReceived = true;
                     }
                 }

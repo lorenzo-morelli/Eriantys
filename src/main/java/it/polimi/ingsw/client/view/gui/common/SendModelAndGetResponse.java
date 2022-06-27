@@ -37,7 +37,7 @@ public class SendModelAndGetResponse {
             if (check) {
                 return null;
             }
-            if (gson.fromJson(response.getParameter(0), ClientModel.class).getClientIdentity() == clientModel.getClientIdentity()) {
+            if (response.getParameter(0)!=null && gson.fromJson(response.getParameter(0), ClientModel.class).getClientIdentity() == clientModel.getClientIdentity()) {
                 responseReceived = true;
             }
         }

@@ -72,7 +72,7 @@ public class AmIFirst extends State {
             }
 
 
-            if (json.fromJson(response.getParameter(0), ClientModel.class).getClientIdentity() == clientModel.getClientIdentity()) {
+            if (response.getParameter(0)!=null && json.fromJson(response.getParameter(0), ClientModel.class).getClientIdentity() == clientModel.getClientIdentity()) {
                 responseReceived = true;
             }
         }

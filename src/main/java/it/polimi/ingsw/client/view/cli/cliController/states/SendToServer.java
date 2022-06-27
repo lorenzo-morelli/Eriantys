@@ -53,7 +53,7 @@ public class SendToServer extends State{
                 System.exit(0);
             }
 
-            if (json.fromJson(ack.getParameter(0), ClientModel.class).getClientIdentity() == clientModel.getClientIdentity()) {
+            if (ack.getParameter(0)!=null && json.fromJson(ack.getParameter(0), ClientModel.class).getClientIdentity() == clientModel.getClientIdentity()) {
                 responseReceived = true;
             }
         }
