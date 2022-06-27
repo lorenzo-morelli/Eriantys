@@ -228,8 +228,8 @@ public class CliView implements View {
 
                 break;
             case "CHOOSEWHERETOMOVESTUDENTS":
+                System.out.println(networkClientModel.getServerModel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO: \n" + "E' IL TUO TURNO - STUDENT PHASE" + "\n\nMOSSE ALTRI GIOCATORI: " + getResponse()));
                 if (networkClientModel.getServerModel().getGameMode().equals(GameMode.EXPERT) && networkClientModel.getServerModel().getTable().getCharacters().stream().anyMatch(j -> j.getCost() <= networkClientModel.getServerModel().getCurrentPlayer().getCoins() && !isUsed)) {
-                    System.out.println(networkClientModel.getServerModel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO: \n" + "E' IL TUO TURNO - STUDENT PHASE" + "\n\nMOSSE ALTRI GIOCATORI: " + getResponse()));
 
                     CommandPrompt.ask("Scegli il colore dello studente che desideri muovere OPPURE inserisci CARD per usare una carta personaggio", "RED or GREEN or BLUE or YELLOW or PINK    or CARD> ");
 
@@ -266,58 +266,7 @@ public class CliView implements View {
                         default:
                             System.out.println("\n\n\n\nScegli la carta che vorresti utilizzare: \n");
                             ArrayList<String> available = new ArrayList<>();
-                            for (int i = 0; i < networkClientModel.getServerModel().getTable().getCharacters().size(); i++) {
-                                if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getCost() <= networkClientModel.getServerModel().getCurrentPlayer().getCoins()) {
-                                    if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("MONK")) {
-                                        System.out.println("MONK - EFFETTO: Prendi uno studente da questa carta e piazzalo su un isola a tua scelta.\n COMMAND: Inserisci MONK , colore scelto e numero dell'isola separati da uno spazio.\n\n");
-                                        available.add("MONK");
-                                    }
-                                    if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("PRINCESS")) {
-                                        System.out.println("PRINCESS - EFFETTO: Prendi uno studente da questa carta e piazzalo nella tua Sala.\nCOMMAND: Inserisci PRINCESS e colore scelto separati da uno spazio.\n\n");
-                                        available.add("PRINCESS");
-                                    }
-                                    if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("MUSHROOMHUNTER")) {
-                                        System.out.println("MUSHROOMHUNTER - EFFETTO: Scegli un colore di studente; in questo turno, durante il calcolo dell'influenza, quel colore non fornisce influenza.\n COMMAND: Inserisci MUSHROOMHUNTER e colore scelto separati da uno spazio.\n\n");
-                                        available.add("MUSHROOMHUNTER");
-                                    }
-                                    if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("THIEF")) {
-                                        System.out.println("THIEF - EFFETTO: Scegli un colore di studente; ogni giocatore (incluso te) deve rimettere nel sacchetto tre studenti di quel colore presenti nella Sala (o tutti quelli che ha se ne avesse meno di tre).\nCOMMAND: Inserisci THIEF e colore scelto separati da uno spazio\n\n");
-                                        available.add("THIEF");
-                                    }
-                                    if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("FARMER")) {
-                                        System.out.println("FARMER - EFFETTO: Durante questo turno, prendi il controllo dei professori anche se nella tua sala hai lo stesso numero di studenti del giocatore che li controlla in quel momento.\nCOMMAND: inserisci FARMER.\n\n");
-                                        available.add("FARMER");
-                                    }
-                                    if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("CENTAUR")) {
-                                        System.out.println("CENTAUR - EFFETTO: Durante il conteggio di un influenza dell'isola le torri presenti non vengono calcolate.\nCOMMAND: inserisci CENTAUR.\n\n");
-                                        available.add("CENTAUR");
-                                    }
-                                    if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("KNIGHT")) {
-                                        System.out.println("KNIGHT - EFFETTO: In questo turno, durante il calcolo dell'influenza, hai due punti di influenza addizionali.\nCOMMAND: inserisci KNIGHT.\n\n");
-                                        available.add("KNIGHT");
-                                    }
-                                    if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("POSTMAN")) {
-                                        System.out.println("POSTMAN - EFFETTO: Puoi muovere madre natura fino a due isole addizionali rispetto a quanto indicato sulla carta assistente che hai giocato.\nCOMMAND: inserisci POSTMAN.\n\n");
-                                        available.add("POSTMAN");
-                                    }
-                                    if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("GRANNY")) {
-                                        System.out.println("GRANNY - EFFETTO: Piazza un divieto su un isola a tua scelta. La prima volta che madre natura termina il suo movimento li l'influenza non verrà calcolata e il divieto verrà reinserito in questa carta.\nCOMMAND: inserisci GRANNY e numero dell'isola separati da uno spazio.\n\n");
-                                        available.add("GRANNY");
-                                    }
-                                    if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("HERALD")) {
-                                        System.out.println("HERALD - EFFETTO: Scegli un isola e calcola la maggioranza come se madre natura avesse terminato il suo movimento li. In questo turno madre natura si muoverà come di consueto e nell'isola dove terminerà il suo movimento la maggioranza verrà normalmente calcolata.\nCOMMAND: inserisci HERALD e numero dell'isola separati da uno spazio.\n\n");
-                                        available.add("HERALD");
-                                    }
-                                    if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("JESTER")) {
-                                        System.out.println("JESTER - EFFETTO: Puoi prendere fino a 3 studenti da questa carta e scambiarli con altrettanti studenti presenti nel tuo Ingresso.\nCOMMAND: inserisci JESTER ,di seguito i colori da scambiare da Ingresso e poi i colori da scambiare da questa Carta, tutti separati da uno spazio (il numero di colori di uno e dell'altro deve essere lo stesso).\n\n");
-                                        available.add("JESTER");
-                                    }
-                                    if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("MINSTRELL")) {
-                                        System.out.println("MINSTRELL - EFFETTO: Puoi scambiare fra loro fino a due studenti presenti nella tua Sala e nel tuo Ingresso.\nCOMMAND: Inserisci MINSTRELL ,di seguito i colori da scambiare da Ingresso e poi i colori da scambiare da Sala tutti separati da uno spazio (il numero di colori di uno e dell'altro deve essere lo stesso).\n\n");
-                                        available.add("MINSTRELL");
-                                    }
-                                }
-                            }
+                            addCards(available);
                             CommandPrompt.ask("Scegliere la carta personaggio seguendo le indicazioni, un qualsiasi altra riga se si vuole tornare indietro", "CHARACTER>");
                             parsedStrings =
                                     new ArrayList<>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
@@ -574,56 +523,9 @@ public class CliView implements View {
                     }
 
                     if (!terminalInput.equals("CARD")) {
-                        if (networkClientModel.getServerModel().getCurrentPlayer().getSchoolBoard().getEntranceSpace().numStudentsByColor(choosedColor) == 0) {
-                            System.out.println("Si è inserito un colore non presente tra quelli disponibili, reinserire i dati con più attenzione !!!!");
-                            TimeUnit.SECONDS.sleep(2);
-                            requestToMe();
-                            return;
-                        }
-
-                        CommandPrompt.ask("Scegliere SCHOOL se si desidera " +
-                                "muovere uno studente dalla tua entrance space alla sala da pranzo, " +
-                                "altrimenti scrivi ISLAND se desideri muovere uno studente su un'isola, inserire una qualsiasi altra riga di comando se si vuole tornare indietro", "SCHOOL or ISLAND> ");
-
-                        String command = CommandPrompt.gotFromTerminal();
-                        if (!command.equals("SCHOOL") && !command.equals("ISLAND")) {
-                            requestToMe();
-                            return;
-                        } else if (command.equals("SCHOOL")) {
-                            if (networkClientModel.getServerModel().getCurrentPlayer().getSchoolBoard().getDinnerTable().numStudentsByColor(choosedColor) == 10) {
-                                System.out.println("La sala da pranzo di quel colore è piena.");
-                                TimeUnit.SECONDS.sleep(2);
-                                requestToMe();
-                                return;
-                            }
-                            networkClientModel.setTypeOfRequest("SCHOOL");
-                        } else {
-                            CommandPrompt.ask("Inserire numero dell'isola su cui si desidera muovere lo studente", "isola> ");
-                            if (isValidNumber(CommandPrompt.gotFromTerminal())) {
-                                System.out.println("Si è inserito un numero non valido, reinserire i dati con più attenzione !!!!");
-                                TimeUnit.SECONDS.sleep(2);
-                                requestToMe();
-                                return;
-                            }
-                            if (Integer.parseInt(CommandPrompt.gotFromTerminal()) > networkClientModel.getServerModel().getTable().getIslands().size() ||
-                                    Integer.parseInt(CommandPrompt.gotFromTerminal()) < 0) {
-                                System.out.println("L'isola scelta non è valida.");
-                                TimeUnit.SECONDS.sleep(2);
-                                requestToMe();
-                                return;
-                            }
-                            networkClientModel.setTypeOfRequest("ISLAND");
-                            networkClientModel.setChoosedIsland(Integer.parseInt(CommandPrompt.gotFromTerminal()) - 1);
-                        }
-                        networkClientModel.setTypeOfRequest(command);
-                        networkClientModel.setResponse(true);
-                        networkClientModel.setPingMessage(false);
-                        networkClientModel.setChoosedColor(choosedColor);
-                        json = new Gson();
-                        Network.send(json.toJson(networkClientModel));
+                        if (schoolOrIsland(choosedColor)) return;
                     }
                 } else {
-                    System.out.println(networkClientModel.getServerModel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO: \n" + "E' IL TUO TURNO - STUDENT PHASE" + "\n\nMOSSE ALTRI GIOCATORI: " + getResponse()));
 
                     CommandPrompt.ask("Scegli il colore dello studente che desideri muovere ", "RED or GREEN or BLUE or YELLOW or PINK> ");
                     if (!CommandPrompt.gotFromTerminal().equals("RED") &&
@@ -657,52 +559,7 @@ public class CliView implements View {
                             throw new IllegalStateException("Unexpected value: " + CommandPrompt.gotFromTerminal());
                     }
 
-                    if (networkClientModel.getServerModel().getCurrentPlayer().getSchoolBoard().getEntranceSpace().numStudentsByColor(choosedColor) == 0) {
-                        System.out.println("Si è inserito un colore non presente tra quelli disponibili, reinserire i dati con più attenzione !!!!");
-                        TimeUnit.SECONDS.sleep(2);
-                        requestToMe();
-                        return;
-                    }
-
-                    CommandPrompt.ask("Scegliere SCHOOL se si desidera " +
-                            "muovere uno studente dalla tua entrance space alla sala da pranzo, " +
-                            "altrimenti scrivi ISLAND se desideri muovere uno studente su un'isola, inserire una qualsiasi altra riga di comando se si vuole tornare indietro", "SCHOOL or ISLAND> ");
-                    String command = CommandPrompt.gotFromTerminal();
-                    if (!command.equals("SCHOOL") && !command.equals("ISLAND")) {
-                        requestToMe();
-                        return;
-                    } else if (command.equals("SCHOOL")) {
-                        if (networkClientModel.getServerModel().getCurrentPlayer().getSchoolBoard().getDinnerTable().numStudentsByColor(choosedColor) == 10) {
-                            System.out.println("La sala da pranzo di quel colore è piena.");
-                            TimeUnit.SECONDS.sleep(2);
-                            requestToMe();
-                            return;
-                        }
-                        networkClientModel.setTypeOfRequest("SCHOOL");
-                    } else {
-                        CommandPrompt.ask("Inserire numero dell'isola su cui si desidera muovere lo studente", "isola> ");
-                        if (isValidNumber(CommandPrompt.gotFromTerminal())) {
-                            System.out.println("Si è inserito un numero non valido, reinserire i dati con più attenzione !!!!");
-                            TimeUnit.SECONDS.sleep(2);
-                            requestToMe();
-                            return;
-                        }
-                        if (Integer.parseInt(CommandPrompt.gotFromTerminal()) > networkClientModel.getServerModel().getTable().getIslands().size() ||
-                                Integer.parseInt(CommandPrompt.gotFromTerminal()) < 0) {
-                            System.out.println("L'isola scelta non è valida.");
-                            TimeUnit.SECONDS.sleep(2);
-                            requestToMe();
-                            return;
-                        }
-                        networkClientModel.setTypeOfRequest("ISLAND");
-                        networkClientModel.setChoosedIsland(Integer.parseInt(CommandPrompt.gotFromTerminal()) - 1);
-                    }
-                    networkClientModel.setTypeOfRequest(command);
-                    networkClientModel.setResponse(true);
-                    networkClientModel.setPingMessage(false);
-                    networkClientModel.setChoosedColor(choosedColor);
-                    json = new Gson();
-                    Network.send(json.toJson(networkClientModel));
+                    if (schoolOrIsland(choosedColor)) return;
                     break;
                 }
                 break;
@@ -734,58 +591,7 @@ public class CliView implements View {
                     if (CommandPrompt.gotFromTerminal().equals("CARD")) {
                         System.out.println("\n\n\n\nScegli la carta che vorresti utilizzare: \n");
                         ArrayList<String> available = new ArrayList<>();
-                        for (int i = 0; i < networkClientModel.getServerModel().getTable().getCharacters().size(); i++) {
-                            if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getCost() <= networkClientModel.getServerModel().getCurrentPlayer().getCoins()) {
-                                if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("MONK")) {
-                                    System.out.println("MONK - EFFETTO: Prendi uno studente da questa carta e piazzalo su un isola a tua scelta.\n COMMAND: Inserisci MONK , colore scelto e numero dell'isola separati da uno spazio.\n\n");
-                                    available.add("MONK");
-                                }
-                                if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("PRINCESS")) {
-                                    System.out.println("PRINCESS - EFFETTO: Prendi uno studente da questa carta e piazzalo nella tua Sala.\nCOMMAND: Inserisci PRINCESS e colore scelto separati da uno spazio.\n\n");
-                                    available.add("PRINCESS");
-                                }
-                                if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("MUSHROOMHUNTER")) {
-                                    System.out.println("MUSHROOMHUNTER - EFFETTO: Scegli un colore di studente; in questo turno, durante il calcolo dell'influenza, quel colore non fornisce influenza.\n COMMAND: Inserisci MUSHROOMHUNTER e colore scelto separati da uno spazio.\n\n");
-                                    available.add("MUSHROOMHUNTER");
-                                }
-                                if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("THIEF")) {
-                                    System.out.println("THIEF - EFFETTO: Scegli un colore di studente; ogni giocatore (incluso te) deve rimettere nel sacchetto tre studenti di quel colore presenti nella Sala (o tutti quelli che ha se ne avesse meno di tre).\nCOMMAND: Inserisci THIEF e colore scelto separati da uno spazio\n\n");
-                                    available.add("THIEF");
-                                }
-                                if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("FARMER")) {
-                                    System.out.println("FARMER - EFFETTO: Durante questo turno, prendi il controllo dei professori anche se nella tua sala hai lo stesso numero di studenti del giocatore che li controlla in quel momento.\nCOMMAND: inserisci FARMER.\n\n");
-                                    available.add("FARMER");
-                                }
-                                if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("CENTAUR")) {
-                                    System.out.println("CENTAUR - EFFETTO: Durante il conteggio di un influenza dell'isola le torri presenti non vengono calcolate.\nCOMMAND: inserisci CENTAUR.\n\n");
-                                    available.add("CENTAUR");
-                                }
-                                if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("KNIGHT")) {
-                                    System.out.println("KNIGHT - EFFETTO: In questo turno, durante il calcolo dell'influenza, hai due punti di influenza addizionali.\nCOMMAND: inserisci KNIGHT.\n\n");
-                                    available.add("KNIGHT");
-                                }
-                                if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("POSTMAN")) {
-                                    System.out.println("POSTMAN - EFFETTO: Puoi muovere madre natura fino a due isole addizionali rispetto a quanto indicato sulla carta assistente che hai giocato.\nCOMMAND: inserisci POSTMAN.\n\n");
-                                    available.add("POSTMAN");
-                                }
-                                if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("GRANNY")) {
-                                    System.out.println("GRANNY - EFFETTO: Piazza un divieto su un isola a tua scelta. La prima volta che madre natura termina il suo movimento li l'influenza non verrà calcolata e il divieto verrà reinserito in questa carta.\nCOMMAND: inserisci GRANNY e numero dell'isola separati da uno spazio.\n\n");
-                                    available.add("GRANNY");
-                                }
-                                if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("HERALD")) {
-                                    System.out.println("HERALD - EFFETTO: Scegli un isola e calcola la maggioranza come se madre natura avesse terminato il suo movimento li. In questo turno madre natura si muoverà come di consueto e nell'isola dove terminerà il suo movimento la maggioranza verrà normalmente calcolata.\nCOMMAND: inserisci HERALD e numero dell'isola separati da uno spazio.\n\n");
-                                    available.add("HERALD");
-                                }
-                                if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("JESTER")) {
-                                    System.out.println("JESTER - EFFETTO: Puoi prendere fino a 3 studenti da questa carta e scambiarli con altrettanti studenti presenti nel tuo Ingresso.\nCOMMAND: inserisci JESTER ,di seguito i colori da scambiare da Ingresso e poi i colori da scambiare da questa Carta, tutti separati da uno spazio (il numero di colori di uno e dell'altro deve essere lo stesso).\n\n");
-                                    available.add("JESTER");
-                                }
-                                if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("MINSTRELL")) {
-                                    System.out.println("MINSTRELL - EFFETTO: Puoi scambiare fra loro fino a due studenti presenti nella tua Sala e nel tuo Ingresso.\nCOMMAND: Inserisci MINSTRELL ,di seguito i colori da scambiare da Ingresso e poi i colori da scambiare da Sala tutti separati da uno spazio (il numero di colori di uno e dell'altro deve essere lo stesso).\n\n");
-                                    available.add("MINSTRELL");
-                                }
-                            }
-                        }
+                        addCards(available);
                         CommandPrompt.ask("Scegliere la carta personaggio seguendo le indicazioni, un qualsiasi altra riga se si vuole tornare indietro", "CHARACTER>");
                         parsedStrings =
                                 new ArrayList<>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
@@ -1148,8 +954,118 @@ public class CliView implements View {
         clearResponse();
     }
 
-    // Qualcun altro sta interagendo con il terminale: devo gestire il tempo di attesa
-    // Esempio "pippo: sta salutando"
+    private void addCards(ArrayList<String> available) {
+        for (int i = 0; i < networkClientModel.getServerModel().getTable().getCharacters().size(); i++) {
+            if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getCost() <= networkClientModel.getServerModel().getCurrentPlayer().getCoins()) {
+                if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("MONK")) {
+                    System.out.println("MONK - EFFETTO: Prendi uno studente da questa carta e piazzalo su un isola a tua scelta.\n COMMAND: Inserisci MONK , colore scelto e numero dell'isola separati da uno spazio.\n\n");
+                    available.add("MONK");
+                }
+                if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("PRINCESS")) {
+                    System.out.println("PRINCESS - EFFETTO: Prendi uno studente da questa carta e piazzalo nella tua Sala.\nCOMMAND: Inserisci PRINCESS e colore scelto separati da uno spazio.\n\n");
+                    available.add("PRINCESS");
+                }
+                if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("MUSHROOMHUNTER")) {
+                    System.out.println("MUSHROOMHUNTER - EFFETTO: Scegli un colore di studente; in questo turno, durante il calcolo dell'influenza, quel colore non fornisce influenza.\n COMMAND: Inserisci MUSHROOMHUNTER e colore scelto separati da uno spazio.\n\n");
+                    available.add("MUSHROOMHUNTER");
+                }
+                if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("THIEF")) {
+                    System.out.println("THIEF - EFFETTO: Scegli un colore di studente; ogni giocatore (incluso te) deve rimettere nel sacchetto tre studenti di quel colore presenti nella Sala (o tutti quelli che ha se ne avesse meno di tre).\nCOMMAND: Inserisci THIEF e colore scelto separati da uno spazio\n\n");
+                    available.add("THIEF");
+                }
+                if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("FARMER")) {
+                    System.out.println("FARMER - EFFETTO: Durante questo turno, prendi il controllo dei professori anche se nella tua sala hai lo stesso numero di studenti del giocatore che li controlla in quel momento.\nCOMMAND: inserisci FARMER.\n\n");
+                    available.add("FARMER");
+                }
+                if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("CENTAUR")) {
+                    System.out.println("CENTAUR - EFFETTO: Durante il conteggio di un influenza dell'isola le torri presenti non vengono calcolate.\nCOMMAND: inserisci CENTAUR.\n\n");
+                    available.add("CENTAUR");
+                }
+                if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("KNIGHT")) {
+                    System.out.println("KNIGHT - EFFETTO: In questo turno, durante il calcolo dell'influenza, hai due punti di influenza addizionali.\nCOMMAND: inserisci KNIGHT.\n\n");
+                    available.add("KNIGHT");
+                }
+                if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("POSTMAN")) {
+                    System.out.println("POSTMAN - EFFETTO: Puoi muovere madre natura fino a due isole addizionali rispetto a quanto indicato sulla carta assistente che hai giocato.\nCOMMAND: inserisci POSTMAN.\n\n");
+                    available.add("POSTMAN");
+                }
+                if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("GRANNY")) {
+                    System.out.println("GRANNY - EFFETTO: Piazza un divieto su un isola a tua scelta. La prima volta che madre natura termina il suo movimento li l'influenza non verrà calcolata e il divieto verrà reinserito in questa carta.\nCOMMAND: inserisci GRANNY e numero dell'isola separati da uno spazio.\n\n");
+                    available.add("GRANNY");
+                }
+                if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("HERALD")) {
+                    System.out.println("HERALD - EFFETTO: Scegli un isola e calcola la maggioranza come se madre natura avesse terminato il suo movimento li. In questo turno madre natura si muoverà come di consueto e nell'isola dove terminerà il suo movimento la maggioranza verrà normalmente calcolata.\nCOMMAND: inserisci HERALD e numero dell'isola separati da uno spazio.\n\n");
+                    available.add("HERALD");
+                }
+                if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("JESTER")) {
+                    System.out.println("JESTER - EFFETTO: Puoi prendere fino a 3 studenti da questa carta e scambiarli con altrettanti studenti presenti nel tuo Ingresso.\nCOMMAND: inserisci JESTER ,di seguito i colori da scambiare da Ingresso e poi i colori da scambiare da questa Carta, tutti separati da uno spazio (il numero di colori di uno e dell'altro deve essere lo stesso).\n\n");
+                    available.add("JESTER");
+                }
+                if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("MINSTRELL")) {
+                    System.out.println("MINSTRELL - EFFETTO: Puoi scambiare fra loro fino a due studenti presenti nella tua Sala e nel tuo Ingresso.\nCOMMAND: Inserisci MINSTRELL ,di seguito i colori da scambiare da Ingresso e poi i colori da scambiare da Sala tutti separati da uno spazio (il numero di colori di uno e dell'altro deve essere lo stesso).\n\n");
+                    available.add("MINSTRELL");
+                }
+            }
+        }
+    }
+
+    private boolean schoolOrIsland(PeopleColor choosedColor) throws InterruptedException {
+        Gson json;
+        if (networkClientModel.getServerModel().getCurrentPlayer().getSchoolBoard().getEntranceSpace().numStudentsByColor(choosedColor) == 0) {
+            System.out.println("Si è inserito un colore non presente tra quelli disponibili, reinserire i dati con più attenzione !!!!");
+            TimeUnit.SECONDS.sleep(2);
+            requestToMe();
+            return true;
+        }
+
+        CommandPrompt.ask("Scegliere SCHOOL se si desidera " +
+                "muovere uno studente dalla tua entrance space alla sala da pranzo, " +
+                "altrimenti scrivi ISLAND se desideri muovere uno studente su un'isola, inserire una qualsiasi altra riga di comando se si vuole tornare indietro", "SCHOOL or ISLAND> ");
+
+        String command = CommandPrompt.gotFromTerminal();
+        if (!command.equals("SCHOOL") && !command.equals("ISLAND")) {
+            requestToMe();
+            return true;
+        } else if (command.equals("SCHOOL")) {
+            if (networkClientModel.getServerModel().getCurrentPlayer().getSchoolBoard().getDinnerTable().numStudentsByColor(choosedColor) == 10) {
+                System.out.println("La sala da pranzo di quel colore è piena.");
+                TimeUnit.SECONDS.sleep(2);
+                requestToMe();
+                return true;
+            }
+            networkClientModel.setTypeOfRequest("SCHOOL");
+        } else {
+            CommandPrompt.ask("Inserire numero dell'isola su cui si desidera muovere lo studente", "isola> ");
+            if (isValidNumber(CommandPrompt.gotFromTerminal())) {
+                System.out.println("Si è inserito un numero non valido, reinserire i dati con più attenzione !!!!");
+                TimeUnit.SECONDS.sleep(2);
+                requestToMe();
+                return true;
+            }
+            if (Integer.parseInt(CommandPrompt.gotFromTerminal()) > networkClientModel.getServerModel().getTable().getIslands().size() ||
+                    Integer.parseInt(CommandPrompt.gotFromTerminal()) < 0) {
+                System.out.println("L'isola scelta non è valida.");
+                TimeUnit.SECONDS.sleep(2);
+                requestToMe();
+                return true;
+            }
+            networkClientModel.setTypeOfRequest("ISLAND");
+            networkClientModel.setChoosedIsland(Integer.parseInt(CommandPrompt.gotFromTerminal()) - 1);
+        }
+        networkClientModel.setTypeOfRequest(command);
+        networkClientModel.setResponse(true);
+        networkClientModel.setPingMessage(false);
+        networkClientModel.setChoosedColor(choosedColor);
+        json = new Gson();
+        Network.send(json.toJson(networkClientModel));
+        return false;
+    }
+
+    /**
+     * Intercepts a server request to another client, and on the basis
+     * of this request performs an action
+     * (for example prints "Pippo is choosing the assistant card")
+     */
     public void requestToOthers() {
         String message = null;
         switch (networkClientModel.getTypeOfRequest()) {
@@ -1175,8 +1091,11 @@ public class CliView implements View {
         }
     }
 
-    // Qualcun altro ha risposto al server: devo mostrare a schermo un'interpretazione della risposta
-    // Esempio "pippo: ha salutato"
+    /**
+     * Intercepts a response from a client to the server, and on the basis
+     * of this request performs an action
+     * (for example prints "Pippo has choosen the assistant card xyz")
+     */
     public synchronized void response() {
         switch (networkClientModel.getTypeOfRequest()) {
             case "CHOOSEASSISTANTCARD":
