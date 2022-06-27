@@ -73,7 +73,7 @@ public class WaitFirstPlayerGameInfo extends State {
                 getReset().fireStateEvent();
                 return super.entryAction(cause);
             }
-            if (json.fromJson(message.getParameter(0), ClientModel.class).getClientIdentity() == connectionModel.getClientsInfo().get(0).getClientIdentity()) {
+            if (message.getParameter(0)!=null && json.fromJson(message.getParameter(0), ClientModel.class).getClientIdentity() == connectionModel.getClientsInfo().get(0).getClientIdentity()) {
                 messageReceived = true;
             }
 

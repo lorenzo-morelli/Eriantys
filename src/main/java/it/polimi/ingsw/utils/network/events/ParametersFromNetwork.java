@@ -60,7 +60,12 @@ public class ParametersFromNetwork extends Event implements DocumentListener {
     }
 
     public synchronized String getParameter(int i) {
-        return parsedStrings.get(i);
+        if (this.parsedStrings!=null){
+            return parsedStrings.get(i);
+        }
+        else {
+            return null;
+        }
     }
 
     public synchronized boolean parametersReceived() {

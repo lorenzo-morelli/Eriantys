@@ -138,6 +138,8 @@ public class Network implements ActionListener {
      */
 
     public synchronized static boolean send(String message) {
+        //System.out.println(message);
+
         return connection.sendText(message);
     }
 
