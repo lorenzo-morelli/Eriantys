@@ -6,6 +6,12 @@ import it.polimi.ingsw.server.model.enums.TowerColor;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * This class represents the data model of the "school board",
+ * which is nothing more than a special accumulator of students
+ *
+ * @author Ignazio Neto Dell'Acqua
+ */
 public class SchoolBoard {
     private final StudentSet entranceSpace;
     private final StudentSet dinnerTable;
@@ -60,12 +66,12 @@ public class SchoolBoard {
         this.numOfTowers = numOfTowers + 1;
     }
 
-    public void load_dinner(PeopleColor color) {
+    public void loadDinnerTable(PeopleColor color) {
         entranceSpace.removeStudent(1, color);
         dinnerTable.addStudents(1, color);
     }
 
-    public void load_entrance(Cloud cloud, ArrayList<Cloud> clouds) {
+    public void loadEntrance(Cloud cloud, ArrayList<Cloud> clouds) {
         entranceSpace.addStudents(cloud.getStudentsAccumulator().numStudentsByColor(PeopleColor.RED), PeopleColor.RED);
         entranceSpace.addStudents(cloud.getStudentsAccumulator().numStudentsByColor(PeopleColor.PINK), PeopleColor.PINK);
         entranceSpace.addStudents(cloud.getStudentsAccumulator().numStudentsByColor(PeopleColor.GREEN), PeopleColor.GREEN);

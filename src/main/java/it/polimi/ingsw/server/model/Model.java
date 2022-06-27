@@ -7,6 +7,12 @@ import java.util.ArrayList;
 import static java.util.Collections.shuffle;
 import static java.util.Collections.sort;
 
+/**
+ * This class represents the data model of the server related to the game, with all the components necessary
+ * for its correct functioning (players, center table, and so on)
+ *
+ * @author Ignazio Neto Dell'Acqua
+ */
 public class Model {
 
     private GameMode gameMode;
@@ -96,6 +102,11 @@ public class Model {
     }
     public boolean isLastTurn(){return isLastTurn;}
 
+    /**
+     * Return the winning player
+     * @return winner player
+     */
+
     public String playerWinner() {
         int min = 8;
         Player winner = null;
@@ -129,7 +140,11 @@ public class Model {
         else return winner.getNickname();
     }
 
-    public String team_winner() {
+    /**
+     * Return the winning Team
+     * @return winner team
+     */
+    public String teamWinner() {
         int min = 8;
         Team winner = null;
         for (Team team : teams) {

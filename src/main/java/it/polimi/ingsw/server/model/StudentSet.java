@@ -5,6 +5,14 @@ import it.polimi.ingsw.server.model.enums.PeopleColor;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * This class represent the basic student accumulator, that is,
+ * it maps an integer for each possible color
+ *
+ * @author Ignazio Neto Dell'Acqua
+ * @author Fernando Morea
+ * @author Lorenzo Morelli
+ */
 public class StudentSet {
     private int numOfRedStudents;
     private int numOfYellowStudents;

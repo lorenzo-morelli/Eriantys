@@ -12,8 +12,7 @@ import java.util.Arrays;
 /**
  * Event of entering a word by the user,
  * the user writes a word of his liking and presses enter.
- *
- * * @author Fernando
+ * @author Fernando
  */
 
 @SuppressWarnings("unused")

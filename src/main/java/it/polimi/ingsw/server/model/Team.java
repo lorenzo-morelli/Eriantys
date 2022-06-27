@@ -2,6 +2,13 @@ package it.polimi.ingsw.server.model;
 
 import it.polimi.ingsw.server.model.enums.TowerColor;
 
+/**
+ * This class represent the data model of a team of players, necessary for the 4 game mode.
+ * Each team has 2 team members (player objects) and a defined team number
+ * (for this game there are only two teams so two different team numbers)
+ *
+ * @author Ignazio Neto Dell'Acqua
+ */
 public class Team {
     private Player player1;
     private Player player2;
@@ -39,7 +46,7 @@ public class Team {
         return player1 != null && player2 != null;
     }
 
-    public String toString(String player,String actualPlayer) {
+    public String toString(String player, String actualPlayer) {
 
         StringBuilder result = new StringBuilder();
         result.append("  TEAM ").append(teamNumber).append(" \n\n");

@@ -71,7 +71,7 @@ public class EndGame extends State {
 
         String winner;
         if(model.getNumberOfPlayers()==4){
-            winner= model.team_winner();
+            winner= model.teamWinner();
         }
         else {
             winner= model.playerWinner();

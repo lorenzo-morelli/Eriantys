@@ -4,6 +4,12 @@ import it.polimi.ingsw.server.model.enums.PeopleColor;
 import it.polimi.ingsw.server.model.enums.TowerColor;
 import java.util.ArrayList;
 
+/**
+ * This class represents the data model of islands,
+ * seen as student accumulators and towers with particular properties
+ *
+ * @author Ignazio Neto Dell'Acqua
+ */
 public class Island {
     private final StudentSet inhabitants;
     private int numberOfTowers;
@@ -34,15 +40,32 @@ public class Island {
         return inhabitants;
     }
 
+    /**
+     * Method to establish if the island is blocked or not
+     * @return boolean value
+     */
     public boolean isBlocked() {
         return isBlocked;
     }
 
+    /**
+     * Method to set  the blocked status
+     * @param blocked boolean value
+     */
     public void setBlocked(boolean blocked) {
         isBlocked = blocked;
     }
 
-    public Player player_influence(ArrayList<Player> Players, ArrayList<Professor> Professors, boolean centaur, PeopleColor mushroom, Player knight) { //ritorna nullo se nessuno ha influenza
+    /**
+     * Calculates who has the influence on the island
+     * @param Players the players to compare
+     * @param Professors the professor
+     * @param centaur required for effect card
+     * @param mushroom required for effect card
+     * @param knight required for effect card
+     * @return the player that currently has the influence on the island
+     */
+    public Player playerInfluenceCalculator(ArrayList<Player> Players, ArrayList<Professor> Professors, boolean centaur, PeopleColor mushroom, Player knight) { //ritorna nullo se nessuno ha influenza
         int max = 0, partialSum = 0;   //2 or 3 player
         Player maxInfluence = null;
         for (Player player : Players) {
@@ -75,7 +98,16 @@ public class Island {
         return maxInfluence; //return the player with the maximum influence
     }
 
-    public Team team_influence(ArrayList<Team> Teams, ArrayList<Professor> Professors, boolean centaur, PeopleColor mushroom, Player knight){ //ritorna nullo se nessuno ha influenza
+    /**
+     * Similar to the precedent method, but for the 4 players game mode
+     * @param Teams teams to compare
+     * @param Professors professors boards
+     * @param centaur required for effect card
+     * @param mushroom required for effect card
+     * @param knight required for effect card
+     * @return the team with maximised influence on the island
+     */
+    public Team teamInfluenceCalculator(ArrayList<Team> Teams, ArrayList<Professor> Professors, boolean centaur, PeopleColor mushroom, Player knight){ //ritorna nullo se nessuno ha influenza
         int max=0, partialSum =0;   //4 player
         Team maxInfluence = null;
 
@@ -111,29 +143,37 @@ public class Island {
     }
     public void placeTower(){ this.numberOfTowers ++; }
 
-    public void controlIsland(Player influence_player){
-        setTowerColor(influence_player.getSchoolBoard().getTowerColor());
+    /**
+     * Method to control the island, once we have determined that the player has the influence on the island
+     * @param influencePlayer the player with the influence
+     */
+    public void controlIsland(Player influencePlayer){
+        setTowerColor(influencePlayer.getSchoolBoard().getTowerColor());
         if(numberOfTowers>0){
             for(int i=0;i<numberOfTowers;i++) {
-                influence_player.getSchoolBoard().placeTower();
+                influencePlayer.getSchoolBoard().placeTower();
             }
         }
         else{
-            influence_player.getSchoolBoard().placeTower();
+            influencePlayer.getSchoolBoard().placeTower();
         }
     }
 
-    public void controlIsland(Team influence_team){
-        setTowerColor(influence_team.getPlayer1().getSchoolBoard().getTowerColor());
+    /**
+     * As the precedent method, but for the 4 players mode
+     * @param influenceTeam the team with the influence on the island
+     */
+    public void controlIsland(Team influenceTeam){
+        setTowerColor(influenceTeam.getPlayer1().getSchoolBoard().getTowerColor());
         if(numberOfTowers>0){
             for(int i=0;i<numberOfTowers;i++) {
-                influence_team.getPlayer1().getSchoolBoard().placeTower();
-                influence_team.getPlayer2().getSchoolBoard().placeTower();
+                influenceTeam.getPlayer1().getSchoolBoard().placeTower();
+                influenceTeam.getPlayer2().getSchoolBoard().placeTower();
             }
         }
         else{
-            influence_team.getPlayer1().getSchoolBoard().placeTower();
-            influence_team.getPlayer2().getSchoolBoard().placeTower();
+            influenceTeam.getPlayer1().getSchoolBoard().placeTower();
+            influenceTeam.getPlayer2().getSchoolBoard().placeTower();
         }
     }
 

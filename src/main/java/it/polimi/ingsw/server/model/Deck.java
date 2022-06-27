@@ -2,12 +2,18 @@ package it.polimi.ingsw.server.model;
 
 import java.util.*;
 
+/**
+ * This class defines and implements the assistant deck of cards
+ *
+ * @author Fernando Morea
+ * @author Ignazio Neto Dell'Acqua
+ */
 public class Deck {
     private final List<AssistantCard> cards;
 
     public Deck() {
         this.cards = new ArrayList<>();
-        // adesso c'è da inizializzare il deck appena costruito
+        // now it is time to initialize the newly built deck
         this.cards.add(new AssistantCard(1, 1));
         this.cards.add(new AssistantCard(2, 1));
         this.cards.add(new AssistantCard(3, 2));
@@ -20,10 +26,19 @@ public class Deck {
         this.cards.add(new AssistantCard(10, 5));
     }
 
+    /**
+     * Method without side effects since it returns an immutable list
+     * @return collection of unmodifiable Assistant Cards
+     */
     public List<AssistantCard> getCardsList() {
         return Collections.unmodifiableList(this.cards);
     }
 
+    /**
+     * Remove card from the deck
+     * @param choosed card to delete
+     * @return a boolean flag that represent the status of the operation
+     */
     public boolean remove(AssistantCard choosed) {
         if (inDeck(choosed)) {
             cards.removeIf(assistantCard -> assistantCard.equals(choosed));
@@ -32,6 +47,12 @@ public class Deck {
             throw new IllegalArgumentException();
         }
     }
+
+    /**
+     * Boolean function to establish if a card is in the deck
+     * @param card card to verify
+     * @return boolean value
+     */
     public boolean inDeck(AssistantCard card){
         for (AssistantCard assistantCard : cards) {
             if (assistantCard.getValues() == card.getValues() && assistantCard.getMoves() == card.getMoves())

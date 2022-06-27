@@ -8,6 +8,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
+/**
+ * This class models the so-called "Center Table",
+ * a physical object that contains the clouds, the islands,
+ * the bag, and so on.
+ *
+ * @author Ignazio Neto Dell'Acqua
+ */
 public class CenterTable {
     private final ArrayList<Cloud> clouds;
     private final ArrayList<Island> islands;
@@ -172,6 +179,11 @@ public class CenterTable {
         return availableTowerColor;
     }
 
+    /**
+     * Method to change the professor of the player
+     * @param player the player
+     * @param color color to update the professor
+     */
     public void changeProfessor(Player player, PeopleColor color) {
         for (Professor professor : professors) {
             if (professor.getColor().equals(color)) professor.setHeldBy(player);
@@ -182,6 +194,12 @@ public class CenterTable {
         return islands;
     }
 
+    /**
+     * Method to move mother nature of n position.
+     * Modular arithmetic is used, considering the islands are "cyclical"
+     * (mother nature can return to the same island several times going forward)
+     * @param moves number of moves that mother nature has to do
+     */
     public void mother(int moves) {
         motherNaturePosition = (motherNaturePosition + moves) % islands.size();
     }
@@ -190,10 +208,23 @@ public class CenterTable {
         return motherNaturePosition;
     }
 
+    /**
+     * Load the specified island with the data passed as argument
+     * @param player the player
+     * @param color the color
+     * @param index_island the index of the island
+     */
+
     public void loadIsland(Player player, PeopleColor color, int index_island) {
         player.getSchoolBoard().getEntranceSpace().removeStudent(1, color);
         islands.get(index_island).getInhabitants().addStudents(1, color);
     }
+
+    /**
+     * Check who has the professor
+     * @param color the color to check
+     * @param players list of players
+     */
 
     public void checkProfessor(PeopleColor color, ArrayList<Player> players) {
         int max = 0;
@@ -211,6 +242,13 @@ public class CenterTable {
         if (moreInfluenced != null) changeProfessor(moreInfluenced, color);
     }
 
+    /**
+     * Method to conquest an island
+     * @param index_island index of the island to conquest
+     * @param players players list
+     * @param influence_player player with the influence
+     */
+
     public void conquestIsland(int index_island, ArrayList<Player> players, Player influence_player) {
         for (Player player : players) {
             if (player.getSchoolBoard().getTowerColor().equals(islands.get(index_island).getTowerColor())) {
@@ -222,6 +260,12 @@ public class CenterTable {
         islands.get(index_island).controlIsland(influence_player);
     }
 
+    /**
+     * Similar to the precedent method, but for the 4 game mode
+     * @param index_island index of the island
+     * @param teams teams list
+     * @param influence_team team with the influence
+     */
     public void conquestIsland(int index_island, ArrayList<Team> teams, Team influence_team) {
         for (Team team : teams) {
             if (team.getPlayer1().getSchoolBoard().getTowerColor().equals(islands.get(index_island).getTowerColor())) {
@@ -234,6 +278,11 @@ public class CenterTable {
         islands.get(index_island).controlIsland(influence_team);
     }
 
+    /**
+     * Method to merge two adjacents islands
+     * @param index_1 index of the island
+     * @param index_2 index of the island
+     */
     public void mergeIsland(int index_1, int index_2) {
         islands.get(index_1).setNumberOfTowers(islands.get(index_1).getNumberOfTowers() + islands.get(index_2).getNumberOfTowers());
         for (PeopleColor Color : PeopleColor.values()) {

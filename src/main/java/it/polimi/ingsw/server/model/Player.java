@@ -4,6 +4,13 @@ import it.polimi.ingsw.server.model.enums.GameMode;
 
 import java.util.Objects;
 
+/**
+ * Class representing the "Player" data object, which contains
+ * all the information necessary for the server (and for the business
+ * logic of the game)
+ *
+ * @author Ignazio Neto Dell'Acqua
+ */
 public class Player implements Comparable<Player> {
     private String nickname;
     private final Deck availableCards;
@@ -16,6 +23,14 @@ public class Player implements Comparable<Player> {
     public static final String ANSI_WHITE = "\033[1;97m";
     public static final String ANSI_GRAY = "\033[1;90m";
     private boolean isDisconnected;
+
+    /**
+     * The main player constructor
+     * @param nickname the nickname of the player
+     * @param Ip the ip address of the player
+     * @param model reference to the model
+     * @param debug boolean value to unlock coins (debug purpose)
+     */
 
     public Player(String nickname, String Ip, Model model, boolean debug) {
         this.nickname = nickname;
@@ -37,7 +52,15 @@ public class Player implements Comparable<Player> {
         isDisconnected = false;
     }
 
-    //requires teamNumber == (1 || 2) and a check that causes the team to be re-chosen if team is already full :team.isFull())
+    /**
+     * Requires teamNumber == (1 || 2) and a check that causes the team to be
+     * re-chosen if team is already full :team.isFull())
+     * @param nickname the username of the player
+     * @param Ip the ip address of the player
+     * @param teamNumber the team number of the player
+     * @param model reference to the model
+     * @param debug debug flag to unlock coins (debug purpose)
+     */
     public Player(String nickname, String Ip, int teamNumber, Model model, boolean debug) {
         if (teamNumber < 3 && teamNumber > 0) {
             this.nickname = nickname;
@@ -79,6 +102,11 @@ public class Player implements Comparable<Player> {
         isDisconnected = false;
     }
 
+    /**
+     * Method to set the assistant card
+     * @param choosedCard the card to choose
+     * @return boolean value that represent the status of the operation
+     */
     public boolean setChoosedCard(AssistantCard choosedCard) {
         this.choosedCard = choosedCard;
         return availableCards.remove(choosedCard);
@@ -88,6 +116,11 @@ public class Player implements Comparable<Player> {
         return choosedCard;
     }
 
+    /**
+     * Comparator of players
+     * @param player the object to be compared.
+     * @return 1 if  the chosen card has a value greater than the one of the other player, -1 else
+     */
     @Override
     public int compareTo(Player player) {
         float compareValues = player.getChoosedCard().getValues();
@@ -135,7 +168,7 @@ public class Player implements Comparable<Player> {
         return coins;
     }
 
-    public void improveCoin() {
+    public void increaseCoin() {
         this.coins++;
     }
 

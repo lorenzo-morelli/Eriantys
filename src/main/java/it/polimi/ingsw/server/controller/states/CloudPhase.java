@@ -95,7 +95,7 @@ public class CloudPhase extends State {
             currentPlayer.setDisconnected(true);
             for(Cloud c: model.getTable().getClouds()) {
                 if(c.getStudentsAccumulator().size()!=0) {
-                    currentPlayer.getSchoolBoard().load_entrance(c,model.getTable().getClouds());
+                    currentPlayer.getSchoolBoard().loadEntrance(c,model.getTable().getClouds());
                     break;
                 }
             }
@@ -153,7 +153,7 @@ public class CloudPhase extends State {
                         currentPlayer.setDisconnected(true);
                         for(Cloud c: model.getTable().getClouds()) {
                             if(c.getStudentsAccumulator().size()!=0) {
-                                currentPlayer.getSchoolBoard().load_entrance(c,model.getTable().getClouds());
+                                currentPlayer.getSchoolBoard().loadEntrance(c,model.getTable().getClouds());
                                 break;
                             }
                         }
@@ -176,7 +176,7 @@ public class CloudPhase extends State {
 
             currentPlayerData = json.fromJson(message.getParameter(0), ClientModel.class);
             Cloud cloud = currentPlayerData.getCloudChoosed();
-            currentPlayer.getSchoolBoard().load_entrance(cloud, model.getTable().getClouds());
+            currentPlayer.getSchoolBoard().loadEntrance(cloud, model.getTable().getClouds());
 
         }
 

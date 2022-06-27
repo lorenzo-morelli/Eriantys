@@ -30,6 +30,11 @@ public class CommandPrompt implements Subject {
         observers = new ArrayList<>();
     }
 
+    /**
+     * Obtain the instance of the singleton
+     * @return the instance of the commandPrompt
+     * @throws IOException input output related errors
+     */
     public static CommandPrompt getInstance() throws IOException {
         if (instance == null) {
             instance = new CommandPrompt();
@@ -37,6 +42,11 @@ public class CommandPrompt implements Subject {
         return instance;
     }
 
+    /**
+     * Obtains the consoleReader
+     * @return consoleReader
+     * @throws IOException input output related errors
+     */
     public static ConsoleReader getConsole() throws IOException {
         if (instance == null) {
             instance = new CommandPrompt();
@@ -44,19 +54,36 @@ public class CommandPrompt implements Subject {
         return console;
     }
 
+    /**
+     * Read the next line from terminal
+     * @throws IOException input output related errors
+     */
     public static void read() throws IOException {
         fromTerminal = console.readLine();
         instance.notifyObservers();
     }
 
+    /**
+     * Obtain the most recently line read from the terminal
+     * @return the string of the most recently line stored in commandPrompt history
+     */
     public static String gotFromTerminal() {
         return fromTerminal;
     }
 
+    /**
+     * Make a fake input (to autofill, helped during debug)
+     * @param input the "fake" input
+     */
     public static void forceInput(String input) {
         CommandPrompt.fromTerminal = input;
     }
 
+    /**
+     * Print line to screen
+     * @param toPrint the string to print
+     * @throws IOException input output related errors
+     */
     public static void println(String toPrint) throws IOException {
         if (instance == null) {
             instance = new CommandPrompt();
@@ -72,6 +99,11 @@ public class CommandPrompt implements Subject {
         getConsole().flush();
     }
 
+    /**
+     * set the command prompt text presented to the user
+     * @param toSet String to set
+     * @throws IOException input output related errors
+     */
     public static void setPrompt(String toSet) throws IOException {
         if (instance == null) {
             instance = new CommandPrompt();
@@ -80,6 +112,10 @@ public class CommandPrompt implements Subject {
         getConsole().flush();
     }
 
+    /**
+     * Clear the command prompt screen
+     * @throws IOException input output related errors
+     */
     public static void clearScreen() throws IOException {
         if (instance == null) {
             instance = new CommandPrompt();
@@ -87,6 +123,12 @@ public class CommandPrompt implements Subject {
         getConsole().clearScreen();
     }
 
+    /**
+     * Smart way to print a hint to the user followed by the classic "MS-DOS like" prompt
+     * @param suggestion the suggestion for the user
+     * @param console the MS-DOS like prompt
+     * @throws InterruptedException input output related errors
+     */
     public static void ask(String suggestion, String console) throws InterruptedException {
 
         // Stop reading input if a client disconnects

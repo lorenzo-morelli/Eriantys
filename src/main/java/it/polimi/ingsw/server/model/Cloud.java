@@ -1,5 +1,11 @@
 package it.polimi.ingsw.server.model;
 
+/**
+ * This class models cloud tiles,
+ * seen as mere student accumulators
+ *
+ * @author Ignazio Neto dell'Acqua
+ */
 public class Cloud {
     private final StudentSet studentsAccumulator;  // accumulator for charging and discharging students
     private final int cloudSize;

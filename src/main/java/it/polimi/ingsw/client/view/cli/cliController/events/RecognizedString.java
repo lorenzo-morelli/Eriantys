@@ -7,10 +7,10 @@ import it.polimi.ingsw.utils.stateMachine.Event;
 import java.io.IOException;
 
 /**
- * L'evento di riconoscimento di una parola inserita dall'utente.
- * Vogliamo poter comparare la stringa ricevuta dal cmd con una stringa memorizzata,
- * quando l'utente inserisce proprio quella stringa scateniamo l'evento
- * Ho utilizzato il pattern observer per poter osservare la CommandPrompt
+ * The recognition event of a word entered by the user.
+ * We want to be able to compare the string received from the cmd with a stored string,
+ * when the user inserts that string we trigger the event
+ * I used the pattern observer to be able to observe the Command Prompt
  *
  * @author Fernando
  */

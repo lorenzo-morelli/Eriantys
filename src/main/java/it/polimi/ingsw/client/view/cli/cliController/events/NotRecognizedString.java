@@ -7,9 +7,9 @@ import it.polimi.ingsw.utils.stateMachine.Event;
 import java.io.IOException;
 
 /**
- * L'evento di riconoscimento di quando una parola NON viene inserita dall'utente.
- * Vogliamo poter comparare la stringa ricevuta dal cmd con una stringa memorizzata,
- * quando l'utente NON inserisce proprio quella stringa scateniamo l'evento
+ * The acknowledgment event of when a word is NOT entered by the user.
+ * We want to be able to compare the string received from the cmd with a stored string,
+ * when the user does NOT insert that string, we trigger the event
  *
  * @author Fernando
  */

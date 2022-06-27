@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 /**
  * This class is needed to store the data sent from Clients over network.
- * Is the de-facto data model that the server has to store the information of
+ * Is the de-facto data model where the server has to store the information of
  * every player connected to the game and the current state of their view, their
  * connection, and other basic data as nickname and ip address.
  */

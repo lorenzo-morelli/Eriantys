@@ -193,7 +193,7 @@ public class MotherPhase extends State {
                     Island target = model.getTable().getIslands().get(model.getTable().getMotherNaturePosition());
                     if (!target.isBlocked()) {
                         if (model.getNumberOfPlayers() == 4) {
-                            Team influence_team = target.team_influence(model.getTeams(), model.getTable().getProfessors(), model.getTable().isCentaurEffect(), model.getTable().getMushroomColor(), model.getTable().getKnightEffect());
+                            Team influence_team = target.teamInfluenceCalculator(model.getTeams(), model.getTable().getProfessors(), model.getTable().isCentaurEffect(), model.getTable().getMushroomColor(), model.getTable().getKnightEffect());
                             if (influence_team != null) {
                                 if (target.getNumberOfTowers() == 0) {
                                     target.controlIsland(influence_team);
@@ -207,7 +207,7 @@ public class MotherPhase extends State {
                                 }
                             }
                         } else {
-                            Player influence_player = target.player_influence(model.getPlayers(), model.getTable().getProfessors(), model.getTable().isCentaurEffect(), model.getTable().getMushroomColor(), model.getTable().getKnightEffect());
+                            Player influence_player = target.playerInfluenceCalculator(model.getPlayers(), model.getTable().getProfessors(), model.getTable().isCentaurEffect(), model.getTable().getMushroomColor(), model.getTable().getKnightEffect());
                             if (influence_player != null) {
                                 if (target.getNumberOfTowers() == 0) {
                                     target.controlIsland(influence_player);

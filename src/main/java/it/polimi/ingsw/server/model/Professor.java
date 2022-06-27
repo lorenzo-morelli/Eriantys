@@ -2,6 +2,13 @@ package it.polimi.ingsw.server.model;
 
 import it.polimi.ingsw.server.model.enums.PeopleColor;
 
+/**
+ * This class represents the data model of the professor for each color:
+ * professor represent that the players has a greater number of students of
+ * the specified color compared to all others players.
+ *
+ * @author Ignazio Neto Dell'Acqua
+ */
 public class Professor {
     private final PeopleColor color;
     private Player heldBy;
@@ -20,10 +27,18 @@ public class Professor {
         heldBy=null;
     }
 
+    /**
+     * Return who has the professor
+     * @return player who has the professor
+     */
     public Player getHeldBy() {
         return heldBy;
     }
 
+    /**
+     * set who has the professor
+     * @param heldBy player to set
+     */
     public void setHeldBy(Player heldBy) {
         this.heldBy = heldBy;
     }

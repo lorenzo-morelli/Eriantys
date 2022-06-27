@@ -145,7 +145,7 @@ public class StudentPhase extends State {
                             int j=0;
                             for(PeopleColor color: colors) {
                                 if(currentPlayer.getSchoolBoard().getEntranceSpace().numStudentsByColor(color)!=0) {
-                                    currentPlayer.getSchoolBoard().load_dinner(color);
+                                    currentPlayer.getSchoolBoard().loadDinnerTable(color);
                                     model.getTable().checkProfessor(color,model.getPlayers());
                                     j++;
                                     if (j == moves - i) {
@@ -156,7 +156,7 @@ public class StudentPhase extends State {
                             for(int k=0;k<model.getTable().getClouds().size();k++) {
                                 if(model.getTable().getClouds().get(k).getStudentsAccumulator().size()!=0)
                                 {
-                                    currentPlayer.getSchoolBoard().load_entrance(model.getTable().getClouds().get(k),model.getTable().getClouds());
+                                    currentPlayer.getSchoolBoard().loadEntrance(model.getTable().getClouds().get(k),model.getTable().getClouds());
                                     model.getTable().getClouds().remove(k);
                                     break;
                                 }
@@ -174,9 +174,9 @@ public class StudentPhase extends State {
 
                 String type = currentPlayerData.getTypeOfRequest();
                 if (type.equals("SCHOOL")) {
-                    currentPlayer.getSchoolBoard().load_dinner(currentPlayerData.getChoosedColor());
+                    currentPlayer.getSchoolBoard().loadDinnerTable(currentPlayerData.getChoosedColor());
                     if (model.getGameMode().equals(GameMode.EXPERT) && currentPlayer.getSchoolBoard().getDinnerTable().numStudentsByColor(currentPlayerData.getChoosedColor()) % 3 == 0) {
-                        currentPlayer.improveCoin();
+                        currentPlayer.increaseCoin();
                     }
                     model.getTable().checkProfessor(currentPlayerData.getChoosedColor(), model.getPlayers());
                 } else if (type.equals("ISLAND")) {

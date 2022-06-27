@@ -7,10 +7,8 @@ import it.polimi.ingsw.utils.stateMachine.Event;
 import java.io.IOException;
 
 /**
- * Evento che si attiva quando l'utente inserisce un numero di parametri scorretti
- * da terminale
- * <p>
- * * @author Fernando
+ * Event that is triggered when the user enters an incorrect number of parameters in the terminal
+ * @author Fernando
  */
 
 public class IncorrectNumberOfParameters extends Event implements Observer {
