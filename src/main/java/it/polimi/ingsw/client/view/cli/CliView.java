@@ -2,28 +2,22 @@ package it.polimi.ingsw.client.view.cli;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.client.model.ClientModel;
-import it.polimi.ingsw.client.view.cli.cliController.states.Decision;
-import it.polimi.ingsw.client.view.cli.cliController.states.ReadFromTerminal;
-import it.polimi.ingsw.client.view.cli.cliController.states.WelcomeScreen;
+import it.polimi.ingsw.client.view.cli.cliController.states.*;
 import it.polimi.ingsw.client.view.View;
-import it.polimi.ingsw.server.model.AssistantCard;
-import it.polimi.ingsw.server.model.StudentSet;
+import it.polimi.ingsw.server.model.*;
 import it.polimi.ingsw.server.model.characters.*;
-import it.polimi.ingsw.server.model.enums.GameMode;
-import it.polimi.ingsw.server.model.enums.PeopleColor;
+import it.polimi.ingsw.server.model.enums.*;
 import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.stateMachine.State;
-
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import static it.polimi.ingsw.client.view.gui.common.Check.isValidIp;
-import static it.polimi.ingsw.client.view.gui.common.Check.isValidPort;
+import java.util.regex.*;
+import java.util.*;
+import static it.polimi.ingsw.client.view.gui.common.Check.*;
+/**
+ * This class implements the methods needed to view information and interact with the client's command line interface
+ * The information relating to the state that called the view is stored, in such a way as to make the interaction with the cli
+ * (for example, if the client fails to enter a data, the view will print an additional warning message on the screen)
+ */
 
 public class CliView implements View {
     private State callingState;
@@ -44,14 +38,22 @@ public class CliView implements View {
         this.networkClientModel = clientModel;
     }
 
-    // Uno stato che vuole chiamare un metodo della vista si registra prima chiamando questo metodo
-    // ad esempio sono nello stato WelcomeScreen e faccio "view.setCallingState(this)"
-    // Non è altro che il pattern Observer riadattato per il pattern State
+    /**
+     * A state that wants to call a view method is first registered by calling this method
+     * for example I am in the WelcomeScreen state, and I do "view.setCallingState(this)"
+     * It is nothing but the Observer pattern re-adapted for the State pattern
+     * @param callingState State of the controller that updated the view
+     */
     @Override
     public synchronized void setCallingState(State callingState) {
         this.callingState = callingState;
     }
-
+    /**
+     * Ask the client to write the word "start" (in reality this interaction is no longer used,
+     * but it was present in the first versions of the game, it is more a case study
+     * on how to use this type of "framework").
+     * @throws InterruptedException I/O errors
+     */
     @Override
     public void askToStart() throws InterruptedException {
         if (callingState instanceof WelcomeScreen) {
@@ -67,7 +69,14 @@ public class CliView implements View {
             ((WelcomeScreen) callingState).notStart().disable();
         }
     }
-
+    /**
+     * Ask the client to make a choice between two options, the method is deliberately
+     * parametric and as general as possible to increase modularity and reuse of the code
+     *
+     * @param option1 String that the client could choose
+     * @param option2 String that the client could choose
+     * @throws InterruptedException I/0 errors
+     */
     @Override
     public void askDecision(String option1, String option2) throws InterruptedException {
         if (callingState instanceof Decision) {
@@ -101,7 +110,6 @@ public class CliView implements View {
             case "USERINFO":
                 CommandPrompt.ask("Inserire Nickname Ip e porta separati da uno spazio e premere invio [empty String: default setup in localhost]",
                         "nickname ip porta>");
-                // Controllo di correttezza dei dati inseriti lato client
                 parsedStrings =
                         new ArrayList<>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
                 if (!CommandPrompt.gotFromTerminal().equals("")) {
@@ -118,10 +126,8 @@ public class CliView implements View {
             case "GAMEINFO":
                 CommandPrompt.ask("Inserire numero di giocatori e modalità di gioco [empty String: default 4 EXPERT]",
                         "numOfPlayers gameMode>");
-                // Controllo di correttezza dei dati inseriti lato client
                 parsedStrings =
                         new ArrayList<>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
-                // controllo che numOfPlayers sia una cifra
                 if (!parsedStrings.get(0).equals("")) {
                     if (!isValidCifra(parsedStrings.get(0))) {
                         System.out.print("ALERT: Inserisci una cifra su numOfPlayers, riprovare\n");
@@ -131,13 +137,11 @@ public class CliView implements View {
                 } else {
                     return;
                 }
-                // se è una cifra allora deve essere compresa tra 2 e 4
                 if (Integer.parseInt(parsedStrings.get(0)) < 2 || Integer.parseInt(parsedStrings.get(0)) > 4) {
                     System.out.print("ALERT: numOfPlayers deve essere compresa tra 2 e 4, riprovare\n");
                     askParameters();
                     return;
                 }
-                // controllo che il game mode sia tra PRINCIPIANT ed EXPERT
                 if (!parsedStrings.get(1).equals("PRINCIPIANT") && !parsedStrings.get(1).equals("EXPERT")) {
                     System.out.print("ALERT: il gameMode scelto deve essere 'PRINCIPIANT' oppure 'EXPERT', riprovare\n");
                     askParameters();
@@ -155,7 +159,10 @@ public class CliView implements View {
         ((ReadFromTerminal) callingState).numberOfParametersIncorrect().disable();
         ((ReadFromTerminal) callingState).insertedParameters().disable();
     }
-
+    /**
+     * Method to send ping messages requests, use the sleep method
+     * to make sure not to clog the network interface and gson to serialize the message
+     */
     public synchronized void requestPing() {
         try {
                 TimeUnit.SECONDS.sleep(1);
@@ -167,7 +174,16 @@ public class CliView implements View {
             throw new RuntimeException(e);
         }
     }
-
+    /**
+     * The requestToMe method is used to specify all the reactions of the client in case
+     * of a specific request (the one who sent the message, the server, has filled in an
+     * identification field as the recipient of the message, and this recipient must be
+     * able to perform an action , i.e. ask the user for information / show information on the screen).
+     * <br>
+     * A switch case is used to parameterize the different usage scenarios
+     * (based on the type of request, another field present in the message)
+     * @throws InterruptedException I/0 errors
+     */
     public void requestToMe() throws InterruptedException {
         Network.setClientModel(networkClientModel);
 

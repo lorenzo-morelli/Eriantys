@@ -3,7 +3,8 @@ package it.polimi.ingsw.server;
 import it.polimi.ingsw.server.controller.ServerController;
 
 /**
- * Launcher for the Server
+ * This class is used to easily start a command line interface of the server,
+ * its task is to instantiate a new ServerController
  */
 public class SERVER {
 
