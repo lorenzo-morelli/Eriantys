@@ -17,6 +17,7 @@ public class ReadFromTerminal extends State {
     final ClientModel clientModel;
     final View view;
     final String type;
+    @SuppressWarnings("unused")
     ParametersFromTerminal fromTerminal;
     final IncorrectNumberOfParameters numberOfParametersIncorrect;
     final Event insertedParameters;

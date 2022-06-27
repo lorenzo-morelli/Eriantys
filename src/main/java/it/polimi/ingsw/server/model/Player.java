@@ -114,25 +114,21 @@ public class Player implements Comparable<Player> {
     public String toString(String nickname) {
         switch (getSchoolBoard().getTowerColor()) {
             case BLACK:
-                return ANSI_BLACK + "    PLAYER : " + this.nickname + ANSI_RESET + (isDisconnected ? "    IL GIOCATORE E' DISCONNESSO\n" : "\n") +
-                        (choosedCard == null ? "    CARD CHOOSED : NESSUNA\n" : "    CARD CHOOSED - VALUE : " + choosedCard.getValues() + " - MOVES : " + choosedCard.getMoves() + "\n") +
-                        "    SCHOOL\n"
-                        + schoolBoard.toString() +
-                        (coins >= 0 ? "    COINS : " + coins + "\n" : (Objects.equals(nickname, this.nickname) ? "" : "\n")) + (Objects.equals(nickname, this.nickname) ? "    AVAILABLE CARDS: " + availableCards.toString() + "\n" : "");
+                return getPlayerInfo(nickname, ANSI_BLACK);
             case WHITE:
-                return ANSI_WHITE + "    PLAYER : " + this.nickname + ANSI_RESET + (isDisconnected ? "    IL GIOCATORE E' DISCONNESSO\n" : "\n") +
-                        (choosedCard == null ? "    CARD CHOOSED : NESSUNA\n" : "    CARD CHOOSED - VALUE : " + choosedCard.getValues() + " - MOVES : " + choosedCard.getMoves() + "\n") +
-                        "    SCHOOL\n"
-                        + schoolBoard.toString() +
-                        (coins >= 0 ? "    COINS : " + coins + "\n" : (Objects.equals(nickname, this.nickname) ? "" : "\n")) + (Objects.equals(nickname, this.nickname) ? "    AVAILABLE CARDS: " + availableCards.toString() + "\n" : "");
+                return getPlayerInfo(nickname, ANSI_WHITE);
             case GREY:
-                return ANSI_GRAY + "    PLAYER : " + this.nickname + ANSI_RESET + (isDisconnected ? "    IL GIOCATORE E' DISCONNESSO\n" : "\n") +
-                        (choosedCard == null ? "    CARD CHOOSED : NESSUNA\n" : "    CARD CHOOSED - VALUE : " + choosedCard.getValues() + " - MOVES : " + choosedCard.getMoves() + "\n") +
-                        "    SCHOOL\n"
-                        + schoolBoard.toString() +
-                        (coins >= 0 ? "    COINS : " + coins + "\n" : (Objects.equals(nickname, this.nickname) ? "" : "\n")) + (Objects.equals(nickname, this.nickname) ? "    AVAILABLE CARDS: " + availableCards.toString() + "\n" : "");
+                return getPlayerInfo(nickname, ANSI_GRAY);
         }
         return null;
+    }
+
+    private String getPlayerInfo(String nickname, String ansiBlack) {
+        return ansiBlack + "    PLAYER : " + this.nickname + ANSI_RESET + (isDisconnected ? "    IL GIOCATORE E' DISCONNESSO\n" : "\n") +
+                (choosedCard == null ? "    CARD CHOOSED : NESSUNA\n" : "    CARD CHOOSED - VALUE : " + choosedCard.getValues() + " - MOVES : " + choosedCard.getMoves() + "\n") +
+                "    SCHOOL\n"
+                + schoolBoard.toString() +
+                (coins >= 0 ? "    COINS : " + coins + "\n" : (Objects.equals(nickname, this.nickname) ? "" : "\n")) + (Objects.equals(nickname, this.nickname) ? "    AVAILABLE CARDS: " + availableCards.toString() + "\n" : "");
     }
 
     public int getCoins() {

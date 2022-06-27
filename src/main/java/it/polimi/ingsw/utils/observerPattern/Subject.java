@@ -1,5 +1,6 @@
 package it.polimi.ingsw.utils.observerPattern;
 
+@SuppressWarnings("unused")
 public interface Subject {
     /**
      * Allows an observer to subscribe to the list of observers

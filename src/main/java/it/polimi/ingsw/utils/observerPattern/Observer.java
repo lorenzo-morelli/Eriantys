@@ -1,6 +1,7 @@
 package it.polimi.ingsw.utils.observerPattern;
 
 
+@SuppressWarnings("unused")
 public interface Observer {
     /**
      * update

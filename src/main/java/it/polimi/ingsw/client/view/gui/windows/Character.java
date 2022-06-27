@@ -22,6 +22,7 @@ import java.util.ResourceBundle;
 
 import static it.polimi.ingsw.client.view.gui.GuiView.*;
 
+@SuppressWarnings("ALL")
 public class Character implements Initializable {
     private final GuiView guiView = new GuiView();
     private boolean flagIsland = false;

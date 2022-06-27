@@ -7,6 +7,7 @@ package it.polimi.ingsw.utils.stateMachine;
         * You should re-implement toString to return some useful information.
 
  */
+@SuppressWarnings("unused")
 public interface IEvent {
 
     void fireStateEvent() throws Exception;

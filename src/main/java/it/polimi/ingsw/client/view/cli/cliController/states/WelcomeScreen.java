@@ -13,6 +13,7 @@ import java.io.IOException;
  * the user had to enter start. No longer used but left for reference.
  */
 public class WelcomeScreen extends State{
+    @SuppressWarnings("unused")
     final View view;
     private final RecognizedString start;
     private final NotRecognizedString notStart;

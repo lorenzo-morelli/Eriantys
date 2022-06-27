@@ -140,21 +140,7 @@ public class MotherPhase extends State {
             }
 
             if (!checkDisconnection) {
-                if (model.getTable().getIslands().size() <= 3) {
-                    gameEnd().fireStateEvent();
-                    return super.entryAction(cause);
-                } else if (model.isLastTurn()) {
-                    if (model.getCurrentPlayer().equals(model.getPlayers().get(model.getPlayers().size() - 1))) {
-                        gameEnd().fireStateEvent();
-                    } else {
-                        model.nextPlayer();
-                        goToStudentPhase().fireStateEvent();
-                    }
-                    return super.entryAction(cause);
-                } else {
-                    GoToCloudPhase().fireStateEvent();
-                    return super.entryAction(cause);
-                }
+                return fireCorrectEvent(cause);
             }
 
 
@@ -269,21 +255,7 @@ public class MotherPhase extends State {
                     model.getTable().setMushroomColor(null);
                     model.getTable().setKnightEffect(null);
 
-                    if (model.getTable().getIslands().size() <= 3) {
-                        gameEnd().fireStateEvent();
-                        return super.entryAction(cause);
-                    } else if (model.isLastTurn()) {
-                        if (model.getCurrentPlayer().equals(model.getPlayers().get(model.getPlayers().size() - 1))) {
-                            gameEnd().fireStateEvent();
-                        } else {
-                            model.nextPlayer();
-                            goToStudentPhase().fireStateEvent();
-                        }
-                        return super.entryAction(cause);
-                    } else {
-                        GoToCloudPhase().fireStateEvent();
-                        return super.entryAction(cause);
-                    }
+                    return fireCorrectEvent(cause);
                 } else {
                     storekeeper = true;
                     for (int j = 0; j < model.getTable().getCharacters().size(); j++) {
@@ -410,6 +382,24 @@ public class MotherPhase extends State {
             }
         }
         return super.entryAction(cause);
+    }
+
+    private IEvent fireCorrectEvent(IEvent cause) throws Exception {
+        if (model.getTable().getIslands().size() <= 3) {
+            gameEnd().fireStateEvent();
+            return super.entryAction(cause);
+        } else if (model.isLastTurn()) {
+            if (model.getCurrentPlayer().equals(model.getPlayers().get(model.getPlayers().size() - 1))) {
+                gameEnd().fireStateEvent();
+            } else {
+                model.nextPlayer();
+                goToStudentPhase().fireStateEvent();
+            }
+            return super.entryAction(cause);
+        } else {
+            GoToCloudPhase().fireStateEvent();
+            return super.entryAction(cause);
+        }
     }
 
     /**

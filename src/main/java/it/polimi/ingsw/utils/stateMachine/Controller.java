@@ -243,6 +243,7 @@ public class Controller {
         return "[FSM " + name + "]";
     }
 
+    @SuppressWarnings("unused")
     private ITransitionListener setListener;
 
     /**

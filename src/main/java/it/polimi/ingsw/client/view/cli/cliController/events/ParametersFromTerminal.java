@@ -16,6 +16,7 @@ import java.util.Arrays;
  * * @author Fernando
  */
 
+@SuppressWarnings("unused")
 public class ParametersFromTerminal extends Event implements Observer {
     private final CommandPrompt commandPrompt;
     private final ClientModel clientModel;

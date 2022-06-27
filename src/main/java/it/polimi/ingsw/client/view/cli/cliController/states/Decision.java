@@ -17,6 +17,7 @@ import java.util.Arrays;
  * If the user writes a string that is not present between the two options, an error event
  * is generated which will be captured by the controller.
  */
+@SuppressWarnings("unused")
 public class Decision extends State {
 
         final View view;
