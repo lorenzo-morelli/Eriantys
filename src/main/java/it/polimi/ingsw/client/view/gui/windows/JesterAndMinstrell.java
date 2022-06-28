@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.view.gui.windows;
 
 import com.google.gson.Gson;
+import it.polimi.ingsw.client.view.gui.Game;
 import it.polimi.ingsw.client.view.gui.GuiView;
 import it.polimi.ingsw.server.model.StudentSet;
 import it.polimi.ingsw.server.model.enums.PeopleColor;
@@ -164,6 +165,7 @@ public class JesterAndMinstrell implements Initializable {
      */
     @SuppressWarnings("GrazieInspection")
     private void populateList(ArrayList<ImageView> students, StudentSet studentSet, ArrayList<PeopleColor> colors, int index) {
+        students.forEach(Game::setShadow);
         students.forEach(student -> student.setOnMouseClicked(event -> {
             System.out.println("cliccate");
             switch (students.indexOf(student)) {

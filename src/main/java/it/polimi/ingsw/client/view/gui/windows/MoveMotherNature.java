@@ -15,6 +15,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import static it.polimi.ingsw.client.view.gui.Game.setShadow;
 import static it.polimi.ingsw.client.view.gui.GuiView.windowNode;
 
 public class MoveMotherNature implements Initializable {
@@ -66,6 +67,7 @@ public class MoveMotherNature implements Initializable {
             }
             islandImage.setFitHeight(60);
             islandImage.setFitWidth(60);
+            setShadow(islandImage);
             islandGrid.add(islandImage, pos.islandX(islands.indexOf(island)), pos.islandY(islands.indexOf(island)));
 
             islandImage.setOnMouseClicked((event) -> {

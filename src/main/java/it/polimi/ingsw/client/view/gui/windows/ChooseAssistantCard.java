@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.view.gui.windows;
 
 import com.google.gson.Gson;
+import it.polimi.ingsw.client.view.gui.Game;
 import it.polimi.ingsw.client.view.gui.GuiView;
 import it.polimi.ingsw.server.model.AssistantCard;
 import it.polimi.ingsw.utils.network.Network;
@@ -55,8 +56,9 @@ public class ChooseAssistantCard implements Initializable {
                 assistantCard10
         );
         List<AssistantCard> deck = this.guiView.getClientModel().getDeck();
-        cards.forEach((card) -> card.setVisible(false));
-        cards.forEach((card) -> {
+        cards.forEach(card -> card.setVisible(false));
+        cards.forEach(Game::setShadow);
+        cards.forEach(card -> {
             boolean show = false;
             for (AssistantCard assistantCard : deck) {
                 if (assistantCard.getValues() == cards.indexOf(card) + 1) {
@@ -70,7 +72,6 @@ public class ChooseAssistantCard implements Initializable {
         cards.forEach((card) -> card.setOnMouseClicked((event) -> setCard(cards.indexOf(card) + 1, event))
         );
     }
-
 
     public void setCard(int value, MouseEvent mouseEvent) {
         this.guiView.getClientModel().setCardChoosedValue(value);

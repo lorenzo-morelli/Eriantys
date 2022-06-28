@@ -71,11 +71,11 @@
    <ImageView fx:id="assistantCard2" fitHeight="130.0" fitWidth="89.0" layoutX="600.0" layoutY="556.0" pickOnBounds="true" preserveRatio="true">
       <Image url="@../graphics/assistants/assistantCard1.png" />
    </ImageView>
-   <ImageView fx:id="assistantCard1" fitHeight="134.0" fitWidth="89.0" layoutX="596.0" layoutY="811.0" pickOnBounds="true" preserveRatio="true">
-      <Image url="@../graphics/assistants/assistantCard1.png" />
-   </ImageView>
    <ImageView fx:id="characterCard1" fitHeight="244.0" fitWidth="177.0" layoutX="909.0" layoutY="102.0" pickOnBounds="true" preserveRatio="true">
       <Image url="@../graphics/characters/monk.jpg" />
+   </ImageView>
+   <ImageView fx:id="assistantCard1" fitHeight="134.0" fitWidth="89.0" layoutX="596.0" layoutY="811.0" pickOnBounds="true" preserveRatio="true">
+      <Image url="@../graphics/assistants/assistantCard1.png" />
    </ImageView>
    <ImageView fx:id="characterCard2" fitHeight="244.0" fitWidth="167.0" layoutX="1094.0" layoutY="102.0" pickOnBounds="true" preserveRatio="true">
       <Image url="@../graphics/characters/monk.jpg" />
@@ -405,14 +405,14 @@
    <Label fx:id="cost3" layoutX="1340.0" layoutY="349.0" text="Cost: 0" />
    <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
    <ScrollPane layoutX="1467.0" layoutY="101.0" prefHeight="244.0" prefWidth="385.0">
-     <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="233.0" prefWidth="372.0">
-           <Label fx:id="log" alignment="BOTTOM_LEFT" layoutX="13.0" layoutY="25.0" prefHeight="233.0" prefWidth="372.0" text="testo testo testo" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-              <padding>
-                 <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-              </padding>
-           </Label>
-        </AnchorPane>
-     </content>
+      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="233.0" prefWidth="372.0">
+         <Label fx:id="log" alignment="BOTTOM_LEFT" layoutX="13.0" layoutY="25.0" prefHeight="233.0" prefWidth="372.0"
+                text="testo testo testo" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <padding>
+               <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
+            </padding>
+         </Label>
+      </AnchorPane>
    </ScrollPane>
 </AnchorPane>

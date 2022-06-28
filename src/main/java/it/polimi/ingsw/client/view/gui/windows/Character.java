@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.view.gui.windows;
 
 import com.google.gson.Gson;
+import it.polimi.ingsw.client.view.gui.Game;
 import it.polimi.ingsw.client.view.gui.GuiView;
 import it.polimi.ingsw.client.view.gui.Position;
 import it.polimi.ingsw.server.model.Island;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 
+import static it.polimi.ingsw.client.view.gui.Game.setShadow;
 import static it.polimi.ingsw.client.view.gui.GuiView.*;
 
 @SuppressWarnings("ALL")
@@ -123,6 +125,7 @@ public class Character implements Initializable {
     }
 
     public void selectStudent(ArrayList<ImageView> students, StudentSet studentSet) {
+        students.forEach(Game::setShadow);
         setToBlackAndWhite(students, studentSet, 0);
         students.forEach(student -> student.setOnMouseClicked(event -> {
             switch (students.indexOf(student)) {
@@ -157,7 +160,6 @@ public class Character implements Initializable {
                     }
                     break;
             }
-            System.out.println("scelto: " + chosenColor.name());
             if (chosenColor == null) {
                 notice.setText("ERROR: Color unavailable!");
             } else {
@@ -183,6 +185,7 @@ public class Character implements Initializable {
             }
             islandImage.setFitHeight(60);
             islandImage.setFitWidth(60);
+            setShadow(islandImage);
             islandGrid.add(islandImage, pos.islandX(islands.indexOf(island)), pos.islandY(islands.indexOf(island)));
             islandImage.setOnMouseClicked(event -> {
                 chosenIsland = islands.indexOf(island);

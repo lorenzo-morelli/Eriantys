@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.view.gui.windows;
 
 import com.google.gson.Gson;
+import it.polimi.ingsw.client.view.gui.Game;
 import it.polimi.ingsw.client.view.gui.GuiView;
 import it.polimi.ingsw.client.view.gui.Position;
 import it.polimi.ingsw.server.model.Island;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 
+import static it.polimi.ingsw.client.view.gui.Game.setShadow;
 import static it.polimi.ingsw.client.view.gui.GuiView.canOpenWindow;
 import static it.polimi.ingsw.client.view.gui.GuiView.windowNode;
 
@@ -50,6 +52,7 @@ public class MoveStudents implements Initializable {
         Position pos = new Position();
         ArrayList<Island> islands = this.guiView.getClientModel().getServerModel().getTable().getIslands();
         ArrayList<ImageView> students = new ArrayList<>(Arrays.asList(blue, green, pink, red, yellow));
+        students.forEach(Game::setShadow);
         currentPlayer = this.guiView.getClientModel().getServerModel().getCurrentPlayer();
         Character character = new Character();
         character.setToBlackAndWhite(students, currentPlayer.getSchoolBoard().getEntranceSpace(), 0);
@@ -69,6 +72,7 @@ public class MoveStudents implements Initializable {
                 }
                 islandImage.setFitHeight(60);
                 islandImage.setFitWidth(60);
+                setShadow(islandImage);
                 islandGrid.add(islandImage, pos.islandX(islands.indexOf(island)), pos.islandY(islands.indexOf(island)));
                 islandImage.setOnMouseClicked((event) -> {
                     if (studentColor == null) {

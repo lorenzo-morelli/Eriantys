@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -151,6 +152,7 @@ public class Game implements Initializable {
     private Label playerName3;
     @FXML
     private Label playerName4;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         String imageURL = "/graphics/buttons/button_unavailable.png";
@@ -166,6 +168,8 @@ public class Game implements Initializable {
                 e.printStackTrace();
             }
         }
+        ArrayList<Button> buttons = new ArrayList<>(Arrays.asList(assistantCardBtn, setOnSchoolBtn, setOnIslandBtn, moveBtn, cloudBtn));
+        buttons.forEach(Game::setShadow);
         if (myTurn) {
             switch (this.guiView.getClientModel().getTypeOfRequest()) {
                 case "CHOOSEASSISTANTCARD":
@@ -258,6 +262,7 @@ public class Game implements Initializable {
                 blocks.setPadding(new Insets(20));
                 blocks.setAlignment(Pos.BOTTOM_LEFT);
                 ImageView block = new ImageView("/graphics/pieces/islands/deny_island_icon.png");
+                setShadow(block);
                 block.setFitHeight(50);
                 block.setFitWidth(50);
                 blocks.addRow(1, block);
@@ -289,6 +294,7 @@ public class Game implements Initializable {
 
             // INITIALIZE MOTHER NATURE
             if (islands.indexOf(island) == motherNaturePos) {
+                setShadow(motherNature);
                 tile.getChildren().add(motherNature);
                 StackPane.setAlignment(motherNature, Pos.TOP_CENTER);
             }
@@ -328,26 +334,31 @@ public class Game implements Initializable {
                 for (int i = 0; i < player.getSchoolBoard().getDinnerTable().getNumOfBlueStudents(); i++) {
                     ImageView studentBlue = new ImageView("/graphics/pieces/students/student_blue.png");
                     imageResize(studentBlue, 27);
+                    setShadow(studentBlue);
                     school.add(studentBlue, i, this.getColorPlace("blue"));
                 }
                 for (int i = 0; i < player.getSchoolBoard().getDinnerTable().getNumOfRedStudents(); i++) {
                     ImageView studentRed = new ImageView("/graphics/pieces/students/student_red.png");
                     imageResize(studentRed, 27);
+                    setShadow(studentRed);
                     school.add(studentRed, i, this.getColorPlace("red"));
                 }
                 for (int i = 0; i < player.getSchoolBoard().getDinnerTable().getNumOfGreenStudents(); i++) {
                     ImageView studentGreen = new ImageView("/graphics/pieces/students/student_green.png");
                     imageResize(studentGreen, 27);
+                    setShadow(studentGreen);
                     school.add(studentGreen, i, this.getColorPlace("green"));
                 }
                 for (int i = 0; i < player.getSchoolBoard().getDinnerTable().getNumOfPinkStudents(); i++) {
                     ImageView studentPink = new ImageView("/graphics/pieces/students/student_pink.png");
                     imageResize(studentPink, 27);
+                    setShadow(studentPink);
                     school.add(studentPink, i, this.getColorPlace("pink"));
                 }
                 for (int i = 0; i < player.getSchoolBoard().getDinnerTable().getNumOfYellowStudents(); i++) {
                     ImageView studentYellow = new ImageView("/graphics/pieces/students/student_yellow.png");
                     imageResize(studentYellow, 27);
+                    setShadow(studentYellow);
                     school.add(studentYellow, i, this.getColorPlace("yellow"));
                 }
             }
@@ -392,6 +403,7 @@ public class Game implements Initializable {
                             break;
                     }
                     imageResize(profImage, 30);
+                    setShadow(profImage);
                     professorGrids.get(players.indexOf(choosedPlayer)).add(profImage, 0, getColorPlace(color));
                 }
             }
@@ -416,6 +428,7 @@ public class Game implements Initializable {
                             break;
                     }
                     imageResize(towerImage, 50);
+                    setShadow(towerImage);
                     tower.setHgap(-15);
                     tower.add(towerImage, i % 2, i / 2);
                 }
@@ -429,6 +442,7 @@ public class Game implements Initializable {
             coinLabels.forEach(coinLabel -> coinLabel.setVisible(false));
             costs.forEach(cost -> cost.setVisible(false));
         } else {
+            coins.forEach(Game::setShadow);
             ArrayList<CharacterCard> characterCards = this.guiView.getClientModel().getServerModel().getTable().getCharacters();
             toImageCharacters(characterCards, characterCardsImages);
             players.forEach(player -> {
@@ -453,6 +467,7 @@ public class Game implements Initializable {
                     case "GRANNY":
                         for (int i = 0; i < this.guiView.getClientModel().getServerModel().getTable().getNumDivieti(); i++) {
                             ImageView block = new ImageView("/graphics/pieces/islands/deny_island_icon.png");
+                            setShadow(block);
                             this.imageResize(block, 30);
                             grid.add(block, i % 2, i / 2);
                         }
@@ -461,6 +476,7 @@ public class Game implements Initializable {
                     populateGrid(grid, 0, 2, studentSet);
                 }
             });
+            characterCardsImages.forEach(Game::setShadow);
             characterCards.forEach(card -> characterCardsImages.get(characterCards.indexOf(card)).setOnMouseClicked(event -> {
                 if (!this.guiView.getClientModel().getTypeOfRequest().equals("CHOOSEASSISTANTCARD") && canOpenWindow) {
                     currentCharacter = card;
@@ -479,7 +495,7 @@ public class Game implements Initializable {
         }
 
         // INITIALIZE PLAYERS AND NUMBER OF PLAYERS
-        for (Player player: players) {
+        for (Player player : players) {
             String name;
             name = player.getNickname();
             if (teams != null) {
@@ -514,6 +530,7 @@ public class Game implements Initializable {
             if (player.getChoosedCard() != null) {
                 Image assistantImage = new Image("/graphics/assistants/assistantCard" + (int) player.getChoosedCard().getValues() + ".png");
                 assistantCards.get(players.indexOf(player)).setImage(assistantImage);
+                setShadow(assistantCards.get(players.indexOf(player)));
                 assistantCards.get(players.indexOf(player)).setVisible(true);
             } else {
                 assistantCards.get(players.indexOf(player)).setVisible(false);
@@ -603,30 +620,35 @@ public class Game implements Initializable {
         int position = init;
         for (int i = 0; i < green; i++) {
             ImageView student = new ImageView("/graphics/pieces/students/student_green.png");
+            setShadow(student);
             this.imageResize(student, 25);
             grid.add(student, position % cols, position / cols);
             position++;
         }
         for (int i = 0; i < red; i++) {
             ImageView student = new ImageView("/graphics/pieces/students/student_red.png");
+            setShadow(student);
             this.imageResize(student, 25);
             grid.add(student, position % cols, position / cols);
             position++;
         }
         for (int i = 0; i < yellow; i++) {
             ImageView student = new ImageView("/graphics/pieces/students/student_yellow.png");
+            setShadow(student);
             this.imageResize(student, 25);
             grid.add(student, position % cols, position / cols);
             position++;
         }
         for (int i = 0; i < pink; i++) {
             ImageView student = new ImageView("/graphics/pieces/students/student_pink.png");
+            setShadow(student);
             this.imageResize(student, 25);
             grid.add(student, position % cols, position / cols);
             position++;
         }
         for (int i = 0; i < blue; i++) {
             ImageView student = new ImageView("/graphics/pieces/students/student_blue.png");
+            setShadow(student);
             this.imageResize(student, 25);
             grid.add(student, position % cols, position / cols);
             position++;
@@ -636,8 +658,8 @@ public class Game implements Initializable {
     /**
      * This method is used to resize an ImageView.
      *
-     * @param image the image to resize.
-     * @param size  the size of the image.
+     * @param image the node to resize.
+     * @param size  the size of the node.
      */
     private void imageResize(ImageView image, int size) {
         image.setFitHeight(size);
@@ -723,5 +745,9 @@ public class Game implements Initializable {
             }
             images.get(i).setImage(character);
         }
+    }
+
+    public static void setShadow(Node node) {
+        node.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);");
     }
 }

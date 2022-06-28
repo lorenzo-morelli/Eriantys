@@ -17,6 +17,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import static it.polimi.ingsw.client.view.gui.Game.setShadow;
 import static it.polimi.ingsw.client.view.gui.GuiView.windowNode;
 
 public class ChooseCloud implements Initializable {
@@ -39,12 +40,12 @@ public class ChooseCloud implements Initializable {
             ImageView cloudImage = new ImageView("/graphics/pieces/clouds/cloud_card.png");
             cloudImage.setFitHeight(130);
             cloudImage.setFitWidth(130);
+            setShadow(cloudImage);
             tile.getChildren().add(cloudImage);
             GridPane studentsCloudGrid = new GridPane();
             studentsCloudGrid.setAlignment(Pos.CENTER);
             studentsCloudGrid.setHgap(7);
             studentsCloudGrid.setVgap(7);
-
             Game game = new Game();
             game.populateGrid(studentsCloudGrid, 0, 2, cloud.getStudentsAccumulator());
             tile.getChildren().add(studentsCloudGrid);
