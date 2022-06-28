@@ -221,7 +221,7 @@ public class CenterTable {
     }
 
     /**
-     * Check who has the professor
+     * Check who has the professor and change the holding of it under specific condition (see the rules)
      * @param color the color to check
      * @param players list of players
      */
@@ -279,9 +279,10 @@ public class CenterTable {
     }
 
     /**
-     * Method to merge two adjacents islands
-     * @param index_1 index of the island
-     * @param index_2 index of the island
+     * Method to merge two adjacent islands into a single one. The island resulted is the fist one plus the second island inhabitants plus the second island number of towers.
+     * Then the method remove the second one from the array list of island
+     * @param index_1 index of the first island
+     * @param index_2 index of the second island
      */
     public void mergeIsland(int index_1, int index_2) {
         islands.get(index_1).setNumberOfTowers(islands.get(index_1).getNumberOfTowers() + islands.get(index_2).getNumberOfTowers());
