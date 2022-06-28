@@ -55,7 +55,7 @@ public class SpecifyPortScreen extends State {
         if (!Network.isServerListening()) {
             CommandPrompt.ask(
                     "Enter the port for Clients Connection [ENTER with empty string: default port 1234]",
-                    "Port >");
+                    "Port :");
         }
         // empty string --> default port
         if (CommandPrompt.gotFromTerminal().equals("")){
@@ -65,7 +65,7 @@ public class SpecifyPortScreen extends State {
         while (!isValidPort(CommandPrompt.gotFromTerminal())) {
             CommandPrompt.ask(
                     "Port chose is not in the correct format (number between 0 and 65536)",
-                    "Port >");
+                    "Port :");
         }
         portSpecified.fireStateEvent();
 

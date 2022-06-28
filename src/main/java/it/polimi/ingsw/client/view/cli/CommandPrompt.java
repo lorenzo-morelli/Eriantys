@@ -3,7 +3,8 @@ package it.polimi.ingsw.client.view.cli;
 import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.observerPattern.Observer;
 import it.polimi.ingsw.utils.observerPattern.Subject;
-import jline.console.ConsoleReader;
+import java.util.Scanner;
+
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,23 +20,22 @@ import java.util.concurrent.TimeUnit;
  */
 public class CommandPrompt implements Subject {
     private static String fromTerminal = null;
-    private static ConsoleReader console;
+    private static Scanner console;
     private static List<Observer> observers = null;
     private static CommandPrompt instance = null;
     private static final boolean debug = false;
     private static boolean inputLetto = false;
 
-    private CommandPrompt() throws IOException {
-        console = new ConsoleReader();
+    private CommandPrompt() {
+        console = new Scanner(System.in);
         observers = new ArrayList<>();
     }
 
     /**
      * Obtain the instance of the singleton
-     * @return the instance of the commandPrompt
-     * @throws IOException input output related errors
+     * @return the instance of the commandPrompts
      */
-    public static CommandPrompt getInstance() throws IOException {
+    public static CommandPrompt getInstance()  {
         if (instance == null) {
             instance = new CommandPrompt();
         }
@@ -44,10 +44,10 @@ public class CommandPrompt implements Subject {
 
     /**
      * Obtains the consoleReader
+     *
      * @return consoleReader
-     * @throws IOException input output related errors
      */
-    public static ConsoleReader getConsole() throws IOException {
+    public static Scanner getConsole() {
         if (instance == null) {
             instance = new CommandPrompt();
         }
@@ -56,10 +56,9 @@ public class CommandPrompt implements Subject {
 
     /**
      * Read the next line from terminal
-     * @throws IOException input output related errors
      */
-    public static void read() throws IOException {
-        fromTerminal = console.readLine();
+    public static void read() {
+        fromTerminal = console.nextLine();
         instance.notifyObservers();
     }
 
@@ -89,14 +88,10 @@ public class CommandPrompt implements Subject {
             instance = new CommandPrompt();
         }
         if (!debug) {
-            // clear screen works only on Windows
+            // using unix ascii code
             CommandPrompt.clearScreen();
-            // ascii code for clear screen should work on unix
-            System.out.print("\033[H\033[2J");
-            System.out.flush();
         }
-        getConsole().println(toPrint);
-        getConsole().flush();
+        System.out.println(toPrint);
     }
 
     /**
@@ -108,8 +103,7 @@ public class CommandPrompt implements Subject {
         if (instance == null) {
             instance = new CommandPrompt();
         }
-        getConsole().setPrompt(toSet);
-        getConsole().flush();
+        System.out.println(toSet);
     }
 
     /**
@@ -120,7 +114,9 @@ public class CommandPrompt implements Subject {
         if (instance == null) {
             instance = new CommandPrompt();
         }
-        getConsole().clearScreen();
+        // ascii code for clear screen should work on unix
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
     }
 
     /**
@@ -141,7 +137,7 @@ public class CommandPrompt implements Subject {
                 CommandPrompt.setPrompt(console);
                 CommandPrompt.read();
                 if (Network.disconnectedClient()) {
-                    System.out.println("Bene, questo input verrà ignorato");
+                    System.out.println("Bene, questo input verra' ignorato");
                     return;
                 }
                 setInputLetto(true);

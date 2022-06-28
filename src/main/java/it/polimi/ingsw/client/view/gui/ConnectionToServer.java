@@ -76,7 +76,7 @@ public class ConnectionToServer {
                 if (!Objects.equals(clientModel.getTypeOfRequest(), "CONNECTTOEXISTINGGAME")) {
                     if (Network.disconnectedClient()) {
                         Network.disconnect();
-                        System.out.println("Il gioco è terminato a causa della disconnessione di un client");
+                        System.out.println("Il gioco e' terminato a causa della disconnessione di un client");
                         isToReset = true;
                     }
                     if (clientModel.isGameStarted() && clientModel.isNotKicked()) {

@@ -62,7 +62,7 @@ public class CliView implements View {
 
             CommandPrompt.ask(
                     "Scrivi start per far partire il gioco e premi invio",
-                    "START THE GAME> ");
+                    "START THE GAME: ");
 
 
             ((WelcomeScreen) callingState).start().disable();
@@ -85,7 +85,7 @@ public class CliView implements View {
 
             CommandPrompt.ask(
                     "Scegli tra " + option1 + " e " + option2,
-                    option1 + " or " + option2 + "> ");
+                    option1 + " or " + option2 + ": ");
 
             ((Decision) callingState).haScelto1().disable();
             ((Decision) callingState).haScelto2().disable();
@@ -109,7 +109,7 @@ public class CliView implements View {
 
             case "USERINFO":
                 CommandPrompt.ask("Inserire Nickname Ip e porta separati da uno spazio e premere invio [empty String: default setup in localhost]",
-                        "nickname ip porta>");
+                        "nickname ip porta:");
                 parsedStrings =
                         new ArrayList<>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
                 if (!CommandPrompt.gotFromTerminal().equals("")) {
@@ -124,8 +124,8 @@ public class CliView implements View {
                 break;
 
             case "GAMEINFO":
-                CommandPrompt.ask("Inserire numero di giocatori e modalità di gioco [empty String: default 4 EXPERT]",
-                        "numOfPlayers gameMode>");
+                CommandPrompt.ask("Inserire numero di giocatori e modalita' di gioco [empty String: default 4 EXPERT]",
+                        "numOfPlayers gameMode:");
                 parsedStrings =
                         new ArrayList<>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
                 if (!parsedStrings.get(0).equals("")) {
@@ -150,8 +150,8 @@ public class CliView implements View {
                 break;
 
             case "NICKNAMEEXISTENT":
-                CommandPrompt.ask("Il nickname scelto è già esistente, si prega di reinserirne uno nuovo",
-                        "nickname>");
+                CommandPrompt.ask("Nickname scelto gia' esistente, si prega di reinserirne uno nuovo",
+                        "nickname:");
                 setNickname(CommandPrompt.gotFromTerminal());
                 break;
         }
@@ -200,9 +200,9 @@ public class CliView implements View {
                 for (AssistantCard a : networkClientModel.getDeck()) {
                     System.out.println("valore: " + (int) a.getValues() + "  mosse: " + a.getMoves());
                 }
-                CommandPrompt.ask("Inserisci valore della carta scelta", "Carta> ");
+                CommandPrompt.ask("Inserisci valore della carta scelta", "Carta: ");
                 if (isValidNumber(CommandPrompt.gotFromTerminal())) {
-                    System.out.println("la carta da te scelta ha un valore non  valido, si prega di fare più attenzione");
+                    System.out.println("la carta da te scelta ha un valore non  valido, si prega :di fare piu' attenzione");
                     TimeUnit.SECONDS.sleep(2);
                     requestToMe();
                     return;
@@ -214,7 +214,7 @@ public class CliView implements View {
                     }
                 }
                 if (!check) {
-                    System.out.println("la carta scelta non è presente, fare più attenzione");
+                    System.out.println("la carta scelta non esiste, fare maggiore attenzione");
                     TimeUnit.SECONDS.sleep(2);
                     requestToMe();
                     return;
@@ -231,7 +231,7 @@ public class CliView implements View {
                 System.out.println(networkClientModel.getServerModel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO: \n" + "E' IL TUO TURNO - STUDENT PHASE" + "\n\nMOSSE ALTRI GIOCATORI: " + getResponse()));
                 if (networkClientModel.getServerModel().getGameMode().equals(GameMode.EXPERT) && networkClientModel.getServerModel().getTable().getCharacters().stream().anyMatch(j -> j.getCost() <= networkClientModel.getServerModel().getCurrentPlayer().getCoins() && !isUsed)) {
 
-                    CommandPrompt.ask("Scegli il colore dello studente che desideri muovere OPPURE inserisci CARD per usare una carta personaggio", "RED or GREEN or BLUE or YELLOW or PINK    or CARD> ");
+                    CommandPrompt.ask("Scegli il colore dello studente che desideri muovere OPPURE inserisci CARD per usare una carta personaggio", "RED or GREEN or BLUE or YELLOW or PINK    or CARD: ");
 
                     if (!CommandPrompt.gotFromTerminal().equals("RED") &&
                             !CommandPrompt.gotFromTerminal().equals("GREEN") &&
@@ -239,7 +239,7 @@ public class CliView implements View {
                             !CommandPrompt.gotFromTerminal().equals("YELLOW") &&
                             !CommandPrompt.gotFromTerminal().equals("PINK") &&
                             !CommandPrompt.gotFromTerminal().equals("CARD")) {
-                        System.out.println("Non si è inserito ne un colore non valido, ne il comando CARD, reinserire i dati con più attenzione !!!!");
+                        System.out.println("Non si e' inserito ne un colore non valido, ne il comando CARD, reinserire i dati con piu' attenzione !!!!");
                         TimeUnit.SECONDS.sleep(2);
                         requestToMe();
                         return;
@@ -267,7 +267,7 @@ public class CliView implements View {
                             System.out.println("\n\n\n\nScegli la carta che vorresti utilizzare: \n");
                             ArrayList<String> available = new ArrayList<>();
                             addCards(available);
-                            CommandPrompt.ask("Scegliere la carta personaggio seguendo le indicazioni, un qualsiasi altra riga se si vuole tornare indietro", "CHARACTER>");
+                            CommandPrompt.ask("Scegliere la carta personaggio seguendo le indicazioni, un qualsiasi altra riga se si vuole tornare indietro", "CHARACTER:");
                             parsedStrings =
                                     new ArrayList<>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
                             if (!available.contains(parsedStrings.get(0))) {
@@ -429,7 +429,7 @@ public class CliView implements View {
                                     }
                                     assert modelCard != null;
                                     if (modelCard.getName().equals("GRANNY") && networkClientModel.getServerModel().getTable().getIslands().get(Integer.parseInt(parsedStrings.get(1)) - 1).isBlocked()) {
-                                        System.out.println("isola già bloccata, scelta carta rifiutata !!!!");
+                                        System.out.println("isola gia' bloccata, scelta carta rifiutata !!!!");
                                         TimeUnit.SECONDS.sleep(2);
                                         requestToMe();
                                         return;
@@ -527,13 +527,13 @@ public class CliView implements View {
                     }
                 } else {
 
-                    CommandPrompt.ask("Scegli il colore dello studente che desideri muovere ", "RED or GREEN or BLUE or YELLOW or PINK> ");
+                    CommandPrompt.ask("Scegli il colore dello studente che desideri muovere ", "RED or GREEN or BLUE or YELLOW or PINK: ");
                     if (!CommandPrompt.gotFromTerminal().equals("RED") &&
                             !CommandPrompt.gotFromTerminal().equals("GREEN") &&
                             !CommandPrompt.gotFromTerminal().equals("BLUE") &&
                             !CommandPrompt.gotFromTerminal().equals("YELLOW") &&
                             !CommandPrompt.gotFromTerminal().equals("PINK")) {
-                        System.out.println("Si è inserito un colore non valido, reinserire i dati con più attenzione !!!!");
+                        System.out.println("Si e' inserito un colore non valido, reinserire i dati con piu' attenzione !!!!");
                         TimeUnit.SECONDS.sleep(2);
                         requestToMe();
                         return;
@@ -567,7 +567,7 @@ public class CliView implements View {
                 for (String nickname : networkClientModel.getNicknames()) {
                     System.out.println(nickname);
                 }
-                CommandPrompt.ask("Inserisci il nickname del tuo compagno di squadra: ", "Nickname> ");
+                CommandPrompt.ask("Inserisci il nickname del tuo compagno di squadra: ", "Nickname: ");
                 if (!networkClientModel.getNicknames().contains(CommandPrompt.gotFromTerminal())) {
                     System.out.print("Il nickname inserito non esiste, si prega di scegliere un nickname tra quelli specificati");
                     requestToMe();
@@ -587,12 +587,12 @@ public class CliView implements View {
             case "CHOOSEWHERETOMOVEMOTHER":
                 if (networkClientModel.getServerModel().getGameMode().equals(GameMode.EXPERT) && networkClientModel.getServerModel().getTable().getCharacters().stream().anyMatch(j -> j.getCost() <= networkClientModel.getServerModel().getCurrentPlayer().getCoins() && !isUsed)) {
                     System.out.println(networkClientModel.getServerModel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO:\n " + "E' IL TUO TURNO - MOTHER PHASE" + "\n\nMOSSE ALTRI GIOCATORI: " + getResponse()));
-                    CommandPrompt.ask("Scegliere il numero di mosse di cui far spostare madre natura  OPPURE inserisci CARD per usare una carta personaggio", "mosse> ");
+                    CommandPrompt.ask("Scegliere il numero di mosse di cui far spostare madre natura  OPPURE inserisci CARD per usare una carta personaggio", "mosse: ");
                     if (CommandPrompt.gotFromTerminal().equals("CARD")) {
                         System.out.println("\n\n\n\nScegli la carta che vorresti utilizzare: \n");
                         ArrayList<String> available = new ArrayList<>();
                         addCards(available);
-                        CommandPrompt.ask("Scegliere la carta personaggio seguendo le indicazioni, un qualsiasi altra riga se si vuole tornare indietro", "CHARACTER>");
+                        CommandPrompt.ask("Scegliere la carta personaggio seguendo le indicazioni, un qualsiasi altra riga se si vuole tornare indietro", "CHARACTER:");
                         parsedStrings =
                                 new ArrayList<>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
                         if (!available.contains(parsedStrings.get(0))) {
@@ -754,7 +754,7 @@ public class CliView implements View {
                                 }
                                 assert modelCard != null;
                                 if (modelCard.getName().equals("GRANNY") && networkClientModel.getServerModel().getTable().getIslands().get(Integer.parseInt(parsedStrings.get(1)) - 1).isBlocked()) {
-                                    System.out.println("isola già bloccata, scelta carta rifiutata !!!!");
+                                    System.out.println("isola gia' bloccata, scelta carta rifiutata !!!!");
                                     TimeUnit.SECONDS.sleep(2);
                                     requestToMe();
                                     return;
@@ -847,19 +847,19 @@ public class CliView implements View {
                         break;
                     } else {
                         if (isValidNumber(CommandPrompt.gotFromTerminal())) {
-                            System.out.println("Il numero di mosse da te inserito non è un numero valido, si prega di fare più attenzione");
+                            System.out.println("Il numero di mosse da te inserito non e' un numero valido, si prega di fare piu' attenzione");
                             TimeUnit.SECONDS.sleep(2);
                             requestToMe();
                             return;
                         }
                         if (Integer.parseInt((CommandPrompt.gotFromTerminal())) <= 0) {
-                            System.out.println("Il numero di mosse deve essere un numero intero positivo, fare più attenzione");
+                            System.out.println("Il numero di mosse deve essere un numero intero positivo, fare piu' attenzione");
                             TimeUnit.SECONDS.sleep(2);
                             requestToMe();
                             break;
                         }
                         if (networkClientModel.getServerModel().getCurrentPlayer().getChoosedCard().getMoves() < Integer.parseInt(CommandPrompt.gotFromTerminal())) {
-                            System.out.println("Il numero di mosse da te inserito eccede il numero massimo di mosse di cui madre natura può spostarsi," +
+                            System.out.println("Il numero di mosse da te inserito eccede il numero massimo di mosse di cui madre natura puo' spostarsi," +
                                     " ovvero " + networkClientModel.getServerModel().getCurrentPlayer().getChoosedCard().getMoves());
                             TimeUnit.SECONDS.sleep(2);
                             requestToMe();
@@ -875,23 +875,23 @@ public class CliView implements View {
                     }
                 } else {
                     System.out.println(networkClientModel.getServerModel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO:\n " + "E' IL TUO TURNO - MOTHER PHASE" + "\n\nMOSSE ALTRI GIOCATORI: " + getResponse()));
-                    CommandPrompt.ask("Scegliere il numero di mosse di cui far spostare madre natura  ", "mosse> ");
+                    CommandPrompt.ask("Scegliere il numero di mosse di cui far spostare madre natura  ", "mosse: ");
 
 
                     if (isValidNumber(CommandPrompt.gotFromTerminal())) {
-                        System.out.println("Il numero di mosse da te inserito non è un numero valido, si prega di fare più attenzione");
+                        System.out.println("Il numero di mosse da te inserito non e' un numero valido, si prega di fare piu' attenzione");
                         TimeUnit.SECONDS.sleep(2);
                         requestToMe();
                         return;
                     }
                     if (Integer.parseInt((CommandPrompt.gotFromTerminal())) <= 0) {
-                        System.out.println("Il numero di mosse deve essere un numero intero positivo, fare più attenzione");
+                        System.out.println("Il numero di mosse deve essere un numero intero positivo, fare piu' attenzione");
                         TimeUnit.SECONDS.sleep(2);
                         requestToMe();
                         break;
                     }
                     if (networkClientModel.getServerModel().getCurrentPlayer().getChoosedCard().getMoves() < Integer.parseInt(CommandPrompt.gotFromTerminal())) {
-                        System.out.println("Il numero di mosse da te inserito eccede il numero massimo di mosse di cui madre natura può spostarsi," +
+                        System.out.println("Il numero di mosse da te inserito eccede il numero massimo di mosse di cui madre natura puo' spostarsi," +
                                 " ovvero " + networkClientModel.getServerModel().getCurrentPlayer().getChoosedCard().getMoves());
                         TimeUnit.SECONDS.sleep(2);
                         requestToMe();
@@ -909,23 +909,23 @@ public class CliView implements View {
 
             case "CHOOSECLOUDS":
                 System.out.println(networkClientModel.getServerModel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO: \n" + "E' IL TUO TURNO - CLOUD PHASE" + "\n\nMOSSE ALTRI GIOCATORI: " + getResponse()));
-                CommandPrompt.ask("Scegliere il numero della tessera nuvola da cui si desidera ricaricarsi di studenti", "tessera nuvola> ");
+                CommandPrompt.ask("Scegliere il numero della tessera nuvola da cui si desidera ricaricarsi di studenti", "tessera nuvola: ");
 
                 if (isValidNumber(CommandPrompt.gotFromTerminal())) {
-                    System.out.println("Il numero inserito non è un numero valido");
+                    System.out.println("Il numero inserito non e' un numero valido");
                     TimeUnit.SECONDS.sleep(2);
                     requestToMe();
                     return;
                 }
                 if (networkClientModel.getServerModel().getTable().getClouds().size() < Integer.parseInt(CommandPrompt.gotFromTerminal()) ||
                         Integer.parseInt(CommandPrompt.gotFromTerminal()) < 1) {
-                    System.out.println("Il numero inserito non rappresenta una tessera nuvola esistente, si prega di fare più attenzione");
+                    System.out.println("Il numero inserito non rappresenta una tessera nuvola esistente, si prega di fare piu' attenzione");
                     TimeUnit.SECONDS.sleep(2);
                     requestToMe();
                     return;
                 }
                 if (networkClientModel.getServerModel().getTable().getClouds().get(Integer.parseInt(CommandPrompt.gotFromTerminal()) - 1).getStudentsAccumulator().size() == 0) {
-                    System.out.println("Hai scelta una nuvola che è stata già scelta da un altro giocatore");
+                    System.out.println("Hai scelta una nuvola che e' stata gia' scelta da un altro giocatore");
                     TimeUnit.SECONDS.sleep(2);
                     requestToMe();
                     return;
@@ -990,11 +990,11 @@ public class CliView implements View {
                     available.add("POSTMAN");
                 }
                 if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("GRANNY")) {
-                    System.out.println("GRANNY - EFFETTO: Piazza un divieto su un isola a tua scelta. La prima volta che madre natura termina il suo movimento li l'influenza non verrà calcolata e il divieto verrà reinserito in questa carta.\nCOMMAND: inserisci GRANNY e numero dell'isola separati da uno spazio.\n\n");
+                    System.out.println("GRANNY - EFFETTO: Piazza un divieto su un isola a tua scelta. La prima volta che madre natura termina il suo movimento li l'influenza non verra' calcolata e il divieto verra' reinserito in questa carta.\nCOMMAND: inserisci GRANNY e numero dell'isola separati da uno spazio.\n\n");
                     available.add("GRANNY");
                 }
                 if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("HERALD")) {
-                    System.out.println("HERALD - EFFETTO: Scegli un isola e calcola la maggioranza come se madre natura avesse terminato il suo movimento li. In questo turno madre natura si muoverà come di consueto e nell'isola dove terminerà il suo movimento la maggioranza verrà normalmente calcolata.\nCOMMAND: inserisci HERALD e numero dell'isola separati da uno spazio.\n\n");
+                    System.out.println("HERALD - EFFETTO: Scegli un isola e calcola la maggioranza come se madre natura avesse terminato il suo movimento li. In questo turno madre natura si muovera' come di consueto e nell'isola dove terminera' il suo movimento la maggioranza verra' normalmente calcolata.\nCOMMAND: inserisci HERALD e numero dell'isola separati da uno spazio.\n\n");
                     available.add("HERALD");
                 }
                 if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("JESTER")) {
@@ -1012,7 +1012,7 @@ public class CliView implements View {
     private boolean schoolOrIsland(PeopleColor choosedColor) throws InterruptedException {
         Gson json;
         if (networkClientModel.getServerModel().getCurrentPlayer().getSchoolBoard().getEntranceSpace().numStudentsByColor(choosedColor) == 0) {
-            System.out.println("Si è inserito un colore non presente tra quelli disponibili, reinserire i dati con più attenzione !!!!");
+            System.out.println("Si e' inserito un colore non presente tra quelli disponibili, reinserire i dati con piu' attenzione !!!!");
             TimeUnit.SECONDS.sleep(2);
             requestToMe();
             return true;
@@ -1020,7 +1020,7 @@ public class CliView implements View {
 
         CommandPrompt.ask("Scegliere SCHOOL se si desidera " +
                 "muovere uno studente dalla tua entrance space alla sala da pranzo, " +
-                "altrimenti scrivi ISLAND se desideri muovere uno studente su un'isola, inserire una qualsiasi altra riga di comando se si vuole tornare indietro", "SCHOOL or ISLAND> ");
+                "altrimenti scrivi ISLAND se desideri muovere uno studente su un'isola, inserire una qualsiasi altra riga di comando se si vuole tornare indietro", "SCHOOL or ISLAND: ");
 
         String command = CommandPrompt.gotFromTerminal();
         if (!command.equals("SCHOOL") && !command.equals("ISLAND")) {
@@ -1028,23 +1028,23 @@ public class CliView implements View {
             return true;
         } else if (command.equals("SCHOOL")) {
             if (networkClientModel.getServerModel().getCurrentPlayer().getSchoolBoard().getDinnerTable().numStudentsByColor(choosedColor) == 10) {
-                System.out.println("La sala da pranzo di quel colore è piena.");
+                System.out.println("La sala da pranzo di quel colore e' piena.");
                 TimeUnit.SECONDS.sleep(2);
                 requestToMe();
                 return true;
             }
             networkClientModel.setTypeOfRequest("SCHOOL");
         } else {
-            CommandPrompt.ask("Inserire numero dell'isola su cui si desidera muovere lo studente", "isola> ");
+            CommandPrompt.ask("Inserire numero dell'isola su cui si desidera muovere lo studente", "isola: ");
             if (isValidNumber(CommandPrompt.gotFromTerminal())) {
-                System.out.println("Si è inserito un numero non valido, reinserire i dati con più attenzione !!!!");
+                System.out.println("Si e' inserito un numero non valido, reinserire i dati con piu' attenzione !!!!");
                 TimeUnit.SECONDS.sleep(2);
                 requestToMe();
                 return true;
             }
             if (Integer.parseInt(CommandPrompt.gotFromTerminal()) > networkClientModel.getServerModel().getTable().getIslands().size() ||
                     Integer.parseInt(CommandPrompt.gotFromTerminal()) < 0) {
-                System.out.println("L'isola scelta non è valida.");
+                System.out.println("L'isola scelta non e' valida.");
                 TimeUnit.SECONDS.sleep(2);
                 requestToMe();
                 return true;
@@ -1125,7 +1125,7 @@ public class CliView implements View {
                 setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio MONK, scegliendo come colore: " + networkClientModel.getChoosedColor() + " e scegliendo come isola: " + networkClientModel.getChoosedIsland() + "  (EFFETTO: Prendi uno studente da questa carta e piazzalo su un isola a tua scelta).");
                 break;
             case "HERALD":
-                setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio HERALD, scegliendo come isola: " + networkClientModel.getChoosedIsland() + "  (EFFETTO: Scegli un isola e calcola la maggioranza come se madre natura avesse terminato il suo movimento li. In questo turno madre natura si muoverà come di consueto e nell'isola dove terminerà il suo movimento la maggioranza verrà normalmente calcolata).");
+                setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio HERALD, scegliendo come isola: " + networkClientModel.getChoosedIsland() + "  (EFFETTO: Scegli un isola e calcola la maggioranza come se madre natura avesse terminato il suo movimento li. In questo turno madre natura si muovera' come di consueto e nell'isola dove terminera' il suo movimento la maggioranza verra' normalmente calcolata).");
                 break;
             case "PRINCESS":
                 setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio PRINCESS, scegliendo come colore: " + networkClientModel.getChoosedIsland() + "  (EFFETTO: Prendi uno studente da questa carta e piazzalo nella tua Sala).");
@@ -1149,7 +1149,7 @@ public class CliView implements View {
                 setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio POSTMAN" + "  (EFFETTO: Puoi muovere madre natura fino a due isole addizionali rispetto a quanto indicato sulla carta assistente che hai giocato).");
                 break;
             case "GRANNY":
-                setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio GRANNY, scegliendo come isola: " + networkClientModel.getChoosedIsland() + "  (EFFETTO: Piazza un divieto su un isola a tua scelta. La prima volta che madre natura termina il suo movimento li l'influenza non verrà calcolata e il divieto verrà reinserito in questa carta).");
+                setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio GRANNY, scegliendo come isola: " + networkClientModel.getChoosedIsland() + "  (EFFETTO: Piazza un divieto su un isola a tua scelta. La prima volta che madre natura termina il suo movimento li l'influenza non verra' calcolata e il divieto verra' reinserito in questa carta).");
                 break;
             case "JESTER":
                 setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio JESTER, scegliendo di scambiare i colori: " + networkClientModel.getColors1() + " dal suo Ingresso con i colori: " + networkClientModel.getColors2() + " da questa carta" + "  (EFFETTO: Puoi prendere fino a 3 studenti da questa carta e scambiarli con altrettanti studenti presenti nel tuo Ingresso).");

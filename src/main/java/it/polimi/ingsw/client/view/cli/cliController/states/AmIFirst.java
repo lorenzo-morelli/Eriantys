@@ -28,12 +28,12 @@ public class AmIFirst extends State {
     private final Event nicknameAlreadyPresent;
 
     public AmIFirst(ClientModel clientModel, Controller controller) {
-        super("[Il client chiede al server se è il primo ad essersi collegato (AmIFirst.java)]");
+        super("[The client ask to server if it is the first (AmIFirst.java)]");
         response = new ParametersFromNetwork(1);
         this.clientModel = clientModel;
-        yes = new Event("Sono il primo client");
-        no = new Event("Non sono il primo client");
-        nicknameAlreadyPresent = new Event("Esiste gia un client con lo stesso nome");
+        yes = new Event("I am the first");
+        no = new Event("I am not the first");
+        nicknameAlreadyPresent = new Event("Exist a player with the same nickname");
         json = new Gson();
 
         yes.setStateEventListener(controller);
@@ -43,13 +43,11 @@ public class AmIFirst extends State {
 
     @Override
     public IEvent entryAction(IEvent cause) throws Exception {
-        // Ci interessa sapere se il server segnala una disconnessione di qualche client
-        // memorizziamo questo segnale in arrivo dal server in Network.disconnectedClient
         Network.setClientModel(clientModel);
         boolean responseReceived = false;
 
-        System.out.println("Sei connesso al server, se è disponibile una partita verrai automaticamente collegato\n" +
-                "altrimenti vuoi dire che il server è al completo e non può ospitare altri giocatori");
+        System.out.println("Sei connesso al server, se e' disponibile una partita verrai automaticamente collegato\n" +
+                "altrimenti vuoi dire che il server e' al completo e non puo' ospitare altri giocatori");
 
         //System.out.println("Attendo x secondi per non intasare la rete...");
         TimeUnit.MILLISECONDS.sleep(500);
@@ -59,14 +57,12 @@ public class AmIFirst extends State {
 
         Network.send(json.toJson(clientModel));
         while (!responseReceived) {
-            // invio al server il mio modello
-            //System.out.println("another one");
             response = new ParametersFromNetwork(1);
             response.enable();
             boolean check = response.waitParametersReceived(5);
 
             if (check || System.currentTimeMillis() >= end) {
-                System.out.println("\n\nServer non ha dato risposta, si vede che il gioco era già pieno oppure la partita non è stata ancora creata oppure che il nickname non è valido... si prega di riprovare");
+                System.out.println("\n\nServer non ha dato risposta, si vede che il gioco era gia' pieno oppure la partita non e' stata ancora creata oppure che il nickname non e' valido... si prega di riprovare");
                 Network.disconnect();
                 System.exit(0);
             }
@@ -82,7 +78,7 @@ public class AmIFirst extends State {
         clientModel = json.fromJson(response.getParameter(0), ClientModel.class);
 
         if (clientModel.getClientIdentity() == Network.getClientModel().getClientIdentity() && clientModel.isNotKicked() && clientModel.getTypeOfRequest() != null && clientModel.getTypeOfRequest().equals("CONNECTTOEXISTINGGAME")) {
-            System.out.println("\n Sei stato connesso a una partita già esistente.");
+            System.out.println("\n Sei stato connesso a una partita gia' esistente.");
             no.fireStateEvent();
             return super.entryAction(cause);
         }

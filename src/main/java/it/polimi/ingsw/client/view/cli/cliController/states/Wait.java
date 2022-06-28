@@ -81,7 +81,7 @@ public class Wait extends State {
 
                 if (Network.disconnectedClient()) {
                     Network.disconnect();
-                    System.out.println("Il gioco è terminato a causa della disconnessione di un client");
+                    System.out.println("Il gioco e' terminato a causa della disconnessione di un client");
                     isToReset = true;
                 }
 

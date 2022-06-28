@@ -13,26 +13,10 @@ import java.util.Random;
 
 public class ClientModel {
     final transient Random rand = new Random();
-
-    // Numero univoco che rappresenta l'identità del client
-    // Questo perché in fase di setup i client potrebbero proporre al server dei nickname identici
-    // e potrebbero avere lo stesso indirizzo IP in fase di testing sullo stesso computer
-    // si rende necessario un metodo di riconoscimento del client
     private int clientIdentity;
-    // Am I the first client connected to server?
-    // amIfirst: true = Identificato come primo,
-    // false = identificato come non primo,
-    // null = non ancora identificato
     private Boolean amIfirst = null;
-    // Gestione dei possibili messaggi, si veda CliView
-    // Un messaggio o è una richiesta (del server a un client di avere degli inputs)
-    // o è una risposta di un client al server
-
-    // isResponse --> è una risposta di un client al server
-    // !isResponse --> è una richiesta del server al client
-    // isResponse == null, non è ne una richiesta ne una risposta, probabilmente un messaggio di quelli iniziali
     private Boolean isResponse = false;
-    private boolean isPingMessage; //differenzia request di ping da request di gioco
+    private boolean isPingMessage;
 
     private Boolean gameStarted = false;
     public boolean kicked = false, reply = true;
