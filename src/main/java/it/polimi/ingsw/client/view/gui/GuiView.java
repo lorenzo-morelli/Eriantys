@@ -128,24 +128,24 @@ public class GuiView extends Application {
                 changeScene("Disconnection");
                 break;
             case "CHOOSEASSISTANTCARD":
-                gameState = "Assistant Card phase";
+                gameState = "ASSISTANT CARD PHASE";
                 changeScene("Game");
                 break;
             case "CHOOSEWHERETOMOVESTUDENTS":
                 System.out.println("carico gli studenti");
-                gameState = "Moving students";
+                gameState = "MOVING STUDENTS";
                 changeScene("Game");
                 break;
             case "TEAMMATE":
-                gameState = "Team mate";
+                gameState = "TEAM MATE";
                 changeScene("TeamMate");
                 break;
             case "CHOOSEWHERETOMOVEMOTHER":
-                gameState = "Moving mother nature";
+                gameState = "MOVING MOTHER NATURE";
                 changeScene("Game");
                 break;
             case "CHOOSECLOUDS":
-                gameState = "Choosing cloud";
+                gameState = "CHOOSING CLOUD";
                 changeScene("Game");
                 break;
             case "GAMEEND":
@@ -166,18 +166,18 @@ public class GuiView extends Application {
         Network.setClientModel(GuiView.clientModel);
         switch (clientModel.getTypeOfRequest()) {
             case "CHOOSEASSISTANTCARD":
-                gameState = "Assistant Card phase";
+                gameState = "ASSISTANT CARD PHASE";
                 changeScene("Game");
                 break;
             case "CHOOSEWHERETOMOVESTUDENTS":
-                gameState = "Moving students";
+                gameState = "MOVING STUDENT";
                 changeScene("Game");
                 break;
             case "TEAMMATE":
-                gameState = "Team mate";
+                gameState = "TEAM MATE";
                 break;
             case "CHOOSEWHERETOMOVEMOTHER":
-                gameState = "Moving mother nature";
+                gameState = "MOVING MOTHER NATURE";
                 changeScene("Game");
                 break;
             case "CHOOSECLOUDS":
