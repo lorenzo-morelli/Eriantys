@@ -10,6 +10,7 @@ import it.polimi.ingsw.server.model.enums.PeopleColor;
 import it.polimi.ingsw.utils.network.Network;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -186,6 +187,7 @@ public class Character implements Initializable {
             islandImage.setFitHeight(60);
             islandImage.setFitWidth(60);
             setShadow(islandImage);
+            islandImage.setCursor(Cursor.HAND);
             islandGrid.add(islandImage, pos.islandX(islands.indexOf(island)), pos.islandY(islands.indexOf(island)));
             islandImage.setOnMouseClicked(event -> {
                 chosenIsland = islands.indexOf(island);

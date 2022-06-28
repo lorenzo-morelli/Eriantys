@@ -8,6 +8,7 @@ import it.polimi.ingsw.server.model.enums.PeopleColor;
 import it.polimi.ingsw.utils.network.Network;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -166,6 +167,7 @@ public class JesterAndMinstrell implements Initializable {
     @SuppressWarnings("GrazieInspection")
     private void populateList(ArrayList<ImageView> students, StudentSet studentSet, ArrayList<PeopleColor> colors, int index) {
         students.forEach(Game::setShadow);
+        students.forEach(student -> student.setCursor(Cursor.HAND));
         students.forEach(student -> student.setOnMouseClicked(event -> {
             System.out.println("cliccate");
             switch (students.indexOf(student)) {

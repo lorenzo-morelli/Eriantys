@@ -10,6 +10,7 @@ import it.polimi.ingsw.server.model.enums.PeopleColor;
 import it.polimi.ingsw.utils.network.Network;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -53,6 +54,7 @@ public class MoveStudents implements Initializable {
         ArrayList<Island> islands = this.guiView.getClientModel().getServerModel().getTable().getIslands();
         ArrayList<ImageView> students = new ArrayList<>(Arrays.asList(blue, green, pink, red, yellow));
         students.forEach(Game::setShadow);
+        students.forEach(student -> student.setCursor(Cursor.HAND));
         currentPlayer = this.guiView.getClientModel().getServerModel().getCurrentPlayer();
         Character character = new Character();
         character.setToBlackAndWhite(students, currentPlayer.getSchoolBoard().getEntranceSpace(), 0);
@@ -73,6 +75,7 @@ public class MoveStudents implements Initializable {
                 islandImage.setFitHeight(60);
                 islandImage.setFitWidth(60);
                 setShadow(islandImage);
+                islandImage.setCursor(Cursor.HAND);
                 islandGrid.add(islandImage, pos.islandX(islands.indexOf(island)), pos.islandY(islands.indexOf(island)));
                 islandImage.setOnMouseClicked((event) -> {
                     if (studentColor == null) {

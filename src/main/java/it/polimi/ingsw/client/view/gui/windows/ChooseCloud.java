@@ -8,6 +8,7 @@ import it.polimi.ingsw.utils.network.Network;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -50,6 +51,7 @@ public class ChooseCloud implements Initializable {
             game.populateGrid(studentsCloudGrid, 0, 2, cloud.getStudentsAccumulator());
             tile.getChildren().add(studentsCloudGrid);
             cloudGrid.add(tile, clouds.indexOf(cloud), 0);
+            tile.setCursor(Cursor.HAND);
             tile.setOnMouseClicked(event -> {
                 if (cloud.getStudentsAccumulator().size() == 0) {
                     this.notice.setText("ERROR: Cloud already chosen!");

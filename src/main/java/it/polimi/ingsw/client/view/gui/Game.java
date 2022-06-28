@@ -365,10 +365,7 @@ public class Game implements Initializable {
         });
 
         // INITIALIZE PROFESSORS
-        professorGrids.forEach(prof -> {
-            prof.getChildren().clear();
-            prof.setAlignment(Pos.CENTER);
-        });
+        professorGrids.forEach(prof -> prof.getChildren().clear());
         professors.forEach(prof -> {
             if (prof.getHeldBy() != null) {
                 Player choosedPlayer = null;
@@ -452,7 +449,6 @@ public class Game implements Initializable {
             ArrayList<GridPane> characterGrids = new ArrayList<>(Arrays.asList(character1Grid, character2Grid, character3Grid));
             costs.forEach(cost -> cost.setText("Cost: " + characterCards.get(costs.indexOf(cost)).getCost()));
             characterGrids.forEach(grid -> {
-                grid.setAlignment(Pos.CENTER);
                 StudentSet studentSet = null;
                 switch (characterCards.get(characterGrids.indexOf(grid)).getName()) {
                     case "MONK":

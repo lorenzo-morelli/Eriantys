@@ -27,6 +27,7 @@ public class SetupGame implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         currNode = otherPlayersLabel;
+
         this.connectedOnIp.setText("Connected on IP: " + this.guiView.getClientModel().getIp());
         this.connectedOnPort.setText("Connected on Port: " + this.guiView.getClientModel().getPort());
         this.gameModeLabel.setText("");
