@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -50,12 +52,12 @@
          <Font name="System Bold" size="19.0" />
       </font>
    </Label>
-   <Label fx:id="phaseLabel" alignment="CENTER" layoutX="1164.0" layoutY="36.0" prefHeight="40.0" prefWidth="531.0" text="PHASE" textFill="WHITE">
+   <Label fx:id="phaseLabel" alignment="CENTER" layoutX="903.0" layoutY="22.0" prefHeight="40.0" prefWidth="531.0" text="PHASE" textFill="WHITE">
       <font>
          <Font name="System Bold" size="31.0" />
       </font>
    </Label>
-   <Label fx:id="turnLabel" alignment="CENTER" layoutX="1168.0" layoutY="80.0" prefHeight="30.0" prefWidth="531.0" text="è il turno di: Gianfranco">
+   <Label fx:id="turnLabel" alignment="CENTER" layoutX="907.0" layoutY="66.0" prefHeight="30.0" prefWidth="531.0" text="è il turno di: Gianfranco">
       <font>
          <Font size="20.0" />
       </font>
@@ -72,13 +74,13 @@
    <ImageView fx:id="assistantCard1" fitHeight="134.0" fitWidth="89.0" layoutX="596.0" layoutY="811.0" pickOnBounds="true" preserveRatio="true">
       <Image url="@../graphics/assistants/assistantCard1.png" />
    </ImageView>
-   <ImageView fx:id="characterCard1" fitHeight="244.0" fitWidth="177.0" layoutX="1170.0" layoutY="116.0" pickOnBounds="true" preserveRatio="true">
+   <ImageView fx:id="characterCard1" fitHeight="244.0" fitWidth="177.0" layoutX="909.0" layoutY="102.0" pickOnBounds="true" preserveRatio="true">
       <Image url="@../graphics/characters/monk.jpg" />
    </ImageView>
-   <ImageView fx:id="characterCard2" fitHeight="244.0" fitWidth="167.0" layoutX="1355.0" layoutY="116.0" pickOnBounds="true" preserveRatio="true">
+   <ImageView fx:id="characterCard2" fitHeight="244.0" fitWidth="167.0" layoutX="1094.0" layoutY="102.0" pickOnBounds="true" preserveRatio="true">
       <Image url="@../graphics/characters/monk.jpg" />
    </ImageView>
-   <ImageView fx:id="characterCard3" fitHeight="244.0" fitWidth="172.0" layoutX="1538.0" layoutY="116.0" pickOnBounds="true" preserveRatio="true">
+   <ImageView fx:id="characterCard3" fitHeight="244.0" fitWidth="172.0" layoutX="1277.0" layoutY="102.0" pickOnBounds="true" preserveRatio="true">
       <Image url="@../graphics/characters/monk.jpg" />
    </ImageView>
    <ImageView fx:id="coin4" fitHeight="51.0" fitWidth="45.0" layoutX="621.0" layoutY="194.0" pickOnBounds="true" preserveRatio="true">
@@ -365,7 +367,7 @@
          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       </rowConstraints>
    </GridPane>
-   <GridPane fx:id="character1Grid" alignment="CENTER" layoutX="1214.0" layoutY="249.0" prefHeight="119.0" prefWidth="135.0">
+   <GridPane fx:id="character1Grid" alignment="CENTER" layoutX="980.0" layoutY="253.0" prefHeight="119.0" prefWidth="135.0">
      <columnConstraints>
        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -376,7 +378,7 @@
        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
      </rowConstraints>
    </GridPane>
-   <GridPane fx:id="character3Grid" alignment="CENTER" layoutX="1582.0" layoutY="249.0" prefHeight="119.0" prefWidth="135.0">
+   <GridPane fx:id="character3Grid" alignment="CENTER" layoutX="1348.0" layoutY="253.0" prefHeight="119.0" prefWidth="135.0">
       <columnConstraints>
          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -387,7 +389,7 @@
          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       </rowConstraints>
    </GridPane>
-   <GridPane fx:id="character2Grid" alignment="CENTER" layoutX="1399.0" layoutY="249.0" prefHeight="119.0" prefWidth="135.0">
+   <GridPane fx:id="character2Grid" alignment="CENTER" layoutX="1165.0" layoutY="253.0" prefHeight="119.0" prefWidth="135.0">
       <columnConstraints>
          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -398,8 +400,19 @@
          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       </rowConstraints>
    </GridPane>
-   <Label fx:id="cost1" layoutX="1232.0" layoutY="363.0" text="Cost: 0" />
-   <Label fx:id="cost2" layoutX="1418.0" layoutY="363.0" text="Cost: 0" />
-   <Label fx:id="cost3" layoutX="1601.0" layoutY="363.0" text="Cost: 0" />
+   <Label fx:id="cost1" layoutX="971.0" layoutY="349.0" text="Cost: 0" />
+   <Label fx:id="cost2" layoutX="1157.0" layoutY="349.0" text="Cost: 0" />
+   <Label fx:id="cost3" layoutX="1340.0" layoutY="349.0" text="Cost: 0" />
    <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+   <ScrollPane layoutX="1467.0" layoutY="101.0" prefHeight="244.0" prefWidth="385.0">
+     <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="233.0" prefWidth="372.0">
+           <Label fx:id="log" alignment="BOTTOM_LEFT" layoutX="13.0" layoutY="25.0" prefHeight="233.0" prefWidth="372.0" text="testo testo testo" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <padding>
+                 <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+              </padding>
+           </Label>
+        </AnchorPane>
+     </content>
+   </ScrollPane>
 </AnchorPane>

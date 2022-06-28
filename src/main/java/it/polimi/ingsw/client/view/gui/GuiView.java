@@ -24,6 +24,8 @@ public class GuiView extends Application {
     private Scene scene;
     private static ClientModel clientModel = new ClientModel();
     public static String gameState;
+
+    public static String logText;
     public static Node currNode = null;
     public static boolean myTurn = false;
     public static boolean isCardUsed = false;
@@ -43,6 +45,8 @@ public class GuiView extends Application {
         System.setProperty("prism.allowhidpi", "false");
         GuiView.clientModel = new ClientModel();
         gameState = "";
+        UpdateLog updateLog = new UpdateLog();
+        logText = updateLog.getTime() + "GAME STARTED!";
         this.stage = stage;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainMenu.fxml"));
         this.scene = new Scene(loader.load());
@@ -115,8 +119,8 @@ public class GuiView extends Application {
      */
     public synchronized void requestToMe() throws IOException {
         myTurn = true;
-        Network.setClientModel(GuiView.clientModel);
-        switch (GuiView.clientModel.getTypeOfRequest()) {
+        Network.setClientModel(clientModel);
+        switch (clientModel.getTypeOfRequest()) {
             case "TRYTORECONNECT":
                 changeScene("TryToReconnect");
                 break;
@@ -160,7 +164,7 @@ public class GuiView extends Application {
             closeWindow();
         }
         Network.setClientModel(GuiView.clientModel);
-        switch (GuiView.clientModel.getTypeOfRequest()) {
+        switch (clientModel.getTypeOfRequest()) {
             case "CHOOSEASSISTANTCARD":
                 gameState = "Assistant Card phase";
                 changeScene("Game");
@@ -195,6 +199,77 @@ public class GuiView extends Application {
         model.setPingMessage(true);
         model.setReply(false);
         Network.send(gson.toJson(model));
+    }
+
+    public synchronized void response() {
+        //todo fix scrollable
+        //todo move to school or to island not recognized
+        UpdateLog updateLog = new UpdateLog();
+        String head = updateLog.getTime();
+        String tail = "\n" + logText;
+        switch (GuiView.clientModel.getTypeOfRequest()) {
+            case "CHOOSEASSISTANTCARD":
+                logText = head + "The player " + GuiView.clientModel.getNickname() + " chose a card with value = " + GuiView.clientModel.getCardChoosedValue() + tail;
+                break;
+            case "TEAMMATE":
+                logText = head + "The player " + GuiView.clientModel.getNickname() + " created the teams:\n" +
+                        "           TEAM 1: " + GuiView.clientModel.getNicknames().get(3) + " " + GuiView.clientModel.getNicknames().get(2) + "\n" +
+                        "           TEAM 2: " + GuiView.clientModel.getNicknames().get(1) + " " + GuiView.clientModel.getNicknames().get(0) + tail;
+                break;
+            case "SCHOOL":
+                logText = head + "The player " + clientModel.getNickname() + " decided to move one " +
+                        clientModel.getChosenColor().toString() + "student on their school" + tail;
+                break;
+            case "ISLAND":
+                logText = head + "The player " + clientModel.getNickname() + " decided to move one " +
+                        clientModel.getChosenColor().toString() + " on the island number " + (clientModel.getChosenIsland() + 1) + tail;
+                break;
+            case "CHOOSEWHERETOMOVEMOTHER":
+                logText = head + "The player " + clientModel.getNickname() + " decided to move mother nature of " + clientModel.getChoosedMoves() + " moves" + tail;
+                break;
+            case "CHOOSECLOUDS":
+                logText = head + "The player " + clientModel.getNickname() + " chose to move students from the cloud number: " + clientModel.getCloudChoosed() + tail;
+                break;
+            case "MONK":
+                logText = head + "The player " + clientModel.getNickname() + " chose to use the character card MONK, choosing the color: " + clientModel.getChosenColor() + " and the island: " + clientModel.getChosenIsland() + tail;
+                break;
+            case "HERALD":
+                logText = head + "The player " + clientModel.getNickname() + " chose to use the character card HERALD, choosing the color: " + clientModel.getChosenColor() + tail;
+                break;
+            case "PRINCESS":
+                logText = head + "The player " + clientModel.getNickname() + " chose to use the character card PRINCESS, choosing the color: " + clientModel.getChosenColor() + tail;
+                break;
+            case "THIEF":
+                logText = head + "The player " + clientModel.getNickname() + " chose to use the character card THIEF, choosing the color: " + clientModel.getChosenColor() + tail;
+                break;
+            case "MUSHROOMHUNTER":
+                logText = head + "The player " + clientModel.getNickname() + " chose to use the character card MUSHROOM HUNTER, choosing the color: " + clientModel.getChosenColor() + tail;
+                break;
+            case "KNIGHT":
+                logText = head + "The player " + clientModel.getNickname() + " chose to use the character card KNIGHT" + tail;
+                break;
+            case "CENTAUR":
+                logText = head + "The player " + clientModel.getNickname() + " chose to use the character card CENTAUR" + tail;
+                break;
+            case "FARMER":
+                logText = head + "The player " + clientModel.getNickname() + " chose to use the character card FARMER" + tail;
+                break;
+            case "POSTMAN":
+                logText = head + "The player " + clientModel.getNickname() + " chose to use the character card POSTMAN" + tail;
+                break;
+            case "GRANNY":
+                logText = head + "The player " + clientModel.getNickname() + " chose to use the character card GRANNY, choosing the island: " + clientModel.getChosenIsland() + tail;
+                break;
+            case "JESTER":
+                logText = head + "The player " + clientModel.getNickname() + " chose to use the character card JESTER, choosing to switch the colors: " + clientModel.getColors1() +
+                        " from their Entrance with the colors: " + clientModel.getColors2() + " from this card" + tail;
+                break;
+            case "MINSTRELL":
+                logText = head + "The player " + clientModel.getNickname() + " chose to use the character card MINSTRELL, choosing to switch the colors: " + clientModel.getColors1() +
+                        " from their Entrance with the colors: " + clientModel.getColors2() + " from their Dinner Table" + tail;
+                break;
+        }
+
     }
 }
 

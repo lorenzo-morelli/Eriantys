@@ -159,7 +159,7 @@ public class ClientModel {
         this.deck = deck;
     }
 
-    public PeopleColor getChoosedColor() {
+    public PeopleColor getChosenColor() {
         return choosedColor;
     }
 
@@ -167,7 +167,7 @@ public class ClientModel {
         this.choosedColor = choosedColor;
     }
 
-    public int getChoosedIsland() {
+    public int getChosenIsland() {
         return choosedIsland;
     }
 

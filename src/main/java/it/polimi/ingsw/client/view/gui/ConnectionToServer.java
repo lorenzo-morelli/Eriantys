@@ -99,12 +99,14 @@ public class ConnectionToServer {
                                         System.out.println("request to me done with pings");
                                         guiView.requestPing();
                                         guiView.requestToMe();
+                                        guiView.response();
                                         isFirst = false;
                                         previousRequest = guiView.getClientModel().getTypeOfRequest();
                                     } else {
                                         guiView.setClientModel(clientModel);
                                         System.out.println("request to me");
                                         guiView.requestToMe();
+                                        guiView.response();
                                         isFirst = false;
                                         previousRequest = guiView.getClientModel().getTypeOfRequest();
                                     }
@@ -120,6 +122,7 @@ public class ConnectionToServer {
                                     System.out.println("request to other");
                                     isFirst = true;
                                     guiView.setClientModel(clientModel);
+                                    guiView.response();
                                     guiView.requestToOthers();
                                 } catch (IOException e) {
                                     throw new RuntimeException(e);

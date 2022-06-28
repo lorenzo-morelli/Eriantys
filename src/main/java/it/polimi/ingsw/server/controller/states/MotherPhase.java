@@ -262,10 +262,10 @@ public class MotherPhase extends State {
                         if (model.getTable().getCharacters().get(j).getName().equals(type)) {
                             switch (type) {
                                 case "MUSHROOMHUNTER":
-                                    ((MushroomHunter) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, currentPlayerData.getChoosedColor(), model.getTable());
+                                    ((MushroomHunter) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, currentPlayerData.getChosenColor(), model.getTable());
                                     break;
                                 case "THIEF":
-                                    ((Thief) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, model.getPlayers(), currentPlayerData.getChoosedColor(), model.getTable());
+                                    ((Thief) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, model.getPlayers(), currentPlayerData.getChosenColor(), model.getTable());
                                     break;
                                 case "CENTAUR":
                                     ((Centaur) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, model.getTable());
@@ -286,16 +286,16 @@ public class MotherPhase extends State {
                                     ((Postman) model.getTable().getCharacters().get(j)).useEffect(currentPlayer);
                                     break;
                                 case "PRINCESS":
-                                    ((Princess) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, currentPlayerData.getChoosedColor(), model.getTable(), model.getPlayers());
+                                    ((Princess) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, currentPlayerData.getChosenColor(), model.getTable(), model.getPlayers());
                                     break;
                                 case "GRANNY":
-                                    ((Granny) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, currentPlayerData.getChoosedIsland(), model.getTable());
+                                    ((Granny) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, currentPlayerData.getChosenIsland(), model.getTable());
                                     break;
                                 case "MONK":
-                                    ((Monk) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, currentPlayerData.getChoosedColor(), currentPlayerData.getChoosedIsland(), model.getTable());
+                                    ((Monk) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, currentPlayerData.getChosenColor(), currentPlayerData.getChosenIsland(), model.getTable());
                                     break;
                                 case "HERALD":
-                                    boolean check = ((Herald) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, currentPlayerData.getChoosedIsland(), model);
+                                    boolean check = ((Herald) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, currentPlayerData.getChosenIsland(), model);
                                     if (check) {
                                         gameEnd().fireStateEvent();
                                         return super.entryAction(cause);

@@ -9,10 +9,13 @@ import it.polimi.ingsw.server.model.characters.*;
 import it.polimi.ingsw.server.model.enums.*;
 import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.stateMachine.State;
+
 import java.util.concurrent.TimeUnit;
 import java.util.regex.*;
 import java.util.*;
+
 import static it.polimi.ingsw.client.view.gui.common.Check.*;
+
 /**
  * This class implements the methods needed to view information and interact with the client's command line interface
  * The information relating to the state that called the view is stored, in such a way as to make the interaction with the cli
@@ -42,16 +45,19 @@ public class CliView implements View {
      * A state that wants to call a view method is first registered by calling this method
      * for example I am in the WelcomeScreen state, and I do "view.setCallingState(this)"
      * It is nothing but the Observer pattern re-adapted for the State pattern
+     *
      * @param callingState State of the controller that updated the view
      */
     @Override
     public synchronized void setCallingState(State callingState) {
         this.callingState = callingState;
     }
+
     /**
      * Ask the client to write the word "start" (in reality this interaction is no longer used,
      * but it was present in the first versions of the game, it is more a case study
      * on how to use this type of "framework").
+     *
      * @throws InterruptedException I/O errors
      */
     @Override
@@ -69,6 +75,7 @@ public class CliView implements View {
             ((WelcomeScreen) callingState).notStart().disable();
         }
     }
+
     /**
      * Ask the client to make a choice between two options, the method is deliberately
      * parametric and as general as possible to increase modularity and reuse of the code
@@ -93,12 +100,12 @@ public class CliView implements View {
     }
 
     /**
-      * Method of requesting the user to enter a certain number of words separated by a space,
-      * the calling state will be a Read state (read from the terminal), the state only takes care of declaring
-      * the number of words to read and then retrieve the information by placing it in the ClientModel object which
-      * will then be sent to the server.
-      * It is also possible to implement client side checks for the correctness of the parameters entered, for example if the
-      * IP address is valid or not.
+     * Method of requesting the user to enter a certain number of words separated by a space,
+     * the calling state will be a Read state (read from the terminal), the state only takes care of declaring
+     * the number of words to read and then retrieve the information by placing it in the ClientModel object which
+     * will then be sent to the server.
+     * It is also possible to implement client side checks for the correctness of the parameters entered, for example if the
+     * IP address is valid or not.
      */
     @Override
     public void askParameters() throws InterruptedException {
@@ -106,7 +113,6 @@ public class CliView implements View {
         ((ReadFromTerminal) callingState).insertedParameters().enable();
 
         switch (((ReadFromTerminal) callingState).getType()) {
-
             case "USERINFO":
                 CommandPrompt.ask("Inserire Nickname Ip e porta separati da uno spazio e premere invio [empty String: default setup in localhost]",
                         "nickname ip porta:");
@@ -159,21 +165,23 @@ public class CliView implements View {
         ((ReadFromTerminal) callingState).numberOfParametersIncorrect().disable();
         ((ReadFromTerminal) callingState).insertedParameters().disable();
     }
+
     /**
      * Method to send ping messages requests, use the sleep method
      * to make sure not to clog the network interface and gson to serialize the message
      */
     public synchronized void requestPing() {
         try {
-                TimeUnit.SECONDS.sleep(1);
-                Network.setClientModel(networkClientModel);
-                Gson json = new Gson();
-                networkClientModel.setPingMessage(true);
-                Network.send(json.toJson(networkClientModel));
+            TimeUnit.SECONDS.sleep(1);
+            Network.setClientModel(networkClientModel);
+            Gson json = new Gson();
+            networkClientModel.setPingMessage(true);
+            Network.send(json.toJson(networkClientModel));
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
+
     /**
      * The requestToMe method is used to specify all the reactions of the client in case
      * of a specific request (the one who sent the message, the server, has filled in an
@@ -182,6 +190,7 @@ public class CliView implements View {
      * <br>
      * A switch case is used to parameterize the different usage scenarios
      * (based on the type of request, another field present in the message)
+     *
      * @throws InterruptedException I/0 errors
      */
     public void requestToMe() throws InterruptedException {
@@ -1109,11 +1118,11 @@ public class CliView implements View {
                 break;
             case "SCHOOL":
                 setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di muovere 1 studente di colore " +
-                        networkClientModel.getChoosedColor().toString() + " sulla sua scuola");
+                        networkClientModel.getChosenColor().toString() + " sulla sua scuola");
                 break;
             case "ISLAND":
                 setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di muovere 1 studente di colore " +
-                        networkClientModel.getChoosedColor().toString() + " sull' isola numero " + (networkClientModel.getChoosedIsland() + 1));
+                        networkClientModel.getChosenColor().toString() + " sull' isola numero " + (networkClientModel.getChosenIsland() + 1));
                 break;
             case "CHOOSEWHERETOMOVEMOTHER":
                 setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di spostare madre natura di " + networkClientModel.getChoosedMoves() + " mosse");
@@ -1122,19 +1131,19 @@ public class CliView implements View {
                 setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di ricaricare gli studenti dalla nuvola: " + networkClientModel.getCloudChoosed());
                 break;
             case "MONK":
-                setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio MONK, scegliendo come colore: " + networkClientModel.getChoosedColor() + " e scegliendo come isola: " + networkClientModel.getChoosedIsland() + "  (EFFETTO: Prendi uno studente da questa carta e piazzalo su un isola a tua scelta).");
+                setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio MONK, scegliendo come colore: " + networkClientModel.getChosenColor() + " e scegliendo come isola: " + networkClientModel.getChosenIsland() + "  (EFFETTO: Prendi uno studente da questa carta e piazzalo su un isola a tua scelta).");
                 break;
             case "HERALD":
-                setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio HERALD, scegliendo come isola: " + networkClientModel.getChoosedIsland() + "  (EFFETTO: Scegli un isola e calcola la maggioranza come se madre natura avesse terminato il suo movimento li. In questo turno madre natura si muovera' come di consueto e nell'isola dove terminera' il suo movimento la maggioranza verra' normalmente calcolata).");
+                setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio HERALD, scegliendo come isola: " + networkClientModel.getChosenIsland() + "  (EFFETTO: Scegli un isola e calcola la maggioranza come se madre natura avesse terminato il suo movimento li. In questo turno madre natura si muovera' come di consueto e nell'isola dove terminera' il suo movimento la maggioranza verra' normalmente calcolata).");
                 break;
             case "PRINCESS":
-                setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio PRINCESS, scegliendo come colore: " + networkClientModel.getChoosedIsland() + "  (EFFETTO: Prendi uno studente da questa carta e piazzalo nella tua Sala).");
+                setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio PRINCESS, scegliendo come colore: " + networkClientModel.getChosenColor() + "  (EFFETTO: Prendi uno studente da questa carta e piazzalo nella tua Sala).");
                 break;
             case "THIEF":
-                setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio THIEF, scegliendo come colore: " + networkClientModel.getChoosedIsland() + "  (EFFETTO: Scegli un colore di studente; ogni giocatore (incluso te) deve rimettere nel sacchetto tre studenti di quel colore presenti nella Sala (o tutti quelli che ha se ne avesse meno di tre) ).");
+                setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio THIEF, scegliendo come colore: " + networkClientModel.getChosenColor() + "  (EFFETTO: Scegli un colore di studente; ogni giocatore (incluso te) deve rimettere nel sacchetto tre studenti di quel colore presenti nella Sala (o tutti quelli che ha se ne avesse meno di tre) ).");
                 break;
             case "MUSHROOMHUNTER":
-                setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio MUSHROOMHUNTER, scegliendo come colore: " + networkClientModel.getChoosedIsland() + "  (EFFETTO: Scegli un colore di studente; in questo turno, durante il calcolo dell'influenza, quel colore non fornisce influenza).");
+                setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio MUSHROOMHUNTER, scegliendo come colore: " + networkClientModel.getChosenColor() + "  (EFFETTO: Scegli un colore di studente; in questo turno, durante il calcolo dell'influenza, quel colore non fornisce influenza).");
                 break;
             case "KNIGHT":
                 setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio KNIGHT" + "  (EFFETTO: In questo turno, durante il calcolo dell'influenza, hai due punti di influenza addizionali).");
@@ -1149,7 +1158,7 @@ public class CliView implements View {
                 setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio POSTMAN" + "  (EFFETTO: Puoi muovere madre natura fino a due isole addizionali rispetto a quanto indicato sulla carta assistente che hai giocato).");
                 break;
             case "GRANNY":
-                setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio GRANNY, scegliendo come isola: " + networkClientModel.getChoosedIsland() + "  (EFFETTO: Piazza un divieto su un isola a tua scelta. La prima volta che madre natura termina il suo movimento li l'influenza non verra' calcolata e il divieto verra' reinserito in questa carta).");
+                setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio GRANNY, scegliendo come isola: " + networkClientModel.getChosenIsland() + "  (EFFETTO: Piazza un divieto su un isola a tua scelta. La prima volta che madre natura termina il suo movimento li l'influenza non verra' calcolata e il divieto verra' reinserito in questa carta).");
                 break;
             case "JESTER":
                 setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio JESTER, scegliendo di scambiare i colori: " + networkClientModel.getColors1() + " dal suo Ingresso con i colori: " + networkClientModel.getColors2() + " da questa carta" + "  (EFFETTO: Puoi prendere fino a 3 studenti da questa carta e scambiarli con altrettanti studenti presenti nel tuo Ingresso).");
@@ -1163,6 +1172,7 @@ public class CliView implements View {
 
     /**
      * Method for client-side checking validity of decimal digit
+     *
      * @param cifra A string
      * @return true if represent a decimal digit, false else
      */
@@ -1183,6 +1193,7 @@ public class CliView implements View {
 
     /**
      * Method for client-side checking validity of decimal numbers
+     *
      * @param number A string
      * @return true if represent a decimal number, false else
      */

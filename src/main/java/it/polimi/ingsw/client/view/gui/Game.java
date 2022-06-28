@@ -31,6 +31,9 @@ public class Game implements Initializable {
     private Label turnLabel;
 
     @FXML
+    private Label log = new Label();
+
+    @FXML
     private Button assistantCardBtn;
     @FXML
     private Button setOnSchoolBtn;
@@ -154,6 +157,7 @@ public class Game implements Initializable {
         currNode = phaseLabel;
         Position pos = new Position();
         phaseLabel.setText(gameState);
+        log.setText(logText);
         turnLabel.setText("This is " + this.guiView.getClientModel().getServerModel().getCurrentPlayer().getNickname() + "'s turn");
         if (this.guiView.getClientModel().getTypeOfRequest().equals("GAMEEND")) {
             try {

@@ -174,23 +174,23 @@ public class StudentPhase extends State {
 
                 String type = currentPlayerData.getTypeOfRequest();
                 if (type.equals("SCHOOL")) {
-                    currentPlayer.getSchoolBoard().loadDinnerTable(currentPlayerData.getChoosedColor());
-                    if (model.getGameMode().equals(GameMode.EXPERT) && currentPlayer.getSchoolBoard().getDinnerTable().numStudentsByColor(currentPlayerData.getChoosedColor()) % 3 == 0) {
+                    currentPlayer.getSchoolBoard().loadDinnerTable(currentPlayerData.getChosenColor());
+                    if (model.getGameMode().equals(GameMode.EXPERT) && currentPlayer.getSchoolBoard().getDinnerTable().numStudentsByColor(currentPlayerData.getChosenColor()) % 3 == 0) {
                         currentPlayer.increaseCoin();
                     }
-                    model.getTable().checkProfessor(currentPlayerData.getChoosedColor(), model.getPlayers());
+                    model.getTable().checkProfessor(currentPlayerData.getChosenColor(), model.getPlayers());
                 } else if (type.equals("ISLAND")) {
-                    model.getTable().loadIsland(currentPlayer, currentPlayerData.getChoosedColor(), currentPlayerData.getChoosedIsland());
+                    model.getTable().loadIsland(currentPlayer, currentPlayerData.getChosenColor(), currentPlayerData.getChosenIsland());
                 } else {
                     i--;
                     for (int j = 0; j < model.getTable().getCharacters().size(); j++) {
                         if (model.getTable().getCharacters().get(j).getName().equals(type)) {
                             switch (type) {
                                 case "MUSHROOMHUNTER":
-                                    ((MushroomHunter) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, currentPlayerData.getChoosedColor(), model.getTable());
+                                    ((MushroomHunter) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, currentPlayerData.getChosenColor(), model.getTable());
                                     break;
                                 case "THIEF":
-                                    ((Thief) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, model.getPlayers(), currentPlayerData.getChoosedColor(), model.getTable());
+                                    ((Thief) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, model.getPlayers(), currentPlayerData.getChosenColor(), model.getTable());
                                     break;
                                 case "CENTAUR":
                                     ((Centaur) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, model.getTable());
@@ -211,16 +211,16 @@ public class StudentPhase extends State {
                                     ((Postman) model.getTable().getCharacters().get(j)).useEffect(currentPlayer);
                                     break;
                                 case "PRINCESS":
-                                    ((Princess) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, currentPlayerData.getChoosedColor(), model.getTable(), model.getPlayers());
+                                    ((Princess) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, currentPlayerData.getChosenColor(), model.getTable(), model.getPlayers());
                                     break;
                                 case "GRANNY":
-                                    ((Granny) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, currentPlayerData.getChoosedIsland(), model.getTable());
+                                    ((Granny) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, currentPlayerData.getChosenIsland(), model.getTable());
                                     break;
                                 case "MONK":
-                                    ((Monk) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, currentPlayerData.getChoosedColor(), currentPlayerData.getChoosedIsland(), model.getTable());
+                                    ((Monk) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, currentPlayerData.getChosenColor(), currentPlayerData.getChosenIsland(), model.getTable());
                                     break;
                                 case "HERALD":
-                                    boolean check = ((Herald) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, currentPlayerData.getChoosedIsland(), model);
+                                    boolean check = ((Herald) model.getTable().getCharacters().get(j)).useEffect(currentPlayer, currentPlayerData.getChosenIsland(), model);
                                     if (check) {
                                         gameEnd().fireStateEvent();
                                         return super.entryAction(cause);
