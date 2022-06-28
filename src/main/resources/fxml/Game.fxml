@@ -377,13 +377,6 @@
        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
      </rowConstraints>
-      <children>
-         <ImageView fx:id="motherNature1" fitHeight="37.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
-            <image>
-               <Image url="@../graphics/pieces/mother_nature.png" />
-            </image>
-         </ImageView>
-      </children>
    </GridPane>
    <GridPane fx:id="character3Grid" alignment="CENTER" gridLinesVisible="true" layoutX="1316.0" layoutY="226.0" prefHeight="119.0" prefWidth="135.0">
       <columnConstraints>
