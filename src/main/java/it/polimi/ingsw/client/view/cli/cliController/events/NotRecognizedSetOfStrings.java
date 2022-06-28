@@ -18,7 +18,7 @@ public class NotRecognizedSetOfStrings extends Event implements Observer {
     private boolean enabled = false;
 
     public NotRecognizedSetOfStrings(ArrayList<String> words) throws IOException {
-        super("[Nessuna delle opzioni riconosciute]");
+        super("[None of the recognized options]");
         this.toListen = words;
         this.commandPrompt = CommandPrompt.getInstance();
         this.subscribe();

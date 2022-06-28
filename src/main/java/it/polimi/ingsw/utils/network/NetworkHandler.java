@@ -16,7 +16,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Java class that abstracts the low-level details of TCP sockets providing the programmer with simple
- * * methods for connecting to a socket, sending and receiving messages, and various utilities
+ * methods for connecting to a socket, sending and receiving messages, and various utilities
  */
 
 public class NetworkHandler {
@@ -143,14 +143,14 @@ public class NetworkHandler {
         this.serverIP = serverIP;
     }
 
-    /********************************************************************
+    /**
      * SocketConnection Class
      * Creates a socket connection in either server mode or client
      * Server opens a server socket and listens for incoming connections
      * If a connection is made, make an appropriate client object
      * and starts listening for data
      * Client opens a socket and starts listening for data
-     * *****************************************************************/
+     */
 
     private class SocketConnection implements Runnable, ActionListener {
         final NetworkHandler parentSocket;
@@ -211,9 +211,12 @@ public class NetworkHandler {
             }
         }
 
-        // This might be called buy two areas simultaneously!
-        // Might be called by the disconnecting while loop in the run method
-        // Might be called by the disconnect method.
+        /**
+         * This might be called buy two areas simultaneously!
+         * Might be called by the disconnecting while loop in the run method
+         * Might be called by the disconnect method.
+         * @param clientConnection the client connection
+         */
         public void removeClient(ClientConnection clientConnection) {
             if (clientConnection.socketObject != null) {
                 System.out.println("Trying to close server connection to client");
@@ -243,14 +246,15 @@ public class NetworkHandler {
             }
         }
 
+        /**
+         * Server while loop to listen for incoming clients
+         * When a client connects, create a socket object
+         * Add that socket object to a vector
+         * Spawn a thread with that socket object
+         * One thread for each client
+         */
         public void run() {
             if (serverIP == null || serverIP.equals("")) {
-                // Server
-                // while loop to listen for incoming clients
-                // When a client connects, create a socket object
-                // Add that socket object to a vector
-                // Spawn a thread with that socket object
-                // One thread for each client
                 while (blnListenForClients) {
                     try {
                         socketObject = serverSocketObject.accept();
@@ -331,11 +335,13 @@ public class NetworkHandler {
             }
         }
 
+        /**
+         * Server style connection, open port
+         * and create a server-socket object
+         * @return boolean, status of operation
+         */
         public boolean openConnection() {
             if (serverIP == null || serverIP.equals("")) {
-                // Server style connection.
-                // Open Port
-                // Create a server-socket object
                 try {
                     serverSocketObject = new ServerSocket(port);
                 } catch (IOException e) {
@@ -365,6 +371,12 @@ public class NetworkHandler {
             return true;
         }
 
+        /**
+         * Constructor of the socket connection
+         * @param serverIP the server IP address
+         * @param port the server port
+         * @param parentSocket the parent socket
+         */
         public SocketConnection(String serverIP, int port, NetworkHandler parentSocket) {
             this.serverIP = serverIP;
             this.port = port;
@@ -378,6 +390,10 @@ public class NetworkHandler {
         }
     }
 
+    /**
+     * This class defines the client connection details,
+     * what to do with a received heartbeat for example
+     */
     private class ClientConnection implements Runnable {
         final NetworkHandler parentSocket;
         final SocketConnection socketConnection;

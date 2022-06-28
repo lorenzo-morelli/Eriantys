@@ -20,7 +20,7 @@ public class RecognizedString extends Event implements Observer {
     private boolean enabled = false;
 
     public RecognizedString(String message) throws IOException {
-        super("[Riconosciuta la parola " + message + "]");
+        super("[Recognized the word " + message + "]");
         this.toListen = message;
         this.commandPrompt = CommandPrompt.getInstance();
         this.subscribe();

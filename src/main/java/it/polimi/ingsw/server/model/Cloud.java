@@ -2,7 +2,7 @@ package it.polimi.ingsw.server.model;
 
 /**
  * This class models cloud tiles,
- * seen as mere student accumulators
+ * seen as a simple student accumulators
  *
  * @author Ignazio Neto dell'Acqua
  */

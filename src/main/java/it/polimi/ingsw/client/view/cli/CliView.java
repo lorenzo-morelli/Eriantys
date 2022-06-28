@@ -1161,14 +1161,11 @@ public class CliView implements View {
 
     }
 
-
-    // Methods for client side type-safety checking
-    // Metodo che controlla se un IP è valido con le regular expressions
-
-
-    // Metodo che controlla se una porta è valida con le regular expressions
-
-    // Metodo che controlla se una cifra è valida con le regular expressions
+    /**
+     * Method for client-side checking validity of decimal digit
+     * @param cifra A string
+     * @return true if represent a decimal digit, false else
+     */
     public static boolean isValidCifra(String cifra) {
 
         String CIFRA_REGEX = "\\d";
@@ -1184,7 +1181,11 @@ public class CliView implements View {
         return matcher.matches();
     }
 
-    // Metodo che controlla se un numero è valido con le regular expressions
+    /**
+     * Method for client-side checking validity of decimal numbers
+     * @param number A string
+     * @return true if represent a decimal number, false else
+     */
     public static boolean isValidNumber(String number) {
         String NUMERO_REGEX = "\\d+";
         Pattern NUMERO_PATTERN = Pattern.compile(NUMERO_REGEX);

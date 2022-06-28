@@ -15,7 +15,7 @@ public class IncorrectNumberOfParameters extends Event implements Observer {
     private final CommandPrompt commandPrompt;
 
     public IncorrectNumberOfParameters(int numberOfStrings) throws IOException {
-        super("[Numero di parametri non corretto (doveva essere " + numberOfStrings + ")]");
+        super("[Incorrect number of parameters (should be " + numberOfStrings + ")]");
         this.commandPrompt = CommandPrompt.getInstance();
         this.subscribe();
     }

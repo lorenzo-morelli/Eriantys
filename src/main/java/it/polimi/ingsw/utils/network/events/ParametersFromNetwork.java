@@ -22,7 +22,7 @@ public class ParametersFromNetwork extends Event implements DocumentListener {
 
     public ParametersFromNetwork(int numberOfStrings) {
 
-        super("[Ricezione di " + numberOfStrings + " parametri da network]");
+        super("[Receiving " + numberOfStrings + " parameters from network]");
         ta = Network.checkNewMessages();
         this.numberOfStrings = numberOfStrings;
         ta.getDocument().addDocumentListener(this);

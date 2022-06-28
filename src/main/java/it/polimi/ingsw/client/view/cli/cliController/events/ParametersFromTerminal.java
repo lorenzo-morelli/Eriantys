@@ -23,7 +23,7 @@ public class ParametersFromTerminal extends Event implements Observer {
     private boolean parametersReceived = false;
 
     public ParametersFromTerminal(ClientModel clientModel, int numberOfStrings) throws IOException {
-        super("[Inserimento di "+numberOfStrings+" parametri da terminale]" );
+        super("[Inserted "+numberOfStrings+" parameters from the terminal]" );
         this.commandPrompt = CommandPrompt.getInstance();
         this.subscribe();
         this.clientModel = clientModel;

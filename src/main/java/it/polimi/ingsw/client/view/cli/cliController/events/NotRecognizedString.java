@@ -19,7 +19,7 @@ public class NotRecognizedString extends Event implements Observer {
     private boolean enabled = false;
 
     public NotRecognizedString(String message) throws IOException {
-        super("[Non è stata riconosciuta la parola " + message + "]");
+        super("[The word " + message + " was not recognized]");
         this.toListen = message;
         this.commandPrompt = CommandPrompt.getInstance();
         this.subscribe();
