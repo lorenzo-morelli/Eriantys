@@ -8,6 +8,6 @@ import it.polimi.ingsw.utils.stateMachine.Event;
 public class ClientDisconnection extends Event {
 
     public ClientDisconnection() {
-        super("Client disconnected");
+        super("A client disconnected from the game");
     }
 }
