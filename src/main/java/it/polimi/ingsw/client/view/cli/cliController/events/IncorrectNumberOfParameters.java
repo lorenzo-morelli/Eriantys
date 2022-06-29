@@ -4,8 +4,6 @@ import it.polimi.ingsw.client.view.cli.CommandPrompt;
 import it.polimi.ingsw.utils.observerPattern.Observer;
 import it.polimi.ingsw.utils.stateMachine.Event;
 
-import java.io.IOException;
-
 /**
  * Event that is triggered when the user enters an incorrect number of parameters in the terminal
  * @author Fernando
@@ -14,7 +12,7 @@ import java.io.IOException;
 public class IncorrectNumberOfParameters extends Event implements Observer {
     private final CommandPrompt commandPrompt;
 
-    public IncorrectNumberOfParameters(int numberOfStrings) throws IOException {
+    public IncorrectNumberOfParameters(int numberOfStrings) {
         super("[Incorrect number of parameters (should be " + numberOfStrings + ")]");
         this.commandPrompt = CommandPrompt.getInstance();
         this.subscribe();

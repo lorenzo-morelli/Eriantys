@@ -56,7 +56,7 @@ public class ChooseCloud implements Initializable {
                 if (cloud.getStudentsAccumulator().size() == 0) {
                     this.notice.setText("ERROR: Cloud already chosen!");
                 } else {
-                    this.guiView.getClientModel().setCloudChoosed(cloud);
+                    this.guiView.getClientModel().setCloudChosen(cloud);
                     this.guiView.getClientModel().setResponse(true);
                     this.guiView.getClientModel().setPingMessage(false);
                     Gson gson = new Gson();

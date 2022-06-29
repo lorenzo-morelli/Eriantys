@@ -7,7 +7,6 @@ import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.utils.stateMachine.IEvent;
 import it.polimi.ingsw.utils.stateMachine.State;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -24,12 +23,12 @@ public class Decision extends State {
         final ClientModel clientModel;
         final RecognizedString scelta1Riconosciuta;
     final RecognizedString scelta2Riconosciuta;
-        NotRecognizedSetOfStrings nessunaDellePrecedenti;
+        final NotRecognizedSetOfStrings nessunaDellePrecedenti;
         final String scelta1;
         final String scelta2;
 
 
-        public Decision(View view, ClientModel clientModel, String scelta1, String scelta2) throws IOException {
+        public Decision(View view, ClientModel clientModel, String scelta1, String scelta2) {
             super("[Decisione tra " +scelta1+" e " + scelta2 +"]"  );
             this.view = view;
             this.clientModel = clientModel;

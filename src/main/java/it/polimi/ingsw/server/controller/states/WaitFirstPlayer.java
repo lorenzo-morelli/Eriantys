@@ -85,7 +85,7 @@ public class WaitFirstPlayer extends State {
 
             System.out.println("Player: " + clientModel.getNickname() + " " + clientModel.getMyIp());
             connectionModel.getClientsInfo().add(0, clientModel);
-            clientModel.setAmIfirst(true);
+            clientModel.setAmFirst(true);
             Network.send(json.toJson(clientModel));
             System.out.println("[Ack sent to the first player]");
 

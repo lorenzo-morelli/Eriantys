@@ -175,7 +175,7 @@ public class CloudPhase extends State {
         if(!currentPlayer.isDisconnected()) {
 
             currentPlayerData = json.fromJson(message.getParameter(0), ClientModel.class);
-            Cloud cloud = currentPlayerData.getCloudChoosed();
+            Cloud cloud = currentPlayerData.getCloudChosen();
             currentPlayer.getSchoolBoard().loadEntrance(cloud, model.getTable().getClouds());
 
         }

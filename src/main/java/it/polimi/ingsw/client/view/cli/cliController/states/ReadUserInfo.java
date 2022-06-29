@@ -5,7 +5,6 @@ import it.polimi.ingsw.client.view.View;
 import it.polimi.ingsw.utils.stateMachine.Controller;
 import it.polimi.ingsw.utils.stateMachine.IEvent;
 
-import java.io.IOException;
 import java.util.Random;
 
 /**
@@ -14,7 +13,7 @@ import java.util.Random;
  */
 public class ReadUserInfo extends ReadFromTerminal {
 
-    public ReadUserInfo(View view, ClientModel clientModel, Controller controller) throws IOException {
+    public ReadUserInfo(View view, ClientModel clientModel, Controller controller) {
         super(view, clientModel, controller, 3, "USERINFO");
     }
 

@@ -76,7 +76,7 @@ public class Menu implements Initializable {
             this.notice.setText("FAILURE: nickname must be less than 13 characters!");
         } else if (ip.contains(" ") || port.contains(" ")) {
             this.notice.setText("FAILURE: ip and port can't contain any spaces!");
-        } else if (!isValidIp(ip) || !isValidPort(port)) {
+        } else if (isValidIp(ip) || isValidPort(port)) {
             this.notice.setText("FAILURE: ip or port format not valid!");
         } else {
             SetConnection.setConnection(nickname, ip, port, this.guiView.getClientModel());
@@ -94,9 +94,9 @@ public class Menu implements Initializable {
                     TimeUnit.SECONDS.sleep(5);
                     System.exit(0);
                 }
-                if (this.guiView.getClientModel().getAmIfirst() == null) {
+                if (this.guiView.getClientModel().getAmFirst() == null) {
                     this.notice.setText("FAILURE: Nickname already taken");
-                } else if (this.guiView.getClientModel().getAmIfirst()) {
+                } else if (this.guiView.getClientModel().getAmFirst()) {
                     this.guiView.changeScene("SetupGame");
                 } else {
                     ConnectionToServer connection = new ConnectionToServer();

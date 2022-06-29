@@ -67,7 +67,7 @@ public class SendNicknameToServer extends State {
         ClientModel fromNetwork = json.fromJson(ack.getParameter(0), ClientModel.class);
         System.out.println(ack.getParameter(0));
 
-        if (fromNetwork.getAmIfirst() == null) {
+        if (fromNetwork.getAmFirst() == null) {
             // ancora una volta l'utente ha inserito un nickname già esistente
             nickAlreadyExistent.fireStateEvent();
         } else {

@@ -6,7 +6,6 @@ import it.polimi.ingsw.utils.observerPattern.Subject;
 import java.util.Scanner;
 
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -81,9 +80,8 @@ public class CommandPrompt implements Subject {
     /**
      * Print line to screen
      * @param toPrint the string to print
-     * @throws IOException input output related errors
      */
-    public static void println(String toPrint) throws IOException {
+    public static void println(String toPrint) {
         if (instance == null) {
             instance = new CommandPrompt();
         }
@@ -97,9 +95,8 @@ public class CommandPrompt implements Subject {
     /**
      * set the command prompt text presented to the user
      * @param toSet String to set
-     * @throws IOException input output related errors
      */
-    public static void setPrompt(String toSet) throws IOException {
+    public static void setPrompt(String toSet) {
         if (instance == null) {
             instance = new CommandPrompt();
         }
@@ -108,9 +105,8 @@ public class CommandPrompt implements Subject {
 
     /**
      * Clear the command prompt screen
-     * @throws IOException input output related errors
      */
-    public static void clearScreen() throws IOException {
+    public static void clearScreen() {
         if (instance == null) {
             instance = new CommandPrompt();
         }
@@ -129,21 +125,17 @@ public class CommandPrompt implements Subject {
 
         // Stop reading input if a client disconnects
         Thread t = new Thread(() -> {
-            try {
-                if (!debug) {
-                    CommandPrompt.clearScreen();
-                }
-                CommandPrompt.println(suggestion);
-                CommandPrompt.setPrompt(console);
-                CommandPrompt.read();
-                if (Network.disconnectedClient()) {
-                    System.out.println("Bene, questo input verra' ignorato");
-                    return;
-                }
-                setInputLetto(true);
-            } catch (IOException e) {
-                e.printStackTrace();
+            if (!debug) {
+                CommandPrompt.clearScreen();
             }
+            CommandPrompt.println(suggestion);
+            CommandPrompt.setPrompt(console);
+            CommandPrompt.read();
+            if (Network.disconnectedClient()) {
+                System.out.println("This input will be ignored");
+                return;
+            }
+            setInputLetto(true);
         });
         t.start();
 

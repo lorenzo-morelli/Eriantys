@@ -63,7 +63,7 @@ public class CreateGame extends State {
         for (ClientModel c : connectionModel.getClientsInfo()) {
             model.getPlayers().add(new Player(connectionModel.getClientsInfo().get(i).getNickname(), connectionModel.getClientsInfo().get(i).getMyIp(), model, false));
             c.setGameStarted(true);
-            c.setAmIfirst(false);
+            c.setAmFirst(false);
             i++;
         }
         model.randomSchedulePlayers();
@@ -92,7 +92,7 @@ public class CreateGame extends State {
                     Gson json = new Gson();
                     ClientModel receivedClientModel = json.fromJson(message.getParameter(0), ClientModel.class);
 
-                    if (receivedClientModel.getAmIfirst() == null && !connectionModel.isCloseThread()) {
+                    if (receivedClientModel.getAmFirst() == null && !connectionModel.isCloseThread()) {
                         boolean check = false;
 
                         for (Player p : getModel().getPlayers()) {
@@ -118,7 +118,7 @@ public class CreateGame extends State {
                                         ClientModel target = connectionModel.findPlayer(p.getNickname());
                                         p.setNickname(receivedClientModel.getNickname());
                                         p.setDisconnected(false);
-                                        receivedClientModel.setAmIfirst(false);
+                                        receivedClientModel.setAmFirst(false);
                                         receivedClientModel.setKicked(false);
                                         receivedClientModel.setGameStarted(true);
                                         receivedClientModel.setTypeOfRequest("CONNECTTOEXISTINGGAME");

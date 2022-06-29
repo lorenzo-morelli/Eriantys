@@ -82,10 +82,10 @@ public class MoveStudents implements Initializable {
                         notice.setText("ERROR: Please select the student you want to move");
                     } else {
                         this.guiView.getClientModel().setTypeOfRequest("ISLAND");
-                        this.guiView.getClientModel().setChoosedIsland(islands.indexOf(island));
+                        this.guiView.getClientModel().setChosenIsland(islands.indexOf(island));
                         this.guiView.getClientModel().setResponse(true);
                         this.guiView.getClientModel().setPingMessage(false);
-                        this.guiView.getClientModel().setChoosedColor(studentColor);
+                        this.guiView.getClientModel().setChosenColor(studentColor);
                         Gson gson = new Gson();
                         Network.send(gson.toJson(this.guiView.getClientModel()));
                         canOpenWindow = true;
@@ -157,7 +157,7 @@ public class MoveStudents implements Initializable {
             this.guiView.getClientModel().setTypeOfRequest("SCHOOL");
             this.guiView.getClientModel().setResponse(true);
             this.guiView.getClientModel().setPingMessage(false);
-            this.guiView.getClientModel().setChoosedColor(studentColor);
+            this.guiView.getClientModel().setChosenColor(studentColor);
             Gson gson = new Gson();
             Network.send(gson.toJson(this.guiView.getClientModel()));
             studentColor = null;

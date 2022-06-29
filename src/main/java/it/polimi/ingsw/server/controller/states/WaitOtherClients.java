@@ -76,7 +76,7 @@ public class WaitOtherClients extends State {
 
             System.out.println("PLAYER: " + clientModel.getNickname() + " " + clientModel.getMyIp());
 
-            clientModel.setAmIfirst(false);
+            clientModel.setAmFirst(false);
             Network.send(json.toJson(clientModel));
             connectionModel.getClientsInfo().add(clientModel);
 

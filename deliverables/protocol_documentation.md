@@ -170,7 +170,7 @@ This message is sent from the server to the all the clients, including all the c
 This message is sent from the client when they want to play an assistant card.
 
 #### Arguments
-- choosenAssistantCard: the card they want to play.
+- chosenAssistantCard: the card they want to play.
 
 #### Possible responses
 - Ack: the messages has been received.

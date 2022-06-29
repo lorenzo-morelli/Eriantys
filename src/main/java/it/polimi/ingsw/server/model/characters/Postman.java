@@ -12,6 +12,6 @@ public class Postman extends CharacterCard{
     public void useEffect(Player player) {
         player.reduceCoin(getCost());
         improveCost();
-        player.getChoosedCard().improveMoves(2);
+        player.getChosenCard().improveMoves(2);
     }
 }

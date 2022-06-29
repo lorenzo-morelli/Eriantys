@@ -188,7 +188,7 @@ public class MotherPhase extends State {
                 currentPlayerData = json.fromJson(message.getParameter(0), ClientModel.class);
                 String type = currentPlayerData.getTypeOfRequest();
                 if (type.equals("MOTHER")) {
-                    int moves = currentPlayerData.getChoosedMoves();
+                    int moves = currentPlayerData.getChosenMoves();
                     model.getTable().mother(moves);
                     Island target = model.getTable().getIslands().get(model.getTable().getMotherNaturePosition());
                     if (!target.isBlocked()) {

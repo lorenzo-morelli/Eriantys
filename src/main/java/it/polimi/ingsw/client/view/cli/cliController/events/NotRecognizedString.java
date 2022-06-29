@@ -4,8 +4,6 @@ import it.polimi.ingsw.client.view.cli.CommandPrompt;
 import it.polimi.ingsw.utils.observerPattern.Observer;
 import it.polimi.ingsw.utils.stateMachine.Event;
 
-import java.io.IOException;
-
 /**
  * The acknowledgment event of when a word is NOT entered by the user.
  * We want to be able to compare the string received from the cmd with a stored string,
@@ -18,7 +16,7 @@ public class NotRecognizedString extends Event implements Observer {
     private final CommandPrompt commandPrompt;
     private boolean enabled = false;
 
-    public NotRecognizedString(String message) throws IOException {
+    public NotRecognizedString(String message) {
         super("[The word " + message + " was not recognized]");
         this.toListen = message;
         this.commandPrompt = CommandPrompt.getInstance();

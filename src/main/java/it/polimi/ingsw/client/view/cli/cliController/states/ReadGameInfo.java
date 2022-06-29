@@ -12,7 +12,7 @@ import java.io.IOException;
  * preset choice is provided by pressing the simple enter without writing any parameters.
  */
 public class ReadGameInfo extends ReadFromTerminal {
-    public ReadGameInfo(View view, ClientModel clientModel, Controller controller) throws IOException {
+    public ReadGameInfo(View view, ClientModel clientModel, Controller controller) {
         super(view, clientModel, controller, 2, "GAMEINFO");
     }
 

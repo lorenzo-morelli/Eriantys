@@ -141,7 +141,7 @@ public class AssistantCardPhase extends State {
                                 if (disconnected) {
                                     currentPlayer.setDisconnected(true);
                                     alreadyChooses.add(currentPlayer.getAvailableCards().getCardsList().get(currentPlayer.getAvailableCards().getCardsList().size() - 1));
-                                    currentPlayer.setChoosedCard(canBeChoose.get(canBeChoose.size()-1));
+                                    currentPlayer.setChosenCard(canBeChoose.get(canBeChoose.size()-1));
                                     boolean check=true;
                                     for(int j=0;j<model.getTable().getClouds().size();j++) {
                                         if(model.getTable().getClouds().get(j).getStudentsAccumulator().size()==0)
@@ -170,7 +170,7 @@ public class AssistantCardPhase extends State {
                     currentPlayerData = json.fromJson(message.getParameter(0), ClientModel.class);
 
                     for (int j = 0; j < currentPlayer.getAvailableCards().getCardsList().size(); j++) {
-                        if (currentPlayerData.getCardChoosedValue() == currentPlayer.getAvailableCards().getCardsList().get(j).getValues()) {
+                        if (currentPlayerData.getCardChosenValue() == currentPlayer.getAvailableCards().getCardsList().get(j).getValues()) {
                             chosen = currentPlayer.getAvailableCards().getCardsList().get(j);
                         }
                     }
@@ -182,7 +182,7 @@ public class AssistantCardPhase extends State {
                     }
 
                     alreadyChooses.add(chosen);
-                    boolean checkEndCondition = currentPlayer.setChoosedCard(chosen);
+                    boolean checkEndCondition = currentPlayer.setChosenCard(chosen);
 
                     if (checkEndCondition) {
                         model.setLastTurn();

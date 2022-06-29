@@ -5,7 +5,6 @@ import it.polimi.ingsw.client.view.cli.CommandPrompt;
 import it.polimi.ingsw.utils.observerPattern.Observer;
 import it.polimi.ingsw.utils.stateMachine.Event;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -22,7 +21,7 @@ public class ParametersFromTerminal extends Event implements Observer {
     private final int numberOfStrings;
     private boolean parametersReceived = false;
 
-    public ParametersFromTerminal(ClientModel clientModel, int numberOfStrings) throws IOException {
+    public ParametersFromTerminal(ClientModel clientModel, int numberOfStrings) {
         super("[Inserted "+numberOfStrings+" parameters from the terminal]" );
         this.commandPrompt = CommandPrompt.getInstance();
         this.subscribe();

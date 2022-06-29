@@ -128,7 +128,7 @@ public class AskForTeamMate extends State {
                     Gson json = new Gson();
                     ClientModel receivedClientModel = json.fromJson(message.getParameter(0), ClientModel.class);
 
-                    if(receivedClientModel.getAmIfirst()==null && !connectionModel.isCloseThread()) {
+                    if(receivedClientModel.getAmFirst()==null && !connectionModel.isCloseThread()) {
                         boolean check = false;
 
                         for (Player p : getModel().getPlayers()) {
@@ -154,7 +154,7 @@ public class AskForTeamMate extends State {
                                         ClientModel target = connectionModel.findPlayer(team.getPlayer1().getNickname());
                                         team.getPlayer1().setNickname(receivedClientModel.getNickname());
                                         team.getPlayer1().setDisconnected(false);
-                                        receivedClientModel.setAmIfirst(false);
+                                        receivedClientModel.setAmFirst(false);
                                         receivedClientModel.setKicked(false);
                                         receivedClientModel.setGameStarted(true);
                                         receivedClientModel.setTypeOfRequest("CONNECTTOEXISTINGGAME");
@@ -169,7 +169,7 @@ public class AskForTeamMate extends State {
                                         ClientModel target = connectionModel.findPlayer(team.getPlayer2().getNickname());
                                         team.getPlayer2().setNickname(receivedClientModel.getNickname());
                                         team.getPlayer2().setDisconnected(false);
-                                        receivedClientModel.setAmIfirst(false);
+                                        receivedClientModel.setAmFirst(false);
                                         receivedClientModel.setKicked(false);
                                         receivedClientModel.setGameStarted(true);
                                         receivedClientModel.setTypeOfRequest("CONNECTTOEXISTINGGAME");

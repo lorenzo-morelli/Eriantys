@@ -74,7 +74,7 @@ public class ChooseAssistantCard implements Initializable {
     }
 
     public void setCard(int value, MouseEvent mouseEvent) {
-        this.guiView.getClientModel().setCardChoosedValue(value);
+        this.guiView.getClientModel().setCardChosenValue(value);
         this.guiView.getClientModel().setResponse(true);
         this.guiView.getClientModel().setPingMessage(false);
         Gson json = new Gson();

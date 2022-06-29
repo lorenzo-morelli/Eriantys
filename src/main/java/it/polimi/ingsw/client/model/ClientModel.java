@@ -14,7 +14,7 @@ import java.util.Random;
 public class ClientModel {
     final transient Random rand = new Random();
     private int clientIdentity;
-    private Boolean amIfirst = null;
+    private Boolean amFirst = null;
     private Boolean isResponse = false;
     private boolean isPingMessage;
 
@@ -22,11 +22,11 @@ public class ClientModel {
     public boolean kicked = false, reply = true;
     private String typeOfRequest;
 
-    private PeopleColor choosedColor;
-    private float cardChoosedValue;
-    private int choosedMoves;
-    private Cloud cloudChoosed;
-    private int choosedIsland;
+    private PeopleColor chosenColor;
+    private float cardChosenValue;
+    private int chosenMoves;
+    private Cloud cloudChosen;
+    private int chosenIsland;
 
     private String gameWinner;
 
@@ -106,12 +106,12 @@ public class ClientModel {
         return port;
     }
 
-    public Boolean getAmIfirst() {
-        return amIfirst;
+    public Boolean getAmFirst() {
+        return amFirst;
     }
 
-    public void setAmIfirst(Boolean amIfirst) {
-        this.amIfirst = amIfirst;
+    public void setAmFirst(Boolean amFirst) {
+        this.amFirst = amFirst;
     }
 
     public String getMyIp() {
@@ -160,19 +160,19 @@ public class ClientModel {
     }
 
     public PeopleColor getChosenColor() {
-        return choosedColor;
+        return chosenColor;
     }
 
-    public void setChoosedColor(PeopleColor choosedColor) {
-        this.choosedColor = choosedColor;
+    public void setChosenColor(PeopleColor chosenColor) {
+        this.chosenColor = chosenColor;
     }
 
     public int getChosenIsland() {
-        return choosedIsland;
+        return chosenIsland;
     }
 
-    public void setChoosedIsland(int choosedIsland) {
-        this.choosedIsland = choosedIsland;
+    public void setChosenIsland(int chosenIsland) {
+        this.chosenIsland = chosenIsland;
     }
 
     public Model getServerModel() {
@@ -187,20 +187,20 @@ public class ClientModel {
         return nicknames;
     }
 
-    public int getChoosedMoves() {
-        return choosedMoves;
+    public int getChosenMoves() {
+        return chosenMoves;
     }
 
-    public void setChoosedMoves(int choosedMoves) {
-        this.choosedMoves = choosedMoves;
+    public void setChosenMoves(int chosenMoves) {
+        this.chosenMoves = chosenMoves;
     }
 
-    public Cloud getCloudChoosed() {
-        return cloudChoosed;
+    public Cloud getCloudChosen() {
+        return cloudChosen;
     }
 
-    public void setCloudChoosed(Cloud cloudChoosed) {
-        this.cloudChoosed = cloudChoosed;
+    public void setCloudChosen(Cloud cloudChosen) {
+        this.cloudChosen = cloudChosen;
     }
 
     public String getGameWinner() {
@@ -211,12 +211,12 @@ public class ClientModel {
         this.gameWinner = gameWinner;
     }
 
-    public float getCardChoosedValue() {
-        return cardChoosedValue;
+    public float getCardChosenValue() {
+        return cardChosenValue;
     }
 
-    public void setCardChoosedValue(float cardChoosedValue) {
-        this.cardChoosedValue = cardChoosedValue;
+    public void setCardChosenValue(float cardChosenValue) {
+        this.cardChosenValue = cardChosenValue;
     }
 
     public ArrayList<PeopleColor> getColors1() {

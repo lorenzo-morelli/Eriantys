@@ -208,7 +208,7 @@ public class Game implements Initializable {
         int motherNaturePos = this.guiView.getClientModel().getServerModel().getTable().getMotherNaturePosition();
         ArrayList<Island> islands = this.guiView.getClientModel().getServerModel().getTable().getIslands();
         ArrayList<Player> players = this.guiView.getClientModel().getServerModel().getPlayers();
-        players.forEach(player -> System.out.println(player.getChoosedCard() != null ? player.getChoosedCard().getValues() : "non scelta"));
+        players.forEach(player -> System.out.println(player.getChosenCard() != null ? player.getChosenCard().getValues() : "non scelta"));
 
         ArrayList<Professor> professors = this.guiView.getClientModel().getServerModel().getTable().getProfessors();
         ArrayList<Cloud> clouds = this.guiView.getClientModel().getServerModel().getTable().getClouds();
@@ -368,13 +368,13 @@ public class Game implements Initializable {
         professorGrids.forEach(prof -> prof.getChildren().clear());
         professors.forEach(prof -> {
             if (prof.getHeldBy() != null) {
-                Player choosedPlayer = null;
+                Player chosenPlayer = null;
                 for (Player player : players) {
                     if (player.getNickname().equals(prof.getHeldBy().getNickname())) {
-                        choosedPlayer = player;
+                        chosenPlayer = player;
                     }
                 }
-                if (choosedPlayer != null) {
+                if (chosenPlayer != null) {
                     ImageView profImage = null;
                     String color = "";
                     switch (prof.getColor()) {
@@ -401,7 +401,7 @@ public class Game implements Initializable {
                     }
                     imageResize(profImage, 30);
                     setShadow(profImage);
-                    professorGrids.get(players.indexOf(choosedPlayer)).add(profImage, 0, getColorPlace(color));
+                    professorGrids.get(players.indexOf(chosenPlayer)).add(profImage, 0, getColorPlace(color));
                 }
             }
         });
@@ -523,8 +523,8 @@ public class Game implements Initializable {
 
         // INITIALIZE ASSISTANT CARDS
         players.forEach(player -> {
-            if (player.getChoosedCard() != null) {
-                Image assistantImage = new Image("/graphics/assistants/assistantCard" + (int) player.getChoosedCard().getValues() + ".png");
+            if (player.getChosenCard() != null) {
+                Image assistantImage = new Image("/graphics/assistants/assistantCard" + (int) player.getChosenCard().getValues() + ".png");
                 assistantCards.get(players.indexOf(player)).setImage(assistantImage);
                 setShadow(assistantCards.get(players.indexOf(player)));
                 assistantCards.get(players.indexOf(player)).setVisible(true);

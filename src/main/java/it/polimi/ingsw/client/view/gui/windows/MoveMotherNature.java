@@ -34,7 +34,7 @@ public class MoveMotherNature implements Initializable {
         notice.setText("");
         ArrayList<Island> islands = this.guiView.getClientModel().getServerModel().getTable().getIslands();
         int motherNaturePos = this.guiView.getClientModel().getServerModel().getTable().getMotherNaturePosition();
-        int moves = this.guiView.getClientModel().getServerModel().getCurrentPlayer().getChoosedCard().getMoves();
+        int moves = this.guiView.getClientModel().getServerModel().getCurrentPlayer().getChosenCard().getMoves();
         distance = 0;
         islands.forEach(island -> {
             distance = islands.indexOf(island) - motherNaturePos;
@@ -81,7 +81,7 @@ public class MoveMotherNature implements Initializable {
                     notice.setText("ERROR: You don't have enough moves available!");
                 } else {
                     this.guiView.getClientModel().setTypeOfRequest("MOTHER");
-                    this.guiView.getClientModel().setChoosedMoves(distance);
+                    this.guiView.getClientModel().setChosenMoves(distance);
                     this.guiView.getClientModel().setResponse(true);
                     this.guiView.getClientModel().setPingMessage(false);
                     Gson gson = new Gson();

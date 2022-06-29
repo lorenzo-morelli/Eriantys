@@ -18,7 +18,7 @@ Server:
 // The connection order will be used to determine the first order to choose the assistants cards
 
 Server:
-    client_ip YOUR_TURN list_assistantcard (is an ArrayList serialized with Gson)
+    client_ip YOUR_TURN list_assistant (is an ArrayList serialized with Gson)
 
 Player:
     myIp CHOOSE_ASSISTANT_CARD assistant_card

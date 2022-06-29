@@ -209,7 +209,7 @@ public class GuiView extends Application {
         String tail = "\n" + logText;
         switch (GuiView.clientModel.getTypeOfRequest()) {
             case "CHOOSEASSISTANTCARD":
-                logText = head + "The player " + GuiView.clientModel.getNickname() + " chose a card with value = " + GuiView.clientModel.getCardChoosedValue() + tail;
+                logText = head + "The player " + GuiView.clientModel.getNickname() + " chose a card with value = " + GuiView.clientModel.getCardChosenValue() + tail;
                 break;
             case "TEAMMATE":
                 logText = head + "The player " + GuiView.clientModel.getNickname() + " created the teams:\n" +
@@ -225,10 +225,10 @@ public class GuiView extends Application {
                         clientModel.getChosenColor().toString() + " on the island number " + (clientModel.getChosenIsland() + 1) + tail;
                 break;
             case "CHOOSEWHERETOMOVEMOTHER":
-                logText = head + "The player " + clientModel.getNickname() + " decided to move mother nature of " + clientModel.getChoosedMoves() + " moves" + tail;
+                logText = head + "The player " + clientModel.getNickname() + " decided to move mother nature of " + clientModel.getChosenMoves() + " moves" + tail;
                 break;
             case "CHOOSECLOUDS":
-                logText = head + "The player " + clientModel.getNickname() + " chose to move students from the cloud number: " + clientModel.getCloudChoosed() + tail;
+                logText = head + "The player " + clientModel.getNickname() + " chose to move students from the cloud number: " + clientModel.getCloudChosen() + tail;
                 break;
             case "MONK":
                 logText = head + "The player " + clientModel.getNickname() + " chose to use the character card MONK, choosing the color: " + clientModel.getChosenColor() + " and the island: " + clientModel.getChosenIsland() + tail;

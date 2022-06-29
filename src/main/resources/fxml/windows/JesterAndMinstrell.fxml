@@ -129,7 +129,7 @@
    </ImageView>
    <Button layoutX="265.0" layoutY="340.0" mnemonicParsing="false" onMouseClicked="#okay" text="Use effect!"/>
    <Label fx:id="explanation" alignment="CENTER" contentDisplay="CENTER" layoutX="141.0" layoutY="54.0"
-          prefHeight="47.0" prefWidth="320.0" text="explaination" textAlignment="CENTER" wrapText="true"
+          prefHeight="47.0" prefWidth="320.0" text="explanation" textAlignment="CENTER" wrapText="true"
           AnchorPane.bottomAnchor="299.0" AnchorPane.leftAnchor="141.0" AnchorPane.rightAnchor="139.0"
           AnchorPane.topAnchor="54.0"/>
    <Label fx:id="start" layoutX="124.0" layoutY="111.0" text="Jester's set"/>

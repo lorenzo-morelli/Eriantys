@@ -14,7 +14,7 @@ import java.util.Objects;
 public class Player implements Comparable<Player> {
     private String nickname;
     private final Deck availableCards;
-    private AssistantCard choosedCard;
+    private AssistantCard chosenCard;
     private final SchoolBoard schoolBoard;
     private int coins;
     private final String Ip;
@@ -36,7 +36,7 @@ public class Player implements Comparable<Player> {
         this.nickname = nickname;
         this.Ip = Ip;
         this.availableCards = new Deck();
-        this.choosedCard = null;
+        this.chosenCard = null;
         this.schoolBoard = new SchoolBoard(model.getNumberOfPlayers(), model.getTable().getBag(), model.getTable().getAvailableTowerColor());
         if (debug) {
             if (model.getGameMode().equals(GameMode.EXPERT)) this.coins = 100;
@@ -66,7 +66,7 @@ public class Player implements Comparable<Player> {
             this.nickname = nickname;
             this.Ip = Ip;
             this.availableCards = new Deck();
-            this.choosedCard = null;
+            this.chosenCard = null;
             Team team;
             if (model.getTeams().get(0).getTeamNumber() == teamNumber) {
                 if (!(model.getTeams().get(0).isFull())) {
@@ -104,16 +104,16 @@ public class Player implements Comparable<Player> {
 
     /**
      * Method to set the assistant card
-     * @param choosedCard the card to choose
+     * @param chosenCard the card to choose
      * @return boolean value that represent the status of the operation
      */
-    public boolean setChoosedCard(AssistantCard choosedCard) {
-        this.choosedCard = choosedCard;
-        return availableCards.remove(choosedCard);
+    public boolean setChosenCard(AssistantCard chosenCard) {
+        this.chosenCard = chosenCard;
+        return availableCards.remove(chosenCard);
     }
 
-    public AssistantCard getChoosedCard() {
-        return choosedCard;
+    public AssistantCard getChosenCard() {
+        return chosenCard;
     }
 
     /**
@@ -123,8 +123,8 @@ public class Player implements Comparable<Player> {
      */
     @Override
     public int compareTo(Player player) {
-        float compareValues = player.getChoosedCard().getValues();
-        if ((this.choosedCard.getValues() - compareValues) > 0) return 1;
+        float compareValues = player.getChosenCard().getValues();
+        if ((this.chosenCard.getValues() - compareValues) > 0) return 1;
         else return -1;
     }
 
@@ -158,7 +158,7 @@ public class Player implements Comparable<Player> {
 
     private String getPlayerInfo(String nickname, String ansiBlack) {
         return ansiBlack + "    PLAYER : " + this.nickname + ANSI_RESET + (isDisconnected ? "    IL GIOCATORE E' DISCONNESSO\n" : "\n") +
-                (choosedCard == null ? "    CARD CHOOSED : NESSUNA\n" : "    CARD CHOOSED - VALUE : " + choosedCard.getValues() + " - MOVES : " + choosedCard.getMoves() + "\n") +
+                (chosenCard == null ? "    CARD CHOOSED : NESSUNA\n" : "    CARD CHOOSED - VALUE : " + chosenCard.getValues() + " - MOVES : " + chosenCard.getMoves() + "\n") +
                 "    SCHOOL\n"
                 + schoolBoard.toString() +
                 (coins >= 0 ? "    COINS : " + coins + "\n" : (Objects.equals(nickname, this.nickname) ? "" : "\n")) + (Objects.equals(nickname, this.nickname) ? "    AVAILABLE CARDS: " + availableCards.toString() + "\n" : "");

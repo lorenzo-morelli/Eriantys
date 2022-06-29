@@ -244,10 +244,10 @@ public class Character implements Initializable {
             this.guiView.getClientModel().setResponse(true);
             this.guiView.getClientModel().setPingMessage(false);
             if (chosenColor != null) {
-                this.guiView.getClientModel().setChoosedColor(chosenColor);
+                this.guiView.getClientModel().setChosenColor(chosenColor);
             }
             if (chosenIsland != -1) {
-                this.guiView.getClientModel().setChoosedIsland(chosenIsland);
+                this.guiView.getClientModel().setChosenIsland(chosenIsland);
             }
             Gson gson = new Gson();
             Network.send(gson.toJson(this.guiView.getClientModel()));

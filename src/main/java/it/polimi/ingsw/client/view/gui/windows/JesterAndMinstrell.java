@@ -157,14 +157,13 @@ public class JesterAndMinstrell implements Initializable {
     }
 
     /**
-     * This method is used to populate with the choosed color
+     * This method is used to populate with the chose color
      *
      * @param students   the student images to get the click event from.
      * @param studentSet the student set with all the available students.
      * @param colors     the list to update.
      * @param index      the index of the list to update.
      */
-    @SuppressWarnings("GrazieInspection")
     private void populateList(ArrayList<ImageView> students, StudentSet studentSet, ArrayList<PeopleColor> colors, int index) {
         students.forEach(Game::setShadow);
         students.forEach(student -> student.setCursor(Cursor.HAND));

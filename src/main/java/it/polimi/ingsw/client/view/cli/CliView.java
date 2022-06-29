@@ -119,7 +119,7 @@ public class CliView implements View {
                 parsedStrings =
                         new ArrayList<>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
                 if (!CommandPrompt.gotFromTerminal().equals("")) {
-                    if (parsedStrings.size() != 3 || !isValidIp(parsedStrings.get(1)) || !isValidPort(parsedStrings.get(2))) {
+                    if (parsedStrings.size() != 3 || isValidIp(parsedStrings.get(1)) || isValidPort(parsedStrings.get(2))) {
                         System.out.print("ALERT: dati inseriti non validi, riprovare\n");
                         askParameters();
                     }
@@ -228,7 +228,7 @@ public class CliView implements View {
                     requestToMe();
                     return;
                 }
-                networkClientModel.setCardChoosedValue(Float.parseFloat(CommandPrompt.gotFromTerminal()));
+                networkClientModel.setCardChosenValue(Float.parseFloat(CommandPrompt.gotFromTerminal()));
                 networkClientModel.setResponse(true);
                 networkClientModel.setPingMessage(false);
                 networkClientModel.setFromTerminal(parsedStrings);
@@ -319,7 +319,7 @@ public class CliView implements View {
                                     networkClientModel.setTypeOfRequest(parsedStrings.get(0));
                                     networkClientModel.setResponse(true);
                                     networkClientModel.setPingMessage(false);
-                                    networkClientModel.setChoosedColor(color);
+                                    networkClientModel.setChosenColor(color);
                                     json = new Gson();
                                     isUsed = true;
                                     Network.send(json.toJson(networkClientModel));
@@ -362,8 +362,8 @@ public class CliView implements View {
                                     networkClientModel.setTypeOfRequest(parsedStrings.get(0));
                                     networkClientModel.setResponse(true);
                                     networkClientModel.setPingMessage(false);
-                                    networkClientModel.setChoosedColor(color);
-                                    networkClientModel.setChoosedIsland(Integer.parseInt(parsedStrings.get(2)) - 1);
+                                    networkClientModel.setChosenColor(color);
+                                    networkClientModel.setChosenIsland(Integer.parseInt(parsedStrings.get(2)) - 1);
                                     json = new Gson();
                                     isUsed = true;
                                     Network.send(json.toJson(networkClientModel));
@@ -406,7 +406,7 @@ public class CliView implements View {
                                     networkClientModel.setTypeOfRequest(parsedStrings.get(0));
                                     networkClientModel.setResponse(true);
                                     networkClientModel.setPingMessage(false);
-                                    networkClientModel.setChoosedColor(color);
+                                    networkClientModel.setChosenColor(color);
                                     json = new Gson();
                                     isUsed = true;
                                     Network.send(json.toJson(networkClientModel));
@@ -452,7 +452,7 @@ public class CliView implements View {
                                     networkClientModel.setTypeOfRequest(parsedStrings.get(0));
                                     networkClientModel.setResponse(true);
                                     networkClientModel.setPingMessage(false);
-                                    networkClientModel.setChoosedIsland(Integer.parseInt(parsedStrings.get(1)) - 1);
+                                    networkClientModel.setChosenIsland(Integer.parseInt(parsedStrings.get(1)) - 1);
                                     json = new Gson();
                                     isUsed = true;
                                     Network.send(json.toJson(networkClientModel));
@@ -644,7 +644,7 @@ public class CliView implements View {
                                 networkClientModel.setTypeOfRequest(parsedStrings.get(0));
                                 networkClientModel.setResponse(true);
                                 networkClientModel.setPingMessage(false);
-                                networkClientModel.setChoosedColor(Color);
+                                networkClientModel.setChosenColor(Color);
                                 json = new Gson();
                                 isUsed = true;
                                 Network.send(json.toJson(networkClientModel));
@@ -687,8 +687,8 @@ public class CliView implements View {
                                 networkClientModel.setTypeOfRequest(parsedStrings.get(0));
                                 networkClientModel.setResponse(true);
                                 networkClientModel.setPingMessage(false);
-                                networkClientModel.setChoosedColor(Color);
-                                networkClientModel.setChoosedIsland(Integer.parseInt(parsedStrings.get(2)) - 1);
+                                networkClientModel.setChosenColor(Color);
+                                networkClientModel.setChosenIsland(Integer.parseInt(parsedStrings.get(2)) - 1);
                                 json = new Gson();
                                 isUsed = true;
                                 Network.send(json.toJson(networkClientModel));
@@ -731,7 +731,7 @@ public class CliView implements View {
                                 networkClientModel.setTypeOfRequest(parsedStrings.get(0));
                                 networkClientModel.setResponse(true);
                                 networkClientModel.setPingMessage(false);
-                                networkClientModel.setChoosedColor(Color);
+                                networkClientModel.setChosenColor(Color);
                                 json = new Gson();
                                 isUsed = true;
                                 Network.send(json.toJson(networkClientModel));
@@ -777,7 +777,7 @@ public class CliView implements View {
                                 networkClientModel.setTypeOfRequest(parsedStrings.get(0));
                                 networkClientModel.setResponse(true);
                                 networkClientModel.setPingMessage(false);
-                                networkClientModel.setChoosedIsland(Integer.parseInt(parsedStrings.get(1)) - 1);
+                                networkClientModel.setChosenIsland(Integer.parseInt(parsedStrings.get(1)) - 1);
                                 json = new Gson();
                                 isUsed = true;
                                 Network.send(json.toJson(networkClientModel));
@@ -867,15 +867,15 @@ public class CliView implements View {
                             requestToMe();
                             break;
                         }
-                        if (networkClientModel.getServerModel().getCurrentPlayer().getChoosedCard().getMoves() < Integer.parseInt(CommandPrompt.gotFromTerminal())) {
+                        if (networkClientModel.getServerModel().getCurrentPlayer().getChosenCard().getMoves() < Integer.parseInt(CommandPrompt.gotFromTerminal())) {
                             System.out.println("Il numero di mosse da te inserito eccede il numero massimo di mosse di cui madre natura puo' spostarsi," +
-                                    " ovvero " + networkClientModel.getServerModel().getCurrentPlayer().getChoosedCard().getMoves());
+                                    " ovvero " + networkClientModel.getServerModel().getCurrentPlayer().getChosenCard().getMoves());
                             TimeUnit.SECONDS.sleep(2);
                             requestToMe();
                             return;
                         }
                         networkClientModel.setTypeOfRequest("MOTHER");
-                        networkClientModel.setChoosedMoves(Integer.parseInt(CommandPrompt.gotFromTerminal()));
+                        networkClientModel.setChosenMoves(Integer.parseInt(CommandPrompt.gotFromTerminal()));
                         networkClientModel.setResponse(true);
                         networkClientModel.setPingMessage(false);
                         networkClientModel.setFromTerminal(parsedStrings);
@@ -899,15 +899,15 @@ public class CliView implements View {
                         requestToMe();
                         break;
                     }
-                    if (networkClientModel.getServerModel().getCurrentPlayer().getChoosedCard().getMoves() < Integer.parseInt(CommandPrompt.gotFromTerminal())) {
+                    if (networkClientModel.getServerModel().getCurrentPlayer().getChosenCard().getMoves() < Integer.parseInt(CommandPrompt.gotFromTerminal())) {
                         System.out.println("Il numero di mosse da te inserito eccede il numero massimo di mosse di cui madre natura puo' spostarsi," +
-                                " ovvero " + networkClientModel.getServerModel().getCurrentPlayer().getChoosedCard().getMoves());
+                                " ovvero " + networkClientModel.getServerModel().getCurrentPlayer().getChosenCard().getMoves());
                         TimeUnit.SECONDS.sleep(2);
                         requestToMe();
                         return;
                     }
                     networkClientModel.setTypeOfRequest("MOTHER");
-                    networkClientModel.setChoosedMoves(Integer.parseInt(CommandPrompt.gotFromTerminal()));
+                    networkClientModel.setChosenMoves(Integer.parseInt(CommandPrompt.gotFromTerminal()));
                     networkClientModel.setResponse(true);
                     networkClientModel.setPingMessage(false);
                     networkClientModel.setFromTerminal(parsedStrings);
@@ -939,7 +939,7 @@ public class CliView implements View {
                     requestToMe();
                     return;
                 }
-                networkClientModel.setCloudChoosed(networkClientModel.getServerModel().getTable().getClouds().get(Integer.parseInt(CommandPrompt.gotFromTerminal()) - 1));
+                networkClientModel.setCloudChosen(networkClientModel.getServerModel().getTable().getClouds().get(Integer.parseInt(CommandPrompt.gotFromTerminal()) - 1));
                 networkClientModel.setResponse(true);
                 networkClientModel.setPingMessage(false);
                 networkClientModel.setFromTerminal(parsedStrings);
@@ -1059,12 +1059,12 @@ public class CliView implements View {
                 return true;
             }
             networkClientModel.setTypeOfRequest("ISLAND");
-            networkClientModel.setChoosedIsland(Integer.parseInt(CommandPrompt.gotFromTerminal()) - 1);
+            networkClientModel.setChosenIsland(Integer.parseInt(CommandPrompt.gotFromTerminal()) - 1);
         }
         networkClientModel.setTypeOfRequest(command);
         networkClientModel.setResponse(true);
         networkClientModel.setPingMessage(false);
-        networkClientModel.setChoosedColor(choosedColor);
+        networkClientModel.setChosenColor(choosedColor);
         json = new Gson();
         Network.send(json.toJson(networkClientModel));
         return false;
@@ -1109,7 +1109,7 @@ public class CliView implements View {
         switch (networkClientModel.getTypeOfRequest()) {
             case "CHOOSEASSISTANTCARD":
                 setResponse("Il giocatore " + networkClientModel.getNickname() + " ha scelto " +
-                        "la carta col valore = " + networkClientModel.getCardChoosedValue());
+                        "la carta col valore = " + networkClientModel.getCardChosenValue());
                 break;
             case "TEAMMATE":
                 setResponse("Il giocatore " + networkClientModel.getNickname() + " ha formato i teams:\n" +
@@ -1125,10 +1125,10 @@ public class CliView implements View {
                         networkClientModel.getChosenColor().toString() + " sull' isola numero " + (networkClientModel.getChosenIsland() + 1));
                 break;
             case "CHOOSEWHERETOMOVEMOTHER":
-                setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di spostare madre natura di " + networkClientModel.getChoosedMoves() + " mosse");
+                setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di spostare madre natura di " + networkClientModel.getChosenMoves() + " mosse");
                 break;
             case "CHOOSECLOUDS":
-                setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di ricaricare gli studenti dalla nuvola: " + networkClientModel.getCloudChoosed());
+                setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di ricaricare gli studenti dalla nuvola: " + networkClientModel.getCloudChosen());
                 break;
             case "MONK":
                 setResponse("L'utente " + networkClientModel.getNickname() + " ha scelto di usare la carta personaggio MONK, scegliendo come colore: " + networkClientModel.getChosenColor() + " e scegliendo come isola: " + networkClientModel.getChosenIsland() + "  (EFFETTO: Prendi uno studente da questa carta e piazzalo su un isola a tua scelta).");

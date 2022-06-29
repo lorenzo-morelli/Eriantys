@@ -4,7 +4,6 @@ import it.polimi.ingsw.client.view.cli.CommandPrompt;
 import it.polimi.ingsw.utils.observerPattern.Observer;
 import it.polimi.ingsw.utils.stateMachine.Event;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -17,7 +16,7 @@ public class NotRecognizedSetOfStrings extends Event implements Observer {
     private final CommandPrompt commandPrompt;
     private boolean enabled = false;
 
-    public NotRecognizedSetOfStrings(ArrayList<String> words) throws IOException {
+    public NotRecognizedSetOfStrings(ArrayList<String> words) {
         super("[None of the recognized options]");
         this.toListen = words;
         this.commandPrompt = CommandPrompt.getInstance();

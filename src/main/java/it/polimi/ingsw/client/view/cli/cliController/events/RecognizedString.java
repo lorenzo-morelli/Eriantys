@@ -4,8 +4,6 @@ import it.polimi.ingsw.client.view.cli.CommandPrompt;
 import it.polimi.ingsw.utils.observerPattern.Observer;
 import it.polimi.ingsw.utils.stateMachine.Event;
 
-import java.io.IOException;
-
 /**
  * The recognition event of a word entered by the user.
  * We want to be able to compare the string received from the cmd with a stored string,
@@ -19,7 +17,7 @@ public class RecognizedString extends Event implements Observer {
     private final CommandPrompt commandPrompt;
     private boolean enabled = false;
 
-    public RecognizedString(String message) throws IOException {
+    public RecognizedString(String message) {
         super("[Recognized the word " + message + "]");
         this.toListen = message;
         this.commandPrompt = CommandPrompt.getInstance();

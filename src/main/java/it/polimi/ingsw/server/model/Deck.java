@@ -36,12 +36,12 @@ public class Deck {
 
     /**
      * Remove card from the deck
-     * @param choosed card to delete
+     * @param chose card to delete
      * @return a boolean flag that represent the status of the operation
      */
-    public boolean remove(AssistantCard choosed) {
-        if (inDeck(choosed)) {
-            cards.removeIf(assistantCard -> assistantCard.equals(choosed));
+    public boolean remove(AssistantCard chose) {
+        if (inDeck(chose)) {
+            cards.removeIf(assistantCard -> assistantCard.equals(chose));
             return cards.size() == 0;
         }else {
             throw new IllegalArgumentException();

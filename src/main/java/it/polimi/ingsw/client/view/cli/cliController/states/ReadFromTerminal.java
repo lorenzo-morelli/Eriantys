@@ -18,11 +18,12 @@ public class ReadFromTerminal extends State {
     final View view;
     final String type;
     @SuppressWarnings("unused")
+    final
     ParametersFromTerminal fromTerminal;
     final IncorrectNumberOfParameters numberOfParametersIncorrect;
     final Event insertedParameters;
 
-    public ReadFromTerminal(View view, ClientModel clientModel, Controller controller, int numOfParameters, String type) throws IOException {
+    public ReadFromTerminal(View view, ClientModel clientModel, Controller controller, int numOfParameters, String type) {
         super("[STATO di lettura di " + numOfParameters + " parametri da terminale interpretati come :"+ type+ "]");
         this.view = view;
         this.clientModel = clientModel;

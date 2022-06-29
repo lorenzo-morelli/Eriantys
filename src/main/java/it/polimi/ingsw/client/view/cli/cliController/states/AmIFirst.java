@@ -83,13 +83,13 @@ public class AmIFirst extends State {
             return super.entryAction(cause);
         }
 
-        if (clientModel.getAmIfirst() == null) {
+        if (clientModel.getAmFirst() == null) {
             nicknameAlreadyPresent.fireStateEvent();
             //System.out.println("   il nickname era già presente !!!]");
-        } else if (clientModel.getAmIfirst().equals(true)) {
+        } else if (clientModel.getAmFirst().equals(true)) {
             yes.fireStateEvent();
             //System.out.println("   sono primo !!!]");
-        } else if (clientModel.getAmIfirst().equals(false)) {
+        } else if (clientModel.getAmFirst().equals(false)) {
 
             System.out.println("In attesa che gli altri giocatori si colleghino...");
             no.fireStateEvent();

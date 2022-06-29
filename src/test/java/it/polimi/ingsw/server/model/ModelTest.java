@@ -29,7 +29,7 @@ class ModelTest {
         assertEquals("pippo", model.getPlayers().get(0).getNickname());
         assertEquals("192.168.0.1", model.getPlayers().get(0).getIp());
         assertEquals(10, model.getPlayers().get(0).getAvailableCards().getCardsList().size());
-        assertNull(model.getPlayers().get(0).getChoosedCard());
+        assertNull(model.getPlayers().get(0).getChosenCard());
         assertEquals(0, model.getPlayers().get(0).getSchoolBoard().getDinnerTable().size());
         assertEquals(7, model.getPlayers().get(0).getSchoolBoard().getEntranceSpace().size());
         assertEquals(8, model.getPlayers().get(0).getSchoolBoard().getNumOfTowers());
@@ -38,7 +38,7 @@ class ModelTest {
         assertEquals("paperino", model.getPlayers().get(1).getNickname());
         assertEquals("192.168.0.2", model.getPlayers().get(1).getIp());
         assertEquals(10, model.getPlayers().get(1).getAvailableCards().getCardsList().size());
-        assertNull(model.getPlayers().get(1).getChoosedCard());
+        assertNull(model.getPlayers().get(1).getChosenCard());
         assertEquals(0, model.getPlayers().get(1).getSchoolBoard().getDinnerTable().size());
         assertEquals(7, model.getPlayers().get(1).getSchoolBoard().getEntranceSpace().size());
         assertTrue((model.getPlayers().get(1).getSchoolBoard().getTowerColor().equals(TowerColor.BLACK) || model.getPlayers().get(1).getSchoolBoard().getTowerColor().equals(TowerColor.WHITE)) && !(model.getPlayers().get(1).getSchoolBoard().getTowerColor().equals(model.getPlayers().get(0).getSchoolBoard().getTowerColor())));
@@ -98,7 +98,7 @@ class ModelTest {
         assertEquals("pippo", model.getPlayers().get(0).getNickname());
         assertEquals("192.168.0.1", model.getPlayers().get(0).getIp());
         assertEquals(10, model.getPlayers().get(0).getAvailableCards().getCardsList().size());
-        assertNull(model.getPlayers().get(0).getChoosedCard());
+        assertNull(model.getPlayers().get(0).getChosenCard());
         assertEquals(0, model.getPlayers().get(0).getSchoolBoard().getDinnerTable().size());
         assertEquals(9, model.getPlayers().get(0).getSchoolBoard().getEntranceSpace().size());
         assertEquals(6, model.getPlayers().get(0).getSchoolBoard().getNumOfTowers());
@@ -108,7 +108,7 @@ class ModelTest {
         assertEquals("paperino", model.getPlayers().get(1).getNickname());
         assertEquals("192.168.0.2", model.getPlayers().get(1).getIp());
         assertEquals(10, model.getPlayers().get(1).getAvailableCards().getCardsList().size());
-        assertNull(model.getPlayers().get(1).getChoosedCard());
+        assertNull(model.getPlayers().get(1).getChosenCard());
         assertEquals(0, model.getPlayers().get(1).getSchoolBoard().getDinnerTable().size());
         assertEquals(9, model.getPlayers().get(1).getSchoolBoard().getEntranceSpace().size());
         assertTrue((model.getPlayers().get(1).getSchoolBoard().getTowerColor().equals(TowerColor.BLACK) || model.getPlayers().get(1).getSchoolBoard().getTowerColor().equals(TowerColor.WHITE) || TowerColor.GREY == model.getPlayers().get(1).getSchoolBoard().getTowerColor()) && !(model.getPlayers().get(1).getSchoolBoard().getTowerColor().equals(model.getPlayers().get(0).getSchoolBoard().getTowerColor())));
@@ -118,7 +118,7 @@ class ModelTest {
         assertEquals("pluto", model.getPlayers().get(2).getNickname());
         assertEquals("192.168.0.3", model.getPlayers().get(2).getIp());
         assertEquals(10, model.getPlayers().get(2).getAvailableCards().getCardsList().size());
-        assertNull(model.getPlayers().get(2).getChoosedCard());
+        assertNull(model.getPlayers().get(2).getChosenCard());
         assertEquals(0, model.getPlayers().get(2).getSchoolBoard().getDinnerTable().size());
         assertEquals(9, model.getPlayers().get(2).getSchoolBoard().getEntranceSpace().size());
         assertTrue((model.getPlayers().get(2).getSchoolBoard().getTowerColor().equals(TowerColor.BLACK) || model.getPlayers().get(2).getSchoolBoard().getTowerColor().equals(TowerColor.WHITE) || TowerColor.GREY == model.getPlayers().get(2).getSchoolBoard().getTowerColor()) && !(model.getPlayers().get(2).getSchoolBoard().getTowerColor().equals(model.getPlayers().get(1).getSchoolBoard().getTowerColor())) && !(model.getPlayers().get(2).getSchoolBoard().getTowerColor().equals(model.getPlayers().get(0).getSchoolBoard().getTowerColor())));
@@ -190,7 +190,7 @@ class ModelTest {
         assertEquals("pippo", model.getPlayers().get(0).getNickname());
         assertEquals("192.168.0.1", model.getPlayers().get(0).getIp());
         assertEquals(10, model.getPlayers().get(0).getAvailableCards().getCardsList().size());
-        assertNull(model.getPlayers().get(0).getChoosedCard());
+        assertNull(model.getPlayers().get(0).getChosenCard());
         assertEquals(0, model.getPlayers().get(0).getSchoolBoard().getDinnerTable().size());
         assertEquals(7, model.getPlayers().get(0).getSchoolBoard().getEntranceSpace().size());
         assertEquals(8, model.getPlayers().get(0).getSchoolBoard().getNumOfTowers());
@@ -200,7 +200,7 @@ class ModelTest {
         assertEquals("paperino", model.getPlayers().get(1).getNickname());
         assertEquals("192.168.0.2", model.getPlayers().get(1).getIp());
         assertEquals(10, model.getPlayers().get(1).getAvailableCards().getCardsList().size());
-        assertNull(model.getPlayers().get(1).getChoosedCard());
+        assertNull(model.getPlayers().get(1).getChosenCard());
         assertEquals(0, model.getPlayers().get(1).getSchoolBoard().getDinnerTable().size());
         assertEquals(7, model.getPlayers().get(1).getSchoolBoard().getEntranceSpace().size());
         assertTrue((model.getPlayers().get(1).getSchoolBoard().getTowerColor().equals(TowerColor.BLACK) || model.getPlayers().get(1).getSchoolBoard().getTowerColor().equals(TowerColor.WHITE)) && !(model.getPlayers().get(1).getSchoolBoard().getTowerColor().equals(model.getPlayers().get(0).getSchoolBoard().getTowerColor())));
@@ -210,7 +210,7 @@ class ModelTest {
         assertEquals("pluto", model.getPlayers().get(2).getNickname());
         assertEquals("192.168.0.3", model.getPlayers().get(2).getIp());
         assertEquals(10, model.getPlayers().get(2).getAvailableCards().getCardsList().size());
-        assertNull(model.getPlayers().get(2).getChoosedCard());
+        assertNull(model.getPlayers().get(2).getChosenCard());
         assertEquals(0, model.getPlayers().get(2).getSchoolBoard().getDinnerTable().size());
         assertEquals(7, model.getPlayers().get(2).getSchoolBoard().getEntranceSpace().size());
         assertTrue((model.getPlayers().get(2).getSchoolBoard().getTowerColor().equals(TowerColor.BLACK) || model.getPlayers().get(2).getSchoolBoard().getTowerColor().equals(TowerColor.WHITE)) && (model.getPlayers().get(2).getSchoolBoard().getTowerColor().equals(model.getPlayers().get(0).getSchoolBoard().getTowerColor())));
@@ -220,7 +220,7 @@ class ModelTest {
         assertEquals("minnie", model.getPlayers().get(3).getNickname());
         assertEquals("192.168.0.4", model.getPlayers().get(3).getIp());
         assertEquals(10, model.getPlayers().get(3).getAvailableCards().getCardsList().size());
-        assertNull(model.getPlayers().get(3).getChoosedCard());
+        assertNull(model.getPlayers().get(3).getChosenCard());
         assertEquals(0, model.getPlayers().get(3).getSchoolBoard().getDinnerTable().size());
         assertEquals(7, model.getPlayers().get(3).getSchoolBoard().getEntranceSpace().size());
         assertTrue((model.getPlayers().get(3).getSchoolBoard().getTowerColor().equals(TowerColor.BLACK) || model.getPlayers().get(3).getSchoolBoard().getTowerColor().equals(TowerColor.WHITE)) && (model.getPlayers().get(3).getSchoolBoard().getTowerColor().equals(model.getPlayers().get(1).getSchoolBoard().getTowerColor())));
@@ -371,8 +371,8 @@ class ModelTest {
 
         assertEquals(model.playerWinner(), "PAREGGIO");
 
-        model.getPlayers().get(1).setChoosedCard(model.getPlayers().get(0).getAvailableCards().getCardsList().get(0));
-        model.getPlayers().get(0).setChoosedCard(model.getPlayers().get(0).getAvailableCards().getCardsList().get(1));
+        model.getPlayers().get(1).setChosenCard(model.getPlayers().get(0).getAvailableCards().getCardsList().get(0));
+        model.getPlayers().get(0).setChosenCard(model.getPlayers().get(0).getAvailableCards().getCardsList().get(1));
 
         assertEquals("pippo", model.getPlayers().get(1).getNickname());
         model.schedulePlayers();
@@ -481,10 +481,10 @@ class ModelTest {
 
         assertEquals(model.teamWinner(), "PAREGGIO");
 
-        model.getPlayers().get(1).setChoosedCard(model.getPlayers().get(0).getAvailableCards().getCardsList().get(0));
-        model.getPlayers().get(0).setChoosedCard(model.getPlayers().get(0).getAvailableCards().getCardsList().get(1));
-        model.getPlayers().get(2).setChoosedCard(model.getPlayers().get(0).getAvailableCards().getCardsList().get(5));
-        model.getPlayers().get(3).setChoosedCard(model.getPlayers().get(0).getAvailableCards().getCardsList().get(6));
+        model.getPlayers().get(1).setChosenCard(model.getPlayers().get(0).getAvailableCards().getCardsList().get(0));
+        model.getPlayers().get(0).setChosenCard(model.getPlayers().get(0).getAvailableCards().getCardsList().get(1));
+        model.getPlayers().get(2).setChosenCard(model.getPlayers().get(0).getAvailableCards().getCardsList().get(5));
+        model.getPlayers().get(3).setChosenCard(model.getPlayers().get(0).getAvailableCards().getCardsList().get(6));
 
         assertEquals("pippo", model.getPlayers().get(1).getNickname());
         model.schedulePlayers();
@@ -833,15 +833,15 @@ class ModelTest {
         model.getPlayers().add(new Player("pippo", "192.168.0.1", model, true));
 
         Player player = model.getPlayers().get(0);
-        player.setChoosedCard(player.getAvailableCards().getCardsList().get(0));
+        player.setChosenCard(player.getAvailableCards().getCardsList().get(0));
         int coins = player.getCoins();
 
         for (int i = 0; i < model.getTable().getCharacters().size(); i++) {
             if (model.getTable().getCharacters().get(i) instanceof Postman) {
                 assertEquals(player.getCoins(), coins);
-                assertEquals(player.getChoosedCard().getMoves(), 1);
+                assertEquals(player.getChosenCard().getMoves(), 1);
                 ((Postman) model.getTable().getCharacters().get(i)).useEffect(model.getPlayers().get(0));
-                assertEquals(player.getChoosedCard().getMoves(), 3);
+                assertEquals(player.getChosenCard().getMoves(), 3);
                 assertEquals(player.getCoins(), coins - 1);
                 coins = player.getCoins();
             }
@@ -855,7 +855,7 @@ class ModelTest {
         model.getPlayers().add(new Player("pippo", "192.168.0.1", model, true));
 
         Player player = model.getPlayers().get(0);
-        player.setChoosedCard(player.getAvailableCards().getCardsList().get(0));
+        player.setChosenCard(player.getAvailableCards().getCardsList().get(0));
         int coins = player.getCoins();
 
         for (int i = 0; i < model.getTable().getCharacters().size(); i++) {
