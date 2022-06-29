@@ -1,7 +1,6 @@
 package it.polimi.ingsw.utils.network.events;
 
 import it.polimi.ingsw.utils.network.Network;
-import it.polimi.ingsw.utils.other.DoubleObject;
 import it.polimi.ingsw.utils.stateMachine.Event;
 import javafx.application.Platform;
 
@@ -91,13 +90,13 @@ public class ParametersFromNetwork extends Event implements DocumentListener {
 
         while (!parametersReceived) {
             if (System.currentTimeMillis() >= time) {
-                Platform.runLater(() -> Platform.exitNestedEventLoop(PAUSE_KEY, new DoubleObject(this, true)));
+                Platform.runLater(() -> Platform.exitNestedEventLoop(PAUSE_KEY, new ResultOfWaiting(this, true)));
                 return;
             }
             wait(5000);
 
         }
-        Platform.runLater(() -> Platform.exitNestedEventLoop(PAUSE_KEY, new DoubleObject(this, false)));
+        Platform.runLater(() -> Platform.exitNestedEventLoop(PAUSE_KEY, new ResultOfWaiting(this, false)));
     }
 
     public synchronized void enable() {

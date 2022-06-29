@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
-import it.polimi.ingsw.utils.other.DoubleObject;
+import it.polimi.ingsw.utils.network.events.ResultOfWaiting;
 import javafx.application.Platform;
 
 import java.util.concurrent.TimeUnit;
@@ -33,7 +33,7 @@ public class SendModelAndGetResponse {
                 }
             });
             t.start();
-            boolean check = ((DoubleObject) Platform.enterNestedEventLoop(PAUSE_KEY)).isResp();
+            boolean check = ((ResultOfWaiting) Platform.enterNestedEventLoop(PAUSE_KEY)).isNotArrived();
             if (check) {
                 return null;
             }

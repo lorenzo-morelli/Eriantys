@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.utils.network.Network;
 import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
-import it.polimi.ingsw.utils.other.DoubleObject;
+import it.polimi.ingsw.utils.network.events.ResultOfWaiting;
 import javafx.application.Platform;
 
 import java.io.IOException;
@@ -55,9 +55,9 @@ public class ConnectionToServer {
                     }
                 });
                 thread.start();
-                DoubleObject response = ((DoubleObject) Platform.enterNestedEventLoop(PAUSE_KEY));
-                boolean check = response.isResp();
-                message = response.getParam();
+                ResultOfWaiting response = ((ResultOfWaiting) Platform.enterNestedEventLoop(PAUSE_KEY));
+                boolean check = response.isNotArrived();
+                message = response.getMessage();
                 if (check && waitForFirst) {
                     waiting(System.currentTimeMillis() + 40000L);
                     return;
