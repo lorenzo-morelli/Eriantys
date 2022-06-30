@@ -30,6 +30,10 @@ TODO: inserire uml finale
 ## Interazioni tra controllore del client e del server
 [Documentazione BPMN](https://github.com/lorenzo-morelli/ing-sw-2022-morelli-morea-netodellacqua/blob/main/deliverables/principiant_game.bpmn)
 
+## Peer review ricevute
+[Protocol](https://github.com/lorenzo-morelli/ing-sw-2022-morelli-morea-netodellacqua/blob/main/deliverables/peer_review_ricevuto_protocol.pdf)
+[UML](https://github.com/lorenzo-morelli/ing-sw-2022-morelli-morea-netodellacqua/blob/main/deliverables/peer_review_ricevuto.pdf)
+
 
 ## Testing e coverage
 Sono stati effettuati testing di coverage con Junit con copertura pari all'86% dei metodi ed all'82% delle righe di codice del Model.  
