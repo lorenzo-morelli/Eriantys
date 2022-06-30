@@ -369,7 +369,7 @@ class ModelTest {
         model.getPlayers().add(new Player("paperino", "192.168.0.2", model, false));
         model.getPlayers().add(new Player("pippo", "192.168.0.1", model, false));
 
-        assertEquals(model.playerWinner(), "PAREGGIO");
+        assertEquals(model.playerWinner(), "DRAW");
 
         model.getPlayers().get(1).setChosenCard(model.getPlayers().get(0).getAvailableCards().getCardsList().get(0));
         model.getPlayers().get(0).setChosenCard(model.getPlayers().get(0).getAvailableCards().getCardsList().get(1));
@@ -479,7 +479,7 @@ class ModelTest {
         model.getPlayers().add(new Player("paperino2", "192.168.0.2", 1, model, false));
         model.getPlayers().add(new Player("pippo2", "192.168.0.1", 2, model, false));
 
-        assertEquals(model.teamWinner(), "PAREGGIO");
+        assertEquals(model.teamWinner(), "DRAW");
 
         model.getPlayers().get(1).setChosenCard(model.getPlayers().get(0).getAvailableCards().getCardsList().get(0));
         model.getPlayers().get(0).setChosenCard(model.getPlayers().get(0).getAvailableCards().getCardsList().get(1));
@@ -574,7 +574,7 @@ class ModelTest {
         assertEquals(model.getPlayers().get(0).getSchoolBoard().getTowerColor(), model.getTable().getIslands().get(2).getTowerColor());
         assertEquals(model.getTeams().get(1).getPlayer1().getSchoolBoard().getTowerColor(), model.getTable().getIslands().get(2).getTowerColor());
 
-        String winner = model.getPlayers().get(0).getNickname() + "+" + model.getTeams().get(1).getPlayer2().getNickname();
+        String winner = model.getPlayers().get(0).getNickname() + " AND " + model.getTeams().get(1).getPlayer2().getNickname();
 
         model.getPlayers().get(0).getSchoolBoard().loadEntrance(model.getTable().getClouds().get(0), model.getTable().getClouds());
         assertEquals(model.getTable().getClouds().get(0).getStudentsAccumulator().size(), 0);
