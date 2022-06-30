@@ -1,7 +1,6 @@
 package it.polimi.ingsw.client.view.gui;
 
 import com.google.gson.Gson;
-import it.polimi.ingsw.client.GUI;
 import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.server.model.Cloud;
 import it.polimi.ingsw.server.model.characters.CharacterCard;
@@ -17,7 +16,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 
 /**
  * GUI View
@@ -73,7 +71,7 @@ public class GuiView extends Application {
         this.stage = (Stage) currNode.getScene().getWindow();
         this.scene = new Scene(loader.load());
         this.stage.setScene(scene);
-        this.stage.setMaximized(newScene.equals("Game"));
+        this.stage.setMaximized(newScene.equals("Game") || newScene.equals("TryToReconnect"));
         this.stage.show();
     }
 
