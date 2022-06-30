@@ -17,6 +17,13 @@ Il client è stato implementato sia nella versione command line interface (CLI),
 
 [UML iniziale](https://github.com/lorenzo-morelli/ing-sw-2022-morelli-morea-netodellacqua/blob/main/deliverables/Initial_UML_Eriantys_morelli_morea_netodellacqua.pdf)
 TODO: inserire uml finale
+
+## Socket
+
+[Sequence diagrams finali](https://github.com/lorenzo-morelli/ing-sw-2022-morelli-morea-netodellacqua/blob/main/deliverables/protocol_final_documentation.pdf)
+[documentazione iniziale](https://github.com/lorenzo-morelli/ing-sw-2022-morelli-morea-netodellacqua/blob/main/deliverables/protocol_initial_documentation.pdf)
+TODO: inserire uml finale
+
 ## Testing e coverage
 Sono stati effettuati testing di coverage con Junit con copertura pari all'86% dei metodi ed all'82% delle righe di codice del Model.  
 ![](https://i.ibb.co/M7dvkmN/Senza-titolo.png)
