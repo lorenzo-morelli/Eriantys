@@ -239,8 +239,9 @@ public class CliView implements View {
                     CommandPrompt.ask("Choose the color of the student you want to move OR insert CARD to use a character card", "RED or GREEN or BLUE or YELLOW or PINK or CARD: ");
 
                     PeopleColor chosenColor= chosenColorManagement();
+                    String fromTerminal= CommandPrompt.gotFromTerminal();
 
-                    if(chosenColor==null && !CommandPrompt.gotFromTerminal().equals("CARD")){
+                    if(chosenColor==null && !fromTerminal.equals("CARD")){
                         System.out.println("ALERT: You have not entered either an valid color or the CARD command, please try again");
                         TimeUnit.SECONDS.sleep(1);
                         requestToMe();
@@ -256,7 +257,7 @@ public class CliView implements View {
                         }
                     }
 
-                    if (!CommandPrompt.gotFromTerminal().equals("CARD")) {
+                    if (!fromTerminal.equals("CARD")) {
                         boolean ResultOfSchoolOrIsland =schoolOrIslandChooseManagement(chosenColor);
                         if (ResultOfSchoolOrIsland) {
                             TimeUnit.SECONDS.sleep(1);
@@ -409,7 +410,7 @@ public class CliView implements View {
                     available.add("MONK");
                 }
                 if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("PRINCESS")) {
-                    System.out.println("PRINCESS - EFFECT: Take a student from this card and place it in your Room.\n" + "COMMAND: Enter PRINCESS and chosen color separated by a space.\n\n");
+                    System.out.println("PRINCESS - EFFECT: Take a student from this card and place it in your Dinner.\n" + "COMMAND: Enter PRINCESS and chosen color separated by a space.\n\n");
                     available.add("PRINCESS");
                 }
                 if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("MUSHROOMHUNTER")) {
@@ -417,7 +418,7 @@ public class CliView implements View {
                     available.add("MUSHROOMHUNTER");
                 }
                 if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("THIEF")) {
-                    System.out.println("THIEF - EFFECT: Choose a student color; each player (including you) must return to the bag three students of that color present in the Room (or all those who have if he had less than three).\n" + "COMMAND: Enter THIEF and chosen color separated by a space\n\n");
+                    System.out.println("THIEF - EFFECT: Choose a student color; each player (including you) must return to the bag three students of that color present in the Dinner (or all those who have if he had less than three).\n" + "COMMAND: Enter THIEF and chosen color separated by a space\n\n");
                     available.add("THIEF");
                 }
                 if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("FARMER")) {
@@ -441,15 +442,15 @@ public class CliView implements View {
                     available.add("GRANNY");
                 }
                 if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("HERALD")) {
-                    System.out.println("HERALD - EFFECT: Choose an island and calculate the majority as if mother nature had finished her movement there. In this turn mother nature will move, as usual, and in the island where her movement will end, the majority will normally be calculated.\nCOMMAND: Enter HERALD and island number separated by a space.\n\n");
+                    System.out.println("HERALD - EFFECT: Choose an island and calculate the influence as if mother nature had finished her movement there. In this turn mother nature will move, as usual, and in the island where her movement will end the influence will normally be calculated.\nCOMMAND: Enter HERALD and island number separated by a space.\n\n");
                     available.add("HERALD");
                 }
                 if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("JESTER")) {
-                    System.out.println("JESTER - EFFECT: You can take up to 3 students from this card and exchange them with as many students present in your Entry.\n" + "COMMAND: enter JESTER , below the colors to be exchanged from Input and then the colors to be exchanged from this Card, all separated by a space (the number of colors of one and the other must be the same).\n\n");
+                    System.out.println("JESTER - EFFECT: You can take up to 3 students from this card and exchange them with as many students present in your Entry.\n" + "COMMAND: enter JESTER , below the colors to be exchanged from Entrance and then the colors to be exchanged from this Card, all separated by a space (the number of colors of one and the other must be the same).\n\n");
                     available.add("JESTER");
                 }
                 if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("MINSTRELL")) {
-                    System.out.println("MINSTRELL - EFFECT: You can exchange up to two students in your Hall and Entrance.\n" + "COMMAND: Enter MINSTRELL , below the colors to be exchanged from Input and then the colors to be exchanged from Room all separated by a space (the number of colors of one and the other must be the same).\n\n");
+                    System.out.println("MINSTRELL - EFFECT: You can exchange up to two students in your Dinner and Entrance.\n" + "COMMAND: Enter MINSTRELL , below the colors to be exchanged from Entrance and then the colors to be exchanged from Dinner all separated by a space (the number of colors of one and the other must be the same).\n\n");
                     available.add("MINSTRELL");
                 }
             }
