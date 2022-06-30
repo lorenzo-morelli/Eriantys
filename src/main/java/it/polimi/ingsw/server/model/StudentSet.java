@@ -78,6 +78,7 @@ public class StudentSet {
     }
 
     public int numStudentsByColor(PeopleColor color) {
+        if (color == null) return 0;
         switch (color) {
             case BLUE:
                 return numOfBlueStudents;
