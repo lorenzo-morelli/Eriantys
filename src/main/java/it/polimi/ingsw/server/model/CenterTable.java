@@ -33,6 +33,10 @@ public class CenterTable {
     public static final String ANSI_CYAN = "\033[0;36m";
     public static final String ANSI_RESET = "\u001B[0m";
 
+    /**
+     * The constructor permit to Set up the Table as declared in the rules in function of numOfPlayers and game mode
+     * @param debug is used for testing to unlock all the 12 cards (and not only 3)
+     */
     public CenterTable(int numOfPlayers, GameMode gamemode, boolean debug) {
 
         islands = new ArrayList<>();
@@ -180,7 +184,7 @@ public class CenterTable {
     }
 
     /**
-     * Method to change the professor of the player
+     * Method permit to change the professor of the player
      * @param player the player
      * @param color color to update the professor
      */
@@ -195,7 +199,7 @@ public class CenterTable {
     }
 
     /**
-     * Method to move mother nature of n position.
+     * Method permits to move mother nature of n position.
      * Modular arithmetic is used, considering the islands are "cyclical"
      * (mother nature can return to the same island several times going forward)
      * @param moves number of moves that mother nature has to do
@@ -209,7 +213,7 @@ public class CenterTable {
     }
 
     /**
-     * Load the specified island with the data passed as argument
+     * Add at the specified island inhabitants the color passed as argument and remove the color from the entrance of the player
      * @param player the player
      * @param color the color
      * @param index_island the index of the island
@@ -221,7 +225,7 @@ public class CenterTable {
     }
 
     /**
-     * Check who has the professor and change the holding of it under specific condition (see the rules)
+     * Check who has the professor and change the holding of it if it's needed (i.e. if someone hase more color in dinner or by specific cases for example by using cards . See the rules to better understand)
      * @param color the color to check
      * @param players list of players
      */
@@ -243,7 +247,8 @@ public class CenterTable {
     }
 
     /**
-     * Method to conquest an island
+     * Method to conquest an island. The method permit to change all the tower on the island (and consequently re-add those in the School of the player) with
+     * the tower of the influence_player (who conquest the island) and remove latter from the School.
      * @param index_island index of the island to conquest
      * @param players players list
      * @param influence_player player with the influence
@@ -261,7 +266,7 @@ public class CenterTable {
     }
 
     /**
-     * Similar to the precedent method, but for the 4 game mode
+     * Similar to the conquestIsland method, but with 4 player rules
      * @param index_island index of the island
      * @param teams teams list
      * @param influence_team team with the influence
@@ -299,6 +304,11 @@ public class CenterTable {
         return clouds;
     }
 
+    /**
+     * This method permit to print all the Table graphics for the CLI View
+     * @param isLastTurn = this flag set as true hide the view of the bag and of the clouds
+     * @return the Table View
+     */
     public String toString(boolean isLastTurn) {
         return "-----------------------------------------TABLE----------------------------------------------------------------------------------------------------------------------------------------\n" +
                 "\n----------------ISLANDS---------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n" + printIslands() + (!isLastTurn ? "------------------BAG-----------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n" +
@@ -310,6 +320,11 @@ public class CenterTable {
                 printProfessors() + "\n\n--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n";
     }
 
+    /**
+     * Util method for the CLI View graphics to represent the clouds
+     * @return Clouds View
+     */
+
     public String printClouds() {
         StringBuilder result = new StringBuilder();
         int i = 1;
@@ -319,6 +334,11 @@ public class CenterTable {
         }
         return result.toString();
     }
+
+    /**
+     * Util method for the CLI View graphics to represent the character cards
+     * @return Characters Card View
+     */
 
     public String printCharacter() {
         StringBuilder result = new StringBuilder();
@@ -335,7 +355,7 @@ public class CenterTable {
                     result.append("    STUDENTS:   ").append(monkSet.toString()).append("\n\n");
                     break;
                 case "GRANNY":
-                    result.append("    DIVIETI:   ").append(numDivieti).append("\n\n");
+                    result.append("    BANS:   ").append(numDivieti).append("\n\n");
                     break;
                 default:
                     result.append("\n\n");
@@ -344,6 +364,11 @@ public class CenterTable {
         }
         return result.toString();
     }
+
+    /**
+     * Util method for the CLI View graphics to represent the islands
+     * @return Islands View
+     */
 
     public String printIslands() {
         StringBuilder result = new StringBuilder();
@@ -359,6 +384,11 @@ public class CenterTable {
         }
         return result.toString();
     }
+
+    /**
+     * Util method for the CLI View to represent the professors
+     * @return ProfessorsView
+     */
 
     public String printProfessors() {
         StringBuilder result = new StringBuilder();

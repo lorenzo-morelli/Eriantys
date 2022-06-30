@@ -3,6 +3,7 @@ import it.polimi.ingsw.server.model.Player;
 
 /**
  * This class contain the methods to use the character POSTMAN described in the rules
+ * @author Ignazio Neto Dell'Acqua
  */
 public class Postman extends CharacterCard{
 
@@ -12,6 +13,6 @@ public class Postman extends CharacterCard{
     public void useEffect(Player player) {
         player.reduceCoin(getCost());
         improveCost();
-        player.getChosenCard().improveMoves(2);
+        player.getChosenCard().increaseMoves(2);
     }
 }

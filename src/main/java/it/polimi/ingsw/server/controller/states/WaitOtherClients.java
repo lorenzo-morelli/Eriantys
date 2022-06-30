@@ -14,6 +14,8 @@ import it.polimi.ingsw.utils.stateMachine.State;
 /**
  * State in which the server is waiting for the remaining n - 1 players, where n is the number
  * of players chosen by the first player when selecting game modes.
+ * @author Ignazio Neto Dell'Acqua
+ * @author Fernando Morea
  */
 
 public class WaitOtherClients extends State {
@@ -40,13 +42,16 @@ public class WaitOtherClients extends State {
 
     /**
      * Events callers
-     *
-     * @return different events in order to change to different phase
+     * @return twoOrThreeClientsConnected event in order to trigger the fsm machine
      */
     public Event twoOrThreeClientsConnected() {
         return twoOrThreeClientsConnected;
     }
 
+    /**
+     * Events callers
+     * @return fourClientsConnected event in order to trigger the fsm machine
+     */
     public Event fourClientsConnected() {
         return fourClientsConnected;
     }

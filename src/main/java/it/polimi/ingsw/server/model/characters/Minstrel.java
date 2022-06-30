@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 /**
  * This class contain the methods to use the character MINSTREL described in the rules
+ * @author Ignazio Neto Dell'Acqua
  */
 public class Minstrel extends CharacterCard{
     public Minstrel(){

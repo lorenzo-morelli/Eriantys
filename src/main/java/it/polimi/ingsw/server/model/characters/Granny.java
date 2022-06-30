@@ -5,6 +5,7 @@ import it.polimi.ingsw.server.model.Player;
 
 /**
  * This class contain the info and the methods to use the card GRANNY described in the rules
+ * @author Ignazio Neto Dell'Acqua
  */
 public class Granny extends CharacterCard{
 

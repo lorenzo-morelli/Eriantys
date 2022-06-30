@@ -10,6 +10,7 @@ import java.util.ConcurrentModificationException;
 
 /**
  * Thread for Student Phase pings
+ * @author Ignazio Neto Dell'Acqua
  */
 public class StudentThread extends Thread {
     private final StudentPhase phase;

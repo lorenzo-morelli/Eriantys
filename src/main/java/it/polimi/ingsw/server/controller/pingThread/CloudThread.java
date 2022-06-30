@@ -10,6 +10,7 @@ import java.util.ConcurrentModificationException;
 
 /**
  * Thread for Cloud Phase pings
+ * @author Ignazio Neto Dell'Acqua
  */
 public class CloudThread extends Thread {
     private final CloudPhase phase;

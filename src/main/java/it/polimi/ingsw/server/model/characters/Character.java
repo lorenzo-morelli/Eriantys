@@ -2,6 +2,7 @@ package it.polimi.ingsw.server.model.characters;
 
 /**
  * Enums differentiate the different Character Card
+ * @author Ignazio Neto Dell'Acqua
  */
 public enum Character {
     KNIGHT,

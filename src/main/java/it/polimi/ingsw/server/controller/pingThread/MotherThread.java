@@ -11,6 +11,7 @@ import java.util.ConcurrentModificationException;
 
 /**
  * Thread for Mother Phase pings
+ * @author Ignazio Neto Dell'Acqua
  */
 public class MotherThread extends Thread {
     private final MotherPhase phase;

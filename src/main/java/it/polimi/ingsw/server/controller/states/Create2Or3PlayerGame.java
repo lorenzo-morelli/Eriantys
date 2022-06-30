@@ -19,14 +19,16 @@ import static java.lang.Thread.sleep;
 
 /**
  * Handles the creation of a new game (server side setup of the model)
+ * @author Ignazio Neto Dell'Acqua
+ * @author Fernando Morea
  */
-public class CreateGame extends State {
+public class Create2Or3PlayerGame extends State {
     private final Event gameCreated, fourPlayersGameCreated;
     private Model model;
     private final ConnectionModel connectionModel;
     private final ServerController serverController;
 
-    public CreateGame(ServerController serverController) {
+    public Create2Or3PlayerGame(ServerController serverController) {
         super("[Create game]");
         this.serverController = serverController;
         Controller controller = ServerController.getFsm();
@@ -40,14 +42,16 @@ public class CreateGame extends State {
 
     /**
      * Events callers
-     *
-     * @return different events in order to change to different phase
+     * @return gameCreated event in order to trigger the fsm machine
      */
-
     public Event gameCreated() {
         return gameCreated;
     }
 
+    /**
+     * Events callers
+     * @return fourPlayersGameCreated event in order to trigger the fsm machine
+     */
     public Event fourPlayersGameCreated() {
         return fourPlayersGameCreated;
     }
@@ -56,6 +60,12 @@ public class CreateGame extends State {
         return model;
     }
 
+    /**
+     * Create the model (3/2 players only, for the 4 players one the controller use the @Create4PlayerGame phase) passing the numberOfPlayer and gameMode chosen , add all the player on it
+     * @param cause the event that caused the controller transition in this state
+     * @return null event
+     * @throws Exception input output or network related exceptions
+     */
     @Override
     public IEvent entryAction(IEvent cause) throws Exception {
         model = new Model(connectionModel.getNumOfPlayers(), connectionModel.getGameMode(), false);

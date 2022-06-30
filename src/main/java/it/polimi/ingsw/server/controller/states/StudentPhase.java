@@ -28,6 +28,8 @@ import static java.util.Collections.shuffle;
  * This state handle the  phase of the game in which the user has to choose where to move the student
  * (in his school or on an island). Formal correctness checks have been carried out in the event of
  * malicious input from the user.
+ * @author Ignazio Neto Dell'Acqua
+ * @author Fernando Morea
  */
 public class StudentPhase extends State {
     private final Event studentPhaseEnded, gameEnd;
@@ -296,7 +298,7 @@ public class StudentPhase extends State {
     }
 
     /**
-     * Utils method for ping and disconnection manage
+     * Utils method for ping and disconnection management
      */
     public ParametersFromNetwork getMessage() {
         return message;

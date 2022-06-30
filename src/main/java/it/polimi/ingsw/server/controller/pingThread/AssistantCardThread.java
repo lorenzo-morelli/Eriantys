@@ -10,6 +10,7 @@ import java.util.ConcurrentModificationException;
 
 /**
  * Thread for Assistant Card Phase pings
+ * @author Ignazio Neto Dell'Acqua
  */
 public class AssistantCardThread extends Thread {
     private final AssistantCardPhase phase;

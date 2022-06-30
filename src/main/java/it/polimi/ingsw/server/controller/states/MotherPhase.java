@@ -26,6 +26,8 @@ import java.util.concurrent.TimeUnit;
  * This state handles the movement of mother nature based on the number of steps chosen by the user
  * (and obviously the card that the user had previously chosen which determines the upper limit to
  * the number of moves that mother nature can make).
+ * @author Ignazio Neto Dell'Acqua
+ * @author Fernando Morea
  */
 public class MotherPhase extends State {
     private final Event gameEnd, goToStudentPhase, goToCloudPhase, goToEndTurn;

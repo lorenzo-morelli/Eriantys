@@ -16,6 +16,8 @@ import java.util.concurrent.TimeUnit;
 /**
  * This state handles the things to do in the event of a natural end of the game
  * caused by termination events (in compliance with the rules of the game).
+ * @author Ignazio Neto Dell'Acqua
+ * @author Fernando Morea
  */
 public class EndGame extends State {
     private final Event restart;

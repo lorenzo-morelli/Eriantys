@@ -1,9 +1,8 @@
 package it.polimi.ingsw.utils.network.events;
 
-import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
-
 /**
  * This class make the users able to store the message and the result of its waiting (boolean value that is true when no one message is arrived) into a single object
+ * @author Ignazio Neto Dell'Acqua
  */
 public class ResultOfWaiting {
     private final ParametersFromNetwork fromNetwork;

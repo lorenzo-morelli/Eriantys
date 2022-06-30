@@ -25,6 +25,8 @@ import java.util.concurrent.TimeUnit;
 /**
  * This server state implements the logic necessary to correctly handle
  * the Assistant card phase of the game.
+ * @author Ignazio Neto Dell'Acqua
+ * @author Fernando Morea
  */
 @SuppressWarnings("ALL")
 public class AssistantCardPhase extends State {
@@ -38,11 +40,15 @@ public class AssistantCardPhase extends State {
 
     /**
      * Events callers
-     * @return different events in order to change to different phase
+     * @return gameEnd event in order to trigger the fsm machine
      */
     public Event gameEnd() {
         return gameEnd;
     }
+    /**
+     * Events callers
+     * @return cardsChosen event in order to trigger the fsm machine
+     */
     public Event cardsChosen() {
         return cardsChosen;
     }
@@ -243,9 +249,8 @@ public class AssistantCardPhase extends State {
     }
 
     /**
-     * Utils method for ping and disconnection manage
+     * Set the value disconnected from pings in order to know if the player is disconnected or not
      */
-
     public void setDisconnected(boolean value){
         disconnected=value;
     }
@@ -258,6 +263,9 @@ public class AssistantCardPhase extends State {
         return message;
     }
 
+    /**
+     * set if the message received is retreived when it expect a ping
+     */
     public void setFromPing(boolean fromPing) {
         this.fromPing = fromPing;
     }

@@ -43,6 +43,10 @@ public class Professor {
         this.heldBy = heldBy;
     }
 
+    /**
+     * get the color of the professor
+     * @return color from PeopleColor
+     */
     public PeopleColor getColor() {
         return color;
     }

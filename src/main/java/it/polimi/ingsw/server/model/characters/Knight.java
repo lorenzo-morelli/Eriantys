@@ -5,6 +5,7 @@ import it.polimi.ingsw.server.model.Player;
 
 /**
  * This class contain the methods to use the character KINGHT described in the rules
+ * @author Ignazio Neto Dell'Acqua
  */
 public class Knight extends CharacterCard implements SimpleEffect {
     public Knight(){

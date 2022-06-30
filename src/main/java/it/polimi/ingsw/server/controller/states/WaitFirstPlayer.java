@@ -18,6 +18,8 @@ import java.util.ArrayList;
  * State in which the server is waiting for the first client, which we can define as the initializer client,
  * that is the one that will decide the type of game (game mode) and the number of players.
  * It therefore plays a fundamental role in the business logic of the game.
+ * @author Ignazio Neto Dell'Acqua
+ * @author Fernando Morea
  */
 public class WaitFirstPlayer extends State {
     private final Gson json;
@@ -78,7 +80,6 @@ public class WaitFirstPlayer extends State {
                 reset.fireStateEvent();
             }
         }
-
         System.out.println("[First Player is connected]");
         if (firstMessage.parametersReceived()) {
             ClientModel clientModel = json.fromJson(firstMessage.getParameter(0), ClientModel.class);
