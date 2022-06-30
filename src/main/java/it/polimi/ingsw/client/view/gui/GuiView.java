@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.view.gui;
 
 import com.google.gson.Gson;
+import it.polimi.ingsw.client.GUI;
 import it.polimi.ingsw.client.model.ClientModel;
 import it.polimi.ingsw.server.model.Cloud;
 import it.polimi.ingsw.server.model.characters.CharacterCard;
@@ -16,6 +17,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 /**
  * GUI View
@@ -200,13 +202,11 @@ public class GuiView extends Application {
      */
     public synchronized void requestPing() {
         System.out.println(("risposta ping"));
-        ClientModel model = new ClientModel();
-        model.setClientIdentity(GuiView.clientModel.getClientIdentity());
-        Network.setClientModel(model);
+        Network.setClientModel(GuiView.clientModel);
         Gson gson = new Gson();
-        model.setPingMessage(true);
-        model.setReply(false);
-        Network.send(gson.toJson(model));
+        GuiView.clientModel.setPingMessage(true);
+        GuiView.clientModel.setReply(true);
+        Network.send(gson.toJson(GuiView.clientModel));
     }
 
     public synchronized void response() {
