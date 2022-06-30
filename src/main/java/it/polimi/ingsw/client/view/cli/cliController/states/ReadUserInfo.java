@@ -27,7 +27,7 @@ public class ReadUserInfo extends ReadFromTerminal {
             clientModel.setPort("1234");
             return;
         }
-            //NICKNAME / IP / PORTA
+            //NICKNAME / IP / PORT
             clientModel.setNickname(clientModel.getFromTerminal().get(0));
             clientModel.setIp(clientModel.getFromTerminal().get(1));
             clientModel.setPort(clientModel.getFromTerminal().get(2));

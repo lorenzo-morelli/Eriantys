@@ -30,7 +30,6 @@ public class WaitFirstPlayer extends State {
 
     /**
      * Main constructor
-     *
      * @param serverController the main server controller
      */
     public WaitFirstPlayer(ServerController serverController) {
@@ -45,9 +44,8 @@ public class WaitFirstPlayer extends State {
     }
 
     /**
-     * Events callers
-     *
-     * @return different events in order to change to different phase
+     * Events caller
+     * @return firstMessage event in order to trigger the fsm machine
      */
     public ParametersFromNetwork gotFirstMessage() {
         return firstMessage;
@@ -55,8 +53,8 @@ public class WaitFirstPlayer extends State {
 
 
     /**
-     * Wait the connection of the first player and put it into the game. Then sends a request to the view of the first player to make it able to choose the game mode and the number of player of the game.
-     *
+     * Wait the connection of the first player and put it into the game. Then sends a request to the view of the first player to make it able to choose the game mode
+     * and the number of player of the game.
      * @param cause the event that caused the controller transition in this state
      * @return null event
      * @throws Exception input output or network related exceptions

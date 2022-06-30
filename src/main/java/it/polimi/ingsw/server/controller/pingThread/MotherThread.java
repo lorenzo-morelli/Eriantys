@@ -8,7 +8,6 @@ import it.polimi.ingsw.utils.network.events.ParametersFromNetwork;
 
 import java.util.ConcurrentModificationException;
 
-
 /**
  * Thread for Mother Phase pings
  * @author Ignazio Neto Dell'Acqua

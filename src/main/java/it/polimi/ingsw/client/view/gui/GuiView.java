@@ -18,7 +18,9 @@ import java.io.IOException;
 import java.util.Objects;
 
 /**
- * Launcher for GUI View
+ * GUI View
+ * @author Ignazio Neto Dell'Acqua
+ * @author Lorenzo Morelli
  */
 public class GuiView extends Application {
     private Stage stage;

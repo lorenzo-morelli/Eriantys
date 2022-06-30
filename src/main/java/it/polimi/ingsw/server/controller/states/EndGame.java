@@ -99,8 +99,8 @@ public class EndGame extends State {
     }
 
     /**
-     * Events callers
-     * @return different events in order to change to different phase
+     * Events caller
+     * @return restart event in order to trigger the fsm machine
      */
     public Event getRestart() {
         return restart;

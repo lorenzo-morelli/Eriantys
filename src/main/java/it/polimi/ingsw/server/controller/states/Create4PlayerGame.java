@@ -39,7 +39,7 @@ public class Create4PlayerGame extends State {
     private ParametersFromNetwork message;
 
     /**
-     * Events callers
+     * Events caller
      * @return teamMateChosen event in order to trigger the fsm machine
      */
     public Event teamMateChosen() {

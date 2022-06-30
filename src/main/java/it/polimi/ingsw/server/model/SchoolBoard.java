@@ -24,7 +24,7 @@ public class SchoolBoard {
     public static final String ANSI_GRAY = "\033[1;90m";
 
     public SchoolBoard(int numOfPlayer, StudentSet bag, ArrayList<TowerColor> availableTower) {
-        this.entranceSpace = new StudentSet();   //2 o 3 giocatori
+        this.entranceSpace = new StudentSet();
         if (numOfPlayer == 3) {
             this.entranceSpace.setStudentsRandomly(9, bag);
             this.numOfTowers = 6;

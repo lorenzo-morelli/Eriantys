@@ -41,7 +41,7 @@ public class WaitOtherClients extends State {
     }
 
     /**
-     * Events callers
+     * Events caller
      * @return twoOrThreeClientsConnected event in order to trigger the fsm machine
      */
     public Event twoOrThreeClientsConnected() {
@@ -49,7 +49,7 @@ public class WaitOtherClients extends State {
     }
 
     /**
-     * Events callers
+     * Events caller
      * @return fourClientsConnected event in order to trigger the fsm machine
      */
     public Event fourClientsConnected() {
@@ -58,7 +58,6 @@ public class WaitOtherClients extends State {
 
     /**
      * Wait the connection of the other player and put it into the game. Then sends an ack to them.
-     *
      * @param cause the event that caused the controller transition in this state
      * @return null event
      * @throws Exception input output or network related exceptions

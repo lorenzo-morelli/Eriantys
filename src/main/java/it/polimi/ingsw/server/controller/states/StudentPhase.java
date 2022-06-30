@@ -44,12 +44,16 @@ public class StudentPhase extends State {
     private boolean disconnected,fromPing;
 
     /**
-     * Events callers
-     * @return different events in order to change to different phase
+     * Events caller
+     * @return studentPhaseEnded event in order to trigger the fsm machine
      */
     public Event studentPhaseEnded() {
         return studentPhaseEnded;
     }
+    /**
+     * Events caller
+     * @return gameEnd event in order to trigger the fsm machine
+     */
     public Event gameEnd() {
         return gameEnd;
     }
@@ -297,9 +301,6 @@ public class StudentPhase extends State {
         return super.entryAction(cause);
     }
 
-    /**
-     * Utils method for ping and disconnection management
-     */
     public ParametersFromNetwork getMessage() {
         return message;
     }
@@ -308,10 +309,16 @@ public class StudentPhase extends State {
         this.message = message;
     }
 
+    /**
+     * Set the value disconnected from pings in order to know if the player is disconnected or not
+     */
     public void setDisconnected(boolean disconnected) {
         this.disconnected = disconnected;
     }
 
+    /**
+     * set if the message received is retrieved when it expects a ping
+     */
     public void setFromPing(boolean fromPing) {
         this.fromPing = fromPing;
     }

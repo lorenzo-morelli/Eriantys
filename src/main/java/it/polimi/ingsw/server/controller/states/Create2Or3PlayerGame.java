@@ -41,7 +41,7 @@ public class Create2Or3PlayerGame extends State {
     }
 
     /**
-     * Events callers
+     * Events caller
      * @return gameCreated event in order to trigger the fsm machine
      */
     public Event gameCreated() {
@@ -49,7 +49,7 @@ public class Create2Or3PlayerGame extends State {
     }
 
     /**
-     * Events callers
+     * Events caller
      * @return fourPlayersGameCreated event in order to trigger the fsm machine
      */
     public Event fourPlayersGameCreated() {

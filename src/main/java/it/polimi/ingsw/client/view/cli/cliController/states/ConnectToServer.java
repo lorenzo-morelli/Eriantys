@@ -12,6 +12,8 @@ import java.io.IOException;
  * This state manages the actual connection phase with the server, by calling the utility class Network on
  * the server's ip-port specified by the user. If this connection fails the client view will again prompt
  * the user to enter a valid ip-port.
+ * @author Ignazio Neto Dell'Acqua
+ * @author Fernando Morea
  */
 public class ConnectToServer extends State{
     final ClientModel clientModel;

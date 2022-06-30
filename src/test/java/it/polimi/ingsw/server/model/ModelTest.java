@@ -10,7 +10,13 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Testing for all the class of the Server Model (it.polimi.ingsw/server/model/)
+ */
 class ModelTest {
+    /**
+     * This class tests if the creation of a game for 2 player , game mode beginner process correctly as indicated in the rules
+     */
     @Test
     void testCreateModel2playerBeginner() {
         Model model = new Model(2, "BEGINNER", false);
@@ -79,6 +85,9 @@ class ModelTest {
         }
     }
 
+    /**
+     * This class tests if the creation of a game for 3 player , game mode beginner process correctly as indicated in the rules
+     */
     @Test
     void testCreateModel3playerBeginner() {
         Model model = new Model(3, "BEGINNER", false);
@@ -161,6 +170,9 @@ class ModelTest {
         }
     }
 
+    /**
+     * This class tests if the creation of a game for 4 player , game mode beginner process correctly as indicated in the rules
+     */
     @Test
     void testCreateModel4playerBeginner() {
         Model model = new Model(4, "BEGINNER", false);
@@ -262,6 +274,9 @@ class ModelTest {
         }
     }
 
+    /**
+     * This class tests the uses of the Deck from the players
+     */
     @Test
     void testDeck() {
         Deck deck = new Deck();
@@ -319,6 +334,9 @@ class ModelTest {
         assertEquals(0, deck.getCardsList().size());
     }
 
+    /**
+     * This class tests the uses of the Student Set in order to deal with the students accumulator
+     */
     @Test
     void StudentSetTest() {
         StudentSet set0 = new StudentSet();

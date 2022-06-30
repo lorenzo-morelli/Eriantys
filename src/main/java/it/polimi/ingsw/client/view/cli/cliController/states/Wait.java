@@ -18,6 +18,8 @@ import java.util.Objects;
  * requestToMe, a request for direct client interaction (for example: insert the assistant card),
  * requestToOthers, i.e. the server is requesting interaction with another client ,
  * and response, that is, another client is responding to the server.
+ * @author Ignazio Neto Dell'Acqua
+ * @author Fernando Morea
  */
 public class Wait extends State {
     private final Gson json;

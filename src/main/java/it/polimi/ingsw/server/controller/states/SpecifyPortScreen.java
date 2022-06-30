@@ -18,8 +18,7 @@ import java.util.regex.Pattern;
 public class SpecifyPortScreen extends State {
     private final Event portSpecified;
 
-    private static final String PORT_REGEX =
-            "^([1-9]\\d{0,3}|[1-5]\\d{4}|6[0-4]\\d{3}|65[0-4]\\d{2}|655[0-2]\\d|6553[0-5])$";
+    private static final String PORT_REGEX = "^([1-9]\\d{0,3}|[1-5]\\d{4}|6[0-4]\\d{3}|65[0-4]\\d{2}|655[0-2]\\d|6553[0-5])$";
 
 
     private static final Pattern PORT_PATTERN = Pattern.compile(PORT_REGEX);
@@ -47,7 +46,7 @@ public class SpecifyPortScreen extends State {
     }
 
     /**
-     * Method is used to set up the port of the server for the Client Connection
+     * Method is used to set up the port of the server for the Client Connection. Empty string --> default port
      * @param cause the event that caused the controller transition in this state
      * @return null event
      * @throws Exception input output or network related exceptions
@@ -59,7 +58,6 @@ public class SpecifyPortScreen extends State {
                     "Enter the port for Clients Connection [ENTER with empty string: default port 1234]",
                     "Port :");
         }
-        // empty string --> default port
         if (CommandPrompt.gotFromTerminal().equals("")){
             CommandPrompt.forceInput("1234");
         }
@@ -75,8 +73,8 @@ public class SpecifyPortScreen extends State {
     }
 
     /**
-     * Events callers
-     * @return different events in order to change to different phase
+     * Events caller
+     * @return portSpecified event in order to trigger the fsm machine
      */
     public Event portSpecified() {
         return portSpecified;

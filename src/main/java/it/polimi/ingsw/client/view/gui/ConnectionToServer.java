@@ -13,7 +13,12 @@ import java.util.concurrent.TimeUnit;
 
 import static it.polimi.ingsw.utils.network.events.ParametersFromNetwork.PAUSE_KEY;
 
+/**
+ * @author Ignazio Neto Dell'Acqua
+ * @author Lorenzo Morelli
+ */
 public class ConnectionToServer {
+
     private final GuiView guiView = new GuiView();
     private final Gson gson = new Gson();
     private boolean isToReset = false;
@@ -36,6 +41,14 @@ public class ConnectionToServer {
         }
     }
 
+    /**
+     * The wait state should be interpreted as a "command waiting" state from the server.
+     * The client is therefore at rest and only 2 types of messages will be delivered from server:
+     * requestToMe, a request for direct client interaction (for example: insert the assistant card),
+     * requestToOthers, i.e. the server is requesting interaction with another client ,
+     * and pings (sometimes pings are used as requestToMe message in order to recovery from lost messages).
+     * @param end = timing for timeout -> when the timeout expires the game will be closed (timeout expires when the server doesn't give any response)
+     */
     public void waiting(long end) throws InterruptedException {
         boolean notDone = false;
         boolean isFirst = true;

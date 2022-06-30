@@ -40,29 +40,39 @@ public class MotherPhase extends State {
     private boolean storekeeper;
 
     /**
-     * Events callers
-     *
-     * @return different events in order to change to different phase
+     * Events caller
+     * @return gameEnd event in order to trigger the fsm machine
      */
     public Event gameEnd() {
         return gameEnd;
     }
 
+    /**
+     * Events caller
+     * @return goToStudentPhase event in order to trigger the fsm machine
+     */
     public Event goToStudentPhase() {
         return goToStudentPhase;
     }
 
+    /**
+     * Events caller
+     * @return goToCloudPhase event in order to trigger the fsm machine
+     */
     public Event GoToCloudPhase() {
         return goToCloudPhase;
     }
 
+    /**
+     * Events caller
+     * @return goToEndTurn event in order to trigger the fsm machine
+     */
     public Event GoToEndTurn() {
         return goToEndTurn;
     }
 
     /**
      * The main constructor of the Mother phase
-     *
      * @param serverController the main server controller
      */
     public MotherPhase(ServerController serverController) {
@@ -386,6 +396,9 @@ public class MotherPhase extends State {
         return super.entryAction(cause);
     }
 
+    /**
+     * This method is used in order to @return the correct event for the fsm machine based on the @param case (see the rules for it)
+     */
     private IEvent fireCorrectEvent(IEvent cause) throws Exception {
         if (model.getTable().getIslands().size() <= 3) {
             gameEnd().fireStateEvent();
@@ -406,7 +419,6 @@ public class MotherPhase extends State {
 
     /**
      * Reinitialize variables for next uses
-     *
      * @param cause the event that caused us to exit this state
      */
     @Override
@@ -416,9 +428,6 @@ public class MotherPhase extends State {
         super.exitAction(cause);
     }
 
-    /**
-     * Utils method for ping and disconnection manage
-     */
     public ParametersFromNetwork getMessage() {
         return message;
     }
@@ -427,10 +436,16 @@ public class MotherPhase extends State {
         this.message = message;
     }
 
+    /**
+     * Set the value disconnected from pings in order to know if the player is disconnected or not
+     */
     public void setDisconnected(boolean disconnected) {
         this.disconnected = disconnected;
     }
 
+    /**
+     * set if the message received is retrieved when it expects a ping
+     */
     public void setFromPing(boolean fromPing) {
         this.fromPing = fromPing;
     }

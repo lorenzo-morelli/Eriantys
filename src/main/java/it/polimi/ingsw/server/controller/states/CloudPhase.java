@@ -36,7 +36,7 @@ public class CloudPhase extends State {
     private boolean disconnected,fromPing;
 
     /**
-     * Events callers
+     * Events caller
      * @return goToEndTurn event in order to trigger the fsm machine
      */
 
@@ -45,7 +45,7 @@ public class CloudPhase extends State {
     }
 
     /**
-     * Events callers
+     * Events caller
      * @return gameEnd event in order to trigger the fsm machine
      */
     public Event gameEnd() {
@@ -53,7 +53,7 @@ public class CloudPhase extends State {
     }
 
     /**
-     * Events callers
+     * Events caller
      * @return goToStudentPhase event in order to trigger the fsm machine
      */
     public Event GoToStudentPhase() {

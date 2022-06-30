@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Dati del client minimali che possono facilmente essere trasferiti via network
+ * Small ClientModel (only get/setter methods) in order to send data to/from the server by serializing it with json
  */
 
 public class ClientModel {

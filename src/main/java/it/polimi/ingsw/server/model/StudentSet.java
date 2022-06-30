@@ -10,8 +10,6 @@ import java.util.Random;
  * it maps an integer for each possible color
  *
  * @author Ignazio Neto Dell'Acqua
- * @author Fernando Morea
- * @author Lorenzo Morelli
  */
 public class StudentSet {
     private int numOfRedStudents;

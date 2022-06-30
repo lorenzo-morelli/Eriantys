@@ -17,6 +17,8 @@ import java.util.concurrent.TimeUnit;
  * you are not the first, or you have entered an invalid nickname and please enter
  * a new one. So this state does nothing more than read the server response and
  * forward to the client view. It also handles various disconnection situations.
+ * @author Ignazio Neto Dell'Acqua
+ * @author Fernando Morea
  */
 
 public class AmIFirst extends State {

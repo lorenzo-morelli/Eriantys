@@ -12,6 +12,8 @@ import it.polimi.ingsw.utils.stateMachine.State;
 /**
  * Send the client nickname to the server, and handle the case in which the server reports the existence of another
  * client with the same nickname, by forwarding to the client view asking to choose another nickname.
+ * @author Ignazio Neto Dell'Acqua
+ * @author Fernando Morea
  */
 public class SendNicknameToServer extends State {
     private final Gson json;
@@ -22,7 +24,7 @@ public class SendNicknameToServer extends State {
     private final Event nickUnique;
 
     public SendNicknameToServer(ClientModel clientModel, Controller controller) {
-        super("[Invio dati al server ed attesa di un ack]");
+        super("[Send the data to the server and wait ak]");
         this.clientModel = clientModel;
         this.controller = controller;
         ack = new ParametersFromNetwork(1);
@@ -44,8 +46,7 @@ public class SendNicknameToServer extends State {
 
     @Override
     public IEvent entryAction(IEvent cause) throws Exception {
-        System.out.println("[Inviato nuovo nickname al server]");
-        //System.out.println(json.toJson(clientModel));
+        System.out.println("[Send new Nickname to the Server]");
         Network.send(json.toJson(clientModel));
         try {
             checkAck();
@@ -63,12 +64,10 @@ public class SendNicknameToServer extends State {
         ack.waitParametersReceived();
 
         ClientModel fromNetwork = json.fromJson(ack.getParameter(0), ClientModel.class);
-        System.out.println(ack.getParameter(0));
 
         if (fromNetwork.getAmFirst() == null) {
             nickAlreadyExistent.fireStateEvent();
         } else {
-
 
             System.out.println("Waiting for the other players to log in ...");
             nickUnique.fireStateEvent();

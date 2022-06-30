@@ -39,14 +39,14 @@ public class AssistantCardPhase extends State {
     private boolean disconnected,fromPing;
 
     /**
-     * Events callers
+     * Events caller
      * @return gameEnd event in order to trigger the fsm machine
      */
     public Event gameEnd() {
         return gameEnd;
     }
     /**
-     * Events callers
+     * Events caller
      * @return cardsChosen event in order to trigger the fsm machine
      */
     public Event cardsChosen() {

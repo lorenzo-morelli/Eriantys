@@ -19,8 +19,8 @@ public class EndTurn extends State {
     private final ServerController serverController;
 
     /**
-     * Events callers
-     * @return different events in order to change to different phase
+     * Events caller
+     * @return goToAssistantCardPhase event in order to trigger the fsm machine
      */
     public Event goToAssistantCardPhase() {
         return goToAssistantCardPhase;
