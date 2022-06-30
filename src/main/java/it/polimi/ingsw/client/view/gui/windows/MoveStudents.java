@@ -86,6 +86,7 @@ public class MoveStudents implements Initializable {
                         this.guiView.getClientModel().setResponse(true);
                         this.guiView.getClientModel().setPingMessage(false);
                         this.guiView.getClientModel().setChosenColor(studentColor);
+                        this.guiView.response();
                         Gson gson = new Gson();
                         Network.send(gson.toJson(this.guiView.getClientModel()));
                         canOpenWindow = true;
@@ -158,6 +159,7 @@ public class MoveStudents implements Initializable {
             this.guiView.getClientModel().setResponse(true);
             this.guiView.getClientModel().setPingMessage(false);
             this.guiView.getClientModel().setChosenColor(studentColor);
+            this.guiView.response();
             Gson gson = new Gson();
             Network.send(gson.toJson(this.guiView.getClientModel()));
             studentColor = null;

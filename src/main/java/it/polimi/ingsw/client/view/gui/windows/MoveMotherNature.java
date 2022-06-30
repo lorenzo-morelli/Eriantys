@@ -84,6 +84,7 @@ public class MoveMotherNature implements Initializable {
                     this.guiView.getClientModel().setChosenMoves(distance);
                     this.guiView.getClientModel().setResponse(true);
                     this.guiView.getClientModel().setPingMessage(false);
+                    this.guiView.response();
                     Gson gson = new Gson();
                     Network.send(gson.toJson(this.guiView.getClientModel()));
                     this.guiView.closeWindow(event);

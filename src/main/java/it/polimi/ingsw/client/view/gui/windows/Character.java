@@ -249,6 +249,7 @@ public class Character implements Initializable {
             if (chosenIsland != -1) {
                 this.guiView.getClientModel().setChosenIsland(chosenIsland);
             }
+            this.guiView.response();
             Gson gson = new Gson();
             Network.send(gson.toJson(this.guiView.getClientModel()));
             isCardUsed = true;

@@ -2,6 +2,7 @@ package it.polimi.ingsw.client.view.gui;
 
 import com.google.gson.Gson;
 import it.polimi.ingsw.client.model.ClientModel;
+import it.polimi.ingsw.server.model.Cloud;
 import it.polimi.ingsw.server.model.characters.CharacterCard;
 import it.polimi.ingsw.utils.network.Network;
 import javafx.application.Application;
@@ -32,6 +33,7 @@ public class GuiView extends Application {
     public static CharacterCard currentCharacter = null;
     public static boolean canOpenWindow = true;
     public static Node windowNode = null;
+
 
     /**
      * This is the entry point for the GUI application
@@ -181,6 +183,7 @@ public class GuiView extends Application {
                 changeScene("Game");
                 break;
             case "CHOOSECLOUDS":
+
                 changeScene("Game");
                 break;
         }
@@ -202,14 +205,12 @@ public class GuiView extends Application {
     }
 
     public synchronized void response() {
-        //todo fix scrollable
-        //todo move to school or to island not recognized
         UpdateLog updateLog = new UpdateLog();
         String head = updateLog.getTime();
         String tail = "\n" + logText;
         switch (GuiView.clientModel.getTypeOfRequest()) {
             case "CHOOSEASSISTANTCARD":
-                logText = head + "The player " + GuiView.clientModel.getNickname() + " chose a card with value = " + GuiView.clientModel.getCardChosenValue() + tail;
+                logText = head + "The player " + GuiView.clientModel.getNickname() + " chose a card with value = " + (int) GuiView.clientModel.getCardChosenValue() + tail;
                 break;
             case "TEAMMATE":
                 logText = head + "The player " + GuiView.clientModel.getNickname() + " created the teams:\n" +
@@ -218,7 +219,7 @@ public class GuiView extends Application {
                 break;
             case "SCHOOL":
                 logText = head + "The player " + clientModel.getNickname() + " decided to move one " +
-                        clientModel.getChosenColor().toString() + "student on their school" + tail;
+                        clientModel.getChosenColor().toString() + " student on their school" + tail;
                 break;
             case "ISLAND":
                 logText = head + "The player " + clientModel.getNickname() + " decided to move one " +
@@ -228,7 +229,7 @@ public class GuiView extends Application {
                 logText = head + "The player " + clientModel.getNickname() + " decided to move mother nature of " + clientModel.getChosenMoves() + " moves" + tail;
                 break;
             case "CHOOSECLOUDS":
-                logText = head + "The player " + clientModel.getNickname() + " chose to move students from the cloud number: " + clientModel.getCloudChosen() + tail;
+                logText = head + "The player " + clientModel.getNickname() + " chose to move students from the cloud with students: " + printCloud(clientModel.getCloudChosen()) + tail;
                 break;
             case "MONK":
                 logText = head + "The player " + clientModel.getNickname() + " chose to use the character card MONK, choosing the color: " + clientModel.getChosenColor() + " and the island: " + clientModel.getChosenIsland() + tail;
@@ -270,6 +271,16 @@ public class GuiView extends Application {
                 break;
         }
 
+    }
+
+    public String printCloud(Cloud cloud) {
+        String students = "";
+        students = students + "Blue: " + cloud.getStudentsAccumulator().getNumOfBlueStudents() + " ";
+        students = students + "Red: " + cloud.getStudentsAccumulator().getNumOfRedStudents() + " ";
+        students = students + "Green: " + cloud.getStudentsAccumulator().getNumOfGreenStudents() + " ";
+        students = students + "Pink: " + cloud.getStudentsAccumulator().getNumOfPinkStudents() + " ";
+        students = students + "Yellow: " + cloud.getStudentsAccumulator().getNumOfYellowStudents();
+        return students;
     }
 }
 

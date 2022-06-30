@@ -25,7 +25,7 @@ public class ServerController {
      * Main constructor of the Server controller. Controller is FSM machine, created by using pattern State
      */
     public ServerController() throws Exception {
-        fsm.showDebugMessages(); // Todo comment when not needed
+        fsm.showDebugMessages();
 
         SpecifyPortScreen specifyPortScreen = new SpecifyPortScreen();
         WaitFirstPlayer waitFirstPlayer = new WaitFirstPlayer(this);

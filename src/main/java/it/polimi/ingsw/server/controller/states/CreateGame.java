@@ -77,7 +77,7 @@ public class CreateGame extends State {
              */
             public synchronized void run() {
                 while (true) {
-                    if (connectionModel.isCloseThread()) { //todo rimuovere duplicati
+                    if (connectionModel.isCloseThread()) {
                         connectionModel.setCloseThread(false);
                         return;
                     }

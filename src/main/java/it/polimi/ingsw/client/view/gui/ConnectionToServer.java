@@ -42,7 +42,6 @@ public class ConnectionToServer {
         String previousRequest = null;
 
         do {
-            System.out.println("primo loop");
             if (!notRead) {
                 message = new ParametersFromNetwork(1);
                 message.enable();
@@ -99,14 +98,12 @@ public class ConnectionToServer {
                                         System.out.println("request to me done with pings");
                                         guiView.requestPing();
                                         guiView.requestToMe();
-                                        guiView.response();
                                         isFirst = false;
                                         previousRequest = guiView.getClientModel().getTypeOfRequest();
                                     } else {
                                         guiView.setClientModel(clientModel);
                                         System.out.println("request to me");
                                         guiView.requestToMe();
-                                        guiView.response();
                                         isFirst = false;
                                         previousRequest = guiView.getClientModel().getTypeOfRequest();
                                     }
@@ -122,12 +119,16 @@ public class ConnectionToServer {
                                     System.out.println("request to other");
                                     isFirst = true;
                                     guiView.setClientModel(clientModel);
-                                    guiView.response();
                                     guiView.requestToOthers();
                                 } catch (IOException e) {
                                     throw new RuntimeException(e);
                                 }
                             }
+                        }
+                        if (!notDone && clientModel.getClientIdentity() != myID && clientModel.isResponse().equals(true) && clientModel.getTypeOfRequest() != null && !clientModel.isPingMessage()) {
+                            System.out.println("stampo response");
+                            guiView.setClientModel(clientModel);
+                            guiView.response();
                         }
                     }
                 }

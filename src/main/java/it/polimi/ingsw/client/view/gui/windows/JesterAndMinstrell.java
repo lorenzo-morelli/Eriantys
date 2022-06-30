@@ -237,6 +237,7 @@ public class JesterAndMinstrell implements Initializable {
                 this.guiView.getClientModel().setColors1(entranceJester);
                 this.guiView.getClientModel().setColors2(jester);
             }
+            this.guiView.response();
             Gson gson = new Gson();
             Network.send(gson.toJson(this.guiView.getClientModel()));
             isCardUsed = true;

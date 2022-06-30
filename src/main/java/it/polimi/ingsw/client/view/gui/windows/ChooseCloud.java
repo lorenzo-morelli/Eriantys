@@ -59,6 +59,7 @@ public class ChooseCloud implements Initializable {
                     this.guiView.getClientModel().setCloudChosen(cloud);
                     this.guiView.getClientModel().setResponse(true);
                     this.guiView.getClientModel().setPingMessage(false);
+                    this.guiView.response();
                     Gson gson = new Gson();
                     Network.send(gson.toJson(this.guiView.getClientModel()));
                     this.guiView.closeWindow(event);
