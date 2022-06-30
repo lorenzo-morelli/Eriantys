@@ -1,9 +1,8 @@
-# Prova finale di ingegneria del software - AA 2021-2022
+# Prova finale d'ingegneria del software - AA 2021-2022
 ![](https://www.craniocreations.it/wp-content/uploads/2021/06/Eriantys_scatola3Dombra-600x600.png)
 
 
-Il progetto consiste nell'implementazione dell'edizione digitale del gioco da tavolo [Eriantys](https://www.craniocreations.it/prodotto/eriantys/), facendo uso di un'architettura    
-client/server ed utilizzando il pattern Model-View-Controller.
+Il progetto consiste nell'implementazione dell'edizione digitale del gioco da tavolo [Eriantys](https://www.craniocreations.it/prodotto/eriantys/), facendo uso di un'architettura client/server e utilizzando il pattern Model-View-Controller.
 
 Il client è stato implementato sia nella versione command line interface (CLI), che nella versione graphic user interface (GUI).
 # Funzionalità sviluppate
