@@ -195,29 +195,29 @@ public class MotherPhase extends State {
                     Island target = model.getTable().getIslands().get(model.getTable().getMotherNaturePosition());
                     if (!target.isBlocked()) {
                         if (model.getNumberOfPlayers() == 4) {
-                            Team influence_team = target.teamInfluenceCalculator(model.getTeams(), model.getTable().getProfessors(), model.getTable().isCentaurEffect(), model.getTable().getMushroomColor(), model.getTable().getKnightEffect());
-                            if (influence_team != null) {
+                            Team influenceTeam = target.teamInfluenceCalculator(model.getTeams(), model.getTable().getProfessors(), model.getTable().isCentaurEffect(), model.getTable().getMushroomColor(), model.getTable().getKnightEffect());
+                            if (influenceTeam != null) {
                                 if (target.getNumberOfTowers() == 0) {
-                                    target.controlIsland(influence_team);
+                                    target.controlIsland(influenceTeam);
                                     target.placeTower();
-                                } else if (!(target.getTowerColor().equals(influence_team.getPlayer1().getSchoolBoard().getTowerColor()))) {
-                                    model.getTable().conquestIsland(model.getTable().getMotherNaturePosition(), model.getTeams(), influence_team);
+                                } else if (!(target.getTowerColor().equals(influenceTeam.getPlayer1().getSchoolBoard().getTowerColor()))) {
+                                    model.getTable().conquestIsland(model.getTable().getMotherNaturePosition(), model.getTeams(), influenceTeam);
                                 }
-                                if (influence_team.getPlayer1().getSchoolBoard().getNumOfTowers() == 0) {
+                                if (influenceTeam.getPlayer1().getSchoolBoard().getNumOfTowers() == 0) {
                                     gameEnd().fireStateEvent();
                                     return super.entryAction(cause);
                                 }
                             }
                         } else {
-                            Player influence_player = target.playerInfluenceCalculator(model.getPlayers(), model.getTable().getProfessors(), model.getTable().isCentaurEffect(), model.getTable().getMushroomColor(), model.getTable().getKnightEffect());
-                            if (influence_player != null) {
+                            Player influencePlayer = target.playerInfluenceCalculator(model.getPlayers(), model.getTable().getProfessors(), model.getTable().isCentaurEffect(), model.getTable().getMushroomColor(), model.getTable().getKnightEffect());
+                            if (influencePlayer != null) {
                                 if (target.getNumberOfTowers() == 0) {
-                                    target.controlIsland(influence_player);
+                                    target.controlIsland(influencePlayer);
                                     target.placeTower();
-                                } else if (!(target.getTowerColor().equals(influence_player.getSchoolBoard().getTowerColor()))) {
-                                    model.getTable().conquestIsland(model.getTable().getMotherNaturePosition(), model.getPlayers(), influence_player);
+                                } else if (!(target.getTowerColor().equals(influencePlayer.getSchoolBoard().getTowerColor()))) {
+                                    model.getTable().conquestIsland(model.getTable().getMotherNaturePosition(), model.getPlayers(), influencePlayer);
                                 }
-                                if (influence_player.getSchoolBoard().getNumOfTowers() == 0) {
+                                if (influencePlayer.getSchoolBoard().getNumOfTowers() == 0) {
                                     gameEnd().fireStateEvent();
                                     return super.entryAction(cause);
                                 }
@@ -234,13 +234,13 @@ public class MotherPhase extends State {
                                 merging = model.getTable().getIslands().get((model.getTable().getMotherNaturePosition() - 1) % model.getTable().getIslands().size());
                             }
                             if (merging.getTowerColor() != null && merging.getTowerColor().equals(model.getTable().getIslands().get(model.getTable().getMotherNaturePosition()).getTowerColor())) {
-                                int merging_index;
+                                int mergingIndex;
                                 if (model.getTable().getMotherNaturePosition() == 0) {
-                                    merging_index = model.getTable().getIslands().size() - 1;
+                                    mergingIndex = model.getTable().getIslands().size() - 1;
                                 } else {
-                                    merging_index = (model.getTable().getMotherNaturePosition() - 1) % model.getTable().getIslands().size();
+                                    mergingIndex = (model.getTable().getMotherNaturePosition() - 1) % model.getTable().getIslands().size();
                                 }
-                                model.getTable().mergeIsland(model.getTable().getMotherNaturePosition(), merging_index);
+                                model.getTable().mergeIsland(model.getTable().getMotherNaturePosition(), mergingIndex);
                             }
                         }
                     } else {
