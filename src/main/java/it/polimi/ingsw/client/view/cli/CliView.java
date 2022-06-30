@@ -401,6 +401,7 @@ public class CliView implements View {
         return chosenColor;
     }
     private void addCards(ArrayList<String> available) { ////////////////////////
+        System.out.println("AVAIABLE CARDS:");
         for (int i = 0; i < networkClientModel.getServerModel().getTable().getCharacters().size(); i++) {
             if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getCost() <= networkClientModel.getServerModel().getCurrentPlayer().getCoins()) {
                 if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("MONK")) {
