@@ -62,7 +62,6 @@ public class ConnectionToServer {
                     return;
                 }
                 if (check) {
-                    System.out.println("\n\nServer non ha dato risposta");
                     Network.disconnect();
                     TimeUnit.SECONDS.sleep(5);
                     System.exit(0);
@@ -75,7 +74,6 @@ public class ConnectionToServer {
                 if (!Objects.equals(clientModel.getTypeOfRequest(), "CONNECTTOEXISTINGGAME")) {
                     if (Network.disconnectedClient()) {
                         Network.disconnect();
-                        System.out.println("Il gioco e' terminato a causa della disconnessione di un client");
                         isToReset = true;
                     }
                     if (clientModel.isGameStarted() && clientModel.isNotKicked()) {
@@ -86,23 +84,19 @@ public class ConnectionToServer {
                                     if (!isFirst && Objects.equals(previousRequest, clientModel.getTypeOfRequest())) {
                                         if (Objects.equals("CHOOSEWHERETOMOVESTUDENTS", clientModel.getTypeOfRequest()) || Objects.equals("CHOOSEWHERETOMOVEMOTHER", clientModel.getTypeOfRequest())) {
                                             guiView.setClientModel(clientModel);
-                                            System.out.println("request to me done with pings");
                                             guiView.requestPing();
                                             guiView.requestToMe();
                                         } else {
-                                            System.out.println("ping");
                                             guiView.requestPing();
                                         }
                                     } else if (clientModel.isPingMessage()) {
                                         guiView.setClientModel(clientModel);
-                                        System.out.println("request to me done with pings");
                                         guiView.requestPing();
                                         guiView.requestToMe();
                                         isFirst = false;
                                         previousRequest = guiView.getClientModel().getTypeOfRequest();
                                     } else {
                                         guiView.setClientModel(clientModel);
-                                        System.out.println("request to me");
                                         guiView.requestToMe();
                                         isFirst = false;
                                         previousRequest = guiView.getClientModel().getTypeOfRequest();
@@ -116,7 +110,6 @@ public class ConnectionToServer {
                                     !clientModel.getTypeOfRequest().equals("TRYTORECONNECT") &&
                                     !clientModel.getTypeOfRequest().equals("DISCONNECTION")) {
                                 try {
-                                    System.out.println("request to other");
                                     isFirst = true;
                                     guiView.setClientModel(clientModel);
                                     guiView.requestToOthers();
@@ -126,7 +119,6 @@ public class ConnectionToServer {
                             }
                         }
                         if (!notDone && clientModel.getClientIdentity() != myID && clientModel.isResponse().equals(true) && clientModel.getTypeOfRequest() != null && !clientModel.isPingMessage()) {
-                            System.out.println("stampo response");
                             guiView.setClientModel(clientModel);
                             guiView.response();
                         }
