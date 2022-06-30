@@ -198,7 +198,7 @@ public class CliView implements View {
 
         switch (networkClientModel.getTypeOfRequest()) {
             case "TRYTORECONNECT":
-                System.out.println(networkClientModel.getServerModel().toString(networkClientModel.getNickname(), "GAME STATE: \n" + " THE SERVER IS ATTEMPTING TO RECONNECT A PLAYER TO A MINIMUM TO ALLOW THE GAME TO CONTINUE" + "\n\nMOVES BY OTHER PLAYERS: " + getResponse()));
+                System.out.println(networkClientModel.getServerModel().toString(networkClientModel.getNickname(), "GAME STATE: \n" + " THE SERVER IS ATTEMPTING TO RECONNECT A PLAYER TO ALLOW THE GAME TO CONTINUE " + "\n\nMOVES BY OTHER PLAYERS: " + getResponse()));
                 break;
             case "DISCONNECTION":
                 System.out.println(networkClientModel.getServerModel().toString(networkClientModel.getNickname(), "GAME STATE: \n" + " THE GAME IS OVER DUE TO DISCONNECTION, NO PLAYER HAS RECONNECTED..." + "\n\nMOVES BY OTHER PLAYERS: " + getResponse()));
