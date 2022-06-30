@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 /**
  * This class contain the methods to use the character PRINCESS described in the rules
+ * @author Ignazio Neto Dell'Acqua
  */
 public class Princess extends CharacterCard{
     private final StudentSet set;

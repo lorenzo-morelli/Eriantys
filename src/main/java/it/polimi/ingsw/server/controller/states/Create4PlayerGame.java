@@ -23,10 +23,12 @@ import static java.lang.Thread.sleep;
 /**
  * This class implements the state of the server where the user has to choose his
  * teammate, to correctly create the 4 players game
+ * @author Ignazio Neto Dell'Acqua
+ * @author Fernando Morea
  */
 
 @SuppressWarnings("ALL")
-public class AskForTeamMate extends State {
+public class Create4PlayerGame extends State {
     private final Event teamMateChosen;
     private Model model;
     private final ConnectionModel connectionModel;
@@ -38,17 +40,17 @@ public class AskForTeamMate extends State {
 
     /**
      * Events callers
-     * @return different events in order to change to different phase
+     * @return teamMateChosen event in order to trigger the fsm machine
      */
     public Event teamMateChosen() {
         return teamMateChosen;
     }
 
     /**
-     * Constructor of the Ask teammate server state
+     * Constructor of the Ask teammate server state and 4 player game creation
      * @param serverController the main server controller
      */
-    public AskForTeamMate(ServerController serverController) {
+    public Create4PlayerGame(ServerController serverController) {
         super("[Ask for team mate]");
         this.serverController = serverController;
         Controller controller = ServerController.getFsm();

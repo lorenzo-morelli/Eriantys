@@ -20,6 +20,8 @@ import java.util.concurrent.TimeUnit;
 /**
  * This class handles the cloud phase of the game, on witch the user can choose one
  * of the clouds in the board (that had not already been chosen by another player)
+ * @author Ignazio Neto Dell'Acqua
+ * @author Fernando Morea
  */
 public class CloudPhase extends State {
     private final Event goToEndTurn, gameEnd;
@@ -35,17 +37,25 @@ public class CloudPhase extends State {
 
     /**
      * Events callers
-     * @return different events in order to change to different phase
+     * @return goToEndTurn event in order to trigger the fsm machine
      */
 
     public Event GoToEndTurn() {
         return goToEndTurn;
     }
 
+    /**
+     * Events callers
+     * @return gameEnd event in order to trigger the fsm machine
+     */
     public Event gameEnd() {
         return gameEnd;
     }
 
+    /**
+     * Events callers
+     * @return goToStudentPhase event in order to trigger the fsm machine
+     */
     public Event GoToStudentPhase() {
         return goToStudentPhase;
     }
@@ -249,9 +259,6 @@ public class CloudPhase extends State {
         return super.entryAction(cause);
     }
 
-    /**
-     * Utils method for ping and disconnection manage
-     */
 
     public ParametersFromNetwork getMessage() {
         return message;
@@ -261,10 +268,16 @@ public class CloudPhase extends State {
         this.message = message;
     }
 
+    /**
+     * Set the value disconnected from pings in order to know if the player is disconnected or not
+     */
     public void setDisconnected(boolean disconnected) {
         this.disconnected = disconnected;
     }
 
+    /**
+     * set if the message received is retrieved when it expects a ping
+     */
     public void setFromPing(boolean fromPing) {
         this.fromPing = fromPing;
     }

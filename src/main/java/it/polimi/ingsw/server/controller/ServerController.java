@@ -14,6 +14,8 @@ import it.polimi.ingsw.utils.stateMachine.Event;
  * In this way the server only keeps track of the table that determines the transition
  * (current state x event) -> target state.
  * This table is created with the "addTransition" method.
+ * @author Ignazio Neto Dell'Acqua
+ * @author Fernando Morea
  */
 public class ServerController {
     private Model model;
@@ -31,10 +33,10 @@ public class ServerController {
         WaitFirstPlayer waitFirstPlayer = new WaitFirstPlayer(this);
         WaitFirstPlayerGameInfo waitFirstPlayerGameInfo = new WaitFirstPlayerGameInfo(this);
         WaitOtherClients waitOtherClients = new WaitOtherClients(this);
-        CreateGame createGame = new CreateGame(this);
+        Create2Or3PlayerGame create2Or3PlayerGame = new Create2Or3PlayerGame(this);
         AssistantCardPhase assistantCardPhase = new AssistantCardPhase(this);
         StudentPhase studentPhase = new StudentPhase(this);
-        AskForTeamMate askForTeamMate = new AskForTeamMate(this);
+        Create4PlayerGame create4PlayerGame = new Create4PlayerGame(this);
         MotherPhase motherPhase = new MotherPhase(this);
         CloudPhase cloudPhase = new CloudPhase(this);
         EndTurn endTurn = new EndTurn(this);
@@ -46,11 +48,11 @@ public class ServerController {
         fsm.addTransition(specifyPortScreen, specifyPortScreen.portSpecified(), waitFirstPlayer);
         fsm.addTransition(waitFirstPlayer, waitFirstPlayer.gotFirstMessage(), waitFirstPlayerGameInfo);
         fsm.addTransition(waitFirstPlayerGameInfo, waitFirstPlayerGameInfo.gotNumOfPlayersAndGameMode(), waitOtherClients);
-        fsm.addTransition(waitOtherClients, waitOtherClients.twoOrThreeClientsConnected(), createGame);
-        fsm.addTransition(waitOtherClients, waitOtherClients.fourClientsConnected(), askForTeamMate);
-        fsm.addTransition(createGame, createGame.gameCreated(), assistantCardPhase);
-        fsm.addTransition(createGame, createGame.fourPlayersGameCreated(), askForTeamMate);
-        fsm.addTransition(askForTeamMate, askForTeamMate.teamMateChosen(), assistantCardPhase);
+        fsm.addTransition(waitOtherClients, waitOtherClients.twoOrThreeClientsConnected(), create2Or3PlayerGame);
+        fsm.addTransition(waitOtherClients, waitOtherClients.fourClientsConnected(), create4PlayerGame);
+        fsm.addTransition(create2Or3PlayerGame, create2Or3PlayerGame.gameCreated(), assistantCardPhase);
+        fsm.addTransition(create2Or3PlayerGame, create2Or3PlayerGame.fourPlayersGameCreated(), create4PlayerGame);
+        fsm.addTransition(create4PlayerGame, create4PlayerGame.teamMateChosen(), assistantCardPhase);
         fsm.addTransition(assistantCardPhase, assistantCardPhase.cardsChosen(), studentPhase);
         fsm.addTransition(assistantCardPhase, assistantCardPhase.gameEnd(), endGame);
         fsm.addTransition(studentPhase, studentPhase.studentPhaseEnded(), motherPhase);
@@ -68,9 +70,6 @@ public class ServerController {
         start.fireStateEvent();
     }
 
-    /**
-     * Utils methods to deal with this class
-     */
     public Model getModel() {
         return model;
     }

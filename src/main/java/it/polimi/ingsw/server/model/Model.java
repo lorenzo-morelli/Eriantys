@@ -28,6 +28,12 @@ public class Model {
     public static final String ANSI_BLACK = "\u001B[30m";
     public static final String ANSI_WHITE="\033[1;97m";
     public static final String ANSI_GRAY="\033[1;90m";
+
+    /**
+     * The constructor permit to Set up the Model in function of numOfPlayers and game mode.
+     * In particular this method create the CentreTable of the game and the array containing the players, and the array containing the teams if the numOfPlayer is 4
+     * @param debug is used for testing to unlock all the 12 cards (and not only 3) and set all the of the player coins to 100
+     */
     public Model(int numOfPlayer, String gameMode, boolean debug) {
 
 //        debug=true; //TODO: DELETE AFTER TESTING
@@ -70,18 +76,30 @@ public class Model {
         return table;
     }
 
+    /**
+     * This method allow to shuffle the array list of the player to randomize the first one who start the game
+     */
     public void randomSchedulePlayers() {
         shuffle(players);
     }
 
+    /**
+     * This method allow to sort the array list of the player (player are comparable) in ascend order of the chosenCardValue of those
+     */
     public void schedulePlayers() {
         sort(players);
     }
 
+    /**
+     * Return the turn player from the array
+     */
     public Player getCurrentPlayer() {
         return players.get(currentPlayer);
     }
 
+    /**
+     * This method permit to change the currentPlayer of the array (the next one in cycle order)
+     */
     public void nextPlayer() {
         if (currentPlayer == (players.size() - 1)) {
             currentPlayer = 0;
@@ -93,18 +111,25 @@ public class Model {
     public ArrayList<Player> getPlayers() {
         return players;
     }
+
+    /**
+     * This method improve the number of turn (utils for CLI graphics)
+     */
     public void nextTurn() {
         turnNumber++;
     }
 
+    /**
+     * This method will set the turn of the game as "LAST TURN", in order to deal to particular cases and graphics who happened on it
+     */
     public void setLastTurn() {
         this.isLastTurn = true;
     }
     public boolean isLastTurn(){return isLastTurn;}
 
     /**
-     * Return the winning player
-     * @return winner player
+     * Return the winning player in order to the rules.
+     * @return winner player or DRAW if no one win
      */
 
     public String playerWinner() {
@@ -141,8 +166,8 @@ public class Model {
     }
 
     /**
-     * Return the winning Team
-     * @return winner team
+     * Return the winning team (the name of each player) in order to the rules.
+     * @return winner team or DRAW if no one win
      */
     public String teamWinner() {
         int min = 8;
@@ -177,6 +202,12 @@ public class Model {
         else return winner.getPlayer1().getNickname() + " AND " + winner.getPlayer2().getNickname();
     }
 
+    /**
+     * This method permit to show all the CLI Model View
+     * @param nickname the nickname of the player of the CLI that call this method
+     * @param message log message to print in video
+     * @return CLI Model View
+     */
     public String toString(String nickname,String message) {
         return "\n\n\n-----------------------------------------GAME-----------------------------------------------------------------------------------------------------------------------------------------\n\n" +
                 "    TURN = " + turnNumber + "    " + (isLastTurn ? " ! LAST TURN OF THE GAME ! ": "" ) +"\n\n" +
@@ -187,6 +218,11 @@ public class Model {
 
     }
 
+    /**
+     * Util method for the CLI View graphics to represent the teams and the players in those (4 Player only)
+     * @param nickname the nickname of the player of the CLI that call this method
+     * @return Team View
+     */
     public String printTeam(String nickname){
         StringBuilder result= new StringBuilder();
         for (Team team : teams) {
@@ -194,6 +230,12 @@ public class Model {
         }
         return result.toString();
     }
+
+    /**
+     * Util method for the CLI View graphics to represent the players (3 or 4 players)
+     * @param nickname the nickname of the player of the CLI that call this method
+     * @return Players View
+     */
 
     public String printPlayers(String nickname){
         StringBuilder result= new StringBuilder();
@@ -232,10 +274,16 @@ public class Model {
         return result.toString();
     }
 
+    /**
+     * @param disconnection is true if the game is to close cause disconnection (default false)
+     */
     public void setDisconnection(boolean disconnection) {
         this.disconnection = disconnection;
     }
 
+    /**
+     * @return true if the game is to close cause disconnection (default false)
+     */
     public boolean isDisconnection() {
         return disconnection;
     }

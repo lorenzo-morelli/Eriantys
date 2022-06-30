@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 /**
  * This class contain and the methods to use the character FARMER described in the rules
+ * @author Ignazio Neto Dell'Acqua
  */
 public class Farmer extends CharacterCard{
 

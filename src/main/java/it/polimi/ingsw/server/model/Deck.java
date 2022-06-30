@@ -13,7 +13,6 @@ public class Deck {
 
     public Deck() {
         this.cards = new ArrayList<>();
-        // now it is time to initialize the newly built deck
         this.cards.add(new AssistantCard(1, 1));
         this.cards.add(new AssistantCard(2, 1));
         this.cards.add(new AssistantCard(3, 2));

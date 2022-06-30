@@ -17,6 +17,7 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * Java class that abstracts the low-level details of TCP sockets providing the programmer with simple
  * methods for connecting to a socket, sending and receiving messages, and various utilities
+ * @author fernandomorea
  */
 
 public class NetworkHandler {

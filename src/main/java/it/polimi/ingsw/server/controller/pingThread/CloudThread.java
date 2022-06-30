@@ -10,6 +10,7 @@ import java.util.ConcurrentModificationException;
 
 /**
  * Thread for Cloud Phase pings
+ * @author Ignazio Neto Dell'Acqua
  */
 public class CloudThread extends Thread {
     private final CloudPhase phase;
@@ -43,22 +44,22 @@ public class CloudThread extends Thread {
             }
 
 
-            ParametersFromNetwork ping_message = new ParametersFromNetwork(1);
-            ping_message.enable();
+            ParametersFromNetwork pingMessage = new ParametersFromNetwork(1);
+            pingMessage.enable();
 
             try {
-                ping_message.waitParametersReceived(5);
+                pingMessage.waitParametersReceived(5);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
 
             synchronized (phase) {
-                if (!ping_message.parametersReceived()) {
+                if (!pingMessage.parametersReceived()) {
                     phase.setDisconnected(true);
                     return;
                 }
-                if (!json.fromJson(ping_message.getParameter(0), ClientModel.class).isPingMessage()) {
-                    phase.setMessage(ping_message);
+                if (!json.fromJson(pingMessage.getParameter(0), ClientModel.class).isPingMessage()) {
+                    phase.setMessage(pingMessage);
                     phase.setFromPing(true);
                     return;
                 }

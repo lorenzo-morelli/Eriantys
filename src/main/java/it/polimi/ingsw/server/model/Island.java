@@ -57,16 +57,16 @@ public class Island {
     }
 
     /**
-     * Calculates who has the influence on the island
+     * Calculates who has the influence on the island (for 2 or 3 player)
      * @param Players the players to compare
-     * @param Professors the professor
-     * @param centaur required for effect card
-     * @param mushroom required for effect card
-     * @param knight required for effect card
-     * @return the player that currently has the influence on the island
+     * @param Professors the professors
+     * @param centaur required for effect card (true if the card effect is activated, false if not)
+     * @param mushroom required for effect card (the color chose when the card is activated, null if is not activated)
+     * @param knight required for effect card (the player who activate the card, null if is not activated)
+     * @return the player that currently has the influence on the island , null if no one has influence
      */
-    public Player playerInfluenceCalculator(ArrayList<Player> Players, ArrayList<Professor> Professors, boolean centaur, PeopleColor mushroom, Player knight) { //ritorna nullo se nessuno ha influenza
-        int max = 0, partialSum = 0;   //2 or 3 player
+    public Player playerInfluenceCalculator(ArrayList<Player> Players, ArrayList<Professor> Professors, boolean centaur, PeopleColor mushroom, Player knight) {
+        int max = 0, partialSum = 0;
         Player maxInfluence = null;
         for (Player player : Players) {
             if (player.getSchoolBoard().getTowerColor().equals(towerColor) && !centaur) partialSum +=numberOfTowers;
@@ -95,20 +95,16 @@ public class Island {
                 }
                 partialSumOfNobody =0;
             }
-        return maxInfluence; //return the player with the maximum influence
+        return maxInfluence;
     }
 
     /**
-     * Similar to the precedent method, but for the 4 players game mode
+     * Similar to the playerInfluenceCalculator method, but used for the 4 players game mode
      * @param Teams teams to compare
-     * @param Professors professors boards
-     * @param centaur required for effect card
-     * @param mushroom required for effect card
-     * @param knight required for effect card
-     * @return the team with maximised influence on the island
+     * @return the team with maximised influence on the island, null if no one has influence
      */
-    public Team teamInfluenceCalculator(ArrayList<Team> Teams, ArrayList<Professor> Professors, boolean centaur, PeopleColor mushroom, Player knight){ //ritorna nullo se nessuno ha influenza
-        int max=0, partialSum =0;   //4 player
+    public Team teamInfluenceCalculator(ArrayList<Team> Teams, ArrayList<Professor> Professors, boolean centaur, PeopleColor mushroom, Player knight){
+        int max=0, partialSum =0;
         Team maxInfluence = null;
 
         for (Team team : Teams) {
@@ -139,13 +135,18 @@ public class Island {
             }
             partialSumOfNobody =0;
         }
-        return maxInfluence; //returns the team with the max influence
+        return maxInfluence;
     }
+
+    /**
+     * Increase the number of tower in the island
+     */
     public void placeTower(){ this.numberOfTowers ++; }
 
     /**
-     * Method to control the island, once we have determined that the player has the influence on the island
-     * @param influencePlayer the player with the influence
+     * Method is used to manage the island by pass the player (influencePlayer) who will control it.
+     * If this island has towers on it yet, the method will remove the same number of tower from the player School and change the color of the Towers on this by the towerColor of the player
+     * If this island has no towers on it, the method will remove one tower from the player School add one Tower on the island and load the color of this by the towerColor of the player
      */
     public void controlIsland(Player influencePlayer){
         setTowerColor(influencePlayer.getSchoolBoard().getTowerColor());
@@ -160,7 +161,7 @@ public class Island {
     }
 
     /**
-     * As the precedent method, but for the 4 players mode
+     * As the controlIsland method, but for the 4 players mode
      * @param influenceTeam the team with the influence on the island
      */
     public void controlIsland(Team influenceTeam){
@@ -191,6 +192,6 @@ public class Island {
         return "    INHABITANS : " + inhabitants.toString() +
                 "    NUMBER OF TOWER : " + numberOfTowers + "\n"+
                 "    TOWER COLOR :" +  (towerColor==null ? " Null" : (towerColor==TowerColor.GREY ? ANSI_GRAY+towerColor+ANSI_RESET :(towerColor==TowerColor.WHITE ? WHITE_BOLD_BRIGHT+towerColor+ANSI_RESET :  ANSI_BLACK+towerColor+ANSI_RESET))) +"\n"+
-                (isBlocked ? "    ! QUESTA ISOLA E' BLOCCATA !\n\n" : "\n");
+                (isBlocked ? "    ! THIS ISLAND IS BLOCKED !\n\n" : "\n");
     }
 }

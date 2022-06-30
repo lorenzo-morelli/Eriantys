@@ -7,6 +7,7 @@ import it.polimi.ingsw.server.model.enums.PeopleColor;
 
 /**
  * This class contain the methods to use the character MONK described in the rules
+ * @author Ignazio Neto Dell'Acqua
  */
 public class Monk extends CharacterCard{
 

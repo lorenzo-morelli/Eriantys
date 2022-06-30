@@ -9,6 +9,7 @@ import java.util.ArrayList;
  * Is the de-facto data model where the server has to store the information of
  * every player connected to the game and the current state of their view, their
  * connection, and other basic data as nickname and ip address.
+ * @author Fernando Morea
  */
 
 public class ConnectionModel {
@@ -90,14 +91,14 @@ public class ConnectionModel {
     }
 
     /**
-     * @return true is Thread for connections during the game is closed (Thread in AskForTeamMate for 4 players or in Create Game for 3/2 players
+     * @return true is Thread for connections during the game is closed (Thread in Create4PlayerGame for 4 players or in Create Game for 3/2 players
      */
     public boolean isCloseThread() {
         return closeThread;
     }
 
     /**
-     * Set the flag to manage Thread for connections during the game (Thread in AskForTeamMate for 4 players or in Create Game for 3/2 players
+     * Set the flag to manage Thread for connections during the game (Thread in Create4PlayerGame for 4 players or in Create Game for 3/2 players
      */
     public void setCloseThread(boolean closeThread) {
         this.closeThread = closeThread;

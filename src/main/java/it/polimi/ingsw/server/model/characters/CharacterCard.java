@@ -2,6 +2,7 @@ package it.polimi.ingsw.server.model.characters;
 
 /**
  * All the character extends this Class, that contain basic methods to deal with it
+ * @author Ignazio Neto Dell'Acqua
  */
 public class CharacterCard {
     private final String Name;

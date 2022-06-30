@@ -10,6 +10,8 @@ import it.polimi.ingsw.utils.stateMachine.State;
 /**
  * This state handles the things that the server has to do
  * at the end of the shift (for example reload the cloud cards)
+ * @author Ignazio Neto Dell'Acqua
+ * @author Fernando Morea
  */
 public class EndTurn extends State {
     private final Event goToAssistantCardPhase;
