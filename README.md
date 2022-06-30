@@ -9,7 +9,7 @@ Il client è stato implementato sia nella versione command line interface (CLI),
 - Regole del gioco complete (incluse tutte le carte personaggio)
 - Socket TCP
 - CLI e GUI
-- Partite a 2, 3 e 4 giocatori
+- Partite a due, tre e quattro giocatori
 - Resilienza alle disconnessioni
 # Documentazione
 
@@ -37,7 +37,7 @@ TODO: inserire uml finale
 
 
 ## Testing e coverage
-Sono stati effettuati testing di coverage con Junit con copertura pari all'86% dei metodi ed all'82% delle righe di codice del Model.  
+Sono stati effettuati testing di coverage con Junit con copertura pari all'86% dei metodi e all'82% delle righe di codice del Model.  
 ![](https://i.ibb.co/M7dvkmN/Senza-titolo.png)
 
 ## Librerie e plugins

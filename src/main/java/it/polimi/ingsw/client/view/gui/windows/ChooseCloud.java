@@ -13,12 +13,9 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-
-import static it.polimi.ingsw.client.view.gui.Game.setShadow;
 import static it.polimi.ingsw.client.view.gui.GuiView.windowNode;
 
 public class ChooseCloud implements Initializable {

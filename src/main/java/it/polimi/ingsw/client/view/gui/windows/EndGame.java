@@ -2,8 +2,6 @@ package it.polimi.ingsw.client.view.gui.windows;
 
 import it.polimi.ingsw.client.view.gui.GuiView;
 import it.polimi.ingsw.client.view.gui.Menu;
-import it.polimi.ingsw.server.model.Player;
-import it.polimi.ingsw.utils.network.Network;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -11,7 +9,6 @@ import javafx.scene.control.Label;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
 import static it.polimi.ingsw.client.view.gui.GuiView.currNode;
 

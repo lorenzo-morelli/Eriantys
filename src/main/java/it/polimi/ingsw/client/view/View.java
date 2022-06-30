@@ -11,8 +11,6 @@ public interface View {
      */
     void setCallingState(State callingState);
     void setClientModel(ClientModel clientModel);
-    @SuppressWarnings("unused")
-    void askToStart() throws InterruptedException;
     void askDecision(String option1, String option2) throws InterruptedException;
     void askParameters() throws InterruptedException;
 
