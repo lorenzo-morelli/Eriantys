@@ -66,6 +66,7 @@ public class WaitFirstPlayer extends State {
         }
         System.out.println("[Listening on port " + CommandPrompt.gotFromTerminal() + "]");
         Network.setupServer(CommandPrompt.gotFromTerminal());
+        System.out.println("SERVER ONLINE ON "+Network.getMyIp()+" PORT "+CommandPrompt.gotFromTerminal());
         Network.setDisconnectedClient(false);
         connectionModel.setClientsInfo(new ArrayList<>());
 
