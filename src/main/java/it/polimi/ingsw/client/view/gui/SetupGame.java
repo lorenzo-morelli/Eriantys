@@ -50,9 +50,9 @@ public class SetupGame implements Initializable {
         numberOfPlayersLabel.setText("Number of players: " + this.guiView.getClientModel().getNumOfPlayers());
     }
 
-    public void setPrincipiant() {
-        this.guiView.getClientModel().setGameMode("PRINCIPIANT");
-        this.gameModeLabel.setText("Game mode: principiant");
+    public void setBeginner() {
+        this.guiView.getClientModel().setGameMode("BEGINNER");
+        this.gameModeLabel.setText("Game mode: Beginner");
     }
 
     public void setExpert() {

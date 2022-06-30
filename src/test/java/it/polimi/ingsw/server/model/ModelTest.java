@@ -12,14 +12,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ModelTest {
     @Test
-    void testCreateModel2playerPrincipiante() {
-        Model model = new Model(2, "PRINCIPIANT", false);
+    void testCreateModel2playerBeginner() {
+        Model model = new Model(2, "BEGINNER", false);
         model.getPlayers().add(new Player("pippo", "192.168.0.1", model, false));
         model.getPlayers().add(new Player("paperino", "192.168.0.2", model, false));
 
         //assert Model
         assertEquals(2, model.getPlayers().size());
-        assertEquals(GameMode.PRINCIPIANT, model.getGameMode());
+        assertEquals(GameMode.BEGINNER, model.getGameMode());
         assertEquals(2, model.getNumberOfPlayers());
         assertNull(model.getTeams());
         assertEquals(model.getPlayers().get(0), model.getCurrentPlayer());
@@ -80,15 +80,15 @@ class ModelTest {
     }
 
     @Test
-    void testCreateModel3playerPrincipiante() {
-        Model model = new Model(3, "PRINCIPIANT", false);
+    void testCreateModel3playerBeginner() {
+        Model model = new Model(3, "BEGINNER", false);
         model.getPlayers().add(new Player("pippo", "192.168.0.1", model, false));
         model.getPlayers().add(new Player("paperino", "192.168.0.2", model, false));
         model.getPlayers().add(new Player("pluto", "192.168.0.3", model, false));
 
         //assert Model
         assertEquals(3, model.getPlayers().size());
-        assertEquals(GameMode.PRINCIPIANT, model.getGameMode());
+        assertEquals(GameMode.BEGINNER, model.getGameMode());
         assertEquals(3, model.getNumberOfPlayers());
         assertNull(model.getTeams());
         assertEquals(model.getPlayers().get(0), model.getCurrentPlayer());
@@ -162,8 +162,8 @@ class ModelTest {
     }
 
     @Test
-    void testCreateModel4playerPrincipiante() {
-        Model model = new Model(4, "PRINCIPIANT", false);
+    void testCreateModel4playerBeginner() {
+        Model model = new Model(4, "BEGINNER", false);
         model.getPlayers().add(new Player("pippo", "192.168.0.1", 1, model, false));
         model.getPlayers().add(new Player("paperino", "192.168.0.2", 2, model, false));
         model.getPlayers().add(new Player("pluto", "192.168.0.3", 1, model, false));
@@ -171,7 +171,7 @@ class ModelTest {
 
         //assert Model
         assertEquals(4, model.getPlayers().size());
-        assertEquals(GameMode.PRINCIPIANT, model.getGameMode());
+        assertEquals(GameMode.BEGINNER, model.getGameMode());
         assertEquals(4, model.getNumberOfPlayers());
         assertEquals(2, model.getTeams().size());
 
@@ -365,7 +365,7 @@ class ModelTest {
 
     @Test
     void SimulateGame2Player() {
-        Model model = new Model(2, "PRINCIPIANT", false);
+        Model model = new Model(2, "BEGINNER", false);
         model.getPlayers().add(new Player("paperino", "192.168.0.2", model, false));
         model.getPlayers().add(new Player("pippo", "192.168.0.1", model, false));
 
@@ -473,7 +473,7 @@ class ModelTest {
 
     @Test
     void SimulateGame4Player() {
-        Model model = new Model(4, "PRINCIPIANT", false);
+        Model model = new Model(4, "BEGINNER", false);
         model.getPlayers().add(new Player("paperino", "192.168.0.2", 1, model, false));
         model.getPlayers().add(new Player("pippo", "192.168.0.1", 2, model, false));
         model.getPlayers().add(new Player("paperino2", "192.168.0.2", 1, model, false));

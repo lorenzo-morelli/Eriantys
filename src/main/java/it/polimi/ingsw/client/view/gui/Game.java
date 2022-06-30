@@ -433,7 +433,7 @@ public class Game implements Initializable {
         }
 
         // INITIALIZE GAMEMODE
-        if (gameMode.equals(GameMode.PRINCIPIANT)) {
+        if (gameMode.equals(GameMode.BEGINNER)) {
             characterCardsImages.forEach(card -> card.setVisible(false));
             coins.forEach(coin -> coin.setVisible(false));
             coinLabels.forEach(coinLabel -> coinLabel.setVisible(false));

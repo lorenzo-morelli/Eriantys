@@ -29,11 +29,11 @@ public class CliView implements View {
     private ClientModel networkClientModel;
     private String nickname;
     private String response;
-    private boolean isUsed;
+    private boolean cardJustUsed;
 
     public CliView() {
         response = "\n";
-        isUsed = false;
+        cardJustUsed = false;
         networkClientModel = new ClientModel();
     }
 
@@ -67,7 +67,7 @@ public class CliView implements View {
             ((WelcomeScreen) callingState).notStart().enable();
 
             CommandPrompt.ask(
-                    "Scrivi start per far partire il gioco e premi invio",
+                    "Write start to start the game and press ENTER",
                     "START THE GAME: ");
 
 
@@ -87,15 +87,15 @@ public class CliView implements View {
     @Override
     public void askDecision(String option1, String option2) throws InterruptedException {
         if (callingState instanceof Decision) {
-            ((Decision) callingState).haScelto1().enable();
-            ((Decision) callingState).haScelto2().enable();
+            ((Decision) callingState).heChoose1().enable();
+            ((Decision) callingState).heChoose2().enable();
 
             CommandPrompt.ask(
-                    "Scegli tra " + option1 + " e " + option2,
+                    "Choose between " + option1 + " and " + option2,
                     option1 + " or " + option2 + ": ");
 
-            ((Decision) callingState).haScelto1().disable();
-            ((Decision) callingState).haScelto2().disable();
+            ((Decision) callingState).heChoose1().disable();
+            ((Decision) callingState).heChoose2().disable();
         }
     }
 
@@ -114,13 +114,13 @@ public class CliView implements View {
 
         switch (((ReadFromTerminal) callingState).getType()) {
             case "USERINFO":
-                CommandPrompt.ask("Inserire Nickname Ip e porta separati da uno spazio e premere invio [empty String: default setup in localhost]",
-                        "nickname ip porta:");
+                CommandPrompt.ask("Enter Nickname Ip and port separated by a space and press ENTER [empty String: default setup in localhost]",
+                        "Nickname Ip Port:");
                 parsedStrings =
                         new ArrayList<>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
                 if (!CommandPrompt.gotFromTerminal().equals("")) {
                     if (parsedStrings.size() != 3 || isValidIp(parsedStrings.get(1)) || isValidPort(parsedStrings.get(2))) {
-                        System.out.print("ALERT: dati inseriti non validi, riprovare\n");
+                        System.out.print("ALERT: invalid entered data, try again\n");
                         askParameters();
                     }
                     setNickname(parsedStrings.get(0));
@@ -130,13 +130,13 @@ public class CliView implements View {
                 break;
 
             case "GAMEINFO":
-                CommandPrompt.ask("Inserire numero di giocatori e modalita' di gioco [empty String: default 4 EXPERT]",
-                        "numOfPlayers gameMode:");
+                CommandPrompt.ask("Enter number of players and game mode [empty String: default 4 EXPERT]",
+                        "NumOfPlayers GameMode:");
                 parsedStrings =
                         new ArrayList<>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
                 if (!parsedStrings.get(0).equals("")) {
                     if (!isValidCifra(parsedStrings.get(0))) {
-                        System.out.print("ALERT: Inserisci una cifra su numOfPlayers, riprovare\n");
+                        System.out.print("ALERT: Enter a digit on the number of players, try again\n");
                         askParameters();
                         return;
                     }
@@ -144,20 +144,20 @@ public class CliView implements View {
                     return;
                 }
                 if (Integer.parseInt(parsedStrings.get(0)) < 2 || Integer.parseInt(parsedStrings.get(0)) > 4) {
-                    System.out.print("ALERT: numOfPlayers deve essere compresa tra 2 e 4, riprovare\n");
+                    System.out.print("ALERT: numOfPlayers must be between 2 and 4, try again\n");
                     askParameters();
                     return;
                 }
-                if (!parsedStrings.get(1).equals("PRINCIPIANT") && !parsedStrings.get(1).equals("EXPERT")) {
-                    System.out.print("ALERT: il gameMode scelto deve essere 'PRINCIPIANT' oppure 'EXPERT', riprovare\n");
+                if (!parsedStrings.get(1).equals("BEGINNER") && !parsedStrings.get(1).equals("EXPERT")) {
+                    System.out.print("ALERT: the chosen gameMode must be 'BEGINNER' or 'EXPERT', try again\n");
                     askParameters();
                     return;
                 }
                 break;
 
             case "NICKNAMEEXISTENT":
-                CommandPrompt.ask("Nickname scelto gia' esistente, si prega di reinserirne uno nuovo",
-                        "nickname:");
+                CommandPrompt.ask("ALERT: Nickname chosen already existing, please re-enter a new one",
+                        "Nickname:");
                 setNickname(CommandPrompt.gotFromTerminal());
                 break;
         }
@@ -198,772 +198,209 @@ public class CliView implements View {
 
         switch (networkClientModel.getTypeOfRequest()) {
             case "TRYTORECONNECT":
-                System.out.println(networkClientModel.getServerModel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO: \n" + "IL SERVER STA TENTANDO DI RICONNETTERSI A MINIMO UN GIOCATORE PER PERMETTERE CHE LA PARTITA CONTINUI" + "\n\nMOSSE ALTRI GIOCATORI: " + getResponse()));
+                System.out.println(networkClientModel.getServerModel().toString(networkClientModel.getNickname(), "GAME STATE: \n" + " THE SERVER IS ATTEMPTING TO RECONNECT A PLAYER TO A MINIMUM TO ALLOW THE GAME TO CONTINUE" + "\n\nMOVES BY OTHER PLAYERS: " + getResponse()));
                 break;
             case "DISCONNECTION":
-                System.out.println(networkClientModel.getServerModel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO: \n" + "LA PARTITA E' TERMINATA CAUSA DISCONNESSIONE, NESSUN GIOCATORE SI E' RICONNESSO..." + "\n\nMOSSE ALTRI GIOCATORI: " + getResponse()));
-                break;
-            case "CHOOSEASSISTANTCARD":
-                System.out.println(networkClientModel.getServerModel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO: \n" + "E' IL TUO TURNO - ASSISTENT CARD PHASE" + "\n\nMOSSE ALTRI GIOCATORI: " + getResponse()));
-                System.out.println("Scegli una Carta Assistente");
-                for (AssistantCard a : networkClientModel.getDeck()) {
-                    System.out.println("valore: " + (int) a.getValues() + "  mosse: " + a.getMoves());
-                }
-                CommandPrompt.ask("Inserisci valore della carta scelta", "Carta: ");
-                if (isValidNumber(CommandPrompt.gotFromTerminal())) {
-                    System.out.println("la carta da te scelta ha un valore non  valido, si prega :di fare piu' attenzione");
-                    TimeUnit.SECONDS.sleep(2);
-                    requestToMe();
-                    return;
-                }
-                boolean check = false;
-                for (int i = 0; i < networkClientModel.getDeck().size(); i++) {
-                    if (networkClientModel.getDeck().get(i).getValues() == Integer.parseInt((CommandPrompt.gotFromTerminal()))) {
-                        check = true;
-                    }
-                }
-                if (!check) {
-                    System.out.println("la carta scelta non esiste, fare maggiore attenzione");
-                    TimeUnit.SECONDS.sleep(2);
-                    requestToMe();
-                    return;
-                }
-                networkClientModel.setCardChosenValue(Float.parseFloat(CommandPrompt.gotFromTerminal()));
-                networkClientModel.setResponse(true);
-                networkClientModel.setPingMessage(false);
-                networkClientModel.setFromTerminal(parsedStrings);
-                Gson json = new Gson();
-                Network.send(json.toJson(networkClientModel));
-
-                break;
-            case "CHOOSEWHERETOMOVESTUDENTS":
-                System.out.println(networkClientModel.getServerModel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO: \n" + "E' IL TUO TURNO - STUDENT PHASE" + "\n\nMOSSE ALTRI GIOCATORI: " + getResponse()));
-                if (networkClientModel.getServerModel().getGameMode().equals(GameMode.EXPERT) && networkClientModel.getServerModel().getTable().getCharacters().stream().anyMatch(j -> j.getCost() <= networkClientModel.getServerModel().getCurrentPlayer().getCoins() && !isUsed)) {
-
-                    CommandPrompt.ask("Scegli il colore dello studente che desideri muovere OPPURE inserisci CARD per usare una carta personaggio", "RED or GREEN or BLUE or YELLOW or PINK    or CARD: ");
-
-                    if (!CommandPrompt.gotFromTerminal().equals("RED") &&
-                            !CommandPrompt.gotFromTerminal().equals("GREEN") &&
-                            !CommandPrompt.gotFromTerminal().equals("BLUE") &&
-                            !CommandPrompt.gotFromTerminal().equals("YELLOW") &&
-                            !CommandPrompt.gotFromTerminal().equals("PINK") &&
-                            !CommandPrompt.gotFromTerminal().equals("CARD")) {
-                        System.out.println("Non si e' inserito ne un colore non valido, ne il comando CARD, reinserire i dati con piu' attenzione !!!!");
-                        TimeUnit.SECONDS.sleep(2);
-                        requestToMe();
-                        return;
-                    }
-
-                    PeopleColor choosedColor = null;
-                    String terminalInput = CommandPrompt.gotFromTerminal();
-                    switch (terminalInput) {
-                        case "RED":
-                            choosedColor = PeopleColor.RED;
-                            break;
-                        case "GREEN":
-                            choosedColor = PeopleColor.GREEN;
-                            break;
-                        case "BLUE":
-                            choosedColor = PeopleColor.BLUE;
-                            break;
-                        case "YELLOW":
-                            choosedColor = PeopleColor.YELLOW;
-                            break;
-                        case "PINK":
-                            choosedColor = PeopleColor.PINK;
-                            break;
-                        default:
-                            System.out.println("\n\n\n\nScegli la carta che vorresti utilizzare: \n");
-                            ArrayList<String> available = new ArrayList<>();
-                            addCards(available);
-                            CommandPrompt.ask("Scegliere la carta personaggio seguendo le indicazioni, un qualsiasi altra riga se si vuole tornare indietro", "CHARACTER:");
-                            parsedStrings =
-                                    new ArrayList<>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
-                            if (!available.contains(parsedStrings.get(0))) {
-                                requestToMe();
-                                return;
-                            }
-                            CharacterCard modelCard = null;
-                            for (int i = 0; i < networkClientModel.getServerModel().getTable().getCharacters().size(); i++) {
-                                if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals(parsedStrings.get(0))) {
-                                    modelCard = networkClientModel.getServerModel().getTable().getCharacters().get(i);
-                                }
-                            }
-                            switch (parsedStrings.get(0)) {
-                                case "MUSHROOMHUNTER":
-                                case "THIEF":
-                                    if (!(parsedStrings.size() == 2) || !(Objects.equals(parsedStrings.get(1), "RED") || Objects.equals(parsedStrings.get(1), "PINK") || Objects.equals(parsedStrings.get(1), "GREEN") || Objects.equals(parsedStrings.get(1), "YELLOW") || Objects.equals(parsedStrings.get(1), "BLUE"))) {
-                                        System.out.println("formato non valido, scelta carta rifiutata !!!!");
-                                        TimeUnit.SECONDS.sleep(2);
-                                        requestToMe();
-                                        return;
-                                    }
-                                    PeopleColor color = null;
-                                    switch (parsedStrings.get(1)) {
-                                        case "RED":
-                                            color = PeopleColor.RED;
-                                            break;
-                                        case "GREEN":
-                                            color = PeopleColor.GREEN;
-                                            break;
-                                        case "PINK":
-                                            color = PeopleColor.PINK;
-                                            break;
-                                        case "BLUE":
-                                            color = PeopleColor.BLUE;
-                                            break;
-                                        case "YELLOW":
-                                            color = PeopleColor.YELLOW;
-                                            break;
-                                    }
-                                    networkClientModel.setTypeOfRequest(parsedStrings.get(0));
-                                    networkClientModel.setResponse(true);
-                                    networkClientModel.setPingMessage(false);
-                                    networkClientModel.setChosenColor(color);
-                                    json = new Gson();
-                                    isUsed = true;
-                                    Network.send(json.toJson(networkClientModel));
-                                    break;
-                                case "MONK":
-                                    if (!(parsedStrings.size() == 3) || !(Objects.equals(parsedStrings.get(1), "RED") || Objects.equals(parsedStrings.get(1), "PINK") || Objects.equals(parsedStrings.get(1), "GREEN") || Objects.equals(parsedStrings.get(1), "YELLOW") || Objects.equals(parsedStrings.get(1), "BLUE")) || (Integer.parseInt(parsedStrings.get(2)) < 1 || Integer.parseInt(parsedStrings.get(2)) > networkClientModel.getServerModel().getTable().getIslands().size())) {
-                                        System.out.println("formato non valido, scelta carta rifiutata !!!!");
-                                        TimeUnit.SECONDS.sleep(2);
-                                        requestToMe();
-                                        return;
-                                    }
-                                    color = null;
-                                    switch (parsedStrings.get(1)) {
-                                        case "RED":
-                                            color = PeopleColor.RED;
-                                            break;
-                                        case "GREEN":
-                                            color = PeopleColor.GREEN;
-                                            break;
-                                        case "PINK":
-                                            color = PeopleColor.PINK;
-                                            break;
-                                        case "BLUE":
-                                            color = PeopleColor.BLUE;
-                                            break;
-                                        case "YELLOW":
-                                            color = PeopleColor.YELLOW;
-                                            break;
-                                    }
-                                    assert modelCard != null;
-                                    if (modelCard.getName().equals("MONK")) {
-                                        assert color != null;
-                                        if (networkClientModel.getServerModel().getTable().getMonkSet().numStudentsByColor(color) == 0) {
-                                            System.out.println("La carta non possiede il colore che hai scelto, scelta carta rifiutata !!!!");
-                                            TimeUnit.SECONDS.sleep(2);
-                                            requestToMe();
-                                            return;
-                                        }
-                                    }
-                                    networkClientModel.setTypeOfRequest(parsedStrings.get(0));
-                                    networkClientModel.setResponse(true);
-                                    networkClientModel.setPingMessage(false);
-                                    networkClientModel.setChosenColor(color);
-                                    networkClientModel.setChosenIsland(Integer.parseInt(parsedStrings.get(2)) - 1);
-                                    json = new Gson();
-                                    isUsed = true;
-                                    Network.send(json.toJson(networkClientModel));
-                                    break;
-                                case "PRINCESS":
-                                    if (!(parsedStrings.size() == 2) || !(Objects.equals(parsedStrings.get(1), "RED") || Objects.equals(parsedStrings.get(1), "PINK") || Objects.equals(parsedStrings.get(1), "GREEN") || Objects.equals(parsedStrings.get(1), "YELLOW") || Objects.equals(parsedStrings.get(1), "BLUE"))) {
-                                        System.out.println("formato non valido, scelta carta rifiutata !!!!");
-                                        TimeUnit.SECONDS.sleep(2);
-                                        requestToMe();
-                                        return;
-                                    }
-                                    color = null;
-                                    switch (parsedStrings.get(1)) {
-                                        case "RED":
-                                            color = PeopleColor.RED;
-                                            break;
-                                        case "GREEN":
-                                            color = PeopleColor.GREEN;
-                                            break;
-                                        case "PINK":
-                                            color = PeopleColor.PINK;
-                                            break;
-                                        case "BLUE":
-                                            color = PeopleColor.BLUE;
-                                            break;
-                                        case "YELLOW":
-                                            color = PeopleColor.YELLOW;
-                                            break;
-                                    }
-                                    assert modelCard != null;
-                                    if (modelCard.getName().equals("PRINCESS")) {
-                                        assert color != null;
-                                        if (networkClientModel.getServerModel().getTable().getPrincessSet().numStudentsByColor(color) == 0) {
-                                            System.out.println("La carta non possiede il colore che hai scelto, scelta carta rifiutata !!!!");
-                                            TimeUnit.SECONDS.sleep(2);
-                                            requestToMe();
-                                            return;
-                                        }
-                                    }
-                                    networkClientModel.setTypeOfRequest(parsedStrings.get(0));
-                                    networkClientModel.setResponse(true);
-                                    networkClientModel.setPingMessage(false);
-                                    networkClientModel.setChosenColor(color);
-                                    json = new Gson();
-                                    isUsed = true;
-                                    Network.send(json.toJson(networkClientModel));
-                                    break;
-                                case "FARMER":
-                                case "CENTAUR":
-                                case "KNIGHT":
-                                case "POSTMAN":
-                                    if (parsedStrings.size() != 1) {
-                                        System.out.println("formato non valido, scelta carta rifiutata !!!!");
-                                        TimeUnit.SECONDS.sleep(2);
-                                        requestToMe();
-                                        return;
-                                    }
-                                    networkClientModel.setTypeOfRequest(parsedStrings.get(0));
-                                    networkClientModel.setResponse(true);
-                                    networkClientModel.setPingMessage(false);
-                                    json = new Gson();
-                                    isUsed = true;
-                                    Network.send(json.toJson(networkClientModel));
-                                    break;
-                                case "GRANNY":
-                                case "HERALD":
-                                    if (!(parsedStrings.size() == 2) || (Integer.parseInt(parsedStrings.get(1)) < 1 || Integer.parseInt(parsedStrings.get(1)) > networkClientModel.getServerModel().getTable().getIslands().size())) {
-                                        System.out.println("formato non valido, scelta carta rifiutata !!!!");
-                                        TimeUnit.SECONDS.sleep(2);
-                                        requestToMe();
-                                        return;
-                                    }
-                                    assert modelCard != null;
-                                    if (modelCard.getName().equals("GRANNY") && networkClientModel.getServerModel().getTable().getIslands().get(Integer.parseInt(parsedStrings.get(1)) - 1).isBlocked()) {
-                                        System.out.println("isola gia' bloccata, scelta carta rifiutata !!!!");
-                                        TimeUnit.SECONDS.sleep(2);
-                                        requestToMe();
-                                        return;
-                                    }
-                                    if (modelCard.getName().equals("GRANNY") && networkClientModel.getServerModel().getTable().getNumDivieti() == 0) {
-                                        System.out.println("non ci sono divieti posizionabili, scelta carta rifiutata !!!!");
-                                        TimeUnit.SECONDS.sleep(2);
-                                        requestToMe();
-                                        return;
-                                    }
-                                    networkClientModel.setTypeOfRequest(parsedStrings.get(0));
-                                    networkClientModel.setResponse(true);
-                                    networkClientModel.setPingMessage(false);
-                                    networkClientModel.setChosenIsland(Integer.parseInt(parsedStrings.get(1)) - 1);
-                                    json = new Gson();
-                                    isUsed = true;
-                                    Network.send(json.toJson(networkClientModel));
-                                    break;
-                                case "MINSTRELL":
-                                case "JESTER":
-                                    int max = 2;
-                                    StudentSet destination = networkClientModel.getServerModel().getCurrentPlayer().getSchoolBoard().getDinnerTable();
-                                    ArrayList<PeopleColor> colors1 = new ArrayList<>();
-                                    ArrayList<PeopleColor> colors2 = new ArrayList<>();
-                                    if (parsedStrings.get(0).equals("JESTER")) {
-                                        max = 3;
-                                        destination = networkClientModel.getServerModel().getTable().getJesterSet();
-                                    }
-                                    if (parsedStrings.size() < 3 || parsedStrings.size() > (1 + 2 * max) || parsedStrings.size() % 2 == 0) {
-                                        System.out.println("formato non valido, scelta carta rifiutata !!!!");
-                                        TimeUnit.SECONDS.sleep(2);
-                                        requestToMe();
-                                        return;
-                                    }
-                                    for (int i = 1; i < parsedStrings.size(); i++) {
-                                        switch (parsedStrings.get(i)) {
-                                            case "RED":
-                                                if (i <= (parsedStrings.size() - 1) / 2) {
-                                                    colors1.add(PeopleColor.RED);
-                                                } else {
-                                                    colors2.add(PeopleColor.RED);
-                                                }
-                                                break;
-                                            case "GREEN":
-                                                if (i <= (parsedStrings.size() - 1) / 2) {
-                                                    colors1.add(PeopleColor.GREEN);
-                                                } else {
-                                                    colors2.add(PeopleColor.GREEN);
-                                                }
-                                                break;
-                                            case "BLUE":
-                                                if (i <= (parsedStrings.size() - 1) / 2) {
-                                                    colors1.add(PeopleColor.BLUE);
-                                                } else {
-                                                    colors2.add(PeopleColor.BLUE);
-                                                }
-                                                break;
-                                            case "YELLOW":
-                                                if (i <= (parsedStrings.size() - 1) / 2) {
-                                                    colors1.add(PeopleColor.YELLOW);
-                                                } else {
-                                                    colors2.add(PeopleColor.YELLOW);
-                                                }
-                                                break;
-                                            case "PINK":
-                                                if (i <= (parsedStrings.size() - 1) / 2) {
-                                                    colors1.add(PeopleColor.PINK);
-                                                } else {
-                                                    colors2.add(PeopleColor.PINK);
-                                                }
-                                                break;
-                                        }
-                                    }
-                                    if (networkClientModel.getServerModel().getCurrentPlayer().getSchoolBoard().getEntranceSpace().contains(colors1) || destination.contains(colors2)) {
-                                        System.out.println("uno o piu colori scelti non sono presenti, scelta carta rifiutata !!!!");
-                                        TimeUnit.SECONDS.sleep(2);
-                                        requestToMe();
-                                        return;
-                                    }
-                                    networkClientModel.setTypeOfRequest(parsedStrings.get(0));
-                                    networkClientModel.setResponse(true);
-                                    networkClientModel.setPingMessage(false);
-                                    networkClientModel.setColors1(colors1);
-                                    networkClientModel.setColors2(colors2);
-                                    json = new Gson();
-                                    isUsed = true;
-                                    Network.send(json.toJson(networkClientModel));
-                                    break;
-                            }
-                            break;
-                    }
-
-                    if (!terminalInput.equals("CARD")) {
-                        if (schoolOrIsland(choosedColor)) return;
-                    }
-                } else {
-
-                    CommandPrompt.ask("Scegli il colore dello studente che desideri muovere ", "RED or GREEN or BLUE or YELLOW or PINK: ");
-                    if (!CommandPrompt.gotFromTerminal().equals("RED") &&
-                            !CommandPrompt.gotFromTerminal().equals("GREEN") &&
-                            !CommandPrompt.gotFromTerminal().equals("BLUE") &&
-                            !CommandPrompt.gotFromTerminal().equals("YELLOW") &&
-                            !CommandPrompt.gotFromTerminal().equals("PINK")) {
-                        System.out.println("Si e' inserito un colore non valido, reinserire i dati con piu' attenzione !!!!");
-                        TimeUnit.SECONDS.sleep(2);
-                        requestToMe();
-                        return;
-                    }
-                    PeopleColor choosedColor;
-                    switch (CommandPrompt.gotFromTerminal()) {
-                        case "RED":
-                            choosedColor = PeopleColor.RED;
-                            break;
-                        case "GREEN":
-                            choosedColor = PeopleColor.GREEN;
-                            break;
-                        case "BLUE":
-                            choosedColor = PeopleColor.BLUE;
-                            break;
-                        case "YELLOW":
-                            choosedColor = PeopleColor.YELLOW;
-                            break;
-                        case "PINK":
-                            choosedColor = PeopleColor.PINK;
-                            break;
-                        default:
-                            throw new IllegalStateException("Unexpected value: " + CommandPrompt.gotFromTerminal());
-                    }
-
-                    if (schoolOrIsland(choosedColor)) return;
-                    break;
-                }
+                System.out.println(networkClientModel.getServerModel().toString(networkClientModel.getNickname(), "GAME STATE: \n" + " THE GAME IS OVER DUE TO DISCONNECTION, NO PLAYER HAS RECONNECTED..." + "\n\nMOVES BY OTHER PLAYERS: " + getResponse()));
                 break;
             case "TEAMMATE":
                 for (String nickname : networkClientModel.getNicknames()) {
                     System.out.println(nickname);
                 }
-                CommandPrompt.ask("Inserisci il nickname del tuo compagno di squadra: ", "Nickname: ");
-                if (!networkClientModel.getNicknames().contains(CommandPrompt.gotFromTerminal())) {
-                    System.out.print("Il nickname inserito non esiste, si prega di scegliere un nickname tra quelli specificati");
+                CommandPrompt.ask("Enter your teammate’s nickname: ", "Nickname: ");
+
+                boolean ResultOfChoosingTeamMate= chosenTeamMateManagement();
+                if(ResultOfChoosingTeamMate){
+                    TimeUnit.SECONDS.sleep(1);
                     requestToMe();
                     return;
                 }
-                String teamMate = CommandPrompt.gotFromTerminal();
-                networkClientModel.getNicknames().remove(teamMate);
-                networkClientModel.getNicknames().add(teamMate);
-                networkClientModel.getNicknames().add(networkClientModel.getNickname());
-                networkClientModel.setResponse(true);
-                networkClientModel.setPingMessage(false);
-                networkClientModel.setFromTerminal(parsedStrings);
-                json = new Gson();
-                Network.send(json.toJson(networkClientModel));
                 break;
+            case "CHOOSEASSISTANTCARD":
+                System.out.println(networkClientModel.getServerModel().toString(networkClientModel.getNickname(), "GAME STATE: \n" + "IT’S YOUR TURN - ASSISTNT CARD PHASE" + "\n\nMOVES BY OTHER PLAYERS: " + getResponse()));
+                System.out.println("Choose a Assistant Card");
+                for (AssistantCard a : networkClientModel.getDeck()) {
+                    System.out.println("Value: " + (int) a.getValues() + "  Moves: " + a.getMoves());
+                }
+                CommandPrompt.ask("Enter the value of the chosen card", "Card: ");
+                boolean ResultOfChoosingAssistantCard= chosenAssistantCardManagement();
+                if(ResultOfChoosingAssistantCard){
+                    TimeUnit.SECONDS.sleep(1);
+                    requestToMe();
+                    return;
+                }
+                break;
+            case "CHOOSEWHERETOMOVESTUDENTS":
 
+                System.out.println(networkClientModel.getServerModel().toString(networkClientModel.getNickname(), "GAME STATE: \n" + "IT’S YOUR TURN - STUDENT PHASE" + "\n\nMOVES BY OTHER PLAYERS: " + getResponse()));
+
+                if (networkClientModel.getServerModel().getGameMode().equals(GameMode.EXPERT) && networkClientModel.getServerModel().getTable().getCharacters().stream().anyMatch(j -> j.getCost() <= networkClientModel.getServerModel().getCurrentPlayer().getCoins() && !cardJustUsed)) {
+
+                    CommandPrompt.ask("Choose the color of the student you want to move OR insert CARD to use a character card", "RED or GREEN or BLUE or YELLOW or PINK or CARD: ");
+
+                    PeopleColor chosenColor= chosenColorManagement();
+
+                    if(chosenColor==null && !CommandPrompt.gotFromTerminal().equals("CARD")){
+                        System.out.println("ALERT: You have not entered either an valid color or the CARD command, please try again");
+                        TimeUnit.SECONDS.sleep(1);
+                        requestToMe();
+                        return;
+                    }
+
+                    if(chosenColor==null) {
+                        boolean ResultOfCardUsage = chosenCharacterCardManagement();
+                        if (ResultOfCardUsage) {
+                            TimeUnit.SECONDS.sleep(1);
+                            requestToMe();
+                            return;
+                        }
+                    }
+
+                    if (!CommandPrompt.gotFromTerminal().equals("CARD")) {
+                        boolean ResultOfSchoolOrIsland =schoolOrIslandChooseManagement(chosenColor);
+                        if (ResultOfSchoolOrIsland) {
+                            TimeUnit.SECONDS.sleep(1);
+                            requestToMe();
+                            return;
+                        }
+                    }
+                }
+                else {
+
+                    CommandPrompt.ask("Choose the color of the student you want to move ", "RED or GREEN or BLUE or YELLOW or PINK: ");
+
+                    PeopleColor chosenColor= chosenColorManagement();
+
+                    if(chosenColor==null){
+                        System.out.println("ALERT: You have not entered a valid color, please try again");
+                        TimeUnit.SECONDS.sleep(1);
+                        requestToMe();
+                        return;
+                    }
+
+                    boolean ResultOfSchoolOrIsland =schoolOrIslandChooseManagement(chosenColor);
+                    if (ResultOfSchoolOrIsland) {
+                        TimeUnit.SECONDS.sleep(1);
+                        requestToMe();
+                        return;
+                    }
+                    break;
+                }
+                break;
             case "CHOOSEWHERETOMOVEMOTHER":
-                if (networkClientModel.getServerModel().getGameMode().equals(GameMode.EXPERT) && networkClientModel.getServerModel().getTable().getCharacters().stream().anyMatch(j -> j.getCost() <= networkClientModel.getServerModel().getCurrentPlayer().getCoins() && !isUsed)) {
-                    System.out.println(networkClientModel.getServerModel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO:\n " + "E' IL TUO TURNO - MOTHER PHASE" + "\n\nMOSSE ALTRI GIOCATORI: " + getResponse()));
-                    CommandPrompt.ask("Scegliere il numero di mosse di cui far spostare madre natura  OPPURE inserisci CARD per usare una carta personaggio", "mosse: ");
+
+                System.out.println(networkClientModel.getServerModel().toString(networkClientModel.getNickname(), "GAME STATE: \n " + "IT’S YOUR TURN - MOTHER PHASE" + "\n\nMOVES BY OTHER PLAYERS: " + getResponse()));
+
+                if (networkClientModel.getServerModel().getGameMode().equals(GameMode.EXPERT) && networkClientModel.getServerModel().getTable().getCharacters().stream().anyMatch(j -> j.getCost() <= networkClientModel.getServerModel().getCurrentPlayer().getCoins() && !cardJustUsed)) {
+
+                    CommandPrompt.ask("Choose the number of moves to move Mother Nature OR enter CARD to use a character card", "Moves: ");
                     if (CommandPrompt.gotFromTerminal().equals("CARD")) {
-                        System.out.println("\n\n\n\nScegli la carta che vorresti utilizzare: \n");
-                        ArrayList<String> available = new ArrayList<>();
-                        addCards(available);
-                        CommandPrompt.ask("Scegliere la carta personaggio seguendo le indicazioni, un qualsiasi altra riga se si vuole tornare indietro", "CHARACTER:");
-                        parsedStrings =
-                                new ArrayList<>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
-                        if (!available.contains(parsedStrings.get(0))) {
+                        boolean resultCardUsage= chosenCharacterCardManagement();
+                        if(resultCardUsage){
+                            TimeUnit.SECONDS.sleep(1);
                             requestToMe();
                             return;
                         }
-                        CharacterCard modelCard = null;
-                        for (int i = 0; i < networkClientModel.getServerModel().getTable().getCharacters().size(); i++) {
-                            if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals(parsedStrings.get(0))) {
-                                modelCard = networkClientModel.getServerModel().getTable().getCharacters().get(i);
-                            }
-                        }
-                        switch (parsedStrings.get(0)) {
-                            case "MUSHROOMHUNTER":
-                            case "THIEF":
-                                if (!(parsedStrings.size() == 2) || !(Objects.equals(parsedStrings.get(1), "RED") || Objects.equals(parsedStrings.get(1), "PINK") || Objects.equals(parsedStrings.get(1), "GREEN") || Objects.equals(parsedStrings.get(1), "YELLOW") || Objects.equals(parsedStrings.get(1), "BLUE"))) {
-                                    System.out.println("formato non valido, scelta carta rifiutata !!!!");
-                                    TimeUnit.SECONDS.sleep(2);
-                                    requestToMe();
-                                    return;
-                                }
-                                PeopleColor Color = null;
-                                switch (parsedStrings.get(1)) {
-                                    case "RED":
-                                        Color = PeopleColor.RED;
-                                        break;
-                                    case "GREEN":
-                                        Color = PeopleColor.GREEN;
-                                        break;
-                                    case "PINK":
-                                        Color = PeopleColor.PINK;
-                                        break;
-                                    case "BLUE":
-                                        Color = PeopleColor.BLUE;
-                                        break;
-                                    case "YELLOW":
-                                        Color = PeopleColor.YELLOW;
-                                        break;
-                                }
-                                networkClientModel.setTypeOfRequest(parsedStrings.get(0));
-                                networkClientModel.setResponse(true);
-                                networkClientModel.setPingMessage(false);
-                                networkClientModel.setChosenColor(Color);
-                                json = new Gson();
-                                isUsed = true;
-                                Network.send(json.toJson(networkClientModel));
-                                break;
-                            case "MONK":
-                                if (!(parsedStrings.size() == 3) || !(Objects.equals(parsedStrings.get(1), "RED") || Objects.equals(parsedStrings.get(1), "PINK") || Objects.equals(parsedStrings.get(1), "GREEN") || Objects.equals(parsedStrings.get(1), "YELLOW") || Objects.equals(parsedStrings.get(1), "BLUE")) || (Integer.parseInt(parsedStrings.get(2)) < 1 || Integer.parseInt(parsedStrings.get(2)) > networkClientModel.getServerModel().getTable().getIslands().size())) {
-                                    System.out.println("formato non valido, scelta carta rifiutata !!!!");
-                                    TimeUnit.SECONDS.sleep(2);
-                                    requestToMe();
-                                    return;
-                                }
-                                Color = null;
-                                switch (parsedStrings.get(1)) {
-                                    case "RED":
-                                        Color = PeopleColor.RED;
-                                        break;
-                                    case "GREEN":
-                                        Color = PeopleColor.GREEN;
-                                        break;
-                                    case "PINK":
-                                        Color = PeopleColor.PINK;
-                                        break;
-                                    case "BLUE":
-                                        Color = PeopleColor.BLUE;
-                                        break;
-                                    case "YELLOW":
-                                        Color = PeopleColor.YELLOW;
-                                        break;
-                                }
-                                assert modelCard != null;
-                                if (modelCard.getName().equals("MONK")) {
-                                    assert Color != null;
-                                    if (networkClientModel.getServerModel().getTable().getMonkSet().numStudentsByColor(Color) == 0) {
-                                        System.out.println("La carta non possiede il colore che hai scelto, scelta carta rifiutata !!!!");
-                                        TimeUnit.SECONDS.sleep(2);
-                                        requestToMe();
-                                        return;
-                                    }
-                                }
-                                networkClientModel.setTypeOfRequest(parsedStrings.get(0));
-                                networkClientModel.setResponse(true);
-                                networkClientModel.setPingMessage(false);
-                                networkClientModel.setChosenColor(Color);
-                                networkClientModel.setChosenIsland(Integer.parseInt(parsedStrings.get(2)) - 1);
-                                json = new Gson();
-                                isUsed = true;
-                                Network.send(json.toJson(networkClientModel));
-                                break;
-                            case "PRINCESS":
-                                if (!(parsedStrings.size() == 2) || !(Objects.equals(parsedStrings.get(1), "RED") || Objects.equals(parsedStrings.get(1), "PINK") || Objects.equals(parsedStrings.get(1), "GREEN") || Objects.equals(parsedStrings.get(1), "YELLOW") || Objects.equals(parsedStrings.get(1), "BLUE"))) {
-                                    System.out.println("formato non valido, scelta carta rifiutata !!!!");
-                                    TimeUnit.SECONDS.sleep(2);
-                                    requestToMe();
-                                    return;
-                                }
-                                Color = null;
-                                switch (parsedStrings.get(1)) {
-                                    case "RED":
-                                        Color = PeopleColor.RED;
-                                        break;
-                                    case "GREEN":
-                                        Color = PeopleColor.GREEN;
-                                        break;
-                                    case "PINK":
-                                        Color = PeopleColor.PINK;
-                                        break;
-                                    case "BLUE":
-                                        Color = PeopleColor.BLUE;
-                                        break;
-                                    case "YELLOW":
-                                        Color = PeopleColor.YELLOW;
-                                        break;
-                                }
-                                assert modelCard != null;
-                                if (modelCard.getName().equals("PRINCESS")) {
-                                    assert Color != null;
-                                    if (networkClientModel.getServerModel().getTable().getPrincessSet().numStudentsByColor(Color) == 0) {
-                                        System.out.println("La carta non possiede il colore che hai scelto, scelta carta rifiutata !!!!");
-                                        TimeUnit.SECONDS.sleep(2);
-                                        requestToMe();
-                                        return;
-                                    }
-                                }
-                                networkClientModel.setTypeOfRequest(parsedStrings.get(0));
-                                networkClientModel.setResponse(true);
-                                networkClientModel.setPingMessage(false);
-                                networkClientModel.setChosenColor(Color);
-                                json = new Gson();
-                                isUsed = true;
-                                Network.send(json.toJson(networkClientModel));
-                                break;
-                            case "FARMER":
-                            case "CENTAUR":
-                            case "KNIGHT":
-                            case "POSTMAN":
-                                if (parsedStrings.size() != 1) {
-                                    System.out.println("formato non valido, scelta carta rifiutata !!!!");
-                                    TimeUnit.SECONDS.sleep(2);
-                                    requestToMe();
-                                    return;
-                                }
-                                networkClientModel.setTypeOfRequest(parsedStrings.get(0));
-                                networkClientModel.setResponse(true);
-                                networkClientModel.setPingMessage(false);
-                                json = new Gson();
-                                isUsed = true;
-                                Network.send(json.toJson(networkClientModel));
-                                break;
-                            case "GRANNY":
-                            case "HERALD":
-                                if (!(parsedStrings.size() == 2) || (Integer.parseInt(parsedStrings.get(1)) < 1 || Integer.parseInt(parsedStrings.get(1)) > networkClientModel.getServerModel().getTable().getIslands().size())) {
-                                    System.out.println("formato non valido, scelta carta rifiutata !!!!");
-                                    TimeUnit.SECONDS.sleep(2);
-                                    requestToMe();
-                                    return;
-                                }
-                                assert modelCard != null;
-                                if (modelCard.getName().equals("GRANNY") && networkClientModel.getServerModel().getTable().getIslands().get(Integer.parseInt(parsedStrings.get(1)) - 1).isBlocked()) {
-                                    System.out.println("isola gia' bloccata, scelta carta rifiutata !!!!");
-                                    TimeUnit.SECONDS.sleep(2);
-                                    requestToMe();
-                                    return;
-                                }
-                                if (modelCard.getName().equals("GRANNY") && networkClientModel.getServerModel().getTable().getNumDivieti() == 0) {
-                                    System.out.println("non ci sono divieti posizionabili, scelta carta rifiutata !!!!");
-                                    TimeUnit.SECONDS.sleep(2);
-                                    requestToMe();
-                                    return;
-                                }
-                                networkClientModel.setTypeOfRequest(parsedStrings.get(0));
-                                networkClientModel.setResponse(true);
-                                networkClientModel.setPingMessage(false);
-                                networkClientModel.setChosenIsland(Integer.parseInt(parsedStrings.get(1)) - 1);
-                                json = new Gson();
-                                isUsed = true;
-                                Network.send(json.toJson(networkClientModel));
-                                break;
-                            case "MINSTRELL":
-                            case "JESTER":
-                                int max = 2;
-                                StudentSet destination = networkClientModel.getServerModel().getCurrentPlayer().getSchoolBoard().getDinnerTable();
-                                ArrayList<PeopleColor> colors1 = new ArrayList<>();
-                                ArrayList<PeopleColor> colors2 = new ArrayList<>();
-                                if (parsedStrings.get(0).equals("JESTER")) {
-                                    max = 3;
-                                    destination = networkClientModel.getServerModel().getTable().getJesterSet();
-                                }
-                                if (parsedStrings.size() < 3 || parsedStrings.size() > (1 + 2 * max) || parsedStrings.size() % 2 == 0) {
-                                    System.out.println("formato non valido, scelta carta rifiutata !!!!");
-                                    TimeUnit.SECONDS.sleep(2);
-                                    requestToMe();
-                                    return;
-                                }
-                                for (int i = 1; i < parsedStrings.size(); i++) {
-                                    switch (parsedStrings.get(i)) {
-                                        case "RED":
-                                            if (i <= (parsedStrings.size() - 1) / 2) {
-                                                colors1.add(PeopleColor.RED);
-                                            } else {
-                                                colors2.add(PeopleColor.RED);
-                                            }
-                                            break;
-                                        case "GREEN":
-                                            if (i <= (parsedStrings.size() - 1) / 2) {
-                                                colors1.add(PeopleColor.GREEN);
-                                            } else {
-                                                colors2.add(PeopleColor.GREEN);
-                                            }
-                                            break;
-                                        case "BLUE":
-                                            if (i <= (parsedStrings.size() - 1) / 2) {
-                                                colors1.add(PeopleColor.BLUE);
-                                            } else {
-                                                colors2.add(PeopleColor.BLUE);
-                                            }
-                                            break;
-                                        case "YELLOW":
-                                            if (i <= (parsedStrings.size() - 1) / 2) {
-                                                colors1.add(PeopleColor.YELLOW);
-                                            } else {
-                                                colors2.add(PeopleColor.YELLOW);
-                                            }
-                                            break;
-                                        case "PINK":
-                                            if (i <= (parsedStrings.size() - 1) / 2) {
-                                                colors1.add(PeopleColor.PINK);
-                                            } else {
-                                                colors2.add(PeopleColor.PINK);
-                                            }
-                                            break;
-                                    }
-                                }
-                                if (networkClientModel.getServerModel().getCurrentPlayer().getSchoolBoard().getEntranceSpace().contains(colors1) || destination.contains(colors2)) {
-                                    System.out.println("uno o piu colori scelti non sono presenti, scelta carta rifiutata !!!!");
-                                    TimeUnit.SECONDS.sleep(2);
-                                    requestToMe();
-                                    return;
-                                }
-                                networkClientModel.setTypeOfRequest(parsedStrings.get(0));
-                                networkClientModel.setResponse(true);
-                                networkClientModel.setPingMessage(false);
-                                networkClientModel.setColors1(colors1);
-                                networkClientModel.setColors2(colors2);
-                                json = new Gson();
-                                isUsed = true;
-                                Network.send(json.toJson(networkClientModel));
-                                break;
-                        }
-                        break;
-                    } else {
-                        if (isValidNumber(CommandPrompt.gotFromTerminal())) {
-                            System.out.println("Il numero di mosse da te inserito non e' un numero valido, si prega di fare piu' attenzione");
-                            TimeUnit.SECONDS.sleep(2);
-                            requestToMe();
-                            return;
-                        }
-                        if (Integer.parseInt((CommandPrompt.gotFromTerminal())) <= 0) {
-                            System.out.println("Il numero di mosse deve essere un numero intero positivo, fare piu' attenzione");
-                            TimeUnit.SECONDS.sleep(2);
-                            requestToMe();
-                            break;
-                        }
-                        if (networkClientModel.getServerModel().getCurrentPlayer().getChosenCard().getMoves() < Integer.parseInt(CommandPrompt.gotFromTerminal())) {
-                            System.out.println("Il numero di mosse da te inserito eccede il numero massimo di mosse di cui madre natura puo' spostarsi," +
-                                    " ovvero " + networkClientModel.getServerModel().getCurrentPlayer().getChosenCard().getMoves());
-                            TimeUnit.SECONDS.sleep(2);
-                            requestToMe();
-                            return;
-                        }
-                        networkClientModel.setTypeOfRequest("MOTHER");
-                        networkClientModel.setChosenMoves(Integer.parseInt(CommandPrompt.gotFromTerminal()));
-                        networkClientModel.setResponse(true);
-                        networkClientModel.setPingMessage(false);
-                        networkClientModel.setFromTerminal(parsedStrings);
-                        json = new Gson();
-                        Network.send(json.toJson(networkClientModel));
+                    }else {
+
+                       boolean ResultOfMovingMother= ChosenMotherMovementManagement();
+                       if(ResultOfMovingMother){
+                           TimeUnit.SECONDS.sleep(1);
+                           requestToMe();
+                           return;
+                       }
                     }
                 } else {
-                    System.out.println(networkClientModel.getServerModel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO:\n " + "E' IL TUO TURNO - MOTHER PHASE" + "\n\nMOSSE ALTRI GIOCATORI: " + getResponse()));
-                    CommandPrompt.ask("Scegliere il numero di mosse di cui far spostare madre natura  ", "mosse: ");
 
-
-                    if (isValidNumber(CommandPrompt.gotFromTerminal())) {
-                        System.out.println("Il numero di mosse da te inserito non e' un numero valido, si prega di fare piu' attenzione");
-                        TimeUnit.SECONDS.sleep(2);
+                    CommandPrompt.ask("Choose the number of moves to move Mother Nature ", "Moves: ");
+                    boolean ResultOfMovingMother= ChosenMotherMovementManagement();
+                    if(ResultOfMovingMother){
+                        TimeUnit.SECONDS.sleep(1);
                         requestToMe();
                         return;
                     }
-                    if (Integer.parseInt((CommandPrompt.gotFromTerminal())) <= 0) {
-                        System.out.println("Il numero di mosse deve essere un numero intero positivo, fare piu' attenzione");
-                        TimeUnit.SECONDS.sleep(2);
-                        requestToMe();
-                        break;
-                    }
-                    if (networkClientModel.getServerModel().getCurrentPlayer().getChosenCard().getMoves() < Integer.parseInt(CommandPrompt.gotFromTerminal())) {
-                        System.out.println("Il numero di mosse da te inserito eccede il numero massimo di mosse di cui madre natura puo' spostarsi," +
-                                " ovvero " + networkClientModel.getServerModel().getCurrentPlayer().getChosenCard().getMoves());
-                        TimeUnit.SECONDS.sleep(2);
-                        requestToMe();
-                        return;
-                    }
-                    networkClientModel.setTypeOfRequest("MOTHER");
-                    networkClientModel.setChosenMoves(Integer.parseInt(CommandPrompt.gotFromTerminal()));
-                    networkClientModel.setResponse(true);
-                    networkClientModel.setPingMessage(false);
-                    networkClientModel.setFromTerminal(parsedStrings);
-                    json = new Gson();
-                    Network.send(json.toJson(networkClientModel));
                 }
                 break;
-
             case "CHOOSECLOUDS":
-                System.out.println(networkClientModel.getServerModel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO: \n" + "E' IL TUO TURNO - CLOUD PHASE" + "\n\nMOSSE ALTRI GIOCATORI: " + getResponse()));
-                CommandPrompt.ask("Scegliere il numero della tessera nuvola da cui si desidera ricaricarsi di studenti", "tessera nuvola: ");
+                System.out.println(networkClientModel.getServerModel().toString(networkClientModel.getNickname(), "GAME STATE: \n" + "IT’S YOUR TURN - CLOUD PHASE" + "\n\nMOVES BY OTHER PLAYERS: " + getResponse()));
+                CommandPrompt.ask("Choose the number of the cloud card from which you want to recharge students", "Cloud: ");
 
-                if (isValidNumber(CommandPrompt.gotFromTerminal())) {
-                    System.out.println("Il numero inserito non e' un numero valido");
-                    TimeUnit.SECONDS.sleep(2);
+                boolean ResultOfChoosingCloud= chosenCloudManagement();
+                if(ResultOfChoosingCloud){
+                    TimeUnit.SECONDS.sleep(1);
                     requestToMe();
                     return;
                 }
-                if (networkClientModel.getServerModel().getTable().getClouds().size() < Integer.parseInt(CommandPrompt.gotFromTerminal()) ||
-                        Integer.parseInt(CommandPrompt.gotFromTerminal()) < 1) {
-                    System.out.println("Il numero inserito non rappresenta una tessera nuvola esistente, si prega di fare piu' attenzione");
-                    TimeUnit.SECONDS.sleep(2);
-                    requestToMe();
-                    return;
-                }
-                if (networkClientModel.getServerModel().getTable().getClouds().get(Integer.parseInt(CommandPrompt.gotFromTerminal()) - 1).getStudentsAccumulator().size() == 0) {
-                    System.out.println("Hai scelta una nuvola che e' stata gia' scelta da un altro giocatore");
-                    TimeUnit.SECONDS.sleep(2);
-                    requestToMe();
-                    return;
-                }
-                networkClientModel.setCloudChosen(networkClientModel.getServerModel().getTable().getClouds().get(Integer.parseInt(CommandPrompt.gotFromTerminal()) - 1));
-                networkClientModel.setResponse(true);
-                networkClientModel.setPingMessage(false);
-                networkClientModel.setFromTerminal(parsedStrings);
-                json = new Gson();
-                Network.send(json.toJson(networkClientModel));
-                isUsed = false;
+                cardJustUsed = false;
                 break;
-
             case "GAMEEND":
-                if (networkClientModel.getGameWinner().equals("PAREGGIO")) {
-                    System.out.println(networkClientModel.getServerModel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO: IL GIOCO E' FINITO IN PARITA', I GIOCATORI SONO TUTTI VINCITORI !!"));
+                if (networkClientModel.getGameWinner().equals("DRAW")) {
+                    System.out.println(networkClientModel.getServerModel().toString(networkClientModel.getNickname(), "GAME STATE: THE GAME ENDED IN A TIE, THE PLAYERS ARE ALL WINNERS!!"));
                 } else if (networkClientModel.getServerModel().getNumberOfPlayers() < 4) {
-                    System.out.println(networkClientModel.getServerModel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO: " + "IL GIOCO E' FINITO! IL VINCITORE E' " + networkClientModel.getGameWinner()));
+                    System.out.println(networkClientModel.getServerModel().toString(networkClientModel.getNickname(), "GAME STATE: " + "THE GAME IS OVER! WINNER IS" + networkClientModel.getGameWinner()));
                 } else {
-                    System.out.println(networkClientModel.getServerModel().toString(networkClientModel.getNickname(), "STATO DEL GIOCO: " + "IL GIOCO E' FINITO! I VINCITORI SONO " + networkClientModel.getGameWinner()));
+                    System.out.println(networkClientModel.getServerModel().toString(networkClientModel.getNickname(), "GAME STATE: " + "THE GAME IS OVER! THE WINNERS ARE " + networkClientModel.getGameWinner()));
                 }
                 Network.disconnect();
                 break;
 
         }
+
         clearResponse();
     }
 
-    private void addCards(ArrayList<String> available) {
+    private boolean chosenTeamMateManagement(){
+        Gson json;
+        if (!networkClientModel.getNicknames().contains(CommandPrompt.gotFromTerminal())) {
+            System.out.print("ALERT: The entered nickname does not exist, please choose a nickname from those specified");
+            return true;
+        }
+        String teamMate = CommandPrompt.gotFromTerminal();
+        networkClientModel.getNicknames().remove(teamMate);
+        networkClientModel.getNicknames().add(teamMate);
+        networkClientModel.getNicknames().add(networkClientModel.getNickname());
+        networkClientModel.setResponse(true);
+        networkClientModel.setPingMessage(false);
+        networkClientModel.setFromTerminal(parsedStrings);
+        json = new Gson();
+        Network.send(json.toJson(networkClientModel));
+        return false;
+    }
+    private PeopleColor chosenColorManagement() {
+
+        if (!CommandPrompt.gotFromTerminal().equals("RED") &&
+                !CommandPrompt.gotFromTerminal().equals("GREEN") &&
+                !CommandPrompt.gotFromTerminal().equals("BLUE") &&
+                !CommandPrompt.gotFromTerminal().equals("YELLOW") &&
+                !CommandPrompt.gotFromTerminal().equals("PINK") &&
+                !CommandPrompt.gotFromTerminal().equals("CARD")) {
+            return null;
+        }
+
+        PeopleColor chosenColor;
+        String terminalInput = CommandPrompt.gotFromTerminal();
+        switch (terminalInput) {
+            case "RED":
+                chosenColor = PeopleColor.RED;
+                break;
+            case "GREEN":
+                chosenColor = PeopleColor.GREEN;
+                break;
+            case "BLUE":
+                chosenColor = PeopleColor.BLUE;
+                break;
+            case "YELLOW":
+                chosenColor = PeopleColor.YELLOW;
+                break;
+            case "PINK":
+                chosenColor = PeopleColor.PINK;
+                break;
+            default:
+                return null;
+        }
+        return chosenColor;
+    }
+    private void addCards(ArrayList<String> available) { ////////////////////////
         for (int i = 0; i < networkClientModel.getServerModel().getTable().getCharacters().size(); i++) {
             if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getCost() <= networkClientModel.getServerModel().getCurrentPlayer().getCoins()) {
                 if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals("MONK")) {
@@ -1017,13 +454,271 @@ public class CliView implements View {
             }
         }
     }
-
-    private boolean schoolOrIsland(PeopleColor choosedColor) throws InterruptedException {
+    private boolean chosenCharacterCardManagement() throws InterruptedException {
         Gson json;
-        if (networkClientModel.getServerModel().getCurrentPlayer().getSchoolBoard().getEntranceSpace().numStudentsByColor(choosedColor) == 0) {
+        System.out.println("\n");
+        ArrayList<String> available = new ArrayList<>();
+        addCards(available);
+        CommandPrompt.ask("Choose the character card by following the directions, any other line if you want to go back", "CHARACTER:");
+        parsedStrings =
+                new ArrayList<>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
+        if (!available.contains(parsedStrings.get(0))) {
+            System.out.println("GO BACK");
+            return true;
+        }
+        CharacterCard modelCard = null;
+        for (int i = 0; i < networkClientModel.getServerModel().getTable().getCharacters().size(); i++) {
+            if (networkClientModel.getServerModel().getTable().getCharacters().get(i).getName().equals(parsedStrings.get(0))) {
+                modelCard = networkClientModel.getServerModel().getTable().getCharacters().get(i);
+            }
+        }
+        switch (parsedStrings.get(0)) {
+            case "MUSHROOMHUNTER":
+            case "THIEF":
+                if (!(parsedStrings.size() == 2) || !(Objects.equals(parsedStrings.get(1), "RED") || Objects.equals(parsedStrings.get(1), "PINK") || Objects.equals(parsedStrings.get(1), "GREEN") || Objects.equals(parsedStrings.get(1), "YELLOW") || Objects.equals(parsedStrings.get(1), "BLUE"))) {
+                    System.out.println("ALERT: invalid size, rejected card choice, try again");
+                    return true;
+                }
+                PeopleColor color = null;
+                switch (parsedStrings.get(1)) {
+                    case "RED":
+                        color = PeopleColor.RED;
+                        break;
+                    case "GREEN":
+                        color = PeopleColor.GREEN;
+                        break;
+                    case "PINK":
+                        color = PeopleColor.PINK;
+                        break;
+                    case "BLUE":
+                        color = PeopleColor.BLUE;
+                        break;
+                    case "YELLOW":
+                        color = PeopleColor.YELLOW;
+                        break;
+                }
+                networkClientModel.setTypeOfRequest(parsedStrings.get(0));
+                networkClientModel.setResponse(true);
+                networkClientModel.setPingMessage(false);
+                networkClientModel.setChosenColor(color);
+                json = new Gson();
+                cardJustUsed = true;
+                Network.send(json.toJson(networkClientModel));
+                break;
+            case "MONK":
+                if (!(parsedStrings.size() == 3) || !(Objects.equals(parsedStrings.get(1), "RED") || Objects.equals(parsedStrings.get(1), "PINK") || Objects.equals(parsedStrings.get(1), "GREEN") || Objects.equals(parsedStrings.get(1), "YELLOW") || Objects.equals(parsedStrings.get(1), "BLUE")) || (Integer.parseInt(parsedStrings.get(2)) < 1 || Integer.parseInt(parsedStrings.get(2)) > networkClientModel.getServerModel().getTable().getIslands().size())) {
+                    System.out.println("ALERT: invalid size, rejected card choice, try again");
+                    return true;
+                }
+                color = null;
+                switch (parsedStrings.get(1)) {
+                    case "RED":
+                        color = PeopleColor.RED;
+                        break;
+                    case "GREEN":
+                        color = PeopleColor.GREEN;
+                        break;
+                    case "PINK":
+                        color = PeopleColor.PINK;
+                        break;
+                    case "BLUE":
+                        color = PeopleColor.BLUE;
+                        break;
+                    case "YELLOW":
+                        color = PeopleColor.YELLOW;
+                        break;
+                }
+                assert modelCard != null;
+                if (modelCard.getName().equals("MONK")) {
+                    assert color != null;
+                    if (networkClientModel.getServerModel().getTable().getMonkSet().numStudentsByColor(color) == 0) {
+                        System.out.println("ALERT: The card does not have the color you have chosen, chosen rejected card , please try again");
+                        return true;
+                    }
+                }
+                networkClientModel.setTypeOfRequest(parsedStrings.get(0));
+                networkClientModel.setResponse(true);
+                networkClientModel.setPingMessage(false);
+                networkClientModel.setChosenColor(color);
+                networkClientModel.setChosenIsland(Integer.parseInt(parsedStrings.get(2)) - 1);
+                json = new Gson();
+                cardJustUsed = true;
+                Network.send(json.toJson(networkClientModel));
+                break;
+            case "PRINCESS":
+                if (!(parsedStrings.size() == 2) || !(Objects.equals(parsedStrings.get(1), "RED") || Objects.equals(parsedStrings.get(1), "PINK") || Objects.equals(parsedStrings.get(1), "GREEN") || Objects.equals(parsedStrings.get(1), "YELLOW") || Objects.equals(parsedStrings.get(1), "BLUE"))) {
+                    System.out.println("ALERT: invalid size, rejected card choice, try again");
+                    return true;
+                }
+                color = null;
+                switch (parsedStrings.get(1)) {
+                    case "RED":
+                        color = PeopleColor.RED;
+                        break;
+                    case "GREEN":
+                        color = PeopleColor.GREEN;
+                        break;
+                    case "PINK":
+                        color = PeopleColor.PINK;
+                        break;
+                    case "BLUE":
+                        color = PeopleColor.BLUE;
+                        break;
+                    case "YELLOW":
+                        color = PeopleColor.YELLOW;
+                        break;
+                }
+                assert modelCard != null;
+                if (modelCard.getName().equals("PRINCESS")) {
+                    assert color != null;
+                    if (networkClientModel.getServerModel().getTable().getPrincessSet().numStudentsByColor(color) == 0) {
+                        System.out.println("ALERT: The card does not have the color you have chosen, chosen rejected card , please try again");
+                        return true;
+                    }
+                }
+                networkClientModel.setTypeOfRequest(parsedStrings.get(0));
+                networkClientModel.setResponse(true);
+                networkClientModel.setPingMessage(false);
+                networkClientModel.setChosenColor(color);
+                json = new Gson();
+                cardJustUsed = true;
+                Network.send(json.toJson(networkClientModel));
+                break;
+            case "FARMER":
+            case "CENTAUR":
+            case "KNIGHT":
+            case "POSTMAN":
+                if (parsedStrings.size() != 1) {
+                    System.out.println("ALERT: invalid size, rejected card choice, try again");
+                    return true;
+                }
+                networkClientModel.setTypeOfRequest(parsedStrings.get(0));
+                networkClientModel.setResponse(true);
+                networkClientModel.setPingMessage(false);
+                json = new Gson();
+                cardJustUsed = true;
+                Network.send(json.toJson(networkClientModel));
+                break;
+            case "GRANNY":
+            case "HERALD":
+                if (!(parsedStrings.size() == 2) || (Integer.parseInt(parsedStrings.get(1)) < 1 || Integer.parseInt(parsedStrings.get(1)) > networkClientModel.getServerModel().getTable().getIslands().size())) {
+                    System.out.println("ALERT: invalid size, rejected card choice, try again");
+                    return true;
+                }
+                assert modelCard != null;
+                if (modelCard.getName().equals("GRANNY") && networkClientModel.getServerModel().getTable().getIslands().get(Integer.parseInt(parsedStrings.get(1)) - 1).isBlocked()) {
+                    System.out.println("ALERT: already blocked island, rejected card choice , try again");
+                    return true;
+                }
+                if (modelCard.getName().equals("GRANNY") && networkClientModel.getServerModel().getTable().getNumDivieti() == 0) {
+                    System.out.println("ALERT: there are no positionable bans, rejected card choice, try again");
+                    return true;
+                }
+                networkClientModel.setTypeOfRequest(parsedStrings.get(0));
+                networkClientModel.setResponse(true);
+                networkClientModel.setPingMessage(false);
+                networkClientModel.setChosenIsland(Integer.parseInt(parsedStrings.get(1)) - 1);
+                json = new Gson();
+                cardJustUsed = true;
+                Network.send(json.toJson(networkClientModel));
+                break;
+            case "MINSTRELL":
+            case "JESTER":
+                int max = 2;
+                StudentSet destination = networkClientModel.getServerModel().getCurrentPlayer().getSchoolBoard().getDinnerTable();
+                ArrayList<PeopleColor> colors1 = new ArrayList<>();
+                ArrayList<PeopleColor> colors2 = new ArrayList<>();
+                if (parsedStrings.get(0).equals("JESTER")) {
+                    max = 3;
+                    destination = networkClientModel.getServerModel().getTable().getJesterSet();
+                }
+                if (parsedStrings.size() < 3 || parsedStrings.size() > (1 + 2 * max) || parsedStrings.size() % 2 == 0) {
+                    System.out.println("ALERT: invalid size, rejected card choice, try again");
+                    return true;
+                }
+                for (int i = 1; i < parsedStrings.size(); i++) {
+                    switch (parsedStrings.get(i)) {
+                        case "RED":
+                            if (i <= (parsedStrings.size() - 1) / 2) {
+                                colors1.add(PeopleColor.RED);
+                            } else {
+                                colors2.add(PeopleColor.RED);
+                            }
+                            break;
+                        case "GREEN":
+                            if (i <= (parsedStrings.size() - 1) / 2) {
+                                colors1.add(PeopleColor.GREEN);
+                            } else {
+                                colors2.add(PeopleColor.GREEN);
+                            }
+                            break;
+                        case "BLUE":
+                            if (i <= (parsedStrings.size() - 1) / 2) {
+                                colors1.add(PeopleColor.BLUE);
+                            } else {
+                                colors2.add(PeopleColor.BLUE);
+                            }
+                            break;
+                        case "YELLOW":
+                            if (i <= (parsedStrings.size() - 1) / 2) {
+                                colors1.add(PeopleColor.YELLOW);
+                            } else {
+                                colors2.add(PeopleColor.YELLOW);
+                            }
+                            break;
+                        case "PINK":
+                            if (i <= (parsedStrings.size() - 1) / 2) {
+                                colors1.add(PeopleColor.PINK);
+                            } else {
+                                colors2.add(PeopleColor.PINK);
+                            }
+                            break;
+                    }
+                }
+                if (networkClientModel.getServerModel().getCurrentPlayer().getSchoolBoard().getEntranceSpace().contains(colors1) || destination.contains(colors2)) {
+                    System.out.println("ALERT: one or more chosen colors are not present, rejected card choice, try again");
+                    return true;
+                }
+                networkClientModel.setTypeOfRequest(parsedStrings.get(0));
+                networkClientModel.setResponse(true);
+                networkClientModel.setPingMessage(false);
+                networkClientModel.setColors1(colors1);
+                networkClientModel.setColors2(colors2);
+                json = new Gson();
+                cardJustUsed = true;
+                Network.send(json.toJson(networkClientModel));
+        }
+        return false;
+    }
+    private boolean chosenAssistantCardManagement(){
+        Gson json;
+        if (isValidNumber(CommandPrompt.gotFromTerminal())) {
+            System.out.println("ALERT: The card you choose has an invalid value, please try again");
+            return true;
+        }
+        boolean check = false;
+        for (int i = 0; i < networkClientModel.getDeck().size(); i++) {
+            if (networkClientModel.getDeck().get(i).getValues() == Integer.parseInt((CommandPrompt.gotFromTerminal()))) {
+                check = true;
+            }
+        }
+        if (!check) {
+            System.out.println("ALERT: The chosen card does not exist, try again");
+            return true;
+        }
+        networkClientModel.setCardChosenValue(Float.parseFloat(CommandPrompt.gotFromTerminal()));
+        networkClientModel.setResponse(true);
+        networkClientModel.setPingMessage(false);
+        networkClientModel.setFromTerminal(parsedStrings);
+        json = new Gson();
+        Network.send(json.toJson(networkClientModel));
+        return false;
+    }
+    private boolean schoolOrIslandChooseManagement(PeopleColor chosenColor) throws InterruptedException {  ///////////////
+
+        Gson json;
+        if (networkClientModel.getServerModel().getCurrentPlayer().getSchoolBoard().getEntranceSpace().numStudentsByColor(chosenColor) == 0) {
             System.out.println("Si e' inserito un colore non presente tra quelli disponibili, reinserire i dati con piu' attenzione !!!!");
-            TimeUnit.SECONDS.sleep(2);
-            requestToMe();
             return true;
         }
 
@@ -1033,13 +728,11 @@ public class CliView implements View {
 
         String command = CommandPrompt.gotFromTerminal();
         if (!command.equals("SCHOOL") && !command.equals("ISLAND")) {
-            requestToMe();
+            System.out.println("ALERT: Command non valid");
             return true;
         } else if (command.equals("SCHOOL")) {
-            if (networkClientModel.getServerModel().getCurrentPlayer().getSchoolBoard().getDinnerTable().numStudentsByColor(choosedColor) == 10) {
+            if (networkClientModel.getServerModel().getCurrentPlayer().getSchoolBoard().getDinnerTable().numStudentsByColor(chosenColor) == 10) {
                 System.out.println("La sala da pranzo di quel colore e' piena.");
-                TimeUnit.SECONDS.sleep(2);
-                requestToMe();
                 return true;
             }
             networkClientModel.setTypeOfRequest("SCHOOL");
@@ -1047,15 +740,11 @@ public class CliView implements View {
             CommandPrompt.ask("Inserire numero dell'isola su cui si desidera muovere lo studente", "isola: ");
             if (isValidNumber(CommandPrompt.gotFromTerminal())) {
                 System.out.println("Si e' inserito un numero non valido, reinserire i dati con piu' attenzione !!!!");
-                TimeUnit.SECONDS.sleep(2);
-                requestToMe();
                 return true;
             }
             if (Integer.parseInt(CommandPrompt.gotFromTerminal()) > networkClientModel.getServerModel().getTable().getIslands().size() ||
                     Integer.parseInt(CommandPrompt.gotFromTerminal()) < 0) {
                 System.out.println("L'isola scelta non e' valida.");
-                TimeUnit.SECONDS.sleep(2);
-                requestToMe();
                 return true;
             }
             networkClientModel.setTypeOfRequest("ISLAND");
@@ -1064,7 +753,55 @@ public class CliView implements View {
         networkClientModel.setTypeOfRequest(command);
         networkClientModel.setResponse(true);
         networkClientModel.setPingMessage(false);
-        networkClientModel.setChosenColor(choosedColor);
+        networkClientModel.setChosenColor(chosenColor);
+        json = new Gson();
+        Network.send(json.toJson(networkClientModel));
+        return false;
+    }
+    private boolean ChosenMotherMovementManagement() { ///////////////
+        Gson json;
+        if (isValidNumber(CommandPrompt.gotFromTerminal())) {
+            System.out.println("Il numero di mosse da te inserito non e' un numero valido, si prega di fare piu' attenzione");
+            return true;
+        }
+        if (Integer.parseInt((CommandPrompt.gotFromTerminal())) <= 0) {
+            System.out.println("Il numero di mosse deve essere un numero intero positivo, fare piu' attenzione");
+            return true;
+        }
+        if (networkClientModel.getServerModel().getCurrentPlayer().getChosenCard().getMoves() < Integer.parseInt(CommandPrompt.gotFromTerminal())) {
+            System.out.println("Il numero di mosse da te inserito eccede il numero massimo di mosse di cui madre natura puo' spostarsi," +
+                    " ovvero " + networkClientModel.getServerModel().getCurrentPlayer().getChosenCard().getMoves());
+            return true;
+        }
+        networkClientModel.setTypeOfRequest("MOTHER");
+        networkClientModel.setChosenMoves(Integer.parseInt(CommandPrompt.gotFromTerminal()));
+        networkClientModel.setResponse(true);
+        networkClientModel.setPingMessage(false);
+        networkClientModel.setFromTerminal(parsedStrings);
+        json = new Gson();
+        Network.send(json.toJson(networkClientModel));
+        return false;
+    }
+    private boolean chosenCloudManagement() { ////////////////////////
+        Gson json;
+
+        if (isValidNumber(CommandPrompt.gotFromTerminal())) {
+            System.out.println("Il numero inserito non e' un numero valido");
+            return true;
+        }
+        if (networkClientModel.getServerModel().getTable().getClouds().size() < Integer.parseInt(CommandPrompt.gotFromTerminal()) ||
+                Integer.parseInt(CommandPrompt.gotFromTerminal()) < 1) {
+            System.out.println("Il numero inserito non rappresenta una tessera nuvola esistente, si prega di fare piu' attenzione");
+            return true;
+        }
+        if (networkClientModel.getServerModel().getTable().getClouds().get(Integer.parseInt(CommandPrompt.gotFromTerminal()) - 1).getStudentsAccumulator().size() == 0) {
+            System.out.println("Hai scelta una nuvola che e' stata gia' scelta da un altro giocatore");
+            return true;
+        }
+        networkClientModel.setCloudChosen(networkClientModel.getServerModel().getTable().getClouds().get(Integer.parseInt(CommandPrompt.gotFromTerminal()) - 1));
+        networkClientModel.setResponse(true);
+        networkClientModel.setPingMessage(false);
+        networkClientModel.setFromTerminal(parsedStrings);
         json = new Gson();
         Network.send(json.toJson(networkClientModel));
         return false;
@@ -1103,7 +840,7 @@ public class CliView implements View {
     /**
      * Intercepts a response from a client to the server, and on the basis
      * of this request performs an action
-     * (for example prints "Pippo has choosen the assistant card xyz")
+     * (for example prints "Pippo has chosen the assistant card xyz")
      */
     public synchronized void response() {
         switch (networkClientModel.getTypeOfRequest()) {

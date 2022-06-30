@@ -51,7 +51,7 @@ public class ClientModel {
     private int numOfPlayer;
 
 
-    // Game mode (PRINCIPIANT or EXPERT)
+    // Game mode (BEGINNER or EXPERT)
     private String gameMode;
     private ArrayList<PeopleColor> colors1;
     private ArrayList<PeopleColor> colors2;

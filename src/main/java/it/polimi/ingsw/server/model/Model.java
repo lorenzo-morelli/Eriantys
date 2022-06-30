@@ -36,8 +36,8 @@ public class Model {
         this.players = new ArrayList<>();
         this.numberOfPlayers = numOfPlayer;
         switch (gameMode) {
-            case "PRINCIPIANT":
-                this.gameMode = GameMode.PRINCIPIANT;
+            case "BEGINNER":
+                this.gameMode = GameMode.BEGINNER;
                 break;
             case "EXPERT":
                 this.gameMode = GameMode.EXPERT;
@@ -136,7 +136,7 @@ public class Model {
             }
         }
 
-        if (winner == null) return "PAREGGIO";
+        if (winner == null) return "DRAW";
         else return winner.getNickname();
     }
 
@@ -173,8 +173,8 @@ public class Model {
             }
         }
 
-        if (winner == null) return "PAREGGIO";
-        else return winner.getPlayer1().getNickname() + "+" + winner.getPlayer2().getNickname();
+        if (winner == null) return "DRAW";
+        else return winner.getPlayer1().getNickname() + " AND " + winner.getPlayer2().getNickname();
     }
 
     public String toString(String nickname,String message) {

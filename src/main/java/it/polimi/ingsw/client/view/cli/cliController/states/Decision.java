@@ -21,35 +21,35 @@ public class Decision extends State {
 
         final View view;
         final ClientModel clientModel;
-        final RecognizedString scelta1Riconosciuta;
-    final RecognizedString scelta2Riconosciuta;
-        final NotRecognizedSetOfStrings nessunaDellePrecedenti;
-        final String scelta1;
-        final String scelta2;
+        final RecognizedString recognizedString1;
+    final RecognizedString recognizedString2;
+        final NotRecognizedSetOfStrings notRecognizedSetOfStrings;
+        final String chosen1;
+        final String chosen2;
 
 
-        public Decision(View view, ClientModel clientModel, String scelta1, String scelta2) {
-            super("[Decisione tra " +scelta1+" e " + scelta2 +"]"  );
+        public Decision(View view, ClientModel clientModel, String choose1, String choose2) {
+            super("[Decision between " +choose1+" and " + choose2 +"]"  );
             this.view = view;
             this.clientModel = clientModel;
-            this.scelta1 = scelta1;
-            this.scelta2 = scelta2;
-            scelta1Riconosciuta = new RecognizedString(scelta1);
-            scelta2Riconosciuta = new RecognizedString(scelta2);
-            nessunaDellePrecedenti = new NotRecognizedSetOfStrings(new ArrayList<>(Arrays.asList(scelta1, scelta2)));
+            this.chosen1 = choose1;
+            this.chosen2 = choose2;
+            recognizedString1 = new RecognizedString(choose1);
+            recognizedString2 = new RecognizedString(choose2);
+            notRecognizedSetOfStrings = new NotRecognizedSetOfStrings(new ArrayList<>(Arrays.asList(choose1, choose2)));
         }
 
-        public RecognizedString haScelto1() {
-            return scelta1Riconosciuta;
+        public RecognizedString heChoose1() {
+            return recognizedString1;
         }
 
-        public RecognizedString haScelto2() {
-            return scelta2Riconosciuta;
+        public RecognizedString heChoose2() {
+            return recognizedString2;
         }
 
     public IEvent entryAction(IEvent cause) throws InterruptedException {
             view.setCallingState(this);
-            view.askDecision(scelta1,scelta2);
+            view.askDecision(chosen1,chosen2);
             return null;
         }
     }
