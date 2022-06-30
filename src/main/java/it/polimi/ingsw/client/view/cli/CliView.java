@@ -54,29 +54,6 @@ public class CliView implements View {
     }
 
     /**
-     * Ask the client to write the word "start" (in reality this interaction is no longer used,
-     * but it was present in the first versions of the game, it is more a case study
-     * on how to use this type of "framework").
-     *
-     * @throws InterruptedException I/O errors
-     */
-    @Override
-    public void askToStart() throws InterruptedException {
-        if (callingState instanceof WelcomeScreen) {
-            ((WelcomeScreen) callingState).start().enable();
-            ((WelcomeScreen) callingState).notStart().enable();
-
-            CommandPrompt.ask(
-                    "Write start to start the game and press ENTER",
-                    "START THE GAME: ");
-
-
-            ((WelcomeScreen) callingState).start().disable();
-            ((WelcomeScreen) callingState).notStart().disable();
-        }
-    }
-
-    /**
      * Ask the client to make a choice between two options, the method is deliberately
      * parametric and as general as possible to increase modularity and reuse of the code
      *
