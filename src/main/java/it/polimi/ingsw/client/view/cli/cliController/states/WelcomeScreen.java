@@ -17,7 +17,7 @@ public class WelcomeScreen extends State{
     private final NotRecognizedString notStart;
 
     public WelcomeScreen(View view) {
-        super("[STATO di attesa di start (WelcomeScreen.java)]");
+        super("[STATUS waiting for start (WelcomeScreen.java)]");
         this.view = view;
         start = new RecognizedString("start");
         notStart = new NotRecognizedString("start");

@@ -5,9 +5,9 @@ import it.polimi.ingsw.utils.stateMachine.State;
 
 public interface View {
     /**
-     * Il metodo serve alla Vista per memorizzare una reference allo stato
-     * (schermata video/cli) che ha aggiornato la vista
-     * @param callingState Stato del controllore che ha aggiornato la vista
+     * The method is for the View to store a reference to the state
+     * (video / cli screen) that updated the view
+     * @param callingState Status of the controller that updated the view
      */
     void setCallingState(State callingState);
     void setClientModel(ClientModel clientModel);

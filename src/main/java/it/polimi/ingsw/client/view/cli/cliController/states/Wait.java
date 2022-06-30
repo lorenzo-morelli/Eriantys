@@ -31,11 +31,11 @@ public class Wait extends State {
     private boolean isToReset;
 
     public Wait(ClientModel clientModel, View view, Controller controller) {
-        super("[Stato di attesa di comandi (aggiornamento vista o comandi di inserimento da terminale)]");
+        super("[Command waiting status (view update or terminal entry commands)]");
         json = new Gson();
         myClientModel = clientModel;
         this.view = view;
-        messaggioGestito = new Event(" messaggio gestito");
+        messaggioGestito = new Event("managed message");
         messaggioGestito.setStateEventListener(controller);
         reset = new Event("reset");
         reset.setStateEventListener(controller);
@@ -65,7 +65,7 @@ public class Wait extends State {
         }
 
         if(System.currentTimeMillis()>=end){
-            System.out.println("Server non piu raggiungibile");
+            System.out.println("Server no longer reachable");
             reset.fireStateEvent();
             return super.entryAction(cause);
         }
@@ -81,7 +81,7 @@ public class Wait extends State {
 
                 if (Network.disconnectedClient()) {
                     Network.disconnect();
-                    System.out.println("Il gioco e' terminato a causa della disconnessione di un client");
+                    System.out.println("The game ended due to a client disconnection");
                     isToReset = true;
                 }
 

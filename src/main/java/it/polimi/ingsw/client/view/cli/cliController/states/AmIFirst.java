@@ -46,10 +46,8 @@ public class AmIFirst extends State {
         Network.setClientModel(clientModel);
         boolean responseReceived = false;
 
-        System.out.println("Sei connesso al server, se e' disponibile una partita verrai automaticamente collegato\n" +
-                "altrimenti vuoi dire che il server e' al completo e non puo' ospitare altri giocatori");
-
-        //System.out.println("Attendo x secondi per non intasare la rete...");
+        System.out.println("You are connected to the server, if a game is available you will be automatically connected\n" +
+                "otherwise it means that the server is full and cannot host other players");
         TimeUnit.MILLISECONDS.sleep(500);
 
         long start = System.currentTimeMillis();
@@ -62,7 +60,7 @@ public class AmIFirst extends State {
             boolean check = response.waitParametersReceived(5);
 
             if (check || System.currentTimeMillis() >= end) {
-                System.out.println("\n\nServer non ha dato risposta, si vede che il gioco era gia' pieno oppure la partita non e' stata ancora creata oppure che il nickname non e' valido... si prega di riprovare");
+                System.out.println("\n\nServer did not give an answer, you can see that the game was already full or the game has not been created yet or that the nickname is not valid, please try again");
                 Network.disconnect();
                 System.exit(0);
             }
@@ -73,27 +71,22 @@ public class AmIFirst extends State {
             }
         }
 
-
-        //System.out.println("[Ho ricevuto la risposta: ");
         clientModel = json.fromJson(response.getParameter(0), ClientModel.class);
 
         if (clientModel.getClientIdentity() == Network.getClientModel().getClientIdentity() && clientModel.isNotKicked() && clientModel.getTypeOfRequest() != null && clientModel.getTypeOfRequest().equals("CONNECTTOEXISTINGGAME")) {
-            System.out.println("\n Sei stato connesso a una partita gia' esistente.");
+            System.out.println("\n You have been connected to an existing game.");
             no.fireStateEvent();
             return super.entryAction(cause);
         }
 
         if (clientModel.getAmFirst() == null) {
             nicknameAlreadyPresent.fireStateEvent();
-            //System.out.println("   il nickname era già presente !!!]");
         } else if (clientModel.getAmFirst().equals(true)) {
             yes.fireStateEvent();
-            //System.out.println("   sono primo !!!]");
         } else if (clientModel.getAmFirst().equals(false)) {
 
-            System.out.println("In attesa che gli altri giocatori si colleghino...");
+            System.out.println("Waiting for the other players to log in ...");
             no.fireStateEvent();
-            //System.out.println("   non sono primo !!!]");
         }
         return super.entryAction(cause);
     }

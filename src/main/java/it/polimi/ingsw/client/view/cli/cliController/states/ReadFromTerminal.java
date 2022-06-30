@@ -24,12 +24,12 @@ public class ReadFromTerminal extends State {
     final Event insertedParameters;
 
     public ReadFromTerminal(View view, ClientModel clientModel, Controller controller, int numOfParameters, String type) {
-        super("[STATO di lettura di " + numOfParameters + " parametri da terminale interpretati come :"+ type+ "]");
+        super("[STATUS of reading of" + numOfParameters + " terminal parameters interpreted as :"+ type+ "]");
         this.view = view;
         this.clientModel = clientModel;
         this.type = type;
 
-        insertedParameters = new Event("Inserimento da terminale di tipo " +type );
+        insertedParameters = new Event("Terminal input of type" +type );
         numberOfParametersIncorrect = new IncorrectNumberOfParameters(numOfParameters);
         fromTerminal = new ParametersFromTerminal(clientModel, numOfParameters);
         insertedParameters.setStateEventListener(controller);

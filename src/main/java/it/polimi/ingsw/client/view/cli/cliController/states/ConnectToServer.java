@@ -20,7 +20,7 @@ public class ConnectToServer extends State{
     final NotConnectedToServer notConnected;
 
     public ConnectToServer(View view, ClientModel clientModel){
-        super("[STATO Tentativo di connessione al server (ConnectToServer.java)]");
+        super("[STATUS Attempt to connect to the server (ConnectToServer.java)]");
         this.view = view;
         this.clientModel = clientModel;
 

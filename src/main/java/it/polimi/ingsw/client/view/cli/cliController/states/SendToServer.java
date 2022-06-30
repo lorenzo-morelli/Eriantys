@@ -57,7 +57,7 @@ public class SendToServer extends State{
                 responseReceived = true;
             }
         }
-        System.out.println("In attesa che gli altri giocatori si colleghino...");
+        System.out.println("Waiting for the other players to log in ...");
         ack.fireStateEvent();
     }
 }

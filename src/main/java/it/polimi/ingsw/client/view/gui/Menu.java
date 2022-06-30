@@ -82,13 +82,12 @@ public class Menu implements Initializable {
             SetConnection.setConnection(nickname, ip, port, this.guiView.getClientModel());
             if (Network.isConnected()) {
                 this.connected.setText("CONNECTED!");
-                this.notice.setText("In attesa che il server dia una risposta...");
+                this.notice.setText("Waiting for the server to give a reply ...");
                 ClientModel model = SendModelAndGetResponse.sendAndGetModel(this.guiView.getClientModel());
 
                 if (model != null) {
                     this.guiView.setClientModel(model);
                 } else {
-                    System.out.println("\n\nServer non ha dato risposta");
                     Network.disconnect();
                     this.notice.setText("Server didn't respond, disconnection...");
                     TimeUnit.SECONDS.sleep(5);

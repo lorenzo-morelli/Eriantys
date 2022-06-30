@@ -60,21 +60,17 @@ public class SendNicknameToServer extends State {
         ack = new ParametersFromNetwork(1);
         ack.setStateEventListener(controller);
         ack.enable();
-        //System.out.println("[Conferma del nickname non ancora ricevuta]");
         ack.waitParametersReceived();
 
-        //System.out.println("[Conferma del nickname ricevuta]");
         ClientModel fromNetwork = json.fromJson(ack.getParameter(0), ClientModel.class);
         System.out.println(ack.getParameter(0));
 
         if (fromNetwork.getAmFirst() == null) {
-            // ancora una volta l'utente ha inserito un nickname già esistente
             nickAlreadyExistent.fireStateEvent();
         } else {
-            // l'utente ha finalmente inserito un nickname valido
 
 
-            System.out.println("In attesa che gli altri giocatori si colleghino...");
+            System.out.println("Waiting for the other players to log in ...");
             nickUnique.fireStateEvent();
         }
 

@@ -339,7 +339,7 @@ public class MotherPhase extends State {
                         }
                     }
                     if (check <= 1) {
-                        System.out.println("numero minimo di giocatori non disponibile, attendo 40 secondi in attesa che un altro giocatore si riconnette");
+                        System.out.println("Minimum number of players not available, I wait 40 seconds waiting for another player to reconnect");
                         for (Player p : model.getPlayers()) {
                             if (!p.isDisconnected()) {
                                 ClientModel Data = connectionModel.findPlayer(p.getNickname());
