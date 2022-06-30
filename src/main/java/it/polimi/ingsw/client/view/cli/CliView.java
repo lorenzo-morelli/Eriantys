@@ -130,13 +130,13 @@ public class CliView implements View {
                 break;
 
             case "GAMEINFO":
-                CommandPrompt.ask("Enter number of players and game mode [empty String: default 4 EXPERT]",
+                CommandPrompt.ask("Enter number of players followed by game mode (2/3/4 BEGINNER/EXPERT) [empty String: default 4 EXPERT]",
                         "NumOfPlayers GameMode:");
                 parsedStrings =
                         new ArrayList<>(Arrays.asList(CommandPrompt.gotFromTerminal().split(" ")));
                 if (!parsedStrings.get(0).equals("")) {
                     if (!isValidCifra(parsedStrings.get(0))) {
-                        System.out.print("ALERT: Enter a digit on the number of players, try again\n");
+                        System.out.print("ALERT: Enter a digit on the number of players, try again (e.g. 2 BEGINNER)\n");
                         askParameters();
                         return;
                     }
@@ -144,12 +144,12 @@ public class CliView implements View {
                     return;
                 }
                 if (Integer.parseInt(parsedStrings.get(0)) < 2 || Integer.parseInt(parsedStrings.get(0)) > 4) {
-                    System.out.print("ALERT: numOfPlayers must be between 2 and 4, try again\n");
+                    System.out.print("ALERT: numOfPlayers must be between 2 and 4, try again (e.g. 2 BEGINNER)\n");
                     askParameters();
                     return;
                 }
                 if (!parsedStrings.get(1).equals("BEGINNER") && !parsedStrings.get(1).equals("EXPERT")) {
-                    System.out.print("ALERT: the chosen gameMode must be 'BEGINNER' or 'EXPERT', try again\n");
+                    System.out.print("ALERT: the chosen gameMode must be 'BEGINNER' or 'EXPERT', try again (e.g. 2 BEGINNER)\n");
                     askParameters();
                     return;
                 }
