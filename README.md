@@ -19,7 +19,7 @@ ToDo: inserire link a uml iniziale e finale
 ToDo inserire javafdock  
 <h2>Testing e coverage</h2>  
 Sono stati effettuati testing di coverage con Junit con copertura pari all'86% dei metodi ed all'82% delle righe di codice del Model.
-![](https://github.com/lorenzo-morelli/ing-sw-2022-morelli-morea-netodellacqua/tree/blob/main/src/main/resources/ModelTesting.png)
+![](https://i.ibb.co/M7dvkmN/Senza-titolo.png)
 
 <h2>Librerie e plugins</h2>  
 Si è scelto di utilizzare il minimo numero di librerie e dipendenze esterne.<br>
