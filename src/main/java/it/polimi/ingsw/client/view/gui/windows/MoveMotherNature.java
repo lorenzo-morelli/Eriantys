@@ -75,7 +75,7 @@ public class MoveMotherNature implements Initializable {
             islandImage.setOnMouseClicked((event) -> {
                 distance = islands.indexOf(island) - motherNaturePos;
                 while (distance <= 0) {
-                    distance += 12;
+                    distance += islands.size();
                 }
                 if (distance > moves) {
                     notice.setText("ERROR: You don't have enough moves available!");

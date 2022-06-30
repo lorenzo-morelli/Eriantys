@@ -289,6 +289,7 @@ public class Game implements Initializable {
                 }
                 towerImage.setFitWidth(40);
                 towerImage.setFitHeight(40);
+                setShadow(towerImage);
                 towers.addRow(1, towerImage);
             }
             tile.getChildren().add(towers);

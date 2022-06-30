@@ -183,7 +183,10 @@ public class GuiView extends Application {
                 changeScene("Game");
                 break;
             case "CHOOSECLOUDS":
-
+                gameState = "CHOOSE CLOUD";
+                changeScene("Game");
+                break;
+            case "GAMEEND":
                 changeScene("Game");
                 break;
         }
@@ -235,7 +238,7 @@ public class GuiView extends Application {
                 logText = head + "The player " + clientModel.getNickname() + " chose to use the character card MONK, choosing the color: " + clientModel.getChosenColor() + " and the island: " + clientModel.getChosenIsland() + tail;
                 break;
             case "HERALD":
-                logText = head + "The player " + clientModel.getNickname() + " chose to use the character card HERALD, choosing the color: " + clientModel.getChosenColor() + tail;
+                logText = head + "The player " + clientModel.getNickname() + " chose to use the character card HERALD, choosing the island: " + clientModel.getChosenIsland() + tail;
                 break;
             case "PRINCESS":
                 logText = head + "The player " + clientModel.getNickname() + " chose to use the character card PRINCESS, choosing the color: " + clientModel.getChosenColor() + tail;

@@ -41,7 +41,6 @@ public class ChooseCloud implements Initializable {
             ImageView cloudImage = new ImageView("/graphics/pieces/clouds/cloud_card.png");
             cloudImage.setFitHeight(130);
             cloudImage.setFitWidth(130);
-            setShadow(cloudImage);
             tile.getChildren().add(cloudImage);
             GridPane studentsCloudGrid = new GridPane();
             studentsCloudGrid.setAlignment(Pos.CENTER);

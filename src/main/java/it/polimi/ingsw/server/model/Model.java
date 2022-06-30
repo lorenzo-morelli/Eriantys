@@ -30,7 +30,7 @@ public class Model {
     public static final String ANSI_GRAY="\033[1;90m";
     public Model(int numOfPlayer, String gameMode, boolean debug) {
 
-        debug=true; //TODO: DELETE AFTER TESTING
+//        debug=true; //TODO: DELETE AFTER TESTING
         this.isLastTurn = false;
         this.currentPlayer = 0;
         this.players = new ArrayList<>();
