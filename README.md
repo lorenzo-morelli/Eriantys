@@ -32,6 +32,7 @@ TODO: inserire uml finale
 
 ## Peer review ricevute
 [Protocol](https://github.com/lorenzo-morelli/ing-sw-2022-morelli-morea-netodellacqua/blob/main/deliverables/peer_review_ricevuto_protocol.pdf)
+<br>
 [UML](https://github.com/lorenzo-morelli/ing-sw-2022-morelli-morea-netodellacqua/blob/main/deliverables/peer_review_ricevuto.pdf)
 
 
