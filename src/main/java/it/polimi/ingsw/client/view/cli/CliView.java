@@ -217,7 +217,7 @@ public class CliView implements View {
                 }
                 break;
             case "CHOOSEASSISTANTCARD":
-                System.out.println(networkClientModel.getServerModel().toString(networkClientModel.getNickname(), "GAME STATE: \n" + "IT’S YOUR TURN - ASSISTNT CARD PHASE" + "\n\nMOVES BY OTHER PLAYERS: " + getResponse()));
+                System.out.println(networkClientModel.getServerModel().toString(networkClientModel.getNickname(), "GAME STATE: \n" + "IT’S YOUR TURN - ASSISTANT CARD PHASE" + "\n\nMOVES BY OTHER PLAYERS: " + getResponse()));
                 System.out.println("Choose a Assistant Card");
                 for (AssistantCard a : networkClientModel.getDeck()) {
                     System.out.println("Value: " + (int) a.getValues() + "  Moves: " + a.getMoves());
