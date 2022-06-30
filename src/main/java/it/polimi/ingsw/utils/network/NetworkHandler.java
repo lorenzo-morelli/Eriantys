@@ -284,7 +284,7 @@ public class NetworkHandler {
                     } catch (IOException ignored) {
                     }
                 }
-                System.out.println("[Server is Closing]");
+                System.out.println("GAME ENDED");
                 closeConnection();
             }
         }
