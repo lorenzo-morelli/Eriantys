@@ -1,6 +1,7 @@
 package it.polimi.ingsw.client.view.gui.windows;
 
 import it.polimi.ingsw.client.view.gui.GuiView;
+import it.polimi.ingsw.client.view.gui.Menu;
 import it.polimi.ingsw.server.model.Player;
 import it.polimi.ingsw.utils.network.Network;
 import javafx.fxml.FXML;
@@ -24,15 +25,15 @@ public class EndGame implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         currNode = winLabel;
-        Player me = this.guiView.getClientModel().getServerModel().getPlayers().stream()
-                .filter(player -> player.getIp().equals(Network.getMyIp())).collect(Collectors.toList()).get(0);
+        Menu menu = new Menu();
+        String me = menu.getNickname();
         String result = this.guiView.getClientModel().getGameWinner();
         int numOfPlayers = this.guiView.getClientModel().getServerModel().getNumberOfPlayers();
         if (result.equals("PAREGGIO")) {
             winLabel.setText("TIE!");
             winnerName.setText("It's a tie and everybody won! ;)");
         } else if (numOfPlayers < 4) {
-            if (result.equals(me.getNickname())) {
+            if (result.equals(me)) {
                 winLabel.setText("YOU WON!");
                 winnerName.setText("Congratulations! You won the game");
             } else {
@@ -40,7 +41,7 @@ public class EndGame implements Initializable {
                 winnerName.setText("You lost the game :( better luck next time!");
             }
         } else {
-            if (result.contains(me.getNickname())) {
+            if (result.contains(me)) {
                 winLabel.setText("YOUR TEAM WON!");
                 winnerName.setText("Congratulations! Your team won the game");
             } else {

@@ -21,6 +21,7 @@ import static it.polimi.ingsw.client.view.common.Check.isValidPort;
 
 public class Menu implements Initializable {
     private final GuiView guiView = new GuiView();
+    private String nickname = "";
 
     @FXML
     private Button playButton = new Button();
@@ -79,6 +80,7 @@ public class Menu implements Initializable {
         } else if (isValidIp(ip) || isValidPort(port)) {
             this.notice.setText("FAILURE: ip or port format not valid!");
         } else {
+            setNickname(nickname);
             SetConnection.setConnection(nickname, ip, port, this.guiView.getClientModel());
             if (Network.isConnected()) {
                 this.connected.setText("CONNECTED!");
@@ -105,5 +107,13 @@ public class Menu implements Initializable {
                 this.notice.setText("FAILURE: impossible to connect to server!");
             }
         }
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 }
