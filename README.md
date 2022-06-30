@@ -24,6 +24,13 @@ TODO: inserire uml finale
 <br>
 [Documentazione iniziale](https://github.com/lorenzo-morelli/ing-sw-2022-morelli-morea-netodellacqua/blob/main/deliverables/protocol_initial_documentation.pdf)
 
+## Controllore del client
+[Documentazione IFML](https://github.com/lorenzo-morelli/ing-sw-2022-morelli-morea-netodellacqua/blob/main/deliverables/ClientController.jpg)
+
+## Interazioni tra controllore del client e del server
+[Documentazione BPMN](https://github.com/lorenzo-morelli/ing-sw-2022-morelli-morea-netodellacqua/blob/main/deliverables/principiant_game.bpmn)
+
+
 ## Testing e coverage
 Sono stati effettuati testing di coverage con Junit con copertura pari all'86% dei metodi ed all'82% delle righe di codice del Model.  
 ![](https://i.ibb.co/M7dvkmN/Senza-titolo.png)
