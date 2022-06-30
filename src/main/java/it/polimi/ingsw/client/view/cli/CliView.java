@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.*;
 import java.util.*;
 
-import static it.polimi.ingsw.client.view.gui.common.Check.*;
+import static it.polimi.ingsw.client.view.common.Check.*;
 
 /**
  * This class implements the methods needed to view information and interact with the client's command line interface

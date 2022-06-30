@@ -1,4 +1,4 @@
-package it.polimi.ingsw.client.view.gui.common;
+package it.polimi.ingsw.client.view.common;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

@@ -1,8 +1,8 @@
 package it.polimi.ingsw.client.view.gui;
 
 import it.polimi.ingsw.client.model.ClientModel;
-import it.polimi.ingsw.client.view.gui.common.SendModelAndGetResponse;
-import it.polimi.ingsw.client.view.gui.common.SetConnection;
+import it.polimi.ingsw.client.view.common.SendModelAndGetResponse;
+import it.polimi.ingsw.client.view.common.SetConnection;
 import it.polimi.ingsw.utils.network.Network;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,8 +16,8 @@ import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
 import static it.polimi.ingsw.client.view.gui.GuiView.currNode;
-import static it.polimi.ingsw.client.view.gui.common.Check.isValidIp;
-import static it.polimi.ingsw.client.view.gui.common.Check.isValidPort;
+import static it.polimi.ingsw.client.view.common.Check.isValidIp;
+import static it.polimi.ingsw.client.view.common.Check.isValidPort;
 
 public class Menu implements Initializable {
     private final GuiView guiView = new GuiView();
