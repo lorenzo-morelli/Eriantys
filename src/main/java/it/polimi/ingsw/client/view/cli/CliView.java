@@ -248,7 +248,7 @@ public class CliView implements View {
                         return;
                     }
 
-                    if(chosenColor==null) {
+                    if(fromTerminal.equals("CARD")) {
                         boolean ResultOfCardUsage = chosenCharacterCardManagement();
                         if (ResultOfCardUsage) {
                             TimeUnit.SECONDS.sleep(1);
@@ -256,8 +256,7 @@ public class CliView implements View {
                             return;
                         }
                     }
-
-                    if (!fromTerminal.equals("CARD")) {
+                    else{
                         boolean ResultOfSchoolOrIsland =schoolOrIslandChooseManagement(chosenColor);
                         if (ResultOfSchoolOrIsland) {
                             TimeUnit.SECONDS.sleep(1);
@@ -295,6 +294,7 @@ public class CliView implements View {
                 if (networkClientModel.getServerModel().getGameMode().equals(GameMode.EXPERT) && networkClientModel.getServerModel().getTable().getCharacters().stream().anyMatch(j -> j.getCost() <= networkClientModel.getServerModel().getCurrentPlayer().getCoins() && !cardJustUsed)) {
 
                     CommandPrompt.ask("Choose the number of moves to move Mother Nature OR enter CARD to use a character card", "Moves: ");
+
                     if (CommandPrompt.gotFromTerminal().equals("CARD")) {
                         boolean resultCardUsage= chosenCharacterCardManagement();
                         if(resultCardUsage){
