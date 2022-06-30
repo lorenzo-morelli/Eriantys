@@ -21,7 +21,8 @@ TODO: inserire uml finale
 ## Socket
 
 [Sequence diagrams finali](https://github.com/lorenzo-morelli/ing-sw-2022-morelli-morea-netodellacqua/blob/main/deliverables/protocol_final_documentation.pdf)
-[documentazione iniziale](https://github.com/lorenzo-morelli/ing-sw-2022-morelli-morea-netodellacqua/blob/main/deliverables/protocol_initial_documentation.pdf)
+<br>
+[Documentazione iniziale](https://github.com/lorenzo-morelli/ing-sw-2022-morelli-morea-netodellacqua/blob/main/deliverables/protocol_initial_documentation.pdf)
 TODO: inserire uml finale
 
 ## Testing e coverage
