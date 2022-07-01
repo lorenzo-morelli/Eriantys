@@ -24,6 +24,7 @@ public class ConnectionToServer {
     private boolean isToReset = false;
     private boolean waitForFirst = true;
     private int myID;
+    public static String myNickname;
     private ParametersFromNetwork message;
     private boolean notRead = false;
 
@@ -32,6 +33,7 @@ public class ConnectionToServer {
             Network.send(gson.toJson(this.guiView.getClientModel()));
         }
         myID = guiView.getClientModel().getClientIdentity();
+        myNickname = guiView.getClientModel().getNickname();
         long start = System.currentTimeMillis();
         long end = start + 70 * 1000L;
         try {

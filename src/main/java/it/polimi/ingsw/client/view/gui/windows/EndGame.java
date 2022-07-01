@@ -1,7 +1,6 @@
 package it.polimi.ingsw.client.view.gui.windows;
 
 import it.polimi.ingsw.client.view.gui.GuiView;
-import it.polimi.ingsw.client.view.gui.Menu;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -10,6 +9,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import static it.polimi.ingsw.client.view.gui.ConnectionToServer.myNickname;
 import static it.polimi.ingsw.client.view.gui.GuiView.currNode;
 
 public class EndGame implements Initializable {
@@ -22,8 +22,7 @@ public class EndGame implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         currNode = winLabel;
-        Menu menu = new Menu();
-        String me = menu.getNickname();
+        String me = myNickname;
         String result = this.guiView.getClientModel().getGameWinner();
         int numOfPlayers = this.guiView.getClientModel().getServerModel().getNumberOfPlayers();
         if (result.equals("PAREGGIO")) {
