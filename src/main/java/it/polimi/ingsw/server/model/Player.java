@@ -22,7 +22,7 @@ public class Player implements Comparable<Player> {
     public static final String ANSI_BLACK = "\u001B[30m";
     public static final String ANSI_WHITE = "\033[1;97m";
     public static final String ANSI_GRAY = "\033[1;90m";
-    private boolean isDisconnected;
+    private boolean isDisconnected,skipClouds=false;
 
     /**
      * The main player constructor for 2/3 player.
@@ -198,4 +198,11 @@ public class Player implements Comparable<Player> {
         this.nickname = nickname;
     }
 
+    public void setSkipClouds(boolean skipClouds) {
+        this.skipClouds = skipClouds;
+    }
+
+    public boolean isSkipClouds() {
+        return skipClouds;
+    }
 }

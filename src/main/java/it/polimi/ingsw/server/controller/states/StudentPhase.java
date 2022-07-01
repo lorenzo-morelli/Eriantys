@@ -164,6 +164,7 @@ public class StudentPhase extends State {
                                 {
                                     currentPlayer.getSchoolBoard().loadEntrance(model.getTable().getClouds().get(k),model.getTable().getClouds());
                                     model.getTable().getClouds().remove(k);
+                                    currentPlayer.setSkipClouds(true);
                                     break;
                                 }
                             }

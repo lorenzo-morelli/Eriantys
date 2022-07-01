@@ -141,7 +141,9 @@ public class Create2Or3PlayerGame extends State {
                                         Network.send(json.toJson(receivedClientModel));
                                         model.setDisconnection(false);
                                         model.getTable().getClouds().add(new Cloud(model.getNumberOfPlayers()));
-                                        model.getTable().getClouds().get(model.getTable().getClouds().size() - 1).charge(model.getTable().getBag());
+                                        if(!p.isSkipClouds()) {
+                                            model.getTable().getClouds().get(model.getTable().getClouds().size() - 1).charge(model.getTable().getBag());
+                                        }
                                         break;
                                     }
                                 }

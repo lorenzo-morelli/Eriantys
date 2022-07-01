@@ -100,23 +100,37 @@ public class CloudPhase extends State {
         disconnected=false;
         fromPing=false;
 
-        if(currentPlayer.isDisconnected()){
+        if(currentPlayer.isDisconnected() || currentPlayer.isSkipClouds()){
 
-            currentPlayer.setDisconnected(true);
-            for(Cloud c: model.getTable().getClouds()) {
-                if(c.getStudentsAccumulator().size()!=0) {
-                    currentPlayer.getSchoolBoard().loadEntrance(c,model.getTable().getClouds());
-                    break;
+            if(currentPlayer.isDisconnected()) {
+                currentPlayer.setDisconnected(true);
+                for(Cloud c: model.getTable().getClouds()) {
+                    if(c.getStudentsAccumulator().size()!=0) {
+                        currentPlayer.getSchoolBoard().loadEntrance(c,model.getTable().getClouds());
+                        break;
+                    }
                 }
+
+                if (model.getCurrentPlayer().equals(model.getPlayers().get(model.getPlayers().size() - 1))) {
+                    GoToEndTurn().fireStateEvent();
+                } else {
+                    model.nextPlayer();
+                    GoToStudentPhase().fireStateEvent();
+                }
+                return super.entryAction(cause);
             }
 
-            if (model.getCurrentPlayer().equals(model.getPlayers().get(model.getPlayers().size() - 1))) {
-                GoToEndTurn().fireStateEvent();
-            } else {
-                model.nextPlayer();
-                GoToStudentPhase().fireStateEvent();
+            if(currentPlayer.isSkipClouds()){
+                currentPlayer.setSkipClouds(false);
+                if (model.getCurrentPlayer().equals(model.getPlayers().get(model.getPlayers().size() - 1))) {
+                    GoToEndTurn().fireStateEvent();
+                } else {
+                    model.nextPlayer();
+                    GoToStudentPhase().fireStateEvent();
+                }
+                return super.entryAction(cause);
+
             }
-            return super.entryAction(cause);
         }
 
         ClientModel currentPlayerData = connectionModel.findPlayer(currentPlayer.getNickname());
