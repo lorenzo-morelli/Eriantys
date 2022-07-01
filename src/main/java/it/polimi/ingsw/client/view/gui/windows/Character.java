@@ -32,14 +32,12 @@ public class Character implements Initializable {
     private boolean flagColor = false;
     private int chosenIsland;
     private PeopleColor chosenColor;
-
     @FXML
     private Label explanation = new Label();
     @FXML
     private Label notice = new Label();
     @FXML
     private Label name = new Label();
-
     @FXML
     private GridPane islandGrid;
     @FXML
@@ -125,7 +123,12 @@ public class Character implements Initializable {
         }
     }
 
-    public void selectStudent(ArrayList<ImageView> students, StudentSet studentSet) {
+    /**
+     * This method is used to select the student color.
+     * @param students the list of student colors.
+     * @param studentSet the set with the number of students per each color.
+     */
+    private void selectStudent(ArrayList<ImageView> students, StudentSet studentSet) {
         students.forEach(Game::setShadow);
         setToBlackAndWhite(students, studentSet, 0);
         students.forEach(student -> student.setOnMouseClicked(event -> {
@@ -169,6 +172,10 @@ public class Character implements Initializable {
         }));
     }
 
+    /**
+     * This method is used to select an island.
+     * @param islands the list of the islands.
+     */
     private void selectIsland(ArrayList<Island> islands) {
         Position pos = new Position();
         islands.forEach(island -> {
@@ -197,6 +204,12 @@ public class Character implements Initializable {
         });
     }
 
+    /**
+     * This method turns all the student images in black and white if they're not available.
+     * @param images the list of the student images.
+     * @param studentSet the set with the number of students per each color.
+     * @param remaining the number of students from where they're considered unavailable.
+     */
     public void setToBlackAndWhite(ArrayList<ImageView> images, StudentSet studentSet, int remaining) {
         images.forEach(student -> {
             switch (images.indexOf(student)) {
@@ -229,8 +242,12 @@ public class Character implements Initializable {
         });
     }
 
+    /**
+     * This event is used when the player wants to use the effect of the selected card.
+     * @param mouseEvent the event to close the current window.
+     */
     @FXML
-    private void okay(MouseEvent mouseEvent) {
+    private void useEffect(MouseEvent mouseEvent) {
         if (!myTurn) {
             notice.setText("It's not your turn!");
         } else if (isCardUsed) {

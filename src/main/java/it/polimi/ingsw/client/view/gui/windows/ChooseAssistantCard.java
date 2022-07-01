@@ -73,7 +73,12 @@ public class ChooseAssistantCard implements Initializable {
         );
     }
 
-    public void setCard(int value, MouseEvent mouseEvent) {
+    /**
+     * This method is only used to choose the assistant card.
+     * @param value the value of the card
+     * @param mouseEvent the event needed to close the window.
+     */
+    private void setCard(int value, MouseEvent mouseEvent) {
         this.guiView.getClientModel().setCardChosenValue(value);
         this.guiView.getClientModel().setResponse(true);
         this.guiView.getClientModel().setPingMessage(false);

@@ -33,7 +33,6 @@ public class MoveStudents implements Initializable {
     private Label notice = new Label();
     private PeopleColor studentColor;
     private Player currentPlayer;
-
     @FXML
     private ImageView blue;
     @FXML
@@ -96,26 +95,47 @@ public class MoveStudents implements Initializable {
             });
         }
     }
+
+    /**
+     * This method sets the color to blue.
+     * @param mouseEvent the event to close the window.
+     */
     @FXML
     private void setBlue(MouseEvent mouseEvent) {
         setColor("blue", mouseEvent);
     }
 
+    /**
+     * This method sets the color to green.
+     * @param mouseEvent the event to close the window.
+     */
     @FXML
     private void setGreen(MouseEvent mouseEvent) {
         setColor("green", mouseEvent);
     }
 
+    /**
+     * This method sets the color to pink.
+     * @param mouseEvent the event to close the window.
+     */
     @FXML
     private void setPink(MouseEvent mouseEvent) {
         setColor("pink", mouseEvent);
     }
 
+    /**
+     * This method sets the color to red.
+     * @param mouseEvent the event to close the window.
+     */
     @FXML
     private void setRed(MouseEvent mouseEvent) {
         setColor("red", mouseEvent);
     }
 
+    /**
+     * This method sets the color to yellow.
+     * @param mouseEvent the event to close the window.
+     */
     @FXML
     private void setYellow(MouseEvent mouseEvent) {
         setColor("yellow", mouseEvent);

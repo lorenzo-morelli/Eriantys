@@ -211,7 +211,7 @@ public class JesterAndMinstrell implements Initializable {
      * @param mouseEvent the event to close the window.
      */
     @FXML
-    private void okay(MouseEvent mouseEvent) {
+    private void useEffect(MouseEvent mouseEvent) {
         entranceMinstrell.removeAll(Collections.singletonList(null));
         diningMinstrell.removeAll(Collections.singletonList(null));
         jester.removeAll(Collections.singletonList(null));
@@ -245,7 +245,10 @@ public class JesterAndMinstrell implements Initializable {
 
     }
 
-    public void initializeArrays() {
+    /**
+     * This method initializes the minestrell and jester's arrays.
+     */
+    private void initializeArrays() {
         entranceMinstrell = new ArrayList<>(Arrays.asList(null, null));
         diningMinstrell = new ArrayList<>(Arrays.asList(null, null));
         jester = new ArrayList<>(Arrays.asList(null, null, null));

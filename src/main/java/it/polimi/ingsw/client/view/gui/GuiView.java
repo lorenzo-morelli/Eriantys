@@ -199,6 +199,9 @@ public class GuiView extends Application {
         Network.send(gson.toJson(GuiView.clientModel));
     }
 
+    /**
+     * This method is used to update the log with the new action.
+     */
     public synchronized void response() {
         UpdateLog updateLog = new UpdateLog();
         String head = updateLog.getTime();
@@ -268,7 +271,12 @@ public class GuiView extends Application {
 
     }
 
-    public String printCloud(Cloud cloud) {
+    /**
+     * This method is used to print the number of students in cloud in the log.
+     * @param cloud the chosen cloud.
+     * @return the string containing the number of the students per color.
+     */
+    private String printCloud(Cloud cloud) {
         String students = "";
         students = students + "Blue: " + cloud.getStudentsAccumulator().getNumOfBlueStudents() + " ";
         students = students + "Red: " + cloud.getStudentsAccumulator().getNumOfRedStudents() + " ";
