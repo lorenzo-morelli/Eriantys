@@ -164,7 +164,9 @@ public class Create4PlayerGame extends State {
                                         Network.send(json.toJson(receivedClientModel));
                                         model.setDisconnection(false);
                                         model.getTable().getClouds().add(new Cloud(model.getNumberOfPlayers()));
-                                        model.getTable().getClouds().get(model.getTable().getClouds().size()-1).charge(model.getTable().getBag());
+                                        if(!team.getPlayer1().isSkipClouds()) {
+                                            model.getTable().getClouds().get(model.getTable().getClouds().size() - 1).charge(model.getTable().getBag());
+                                        }
                                         break;
                                     }
                                     if (team.getPlayer2().isDisconnected()) {
@@ -179,7 +181,9 @@ public class Create4PlayerGame extends State {
                                         Network.send(json.toJson(receivedClientModel));
                                         model.setDisconnection(false);
                                         model.getTable().getClouds().add(new Cloud(model.getNumberOfPlayers()));
-                                        model.getTable().getClouds().get(model.getTable().getClouds().size()-1).charge(model.getTable().getBag());
+                                        if(!team.getPlayer2().isSkipClouds()) {
+                                            model.getTable().getClouds().get(model.getTable().getClouds().size() - 1).charge(model.getTable().getBag());
+                                        }
                                         break;
                                     }
                                 }
