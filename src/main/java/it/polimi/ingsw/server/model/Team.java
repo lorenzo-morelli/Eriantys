@@ -18,6 +18,9 @@ public class Team {
     public static final String ANSI_WHITE="\033[1;97m";
     public static final String ANSI_GRAY="\033[1;90m";
 
+    /**
+     * inizialize the team as two free slots of players and a unique teamNumber
+     */
     public Team(int teamNumber){
         player1=null;
         player2=null;
@@ -30,6 +33,9 @@ public class Team {
         return player2;
     }
 
+    /**
+     * set the player given in a free slot of the team
+     */
     public void setPlayer(Player player){
         if(player1==null){
             player1=player;
@@ -42,6 +48,10 @@ public class Team {
     public int getTeamNumber() {
         return teamNumber;
     }
+
+    /**
+     * return true if the team is full (if the player1 and the player2 slot are occupied)
+     */
     public boolean isFull(){
         return player1 != null && player2 != null;
     }

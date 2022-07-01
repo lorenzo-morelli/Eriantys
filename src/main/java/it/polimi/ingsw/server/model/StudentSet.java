@@ -7,7 +7,7 @@ import java.util.Random;
 
 /**
  * This class represent the basic student accumulator, that is,
- * it maps an integer for each possible color
+ * it maps an integer for each possible color (one accumulator for each color)
  *
  * @author Ignazio Neto Dell'Acqua
  */
@@ -25,6 +25,9 @@ public class StudentSet {
     public static final String ANSI_BLUE = "\u001B[34m";
     public static final String ANSI_PURPLE = "\u001B[35m";
 
+    /**
+     * This constructor initializes all the students accumulators to zero
+     */
     public StudentSet() {
         this.numOfRedStudents = 0;
         this.numOfGreenStudents = 0;
@@ -33,6 +36,9 @@ public class StudentSet {
         this.numOfYellowStudents = 0;
     }
 
+    /**
+     * This constructor initializes all the students accumulators to the numbers passed as parameters
+     */
     public StudentSet(int numOfRedStudents, int numOfYellowStudents, int numOfBlueStudents, int numOfPinkStudents, int numOfGreenStudents) {
         this.numOfRedStudents = numOfRedStudents;
         this.numOfGreenStudents = numOfGreenStudents;
@@ -41,6 +47,9 @@ public class StudentSet {
         this.numOfYellowStudents = numOfYellowStudents;
     }
 
+    /**
+     * This method permit to reset all the students accumulators to zero
+     */
     public void setAllStudentToZero() {
         this.numOfRedStudents = 0;
         this.numOfGreenStudents = 0;
@@ -49,6 +58,9 @@ public class StudentSet {
         this.numOfYellowStudents = 0;
     }
 
+    /**
+     * This method permit extract one random student from this: remove and return one random color from this
+     */
     public PeopleColor extractRandomStudent() {
         if (this.size() > 0) {
             int rnd = new Random().nextInt(this.size());
@@ -75,6 +87,9 @@ public class StudentSet {
         throw new IllegalArgumentException();
     }
 
+    /**
+     * This method return the number of students by the given color
+     */
     public int numStudentsByColor(PeopleColor color) {
         if (color == null) return 0;
         switch (color) {
@@ -92,10 +107,16 @@ public class StudentSet {
         throw new IllegalArgumentException();
     }
 
+    /**
+     * This method return the size of all the student set
+     */
     public int size() {
         return numStudentsByColor(PeopleColor.BLUE) + numStudentsByColor(PeopleColor.RED) + numStudentsByColor(PeopleColor.YELLOW) + numStudentsByColor(PeopleColor.PINK) + numStudentsByColor(PeopleColor.GREEN);
     }
 
+    /**
+     * This method will remove from this set n student of the color passed as parameter
+     */
     public void removeStudent(int n, PeopleColor color) {
         if (numStudentsByColor(color) < n) {
             addStudents(-numStudentsByColor(color), color);
@@ -104,6 +125,9 @@ public class StudentSet {
         addStudents(-n, color);
     }
 
+    /**
+     * This method will remove from this set n student of the color passed as parameter and put those in another set (bag)
+     */
     public void removeStudentInBag(int n, PeopleColor color, StudentSet bag) {
         if (numStudentsByColor(color) < n) {
             addStudents(-numStudentsByColor(color), color);
@@ -114,7 +138,9 @@ public class StudentSet {
         bag.addStudents(n, color);
     }
 
-
+    /**
+     * This method will add into this set n student of the color passed as parameter
+     */
     public void addStudents(int n, PeopleColor color) {
         switch (color) {
             case BLUE:
@@ -135,6 +161,9 @@ public class StudentSet {
         }
     }
 
+    /**
+     * This method will put into this set n student random extracting those from a Set (bag) passed as parameter
+     */
     public void setStudentsRandomly(int n, StudentSet bag) {
         for (int i = 0; i < n; i++) {
             addStudents(1, bag.extractRandomStudent());
@@ -151,6 +180,9 @@ public class StudentSet {
                 '\n';
     }
 
+    /**
+     * Two student set are equal if all the accumulator have the same number of student
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -183,6 +215,9 @@ public class StudentSet {
         return numOfYellowStudents;
     }
 
+    /**
+     * This method return true if an array list of colors is contained into the set
+     */
     public boolean contains(ArrayList<PeopleColor> colors) {
         int red = 0, pink = 0, green = 0, yellow = 0, blue = 0;
 

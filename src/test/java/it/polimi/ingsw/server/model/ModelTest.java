@@ -275,7 +275,7 @@ class ModelTest {
     }
 
     /**
-     * This class tests the uses of the Deck from the players
+     * This class tests the uses of the Deck (Array list of Assistant CArd) from the players
      */
     @Test
     void testDeck() {
@@ -335,7 +335,7 @@ class ModelTest {
     }
 
     /**
-     * This class tests the uses of the Student Set in order to deal with the students accumulator
+     * This class tests the uses of the Student Set in order to deal with the students' accumulator adds and remove
      */
     @Test
     void StudentSetTest() {
@@ -365,8 +365,11 @@ class ModelTest {
         assertEquals(set2, set3);
     }
 
+    /**
+     * This class tests the uses of the Student Set in order to deal with the students' accumulator with randoms add
+     */
     @Test
-    void numStudentsColor() {
+    void randomStudentsColor() {
         StudentSet bag = new StudentSet(2, 2, 2, 2, 2);
         StudentSet set = new StudentSet();
 
@@ -381,6 +384,9 @@ class ModelTest {
         assertThrows(IllegalArgumentException.class, () -> set.setStudentsRandomly(1, bag));
     }
 
+    /**
+     * This class tests a simulation of an entire round of the game for 2 player as indicated in the rules , then show if the winner in the end of this turn is correct (also see is the to string view are set correctly)
+     */
     @Test
     void SimulateGame2Player() {
         Model model = new Model(2, "BEGINNER", false);
@@ -489,6 +495,9 @@ class ModelTest {
 
     }
 
+    /**
+     * This class tests a simulation of an entire round of the game for 4 player as indicated in the rules , then show if the winner in the end of this turn is correct (also see is the to string view are set correctly)
+     */
     @Test
     void SimulateGame4Player() {
         Model model = new Model(4, "BEGINNER", false);
@@ -607,6 +616,9 @@ class ModelTest {
 
     }
 
+    /**
+     * This class tests the creation of the game for expert game mode
+     */
     @Test
     void SimulateExpertCreation() {
         Model model = new Model(2, "EXPERT", false);
@@ -619,6 +631,9 @@ class ModelTest {
         assertNotEquals(model.getTable().getCharacters().get(2).getName(), model.getTable().getCharacters().get(1).getName());
     }
 
+    /**
+     * This class tests a simulation of use of the character card GRANNY
+     */
     @Test
     void SimulateGRANNY() {
         Model model = new Model(2, "EXPERT", true);
@@ -639,7 +654,9 @@ class ModelTest {
             }
         }
     }
-
+    /**
+     * This class tests a simulation of use of the character card CENTAUR
+     */
     @Test
     void SimulateCENTAUR() {
         Model model = new Model(2, "EXPERT", true);
@@ -665,7 +682,9 @@ class ModelTest {
             }
         }
     }
-
+    /**
+     * This class tests a simulation of use of the character card FARMER
+     */
     @Test
     void SimulateFARMER() {
         Model model = new Model(2, "EXPERT", true);
@@ -701,7 +720,9 @@ class ModelTest {
             }
         }
     }
-
+    /**
+     * This class tests a simulation of use of the character card HERALD
+     */
     @Test
     void SimulateHERALD() {
         Model model = new Model(2, "EXPERT", true);
@@ -753,7 +774,9 @@ class ModelTest {
             }
         }
     }
-
+    /**
+     * This class tests a simulation of use of the character card KNIGHT
+     */
     @Test
     void SimulateKNIGHT() {
         Model model = new Model(2, "EXPERT", true);
@@ -773,7 +796,9 @@ class ModelTest {
             }
         }
     }
-
+    /**
+     * This class tests a simulation of use of the character card MONK
+     */
     @Test
     void SimulateMONK() {
         Model model = new Model(2, "EXPERT", true);
@@ -795,7 +820,9 @@ class ModelTest {
             }
         }
     }
-
+    /**
+     * This class tests a simulation of use of the character card MUSHROOM HUNTER
+     */
     @Test
     void SimulateMUSHHUNTER() {
         Model model = new Model(2, "EXPERT", true);
@@ -843,7 +870,9 @@ class ModelTest {
             }
         }
     }
-
+    /**
+     * This class tests a simulation of use of the character card POSTMAN
+     */
     @Test
     void SimulatePOSTMAN() {
         Model model = new Model(2, "EXPERT", true);
@@ -865,9 +894,11 @@ class ModelTest {
             }
         }
     }
-
+    /**
+     * This class tests a simulation of use of the character card PRINCESS
+     */
     @Test
-    void SimulatePrincess() {
+    void SimulatePRINCESS() {
         Model model = new Model(2, "EXPERT", true);
         model.getPlayers().add(new Player("paperino", "192.168.0.2", model, true));
         model.getPlayers().add(new Player("pippo", "192.168.0.1", model, true));
@@ -892,7 +923,9 @@ class ModelTest {
             }
         }
     }
-
+    /**
+     * This class tests a simulation of use of the character card THIEF
+     */
     @Test
     void SimulateTHIEF() {
         Model model = new Model(2, "EXPERT", true);
@@ -918,7 +951,9 @@ class ModelTest {
             }
         }
     }
-
+    /**
+     * This class tests a simulation of use of the character card JESTER
+     */
     @Test
     void SimulateJESTER() {
         Model model = new Model(2, "EXPERT", true);
@@ -954,7 +989,9 @@ class ModelTest {
             }
         }
     }
-
+    /**
+     * This class tests a simulation of use of the character card MINSTREL
+     */
     @Test
     void SimulateMINSTREL() {
         Model model = new Model(2, "EXPERT", true);

@@ -10,6 +10,9 @@ import javax.swing.event.DocumentListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * This class handle with the Event of reviving a parameters send over the network
+ */
 public class ParametersFromNetwork extends Event implements DocumentListener {
     private static JTextArea ta;
     private final int numberOfStrings;
@@ -27,6 +30,9 @@ public class ParametersFromNetwork extends Event implements DocumentListener {
         ta.getDocument().addDocumentListener(this);
     }
 
+    /**
+     * This method is called when something is updated over the network and check if the message is arrived
+     */
     @Override
     public void insertUpdate(DocumentEvent e) {
         if (enabled) {
@@ -44,6 +50,9 @@ public class ParametersFromNetwork extends Event implements DocumentListener {
 
     }
 
+    /**
+     * This method check if the message is arrived and notify all the waiting thread that needs this message
+     */
     private synchronized void checkLastMessage() {
         try {
             parsedStrings = new ArrayList<>(Arrays.asList(ta.getText().split(" ")));
@@ -58,6 +67,9 @@ public class ParametersFromNetwork extends Event implements DocumentListener {
         }
     }
 
+    /**
+     * This method return the parameters contained in the message
+     */
     public synchronized String getParameter(int i) {
         if (this.parsedStrings!=null){
             return parsedStrings.get(i);
@@ -67,16 +79,25 @@ public class ParametersFromNetwork extends Event implements DocumentListener {
         }
     }
 
+    /**
+     * @return true if the message is arrived
+     */
     public synchronized boolean parametersReceived() {
         return parametersReceived;
     }
 
+    /**
+     * This method goes in wait until the parameters is not received
+     */
     public synchronized void waitParametersReceived() throws InterruptedException {
         while (!parametersReceived) {
             wait();
         }
     }
 
+    /**
+     * This method goes in wait until the parameters is not received with a timeout of @param sec (if the timeout expires this method return true, otherwise false)
+     */
     public synchronized boolean waitParametersReceived(int sec) throws InterruptedException {
         long start = System.currentTimeMillis();
         long end = start + sec * 1000L;
@@ -86,6 +107,10 @@ public class ParametersFromNetwork extends Event implements DocumentListener {
         return System.currentTimeMillis() >= end;
     }
 
+    /**
+     * This method goes in wait until the parameters is not received with a timeout of @param sec (if the timeout expires this method return true, otherwise false)
+     * and is build to function with the javaFx Thread
+     */
     public synchronized void waitParametersReceivedGUI(long time) throws InterruptedException {
 
         while (!parametersReceived) {
@@ -99,10 +124,16 @@ public class ParametersFromNetwork extends Event implements DocumentListener {
         Platform.runLater(() -> Platform.exitNestedEventLoop(PAUSE_KEY, new ResultOfWaiting(this, false)));
     }
 
+    /**
+     * Enable the message to be used
+     */
     public synchronized void enable() {
         enabled = true;
     }
 
+    /**
+     * Disable the message to be used
+     */
     public synchronized void disable() {
         enabled = false;
         parametersReceived = false;

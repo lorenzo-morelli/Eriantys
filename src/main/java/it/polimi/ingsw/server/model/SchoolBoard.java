@@ -23,6 +23,10 @@ public class SchoolBoard {
     public static final String ANSI_WHITE = "\033[1;97m";
     public static final String ANSI_GRAY = "\033[1;90m";
 
+    /**
+     * The constructor permit to Set up the School Board in function of numOfPlayers and available towers for 2/3 player.
+     * The students are taking from the bag of the centre table
+     */
     public SchoolBoard(int numOfPlayer, StudentSet bag, ArrayList<TowerColor> availableTower) {
         this.entranceSpace = new StudentSet();
         if (numOfPlayer == 3) {
@@ -39,6 +43,10 @@ public class SchoolBoard {
         showTower = true;
     }
 
+    /**
+     * The constructor permit to Set up the School Board in function of numOfPlayers and available towers for 4 player.
+     * The students are taking from the bag of the centre table
+     */
     public SchoolBoard(Team team, StudentSet bag, ArrayList<TowerColor> availableTower) {
         this.entranceSpace = new StudentSet();
         this.entranceSpace.setStudentsRandomly(7, bag);
@@ -66,11 +74,17 @@ public class SchoolBoard {
         this.numOfTowers = numOfTowers + 1;
     }
 
+    /**
+     * This method permit to remove one student of @param color from Entrance Table and put it on Dinner Table
+     */
     public void loadDinnerTable(PeopleColor color) {
         entranceSpace.removeStudent(1, color);
         dinnerTable.addStudents(1, color);
     }
 
+    /**
+     * This method permit to load the students from the students' accumulator of the chosen @param cloud
+     */
     public void loadEntrance(Cloud cloud, ArrayList<Cloud> clouds) {
         entranceSpace.addStudents(cloud.getStudentsAccumulator().numStudentsByColor(PeopleColor.RED), PeopleColor.RED);
         entranceSpace.addStudents(cloud.getStudentsAccumulator().numStudentsByColor(PeopleColor.PINK), PeopleColor.PINK);
