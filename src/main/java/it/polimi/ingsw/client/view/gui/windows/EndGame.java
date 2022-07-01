@@ -52,6 +52,7 @@ public class EndGame implements Initializable {
      */
     @FXML
     private void toMainMenu() throws IOException {
+        this.guiView.closeWindow();
         this.guiView.changeScene("MainMenu");
     }
 }
