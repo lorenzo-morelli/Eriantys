@@ -123,6 +123,11 @@ public class Create2Or3PlayerGame extends State {
                             }
 
                             if (check2) {
+                                try {
+                                    sleeping(6000);
+                                } catch (InterruptedException e) {
+                                    throw new RuntimeException(e);
+                                }
                                 for (Player p : getModel().getPlayers()) {
                                     if (p.isDisconnected()) {
                                         ClientModel target = connectionModel.findPlayer(p.getNickname());
@@ -144,7 +149,7 @@ public class Create2Or3PlayerGame extends State {
                         }
                     }
                     try {
-                        sleeping();
+                        sleeping(3000);
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
@@ -155,8 +160,8 @@ public class Create2Or3PlayerGame extends State {
         gameCreated.fireStateEvent();
         return super.entryAction(cause);
     }
-    private void sleeping() throws InterruptedException {
-        sleep(2000);
+    private void sleeping(int i) throws InterruptedException {
+        sleep(i);
     }
 
 }
