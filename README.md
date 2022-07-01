@@ -26,9 +26,11 @@ Il client è stato implementato sia nella versione command line interface (CLI),
 # Documentazione
 
 ## UML
+[UML finale](https://github.com/lorenzo-morelli/ing-sw-2022-morelli-morea-netodellacqua/blob/main/deliverables/UML.pdf)
 
+<br>
 [UML iniziale](https://github.com/lorenzo-morelli/ing-sw-2022-morelli-morea-netodellacqua/blob/main/deliverables/Initial_UML_Eriantys_morelli_morea_netodellacqua.pdf)
-TODO: inserire uml finale
+
 
 ## Socket
 
