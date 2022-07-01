@@ -6,7 +6,6 @@ import it.polimi.ingsw.server.model.Cloud;
 import it.polimi.ingsw.server.model.characters.CharacterCard;
 import it.polimi.ingsw.utils.network.Network;
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -28,7 +27,6 @@ public class GuiView extends Application {
     private Scene scene;
     private static ClientModel clientModel = new ClientModel();
     public static String gameState;
-
     public static String logText;
     public static Node currNode = null;
     public static boolean myTurn = false;
