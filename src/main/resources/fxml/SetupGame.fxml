@@ -9,10 +9,9 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.gui.SetupGame">
-   <ImageView fx:id="loading" fitHeight="38.0" fitWidth="42.0" layoutX="286.0" layoutY="344.0" pickOnBounds="true" preserveRatio="true">
-      <image>
-         <Image url="@../graphics/loading.gif" />
-      </image>
+   <ImageView fx:id="loading" fitHeight="38.0" fitWidth="42.0" layoutX="286.0" layoutY="344.0" pickOnBounds="true"
+              preserveRatio="true">
+      <Image url="@../graphics/loading.gif"/>
    </ImageView>
    <Label fx:id="connectedOnIp" alignment="CENTER" layoutX="2.0" layoutY="14.0" prefHeight="17.0" prefWidth="606.0" text="Connected on IP: ...">
       <font>

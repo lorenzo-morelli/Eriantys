@@ -12,9 +12,8 @@
          <Font size="15.0" />
       </font>
    </Label>
-   <ImageView fitHeight="34.0" fitWidth="36.0" layoutX="944.0" layoutY="563.0" pickOnBounds="true" preserveRatio="true">
-      <image>
-         <Image url="@../graphics/loading.gif" />
-      </image>
-   </ImageView>
+    <ImageView fitHeight="34.0" fitWidth="36.0" layoutX="944.0" layoutY="563.0" pickOnBounds="true"
+               preserveRatio="true">
+        <Image url="@../graphics/loading.gif"/>
+    </ImageView>
 </AnchorPane>
