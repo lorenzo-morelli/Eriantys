@@ -116,7 +116,7 @@ public class MotherPhase extends State {
             fromPing = false;
 
             if (currentPlayer.isDisconnected()) {
-
+                currentPlayer.setSkipClouds(false);
                 if (model.getTable().getIslands().size() <= 3) {
                     gameEnd().fireStateEvent();
                     return super.entryAction(cause);
