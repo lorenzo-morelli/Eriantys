@@ -163,6 +163,7 @@ public class Game implements Initializable {
         log.setText(logText);
         turnLabel.setText("This is " + this.guiView.getClientModel().getServerModel().getCurrentPlayer().getNickname() + "'s turn");
         if (this.guiView.getClientModel().getTypeOfRequest().equals("GAMEEND")) {
+            windowNode = phaseLabel;
             try {
                 this.guiView.openNewWindow("EndGame");
             } catch (IOException e) {
