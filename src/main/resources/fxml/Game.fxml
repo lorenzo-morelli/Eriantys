@@ -20,16 +20,16 @@
    <Button fx:id="setOnIslandBtn" layoutX="1631.0" layoutY="648.0" mnemonicParsing="false" onMouseClicked="#setOnIsland" prefHeight="63.0" prefWidth="241.0" styleClass="actionButton" stylesheets="@../css/graphics.css" text="Set student on island" />
 
    <ImageView fx:id="school1" fitHeight="263.0" fitWidth="593.0" layoutY="766.0" pickOnBounds="true" preserveRatio="true">
-      <Image url="@../graphics/PLANCIA_GIOCO_2.jpeg" />
+      <Image url="@../graphics/school.jpeg" />
    </ImageView>
    <ImageView fx:id="school2" fitHeight="263.0" fitWidth="593.0" layoutY="508.0" pickOnBounds="true" preserveRatio="true">
-      <Image url="@../graphics/PLANCIA_GIOCO_2.jpeg" />
+      <Image url="@../graphics/school.jpeg" />
    </ImageView>
    <ImageView fx:id="school3" fitHeight="263.0" fitWidth="593.0" layoutY="251.0" pickOnBounds="true" preserveRatio="true">
-      <Image url="@../graphics/PLANCIA_GIOCO_2.jpeg" />
+      <Image url="@../graphics/school.jpeg" />
    </ImageView>
    <ImageView fx:id="school4" fitHeight="263.0" fitWidth="593.0" layoutY="-6.0" pickOnBounds="true" preserveRatio="true">
-      <Image url="@../graphics/PLANCIA_GIOCO_2.jpeg" />
+      <Image url="@../graphics/school.jpeg" />
    </ImageView>
    <Label fx:id="playerName1" alignment="CENTER" layoutX="-2.0" layoutY="762.0" prefHeight="28.0" prefWidth="597.0" text="Player 1" textFill="DARKRED">
       <font>
@@ -82,32 +82,23 @@
    <ImageView fx:id="characterCard3" fitHeight="244.0" fitWidth="172.0" layoutX="1277.0" layoutY="102.0" pickOnBounds="true" preserveRatio="true">
       <Image url="@../graphics/characters/monk.jpg" />
    </ImageView>
-   <ImageView fx:id="coin4" fitHeight="51.0" fitWidth="45.0" layoutX="621.0" layoutY="194.0" pickOnBounds="true" preserveRatio="true">
-      <Image url="@../graphics/Moneta_base.png" />
-   </ImageView>
    <Label fx:id="coin4Label" alignment="CENTER" layoutX="600.0" layoutY="181.0" prefHeight="20.0" prefWidth="89.0" text="10000">
       <font>
          <Font size="14.0" />
       </font>
    </Label>
-   <ImageView fx:id="coin3" fitHeight="51.0" fitWidth="53.0" layoutX="622.0" layoutY="449.0" pickOnBounds="true" preserveRatio="true">
-      <Image url="@../graphics/Moneta_base.png" />
-   </ImageView>
    <Label fx:id="coin3Label" alignment="CENTER" layoutX="600.0" layoutY="437.0" prefHeight="20.0" prefWidth="89.0" text="10000">
       <font>
          <Font size="14.0" />
       </font>
    </Label>
-   <ImageView fx:id="coin2" fitHeight="51.0" fitWidth="53.0" layoutX="622.0" layoutY="706.0" pickOnBounds="true" preserveRatio="true">
-      <Image url="@../graphics/Moneta_base.png" />
-   </ImageView>
    <Label fx:id="coin2Label" alignment="CENTER" layoutX="600.0" layoutY="693.0" prefHeight="20.0" prefWidth="89.0" text="10000">
       <font>
          <Font size="14.0" />
       </font>
    </Label>
-   <ImageView fx:id="coin1" fitHeight="51.0" fitWidth="45.0" layoutX="622.0" layoutY="961.0" pickOnBounds="true" preserveRatio="true">
-      <Image url="@../graphics/Moneta_base.png" />
+   <ImageView fx:id="coin1" fitHeight="44.0" fitWidth="36.0" layoutX="627.0" layoutY="971.0" pickOnBounds="true" preserveRatio="true">
+      <Image url="@../graphics/coin.png" />
    </ImageView>
    <Label fx:id="coin1Label" alignment="CENTER" layoutX="600.0" layoutY="950.0" prefHeight="20.0" prefWidth="89.0" text="00000">
       <font>
@@ -412,4 +403,19 @@
          <Font name="System Bold" size="20.0" />
       </font>
    </Label>
+   <ImageView fx:id="coin2" fitHeight="44.0" fitWidth="36.0" layoutX="626.0" layoutY="715.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@../graphics/coin.png" />
+      </image>
+   </ImageView>
+   <ImageView fx:id="coin3" fitHeight="44.0" fitWidth="36.0" layoutX="627.0" layoutY="457.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@../graphics/coin.png" />
+      </image>
+   </ImageView>
+   <ImageView fx:id="coin4" fitHeight="44.0" fitWidth="36.0" layoutX="626.0" layoutY="202.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@../graphics/coin.png" />
+      </image>
+   </ImageView>
 </AnchorPane>
