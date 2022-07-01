@@ -35,6 +35,11 @@ TODO: inserire uml finale
 <br>
 [UML](https://github.com/lorenzo-morelli/ing-sw-2022-morelli-morea-netodellacqua/blob/main/deliverables/peer_review_ricevuto.pdf)
 
+## Peer review fatte
+[Protocol](https://github.com/lorenzo-morelli/ing-sw-2022-morelli-morea-netodellacqua/blob/main/deliverables/peer_review_protocol.pdf)
+<br>
+[UML](https://github.com/lorenzo-morelli/ing-sw-2022-morelli-morea-netodellacqua/blob/main/deliverables/peer_review_uml.docx)
+
 
 ## Testing e coverage
 Sono stati effettuati testing di coverage con Junit con copertura pari all'86% dei metodi e all'82% delle righe di codice del Model.  
