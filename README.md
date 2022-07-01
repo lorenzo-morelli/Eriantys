@@ -37,7 +37,7 @@ Il client è stato implementato sia nella versione command line interface (CLI),
 ### UML
 [UML finale](https://github.com/lorenzo-morelli/ing-sw-2022-morelli-morea-netodellacqua/blob/main/deliverables/UML_final.pdf)
 <br>
-[UML iniziale](https://github.com/lorenzo-morelli/ing-sw-2022-morelli-morea-netodellacqua/blob/main/deliverables/UML_initialpdf)
+[UML iniziale](https://github.com/lorenzo-morelli/ing-sw-2022-morelli-morea-netodellacqua/blob/main/deliverables/UML_initial.pdf)
 
 
 ### Socket
