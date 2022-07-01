@@ -11,10 +11,10 @@ import static it.polimi.ingsw.client.view.gui.GuiView.currNode;
 
 public class TryToReconnect implements Initializable {
     @FXML
-    private final Label label = new Label();
+    private Label notice;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        currNode = label;
+        currNode = notice;
     }
 }

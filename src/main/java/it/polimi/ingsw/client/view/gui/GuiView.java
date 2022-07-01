@@ -67,6 +67,10 @@ public class GuiView extends Application {
      * @param newScene the name of the FXML file, without the extension.
      */
     public synchronized void changeScene(String newScene) throws IOException {
+        System.out.println("cambio scena!");
+        System.out.println("nuova scena: " + newScene);
+        System.out.println("currNode: " + currNode);
+        System.out.println("currScene: " + currNode.getScene().getWindow());
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/" + newScene + ".fxml"));
         this.stage = (Stage) currNode.getScene().getWindow();
         this.scene = new Scene(loader.load());
