@@ -67,13 +67,13 @@
    <ImageView fx:id="assistantCard3" fitHeight="130.0" fitWidth="89.0" layoutX="600.0" layoutY="300.0" pickOnBounds="true" preserveRatio="true">
       <Image url="@../graphics/assistants/assistantCard1.png" />
    </ImageView>
-   <ImageView fx:id="assistantCard2" fitHeight="130.0" fitWidth="89.0" layoutX="600.0" layoutY="556.0" pickOnBounds="true" preserveRatio="true">
+   <ImageView fx:id="assistantCard2" fitHeight="130.0" fitWidth="89.0" layoutX="600.0" layoutY="562.0" pickOnBounds="true" preserveRatio="true">
       <Image url="@../graphics/assistants/assistantCard1.png" />
    </ImageView>
    <ImageView fx:id="characterCard1" fitHeight="244.0" fitWidth="177.0" layoutX="909.0" layoutY="102.0" pickOnBounds="true" preserveRatio="true">
       <Image url="@../graphics/characters/monk.jpg" />
    </ImageView>
-   <ImageView fx:id="assistantCard1" fitHeight="134.0" fitWidth="89.0" layoutX="596.0" layoutY="811.0" pickOnBounds="true" preserveRatio="true">
+   <ImageView fx:id="assistantCard1" fitHeight="134.0" fitWidth="89.0" layoutX="599.0" layoutY="817.0" pickOnBounds="true" preserveRatio="true">
       <Image url="@../graphics/assistants/assistantCard1.png" />
    </ImageView>
    <ImageView fx:id="characterCard2" fitHeight="244.0" fitWidth="167.0" layoutX="1094.0" layoutY="102.0" pickOnBounds="true" preserveRatio="true">
@@ -106,10 +106,10 @@
          <Font size="14.0" />
       </font>
    </Label>
-   <ImageView fx:id="coin1" fitHeight="51.0" fitWidth="45.0" layoutX="616.0" layoutY="960.0" pickOnBounds="true" preserveRatio="true">
+   <ImageView fx:id="coin1" fitHeight="51.0" fitWidth="45.0" layoutX="622.0" layoutY="961.0" pickOnBounds="true" preserveRatio="true">
       <Image url="@../graphics/Moneta_base.png" />
    </ImageView>
-   <Label fx:id="coin1Label" alignment="CENTER" layoutX="594.0" layoutY="948.0" prefHeight="20.0" prefWidth="89.0" text="00000">
+   <Label fx:id="coin1Label" alignment="CENTER" layoutX="600.0" layoutY="950.0" prefHeight="20.0" prefWidth="89.0" text="00000">
       <font>
          <Font size="14.0" />
       </font>
@@ -210,7 +210,7 @@
          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       </rowConstraints>
    </GridPane>
-   <ImageView fx:id="motherNature" fitHeight="74.0" fitWidth="88.0" layoutX="893.0" layoutY="371.0" pickOnBounds="true" preserveRatio="true">
+   <ImageView fx:id="motherNature" fitHeight="70.0" fitWidth="74.0" layoutX="893.0" layoutY="375.0" pickOnBounds="true" preserveRatio="true">
       <Image url="@../graphics/pieces/mother_nature.png" />
    </ImageView>
    <Button fx:id="moveBtn" layoutX="1631.0" layoutY="735.0" mnemonicParsing="false" onMouseClicked="#move" prefHeight="63.0" prefWidth="241.0" styleClass="actionButton" stylesheets="@../css/graphics.css" text="Move mother nature" />
@@ -404,4 +404,16 @@
    <Label fx:id="cost3" layoutX="1340.0" layoutY="349.0" text="Cost: 0" />
    <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
    <TextArea fx:id="log" editable="false" layoutX="1468.0" layoutY="101.0" prefHeight="244.0" prefWidth="357.0" text="tatatatata&#10;at&#10;at&#10;at&#10;ta&#10;ta&#10;t&#10;at&#10;a&#10;t&#10;at&#10;at&#10;at&#10;at&#10;a&#10;ta&#10;t sadddddddddddddddddddddddddddddddddddddddddddddddddddddd" />
+   <GridPane layoutX="1496.0" layoutY="370.0" prefHeight="44.0" prefWidth="292.0">
+     <columnConstraints>
+       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+     </columnConstraints>
+     <rowConstraints>
+       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+     </rowConstraints>
+   </GridPane>
 </AnchorPane>
