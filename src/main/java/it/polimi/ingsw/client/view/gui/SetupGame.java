@@ -3,6 +3,7 @@ package it.polimi.ingsw.client.view.gui;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -23,11 +24,13 @@ public class SetupGame implements Initializable {
     private Label numberOfPlayersLabel;
     @FXML
     private Label gameModeLabel;
+    @FXML
+    private ImageView loading;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         currNode = otherPlayersLabel;
-
+        loading.setVisible(false);
         this.connectedOnIp.setText("Connected on IP: " + this.guiView.getClientModel().getIp());
         this.connectedOnPort.setText("Connected on Port: " + this.guiView.getClientModel().getPort());
         this.gameModeLabel.setText("");
@@ -60,12 +63,16 @@ public class SetupGame implements Initializable {
         this.gameModeLabel.setText("Game mode: expert");
     }
 
+    /**
+     * This event creates a new game with the chosen parameters.
+     */
     public void start() {
         if (this.guiView.getClientModel().getNumOfPlayers() != 2 && this.guiView.getClientModel().getNumOfPlayers() != 3 && this.guiView.getClientModel().getNumOfPlayers() != 4) {
             this.otherPlayersLabel.setText("ERROR: Please select a number of players!");
         } else if (this.guiView.getClientModel().getGameMode() == null) {
             this.otherPlayersLabel.setText("ERROR: Please select a game mode!");
         } else {
+            loading.setVisible(true);
             this.otherPlayersLabel.setText("...Waiting for other players to join the game...");
             ConnectionToServer connection = new ConnectionToServer();
             connection.connect(true);

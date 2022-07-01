@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 
 import java.io.IOException;
 import java.net.URL;
@@ -21,8 +22,6 @@ import static it.polimi.ingsw.client.view.common.Check.isValidPort;
 
 public class Menu implements Initializable {
     private final GuiView guiView = new GuiView();
-    private String nickname = "";
-
     @FXML
     private Button playButton = new Button();
     @FXML
@@ -35,12 +34,15 @@ public class Menu implements Initializable {
     private Label notice = new Label();
     @FXML
     private Label connected = new Label();
+    @FXML
+    private ImageView loading = new ImageView();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.notice.setText("");
         this.connected.setText("");
         currNode = playButton;
+        loading.setVisible(false);
     }
 
     /**
@@ -80,11 +82,10 @@ public class Menu implements Initializable {
         } else if (isValidIp(ip) || isValidPort(port)) {
             this.notice.setText("FAILURE: ip or port format not valid!");
         } else {
-            setNickname(nickname);
             SetConnection.setConnection(nickname, ip, port, this.guiView.getClientModel());
             if (Network.isConnected()) {
                 this.connected.setText("CONNECTED!");
-                this.notice.setText("Waiting for the server to give a reply ...");
+                this.notice.setText("Waiting for the server to give a response...");
                 ClientModel model = SendModelAndGetResponse.sendAndGetModel(this.guiView.getClientModel());
 
                 if (model != null) {
@@ -100,6 +101,7 @@ public class Menu implements Initializable {
                 } else if (this.guiView.getClientModel().getAmFirst()) {
                     this.guiView.changeScene("SetupGame");
                 } else {
+                    loading.setVisible(true);
                     ConnectionToServer connection = new ConnectionToServer();
                     connection.connect(false);
                 }
@@ -107,13 +109,5 @@ public class Menu implements Initializable {
                 this.notice.setText("FAILURE: impossible to connect to server!");
             }
         }
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
     }
 }

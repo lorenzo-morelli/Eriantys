@@ -6,6 +6,7 @@ import it.polimi.ingsw.server.model.Cloud;
 import it.polimi.ingsw.server.model.characters.CharacterCard;
 import it.polimi.ingsw.utils.network.Network;
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -36,9 +37,8 @@ public class GuiView extends Application {
     public static boolean canOpenWindow = true;
     public static Node windowNode = null;
 
-
     /**
-     * This is the entry point for the GUI application
+     * This is the entrypoint for the GUI application.
      */
     public static void main(String[] args) {
         launch(args);

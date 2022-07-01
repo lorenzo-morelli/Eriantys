@@ -209,7 +209,7 @@ public class Game implements Initializable {
             cloudBtn.setStyle("-fx-background-image: url(" + imageURL + ");");
         }
 
-        int bagNum = this.guiView.getClientModel().getServerModel().getTable().getBag().size();
+        int bagSize = this.guiView.getClientModel().getServerModel().getTable().getBag().size();
         GameMode gameMode = this.guiView.getClientModel().getServerModel().getGameMode();
         int motherNaturePos = this.guiView.getClientModel().getServerModel().getTable().getMotherNaturePosition();
         ArrayList<Island> islands = this.guiView.getClientModel().getServerModel().getTable().getIslands();
@@ -232,9 +232,8 @@ public class Game implements Initializable {
         ArrayList<Label> coinLabels = new ArrayList<>(Arrays.asList(coin1Label, coin2Label, coin3Label, coin4Label));
         ArrayList<Label> costs = new ArrayList<>(Arrays.asList(cost1, cost2, cost3));
 
-
         //INITIALIZE BAG
-        bag.setText("= " + bagNum);
+        bag.setText("= " + bagSize);
 
         // INITIALIZE ISLANDS
         islandGrid.setAlignment(Pos.CENTER);
@@ -256,7 +255,7 @@ public class Game implements Initializable {
             islandImage.setFitWidth(180);
             tile.getChildren().add(islandImage);
 
-            // INITIALIZE STUDENTS INHABITANTS
+            // INITIALIZE ISLAND INHABITANTS
             GridPane students = new GridPane();
             students.setAlignment(Pos.CENTER);
             StudentSet islandSet = island.getInhabitants();
@@ -750,6 +749,10 @@ public class Game implements Initializable {
         }
     }
 
+    /**
+     * This method is used to add a shadow effect to a specific Node.
+     * @param node the element to apply the effect to (image or button).
+     */
     public static void setShadow(Node node) {
         node.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);");
     }

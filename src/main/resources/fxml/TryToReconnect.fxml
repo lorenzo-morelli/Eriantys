@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.gui.TryToReconnect">
-   <Label fx:id="notice" alignment="CENTER" layoutX="98.0" layoutY="154.0" prefHeight="92.0" prefWidth="405.0" text="The game can't go on because there aren't enough players. Waiting for a player to reconnect..." textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="154.0" AnchorPane.leftAnchor="98.0" AnchorPane.rightAnchor="97.0" AnchorPane.topAnchor="154.0">
+<AnchorPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.client.view.gui.TryToReconnect">
+   <Label fx:id="notice" alignment="CENTER" layoutX="98.0" layoutY="154.0" prefHeight="1080.0" prefWidth="1920.0" text="The game can't go on because there aren't enough players. Waiting for a player to reconnect..." textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <font>
          <Font size="15.0" />
       </font>
    </Label>
+   <ImageView fitHeight="34.0" fitWidth="36.0" layoutX="944.0" layoutY="563.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@../graphics/loading.gif" />
+      </image>
+   </ImageView>
 </AnchorPane>
