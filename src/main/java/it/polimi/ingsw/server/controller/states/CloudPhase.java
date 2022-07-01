@@ -104,6 +104,7 @@ public class CloudPhase extends State {
 
             if(currentPlayer.isDisconnected()) {
                 currentPlayer.setDisconnected(true);
+                currentPlayer.setSkipClouds(false);
                 for(Cloud c: model.getTable().getClouds()) {
                     if(c.getStudentsAccumulator().size()!=0) {
                         currentPlayer.getSchoolBoard().loadEntrance(c,model.getTable().getClouds());

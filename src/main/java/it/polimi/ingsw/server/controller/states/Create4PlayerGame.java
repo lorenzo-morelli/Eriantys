@@ -151,11 +151,6 @@ public class Create4PlayerGame extends State {
                             }
 
                             if (check2) {
-                                try {
-                                    sleeping(6000);
-                                } catch (InterruptedException e) {
-                                    throw new RuntimeException(e);
-                                }
                                 for (Team team : getModel().getTeams()) {
                                     if (team.getPlayer1().isDisconnected()) {
                                         ClientModel target = connectionModel.findPlayer(team.getPlayer1().getNickname());
@@ -192,7 +187,7 @@ public class Create4PlayerGame extends State {
                         }
                     }
                     try {
-                        sleeping(3000);
+                        sleeping();
                     } catch (InterruptedException e) {
                       throw new RuntimeException(e);
                     }
@@ -205,8 +200,8 @@ public class Create4PlayerGame extends State {
         return super.entryAction(cause);
     }
 
-    private void sleeping(int i) throws InterruptedException {
-        sleep(i);
+    private void sleeping() throws InterruptedException {
+        sleep(2000);
     }
 
     private Model getModel() {
