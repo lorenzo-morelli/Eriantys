@@ -71,7 +71,7 @@ public class GuiView extends Application {
         this.stage = (Stage) currNode.getScene().getWindow();
         this.scene = new Scene(loader.load());
         this.stage.setScene(scene);
-        this.stage.setMaximized(newScene.equals("Game") || newScene.equals("TryToReconnect"));
+        this.stage.setMaximized(newScene.equals("Game") || newScene.equals("TryToReconnect") || newScene.equals("Disconnection"));
         this.stage.show();
     }
 
@@ -86,6 +86,7 @@ public class GuiView extends Application {
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
         stage.setResizable(false);
+        stage.getIcons().clear();
         stage.getIcons().add(new Image("/graphics/pieces/islands/island1.png"));
         stage.setOnCloseRequest(event -> canOpenWindow = true);
         stage.setAlwaysOnTop(true);
