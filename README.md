@@ -12,6 +12,17 @@ Il client è stato implementato sia nella versione command line interface (CLI),
 - Partite a due, tre e quattro giocatori
 - Resilienza alle disconnessioni
 - Bot che simula un giocatore (nel caso in cui un giocatore si è disconnesso)
+
+# Come eseguire i JAR
+- Per la GUI:
+  - basta fare doppio click sul file .jar!
+- Per la CLI:
+  - Aprire il command prompt all'interno della cartella in cui si trova il file .jar.
+  - Eseguire il seguente codice: `java -jar Eriantys-CLI-v1.0.0.jar`.
+- Per il SERVER:
+  - Aprire il command prompt all'interno della cartella in cui si trova il file .jar.
+  - Eseguire il seguente codice: `java -jar Eriantys-SERVER-v1.0.0.jar`.
+
 # Documentazione
 
 ## UML
