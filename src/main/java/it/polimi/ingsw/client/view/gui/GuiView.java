@@ -17,11 +17,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 
-/**
- * GUI View
- * @author Ignazio Neto Dell'Acqua
- * @author Lorenzo Morelli
- */
 public class GuiView extends Application {
     private Stage stage;
     private Scene scene;
