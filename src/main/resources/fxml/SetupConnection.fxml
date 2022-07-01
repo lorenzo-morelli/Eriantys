@@ -30,9 +30,8 @@
       </cursor></TextField>
     <Label fx:id="notice" alignment="CENTER" layoutY="248.0" prefHeight="25.0" prefWidth="600.0" text="error" textAlignment="CENTER" AnchorPane.bottomAnchor="127.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="248.0" />
     <Label fx:id="connected" layoutX="266.0" layoutY="225.0" text="CONNECTED!" />
-   <ImageView fx:id="loading" fitHeight="37.0" fitWidth="36.0" layoutX="285.0" layoutY="333.0" pickOnBounds="true" preserveRatio="true">
-      <image>
-         <Image url="@../graphics/loading.gif" />
-      </image>
-   </ImageView>
+    <ImageView fx:id="loading" fitHeight="37.0" fitWidth="36.0" layoutX="285.0" layoutY="333.0" pickOnBounds="true"
+               preserveRatio="true">
+        <Image url="@../graphics/loading.gif"/>
+    </ImageView>
 </AnchorPane>
