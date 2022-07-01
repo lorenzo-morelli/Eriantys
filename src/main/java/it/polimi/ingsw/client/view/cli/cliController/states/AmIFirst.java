@@ -53,7 +53,7 @@ public class AmIFirst extends State {
         TimeUnit.MILLISECONDS.sleep(500);
 
         long start = System.currentTimeMillis();
-        long end = start + 15 * 1000L;
+        long end = start + 17 * 1000L;
 
         Network.send(json.toJson(clientModel));
         while (!responseReceived) {
