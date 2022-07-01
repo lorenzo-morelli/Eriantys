@@ -11,6 +11,7 @@ Il client è stato implementato sia nella versione command line interface (CLI),
 - CLI e GUI
 - Partite a due, tre e quattro giocatori
 - Resilienza alle disconnessioni
+- Bot che simula un giocatore (nel caso in cui un giocatore si è disconnesso)
 # Documentazione
 
 ## UML
