@@ -35,35 +35,35 @@ Il client è stato implementato sia nella versione command line interface (CLI),
 
 
 ### UML
-[UML finale](https://github.com/lorenzo-morelli/ing-sw-2022-morelli-morea-netodellacqua/blob/main/deliverables/UML.pdf)
+[UML finale](https://github.com/lorenzo-morelli/ing-sw-2022-morelli-morea-netodellacqua/blob/main/deliverables/UML_final.pdf)
 <br>
-[UML iniziale](https://github.com/lorenzo-morelli/ing-sw-2022-morelli-morea-netodellacqua/blob/main/deliverables/Initial_UML_Eriantys_morelli_morea_netodellacqua.pdf)
+[UML iniziale](https://github.com/lorenzo-morelli/ing-sw-2022-morelli-morea-netodellacqua/blob/main/deliverables/UML_initialpdf)
 
 
 ### Socket
-[Sequence diagrams finali](https://github.com/lorenzo-morelli/ing-sw-2022-morelli-morea-netodellacqua/blob/main/deliverables/protocol_final_documentation.pdf)
+[Sequence diagrams finali](https://github.com/lorenzo-morelli/ing-sw-2022-morelli-morea-netodellacqua/blob/main/deliverables/protocol_final.pdf)
 <br>
-[Documentazione iniziale](https://github.com/lorenzo-morelli/ing-sw-2022-morelli-morea-netodellacqua/blob/main/deliverables/protocol_initial_documentation.pdf)
+[Documentazione iniziale](https://github.com/lorenzo-morelli/ing-sw-2022-morelli-morea-netodellacqua/blob/main/deliverables/protocol_initial.pdf)
 
 
 ### Controllore del client
-[Documentazione IFML](https://github.com/lorenzo-morelli/ing-sw-2022-morelli-morea-netodellacqua/blob/main/deliverables/ClientController.jpg)
+[Documentazione IFML](https://github.com/lorenzo-morelli/ing-sw-2022-morelli-morea-netodellacqua/blob/main/deliverables/others/ClientController.jpg)
 
 
 ### Interazioni tra controllore del client e del server
-[Documentazione BPMN](https://github.com/lorenzo-morelli/ing-sw-2022-morelli-morea-netodellacqua/blob/main/deliverables/principiant_game.bpmn)
+[Documentazione BPMN](https://github.com/lorenzo-morelli/ing-sw-2022-morelli-morea-netodellacqua/blob/main/deliverables/others/principiant_game.bpmn)
 
 
 ### Peer review ricevute
-[Protocol](https://github.com/lorenzo-morelli/ing-sw-2022-morelli-morea-netodellacqua/blob/main/deliverables/peer_review_ricevuto_protocol.pdf)
+[Protocol](https://github.com/lorenzo-morelli/ing-sw-2022-morelli-morea-netodellacqua/blob/main/deliverables/protocol_peer_review_ricevuta.pdf)
 <br>
-[UML](https://github.com/lorenzo-morelli/ing-sw-2022-morelli-morea-netodellacqua/blob/main/deliverables/peer_review_ricevuto.pdf)
+[UML](https://github.com/lorenzo-morelli/ing-sw-2022-morelli-morea-netodellacqua/blob/main/deliverables/UML_peer_review_ricevuta.pdf)
 
 
 ### Peer review fatte
-[Protocol](https://github.com/lorenzo-morelli/ing-sw-2022-morelli-morea-netodellacqua/blob/main/deliverables/peer_review_protocol.pdf)
+[Protocol](https://github.com/lorenzo-morelli/ing-sw-2022-morelli-morea-netodellacqua/blob/main/deliverables/protocol_peer_review_fatta.pdf)
 <br>
-[UML](https://github.com/lorenzo-morelli/ing-sw-2022-morelli-morea-netodellacqua/blob/main/deliverables/peer_review_uml.docx)
+[UML](https://github.com/lorenzo-morelli/ing-sw-2022-morelli-morea-netodellacqua/blob/main/deliverables/protocol_peer_review_ricevuta.pdf)
 
 
 ### Testing e coverage
