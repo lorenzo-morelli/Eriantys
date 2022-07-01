@@ -154,6 +154,9 @@ public class Game implements Initializable {
     @FXML
     private Label playerName4;
 
+    @FXML
+    private Label bag;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         String imageURL = "/graphics/buttons/button_unavailable.png";
@@ -206,12 +209,11 @@ public class Game implements Initializable {
             cloudBtn.setStyle("-fx-background-image: url(" + imageURL + ");");
         }
 
+        int bagNum = this.guiView.getClientModel().getServerModel().getTable().getBag().size();
         GameMode gameMode = this.guiView.getClientModel().getServerModel().getGameMode();
         int motherNaturePos = this.guiView.getClientModel().getServerModel().getTable().getMotherNaturePosition();
         ArrayList<Island> islands = this.guiView.getClientModel().getServerModel().getTable().getIslands();
         ArrayList<Player> players = this.guiView.getClientModel().getServerModel().getPlayers();
-        players.forEach(player -> System.out.println(player.getChosenCard() != null ? player.getChosenCard().getValues() : "non scelta"));
-
         ArrayList<Professor> professors = this.guiView.getClientModel().getServerModel().getTable().getProfessors();
         ArrayList<Cloud> clouds = this.guiView.getClientModel().getServerModel().getTable().getClouds();
         ArrayList<Team> teams = null;
@@ -230,6 +232,9 @@ public class Game implements Initializable {
         ArrayList<Label> coinLabels = new ArrayList<>(Arrays.asList(coin1Label, coin2Label, coin3Label, coin4Label));
         ArrayList<Label> costs = new ArrayList<>(Arrays.asList(cost1, cost2, cost3));
 
+
+        //INITIALIZE BAG
+        bag.setText("= " + bagNum);
 
         // INITIALIZE ISLANDS
         islandGrid.setAlignment(Pos.CENTER);

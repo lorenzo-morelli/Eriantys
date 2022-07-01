@@ -67,10 +67,6 @@ public class GuiView extends Application {
      * @param newScene the name of the FXML file, without the extension.
      */
     public synchronized void changeScene(String newScene) throws IOException {
-        System.out.println("cambio scena!");
-        System.out.println("nuova scena: " + newScene);
-        System.out.println("currNode: " + currNode);
-        System.out.println("currScene: " + currNode.getScene().getWindow());
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/" + newScene + ".fxml"));
         this.stage = (Stage) currNode.getScene().getWindow();
         this.scene = new Scene(loader.load());
@@ -140,7 +136,6 @@ public class GuiView extends Application {
                 changeScene("Game");
                 break;
             case "CHOOSEWHERETOMOVESTUDENTS":
-                System.out.println("carico gli studenti");
                 gameState = "MOVING STUDENTS";
                 changeScene("Game");
                 break;
@@ -203,7 +198,6 @@ public class GuiView extends Application {
      * This method, which runs on another thread, accepts and responds to the pings sent from the server
      */
     public synchronized void requestPing() {
-        System.out.println(("risposta ping"));
         Network.setClientModel(GuiView.clientModel);
         Gson gson = new Gson();
         GuiView.clientModel.setPingMessage(true);

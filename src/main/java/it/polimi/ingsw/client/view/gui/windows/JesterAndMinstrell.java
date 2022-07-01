@@ -168,7 +168,6 @@ public class JesterAndMinstrell implements Initializable {
         students.forEach(Game::setShadow);
         students.forEach(student -> student.setCursor(Cursor.HAND));
         students.forEach(student -> student.setOnMouseClicked(event -> {
-            System.out.println("cliccate");
             switch (students.indexOf(student)) {
                 case 0:
                     if (studentSet.getNumOfBlueStudents() > 0) {

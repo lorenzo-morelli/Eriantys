@@ -404,16 +404,13 @@
    <Label fx:id="cost3" layoutX="1340.0" layoutY="349.0" text="Cost: 0" />
    <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
    <TextArea fx:id="log" editable="false" layoutX="1468.0" layoutY="101.0" prefHeight="244.0" prefWidth="357.0" text="tatatatata&#10;at&#10;at&#10;at&#10;ta&#10;ta&#10;t&#10;at&#10;a&#10;t&#10;at&#10;at&#10;at&#10;at&#10;a&#10;ta&#10;t sadddddddddddddddddddddddddddddddddddddddddddddddddddddd" />
-   <GridPane layoutX="1496.0" layoutY="370.0" prefHeight="44.0" prefWidth="292.0">
-     <columnConstraints>
-       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-     </columnConstraints>
-     <rowConstraints>
-       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-     </rowConstraints>
-   </GridPane>
+   <ImageView fitHeight="119.0" fitWidth="70.0" layoutX="1671.0" layoutY="364.0" pickOnBounds="true"
+              preserveRatio="true">
+      <Image url="@../graphics/pieces/bag.png"/>
+   </ImageView>
+   <Label fx:id="bag" layoutX="1745.0" layoutY="402.0" text="= 200" textFill="WHITE">
+      <font>
+         <Font name="System Bold" size="20.0" />
+      </font>
+   </Label>
 </AnchorPane>
