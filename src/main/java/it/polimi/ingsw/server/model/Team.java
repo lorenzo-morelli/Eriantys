@@ -19,7 +19,7 @@ public class Team {
     public static final String ANSI_GRAY="\033[1;90m";
 
     /**
-     * inizialize the team as two free slots of players and a unique teamNumber
+     * initialize the team as two free slots of players and a unique teamNumber
      */
     public Team(int teamNumber){
         player1=null;

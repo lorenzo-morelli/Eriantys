@@ -394,7 +394,7 @@
    <Label fx:id="cost2" layoutX="1157.0" layoutY="349.0" text="Cost: 0" />
    <Label fx:id="cost3" layoutX="1340.0" layoutY="349.0" text="Cost: 0" />
    <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-   <TextArea fx:id="log" editable="false" layoutX="1468.0" layoutY="101.0" prefHeight="244.0" prefWidth="357.0" text="tatatatata&#10;at&#10;at&#10;at&#10;ta&#10;ta&#10;t&#10;at&#10;a&#10;t&#10;at&#10;at&#10;at&#10;at&#10;a&#10;ta&#10;t sadddddddddddddddddddddddddddddddddddddddddddddddddddddd" />
+   <TextArea fx:id="log" editable="false" layoutX="1468.0" layoutY="101.0" prefHeight="244.0" prefWidth="357.0" text="adattata&#10;at&#10;at&#10;at&#10;ta&#10;ta&#10;t&#10;at&#10;a&#10;t&#10;at&#10;at&#10;at&#10;at&#10;a&#10;ta&#10;t sadddddddddddddddddddddddddddddddddddddddddddddddddddddd" />
    <ImageView fitHeight="119.0" fitWidth="70.0" layoutX="1670.0" layoutY="382.0" pickOnBounds="true" preserveRatio="true">
       <Image url="@../graphics/pieces/bag.png" />
    </ImageView>
@@ -403,19 +403,16 @@
          <Font name="System Bold" size="20.0" />
       </font>
    </Label>
-   <ImageView fx:id="coin2" fitHeight="44.0" fitWidth="36.0" layoutX="626.0" layoutY="715.0" pickOnBounds="true" preserveRatio="true">
-      <image>
-         <Image url="@../graphics/coin.png" />
-      </image>
+   <ImageView fx:id="coin2" fitHeight="44.0" fitWidth="36.0" layoutX="626.0" layoutY="715.0" pickOnBounds="true"
+              preserveRatio="true">
+      <Image url="@../graphics/coin.png"/>
    </ImageView>
-   <ImageView fx:id="coin3" fitHeight="44.0" fitWidth="36.0" layoutX="627.0" layoutY="457.0" pickOnBounds="true" preserveRatio="true">
-      <image>
-         <Image url="@../graphics/coin.png" />
-      </image>
+   <ImageView fx:id="coin3" fitHeight="44.0" fitWidth="36.0" layoutX="627.0" layoutY="457.0" pickOnBounds="true"
+              preserveRatio="true">
+      <Image url="@../graphics/coin.png"/>
    </ImageView>
-   <ImageView fx:id="coin4" fitHeight="44.0" fitWidth="36.0" layoutX="626.0" layoutY="202.0" pickOnBounds="true" preserveRatio="true">
-      <image>
-         <Image url="@../graphics/coin.png" />
-      </image>
+   <ImageView fx:id="coin4" fitHeight="44.0" fitWidth="36.0" layoutX="626.0" layoutY="202.0" pickOnBounds="true"
+              preserveRatio="true">
+      <Image url="@../graphics/coin.png"/>
    </ImageView>
 </AnchorPane>

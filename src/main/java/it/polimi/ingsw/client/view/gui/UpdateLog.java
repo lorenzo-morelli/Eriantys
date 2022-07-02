@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class UpdateLog {
     /**
-     * This methos is used to get the current time, for the log.
+     * These methods are used to get the current time, for the log.
      * @return the current time.
      */
     public String getTime() {

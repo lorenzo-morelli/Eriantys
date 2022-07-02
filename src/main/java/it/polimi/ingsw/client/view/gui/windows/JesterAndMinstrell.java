@@ -246,7 +246,7 @@ public class JesterAndMinstrell implements Initializable {
     }
 
     /**
-     * This method initializes the minestrell and jester's arrays.
+     * This method initializes the minstrel and jester's arrays.
      */
     private void initializeArrays() {
         entranceMinstrell = new ArrayList<>(Arrays.asList(null, null));
