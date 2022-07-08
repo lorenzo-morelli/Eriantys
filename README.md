@@ -1,7 +1,7 @@
 # Prova finale d'ingegneria del software - AA 2021-2022
-<img src="https://www.craniocreations.it/wp-content/uploads/2021/06/Eriantys_scatola3Dombra-600x600.png" 
-        alt="Picture" 
-        align="center" />
+<p align="center">
+    <img src="https://www.craniocreations.it/wp-content/uploads/2021/06/Eriantys_scatola3Dombra-600x600.png">
+p>
 
 
 ## Introduzione
