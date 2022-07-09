@@ -16,7 +16,7 @@ Otherwise, the client is available with CLI or Graphical User Interface (GUI).
 - CLI and GUI for the client.
 - Matches with 2, 3 or 4 players.
 - Resilience to disconnections: it means that when a player is disconnected, if there are enough players connected, the game will go on anyways.
-- Bot simulating a players' moves in case they're disconnected.
+- Bot simulating a player's moves in case they're disconnected.
 
 ## Documentation
 You can find all the documentation about the UMLs, the network protocol and the BPMN diagram in the "deliverables" folder.
