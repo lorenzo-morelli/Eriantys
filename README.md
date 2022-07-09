@@ -28,7 +28,7 @@ For the Model, ome tests have been done using Junit, with a coverage of 86% of t
 
 
 ### Dependencies and plugins
-We have chosen to use only the essential number of dependencies.
+We have chosen to only use the essential number of dependencies.
 -	Gson
 -	Junit
 -	Javafx
