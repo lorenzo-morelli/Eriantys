@@ -6,12 +6,12 @@
 
 ## Introduction
 This is our Software Engineering final project for the bachelor's graduation in Computer Engineering.
-It consists in an implementation of a digital transposition of a physical existing game called [Eriantys](https://www.craniocreations.it/prodotto/eriantys/), using a client/server architecture and the Model-View-Controller design patter.
+It consists in an implementation of a digital transposition of a physical existing game called [Eriantys](https://craniointernational.com/products/eriantys/), using a client/server architecture and the Model-View-Controller design patter.
 The server runs on a Command Line Interface (CLI).
 Otherwise, the client is available with CLI or Graphical User Interface (GUI).
 
 ## Developed features
-- Complete game rules, with both beginner and expert game mode.
+- Complete [game rules](https://craniointernational.com/2021/wp-content/uploads/2021/06/Eriantys_rules_small.pdf), with both beginner and expert game mode.
 - Socket TCP transmission between the client and the server,
 - CLI and GUI for the client.
 - Matches with 2, 3 or 4 players.
