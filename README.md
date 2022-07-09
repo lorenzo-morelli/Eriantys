@@ -5,8 +5,6 @@
 
 
 ## Introduction
-# Eriantys - A board game
-
 This is our Software Engineering final project for the bachelor's graduation in Computer Engineering.
 It consists in an implementation of a digital transposition of a physical existing game called [Eriantys](https://www.craniocreations.it/prodotto/eriantys/), using a client/server architecture and the Model-View-Controller design patter.
 The server runs on a Command Line Interface (CLI).
