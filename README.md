@@ -10,7 +10,7 @@ The server component operates within a Command Line Interface (CLI) environment,
 
 ## Developed features
 - Complete [game rules](https://craniointernational.com/2021/wp-content/uploads/2021/06/Eriantys_rules_small.pdf), with both beginner and expert game mode.
-- Socket TCP transmission between the client and the server,
+- Socket TCP transmission between the client and the server.
 - CLI and GUI for the client.
 - Matches with 2, 3 or 4 players.
 - Resilience to disconnections: it means that when a player is disconnected, if there are enough players connected, the game will go on anyways.
